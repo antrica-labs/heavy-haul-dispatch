@@ -1,0 +1,203 @@
+﻿<Window x:Class="Singer_Dispatch.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Title="Singer Dispatch" Height="579" Width="885">
+
+    <DockPanel>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="_File" >
+                <MenuItem Header="_Exit" Click="FileExit_Click" />
+            </MenuItem>
+            <MenuItem Header="_Create">
+                <MenuItem Header="_New Contact" />
+                <MenuItem Header="_New Quote" />
+                <MenuItem Header="_New Job" />
+                <MenuItem Header="_New Load" />
+                <MenuItem Header="_New Dispatch" />
+            </MenuItem>
+        </Menu>
+
+        <StatusBar DockPanel.Dock="Bottom" >
+            <StatusBarItem>
+                <TextBlock Name="statBarText">Ready</TextBlock>
+            </StatusBarItem>
+        </StatusBar>
+
+        <Grid DockPanel.Dock="Left" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200"/>
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Column="0" VerticalAlignment="Stretch">
+                <Label FontSize="16">Singer Specialized</Label>
+                <Expander Header="Contacts">
+                    <StackPanel VerticalAlignment="Top">
+                        <Label>Contacts</Label>
+                        <Label>Commodities</Label>
+                        <Label>Credit and Rates</Label>
+                    </StackPanel>
+                </Expander>
+                <Expander Header="Quotes">
+                    <StackPanel VerticalAlignment="Top">
+                        <Label>Quotes</Label>
+                        <Label>Move Commodities</Label>
+                        <Label>Supplements</Label>
+                        <Label>Conditions</Label>
+                    </StackPanel>
+                </Expander>
+                <Expander Header="Jobs"></Expander>
+                <Expander Header="Billing"></Expander>
+                <Expander Header="Reports"></Expander>
+                <Expander Header="Admin"></Expander>
+            </StackPanel>
+
+            <StackPanel Grid.Column="1" VerticalAlignment="Stretch">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+
+                    <Label Grid.Column="0" Grid.Row="0">Company Name:</Label>
+                    <Label Grid.Column="0" Grid.Row="2">Operating As:</Label>
+                    <Label Grid.Column="1" Grid.Row="0">Head Office Phone:</Label>
+                    <Label Grid.Column="1" Grid.Row="2">Head Office Fax:</Label>
+                    <Label Grid.Column="3" Grid.Row="0">Available Credit:</Label>
+                    <Label Grid.Column="3" Grid.Row="2">Priority Level:</Label>
+
+                    <ComboBox Name="cmbCompanyName" Grid.Column="0" Grid.Row="1" />
+                    <ComboBox Name="cmbOperatingAs" Grid.Column="0" Grid.Row="3" />
+                    <TextBox Name="txtOfficePhone" Grid.Column="1" Grid.Row="1" />
+                    <TextBox Name="txtOfficeFax" Grid.Column="1" Grid.Row="3" />
+                    <TextBox Name="txtAvailableCredit" Grid.Column="3" Grid.Row="1" />
+                    <ComboBox Name="cmbPriorityLevel" Grid.Column="3" Grid.Row="3" />
+                </Grid>
+
+                <StackPanel VerticalAlignment="Top">
+                    <TabControl>
+                        <TabItem Header="Addresses &amp; Contacts">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <GroupBox Grid.Column="0" Header="Address Detials">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition />
+                                            <ColumnDefinition />
+                                            <ColumnDefinition />
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition />
+                                            <RowDefinition />
+                                            <RowDefinition />
+                                            <RowDefinition />
+                                            <RowDefinition />
+                                            <RowDefinition />
+                                            <RowDefinition />
+                                            <RowDefinition />
+                                            <RowDefinition />
+                                            <RowDefinition />
+                                            <RowDefinition />
+                                        </Grid.RowDefinitions>
+                                        <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3">Address:</Label>
+                                        <TextBox Name="txtAddress1" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" />
+                                        <TextBox Name="txtAddress2" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" />
+                                        <Label Grid.Row="3" Grid.Column="0">Country:</Label>
+                                        <TextBox Name="txtCountry" Grid.Row="4" Grid.Column="0" />
+                                        <Label Grid.Row="3" Grid.Column="1">Province:</Label>
+                                        <TextBox Name="txtProvince" Grid.Row="4" Grid.Column="1" />
+                                        <Label Grid.Row="3" Grid.Column="2">City:</Label>
+                                        <TextBox Name="txtCity" Grid.Row="4" Grid.Column="2" />
+                                        <Label Grid.Row="5" Grid.Column="0">Postal/Zip Code:</Label>
+                                        <TextBox Name="txtPostalZip" Grid.Row="6" Grid.Column="0" />
+                                        <Label Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2">Address Type:</Label>
+                                        <ComboBox Name="cmbAddressType" Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2" />
+                                        <Label Grid.Row="7" Grid.Column="0">Site Main Phone:</Label>
+                                        <TextBox Name="txtSiteMainPhone" Grid.Row="8" Grid.Column="0" />
+                                        <Label Grid.Row="7" Grid.Column="1">Site Secondary:</Label>
+                                        <TextBox Name="txtSiteSecondaryPhone" Grid.Row="8" Grid.Column="1" />
+                                        <Label Grid.Row="7" Grid.Column="2">Site Fax:</Label>
+                                        <TextBox Name="txtSiteFax" Grid.Row="8" Grid.Column="2" />
+                                        <Label Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="3">Address Notes:</Label>
+                                        <TextBox Name="txtAddressNotes" Grid.Row="10" Grid.Column="0" Grid.ColumnSpan="3" Height="60" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" />
+                                    </Grid>
+                                </GroupBox>
+                                <GroupBox Grid.Column="1" Header="ContactDetails">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition />
+                                            <ColumnDefinition />
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition />
+                                            <RowDefinition />
+                                            <RowDefinition />
+                                            <RowDefinition />
+                                            <RowDefinition />
+                                            <RowDefinition />
+                                            <RowDefinition />
+                                            <RowDefinition />
+                                            <RowDefinition />
+                                            <RowDefinition />
+                                        </Grid.RowDefinitions>
+                                        <Label Grid.Column="0" Grid.Row="0">First Name:</Label>
+                                        <TextBox Name="txtContactFirstName" Grid.Column="0" Grid.Row="1" />
+                                        <Label Grid.Column="1" Grid.Row="0">Last Name:</Label>
+                                        <TextBox Name="txtContactLastName" Grid.Column="1" Grid.Row="1" />
+                                        <Label Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2">Email Address:</Label>
+                                        <TextBox Name="txtContactEmail" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" />
+                                        <Label Grid.Row="4" Grid.Column="0">Primary Phone:</Label>
+                                        <TextBox Name="txtContactPrimaryPhone" Grid.Column="0" Grid.Row="5" />
+                                        <Label Grid.Row="4" Grid.Column="1">Secondary Phone:</Label>
+                                        <TextBox Name="txtContactSecondaryPhone" Grid.Row="5" Grid.Column="1" />
+                                        <Label Grid.Row="6" Grid.Column="0">Contact Type:</Label>
+                                        <ComboBox Name="cmbContactType" Grid.Row="7" Grid.Column="0" />
+                                        <Label Grid.Row="6" Grid.Column="1">Preferred Contact Method:</Label>
+                                        <ComboBox Name="cmbContactPreferedContactMethod" Grid.Row="7" Grid.Column="1" />
+                                        <Label Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="2">Contact Notes:</Label>
+                                        <TextBox Name="txtContactNotes" Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="2" Height="60" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" />
+                                    </Grid>
+                                </GroupBox>
+                            </Grid>
+                        </TabItem>
+                        <TabItem Header="Commodities">
+                            <GroupBox Header="Commodity Details">
+                                <StackPanel VerticalAlignment="Top">
+                                    <GroupBox Header="Instructions">
+                                        <TextBlock>Dynamic intnstruction box that provides help information about the highlighted field.</TextBlock>
+                                    </GroupBox>
+                                </StackPanel>
+                            </GroupBox>
+                        </TabItem>
+                        <TabItem Header="Credit &amp; Rates"></TabItem>
+                    </TabControl>
+
+                    <!-- 
+                    <TabControl>
+                        <TabItem Header="Move Commodity">
+                        </TabItem>
+                        <TabItem Header="Supplements">
+                        </TabItem>
+                        <TabItem Header="Storage">
+                        </TabItem>
+                        <TabItem Header="Conditions">
+                        </TabItem>
+                    </TabControl>
+                    -->
+                </StackPanel>
+            </StackPanel>
+
+        </Grid>
+    </DockPanel>
+</Window>
