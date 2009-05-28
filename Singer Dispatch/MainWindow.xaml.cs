@@ -25,7 +25,22 @@ namespace Singer_Dispatch
 
         private void FileExit_Click(object sender, RoutedEventArgs e)
         {
+            Application.Current.Shutdown();
+        }
 
+        private void btnViewContacts_Click(object sender, RoutedEventArgs e)
+        {
+            tabContacts.SelectedIndex = 0;
+        }
+
+        private void btnViewContactsCommodities_Click(object sender, RoutedEventArgs e)
+        {
+            tabContacts.SelectedIndex = 1;
+        }
+
+        private void btnViewContactsCredit_Click(object sender, RoutedEventArgs e)
+        {
+            tabContacts.SelectedIndex = 2;
         }
 
     }
