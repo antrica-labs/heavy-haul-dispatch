@@ -21,27 +21,41 @@ namespace Singer_Dispatch
         public MainWindow()
         {
             InitializeComponent();
+
+            BuildMainNavigation();
+        }
+
+        private void BuildMainNavigation()
+        {
+            addLinksToExpander(linksCompanies, tabCompanies.Items);
+            addLinksToExpander(linksQuotes, tabQuotes.Items);
+        }
+
+        private void addLinksToExpander(StackPanel panel, ItemCollection tabs)
+        {
+            foreach (TabItem tab in tabs)
+            {
+                TabIndexHyperlink link = new TabIndexHyperlink(tab);
+                link.Click += new RoutedEventHandler(SwitchTabs);
+
+                Label label = new Label();
+                label.Content = link;
+
+                panel.Children.Add(label);
+            }
+        }
+
+        private void SwitchTabs(object sender, RoutedEventArgs e)
+        {
+            TabIndexHyperlink link = (TabIndexHyperlink)e.Source;
+
+            link.Tab.IsSelected = true;
+
         }
 
         private void FileExit_Click(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
-        }
-
-        private void btnViewContacts_Click(object sender, RoutedEventArgs e)
-        {
-            tabContacts.SelectedIndex = 0;
-        }
-
-        private void btnViewContactsCommodities_Click(object sender, RoutedEventArgs e)
-        {
-            tabContacts.SelectedIndex = 1;
-        }
-
-        private void btnViewContactsCredit_Click(object sender, RoutedEventArgs e)
-        {
-            tabContacts.SelectedIndex = 2;
-        }
-
+        }    
     }
 }

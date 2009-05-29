@@ -1,6 +1,7 @@
 ﻿<Window x:Class="Singer_Dispatch.MainWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:Singer_Dispatch"
     Title="Singer Dispatch" MinWidth="780" MinHeight="645">
     <Window.Resources>
         <Style TargetType="TextBox">
@@ -16,7 +17,29 @@
             <Setter Property="Foreground" Value="DarkBlue" />
             <Setter Property="Margin" Value="0,0,0,5" />
         </Style>
+        
+        <Style x:Key="SectionExpander" TargetType="Expander">
+            <Setter Property="Margin" Value="0,0,0,5" />
+            <Setter Property="FontWeight" Value="Bold" />
+        </Style>
+        
+        <Style x:Key="SectionExpanderContent">
+            <Setter Property="ContentControl.FontWeight" Value="Normal" />
+            <Setter Property="ContentControl.Margin" Value="19,1,0,0" />
+        </Style>
+        
+        <Style TargetType="{x:Type local:TabIndexHyperlink}">
+            <Setter Property="TextDecorations" Value="None" />
+            <Setter Property="Foreground" Value="Black" />
 
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="true">
+                    <Setter Property="TextDecorations" Value="Underline" />
+                    <Setter Property="Foreground" Value="DarkBlue" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+       
         <Style x:Key="CompanySelection" TargetType="Border">
             <Setter Property="BorderThickness" Value="1" />
             <Setter Property="BorderBrush" Value="Gray" />
@@ -31,31 +54,9 @@
             <Setter Property="Padding" Value="12,7,12,7" />
         </Style>
         
-        <Style x:Key="SectionLabel" TargetType="Label">
-            <Setter Property="Margin" Value="19,3,0,0" />
-        </Style>
-        
-        <Style x:Key="SectionLink" TargetType="Hyperlink">
-            <Setter Property="FontWeight" Value="Normal" />
-            <Setter Property="Foreground" Value="Black" />
-            <Setter Property="TextDecorations" Value="None" />
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="true">
-                    <Setter Property="Foreground" Value="Black" />
-                    <Setter Property="TextDecorations" Value="Underline" />
-                    <Setter Property="Foreground" Value="DarkBlue" />
-                </Trigger>
-            </Style.Triggers>
-        </Style>
-        
         <Style x:Key="MainContent" TargetType="Border">
             <Setter Property="Margin" Value="6,6,6,6" />
-        </Style>
-        
-        <Style TargetType="Expander">
-            <Setter Property="Margin" Value="0,0,0,5" />
-            <Setter Property="FontWeight" Value="Bold" />
-        </Style>
+        </Style>        
     </Window.Resources>
     
     <Border>
@@ -76,24 +77,24 @@
             <Border Style="{StaticResource MainNavigation}">
                 <StackPanel DockPanel.Dock="Left">
                     <Label Style="{StaticResource Heading}">Singer Specialized</Label>
-                    <Expander Header="Contacts" IsExpanded="True">
-                        <StackPanel VerticalAlignment="Top">
-                            <Label Style="{StaticResource SectionLabel}">
-                                <Hyperlink Style="{StaticResource SectionLink}" Click="btnViewContacts_Click">Contacts</Hyperlink>
-                            </Label>
-                            <Label Style="{StaticResource SectionLabel}">
-                                <Hyperlink Style="{StaticResource SectionLink}" Click="btnViewContactsCommodities_Click">Commodities</Hyperlink>
-                            </Label>
-                            <Label Style="{StaticResource SectionLabel}">
-                                <Hyperlink Style="{StaticResource SectionLink}" Click="btnViewContactsCredit_Click">Credit &amp; Rates</Hyperlink>
-                            </Label>
-                        </StackPanel>
+                    <Expander Header="Companies" Style="{StaticResource SectionExpander}" IsExpanded="True">
+                        <StackPanel Name="linksCompanies" Style="{StaticResource SectionExpanderContent}" VerticalAlignment="Top"></StackPanel>
                     </Expander>
-                    <Expander Header="Quotes"></Expander>
-                    <Expander Header="Jobs"></Expander>
-                    <Expander Header="Billing"></Expander>
-                    <Expander Header="Reports"></Expander>
-                    <Expander Header="Admin"></Expander>
+                    <Expander Header="Quotes" Style="{StaticResource SectionExpander}">
+                        <StackPanel Name="linksQuotes" Style="{StaticResource SectionExpanderContent}" VerticalAlignment="Top"></StackPanel>
+                    </Expander>
+                    <Expander Header="Jobs" Style="{StaticResource SectionExpander}">
+                        <StackPanel Name="linksJobs" Style="{StaticResource SectionExpanderContent}" VerticalAlignment="Top"></StackPanel>
+                    </Expander>
+                    <Expander Header="Billing" Style="{StaticResource SectionExpander}">
+                        <StackPanel Name="linksBilling" Style="{StaticResource SectionExpanderContent}" VerticalAlignment="Top"></StackPanel>
+                    </Expander>
+                    <Expander Header="Reports" Style="{StaticResource SectionExpander}">
+                        <StackPanel Name="linksReports" Style="{StaticResource SectionExpanderContent}" VerticalAlignment="Top"></StackPanel>
+                    </Expander>
+                    <Expander Header="Admin" Style="{StaticResource SectionExpander}">
+                        <StackPanel Name="linksAdmin" Style="{StaticResource SectionExpanderContent}" VerticalAlignment="Top"></StackPanel>
+                    </Expander>
                 </StackPanel>
             </Border>
             
@@ -131,7 +132,7 @@
 
                 <Border Style="{StaticResource MainContent}">
                     <StackPanel VerticalAlignment="Top">
-                        <TabControl Name="tabContacts" SelectedIndex="0">
+                        <TabControl Name="tabCompanies" SelectedIndex="2">
                             <TabItem Header="Addresses &amp; Contacts">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
@@ -346,6 +347,24 @@
                                     </GroupBox>
                                 </Grid>
                             </TabItem>
+                            <TabItem Header="Services">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+
+                                    <StackPanel Grid.Column="0" Grid.Row="0">
+                                        <Label>Services Provided</Label>
+                                        
+                                    </StackPanel>
+
+                                    <StackPanel Grid.Column="1" Grid.Row="0">
+                                        <Label>Notes:</Label>
+                                        <TextBox Name="txtServicesNotes" Height="100" AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Visible" />
+                                    </StackPanel>                                    
+                                </Grid>
+                            </TabItem>
                             <TabItem Header="Credit &amp; Rates">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
@@ -430,18 +449,18 @@
                                 </Grid>
                             </TabItem>
                         </TabControl>
-                        <!-- 
-                            <TabControl>
-                                <TabItem Header="Move Commodity">
-                                </TabItem>
-                                <TabItem Header="Supplements">
-                                </TabItem>
-                                <TabItem Header="Storage">
-                                </TabItem>
-                                <TabItem Header="Conditions">
-                                </TabItem>
-                            </TabControl>
-                            -->
+                        
+                        <TabControl Name="tabQuotes" Visibility="Collapsed">
+                            <TabItem Header="Move Commodity">
+                            </TabItem>
+                            <TabItem Header="Supplements">
+                            </TabItem>
+                            <TabItem Header="Storage">
+                            </TabItem>
+                            <TabItem Header="Conditions">
+                            </TabItem>
+                        </TabControl>
+                        
                     </StackPanel>
                 </Border>
             </StackPanel>
