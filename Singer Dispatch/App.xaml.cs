@@ -5,7 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Windows;
 
-namespace Singer_Dispatch
+namespace SingerDispatch
 {
     /// <summary>
     /// Interaction logic for App.xaml

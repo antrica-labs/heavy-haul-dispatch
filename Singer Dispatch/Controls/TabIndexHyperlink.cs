@@ -5,8 +5,11 @@ using System.Text;
 using System.Windows.Documents;
 using System.Windows.Controls;
 
-namespace Singer_Dispatch
+namespace SingerDispatch.Controls
 {
+    /// <summary>
+    /// A Hyperlink control that contains a TabItem to create links to tabs in a TabControl.
+    /// </summary>
     class TabIndexHyperlink : Hyperlink
     {
         private TabItem tab;

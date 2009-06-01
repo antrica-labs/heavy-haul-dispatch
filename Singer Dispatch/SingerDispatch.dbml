@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Database Name="SingerDispatchDB" Class="SingerDispatchDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=.\SQLEXPRESS;AttachDbFilename=|DataDirectory|\SingerDispatchDB.mdf;Integrated Security=True;User Instance=True" SettingsObjectName="SingerDispatch.Properties.Settings" SettingsPropertyName="SingerDispatchDBConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.Addresses" Member="Addresses">
+    <Type Name="Address">
+      <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="CompanyID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="Line1" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Column Name="Line2" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Column Name="City" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Column Name="ProvinceID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="CountryID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="PostalZip" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="PrimaryPhone" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="SecondaryPhone" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Fax" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Notes" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
+      <Association Name="Address_Contact" Member="Contacts" OtherKey="AddressID" Type="Contact" />
+      <Association Name="ProvincesAndState_Address" Member="ProvincesAndState" ThisKey="ProvinceID" Type="ProvincesAndState" IsForeignKey="true" />
+      <Association Name="Company_Address" Member="Company" ThisKey="CompanyID" Type="Company" IsForeignKey="true" />
+      <Association Name="Country_Address" Member="Country" ThisKey="CountryID" Type="Country" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ProvincesAndStates" Member="ProvincesAndStates">
+    <Type Name="ProvincesAndState">
+      <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="CountryID" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Association Name="ProvincesAndState_Address" Member="Addresses" OtherKey="ProvinceID" Type="Address" />
+      <Association Name="Country_ProvincesAndState" Member="Country" ThisKey="CountryID" Type="Country" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Companies" Member="Companies">
+    <Type Name="Company">
+      <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Column Name="OperatingAs" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Column Name="AccPacVendorCode" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="EquifaxComplete" Type="System.Byte" DbType="TinyInt" CanBeNull="true" />
+      <Column Name="MainAddressID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Association Name="Company_Address" Member="Addresses" OtherKey="CompanyID" Type="Address" />
+      <Association Name="Company_Contact" Member="Contacts" OtherKey="CompanyID" Type="Contact" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Contacts" Member="Contacts">
+    <Type Name="Contact">
+      <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="FirstName" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Column Name="LastName" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Column Name="Email" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Column Name="PrimaryPhone" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="SecondaryPhone" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="PreferedContactMethod" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="CompanyID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="AddressID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="TypeID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="Notes" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
+      <Association Name="Address_Contact" Member="Address" ThisKey="AddressID" Type="Address" IsForeignKey="true" />
+      <Association Name="Company_Contact" Member="Company" ThisKey="CompanyID" Type="Company" IsForeignKey="true" />
+      <Association Name="ContactType_Contact" Member="ContactType" ThisKey="TypeID" Type="ContactType" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ContactTypes" Member="ContactTypes">
+    <Type Name="ContactType">
+      <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Association Name="ContactType_Contact" Member="Contacts" OtherKey="TypeID" Type="Contact" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Countries" Member="Countries">
+    <Type Name="Country">
+      <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Association Name="Country_Address" Member="Addresses" OtherKey="CountryID" Type="Address" />
+      <Association Name="Country_ProvincesAndState" Member="ProvincesAndStates" OtherKey="CountryID" Type="ProvincesAndState" />
+    </Type>
+  </Table>
+</Database>

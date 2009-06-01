@@ -11,7 +11,10 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace Singer_Dispatch
+using SingerDispatch.Controls;
+using SingerDispatch.Panels.Companies;
+
+namespace SingerDispatch
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -56,6 +59,19 @@ namespace Singer_Dispatch
         private void FileExit_Click(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            using (SingerDispatchDataContext db = new SingerDispatchDataContext())
+            {
+                var results = from c in db.Companies orderby c.Name select c;
+
+                foreach (Company company in results)
+                {
+                    cmbCompanyName.Items.Add(company.Name);
+                }
+            }
         }    
     }
 }
