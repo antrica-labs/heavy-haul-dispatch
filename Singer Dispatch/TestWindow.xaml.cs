@@ -9,17 +9,16 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace SingerDispatch.Panels.Companies
+namespace SingerDispatch
 {
     /// <summary>
-    /// Interaction logic for AddressesAndContacts.xaml
+    /// Interaction logic for TestWindow.xaml
     /// </summary>
-    public partial class AddressesAndContacts : UserControl
+    public partial class TestWindow : Window
     {
-        public AddressesAndContacts()
+        public TestWindow()
         {
             InitializeComponent();
         }

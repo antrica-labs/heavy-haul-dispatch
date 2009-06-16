@@ -1,18 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 using SingerDispatch.Controls;
-using SingerDispatch.Panels.Companies;
 
 namespace SingerDispatch
 {
@@ -21,18 +12,36 @@ namespace SingerDispatch
     /// </summary>
     public partial class MainWindow : Window
     {
+        SingerDispatchDataContext database;
+        ObservableCollection<Company> companies;
+
         public MainWindow()
-        {
+        {   
             InitializeComponent();
 
-            BuildMainNavigation();
+            this.database = new SingerDispatchDataContext();            
+            this.companies = new ObservableCollection<Company>(
+                (from c in database.Companies orderby c.Name select c).ToList()
+            );
+            
+            BuildMainNavigation();            
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            cmbCompanies.ItemsSource = companies;
+            cmbOperators.ItemsSource = companies;
         }
 
         private void BuildMainNavigation()
         {
-            addLinksToExpander(linksCompanies, tabCompanies.Items);
-            addLinksToExpander(linksQuotes, tabQuotes.Items);
-        }
+            //CompaniesPanel panel = (CompaniesPanel) panelMainContent.Child;
+
+            //addLinksToExpander(linksCompanies, panel.tabs.Items);
+
+            //addLinksToExpander(linksCompanies, tabCompanies.Items);
+            //addLinksToExpander(linksQuotes, tabQuotes.Items);
+        }       
 
         private void addLinksToExpander(StackPanel panel, ItemCollection tabs)
         {
@@ -53,25 +62,33 @@ namespace SingerDispatch
             TabIndexHyperlink link = (TabIndexHyperlink)e.Source;
 
             link.Tab.IsSelected = true;
+        }        
 
+        private void menuCreateCompany_Click(object sender, RoutedEventArgs e)
+        {
+            CreateCompanyWindow window = new CreateCompanyWindow(database, companies);
+            window.Owner = this;
+            Company newCompany = window.CreateCompany();
+
+            if (newCompany != null)
+            {
+                cmbCompanies.SelectedItem = newCompany;
+            }
         }
 
-        private void FileExit_Click(object sender, RoutedEventArgs e)
+        private void cmbCompanies_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            cmbOperators.SelectedItem = (Company)cmbCompanies.SelectedItem;
+        }
+
+        private void cmbOperators_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            cmbCompanies.SelectedItem = (Company)cmbOperators.SelectedItem;
+        }
+
+        private void Terminate(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
         }
-
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-            using (SingerDispatchDataContext db = new SingerDispatchDataContext())
-            {
-                var results = from c in db.Companies orderby c.Name select c;
-
-                foreach (Company company in results)
-                {
-                    cmbCompanyName.Items.Add(company.Name);
-                }
-            }
-        }    
     }
 }

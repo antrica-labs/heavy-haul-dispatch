@@ -26,8 +26,8 @@ namespace SingerDispatch.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=.\\SQLEXPRESS;AttachDbFilename=|DataDirectory|\\SingerDispatchDB.mdf;In" +
-            "tegrated Security=True;User Instance=True")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=SIMAC-VM-WIN7\\SQLEXPRESS;Initial Catalog=SingerDispatch;Integrated Se" +
+            "curity=True")]
         public string SingerDispatchDBConnectionString {
             get {
                 return ((string)(this["SingerDispatchDBConnectionString"]));

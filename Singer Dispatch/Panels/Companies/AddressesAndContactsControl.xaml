@@ -1,0 +1,182 @@
+﻿<UserControl x:Class="SingerDispatch.Panels.Companies.AddressesAndContactsControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:WPF="http://schemas.microsoft.com/wpf/2008/toolkit"
+    x:Name="addressesAndContactsControl"
+    Loaded="Control_Loaded">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/SingerDispatchDictionary.xaml" />
+            </ResourceDictionary.MergedDictionaries>            
+            <DataTemplate x:Key="provinceTemplate">
+                <TextBlock Text="{Binding Name}" />
+            </DataTemplate>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    
+    <Grid DataContext="{Binding ElementName=addressesAndContactsControl}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />            
+        </Grid.RowDefinitions>
+        
+        <StackPanel Grid.Column="0" Grid.Row="0" Margin="0,0,5,15">
+            <Label>Company Addresses:</Label>
+
+            <WPF:DataGrid Name="dgAddresses" Style="{StaticResource ListDisplay}" Grid.Column="0" Grid.Row="0" MinHeight="125" Margin="3" AutoGenerateColumns="False" SelectionChanged="dgAddresses_SelectionChanged">
+                <WPF:DataGrid.Columns>
+                    <WPF:DataGridTextColumn Header="Address" Binding="{Binding Line1}" />
+                    <WPF:DataGridTextColumn Header="City" Binding="{Binding City}" />
+                    <WPF:DataGridTextColumn Header="Province" Binding="{Binding ProvincesAndState.Name}" IsReadOnly="True" />
+                    <WPF:DataGridTextColumn Header="Country" Binding="{Binding ProvincesAndState.Country.Name}" IsReadOnly="True" />
+                </WPF:DataGrid.Columns>
+            </WPF:DataGrid>
+            
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+            
+                <Button Name="btnRemoveAddress" Grid.Column="0" Margin="3,0,2,0" Click="btnRemoveAddress_Click">Remove address</Button>
+                <Button Name="btnNewAddress" Grid.Column="1" Margin="2,0,3,0" Click="btnNewAddress_Click">New address</Button>
+            </Grid>            
+        </StackPanel>
+        
+        <GroupBox Grid.Column="0" Grid.Row="1"  Header="Address Detials" Margin="0,0,5,0" DataContext="{Binding ElementName=dgAddresses, Path=SelectedItem}">            
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+
+                <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3">Address:</Label>
+                <TextBox Name="txtAddress1" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Text="{Binding Line1}" />
+                <TextBox Name="txtAddress2" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Text="{Binding Line2}" />
+
+                <Label Grid.Row="3" Grid.Column="0">City:</Label>
+                <TextBox Name="txtCity" Grid.Row="4" Grid.Column="0" Text="{Binding City}" />
+                                
+                <Label Grid.Row="3" Grid.Column="1">Province/State:</Label>
+                <ComboBox Name="cmbProvinceOrState" Grid.Row="4" Grid.Column="1" ItemTemplate="{StaticResource provinceTemplate}" SelectedItem="{Binding ProvincesAndState}" TextSearch.TextPath="Name" />
+
+                <Label Grid.Row="3" Grid.Column="2">Country:</Label>
+                <TextBox Name="txtCountry" Grid.Row="4" Grid.Column="2" IsEnabled="False" Text="{Binding ElementName=cmbProvinceOrState, Path=SelectedItem.Country.Name}" TextSearch.TextPath="Name" />
+
+                <Label Grid.Row="5" Grid.Column="0">Postal/Zip Code:</Label>
+                <TextBox Name="txtPostalZip" Grid.Row="6" Grid.Column="0" Text="{Binding PostalZip}" />
+
+                <Label Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2">Address Type:</Label>
+                <ComboBox Name="cmbAddressType" Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2" />
+
+                <Label Grid.Row="7" Grid.Column="0">Site Main Phone:</Label>
+                <TextBox Name="txtSiteMainPhone" Grid.Row="8" Grid.Column="0" Text="{Binding PrimaryPhone}" />
+
+                <Label Grid.Row="7" Grid.Column="1">Site Secondary:</Label>
+                <TextBox Name="txtSiteSecondaryPhone" Grid.Row="8" Grid.Column="1" Text="{Binding SecondaryPhone}" />
+
+                <Label Grid.Row="7" Grid.Column="2">Site Fax:</Label>
+                <TextBox Name="txtSiteFax" Grid.Row="8" Grid.Column="2" Text="{Binding Fax}" />
+
+                <Label Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="3">Address Notes:</Label>
+                <TextBox Name="txtAddressNotes" Grid.Row="10" Grid.Column="0" Grid.ColumnSpan="3" Height="60" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" Text="{Binding Notes}"/>
+                
+                <Button Name="bttnSaveAddress" Grid.Row="11" Grid.Column="0" Grid.ColumnSpan="3" Margin="3" Click="bttnSaveAddress_Click">Save address</Button>
+            </Grid>
+        </GroupBox>
+        
+        <StackPanel Grid.Column="1" Grid.Row="0" Margin="5,0,0,15">
+            <Label>Address Contacts:</Label>
+            
+            <WPF:DataGrid Name="dgContacts" Style="{StaticResource ListDisplay}" Grid.Column="0" Grid.Row="0" ItemsSource="{Binding ElementName=dgAddresses, Path=SelectedItem.Contacts}" MinHeight="125" Margin="3" AutoGenerateColumns="False">
+                <WPF:DataGrid.Columns>
+                    <WPF:DataGridTextColumn Header="Last name" Binding="{Binding LastName}" />
+                    <WPF:DataGridTextColumn Header="First name" Binding="{Binding FirstName}" />
+                    <WPF:DataGridTextColumn Header="Phone" Binding="{Binding PrimaryPhone}" />
+                    <WPF:DataGridTextColumn Header="Email" Binding="{Binding Email}" />                    
+                </WPF:DataGrid.Columns>
+            </WPF:DataGrid>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+
+                <Button Name="btnRemoveContact" Grid.Column="0" Margin="3,0,2,0" Click="btnRemoveContact_Click">Remove contact</Button>
+                <Button Name="btnNewContact" Grid.Column="1" Margin="2,0,3,0" Click="btnNewContact_Click">New contact</Button>
+            </Grid>
+
+            
+        </StackPanel>
+        
+        <GroupBox Grid.Column="1" Grid.Row="1" Header="ContactDetails" Margin="5,0,0,0" DataContext="{Binding ElementName=dgContacts, Path=SelectedItem}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+
+                <Label Grid.Column="0" Grid.Row="0">First Name:</Label>
+                <TextBox Name="txtContactFirstName" Grid.Column="0" Grid.Row="1" Text="{Binding FirstName}" />
+
+                <Label Grid.Column="1" Grid.Row="0">Last Name:</Label>
+                <TextBox Name="txtContactLastName" Grid.Column="1" Grid.Row="1" Text="{Binding LastName}" />
+
+                <Label Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2">Email Address:</Label>
+                <TextBox Name="txtContactEmail" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" Text="{Binding Email}" />
+
+                <Label Grid.Row="4" Grid.Column="0">Primary Phone:</Label>
+                <TextBox Name="txtContactPrimaryPhone" Grid.Column="0" Grid.Row="5" Text="{Binding PrimaryPhone}"/>
+
+                <Label Grid.Row="4" Grid.Column="1">Secondary Phone:</Label>
+                <TextBox Name="txtContactSecondaryPhone" Grid.Row="5" Grid.Column="1" Text="{Binding SecondaryPhone}" />
+
+                <Label Grid.Row="6" Grid.Column="0">Contact Type:</Label>
+                <ComboBox Name="cmbContactType" Grid.Row="7" Grid.Column="0" SelectedItem="{Binding Type}"/>
+
+                <Label Grid.Row="6" Grid.Column="1">Preferred Contact Method:</Label>
+                <ComboBox Name="cmbContactPreferedContactMethod" Grid.Row="7" Grid.Column="1" SelectedItem="{Binding PreferedContactMethod}" />
+
+                <Label Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="2">Contact Notes:</Label>
+                <TextBox Name="txtContactNotes" Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="2" Height="60" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" Text="{Binding Notes}" />
+                
+                <Button Name="bttnSaveContact" Grid.Row="10" Grid.Column="0" Grid.ColumnSpan="2" Margin="3" Click="bttnSaveContact_Click">Save contact</Button>
+            </Grid>
+        </GroupBox>
+    </Grid>
+
+</UserControl>

@@ -14,6 +14,8 @@
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -26,7 +28,6 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -88,20 +89,35 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CreateCompanyWindow.xaml.cs">
+      <DependentUpon>CreateCompanyWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Panels\Companies\AddressesAndContacts.xaml.cs">
-      <DependentUpon>AddressesAndContacts.xaml</DependentUpon>
+    <Compile Include="Panels\Companies\AddressesAndContactsControl.xaml.cs">
+      <DependentUpon>AddressesAndContactsControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Panels\Companies\Commodities.xaml.cs">
-      <DependentUpon>Commodities.xaml</DependentUpon>
+    <Compile Include="Panels\Companies\CommoditiesControl.xaml.cs">
+      <DependentUpon>CommoditiesControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Panels\Companies\CreditAndRates.xaml.cs">
-      <DependentUpon>CreditAndRates.xaml</DependentUpon>
+    <Compile Include="Panels\Companies\CompaniesPanel.xaml.cs">
+      <DependentUpon>CompaniesPanel.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Panels\Companies\Services.xaml.cs">
-      <DependentUpon>Services.xaml</DependentUpon>
+    <Compile Include="Panels\Companies\CreditAndRatesControl.xaml.cs">
+      <DependentUpon>CreditAndRatesControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Panels\Companies\ServicesControl.xaml.cs">
+      <DependentUpon>ServicesControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Panels\Quotes\QuotesPanel.xaml.cs">
+      <DependentUpon>QuotesPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Panels\Testing\TestingTab.xaml.cs">
+      <DependentUpon>TestingTab.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Panels\Testing\TestPanel.xaml.cs">
+      <DependentUpon>TestPanel.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -122,11 +138,16 @@
       <DependentUpon>SingerDispatch.dbml</DependentUpon>
     </Compile>
     <Compile Include="Controls\TabIndexHyperlink.cs" />
+    <Compile Include="TestWindow.xaml.cs">
+      <DependentUpon>TestWindow.xaml</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <None Include="app.manifest" />
+    <None Include="provincesandstates.sql" />
     <None Include="SingerDispatch.dbml.layout">
       <DependentUpon>SingerDispatch.dbml</DependentUpon>
     </None>
@@ -143,35 +164,54 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="CreateCompanyWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Panels\Companies\AddressesAndContacts.xaml">
+    <Page Include="Panels\Companies\AddressesAndContactsControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Panels\Companies\Commodities.xaml">
+    <Page Include="Panels\Companies\CommoditiesControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Panels\Companies\CreditAndRates.xaml">
+    <Page Include="Panels\Companies\CompaniesPanel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Panels\Companies\Services.xaml">
+    <Page Include="Panels\Companies\CreditAndRatesControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="SingerDispatchDB.mdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="SingerDispatchDB_log.ldf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <DependentUpon>SingerDispatchDB.mdf</DependentUpon>
-    </Content>
+    <Page Include="Panels\Companies\ServicesControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Panels\Quotes\QuotesPanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Panels\Testing\TestingTab.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Panels\Testing\TestPanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SingerDispatchDictionary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TestWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
