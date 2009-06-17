@@ -109,23 +109,40 @@ namespace SingerDispatch.Panels.Companies
         private void CreateNewCommodity(Company company)
         {
             Commodity commodity = new Commodity() { CompanyID = company.ID };
+            float tmpFloat;
+            decimal tmpDecimal;
 
             commodity.Name = txtCommodityName.Text;
             commodity.Serial = txtCommoditySerial.Text;
-            commodity.Owner = txtCommodityOwner.Text;
-            commodity.Value = decimal.Parse(txtCommodityValue.Text);
+            commodity.Owner = txtCommodityOwner.Text;            
             commodity.Unit = txtCommodityUnitNumber.Text;
             commodity.LastAddress = txtCommodityLastAddress.Text;
             commodity.LastLocation = txtCommodityLastLocation.Text;
             commodity.Notes = txtCommodityNotes.Text;
-            commodity.Length = null;// float.Parse(txtCommodityLength.Text);
-            commodity.Width = null;// float.Parse(txtCommodityWidth.Text);
-            commodity.Height = null;// float.Parse(txtCommodityHeight.Text);
+            commodity.WeightEstimated = chbCommodityWeightEstimated.IsChecked == true ? (byte)1 : (byte)0;
+            commodity.SizeEstimated = chbCommoditySizeEstimated.IsChecked == true ? (byte)1 : (byte)0;
+
+            decimal.TryParse(txtCommodityValue.Text, out tmpDecimal);
+            commodity.Value = tmpDecimal;
+
+            float.TryParse(txtCommodityLength.Text, out tmpFloat);
+            commodity.Length = tmpFloat;
+
+            float.TryParse(txtCommodityWidth.Text, out tmpFloat);
+            commodity.Width = tmpFloat;
+            
+            float.TryParse(txtCommodityHeight.Text, out tmpFloat);
+            commodity.Height = tmpFloat;
 
             database.Commodities.InsertOnSubmit(commodity);
             ((ObservableCollection<Commodity>)dgCommodities.ItemsSource).Add(commodity);
 
             dgCommodities.SelectedItem = commodity;
+        }
+
+        private void DataGridCommit(object sender, Microsoft.Windows.Controls.DataGridRowEditEndingEventArgs e)
+        {
+            database.SubmitChanges();
         }
     }
 }

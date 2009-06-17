@@ -15,7 +15,7 @@
         </ResourceDictionary>
     </UserControl.Resources>
     
-    <Grid DataContext="{Binding ElementName=addressesAndContactsControl}">
+    <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
             <ColumnDefinition />
@@ -28,7 +28,7 @@
         <StackPanel Grid.Column="0" Grid.Row="0" Margin="0,0,5,15">
             <Label>Company Addresses:</Label>
 
-            <WPF:DataGrid Name="dgAddresses" Style="{StaticResource ListDisplay}" Grid.Column="0" Grid.Row="0" MinHeight="125" Margin="3" AutoGenerateColumns="False" SelectionChanged="dgAddresses_SelectionChanged">
+            <WPF:DataGrid Name="dgAddresses" Style="{StaticResource ListDisplay}" Grid.Column="0" Grid.Row="0" MinHeight="125" Margin="3" AutoGenerateColumns="False" SelectionChanged="dgAddresses_SelectionChanged" RowEditEnding="DataGridCommit">
                 <WPF:DataGrid.Columns>
                     <WPF:DataGridTextColumn Header="Address" Binding="{Binding Line1}" />
                     <WPF:DataGridTextColumn Header="City" Binding="{Binding City}" />
@@ -108,7 +108,7 @@
         <StackPanel Grid.Column="1" Grid.Row="0" Margin="5,0,0,15">
             <Label>Address Contacts:</Label>
             
-            <WPF:DataGrid Name="dgContacts" Style="{StaticResource ListDisplay}" Grid.Column="0" Grid.Row="0" ItemsSource="{Binding ElementName=dgAddresses, Path=SelectedItem.Contacts}" MinHeight="125" Margin="3" AutoGenerateColumns="False">
+            <WPF:DataGrid Name="dgContacts" Style="{StaticResource ListDisplay}" Grid.Column="0" Grid.Row="0" ItemsSource="{Binding ElementName=dgAddresses, Path=SelectedItem.Contacts}" MinHeight="125" Margin="3" AutoGenerateColumns="False" RowEditEnding="DataGridCommit">
                 <WPF:DataGrid.Columns>
                     <WPF:DataGridTextColumn Header="Last name" Binding="{Binding LastName}" />
                     <WPF:DataGridTextColumn Header="First name" Binding="{Binding FirstName}" />

@@ -21,9 +21,11 @@
             <RowDefinition />
         </Grid.RowDefinitions>
 
-        <WPF:DataGrid Name="dgCommodities" Grid.Column="0" Grid.Row="0" Style="{StaticResource ListDisplay}" AutoGenerateColumns="False" Margin="0,0,8,4">
+        <WPF:DataGrid Name="dgCommodities" Grid.Column="0" Grid.Row="0" Style="{StaticResource ListDisplay}" AutoGenerateColumns="False" Margin="0,0,8,4" RowEditEnding="DataGridCommit">
             <WPF:DataGrid.Columns>
-                <WPF:DataGridTextColumn Header="Name" Binding="{Binding Name}" />
+                <WPF:DataGridTextColumn Header="Unit" Binding="{Binding Unit}" />
+                <WPF:DataGridTextColumn Header="Name" Binding="{Binding Name}" />                
+                <WPF:DataGridTextColumn Header="Serial" Binding="{Binding Serial}" />
                 <WPF:DataGridTextColumn Header="Value" Binding="{Binding Value}" />
             </WPF:DataGrid.Columns>
         </WPF:DataGrid>
@@ -107,13 +109,13 @@
                         <TextBox Name="txtCommodityHeight" Grid.Row="2" Grid.Column="1" Text="{Binding Height}" />
 
                         <Label Grid.Row="3" Grid.Column="0">Estimated:</Label>
-                        <CheckBox Name="chbCommoditySizeEstimated" Grid.Row="3" Grid.Column="1" Margin="3,6,0,0" />
+                        <CheckBox Name="chbCommoditySizeEstimated" Grid.Row="3" Grid.Column="1" Margin="3,6,0,0" IsChecked="{Binding SizeEstimated}" />
 
                         <Label Grid.Row="4" Grid.Column="0">Weight:</Label>
                         <TextBox Name="txtCommodityWeight" Grid.Row="4" Grid.Column="1" Text="{Binding Weight}" />
 
                         <Label Grid.Row="5" Grid.Column="0">Estimated:</Label>
-                        <CheckBox Name="chbCommodityWeightEstimated" Grid.Row="5" Grid.Column="1" Margin="3,6,0,0"/>
+                        <CheckBox Name="chbCommodityWeightEstimated" Grid.Row="5" Grid.Column="1" Margin="3,6,0,0" IsChecked="{Binding WeightEstimated}"/>
                     </Grid>
                 </GroupBox>
             </Grid>

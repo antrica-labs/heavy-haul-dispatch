@@ -22,7 +22,7 @@
                 <Company:ServicesControl />
             </TabItem>
             <TabItem Header="Credit &amp; Rates">
-                <Company:CreditAndRatesControl />
+                <Company:CreditAndRatesControl SelectedCompany="{Binding Path=SelectedCompany}" />
             </TabItem>
         </TabControl>
     </StackPanel>

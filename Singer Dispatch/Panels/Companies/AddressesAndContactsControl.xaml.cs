@@ -221,5 +221,10 @@ namespace SingerDispatch.Panels.Companies
             ((ObservableCollection<Address>)dgAddresses.ItemsSource).Add(address);
             dgAddresses.SelectedItem = address;
         }
+
+        private void DataGridCommit(object sender, DataGridRowEditEndingEventArgs e)
+        {
+            database.SubmitChanges();
+        }
     }
 }
