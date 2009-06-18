@@ -60,23 +60,10 @@ namespace SingerDispatch.Panels.Companies
                 company.PriorityLevelID = SelectedCompany.PriorityLevelID;
                 company.Notes = SelectedCompany.Notes;
                 company.EquifaxComplete = SelectedCompany.EquifaxComplete;                
-
+                
                 database.SubmitChanges();
             }
         }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-
-            CompanyPriorityLevel level = (from l in database.CompanyPriorityLevels where l.ID == 2 select l).Single();
-
-            Company company = new Company();
-            company.Name = "New test";
-            company.PriorityLevelID = 2;// level.ID;
-
-            database.Companies.InsertOnSubmit(company);
-            database.SubmitChanges();
-            
-        }        
+     
     }
 }

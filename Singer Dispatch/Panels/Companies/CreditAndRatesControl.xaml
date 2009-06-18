@@ -58,7 +58,7 @@
                     <TextBox Name="txtCreditRateMonthly" Grid.Column="1" Grid.Row="3" />
                     <Label Grid.Column="2" Grid.Row="3">%</Label>
                     
-                    <Button Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3" Click="Button_Click">Save Adjustment</Button>
+                    <Button Name="btnSaveAdjustments" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3" Margin="0,4,0,0">Save Adjustments</Button>
                 </Grid>
             </GroupBox>           
 
@@ -98,7 +98,7 @@
                         <TextBox Name="txtCreditAdminNotes" Height="60" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" Text="{Binding Notes}" />
                     </StackPanel>
                     
-                    <Button Name="btnSaveAdminDetails" Click="btnSaveAdminDetails_Click">Save Administration Details</Button>
+                    <Button Name="btnSaveAdminDetails" Click="btnSaveAdminDetails_Click" Margin="0,4,0,0" Save Administration Details</Button>
                 </StackPanel>
             </GroupBox>
         </StackPanel>
