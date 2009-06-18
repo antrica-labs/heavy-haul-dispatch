@@ -38,13 +38,8 @@ namespace SingerDispatch.Panels.Companies
 
         private void Control_Loaded(object sender, RoutedEventArgs e)
         {
-            List<string> contactMethods = new List<string>();
-            contactMethods.Add("Email");
-            contactMethods.Add("Primary phone");
-            contactMethods.Add("Secondary phone");
-
-            cmbProvinceOrState.ItemsSource = (from p in database.ProvincesAndStates orderby p.CountryID, p.Name select p).ToList();
-            cmbContactPreferedContactMethod.ItemsSource = contactMethods;
+            cmbContactPreferedContactMethod.ItemsSource = SingerConstants.ContactMethods;
+            cmbProvinceOrState.ItemsSource = (from p in database.ProvincesAndStates orderby p.CountryID, p.Name select p).ToList();            
         }
 
         public static void SelectedCompanyPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)

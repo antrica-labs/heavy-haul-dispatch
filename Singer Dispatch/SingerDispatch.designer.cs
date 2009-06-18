@@ -30,9 +30,6 @@ namespace SingerDispatch
 		
     #region Extensibility Method Definitions
     partial void OnCreated();
-    partial void InsertCompany(Company instance);
-    partial void UpdateCompany(Company instance);
-    partial void DeleteCompany(Company instance);
     partial void InsertContact(Contact instance);
     partial void UpdateContact(Contact instance);
     partial void DeleteContact(Contact instance);
@@ -54,6 +51,12 @@ namespace SingerDispatch
     partial void InsertCommodity(Commodity instance);
     partial void UpdateCommodity(Commodity instance);
     partial void DeleteCommodity(Commodity instance);
+    partial void InsertCompanyPriorityLevel(CompanyPriorityLevel instance);
+    partial void UpdateCompanyPriorityLevel(CompanyPriorityLevel instance);
+    partial void DeleteCompanyPriorityLevel(CompanyPriorityLevel instance);
+    partial void InsertCompany(Company instance);
+    partial void UpdateCompany(Company instance);
+    partial void DeleteCompany(Company instance);
     #endregion
 		
 		public SingerDispatchDataContext() : 
@@ -84,14 +87,6 @@ namespace SingerDispatch
 				base(connection, mappingSource)
 		{
 			OnCreated();
-		}
-		
-		public System.Data.Linq.Table<Company> Companies
-		{
-			get
-			{
-				return this.GetTable<Company>();
-			}
 		}
 		
 		public System.Data.Linq.Table<Contact> Contacts
@@ -149,267 +144,21 @@ namespace SingerDispatch
 				return this.GetTable<Commodity>();
 			}
 		}
-	}
-	
-	[Table(Name="dbo.Companies")]
-	public partial class Company : INotifyPropertyChanging, INotifyPropertyChanged
-	{
 		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private long _ID;
-		
-		private string _Name;
-		
-		private string _OperatingAs;
-		
-		private System.Nullable<int> _AvailableCredit;
-		
-		private string _AccPacVendorCode;
-		
-		private System.Nullable<byte> _EquifaxComplete;
-		
-		private string _Notes;
-		
-		private EntitySet<Address> _Addresses;
-		
-		private EntitySet<Commodity> _Commodities;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIDChanging(long value);
-    partial void OnIDChanged();
-    partial void OnNameChanging(string value);
-    partial void OnNameChanged();
-    partial void OnOperatingAsChanging(string value);
-    partial void OnOperatingAsChanged();
-    partial void OnAvailableCreditChanging(System.Nullable<int> value);
-    partial void OnAvailableCreditChanged();
-    partial void OnAccPacVendorCodeChanging(string value);
-    partial void OnAccPacVendorCodeChanged();
-    partial void OnEquifaxCompleteChanging(System.Nullable<byte> value);
-    partial void OnEquifaxCompleteChanged();
-    partial void OnNotesChanging(string value);
-    partial void OnNotesChanged();
-    #endregion
-		
-		public Company()
-		{
-			this._Addresses = new EntitySet<Address>(new Action<Address>(this.attach_Addresses), new Action<Address>(this.detach_Addresses));
-			this._Commodities = new EntitySet<Commodity>(new Action<Commodity>(this.attach_Commodities), new Action<Commodity>(this.detach_Commodities));
-			OnCreated();
-		}
-		
-		[Column(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="BigInt NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public long ID
+		public System.Data.Linq.Table<CompanyPriorityLevel> CompanyPriorityLevels
 		{
 			get
 			{
-				return this._ID;
-			}
-			set
-			{
-				if ((this._ID != value))
-				{
-					this.OnIDChanging(value);
-					this.SendPropertyChanging();
-					this._ID = value;
-					this.SendPropertyChanged("ID");
-					this.OnIDChanged();
-				}
+				return this.GetTable<CompanyPriorityLevel>();
 			}
 		}
 		
-		[Column(Storage="_Name", DbType="VarChar(255)")]
-		public string Name
+		public System.Data.Linq.Table<Company> Companies
 		{
 			get
 			{
-				return this._Name;
+				return this.GetTable<Company>();
 			}
-			set
-			{
-				if ((this._Name != value))
-				{
-					this.OnNameChanging(value);
-					this.SendPropertyChanging();
-					this._Name = value;
-					this.SendPropertyChanged("Name");
-					this.OnNameChanged();
-				}
-			}
-		}
-		
-		[Column(Storage="_OperatingAs", DbType="VarChar(255)")]
-		public string OperatingAs
-		{
-			get
-			{
-				return this._OperatingAs;
-			}
-			set
-			{
-				if ((this._OperatingAs != value))
-				{
-					this.OnOperatingAsChanging(value);
-					this.SendPropertyChanging();
-					this._OperatingAs = value;
-					this.SendPropertyChanged("OperatingAs");
-					this.OnOperatingAsChanged();
-				}
-			}
-		}
-		
-		[Column(Storage="_AvailableCredit", DbType="Int")]
-		public System.Nullable<int> AvailableCredit
-		{
-			get
-			{
-				return this._AvailableCredit;
-			}
-			set
-			{
-				if ((this._AvailableCredit != value))
-				{
-					this.OnAvailableCreditChanging(value);
-					this.SendPropertyChanging();
-					this._AvailableCredit = value;
-					this.SendPropertyChanged("AvailableCredit");
-					this.OnAvailableCreditChanged();
-				}
-			}
-		}
-		
-		[Column(Storage="_AccPacVendorCode", DbType="VarChar(50)")]
-		public string AccPacVendorCode
-		{
-			get
-			{
-				return this._AccPacVendorCode;
-			}
-			set
-			{
-				if ((this._AccPacVendorCode != value))
-				{
-					this.OnAccPacVendorCodeChanging(value);
-					this.SendPropertyChanging();
-					this._AccPacVendorCode = value;
-					this.SendPropertyChanged("AccPacVendorCode");
-					this.OnAccPacVendorCodeChanged();
-				}
-			}
-		}
-		
-		[Column(Storage="_EquifaxComplete", DbType="TinyInt")]
-		public System.Nullable<byte> EquifaxComplete
-		{
-			get
-			{
-				return this._EquifaxComplete;
-			}
-			set
-			{
-				if ((this._EquifaxComplete != value))
-				{
-					this.OnEquifaxCompleteChanging(value);
-					this.SendPropertyChanging();
-					this._EquifaxComplete = value;
-					this.SendPropertyChanged("EquifaxComplete");
-					this.OnEquifaxCompleteChanged();
-				}
-			}
-		}
-		
-		[Column(Storage="_Notes", DbType="Text", UpdateCheck=UpdateCheck.Never)]
-		public string Notes
-		{
-			get
-			{
-				return this._Notes;
-			}
-			set
-			{
-				if ((this._Notes != value))
-				{
-					this.OnNotesChanging(value);
-					this.SendPropertyChanging();
-					this._Notes = value;
-					this.SendPropertyChanged("Notes");
-					this.OnNotesChanged();
-				}
-			}
-		}
-		
-		[Association(Name="Company_Address", Storage="_Addresses", OtherKey="CompanyID")]
-		public EntitySet<Address> Addresses
-		{
-			get
-			{
-				return this._Addresses;
-			}
-			set
-			{
-				this._Addresses.Assign(value);
-			}
-		}
-		
-		[Association(Name="Company_Commodity", Storage="_Commodities", OtherKey="CompanyID")]
-		public EntitySet<Commodity> Commodities
-		{
-			get
-			{
-				return this._Commodities;
-			}
-			set
-			{
-				this._Commodities.Assign(value);
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_Addresses(Address entity)
-		{
-			this.SendPropertyChanging();
-			entity.Company = this;
-		}
-		
-		private void detach_Addresses(Address entity)
-		{
-			this.SendPropertyChanging();
-			entity.Company = null;
-		}
-		
-		private void attach_Commodities(Commodity entity)
-		{
-			this.SendPropertyChanging();
-			entity.Company = this;
-		}
-		
-		private void detach_Commodities(Commodity entity)
-		{
-			this.SendPropertyChanging();
-			entity.Company = null;
 		}
 	}
 	
@@ -1212,11 +961,11 @@ namespace SingerDispatch
 		
 		private EntitySet<Contact> _Contacts;
 		
-		private EntityRef<Company> _Company;
-		
 		private EntityRef<ProvincesAndState> _ProvincesAndState;
 		
 		private EntityRef<AddressType> _AddressType;
+		
+		private EntityRef<Company> _Company;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -1251,9 +1000,9 @@ namespace SingerDispatch
 		public Address()
 		{
 			this._Contacts = new EntitySet<Contact>(new Action<Contact>(this.attach_Contacts), new Action<Contact>(this.detach_Contacts));
-			this._Company = default(EntityRef<Company>);
 			this._ProvincesAndState = default(EntityRef<ProvincesAndState>);
 			this._AddressType = default(EntityRef<AddressType>);
+			this._Company = default(EntityRef<Company>);
 			OnCreated();
 		}
 		
@@ -1522,40 +1271,6 @@ namespace SingerDispatch
 			}
 		}
 		
-		[Association(Name="Company_Address", Storage="_Company", ThisKey="CompanyID", IsForeignKey=true)]
-		public Company Company
-		{
-			get
-			{
-				return this._Company.Entity;
-			}
-			set
-			{
-				Company previousValue = this._Company.Entity;
-				if (((previousValue != value) 
-							|| (this._Company.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Company.Entity = null;
-						previousValue.Addresses.Remove(this);
-					}
-					this._Company.Entity = value;
-					if ((value != null))
-					{
-						value.Addresses.Add(this);
-						this._CompanyID = value.ID;
-					}
-					else
-					{
-						this._CompanyID = default(long);
-					}
-					this.SendPropertyChanged("Company");
-				}
-			}
-		}
-		
 		[Association(Name="ProvincesAndState_Address", Storage="_ProvincesAndState", ThisKey="ProvinceStateID", IsForeignKey=true)]
 		public ProvincesAndState ProvincesAndState
 		{
@@ -1620,6 +1335,40 @@ namespace SingerDispatch
 						this._AddressTypeID = default(Nullable<long>);
 					}
 					this.SendPropertyChanged("AddressType");
+				}
+			}
+		}
+		
+		[Association(Name="Company_Address", Storage="_Company", ThisKey="CompanyID", IsForeignKey=true)]
+		public Company Company
+		{
+			get
+			{
+				return this._Company.Entity;
+			}
+			set
+			{
+				Company previousValue = this._Company.Entity;
+				if (((previousValue != value) 
+							|| (this._Company.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Company.Entity = null;
+						previousValue.Addresses.Remove(this);
+					}
+					this._Company.Entity = value;
+					if ((value != null))
+					{
+						value.Addresses.Add(this);
+						this._CompanyID = value.ID;
+					}
+					else
+					{
+						this._CompanyID = default(long);
+					}
+					this.SendPropertyChanged("Company");
 				}
 			}
 		}
@@ -2231,6 +1980,471 @@ namespace SingerDispatch
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
+		}
+	}
+	
+	[Table(Name="dbo.CompanyPriorityLevels")]
+	public partial class CompanyPriorityLevel : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private long _ID;
+		
+		private string _Name;
+		
+		private EntitySet<Company> _Companies;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDChanging(long value);
+    partial void OnIDChanged();
+    partial void OnNameChanging(string value);
+    partial void OnNameChanged();
+    #endregion
+		
+		public CompanyPriorityLevel()
+		{
+			this._Companies = new EntitySet<Company>(new Action<Company>(this.attach_Companies), new Action<Company>(this.detach_Companies));
+			OnCreated();
+		}
+		
+		[Column(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="BigInt NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public long ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this.OnIDChanging(value);
+					this.SendPropertyChanging();
+					this._ID = value;
+					this.SendPropertyChanged("ID");
+					this.OnIDChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_Name", DbType="VarChar(100)")]
+		public string Name
+		{
+			get
+			{
+				return this._Name;
+			}
+			set
+			{
+				if ((this._Name != value))
+				{
+					this.OnNameChanging(value);
+					this.SendPropertyChanging();
+					this._Name = value;
+					this.SendPropertyChanged("Name");
+					this.OnNameChanged();
+				}
+			}
+		}
+		
+		[Association(Name="CompanyPriorityLevel_Company", Storage="_Companies", OtherKey="PriorityLevelID")]
+		public EntitySet<Company> Companies
+		{
+			get
+			{
+				return this._Companies;
+			}
+			set
+			{
+				this._Companies.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_Companies(Company entity)
+		{
+			this.SendPropertyChanging();
+			entity.CompanyPriorityLevel = this;
+		}
+		
+		private void detach_Companies(Company entity)
+		{
+			this.SendPropertyChanging();
+			entity.CompanyPriorityLevel = null;
+		}
+	}
+	
+	[Table(Name="dbo.Companies")]
+	public partial class Company : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private long _ID;
+		
+		private string _Name;
+		
+		private string _OperatingAs;
+		
+		private string _Type;
+		
+		private System.Nullable<int> _AvailableCredit;
+		
+		private string _AccPacVendorCode;
+		
+		private System.Nullable<byte> _EquifaxComplete;
+		
+		private System.Nullable<long> _PriorityLevelID;
+		
+		private string _Notes;
+		
+		private EntitySet<Address> _Addresses;
+		
+		private EntitySet<Commodity> _Commodities;
+		
+		private EntityRef<CompanyPriorityLevel> _CompanyPriorityLevel;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDChanging(long value);
+    partial void OnIDChanged();
+    partial void OnNameChanging(string value);
+    partial void OnNameChanged();
+    partial void OnOperatingAsChanging(string value);
+    partial void OnOperatingAsChanged();
+    partial void OnTypeChanging(string value);
+    partial void OnTypeChanged();
+    partial void OnAvailableCreditChanging(System.Nullable<int> value);
+    partial void OnAvailableCreditChanged();
+    partial void OnAccPacVendorCodeChanging(string value);
+    partial void OnAccPacVendorCodeChanged();
+    partial void OnEquifaxCompleteChanging(System.Nullable<byte> value);
+    partial void OnEquifaxCompleteChanged();
+    partial void OnPriorityLevelIDChanging(System.Nullable<long> value);
+    partial void OnPriorityLevelIDChanged();
+    partial void OnNotesChanging(string value);
+    partial void OnNotesChanged();
+    #endregion
+		
+		public Company()
+		{
+			this._Addresses = new EntitySet<Address>(new Action<Address>(this.attach_Addresses), new Action<Address>(this.detach_Addresses));
+			this._Commodities = new EntitySet<Commodity>(new Action<Commodity>(this.attach_Commodities), new Action<Commodity>(this.detach_Commodities));
+			this._CompanyPriorityLevel = default(EntityRef<CompanyPriorityLevel>);
+			OnCreated();
+		}
+		
+		[Column(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="BigInt NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public long ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this.OnIDChanging(value);
+					this.SendPropertyChanging();
+					this._ID = value;
+					this.SendPropertyChanged("ID");
+					this.OnIDChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_Name", DbType="VarChar(255)")]
+		public string Name
+		{
+			get
+			{
+				return this._Name;
+			}
+			set
+			{
+				if ((this._Name != value))
+				{
+					this.OnNameChanging(value);
+					this.SendPropertyChanging();
+					this._Name = value;
+					this.SendPropertyChanged("Name");
+					this.OnNameChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_OperatingAs", DbType="VarChar(255)")]
+		public string OperatingAs
+		{
+			get
+			{
+				return this._OperatingAs;
+			}
+			set
+			{
+				if ((this._OperatingAs != value))
+				{
+					this.OnOperatingAsChanging(value);
+					this.SendPropertyChanging();
+					this._OperatingAs = value;
+					this.SendPropertyChanged("OperatingAs");
+					this.OnOperatingAsChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_Type", DbType="VarChar(100)")]
+		public string Type
+		{
+			get
+			{
+				return this._Type;
+			}
+			set
+			{
+				if ((this._Type != value))
+				{
+					this.OnTypeChanging(value);
+					this.SendPropertyChanging();
+					this._Type = value;
+					this.SendPropertyChanged("Type");
+					this.OnTypeChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_AvailableCredit", DbType="Int")]
+		public System.Nullable<int> AvailableCredit
+		{
+			get
+			{
+				return this._AvailableCredit;
+			}
+			set
+			{
+				if ((this._AvailableCredit != value))
+				{
+					this.OnAvailableCreditChanging(value);
+					this.SendPropertyChanging();
+					this._AvailableCredit = value;
+					this.SendPropertyChanged("AvailableCredit");
+					this.OnAvailableCreditChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_AccPacVendorCode", DbType="VarChar(50)")]
+		public string AccPacVendorCode
+		{
+			get
+			{
+				return this._AccPacVendorCode;
+			}
+			set
+			{
+				if ((this._AccPacVendorCode != value))
+				{
+					this.OnAccPacVendorCodeChanging(value);
+					this.SendPropertyChanging();
+					this._AccPacVendorCode = value;
+					this.SendPropertyChanged("AccPacVendorCode");
+					this.OnAccPacVendorCodeChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_EquifaxComplete", DbType="TinyInt")]
+		public System.Nullable<byte> EquifaxComplete
+		{
+			get
+			{
+				return this._EquifaxComplete;
+			}
+			set
+			{
+				if ((this._EquifaxComplete != value))
+				{
+					this.OnEquifaxCompleteChanging(value);
+					this.SendPropertyChanging();
+					this._EquifaxComplete = value;
+					this.SendPropertyChanged("EquifaxComplete");
+					this.OnEquifaxCompleteChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_PriorityLevelID", DbType="BigInt")]
+		public System.Nullable<long> PriorityLevelID
+		{
+			get
+			{
+				return this._PriorityLevelID;
+			}
+			set
+			{
+				if ((this._PriorityLevelID != value))
+				{
+					if (this._CompanyPriorityLevel.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnPriorityLevelIDChanging(value);
+					this.SendPropertyChanging();
+					this._PriorityLevelID = value;
+					this.SendPropertyChanged("PriorityLevelID");
+					this.OnPriorityLevelIDChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_Notes", DbType="Text", UpdateCheck=UpdateCheck.Never)]
+		public string Notes
+		{
+			get
+			{
+				return this._Notes;
+			}
+			set
+			{
+				if ((this._Notes != value))
+				{
+					this.OnNotesChanging(value);
+					this.SendPropertyChanging();
+					this._Notes = value;
+					this.SendPropertyChanged("Notes");
+					this.OnNotesChanged();
+				}
+			}
+		}
+		
+		[Association(Name="Company_Address", Storage="_Addresses", OtherKey="CompanyID")]
+		public EntitySet<Address> Addresses
+		{
+			get
+			{
+				return this._Addresses;
+			}
+			set
+			{
+				this._Addresses.Assign(value);
+			}
+		}
+		
+		[Association(Name="Company_Commodity", Storage="_Commodities", OtherKey="CompanyID")]
+		public EntitySet<Commodity> Commodities
+		{
+			get
+			{
+				return this._Commodities;
+			}
+			set
+			{
+				this._Commodities.Assign(value);
+			}
+		}
+		
+		[Association(Name="CompanyPriorityLevel_Company", Storage="_CompanyPriorityLevel", ThisKey="PriorityLevelID", IsForeignKey=true)]
+		public CompanyPriorityLevel CompanyPriorityLevel
+		{
+			get
+			{
+				return this._CompanyPriorityLevel.Entity;
+			}
+			set
+			{
+				CompanyPriorityLevel previousValue = this._CompanyPriorityLevel.Entity;
+				if (((previousValue != value) 
+							|| (this._CompanyPriorityLevel.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._CompanyPriorityLevel.Entity = null;
+						previousValue.Companies.Remove(this);
+					}
+					this._CompanyPriorityLevel.Entity = value;
+					if ((value != null))
+					{
+						value.Companies.Add(this);
+						this._PriorityLevelID = value.ID;
+					}
+					else
+					{
+						this._PriorityLevelID = default(Nullable<long>);
+					}
+					this.SendPropertyChanged("CompanyPriorityLevel");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_Addresses(Address entity)
+		{
+			this.SendPropertyChanging();
+			entity.Company = this;
+		}
+		
+		private void detach_Addresses(Address entity)
+		{
+			this.SendPropertyChanging();
+			entity.Company = null;
+		}
+		
+		private void attach_Commodities(Commodity entity)
+		{
+			this.SendPropertyChanging();
+			entity.Company = this;
+		}
+		
+		private void detach_Commodities(Commodity entity)
+		{
+			this.SendPropertyChanging();
+			entity.Company = null;
 		}
 	}
 }

@@ -14,8 +14,8 @@
             <DataTemplate x:Key="nameTemplate">
                 <TextBlock Text="{Binding Path=Name}" />
             </DataTemplate>
-                <DataTemplate x:Key="operatingAsTemplate">
-                    <TextBlock Text="{Binding Path=OperatingAs}" />
+            <DataTemplate x:Key="operatingAsTemplate">
+                <TextBlock Text="{Binding Path=OperatingAs}" />
             </DataTemplate>
         </ResourceDictionary>        
     </Window.Resources>
@@ -81,8 +81,8 @@
 
                         <ComboBox Name="cmbCompanies" Grid.Column="0" Grid.Row="1" ItemTemplate="{StaticResource nameTemplate}" TextSearch.TextPath="Name" IsEditable="True" SelectionChanged="cmbCompanies_SelectionChanged" />
                         <ComboBox Name="cmbOperators" Grid.Column="1" Grid.Row="1" ItemTemplate="{StaticResource operatingAsTemplate}" TextSearch.TextPath="OperatingAs" IsEditable="True" SelectionChanged="cmbOperators_SelectionChanged" />
-                        <TextBox Name="txtCompanyAvailableCredit" Grid.Column="2" Grid.Row="1" IsReadOnly="True" Text="{Binding ElementName=cmbCompanies, Path=SelectedItem.AvailableCredit, UpdateSourceTrigger=PropertyChanged, StringFormat=c }" />
-                        <TextBox Name="txtCompanyPriorityLevel" Grid.Column="3" Grid.Row="1" IsReadOnly="True" />
+                        <TextBox Name="txtCompanyAvailableCredit" Grid.Column="2" Grid.Row="1" IsReadOnly="True" Text="{Binding ElementName=cmbCompanies, Path=SelectedItem.AvailableCredit, StringFormat=c }" />
+                        <TextBox Name="txtCompanyPriorityLevel" Grid.Column="3" Grid.Row="1" IsReadOnly="True" Text="{Binding ElementName=cmbCompanies, Path=SelectedItem.CompanyPriorityLevel.Name}" />
                     </Grid>
                 </Border>
 

@@ -1,19 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Database Name="SingerDispatch" Class="SingerDispatchDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
   <Connection Mode="AppSettings" ConnectionString="Data Source=SIMAC-VM-WIN7\SQLEXPRESS;Initial Catalog=SingerDispatch;Integrated Security=True" SettingsObjectName="SingerDispatch.Properties.Settings" SettingsPropertyName="SingerDispatchDBConnectionString" Provider="System.Data.SqlClient" />
-  <Table Name="dbo.Companies" Member="Companies">
-    <Type Name="Company">
-      <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Name" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
-      <Column Name="OperatingAs" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
-      <Column Name="AvailableCredit" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="AccPacVendorCode" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
-      <Column Name="EquifaxComplete" Type="System.Byte" DbType="TinyInt" CanBeNull="true" />
-      <Column Name="Notes" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
-      <Association Name="Company_Address" Member="Addresses" OtherKey="CompanyID" Type="Address" />
-      <Association Name="Company_Commodity" Member="Commodities" OtherKey="CompanyID" Type="Commodity" />
-    </Type>
-  </Table>
   <Table Name="dbo.Contacts" Member="Contacts">
     <Type Name="Contact">
       <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -68,9 +55,9 @@
       <Column Name="Fax" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
       <Column Name="Notes" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
       <Association Name="Address_Contact" Member="Contacts" OtherKey="AddressID" Type="Contact" />
-      <Association Name="Company_Address" Member="Company" ThisKey="CompanyID" Type="Company" IsForeignKey="true" />
       <Association Name="ProvincesAndState_Address" Member="ProvincesAndState" ThisKey="ProvinceStateID" Type="ProvincesAndState" IsForeignKey="true" />
       <Association Name="AddressType_Address" Member="AddressType" ThisKey="AddressTypeID" Type="AddressType" IsForeignKey="true" />
+      <Association Name="Company_Address" Member="Company" ThisKey="CompanyID" Type="Company" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.AddressTypes" Member="AddressTypes">
@@ -99,6 +86,29 @@
       <Column Name="WeightEstimated" Type="System.Byte" DbType="TinyInt" CanBeNull="true" />
       <Column Name="Notes" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
       <Association Name="Company_Commodity" Member="Company" ThisKey="CompanyID" Type="Company" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.CompanyPriorityLevels" Member="CompanyPriorityLevels">
+    <Type Name="CompanyPriorityLevel">
+      <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Association Name="CompanyPriorityLevel_Company" Member="Companies" OtherKey="PriorityLevelID" Type="Company" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Companies" Member="Companies">
+    <Type Name="Company">
+      <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Column Name="OperatingAs" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Column Name="Type" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="AvailableCredit" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="AccPacVendorCode" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="EquifaxComplete" Type="System.Byte" DbType="TinyInt" CanBeNull="true" />
+      <Column Name="PriorityLevelID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="Notes" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
+      <Association Name="Company_Address" Member="Addresses" OtherKey="CompanyID" Type="Address" />
+      <Association Name="Company_Commodity" Member="Commodities" OtherKey="CompanyID" Type="Commodity" />
+      <Association Name="CompanyPriorityLevel_Company" Member="CompanyPriorityLevel" ThisKey="PriorityLevelID" Type="CompanyPriorityLevel" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>
