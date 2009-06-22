@@ -20,12 +20,17 @@
             <ColumnDefinition Width="350" />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
-
                
         <WPF:DataGrid Name="dgCreditRates" Grid.Column="0" Margin="5" Style="{StaticResource ListDisplay}" AutoGenerateColumns="False" RowEditEnding="DataGridCommit">
-            
+            <WPF:DataGrid.Columns>
+                <WPF:DataGridTextColumn Header="Type" Binding="{Binding Name}" />
+                <WPF:DataGridTextColumn Header="Hourly" Binding="{Binding Path=Hourly, StringFormat=c}" />
+                <WPF:DataGridTextColumn Header="Daily" Binding="{Binding Path=Hourly, StringFormat=c}" />
+                <WPF:DataGridTextColumn Header="Weekly" Binding="{Binding Path=Hourly, StringFormat=c}" />
+                <WPF:DataGridTextColumn Header="Monthly" Binding="{Binding Path=Hourly, StringFormat=c}" />
+            </WPF:DataGrid.Columns>
         </WPF:DataGrid>
-        
+       
 
         <StackPanel VerticalAlignment="Top" Grid.Column="1">
             <GroupBox Header="Rate Adjustments">

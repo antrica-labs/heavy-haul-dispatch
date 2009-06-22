@@ -4,7 +4,7 @@
     xmlns:Controls="clr-namespace:SingerDispatch.Controls">
     <ResourceDictionary.MergedDictionaries>
         <!-- Remove the following to allow the system theme instead of the Windows XP theme -->
-        <ResourceDictionary Source="/PresentationFramework.Luna, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, ProcessorArchitecture=MSIL;component/themes/luna.normalcolor.xaml" />
+        <!-- <ResourceDictionary Source="/PresentationFramework.Luna, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, ProcessorArchitecture=MSIL;component/themes/luna.normalcolor.xaml" /> -->
     </ResourceDictionary.MergedDictionaries>
     
     <Style TargetType="Menu">        

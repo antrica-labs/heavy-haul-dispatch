@@ -5,6 +5,8 @@ using System.Windows.Controls;
 
 using SingerDispatch.Controls;
 using SingerDispatch.Panels.Companies;
+using System.Windows.Data;
+using SingerDispatch.Panels.Quotes;
 
 namespace SingerDispatch
 {
@@ -24,46 +26,15 @@ namespace SingerDispatch
             this.companies = new ObservableCollection<Company>(
                 (from c in database.Companies orderby c.Name select c).ToList()
             );
-            
-            BuildMainNavigation();            
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             cmbCompanies.ItemsSource = companies;
             cmbOperators.ItemsSource = companies;
-        }
 
-        private void BuildMainNavigation()
-        {
-            CompaniesPanel panel = (CompaniesPanel) panelMainContent.Child;
-
-            addLinksToExpander(linksCompanies, panel.tabs.Items);
-
-            //addLinksToExpander(linksCompanies, tabCompanies.Items);
-            //addLinksToExpander(linksQuotes, tabQuotes.Items);
-        }       
-
-        private void addLinksToExpander(StackPanel panel, ItemCollection tabs)
-        {
-            foreach (TabItem tab in tabs)
-            {
-                TabIndexHyperlink link = new TabIndexHyperlink(tab);
-                link.Click += new RoutedEventHandler(SwitchTabs);
-
-                Label label = new Label();
-                label.Content = link;
-
-                panel.Children.Add(label);
-            }
-        }
-
-        private void SwitchTabs(object sender, RoutedEventArgs e)
-        {
-            TabIndexHyperlink link = (TabIndexHyperlink)e.Source;
-
-            link.Tab.IsSelected = true;
-        }        
+            expanderCompanies.IsExpanded = true; 
+        }                
 
         private void menuCreateCompany_Click(object sender, RoutedEventArgs e)
         {
@@ -91,5 +62,73 @@ namespace SingerDispatch
         {
             Application.Current.Shutdown();
         }
+
+        private void AddLinksToExpander(StackPanel panel, ItemCollection tabs)
+        {
+            panel.Children.Clear();
+
+            foreach (TabItem tab in tabs)
+            {
+                TabIndexHyperlink link = new TabIndexHyperlink(tab);
+                link.Click += new RoutedEventHandler(SwitchTabs);
+
+                Label label = new Label();
+                label.Content = link;
+
+                panel.Children.Add(label);
+            }
+        }
+
+        private void SwitchTabs(object sender, RoutedEventArgs e)
+        {
+            TabIndexHyperlink link = (TabIndexHyperlink)e.Source;
+
+            link.Tab.IsSelected = true;
+        }
+
+        private void CollapseAllOtherNavigationExpanders(Expander self)
+        {
+            foreach (Control control in altNavigationStack.Children)
+            {
+                if (control is Expander)
+                {
+                    Expander expander = (Expander)control;
+
+                    if (expander != self && expander.IsExpanded)
+                    {
+                        expander.IsExpanded = false;
+                    }
+                }
+            }
+        }
+
+        private void ExpandCompanies(object sender, RoutedEventArgs e)
+        {
+            CollapseAllOtherNavigationExpanders((Expander)sender);
+
+            CompaniesPanel panel = new CompaniesPanel();
+
+            Binding binding = new Binding();
+            binding.ElementName = "cmbCompanies";
+            binding.Path = new PropertyPath(ComboBox.SelectedItemProperty);
+
+            panel.SetBinding(CompaniesPanel.SelectedCompanyProperty, binding);
+
+            panelMainContent.Child = panel;
+
+            AddLinksToExpander(linksCompanies, panel.tabs.Items);            
+        }
+
+        private void ExpandQuotes(object sender, RoutedEventArgs e)
+        {
+            CollapseAllOtherNavigationExpanders((Expander)sender);
+
+            QuotesPanel panel = new QuotesPanel();
+            panelMainContent.Child = panel;
+
+            AddLinksToExpander(linksQuotes, panel.tabs.Items);
+        }
+
+        
     }
 }

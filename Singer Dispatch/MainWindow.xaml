@@ -3,7 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:Companies="clr-namespace:SingerDispatch.Panels.Companies"
     xmlns:Quotes="clr-namespace:SingerDispatch.Panels.Quotes"
-    Title="Singer Dispatch" WindowStartupLocation="CenterScreen" MinWidth="780" SizeToContent="Height"
+    Title="Singer Dispatch" WindowState="Maximized" MinWidth="780"
     Loaded="Window_Loaded"
     x:Name="mainWindow">
     <Window.Resources>
@@ -35,24 +35,24 @@
             </Menu>
 
             <Border Style="{StaticResource MainNavigation}">
-                <StackPanel DockPanel.Dock="Left">
+                <StackPanel Name="altNavigationStack" DockPanel.Dock="Left">
                     <Label Style="{StaticResource Heading}">Singer Specialized</Label>
-                    <Expander Header="Companies" Style="{StaticResource SectionExpander}" IsExpanded="True">
+                    <Expander Name="expanderCompanies"  Header="Companies" Style="{StaticResource SectionExpander}" Expanded="ExpandCompanies">
                         <StackPanel Name="linksCompanies" Style="{StaticResource SectionExpanderContent}" VerticalAlignment="Top"></StackPanel>
                     </Expander>
-                    <Expander Header="Quotes" Style="{StaticResource SectionExpander}">
+                    <Expander Name="expanderQuotes" Header="Quotes" Style="{StaticResource SectionExpander}" Expanded="ExpandQuotes">
                         <StackPanel Name="linksQuotes" Style="{StaticResource SectionExpanderContent}" VerticalAlignment="Top"></StackPanel>
                     </Expander>
-                    <Expander Header="Jobs" Style="{StaticResource SectionExpander}">
+                    <Expander Name="expanderJobs" Header="Jobs" Style="{StaticResource SectionExpander}" IsEnabled="False">
                         <StackPanel Name="linksJobs" Style="{StaticResource SectionExpanderContent}" VerticalAlignment="Top"></StackPanel>
                     </Expander>
-                    <Expander Header="Billing" Style="{StaticResource SectionExpander}">
+                    <Expander Name="expanderBilling" Header="Billing" Style="{StaticResource SectionExpander}" IsEnabled="False">
                         <StackPanel Name="linksBilling" Style="{StaticResource SectionExpanderContent}" VerticalAlignment="Top"></StackPanel>
                     </Expander>
-                    <Expander Header="Reports" Style="{StaticResource SectionExpander}">
+                    <Expander Name="expanderReports" Header="Reports" Style="{StaticResource SectionExpander}" IsEnabled="False">
                         <StackPanel Name="linksReports" Style="{StaticResource SectionExpanderContent}" VerticalAlignment="Top"></StackPanel>
                     </Expander>
-                    <Expander Header="Admin" Style="{StaticResource SectionExpander}">
+                    <Expander Name="expanderAdmin" Header="Admin" Style="{StaticResource SectionExpander}" IsEnabled="False">
                         <StackPanel Name="linksAdmin" Style="{StaticResource SectionExpanderContent}" VerticalAlignment="Top"></StackPanel>
                     </Expander>                    
                 </StackPanel>
@@ -87,7 +87,7 @@
                 </Border>
 
                 <Border Style="{StaticResource MainContent}" Name="panelMainContent">
-                    <Companies:CompaniesPanel SelectedCompany="{Binding ElementName=cmbCompanies, Path=SelectedItem}" />                    
+                    <Label>Loading...</Label>
                 </Border>                
             </StackPanel>
         </DockPanel>
