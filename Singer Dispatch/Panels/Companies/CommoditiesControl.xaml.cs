@@ -8,10 +8,8 @@ namespace SingerDispatch.Panels.Companies
     /// <summary>
     /// Interaction logic for CommoditiesControl.xaml
     /// </summary>
-    public partial class CommoditiesControl : UserControl
+    public partial class CommoditiesControl : CompanyUserControl
     {
-        public static DependencyProperty SelectedCompanyProperty = DependencyProperty.Register("SelectedCompany", typeof(Company), typeof(CommoditiesControl), new PropertyMetadata(null, CommoditiesControl.SelectedCompanyPropertyChanged));
-
         private SingerDispatchDataContext database;
 
         public CommoditiesControl()
@@ -21,37 +19,19 @@ namespace SingerDispatch.Panels.Companies
             database = new SingerDispatchDataContext();
         }
 
-        private void Control_Loaded(object sender, RoutedEventArgs e)
+        protected override void SelectedCompanyChanged(Company newValue, Company oldValue)
         {
-            
-        }
-
-        public Company SelectedCompany
-        {
-            get
-            {
-                return (Company)GetValue(SelectedCompanyProperty);
-            }
-            set
-            {
-                SetValue(SelectedCompanyProperty, value);
-            }
-        }
-
-        public static void SelectedCompanyPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            CommoditiesControl control = (CommoditiesControl)d;
-            Company company = (Company)e.NewValue;
+            Company company = newValue;
 
             if (company != null)
-            {                
-                control.dgCommodities.ItemsSource = new ObservableCollection<Commodity>(
-                    (from c in control.database.Commodities where c.CompanyID == company.ID select c).ToList()
-                );                
+            {
+                dgCommodities.ItemsSource = new ObservableCollection<Commodity>(
+                    (from c in database.Commodities where c.CompanyID == company.ID select c).ToList()
+                );
             }
             else
             {
-                control.dgCommodities.ItemsSource = null;
+                dgCommodities.ItemsSource = null;
             }
         }
 

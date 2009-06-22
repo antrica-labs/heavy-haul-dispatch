@@ -1,7 +1,8 @@
-﻿<UserControl x:Class="SingerDispatch.Panels.Companies.AddressesAndContactsControl"
+﻿<Company:CompanyUserControl x:Class="SingerDispatch.Panels.Companies.AddressesAndContactsControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:WPF="http://schemas.microsoft.com/wpf/2008/toolkit"
+    xmlns:Company="clr-namespace:SingerDispatch.Panels.Companies"
     x:Name="addressesAndContactsControl"
     Loaded="Control_Loaded">
     <UserControl.Resources>
@@ -179,4 +180,4 @@
         </GroupBox>
     </Grid>
 
-</UserControl>
+</Company:CompanyUserControl>

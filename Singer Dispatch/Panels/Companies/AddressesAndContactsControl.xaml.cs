@@ -11,10 +11,8 @@ namespace SingerDispatch.Panels.Companies
     /// <summary>
     /// Interaction logic for AddressesAndContactsControl.xaml
     /// </summary>
-    public partial class AddressesAndContactsControl : UserControl
-    {        
-        public static DependencyProperty SelectedCompanyProperty = DependencyProperty.Register("SelectedCompany", typeof(Company), typeof(AddressesAndContactsControl), new PropertyMetadata(null, AddressesAndContactsControl.SelectedCompanyPropertyChanged));
-
+    public partial class AddressesAndContactsControl : CompanyUserControl
+    {       
         private SingerDispatchDataContext database;
 
         public AddressesAndContactsControl()
@@ -24,38 +22,26 @@ namespace SingerDispatch.Panels.Companies
             database = new SingerDispatchDataContext();
         }
 
-        public Company SelectedCompany
-        {
-            get
-            {
-                return (Company)GetValue(SelectedCompanyProperty);
-            }
-            set
-            {
-                SetValue(SelectedCompanyProperty, value);
-            }
-        }
-
         private void Control_Loaded(object sender, RoutedEventArgs e)
         {
             cmbContactPreferedContactMethod.ItemsSource = SingerConstants.ContactMethods;
             cmbProvinceOrState.ItemsSource = (from p in database.ProvincesAndStates orderby p.CountryID, p.Name select p).ToList();            
         }
 
-        public static void SelectedCompanyPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {            
-            AddressesAndContactsControl control = (AddressesAndContactsControl)d;
-            Company company = (Company)e.NewValue;
+
+        protected override void SelectedCompanyChanged(Company newValue, Company oldValue)
+        {
+            Company company = newValue;
 
             if (company != null)
             {       
-                control.dgAddresses.ItemsSource = new ObservableCollection<Address>(
-                    (from a in control.database.Addresses where a.CompanyID == company.ID select a).ToList()
+                dgAddresses.ItemsSource = new ObservableCollection<Address>(
+                    (from a in database.Addresses where a.CompanyID == company.ID select a).ToList()
                 );
             }
             else
             {
-                control.dgAddresses.ItemsSource = null;
+                dgAddresses.ItemsSource = null;
             }                                                   
         }
 

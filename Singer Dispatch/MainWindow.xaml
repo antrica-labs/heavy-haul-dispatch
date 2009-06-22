@@ -1,8 +1,8 @@
 ﻿<Window x:Class="SingerDispatch.MainWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:companies="clr-namespace:SingerDispatch.Panels.Companies"
-    xmlns:testing="clr-namespace:SingerDispatch.Panels.Testing"
+    xmlns:Companies="clr-namespace:SingerDispatch.Panels.Companies"
+    xmlns:Quotes="clr-namespace:SingerDispatch.Panels.Quotes"
     Title="Singer Dispatch" WindowStartupLocation="CenterScreen" MinWidth="780" SizeToContent="Height"
     Loaded="Window_Loaded"
     x:Name="mainWindow">
@@ -86,8 +86,8 @@
                     </Grid>
                 </Border>
 
-                <Border Style="{StaticResource MainContent}" Name="panelMainContent" DataContext="{Binding ElementName=cmbCompanies}">
-                    <companies:CompaniesPanel SelectedCompany="{Binding Path=SelectedItem}" />                    
+                <Border Style="{StaticResource MainContent}" Name="panelMainContent">
+                    <Companies:CompaniesPanel SelectedCompany="{Binding ElementName=cmbCompanies, Path=SelectedItem}" />                    
                 </Border>                
             </StackPanel>
         </DockPanel>

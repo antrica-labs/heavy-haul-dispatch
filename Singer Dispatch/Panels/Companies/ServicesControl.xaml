@@ -1,6 +1,7 @@
-﻿<UserControl x:Class="SingerDispatch.Panels.Companies.ServicesControl"
+﻿<Company:CompanyUserControl x:Class="SingerDispatch.Panels.Companies.ServicesControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:Company="clr-namespace:SingerDispatch.Panels.Companies">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -24,4 +25,4 @@
             <TextBox Name="txtServicesNotes" Height="100" AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Visible" />
         </StackPanel>
     </Grid>
-</UserControl>
+</Company:CompanyUserControl>

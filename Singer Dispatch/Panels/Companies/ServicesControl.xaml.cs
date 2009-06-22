@@ -5,7 +5,7 @@ namespace SingerDispatch.Panels.Companies
     /// <summary>
     /// Interaction logic for ServicesControl.xaml
     /// </summary>
-    public partial class ServicesControl : UserControl
+    public partial class ServicesControl : CompanyUserControl
     {
         public ServicesControl()
         {

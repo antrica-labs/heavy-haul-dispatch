@@ -4,6 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 
 using SingerDispatch.Controls;
+using SingerDispatch.Panels.Companies;
 
 namespace SingerDispatch
 {
@@ -35,9 +36,9 @@ namespace SingerDispatch
 
         private void BuildMainNavigation()
         {
-            //CompaniesPanel panel = (CompaniesPanel) panelMainContent.Child;
+            CompaniesPanel panel = (CompaniesPanel) panelMainContent.Child;
 
-            //addLinksToExpander(linksCompanies, panel.tabs.Items);
+            addLinksToExpander(linksCompanies, panel.tabs.Items);
 
             //addLinksToExpander(linksCompanies, tabCompanies.Items);
             //addLinksToExpander(linksQuotes, tabQuotes.Items);

@@ -56,6 +56,8 @@
     <Reference Include="System.Data.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -110,6 +112,7 @@
     <Compile Include="Panels\Companies\ServicesControl.xaml.cs">
       <DependentUpon>ServicesControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Panels\Companies\CompanyUserControl.cs" />
     <Compile Include="Panels\Quotes\QuotesPanel.xaml.cs">
       <DependentUpon>QuotesPanel.xaml</DependentUpon>
     </Compile>

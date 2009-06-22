@@ -1,9 +1,9 @@
-﻿<UserControl x:Class="SingerDispatch.Panels.Companies.CommoditiesControl"
+﻿<Company:CompanyUserControl x:Class="SingerDispatch.Panels.Companies.CommoditiesControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:WPF="http://schemas.microsoft.com/wpf/2008/toolkit"
-    x:Name="commoditiesControl"
-    Loaded="Control_Loaded">
+    xmlns:Company="clr-namespace:SingerDispatch.Panels.Companies"
+    x:Name="commoditiesControl">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -123,4 +123,4 @@
         
         <Button Name="btnSaveCommodity" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="3" Click="btnSaveCommodity_Click">Save commodity</Button>
     </Grid>
-</UserControl>
+</Company:CompanyUserControl>
