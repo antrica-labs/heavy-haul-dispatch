@@ -1,45 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Database Name="SingerDispatch" Class="SingerDispatchDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
   <Connection Mode="AppSettings" ConnectionString="Data Source=SIMAC-VM-WIN7\SQLEXPRESS;Initial Catalog=SingerDispatch;Integrated Security=True" SettingsObjectName="SingerDispatch.Properties.Settings" SettingsPropertyName="SingerDispatchDBConnectionString" Provider="System.Data.SqlClient" />
-  <Table Name="dbo.Contacts" Member="Contacts">
-    <Type Name="Contact">
-      <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="FirstName" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
-      <Column Name="LastName" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
-      <Column Name="Email" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
-      <Column Name="PrimaryPhone" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
-      <Column Name="SecondaryPhone" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
-      <Column Name="PreferedContactMethod" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
-      <Column Name="AddressID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
-      <Column Name="TypeID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
-      <Column Name="Notes" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
-      <Association Name="ContactType_Contact" Member="ContactType" ThisKey="TypeID" Type="ContactType" IsForeignKey="true" />
-      <Association Name="Address_Contact" Member="Address" ThisKey="AddressID" Type="Address" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.ContactTypes" Member="ContactTypes">
-    <Type Name="ContactType">
-      <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Name" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
-      <Association Name="ContactType_Contact" Member="Contacts" OtherKey="TypeID" Type="Contact" />
-    </Type>
-  </Table>
-  <Table Name="dbo.Countries" Member="Countries">
-    <Type Name="Country">
-      <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Name" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
-      <Association Name="Country_ProvincesAndState" Member="ProvincesAndStates" OtherKey="CountryID" Type="ProvincesAndState" />
-    </Type>
-  </Table>
-  <Table Name="dbo.ProvincesAndStates" Member="ProvincesAndStates">
-    <Type Name="ProvincesAndState">
-      <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Name" Type="System.String" DbType="VarChar(255) NOT NULL" CanBeNull="false" />
-      <Column Name="CountryID" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
-      <Association Name="ProvincesAndState_Address" Member="Addresses" OtherKey="ProvinceStateID" Type="Address" />
-      <Association Name="Country_ProvincesAndState" Member="Country" ThisKey="CountryID" Type="Country" IsForeignKey="true" />
-    </Type>
-  </Table>
   <Table Name="dbo.Addresses" Member="Addresses">
     <Type Name="Address">
       <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -55,9 +16,20 @@
       <Column Name="Fax" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
       <Column Name="Notes" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
       <Association Name="Address_Contact" Member="Contacts" OtherKey="AddressID" Type="Contact" />
-      <Association Name="ProvincesAndState_Address" Member="ProvincesAndState" ThisKey="ProvinceStateID" Type="ProvincesAndState" IsForeignKey="true" />
       <Association Name="AddressType_Address" Member="AddressType" ThisKey="AddressTypeID" Type="AddressType" IsForeignKey="true" />
       <Association Name="Company_Address" Member="Company" ThisKey="CompanyID" Type="Company" IsForeignKey="true" />
+      <Association Name="ProvincesAndState_Address" Member="ProvincesAndState" ThisKey="ProvinceStateID" Type="ProvincesAndState" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Rates" Member="Rates">
+    <Type Name="Rate">
+      <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Column Name="Hourly" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Daily" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Weekly" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Monthly" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="IsSpecialized" Type="System.Byte" DbType="TinyInt NOT NULL" CanBeNull="false" />
     </Type>
   </Table>
   <Table Name="dbo.AddressTypes" Member="AddressTypes">
@@ -88,13 +60,6 @@
       <Association Name="Company_Commodity" Member="Company" ThisKey="CompanyID" Type="Company" IsForeignKey="true" />
     </Type>
   </Table>
-  <Table Name="dbo.CompanyPriorityLevels" Member="CompanyPriorityLevels">
-    <Type Name="CompanyPriorityLevel">
-      <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Name" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
-      <Association Name="CompanyPriorityLevel_Company" Member="Companies" OtherKey="PriorityLevelID" Type="Company" />
-    </Type>
-  </Table>
   <Table Name="dbo.Companies" Member="Companies">
     <Type Name="Company">
       <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -108,7 +73,65 @@
       <Column Name="Notes" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
       <Association Name="Company_Address" Member="Addresses" OtherKey="CompanyID" Type="Address" />
       <Association Name="Company_Commodity" Member="Commodities" OtherKey="CompanyID" Type="Commodity" />
+      <Association Name="Company_RateDiscount" Member="RateDiscounts" OtherKey="CompanyID" Type="RateDiscount" />
       <Association Name="CompanyPriorityLevel_Company" Member="CompanyPriorityLevel" ThisKey="PriorityLevelID" Type="CompanyPriorityLevel" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.CompanyPriorityLevels" Member="CompanyPriorityLevels">
+    <Type Name="CompanyPriorityLevel">
+      <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Association Name="CompanyPriorityLevel_Company" Member="Companies" OtherKey="PriorityLevelID" Type="Company" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Contacts" Member="Contacts">
+    <Type Name="Contact">
+      <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="FirstName" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Column Name="LastName" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Column Name="Email" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Column Name="PrimaryPhone" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="SecondaryPhone" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="PreferedContactMethod" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="AddressID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="TypeID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="Notes" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
+      <Association Name="Address_Contact" Member="Address" ThisKey="AddressID" Type="Address" IsForeignKey="true" />
+      <Association Name="ContactType_Contact" Member="ContactType" ThisKey="TypeID" Type="ContactType" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ContactTypes" Member="ContactTypes">
+    <Type Name="ContactType">
+      <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Association Name="ContactType_Contact" Member="Contacts" OtherKey="TypeID" Type="Contact" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Countries" Member="Countries">
+    <Type Name="Country">
+      <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Association Name="Country_ProvincesAndState" Member="ProvincesAndStates" OtherKey="CountryID" Type="ProvincesAndState" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ProvincesAndStates" Member="ProvincesAndStates">
+    <Type Name="ProvincesAndState">
+      <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="CountryID" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Association Name="ProvincesAndState_Address" Member="Addresses" OtherKey="ProvinceStateID" Type="Address" />
+      <Association Name="Country_ProvincesAndState" Member="Country" ThisKey="CountryID" Type="Country" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.RateDiscounts" Member="RateDiscounts">
+    <Type Name="RateDiscount">
+      <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="CompanyID" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="Hourly" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Daily" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Weekly" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Monthly" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Association Name="Company_RateDiscount" Member="Company" ThisKey="CompanyID" Type="Company" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>

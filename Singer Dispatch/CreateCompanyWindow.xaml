@@ -16,17 +16,17 @@
     <StackPanel Margin="5,5,5,5">
         <Label Style="{StaticResource Heading}">Create New Company</Label>
         
-        <GroupBox Header="Company Details" Margin="0,5,0,5" Padding="3,3,3,3" DataContext="{Binding ElementName=company}">
+        <GroupBox Name="companyDetails" Header="Company Details" Margin="0,5,0,5" Padding="3,3,3,3">
             <StackPanel>
                 <Label>Name:</Label>
-                <TextBox Name="txtName" />
+                <TextBox Name="txtName" Text="{Binding Path=Name}" />
                 
                 <Label>Operating As:</Label>
-                <TextBox Name="txtOperatingAs" />
+                <TextBox Name="txtOperatingAs" Text="{Binding Path=OperatingAs, ValidatesOnExceptions=True}" />
             </StackPanel>
         </GroupBox>
         
-        <GroupBox Header="Head Office" Margin="0,0,0,5" Padding="3,3,3,3">
+        <GroupBox Name="addressDetails" Header="Head Office" Margin="0,0,0,5" Padding="3,3,3,3">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
@@ -48,35 +48,35 @@
                 </Grid.RowDefinitions>
 
                 <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3">Address:</Label>
-                <TextBox Name="txtAddress1" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" />
-                <TextBox Name="txtAddress2" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" />
+                <TextBox Name="txtAddress1" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Text="{Binding Path=Line1}" />
+                <TextBox Name="txtAddress2" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Text="{Binding Path=Line2}" />
 
                 <Label Grid.Row="3" Grid.Column="0">City:</Label>
-                <TextBox Name="txtCity" Grid.Row="4" Grid.Column="0" />
+                <TextBox Name="txtCity" Grid.Row="4" Grid.Column="0" Text="{Binding Path=City}"/>
                 
                 <Label Grid.Row="3" Grid.Column="1">Province/State:</Label>
-                <ComboBox Name="cmbProvince" Grid.Row="4" Grid.Column="1" ItemTemplate="{StaticResource nameTemplate}" IsEditable="True" TextSearch.TextPath="Name" />
+                <ComboBox Name="cmbProvince" Grid.Row="4" Grid.Column="1" ItemTemplate="{StaticResource nameTemplate}" IsEditable="True" TextSearch.TextPath="Name"  />
                 
                 <Label Grid.Row="3" Grid.Column="2">Country:</Label>
                 <TextBox Name="txtCountry" Grid.Row="4" Grid.Column="2" IsEnabled="False" Text="{Binding ElementName=cmbProvince, Path=SelectedItem.Country.Name}"/>
 
                 <Label Grid.Row="5" Grid.Column="0">Postal/Zip Code:</Label>
-                <TextBox Name="txtPostalZip" Grid.Row="6" Grid.Column="0" />
+                <TextBox Name="txtPostalZip" Grid.Row="6" Grid.Column="0" Text="{Binding Path=PostalZip}" />
 
                 <Label Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2">Address Type:</Label>
                 <ComboBox Name="cmbAddressType" Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2" />
 
                 <Label Grid.Row="7" Grid.Column="0">Site Main Phone:</Label>
-                <TextBox Name="txtSiteMainPhone" Grid.Row="8" Grid.Column="0" />
+                <TextBox Name="txtSiteMainPhone" Grid.Row="8" Grid.Column="0" Text="{Binding Path=PrimaryPhone}" />
 
                 <Label Grid.Row="7" Grid.Column="1">Site Secondary:</Label>
-                <TextBox Name="txtSiteSecondaryPhone" Grid.Row="8" Grid.Column="1" />
+                <TextBox Name="txtSiteSecondaryPhone" Grid.Row="8" Grid.Column="1" Text="{Binding Path=SecondaryPhone}" />
 
                 <Label Grid.Row="7" Grid.Column="2">Site Fax:</Label>
-                <TextBox Name="txtSiteFax" Grid.Row="8" Grid.Column="2" />
+                <TextBox Name="txtSiteFax" Grid.Row="8" Grid.Column="2" Text="{Binding Path=Fax}" />
 
                 <Label Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="3">Address Notes:</Label>
-                <TextBox Name="txtAddressNotes" Grid.Row="10" Grid.Column="0" Grid.ColumnSpan="3" Height="60" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" />
+                <TextBox Name="txtAddressNotes" Grid.Row="10" Grid.Column="0" Grid.ColumnSpan="3" Height="60" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" Text="{Binding Path=Notes}" />
             </Grid>
         </GroupBox>
         

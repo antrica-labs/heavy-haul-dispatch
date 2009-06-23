@@ -25,15 +25,15 @@
             <WPF:DataGrid.Columns>
                 <WPF:DataGridTextColumn Header="Type" Binding="{Binding Name}" />
                 <WPF:DataGridTextColumn Header="Hourly" Binding="{Binding Path=Hourly, StringFormat=c}" />
-                <WPF:DataGridTextColumn Header="Daily" Binding="{Binding Path=Hourly, StringFormat=c}" />
-                <WPF:DataGridTextColumn Header="Weekly" Binding="{Binding Path=Hourly, StringFormat=c}" />
-                <WPF:DataGridTextColumn Header="Monthly" Binding="{Binding Path=Hourly, StringFormat=c}" />
+                <WPF:DataGridTextColumn Header="Daily" Binding="{Binding Path=Daily, StringFormat=c}" />
+                <WPF:DataGridTextColumn Header="Weekly" Binding="{Binding Path=Weekly, StringFormat=c}" />
+                <WPF:DataGridTextColumn Header="Monthly" Binding="{Binding Path=Monthly, StringFormat=c}" />
             </WPF:DataGrid.Columns>
         </WPF:DataGrid>
        
 
         <StackPanel VerticalAlignment="Top" Grid.Column="1">
-            <GroupBox Header="Rate Adjustments">
+            <GroupBox Header="Rate Adjustments" Name="grpRateAdjustment">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="100"/>
@@ -49,22 +49,22 @@
                     </Grid.RowDefinitions>
 
                     <Label Grid.Column="0" Grid.Row="0">Hourly:</Label>
-                    <TextBox Name="txtCreditRateHourly" Grid.Column="1" Grid.Row="0" />
+                    <TextBox Name="txtCreditRateHourly" Grid.Column="1" Grid.Row="0" Text="{Binding Path=Hourly, ValidatesOnExceptions=true}" />
                     <Label Grid.Column="2" Grid.Row="0">%</Label>
 
                     <Label Grid.Column="0" Grid.Row="1">Daily:</Label>
-                    <TextBox Name="txtCreditRateDaily" Grid.Column="1" Grid.Row="1" />
+                    <TextBox Name="txtCreditRateDaily" Grid.Column="1" Grid.Row="1" Text="{Binding Path=Daily, ValidatesOnExceptions=true}" />                     
                     <Label Grid.Column="2" Grid.Row="1">%</Label>
 
                     <Label Grid.Column="0" Grid.Row="2">Weekly:</Label>
-                    <TextBox Name="txtCreditRateWeekly" Grid.Column="1" Grid.Row="2" />
+                    <TextBox Name="txtCreditRateWeekly" Grid.Column="1" Grid.Row="2" Text="{Binding Path=Weekly, ValidatesOnExceptions=true}" />
                     <Label Grid.Column="2" Grid.Row="2">%</Label>
 
                     <Label Grid.Column="0" Grid.Row="3">Monthly:</Label>
-                    <TextBox Name="txtCreditRateMonthly" Grid.Column="1" Grid.Row="3" />
+                    <TextBox Name="txtCreditRateMonthly" Grid.Column="1" Grid.Row="3" Text="{Binding Path=Monthly, ValidatesOnExceptions=true}" />
                     <Label Grid.Column="2" Grid.Row="3">%</Label>
                     
-                    <Button Name="btnSaveAdjustments" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3" Margin="0,4,0,0">Save Adjustments</Button>
+                    <Button Name="btnSaveAdjustments" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3" Margin="0,4,0,0" Click="btnSaveAdjustments_Click">Save Adjustments</Button>
                 </Grid>
             </GroupBox>           
 

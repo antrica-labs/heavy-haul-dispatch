@@ -136,6 +136,9 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="SingerConstants.cs" />
+    <Compile Include="SingerDispatch.cs">
+      <DependentUpon>SingerDispatch.dbml</DependentUpon>
+    </Compile>
     <Compile Include="SingerDispatch.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
