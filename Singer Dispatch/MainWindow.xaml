@@ -26,11 +26,7 @@
                     <MenuItem Header="_Exit" Click="Terminate" />
                 </MenuItem>
                 <MenuItem Header="_Create">
-                    <MenuItem Name="menuCreateCompany" Header="_New Company" Click="menuCreateCompany_Click" />
-                    <MenuItem Header="_New Quote" />
-                    <MenuItem Header="_New Job" />
-                    <MenuItem Header="_New Load" />
-                    <MenuItem Header="_New Dispatch" />
+                    <MenuItem Name="menuCreateCompany" Header="_New Company" Click="menuCreateCompany_Click" />                    
                 </MenuItem>
             </Menu>
 

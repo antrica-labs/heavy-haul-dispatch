@@ -12,5 +12,17 @@ namespace SingerDispatch.Panels.Companies
         {
             InitializeComponent();
         }
+
+        protected override void SelectedCompanyChanged(Company newValue, Company oldValue)
+        {
+            if (newValue == null)
+            {
+                this.IsEnabled = false;
+            }
+            else
+            {
+                this.IsEnabled = true;
+            }
+        }
     }
 }

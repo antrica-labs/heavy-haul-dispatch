@@ -18,14 +18,17 @@ namespace SingerDispatch.Panels.Companies
         public AddressesAndContactsControl()
         {
             InitializeComponent();
+            this.Width = double.NaN;
 
-            database = new SingerDispatchDataContext();
+            database = SingerConstants.CommonDataContext;            
         }
 
         private void Control_Loaded(object sender, RoutedEventArgs e)
         {
             cmbContactPreferedContactMethod.ItemsSource = SingerConstants.ContactMethods;
-            cmbProvinceOrState.ItemsSource = (from p in database.ProvincesAndStates orderby p.CountryID, p.Name select p).ToList();            
+            cmbProvinceOrState.ItemsSource = (from p in database.ProvincesAndStates orderby p.CountryID, p.Name select p).ToList();
+            cmbContactType.ItemsSource = (from ct in database.ContactTypes select ct).ToList();
+            cmbAddressType.ItemsSource = (from at in database.AddressTypes select at).ToList();
         }
 
 
@@ -173,7 +176,7 @@ namespace SingerDispatch.Panels.Companies
             contact.Email = txtContactEmail.Text;
             contact.PrimaryPhone = txtContactPrimaryPhone.Text;
             contact.SecondaryPhone = txtContactSecondaryPhone.Text;
-            contact.ContactType = (ContactType)cmbContactType.SelectedItem;
+            contact.ContactType = (ContactType)cmbContactType.SelectedItem;            
             contact.PreferedContactMethod = (string)cmbContactPreferedContactMethod.SelectedItem;
             contact.Notes = txtContactNotes.Text;
 
@@ -197,6 +200,7 @@ namespace SingerDispatch.Panels.Companies
             address.Fax = txtSiteFax.Text;
             address.Notes = txtAddressNotes.Text;
             address.ProvinceStateID = provinceOrState.ID;
+            address.AddressType = (AddressType)cmbAddressType.SelectedItem;
 
             database.Addresses.InsertOnSubmit(address);
             ((ObservableCollection<Address>)dgAddresses.ItemsSource).Add(address);

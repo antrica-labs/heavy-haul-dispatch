@@ -18,7 +18,7 @@ namespace SingerDispatch.Panels.Companies
         {
             InitializeComponent();
 
-            database = new SingerDispatchDataContext();
+            database = SingerConstants.CommonDataContext;
         }
 
         private void Control_Loaded(object sender, RoutedEventArgs e)
@@ -36,19 +36,20 @@ namespace SingerDispatch.Panels.Companies
             base.SelectedCompanyChanged(newValue, oldValue);
 
             if (newValue != null)
-            {
+            {                               
                 var rateDiscounts = from d in database.RateDiscounts where d.CompanyID == newValue.ID select d;
 
                 if (rateDiscounts.Count() > 0)
                 {
-                    discount = (RateDiscount)rateDiscounts.First();
-                    grpRateAdjustment.DataContext = discount;
+                    discount = (RateDiscount)rateDiscounts.First();                    
                 }
                 else
                 {
-                    discount = new RateDiscount() { CompanyID = newValue.ID };
-                    grpRateAdjustment.DataContext = discount;
+                    discount = new RateDiscount() { CompanyID = newValue.ID };                    
                 }
+
+                grpAdministration.DataContext = newValue;
+                grpRateAdjustment.DataContext = discount;
             }
             else
             {
@@ -61,28 +62,11 @@ namespace SingerDispatch.Panels.Companies
             database.SubmitChanges();
         }
 
-        private void btnSaveAdminDetails_Click(object sender, RoutedEventArgs e)
+        private void SaveDetails(object sender, RoutedEventArgs e)
         {
             if (SelectedCompany != null)
-            {                
-                Company company = (from c in database.Companies where c.ID == SelectedCompany.ID select c).Single();                
-
-                company.Type = SelectedCompany.Type;
-                company.AvailableCredit = SelectedCompany.AvailableCredit;             
-                company.AccPacVendorCode = SelectedCompany.AccPacVendorCode;
-                company.PriorityLevelID = SelectedCompany.PriorityLevelID;
-                company.Notes = SelectedCompany.Notes;
-                company.EquifaxComplete = SelectedCompany.EquifaxComplete;                
-                
-                database.SubmitChanges();
-            }
-        }
-
-        private void btnSaveAdjustments_Click(object sender, RoutedEventArgs e)
-        {
-            if (discount != null)
             {
-                if (discount.ID == 0)
+                if (discount != null && discount.ID == 0)
                 {
                     database.RateDiscounts.InsertOnSubmit(discount);
                 }
@@ -90,6 +74,5 @@ namespace SingerDispatch.Panels.Companies
                 database.SubmitChanges();
             }
         }
-     
     }
 }

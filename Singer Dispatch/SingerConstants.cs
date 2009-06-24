@@ -9,6 +9,7 @@ namespace SingerDispatch
     {
         private static List<string> contactMethods = new List<string>();
         private static List<string> customerTypes = new List<string>();
+        private static SingerDispatchDataContext database = new SingerDispatchDataContext();
 
         static SingerConstants()
         {
@@ -34,6 +35,14 @@ namespace SingerDispatch
             get
             {
                 return customerTypes;
+            }
+        }
+
+        public static SingerDispatchDataContext CommonDataContext
+        {
+            get
+            {
+                return database;
             }
         }
     }

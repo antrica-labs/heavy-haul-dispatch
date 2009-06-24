@@ -16,7 +16,7 @@ namespace SingerDispatch.Panels.Companies
         {
             InitializeComponent();
 
-            database = new SingerDispatchDataContext();
+            database = SingerConstants.CommonDataContext;
         }
 
         protected override void SelectedCompanyChanged(Company newValue, Company oldValue)

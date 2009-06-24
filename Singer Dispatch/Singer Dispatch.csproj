@@ -116,6 +116,8 @@
     <Compile Include="Panels\Quotes\QuotesPanel.xaml.cs">
       <DependentUpon>QuotesPanel.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Panels\Quotes\QuoteUserControl.cs">
+    </Compile>
     <Compile Include="Panels\Testing\TestingTab.xaml.cs">
       <DependentUpon>TestingTab.xaml</DependentUpon>
     </Compile>

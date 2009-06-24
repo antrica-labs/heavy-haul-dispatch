@@ -22,7 +22,7 @@ namespace SingerDispatch
         {   
             InitializeComponent();
 
-            this.database = new SingerDispatchDataContext();            
+            this.database = SingerConstants.CommonDataContext;            
             this.companies = new ObservableCollection<Company>(
                 (from c in database.Companies orderby c.Name select c).ToList()
             );
@@ -104,6 +104,12 @@ namespace SingerDispatch
 
         private void ExpandCompanies(object sender, RoutedEventArgs e)
         {
+            if (panelMainContent.Child is CompaniesPanel)
+            {
+                // This panel is already visible, so we don't need to reload it.
+                return;
+            }
+
             CollapseAllOtherNavigationExpanders((Expander)sender);
 
             CompaniesPanel panel = new CompaniesPanel();
@@ -121,6 +127,12 @@ namespace SingerDispatch
 
         private void ExpandQuotes(object sender, RoutedEventArgs e)
         {
+            if (panelMainContent.Child is QuotesPanel)
+            {
+                // This panel is already visible, so we don't need to reload it.
+                return;
+            }
+
             CollapseAllOtherNavigationExpanders((Expander)sender);
 
             QuotesPanel panel = new QuotesPanel();

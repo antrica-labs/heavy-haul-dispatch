@@ -13,7 +13,7 @@
     </UserControl.Resources>
     <Grid Margin="5">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="250" />
+            <ColumnDefinition Width="350" />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
@@ -21,12 +21,12 @@
             <RowDefinition />
         </Grid.RowDefinitions>
 
-        <WPF:DataGrid Name="dgCommodities" Grid.Column="0" Grid.Row="0" Style="{StaticResource ListDisplay}" AutoGenerateColumns="False" Margin="0,0,8,4" RowEditEnding="DataGridCommit">
+        <WPF:DataGrid Name="dgCommodities" Grid.Column="0" HorizontalScrollBarVisibility="Disabled" Grid.Row="0" Style="{StaticResource ListDisplay}" AutoGenerateColumns="False" Margin="0,0,4,4" RowEditEnding="DataGridCommit">
             <WPF:DataGrid.Columns>
                 <WPF:DataGridTextColumn Header="Unit" Binding="{Binding Unit}" />
-                <WPF:DataGridTextColumn Header="Name" Binding="{Binding Name}" />                
+                <WPF:DataGridTextColumn Header="Name" Width="2*" Binding="{Binding Name}" />                
                 <WPF:DataGridTextColumn Header="Serial" Binding="{Binding Serial}" />
-                <WPF:DataGridTextColumn Header="Value" Binding="{Binding Value}" />
+                <WPF:DataGridTextColumn Header="Value" Binding="{Binding Value, StringFormat=c}" />
             </WPF:DataGrid.Columns>
         </WPF:DataGrid>
 

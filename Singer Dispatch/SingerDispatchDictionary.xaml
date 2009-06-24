@@ -4,8 +4,13 @@
     xmlns:Controls="clr-namespace:SingerDispatch.Controls">
     <ResourceDictionary.MergedDictionaries>
         <!-- Remove the following to allow the system theme instead of the Windows XP theme -->
+        <!-- <ResourceDictionary Source="/PresentationFramework.Aero, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, ProcessorArchitecture=MSIL;component/themes/aero.normalcolor.xaml" /> -->
         <!-- <ResourceDictionary Source="/PresentationFramework.Luna, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, ProcessorArchitecture=MSIL;component/themes/luna.normalcolor.xaml" /> -->
     </ResourceDictionary.MergedDictionaries>
+    
+    <DataTemplate x:Key="SimpleNameTemplate">
+        <TextBlock Text="{Binding Name}" />
+    </DataTemplate>
     
     <Style TargetType="Menu">        
         <Setter Property="BorderBrush" Value="LightGray" />
@@ -73,6 +78,7 @@
         <Setter Property="HorizontalGridLinesBrush" Value="LightGray" />
         <Setter Property="SelectionMode" Value="Single" />
         <Setter Property="CanUserAddRows" Value="False" />
-        <Setter Property="CanUserDeleteRows" Value="False" />
+        <Setter Property="CanUserDeleteRows" Value="False" />      
+        <Setter Property="ColumnWidth" Value="*" />
     </Style>
 </ResourceDictionary>

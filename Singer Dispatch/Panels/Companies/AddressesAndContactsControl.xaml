@@ -4,15 +4,12 @@
     xmlns:WPF="http://schemas.microsoft.com/wpf/2008/toolkit"
     xmlns:Company="clr-namespace:SingerDispatch.Panels.Companies"
     x:Name="addressesAndContactsControl"
-    Loaded="Control_Loaded">
+    Loaded="Control_Loaded" Width="650">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/SingerDispatchDictionary.xaml" />
-            </ResourceDictionary.MergedDictionaries>            
-            <DataTemplate x:Key="provinceTemplate">
-                <TextBlock Text="{Binding Name}" />
-            </DataTemplate>
+            </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
     
@@ -29,9 +26,10 @@
         <StackPanel Grid.Column="0" Grid.Row="0" Margin="0,0,5,15">
             <Label>Company Addresses:</Label>
 
-            <WPF:DataGrid Name="dgAddresses" Style="{StaticResource ListDisplay}" Grid.Column="0" Grid.Row="0" MinHeight="125" Margin="3" AutoGenerateColumns="False" SelectionChanged="dgAddresses_SelectionChanged" RowEditEnding="DataGridCommit">
+            <WPF:DataGrid Name="dgAddresses" Style="{StaticResource ListDisplay}" Grid.Column="0" Grid.Row="0" MinHeight="125" Margin="3" AutoGenerateColumns="False" SelectionChanged="dgAddresses_SelectionChanged" RowEditEnding="DataGridCommit" HorizontalScrollBarVisibility="Disabled">
                 <WPF:DataGrid.Columns>
-                    <WPF:DataGridTextColumn Header="Address" Binding="{Binding Line1}" />
+                    <WPF:DataGridTextColumn Header="Type" Binding="{Binding AddressType.Name}" IsReadOnly="True" />
+                    <WPF:DataGridTextColumn Header="Address" Width="1.5*" Binding="{Binding Line1}" />
                     <WPF:DataGridTextColumn Header="City" Binding="{Binding City}" />
                     <WPF:DataGridTextColumn Header="Province" Binding="{Binding ProvincesAndState.Name}" IsReadOnly="True" />
                     <WPF:DataGridTextColumn Header="Country" Binding="{Binding ProvincesAndState.Country.Name}" IsReadOnly="True" />
@@ -79,7 +77,7 @@
                 <TextBox Name="txtCity" Grid.Row="4" Grid.Column="0" Text="{Binding City}" />
                                 
                 <Label Grid.Row="3" Grid.Column="1">Province/State:</Label>
-                <ComboBox Name="cmbProvinceOrState" Grid.Row="4" Grid.Column="1" ItemTemplate="{StaticResource provinceTemplate}" SelectedItem="{Binding ProvincesAndState}" TextSearch.TextPath="Name" />
+                <ComboBox Name="cmbProvinceOrState" Grid.Row="4" Grid.Column="1" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectedItem="{Binding ProvincesAndState}" TextSearch.TextPath="Name" />
 
                 <Label Grid.Row="3" Grid.Column="2">Country:</Label>
                 <TextBox Name="txtCountry" Grid.Row="4" Grid.Column="2" IsEnabled="False" Text="{Binding ElementName=cmbProvinceOrState, Path=SelectedItem.Country.Name}" TextSearch.TextPath="Name" />
@@ -88,7 +86,7 @@
                 <TextBox Name="txtPostalZip" Grid.Row="6" Grid.Column="0" Text="{Binding PostalZip}" />
 
                 <Label Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2">Address Type:</Label>
-                <ComboBox Name="cmbAddressType" Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2" />
+                <ComboBox Name="cmbAddressType" Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectedItem="{Binding AddressType}" TextSearch.TextPath="Name" />
 
                 <Label Grid.Row="7" Grid.Column="0">Site Main Phone:</Label>
                 <TextBox Name="txtSiteMainPhone" Grid.Row="8" Grid.Column="0" Text="{Binding PrimaryPhone}" />
@@ -109,7 +107,7 @@
         <StackPanel Grid.Column="1" Grid.Row="0" Margin="5,0,0,15">
             <Label>Address Contacts:</Label>
             
-            <WPF:DataGrid Name="dgContacts" Style="{StaticResource ListDisplay}" Grid.Column="0" Grid.Row="0" ItemsSource="{Binding ElementName=dgAddresses, Path=SelectedItem.Contacts}" MinHeight="125" Margin="3" AutoGenerateColumns="False" RowEditEnding="DataGridCommit">
+            <WPF:DataGrid Name="dgContacts" Style="{StaticResource ListDisplay}" Grid.Column="0" Grid.Row="0" ItemsSource="{Binding ElementName=dgAddresses, Path=SelectedItem.Contacts}" MinHeight="125" Margin="3" AutoGenerateColumns="False" RowEditEnding="DataGridCommit" HorizontalScrollBarVisibility="Disabled">
                 <WPF:DataGrid.Columns>
                     <WPF:DataGridTextColumn Header="Last name" Binding="{Binding LastName}" />
                     <WPF:DataGridTextColumn Header="First name" Binding="{Binding FirstName}" />
@@ -167,7 +165,7 @@
                 <TextBox Name="txtContactSecondaryPhone" Grid.Row="5" Grid.Column="1" Text="{Binding SecondaryPhone}" />
 
                 <Label Grid.Row="6" Grid.Column="0">Contact Type:</Label>
-                <ComboBox Name="cmbContactType" Grid.Row="7" Grid.Column="0" SelectedItem="{Binding Type}"/>
+                <ComboBox Name="cmbContactType" Grid.Row="7" Grid.Column="0" ItemTemplate="{StaticResource SimpleNameTemplate}"  SelectedItem="{Binding ContactType}" TextSearch.TextPath="Name" />
 
                 <Label Grid.Row="6" Grid.Column="1">Preferred Contact Method:</Label>
                 <ComboBox Name="cmbContactPreferedContactMethod" Grid.Row="7" Grid.Column="1" SelectedItem="{Binding PreferedContactMethod}" />

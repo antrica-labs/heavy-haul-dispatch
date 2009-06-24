@@ -21,7 +21,7 @@
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
                
-        <WPF:DataGrid Name="dgCreditRates" Grid.Column="0" Margin="5" Style="{StaticResource ListDisplay}" AutoGenerateColumns="False" RowEditEnding="DataGridCommit">
+        <WPF:DataGrid Name="dgCreditRates" Grid.Column="0" Margin="5" Style="{StaticResource ListDisplay}" AutoGenerateColumns="False" RowEditEnding="DataGridCommit" HorizontalScrollBarVisibility="Disabled">
             <WPF:DataGrid.Columns>
                 <WPF:DataGridTextColumn Header="Type" Binding="{Binding Name}" />
                 <WPF:DataGridTextColumn Header="Hourly" Binding="{Binding Path=Hourly, StringFormat=c}" />
@@ -45,7 +45,6 @@
                         <RowDefinition />
                         <RowDefinition />
                         <RowDefinition />
-                        <RowDefinition />
                     </Grid.RowDefinitions>
 
                     <Label Grid.Column="0" Grid.Row="0">Hourly:</Label>
@@ -63,12 +62,10 @@
                     <Label Grid.Column="0" Grid.Row="3">Monthly:</Label>
                     <TextBox Name="txtCreditRateMonthly" Grid.Column="1" Grid.Row="3" Text="{Binding Path=Monthly, ValidatesOnExceptions=true}" />
                     <Label Grid.Column="2" Grid.Row="3">%</Label>
-                    
-                    <Button Name="btnSaveAdjustments" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3" Margin="0,4,0,0" Click="btnSaveAdjustments_Click">Save Adjustments</Button>
                 </Grid>
             </GroupBox>           
 
-            <GroupBox Header="Administration" DataContext="{Binding ElementName=creditAndRatesControl, Path=SelectedCompany}">
+            <GroupBox Header="Administration" Name="grpAdministration">
                 <StackPanel VerticalAlignment="Top">
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -103,10 +100,10 @@
                         <Label>Addministration Notes:</Label>
                         <TextBox Name="txtCreditAdminNotes" Height="60" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" Text="{Binding Notes}" />
                     </StackPanel>
-                    
-                    <Button Name="btnSaveAdminDetails" Click="btnSaveAdminDetails_Click" Margin="0,4,0,0" >Save Administration Details</Button>
                 </StackPanel>
             </GroupBox>
+            
+            <Button Name="btnSaveDetails" Click="SaveDetails" Margin="0,4,0,5" >Update Details</Button>
         </StackPanel>
     </Grid>
 </Company:CompanyUserControl>
