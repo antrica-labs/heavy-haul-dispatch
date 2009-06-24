@@ -171,6 +171,7 @@
       <LastGenOutput>SingerDispatch.designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </None>
+    <None Include="SQL\servicetypes.sql" />
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>

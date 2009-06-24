@@ -74,6 +74,7 @@
       <Association Name="Company_Address" Member="Addresses" OtherKey="CompanyID" Type="Address" />
       <Association Name="Company_Commodity" Member="Commodities" OtherKey="CompanyID" Type="Commodity" />
       <Association Name="Company_RateDiscount" Member="RateDiscounts" OtherKey="CompanyID" Type="RateDiscount" />
+      <Association Name="Company_Service" Member="Services" OtherKey="CompanyID" Type="Service" />
       <Association Name="CompanyPriorityLevel_Company" Member="CompanyPriorityLevel" ThisKey="PriorityLevelID" Type="CompanyPriorityLevel" IsForeignKey="true" />
     </Type>
   </Table>
@@ -132,6 +133,22 @@
       <Column Name="Weekly" Type="System.Double" DbType="Float" CanBeNull="true" />
       <Column Name="Monthly" Type="System.Double" DbType="Float" CanBeNull="true" />
       <Association Name="Company_RateDiscount" Member="Company" ThisKey="CompanyID" Type="Company" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ServiceTypes" Member="ServiceTypes">
+    <Type Name="ServiceType">
+      <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Association Name="ServiceType_Service" Member="Services" OtherKey="ServiceTypeID" Type="Service" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Services" Member="Services">
+    <Type Name="Service">
+      <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="CompanyID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="ServiceTypeID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Association Name="Company_Service" Member="Company" ThisKey="CompanyID" Type="Company" IsForeignKey="true" />
+      <Association Name="ServiceType_Service" Member="ServiceType" ThisKey="ServiceTypeID" Type="ServiceType" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>

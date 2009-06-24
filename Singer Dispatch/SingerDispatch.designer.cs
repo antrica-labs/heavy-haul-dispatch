@@ -63,6 +63,12 @@ namespace SingerDispatch
     partial void InsertRateDiscount(RateDiscount instance);
     partial void UpdateRateDiscount(RateDiscount instance);
     partial void DeleteRateDiscount(RateDiscount instance);
+    partial void InsertServiceType(ServiceType instance);
+    partial void UpdateServiceType(ServiceType instance);
+    partial void DeleteServiceType(ServiceType instance);
+    partial void InsertService(Service instance);
+    partial void UpdateService(Service instance);
+    partial void DeleteService(Service instance);
     #endregion
 		
 		public SingerDispatchDataContext() : 
@@ -180,6 +186,22 @@ namespace SingerDispatch
 			get
 			{
 				return this.GetTable<RateDiscount>();
+			}
+		}
+		
+		public System.Data.Linq.Table<ServiceType> ServiceTypes
+		{
+			get
+			{
+				return this.GetTable<ServiceType>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Service> Services
+		{
+			get
+			{
+				return this.GetTable<Service>();
 			}
 		}
 	}
@@ -1474,6 +1496,8 @@ namespace SingerDispatch
 		
 		private EntitySet<RateDiscount> _RateDiscounts;
 		
+		private EntitySet<Service> _Services;
+		
 		private EntityRef<CompanyPriorityLevel> _CompanyPriorityLevel;
 		
     #region Extensibility Method Definitions
@@ -1505,6 +1529,7 @@ namespace SingerDispatch
 			this._Addresses = new EntitySet<Address>(new Action<Address>(this.attach_Addresses), new Action<Address>(this.detach_Addresses));
 			this._Commodities = new EntitySet<Commodity>(new Action<Commodity>(this.attach_Commodities), new Action<Commodity>(this.detach_Commodities));
 			this._RateDiscounts = new EntitySet<RateDiscount>(new Action<RateDiscount>(this.attach_RateDiscounts), new Action<RateDiscount>(this.detach_RateDiscounts));
+			this._Services = new EntitySet<Service>(new Action<Service>(this.attach_Services), new Action<Service>(this.detach_Services));
 			this._CompanyPriorityLevel = default(EntityRef<CompanyPriorityLevel>);
 			OnCreated();
 		}
@@ -1732,6 +1757,19 @@ namespace SingerDispatch
 			}
 		}
 		
+		[Association(Name="Company_Service", Storage="_Services", OtherKey="CompanyID")]
+		public EntitySet<Service> Services
+		{
+			get
+			{
+				return this._Services;
+			}
+			set
+			{
+				this._Services.Assign(value);
+			}
+		}
+		
 		[Association(Name="CompanyPriorityLevel_Company", Storage="_CompanyPriorityLevel", ThisKey="PriorityLevelID", IsForeignKey=true)]
 		public CompanyPriorityLevel CompanyPriorityLevel
 		{
@@ -1817,6 +1855,18 @@ namespace SingerDispatch
 		}
 		
 		private void detach_RateDiscounts(RateDiscount entity)
+		{
+			this.SendPropertyChanging();
+			entity.Company = null;
+		}
+		
+		private void attach_Services(Service entity)
+		{
+			this.SendPropertyChanging();
+			entity.Company = this;
+		}
+		
+		private void detach_Services(Service entity)
 		{
 			this.SendPropertyChanging();
 			entity.Company = null;
@@ -2902,6 +2952,312 @@ namespace SingerDispatch
 						this._CompanyID = default(long);
 					}
 					this.SendPropertyChanged("Company");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[Table(Name="dbo.ServiceTypes")]
+	public partial class ServiceType : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private long _ID;
+		
+		private string _Name;
+		
+		private EntitySet<Service> _Services;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDChanging(long value);
+    partial void OnIDChanged();
+    partial void OnNameChanging(string value);
+    partial void OnNameChanged();
+    #endregion
+		
+		public ServiceType()
+		{
+			this._Services = new EntitySet<Service>(new Action<Service>(this.attach_Services), new Action<Service>(this.detach_Services));
+			OnCreated();
+		}
+		
+		[Column(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="BigInt NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public long ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this.OnIDChanging(value);
+					this.SendPropertyChanging();
+					this._ID = value;
+					this.SendPropertyChanged("ID");
+					this.OnIDChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_Name", DbType="VarChar(100)")]
+		public string Name
+		{
+			get
+			{
+				return this._Name;
+			}
+			set
+			{
+				if ((this._Name != value))
+				{
+					this.OnNameChanging(value);
+					this.SendPropertyChanging();
+					this._Name = value;
+					this.SendPropertyChanged("Name");
+					this.OnNameChanged();
+				}
+			}
+		}
+		
+		[Association(Name="ServiceType_Service", Storage="_Services", OtherKey="ServiceTypeID")]
+		public EntitySet<Service> Services
+		{
+			get
+			{
+				return this._Services;
+			}
+			set
+			{
+				this._Services.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_Services(Service entity)
+		{
+			this.SendPropertyChanging();
+			entity.ServiceType = this;
+		}
+		
+		private void detach_Services(Service entity)
+		{
+			this.SendPropertyChanging();
+			entity.ServiceType = null;
+		}
+	}
+	
+	[Table(Name="dbo.Services")]
+	public partial class Service : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private long _ID;
+		
+		private System.Nullable<long> _CompanyID;
+		
+		private System.Nullable<long> _ServiceTypeID;
+		
+		private EntityRef<Company> _Company;
+		
+		private EntityRef<ServiceType> _ServiceType;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDChanging(long value);
+    partial void OnIDChanged();
+    partial void OnCompanyIDChanging(System.Nullable<long> value);
+    partial void OnCompanyIDChanged();
+    partial void OnServiceTypeIDChanging(System.Nullable<long> value);
+    partial void OnServiceTypeIDChanged();
+    #endregion
+		
+		public Service()
+		{
+			this._Company = default(EntityRef<Company>);
+			this._ServiceType = default(EntityRef<ServiceType>);
+			OnCreated();
+		}
+		
+		[Column(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="BigInt NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public long ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this.OnIDChanging(value);
+					this.SendPropertyChanging();
+					this._ID = value;
+					this.SendPropertyChanged("ID");
+					this.OnIDChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_CompanyID", DbType="BigInt")]
+		public System.Nullable<long> CompanyID
+		{
+			get
+			{
+				return this._CompanyID;
+			}
+			set
+			{
+				if ((this._CompanyID != value))
+				{
+					if (this._Company.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnCompanyIDChanging(value);
+					this.SendPropertyChanging();
+					this._CompanyID = value;
+					this.SendPropertyChanged("CompanyID");
+					this.OnCompanyIDChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_ServiceTypeID", DbType="BigInt")]
+		public System.Nullable<long> ServiceTypeID
+		{
+			get
+			{
+				return this._ServiceTypeID;
+			}
+			set
+			{
+				if ((this._ServiceTypeID != value))
+				{
+					if (this._ServiceType.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnServiceTypeIDChanging(value);
+					this.SendPropertyChanging();
+					this._ServiceTypeID = value;
+					this.SendPropertyChanged("ServiceTypeID");
+					this.OnServiceTypeIDChanged();
+				}
+			}
+		}
+		
+		[Association(Name="Company_Service", Storage="_Company", ThisKey="CompanyID", IsForeignKey=true)]
+		public Company Company
+		{
+			get
+			{
+				return this._Company.Entity;
+			}
+			set
+			{
+				Company previousValue = this._Company.Entity;
+				if (((previousValue != value) 
+							|| (this._Company.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Company.Entity = null;
+						previousValue.Services.Remove(this);
+					}
+					this._Company.Entity = value;
+					if ((value != null))
+					{
+						value.Services.Add(this);
+						this._CompanyID = value.ID;
+					}
+					else
+					{
+						this._CompanyID = default(Nullable<long>);
+					}
+					this.SendPropertyChanged("Company");
+				}
+			}
+		}
+		
+		[Association(Name="ServiceType_Service", Storage="_ServiceType", ThisKey="ServiceTypeID", IsForeignKey=true)]
+		public ServiceType ServiceType
+		{
+			get
+			{
+				return this._ServiceType.Entity;
+			}
+			set
+			{
+				ServiceType previousValue = this._ServiceType.Entity;
+				if (((previousValue != value) 
+							|| (this._ServiceType.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._ServiceType.Entity = null;
+						previousValue.Services.Remove(this);
+					}
+					this._ServiceType.Entity = value;
+					if ((value != null))
+					{
+						value.Services.Add(this);
+						this._ServiceTypeID = value.ID;
+					}
+					else
+					{
+						this._ServiceTypeID = default(Nullable<long>);
+					}
+					this.SendPropertyChanged("ServiceType");
 				}
 			}
 		}
