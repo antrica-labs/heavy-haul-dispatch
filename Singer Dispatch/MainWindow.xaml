@@ -3,7 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:Companies="clr-namespace:SingerDispatch.Panels.Companies"
     xmlns:Quotes="clr-namespace:SingerDispatch.Panels.Quotes"
-    Title="Singer Dispatch" WindowState="Maximized" MinWidth="780"
+    Title="Singer Dispatch" MinWidth="780"
     Loaded="Window_Loaded"
     x:Name="mainWindow">
     <Window.Resources>

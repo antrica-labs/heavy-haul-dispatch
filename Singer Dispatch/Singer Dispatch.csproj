@@ -113,6 +113,9 @@
       <DependentUpon>ServicesControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Panels\Companies\CompanyUserControl.cs" />
+    <Compile Include="Panels\Quotes\QuoteHistoryControl.xaml.cs">
+      <DependentUpon>QuoteHistoryControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Panels\Quotes\QuotesPanel.xaml.cs">
       <DependentUpon>QuotesPanel.xaml</DependentUpon>
     </Compile>
@@ -156,6 +159,7 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <None Include="app.manifest" />
+    <None Include="SQL\addresstypes.sql" />
     <None Include="SQL\prioritylevels.sql" />
     <None Include="SQL\provincesandstates.sql" />
     <None Include="SingerDispatch.dbml.layout">
@@ -200,6 +204,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Panels\Companies\ServicesControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Panels\Quotes\QuoteHistoryControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

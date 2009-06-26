@@ -39,15 +39,13 @@ namespace SingerDispatch
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            SingerDispatchDataContext db = new SingerDispatchDataContext();
-            var provinces = from p in db.ProvincesAndStates orderby p.CountryID, p.Name select p;
-            
-            cmbProvince.ItemsSource = provinces.ToList();
+            cmbProvinceOrState.ItemsSource = (from ps in database.ProvincesAndStates orderby ps.CountryID, ps.Name select ps).ToList();
+            cmbAddressType.ItemsSource = (from at in database.AddressTypes select at).ToList();
         }
 
         private void bttnCreateCompany_Click(object sender, RoutedEventArgs e)
         {
-            address.ProvinceStateID = ((ProvincesAndState)cmbProvince.SelectedItem).ID;
+            address.ProvinceStateID = ((ProvincesAndState)cmbProvinceOrState.SelectedItem).ID;
 
             database.Companies.InsertOnSubmit(company);
             database.Addresses.InsertOnSubmit(address);
