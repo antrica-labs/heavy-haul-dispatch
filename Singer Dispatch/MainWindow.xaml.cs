@@ -2,11 +2,10 @@
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-
-using SingerDispatch.Controls;
-using SingerDispatch.Panels.Companies;
 using System.Windows.Data;
 using SingerDispatch.Panels.Quotes;
+using SingerDispatch.Controls;
+using SingerDispatch.Panels.Companies;
 
 namespace SingerDispatch
 {
@@ -33,7 +32,7 @@ namespace SingerDispatch
             cmbCompanies.ItemsSource = companies;
             cmbOperators.ItemsSource = companies;
 
-            expanderCompanies.IsExpanded = true; 
+            expanderQuotes.IsExpanded = true; 
         }                
 
         private void menuCreateCompany_Click(object sender, RoutedEventArgs e)
@@ -136,6 +135,13 @@ namespace SingerDispatch
             CollapseAllOtherNavigationExpanders((Expander)sender);
 
             QuotesPanel panel = new QuotesPanel();
+
+            Binding binding = new Binding();
+            binding.ElementName = "cmbCompanies";
+            binding.Path = new PropertyPath(ComboBox.SelectedItemProperty);
+
+            panel.SetBinding(QuotesPanel.SelectedCompanyProperty, binding);
+
             panelMainContent.Child = panel;
 
             AddLinksToExpander(linksQuotes, panel.tabs.Items);

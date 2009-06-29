@@ -113,11 +113,17 @@
       <DependentUpon>ServicesControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Panels\Companies\CompanyUserControl.cs" />
+    <Compile Include="Panels\Quotes\QuoteCommoditiesControl.xaml.cs">
+      <DependentUpon>QuoteCommoditiesControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Panels\Quotes\QuoteHistoryControl.xaml.cs">
       <DependentUpon>QuoteHistoryControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Panels\Quotes\QuotesPanel.xaml.cs">
       <DependentUpon>QuotesPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Panels\Quotes\QuoteSupplements.xaml.cs">
+      <DependentUpon>QuoteSupplements.xaml</DependentUpon>
     </Compile>
     <Compile Include="Panels\Quotes\QuoteUserControl.cs">
     </Compile>
@@ -207,11 +213,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Panels\Quotes\QuoteCommoditiesControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Panels\Quotes\QuoteHistoryControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Panels\Quotes\QuotesPanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Panels\Quotes\QuoteSupplements.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

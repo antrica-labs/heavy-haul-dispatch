@@ -1,8 +1,10 @@
-﻿<UserControl x:Class="SingerDispatch.Panels.Quotes.QuotesPanel"
+﻿<Company:CompanyUserControl x:Class="SingerDispatch.Panels.Quotes.QuotesPanel"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:Company="clr-namespace:SingerDispatch.Panels.Companies"
     xmlns:Quote="clr-namespace:SingerDispatch.Panels.Quotes"
-    IsEnabled="True">
+    x:Name="quotesPanel"
+    IsEnabled="False">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -10,20 +12,23 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <StackPanel>
+    <StackPanel DataContext="{Binding ElementName=quotesPanel}">
         <Border Background="LightGoldenrodYellow" BorderBrush="LightGray" BorderThickness="1" Margin="0,0,0,5">
             <Label>Active Quote:</Label>
         </Border>
         
         <TabControl Name="tabs">
-            <TabItem Header="Quote History">
-                <Quote:QuoteHistoryControl />
+            <TabItem Header="Quotes">
+                <Quote:QuoteHistoryControl SelectedCompany="{Binding SelectedCompany}" />
             </TabItem>
-            <TabItem Header="Move Commodity" />            
-            <TabItem Header="Supplements" />            
-            <TabItem Header="Storage" />
-            <TabItem Header="Conditions" />
+            <TabItem Header="Move Commodity" IsEnabled="False">
+                <Quote:QuoteCommoditiesControl />
+            </TabItem>                
+            <TabItem Header="Supplements" IsEnabled="False">
+                <Quote:QuoteSupplements />
+            </TabItem>            
+            <TabItem Header="Storage" IsEnabled="False" />
+            <TabItem Header="Conditions" IsEnabled="False" />
         </TabControl>
-    </StackPanel>
-    
-</UserControl>
+    </StackPanel>    
+</Company:CompanyUserControl>

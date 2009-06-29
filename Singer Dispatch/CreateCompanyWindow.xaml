@@ -58,7 +58,7 @@
                 <ComboBox Name="cmbProvinceOrState" Grid.Row="4" Grid.Column="1" ItemTemplate="{StaticResource SimpleNameTemplate}" IsEditable="True" TextSearch.TextPath="Name"  />
                 
                 <Label Grid.Row="3" Grid.Column="2">Country:</Label>
-                <TextBox Name="txtCountry" Grid.Row="4" Grid.Column="2" IsEnabled="False" Text="{Binding ElementName=cmbProvince, Path=SelectedItem.Country.Name}"/>
+                <TextBox Name="txtCountry" Grid.Row="4" Grid.Column="2" IsEnabled="False" Text="{Binding ElementName=cmbProvinceOrState, Path=SelectedItem.Country.Name}"/>
 
                 <Label Grid.Row="5" Grid.Column="0">Postal/Zip Code:</Label>
                 <TextBox Name="txtPostalZip" Grid.Row="6" Grid.Column="0" Text="{Binding Path=PostalZip}" />

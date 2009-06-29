@@ -15,6 +15,8 @@ namespace SingerDispatch.Panels.Companies
 
         protected override void SelectedCompanyChanged(Company newValue, Company oldValue)
         {
+            base.SelectedCompanyChanged(newValue, oldValue);
+
             if (newValue == null)
             {
                 this.IsEnabled = false;
