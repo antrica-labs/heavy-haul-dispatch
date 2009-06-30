@@ -14,17 +14,20 @@
     </UserControl.Resources>
     <StackPanel DataContext="{Binding ElementName=quotesPanel}">
         <Border Background="LightGoldenrodYellow" BorderBrush="LightGray" BorderThickness="1" Margin="0,0,0,5">
-            <Label>Active Quote:</Label>
+            <StackPanel Orientation="Horizontal">
+                <Label Grid.Column="0">Active Quote #:</Label>
+                <Label Grid.Column="1" Content="{Binding Path=SelectedQuote.Number}" FontWeight="Bold" />                
+            </StackPanel>
         </Border>
         
         <TabControl Name="tabs">
             <TabItem Header="Quotes">
                 <Quote:QuoteHistoryControl SelectedCompany="{Binding SelectedCompany}" />
             </TabItem>
-            <TabItem Header="Move Commodity" IsEnabled="False">
+            <TabItem Name="tabCommodities" Header="Commodities" IsEnabled="False">
                 <Quote:QuoteCommoditiesControl />
             </TabItem>                
-            <TabItem Header="Supplements" IsEnabled="False">
+            <TabItem Name="tabSupplements" Header="Supplements" IsEnabled="False">
                 <Quote:QuoteSupplements />
             </TabItem>            
             <TabItem Header="Storage" IsEnabled="False" />

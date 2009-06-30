@@ -12,6 +12,18 @@ namespace SingerDispatch.Panels.Quotes
     {       
         public static DependencyProperty SelectedQuoteProperty = DependencyProperty.Register("SelectedQuote", typeof(Quote), typeof(QuoteUserControl), new PropertyMetadata(null, QuoteUserControl.SelectedQuotePropertyChanged));
 
+        public Quote SelectedQuote
+        {
+            get
+            {
+                return (Quote)GetValue(SelectedQuoteProperty);
+            }
+            set
+            {
+                SetValue(SelectedQuoteProperty, value);
+            }
+        }
+
         public static void SelectedQuotePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             QuoteUserControl control = (QuoteUserControl)d;

@@ -43,7 +43,7 @@
         <GroupBox Name="panelCommodityDetails" Header="Commodity Details" Grid.Column="1" Grid.Row="0" Margin="0,0,0,5" DataContext="{Binding ElementName=dgCommodities, Path=SelectedItem}">            
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="125" />
+                    <ColumnDefinition Width="105" />
                     <ColumnDefinition />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
@@ -87,7 +87,7 @@
                 <GroupBox Header="Dimentions (meters/kg)" Grid.Row="0" Grid.Column="2" Grid.RowSpan="7" Margin="5,0,0,0">
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="90" />
+                            <ColumnDefinition Width="70" />
                             <ColumnDefinition />
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>                            

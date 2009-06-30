@@ -12,10 +12,10 @@
         </ResourceDictionary>
     </UserControl.Resources>
     <StackPanel>
-        <WPF:DataGrid Name="dgQuotes" Style="{StaticResource ListDisplay}" AutoGenerateColumns="False" Margin="0,0,0,5" MinHeight="200">
+        <WPF:DataGrid Name="dgQuotes" Style="{StaticResource ListDisplay}" AutoGenerateColumns="False" Margin="0,0,0,5" MinHeight="200" SelectionChanged="dgQuotes_SelectionChanged">
             <WPF:DataGrid.Columns>
-                <WPF:DataGridTextColumn Header="Quote #" Width="0.5*" Binding="{Binding Number}"/>
-                <WPF:DataGridTextColumn Header="Revision" Width="0.5*" Binding="{Binding Revision}"/>
+                <WPF:DataGridTextColumn Header="Quote #" Width="0.3*" Binding="{Binding Number}"/>
+                <WPF:DataGridTextColumn Header="Revision" Width="0.3*" Binding="{Binding Revision}"/>
                 <WPF:DataGridTextColumn Header="Description" Width="3*" Binding="{Binding Description}" />
             </WPF:DataGrid.Columns>
         </WPF:DataGrid>
@@ -28,11 +28,11 @@
                 <ColumnDefinition />                               
             </Grid.ColumnDefinitions>
             
-            <Button Grid.Column="0" >Create Quote</Button>
-            <Button Grid.Column="3">Print Quote</Button>
+            <Button Name="btnCreateQuote" Grid.Column="0" Click="btnCreateQuote_Click">Create Quote</Button>
+            <Button Name="btnPrintQuote" Grid.Column="3">Print Quote</Button>
         </Grid>
         
-        <Grid>
+        <Grid Name="panelQuoteDetails">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
                 <ColumnDefinition />                
@@ -42,7 +42,7 @@
                 <RowDefinition />
             </Grid.RowDefinitions>
                         
-            <GroupBox Header="Quote Details" Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Margin="5" DataContext="{Binding ElementName=dgQuotes, Path=SelectedItem}">
+            <GroupBox Header="Quote Details" Name="gbQuoteDetails" Grid.Column="0" Grid.Row="0" Margin="0,0,5,0">
                 <StackPanel>
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -70,42 +70,43 @@
                     </Grid>
                     
                     <Label>Care Of:</Label>
-                    <ComboBox></ComboBox>
+                    <ComboBox Name="cmbCareOfCompanies" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectionChanged="cmbCareOfCompanies_SelectionChanged" SelectedItem="{Binding Company1}" />
                     
                     <Label>Project Description</Label>
                     <TextBox Height="40" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Disabled" Text="{Binding Description}"/>
                 </StackPanel>    
             </GroupBox>
             
-            <GroupBox Header="Quote Timeline" Grid.Column="1" Grid.Row="0" Margin="0,5,5,5" DataContext="{Binding ElementName=dgQuotes, Path=SelectedItem}">
+            <GroupBox Header="Quote Timeline" Name="gbQuoteTimeline" Grid.Column="0" Grid.Row="1" Margin="0,5,0,5">
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition />
-                        <ColumnDefinition />
-                        <ColumnDefinition />
-                        <ColumnDefinition />
+                        <ColumnDefinition Width="43*" />
+                        <ColumnDefinition Width="52.75*" />
+                        <ColumnDefinition Width="96*" />
+                        <ColumnDefinition Width="96*" />
+                        <ColumnDefinition Width="96*" />
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition />
                         <RowDefinition />
                     </Grid.RowDefinitions>
                     
-                    <Label Grid.Column="0" Grid.Row="0">Creation Date:</Label>
-                    <WPF:DatePicker Name="dpCreationDate" Grid.Column="0" Grid.Row="1" Margin="2" SelectedDate="{Binding CreationDate}" />
+                    <Label Grid.ColumnSpan="3" Margin="0,0,95.625,0">Creation Date:</Label>
+                    <WPF:DatePicker Name="dpCreationDate" Grid.Row="1" SelectedDate="{Binding CreationDate}" Grid.ColumnSpan="2" />
                     
-                    <Label Grid.Column="1" Grid.Row="0">Expiration Date:</Label>
-                    <WPF:DatePicker Name="dpExpirationDate" Grid.Column="1" Grid.Row="1" Margin="2" SelectedDate="{Binding ExpirationDate}" />
+                    <Label Grid.Column="2" Grid.ColumnSpan="2">Expiration Date:</Label>
+                    <WPF:DatePicker Name="dpExpirationDate" Grid.Column="2" Grid.Row="1" Margin="2" SelectedDate="{Binding ExpirationDate}" />
                 </Grid>
     
             </GroupBox>
             
-            <GroupBox Header="Contact List" Grid.Column="1" Grid.Row="1" Margin="0,0,5,5">
+            <GroupBox Header="Contact List" Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" Margin="0,0,5,5">
                 <StackPanel>
-                    <WPF:DataGrid Name="dgQuoteContacts" Style="{StaticResource ListDisplay}" HorizontalScrollBarVisibility="Disabled" AutoGenerateColumns="False" MinHeight="75">
+                    <WPF:DataGrid Name="dgQuoteContacts" Style="{StaticResource ListDisplay}" HorizontalScrollBarVisibility="Disabled" AutoGenerateColumns="False" MinHeight="125" Margin="0,0,0,5">
                         <WPF:DataGrid.Columns>
-                            <WPF:DataGridTextColumn Header="First" Binding="{Binding FirstName}" />
-                            <WPF:DataGridTextColumn Header="Last" Binding="{Binding LastName}" />
-                            <WPF:DataGridTextColumn Header="Company" Binding="{Binding Address.Company.Name}" />                        
+                            <WPF:DataGridTextColumn Header="First" Binding="{Binding FirstName}" IsReadOnly="True" />
+                            <WPF:DataGridTextColumn Header="Last" Binding="{Binding LastName}" IsReadOnly="True" />
+                            <WPF:DataGridTextColumn Header="Company" Binding="{Binding Address.Company.Name}" IsReadOnly="True" />                        
                         </WPF:DataGrid.Columns>
                     </WPF:DataGrid>
                 
