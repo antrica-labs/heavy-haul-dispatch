@@ -4,7 +4,7 @@
     xmlns:WPF="http://schemas.microsoft.com/wpf/2008/toolkit"
     xmlns:Company="clr-namespace:SingerDispatch.Panels.Companies"
     x:Name="addressesAndContactsControl"
-    Loaded="Control_Loaded" Width="650">
+    Loaded="Control_Loaded" Width="750">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>

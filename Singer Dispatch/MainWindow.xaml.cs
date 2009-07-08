@@ -3,9 +3,10 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using SingerDispatch.Panels.Quotes;
 using SingerDispatch.Controls;
+using SingerDispatch.Panels.Quotes;
 using SingerDispatch.Panels.Companies;
+using SingerDispatch.Panels.Jobs;
 
 namespace SingerDispatch
 {
@@ -147,6 +148,20 @@ namespace SingerDispatch
             AddLinksToExpander(linksQuotes, panel.tabs.Items);
         }
 
-        
+
+        private void ExpandJobs(object sender, RoutedEventArgs e)
+        {
+            if (panelMainContent.Child is JobsPanel)
+            {
+                return;
+            }
+
+            CollapseAllOtherNavigationExpanders((Expander)sender);
+
+            JobsPanel panel = new JobsPanel();
+
+            panelMainContent.Child = panel;
+            AddLinksToExpander(linksJobs, panel.tabs.Items);   
+        }
     }
 }

@@ -69,9 +69,21 @@ namespace SingerDispatch
     partial void InsertService(Service instance);
     partial void UpdateService(Service instance);
     partial void DeleteService(Service instance);
+    partial void InsertUser(User instance);
+    partial void UpdateUser(User instance);
+    partial void DeleteUser(User instance);
     partial void InsertQuote(Quote instance);
     partial void UpdateQuote(Quote instance);
     partial void DeleteQuote(Quote instance);
+    partial void InsertQuoteCommodity(QuoteCommodity instance);
+    partial void UpdateQuoteCommodity(QuoteCommodity instance);
+    partial void DeleteQuoteCommodity(QuoteCommodity instance);
+    partial void InsertQuoteSupplement(QuoteSupplement instance);
+    partial void UpdateQuoteSupplement(QuoteSupplement instance);
+    partial void DeleteQuoteSupplement(QuoteSupplement instance);
+    partial void InsertBillingType(BillingType instance);
+    partial void UpdateBillingType(BillingType instance);
+    partial void DeleteBillingType(BillingType instance);
     #endregion
 		
 		public SingerDispatchDataContext() : 
@@ -208,11 +220,43 @@ namespace SingerDispatch
 			}
 		}
 		
+		public System.Data.Linq.Table<User> Users
+		{
+			get
+			{
+				return this.GetTable<User>();
+			}
+		}
+		
 		public System.Data.Linq.Table<Quote> Quotes
 		{
 			get
 			{
 				return this.GetTable<Quote>();
+			}
+		}
+		
+		public System.Data.Linq.Table<QuoteCommodity> QuoteCommodities
+		{
+			get
+			{
+				return this.GetTable<QuoteCommodity>();
+			}
+		}
+		
+		public System.Data.Linq.Table<QuoteSupplement> QuoteSupplements
+		{
+			get
+			{
+				return this.GetTable<QuoteSupplement>();
+			}
+		}
+		
+		public System.Data.Linq.Table<BillingType> BillingTypes
+		{
+			get
+			{
+				return this.GetTable<BillingType>();
 			}
 		}
 	}
@@ -3350,6 +3394,168 @@ namespace SingerDispatch
 		}
 	}
 	
+	[Table(Name="dbo.Users")]
+	public partial class User : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private long _ID;
+		
+		private string _FirstName;
+		
+		private string _LastName;
+		
+		private string _Email;
+		
+		private EntitySet<Quote> _Quotes;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDChanging(long value);
+    partial void OnIDChanged();
+    partial void OnFirstNameChanging(string value);
+    partial void OnFirstNameChanged();
+    partial void OnLastNameChanging(string value);
+    partial void OnLastNameChanged();
+    partial void OnEmailChanging(string value);
+    partial void OnEmailChanged();
+    #endregion
+		
+		public User()
+		{
+			this._Quotes = new EntitySet<Quote>(new Action<Quote>(this.attach_Quotes), new Action<Quote>(this.detach_Quotes));
+			OnCreated();
+		}
+		
+		[Column(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="BigInt NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public long ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this.OnIDChanging(value);
+					this.SendPropertyChanging();
+					this._ID = value;
+					this.SendPropertyChanged("ID");
+					this.OnIDChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_FirstName", DbType="VarChar(255)")]
+		public string FirstName
+		{
+			get
+			{
+				return this._FirstName;
+			}
+			set
+			{
+				if ((this._FirstName != value))
+				{
+					this.OnFirstNameChanging(value);
+					this.SendPropertyChanging();
+					this._FirstName = value;
+					this.SendPropertyChanged("FirstName");
+					this.OnFirstNameChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_LastName", DbType="VarChar(255)")]
+		public string LastName
+		{
+			get
+			{
+				return this._LastName;
+			}
+			set
+			{
+				if ((this._LastName != value))
+				{
+					this.OnLastNameChanging(value);
+					this.SendPropertyChanging();
+					this._LastName = value;
+					this.SendPropertyChanged("LastName");
+					this.OnLastNameChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_Email", DbType="VarChar(355)")]
+		public string Email
+		{
+			get
+			{
+				return this._Email;
+			}
+			set
+			{
+				if ((this._Email != value))
+				{
+					this.OnEmailChanging(value);
+					this.SendPropertyChanging();
+					this._Email = value;
+					this.SendPropertyChanged("Email");
+					this.OnEmailChanged();
+				}
+			}
+		}
+		
+		[Association(Name="User_Quote", Storage="_Quotes", OtherKey="QuotedByUserID")]
+		public EntitySet<Quote> Quotes
+		{
+			get
+			{
+				return this._Quotes;
+			}
+			set
+			{
+				this._Quotes.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_Quotes(Quote entity)
+		{
+			this.SendPropertyChanging();
+			entity.User = this;
+		}
+		
+		private void detach_Quotes(Quote entity)
+		{
+			this.SendPropertyChanging();
+			entity.User = null;
+		}
+	}
+	
 	[Table(Name="dbo.Quotes")]
 	public partial class Quote : INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -3372,9 +3578,17 @@ namespace SingerDispatch
 		
 		private System.Nullable<System.DateTime> _ExpirationDate;
 		
+		private System.Nullable<long> _QuotedByUserID;
+		
+		private EntitySet<QuoteCommodity> _QuoteCommodities;
+		
+		private EntitySet<QuoteSupplement> _QuoteSupplements;
+		
 		private EntityRef<Company> _Company;
 		
 		private EntityRef<Company> _Company1;
+		
+		private EntityRef<User> _User;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -3396,12 +3610,17 @@ namespace SingerDispatch
     partial void OnCreationDateChanged();
     partial void OnExpirationDateChanging(System.Nullable<System.DateTime> value);
     partial void OnExpirationDateChanged();
+    partial void OnQuotedByUserIDChanging(System.Nullable<long> value);
+    partial void OnQuotedByUserIDChanged();
     #endregion
 		
 		public Quote()
 		{
+			this._QuoteCommodities = new EntitySet<QuoteCommodity>(new Action<QuoteCommodity>(this.attach_QuoteCommodities), new Action<QuoteCommodity>(this.detach_QuoteCommodities));
+			this._QuoteSupplements = new EntitySet<QuoteSupplement>(new Action<QuoteSupplement>(this.attach_QuoteSupplements), new Action<QuoteSupplement>(this.detach_QuoteSupplements));
 			this._Company = default(EntityRef<Company>);
 			this._Company1 = default(EntityRef<Company>);
+			this._User = default(EntityRef<User>);
 			OnCreated();
 		}
 		
@@ -3573,6 +3792,56 @@ namespace SingerDispatch
 			}
 		}
 		
+		[Column(Storage="_QuotedByUserID", DbType="BigInt")]
+		public System.Nullable<long> QuotedByUserID
+		{
+			get
+			{
+				return this._QuotedByUserID;
+			}
+			set
+			{
+				if ((this._QuotedByUserID != value))
+				{
+					if (this._User.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnQuotedByUserIDChanging(value);
+					this.SendPropertyChanging();
+					this._QuotedByUserID = value;
+					this.SendPropertyChanged("QuotedByUserID");
+					this.OnQuotedByUserIDChanged();
+				}
+			}
+		}
+		
+		[Association(Name="Quote_QuoteCommodity", Storage="_QuoteCommodities", OtherKey="QuoteID")]
+		public EntitySet<QuoteCommodity> QuoteCommodities
+		{
+			get
+			{
+				return this._QuoteCommodities;
+			}
+			set
+			{
+				this._QuoteCommodities.Assign(value);
+			}
+		}
+		
+		[Association(Name="Quote_QuoteSupplement", Storage="_QuoteSupplements", OtherKey="QuoteID")]
+		public EntitySet<QuoteSupplement> QuoteSupplements
+		{
+			get
+			{
+				return this._QuoteSupplements;
+			}
+			set
+			{
+				this._QuoteSupplements.Assign(value);
+			}
+		}
+		
 		[Association(Name="Company_Quote", Storage="_Company", ThisKey="CompanyID", IsForeignKey=true, DeleteOnNull=true, DeleteRule="CASCADE")]
 		public Company Company
 		{
@@ -3641,6 +3910,40 @@ namespace SingerDispatch
 			}
 		}
 		
+		[Association(Name="User_Quote", Storage="_User", ThisKey="QuotedByUserID", IsForeignKey=true)]
+		public User User
+		{
+			get
+			{
+				return this._User.Entity;
+			}
+			set
+			{
+				User previousValue = this._User.Entity;
+				if (((previousValue != value) 
+							|| (this._User.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._User.Entity = null;
+						previousValue.Quotes.Remove(this);
+					}
+					this._User.Entity = value;
+					if ((value != null))
+					{
+						value.Quotes.Add(this);
+						this._QuotedByUserID = value.ID;
+					}
+					else
+					{
+						this._QuotedByUserID = default(Nullable<long>);
+					}
+					this.SendPropertyChanged("User");
+				}
+			}
+		}
+		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -3659,6 +3962,1039 @@ namespace SingerDispatch
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
+		}
+		
+		private void attach_QuoteCommodities(QuoteCommodity entity)
+		{
+			this.SendPropertyChanging();
+			entity.Quote = this;
+		}
+		
+		private void detach_QuoteCommodities(QuoteCommodity entity)
+		{
+			this.SendPropertyChanging();
+			entity.Quote = null;
+		}
+		
+		private void attach_QuoteSupplements(QuoteSupplement entity)
+		{
+			this.SendPropertyChanging();
+			entity.Quote = this;
+		}
+		
+		private void detach_QuoteSupplements(QuoteSupplement entity)
+		{
+			this.SendPropertyChanging();
+			entity.Quote = null;
+		}
+	}
+	
+	[Table(Name="dbo.QuoteCommodities")]
+	public partial class QuoteCommodity : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private long _ID;
+		
+		private long _QuoteID;
+		
+		private System.Nullable<long> _OriginalCommodityID;
+		
+		private string _DepartureSiteName;
+		
+		private string _DepartureAddress;
+		
+		private string _ArrivalSiteName;
+		
+		private string _ArrivalAddress;
+		
+		private string _Name;
+		
+		private System.Nullable<decimal> _Value;
+		
+		private string _Serial;
+		
+		private string _Unit;
+		
+		private string _Owner;
+		
+		private System.Nullable<double> _Length;
+		
+		private System.Nullable<double> _Width;
+		
+		private System.Nullable<double> _Height;
+		
+		private System.Nullable<double> _Weight;
+		
+		private System.Nullable<byte> _SizeEstimated;
+		
+		private System.Nullable<byte> _WeightEstimated;
+		
+		private System.Nullable<int> _Quantity;
+		
+		private System.Nullable<decimal> _CostPerItem;
+		
+		private string _Notes;
+		
+		private EntityRef<Quote> _Quote;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDChanging(long value);
+    partial void OnIDChanged();
+    partial void OnQuoteIDChanging(long value);
+    partial void OnQuoteIDChanged();
+    partial void OnOriginalCommodityIDChanging(System.Nullable<long> value);
+    partial void OnOriginalCommodityIDChanged();
+    partial void OnDepartureSiteNameChanging(string value);
+    partial void OnDepartureSiteNameChanged();
+    partial void OnDepartureAddressChanging(string value);
+    partial void OnDepartureAddressChanged();
+    partial void OnArrivalSiteNameChanging(string value);
+    partial void OnArrivalSiteNameChanged();
+    partial void OnArrivalAddressChanging(string value);
+    partial void OnArrivalAddressChanged();
+    partial void OnNameChanging(string value);
+    partial void OnNameChanged();
+    partial void OnValueChanging(System.Nullable<decimal> value);
+    partial void OnValueChanged();
+    partial void OnSerialChanging(string value);
+    partial void OnSerialChanged();
+    partial void OnUnitChanging(string value);
+    partial void OnUnitChanged();
+    partial void OnOwnerChanging(string value);
+    partial void OnOwnerChanged();
+    partial void OnLengthChanging(System.Nullable<double> value);
+    partial void OnLengthChanged();
+    partial void OnWidthChanging(System.Nullable<double> value);
+    partial void OnWidthChanged();
+    partial void OnHeightChanging(System.Nullable<double> value);
+    partial void OnHeightChanged();
+    partial void OnWeightChanging(System.Nullable<double> value);
+    partial void OnWeightChanged();
+    partial void OnSizeEstimatedChanging(System.Nullable<byte> value);
+    partial void OnSizeEstimatedChanged();
+    partial void OnWeightEstimatedChanging(System.Nullable<byte> value);
+    partial void OnWeightEstimatedChanged();
+    partial void OnQuantityChanging(System.Nullable<int> value);
+    partial void OnQuantityChanged();
+    partial void OnCostPerItemChanging(System.Nullable<decimal> value);
+    partial void OnCostPerItemChanged();
+    partial void OnNotesChanging(string value);
+    partial void OnNotesChanged();
+    #endregion
+		
+		public QuoteCommodity()
+		{
+			this._Quote = default(EntityRef<Quote>);
+			OnCreated();
+		}
+		
+		[Column(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="BigInt NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public long ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this.OnIDChanging(value);
+					this.SendPropertyChanging();
+					this._ID = value;
+					this.SendPropertyChanged("ID");
+					this.OnIDChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_QuoteID", DbType="BigInt NOT NULL")]
+		public long QuoteID
+		{
+			get
+			{
+				return this._QuoteID;
+			}
+			set
+			{
+				if ((this._QuoteID != value))
+				{
+					if (this._Quote.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnQuoteIDChanging(value);
+					this.SendPropertyChanging();
+					this._QuoteID = value;
+					this.SendPropertyChanged("QuoteID");
+					this.OnQuoteIDChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_OriginalCommodityID", DbType="BigInt")]
+		public System.Nullable<long> OriginalCommodityID
+		{
+			get
+			{
+				return this._OriginalCommodityID;
+			}
+			set
+			{
+				if ((this._OriginalCommodityID != value))
+				{
+					this.OnOriginalCommodityIDChanging(value);
+					this.SendPropertyChanging();
+					this._OriginalCommodityID = value;
+					this.SendPropertyChanged("OriginalCommodityID");
+					this.OnOriginalCommodityIDChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_DepartureSiteName", DbType="VarChar(255)")]
+		public string DepartureSiteName
+		{
+			get
+			{
+				return this._DepartureSiteName;
+			}
+			set
+			{
+				if ((this._DepartureSiteName != value))
+				{
+					this.OnDepartureSiteNameChanging(value);
+					this.SendPropertyChanging();
+					this._DepartureSiteName = value;
+					this.SendPropertyChanged("DepartureSiteName");
+					this.OnDepartureSiteNameChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_DepartureAddress", DbType="VarChar(255)")]
+		public string DepartureAddress
+		{
+			get
+			{
+				return this._DepartureAddress;
+			}
+			set
+			{
+				if ((this._DepartureAddress != value))
+				{
+					this.OnDepartureAddressChanging(value);
+					this.SendPropertyChanging();
+					this._DepartureAddress = value;
+					this.SendPropertyChanged("DepartureAddress");
+					this.OnDepartureAddressChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_ArrivalSiteName", DbType="VarChar(255)")]
+		public string ArrivalSiteName
+		{
+			get
+			{
+				return this._ArrivalSiteName;
+			}
+			set
+			{
+				if ((this._ArrivalSiteName != value))
+				{
+					this.OnArrivalSiteNameChanging(value);
+					this.SendPropertyChanging();
+					this._ArrivalSiteName = value;
+					this.SendPropertyChanged("ArrivalSiteName");
+					this.OnArrivalSiteNameChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_ArrivalAddress", DbType="VarChar(255)")]
+		public string ArrivalAddress
+		{
+			get
+			{
+				return this._ArrivalAddress;
+			}
+			set
+			{
+				if ((this._ArrivalAddress != value))
+				{
+					this.OnArrivalAddressChanging(value);
+					this.SendPropertyChanging();
+					this._ArrivalAddress = value;
+					this.SendPropertyChanged("ArrivalAddress");
+					this.OnArrivalAddressChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_Name", DbType="VarChar(255)")]
+		public string Name
+		{
+			get
+			{
+				return this._Name;
+			}
+			set
+			{
+				if ((this._Name != value))
+				{
+					this.OnNameChanging(value);
+					this.SendPropertyChanging();
+					this._Name = value;
+					this.SendPropertyChanged("Name");
+					this.OnNameChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_Value", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> Value
+		{
+			get
+			{
+				return this._Value;
+			}
+			set
+			{
+				if ((this._Value != value))
+				{
+					this.OnValueChanging(value);
+					this.SendPropertyChanging();
+					this._Value = value;
+					this.SendPropertyChanged("Value");
+					this.OnValueChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_Serial", DbType="VarChar(255)")]
+		public string Serial
+		{
+			get
+			{
+				return this._Serial;
+			}
+			set
+			{
+				if ((this._Serial != value))
+				{
+					this.OnSerialChanging(value);
+					this.SendPropertyChanging();
+					this._Serial = value;
+					this.SendPropertyChanged("Serial");
+					this.OnSerialChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_Unit", DbType="VarChar(255)")]
+		public string Unit
+		{
+			get
+			{
+				return this._Unit;
+			}
+			set
+			{
+				if ((this._Unit != value))
+				{
+					this.OnUnitChanging(value);
+					this.SendPropertyChanging();
+					this._Unit = value;
+					this.SendPropertyChanged("Unit");
+					this.OnUnitChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_Owner", DbType="VarChar(255)")]
+		public string Owner
+		{
+			get
+			{
+				return this._Owner;
+			}
+			set
+			{
+				if ((this._Owner != value))
+				{
+					this.OnOwnerChanging(value);
+					this.SendPropertyChanging();
+					this._Owner = value;
+					this.SendPropertyChanged("Owner");
+					this.OnOwnerChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_Length", DbType="Float")]
+		public System.Nullable<double> Length
+		{
+			get
+			{
+				return this._Length;
+			}
+			set
+			{
+				if ((this._Length != value))
+				{
+					this.OnLengthChanging(value);
+					this.SendPropertyChanging();
+					this._Length = value;
+					this.SendPropertyChanged("Length");
+					this.OnLengthChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_Width", DbType="Float")]
+		public System.Nullable<double> Width
+		{
+			get
+			{
+				return this._Width;
+			}
+			set
+			{
+				if ((this._Width != value))
+				{
+					this.OnWidthChanging(value);
+					this.SendPropertyChanging();
+					this._Width = value;
+					this.SendPropertyChanged("Width");
+					this.OnWidthChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_Height", DbType="Float")]
+		public System.Nullable<double> Height
+		{
+			get
+			{
+				return this._Height;
+			}
+			set
+			{
+				if ((this._Height != value))
+				{
+					this.OnHeightChanging(value);
+					this.SendPropertyChanging();
+					this._Height = value;
+					this.SendPropertyChanged("Height");
+					this.OnHeightChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_Weight", DbType="Float")]
+		public System.Nullable<double> Weight
+		{
+			get
+			{
+				return this._Weight;
+			}
+			set
+			{
+				if ((this._Weight != value))
+				{
+					this.OnWeightChanging(value);
+					this.SendPropertyChanging();
+					this._Weight = value;
+					this.SendPropertyChanged("Weight");
+					this.OnWeightChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_SizeEstimated", DbType="TinyInt")]
+		public System.Nullable<byte> SizeEstimated
+		{
+			get
+			{
+				return this._SizeEstimated;
+			}
+			set
+			{
+				if ((this._SizeEstimated != value))
+				{
+					this.OnSizeEstimatedChanging(value);
+					this.SendPropertyChanging();
+					this._SizeEstimated = value;
+					this.SendPropertyChanged("SizeEstimated");
+					this.OnSizeEstimatedChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_WeightEstimated", DbType="TinyInt")]
+		public System.Nullable<byte> WeightEstimated
+		{
+			get
+			{
+				return this._WeightEstimated;
+			}
+			set
+			{
+				if ((this._WeightEstimated != value))
+				{
+					this.OnWeightEstimatedChanging(value);
+					this.SendPropertyChanging();
+					this._WeightEstimated = value;
+					this.SendPropertyChanged("WeightEstimated");
+					this.OnWeightEstimatedChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_Quantity", DbType="Int")]
+		public System.Nullable<int> Quantity
+		{
+			get
+			{
+				return this._Quantity;
+			}
+			set
+			{
+				if ((this._Quantity != value))
+				{
+					this.OnQuantityChanging(value);
+					this.SendPropertyChanging();
+					this._Quantity = value;
+					this.SendPropertyChanged("Quantity");
+					this.OnQuantityChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_CostPerItem", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> CostPerItem
+		{
+			get
+			{
+				return this._CostPerItem;
+			}
+			set
+			{
+				if ((this._CostPerItem != value))
+				{
+					this.OnCostPerItemChanging(value);
+					this.SendPropertyChanging();
+					this._CostPerItem = value;
+					this.SendPropertyChanged("CostPerItem");
+					this.OnCostPerItemChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_Notes", DbType="Text", UpdateCheck=UpdateCheck.Never)]
+		public string Notes
+		{
+			get
+			{
+				return this._Notes;
+			}
+			set
+			{
+				if ((this._Notes != value))
+				{
+					this.OnNotesChanging(value);
+					this.SendPropertyChanging();
+					this._Notes = value;
+					this.SendPropertyChanged("Notes");
+					this.OnNotesChanged();
+				}
+			}
+		}
+		
+		[Association(Name="Quote_QuoteCommodity", Storage="_Quote", ThisKey="QuoteID", IsForeignKey=true)]
+		public Quote Quote
+		{
+			get
+			{
+				return this._Quote.Entity;
+			}
+			set
+			{
+				Quote previousValue = this._Quote.Entity;
+				if (((previousValue != value) 
+							|| (this._Quote.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Quote.Entity = null;
+						previousValue.QuoteCommodities.Remove(this);
+					}
+					this._Quote.Entity = value;
+					if ((value != null))
+					{
+						value.QuoteCommodities.Add(this);
+						this._QuoteID = value.ID;
+					}
+					else
+					{
+						this._QuoteID = default(long);
+					}
+					this.SendPropertyChanged("Quote");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[Table(Name="dbo.QuoteSupplements")]
+	public partial class QuoteSupplement : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private long _ID;
+		
+		private long _QuoteID;
+		
+		private string _Name;
+		
+		private string _Details;
+		
+		private System.Nullable<long> _BillingTypeID;
+		
+		private System.Nullable<byte> _IsCostIncluded;
+		
+		private System.Nullable<int> _Quantity;
+		
+		private System.Nullable<decimal> _CostPerItem;
+		
+		private EntityRef<Quote> _Quote;
+		
+		private EntityRef<BillingType> _BillingType;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDChanging(long value);
+    partial void OnIDChanged();
+    partial void OnQuoteIDChanging(long value);
+    partial void OnQuoteIDChanged();
+    partial void OnNameChanging(string value);
+    partial void OnNameChanged();
+    partial void OnDetailsChanging(string value);
+    partial void OnDetailsChanged();
+    partial void OnBillingTypeIDChanging(System.Nullable<long> value);
+    partial void OnBillingTypeIDChanged();
+    partial void OnIsCostIncludedChanging(System.Nullable<byte> value);
+    partial void OnIsCostIncludedChanged();
+    partial void OnQuantityChanging(System.Nullable<int> value);
+    partial void OnQuantityChanged();
+    partial void OnCostPerItemChanging(System.Nullable<decimal> value);
+    partial void OnCostPerItemChanged();
+    #endregion
+		
+		public QuoteSupplement()
+		{
+			this._Quote = default(EntityRef<Quote>);
+			this._BillingType = default(EntityRef<BillingType>);
+			OnCreated();
+		}
+		
+		[Column(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="BigInt NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public long ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this.OnIDChanging(value);
+					this.SendPropertyChanging();
+					this._ID = value;
+					this.SendPropertyChanged("ID");
+					this.OnIDChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_QuoteID", DbType="BigInt NOT NULL")]
+		public long QuoteID
+		{
+			get
+			{
+				return this._QuoteID;
+			}
+			set
+			{
+				if ((this._QuoteID != value))
+				{
+					if (this._Quote.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnQuoteIDChanging(value);
+					this.SendPropertyChanging();
+					this._QuoteID = value;
+					this.SendPropertyChanged("QuoteID");
+					this.OnQuoteIDChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_Name", DbType="VarChar(255)")]
+		public string Name
+		{
+			get
+			{
+				return this._Name;
+			}
+			set
+			{
+				if ((this._Name != value))
+				{
+					this.OnNameChanging(value);
+					this.SendPropertyChanging();
+					this._Name = value;
+					this.SendPropertyChanged("Name");
+					this.OnNameChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_Details", DbType="VarChar(700)")]
+		public string Details
+		{
+			get
+			{
+				return this._Details;
+			}
+			set
+			{
+				if ((this._Details != value))
+				{
+					this.OnDetailsChanging(value);
+					this.SendPropertyChanging();
+					this._Details = value;
+					this.SendPropertyChanged("Details");
+					this.OnDetailsChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_BillingTypeID", DbType="BigInt")]
+		public System.Nullable<long> BillingTypeID
+		{
+			get
+			{
+				return this._BillingTypeID;
+			}
+			set
+			{
+				if ((this._BillingTypeID != value))
+				{
+					if (this._BillingType.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnBillingTypeIDChanging(value);
+					this.SendPropertyChanging();
+					this._BillingTypeID = value;
+					this.SendPropertyChanged("BillingTypeID");
+					this.OnBillingTypeIDChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_IsCostIncluded", DbType="TinyInt")]
+		public System.Nullable<byte> IsCostIncluded
+		{
+			get
+			{
+				return this._IsCostIncluded;
+			}
+			set
+			{
+				if ((this._IsCostIncluded != value))
+				{
+					this.OnIsCostIncludedChanging(value);
+					this.SendPropertyChanging();
+					this._IsCostIncluded = value;
+					this.SendPropertyChanged("IsCostIncluded");
+					this.OnIsCostIncludedChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_Quantity", DbType="Int")]
+		public System.Nullable<int> Quantity
+		{
+			get
+			{
+				return this._Quantity;
+			}
+			set
+			{
+				if ((this._Quantity != value))
+				{
+					this.OnQuantityChanging(value);
+					this.SendPropertyChanging();
+					this._Quantity = value;
+					this.SendPropertyChanged("Quantity");
+					this.OnQuantityChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_CostPerItem", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> CostPerItem
+		{
+			get
+			{
+				return this._CostPerItem;
+			}
+			set
+			{
+				if ((this._CostPerItem != value))
+				{
+					this.OnCostPerItemChanging(value);
+					this.SendPropertyChanging();
+					this._CostPerItem = value;
+					this.SendPropertyChanged("CostPerItem");
+					this.OnCostPerItemChanged();
+				}
+			}
+		}
+		
+		[Association(Name="Quote_QuoteSupplement", Storage="_Quote", ThisKey="QuoteID", IsForeignKey=true)]
+		public Quote Quote
+		{
+			get
+			{
+				return this._Quote.Entity;
+			}
+			set
+			{
+				Quote previousValue = this._Quote.Entity;
+				if (((previousValue != value) 
+							|| (this._Quote.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Quote.Entity = null;
+						previousValue.QuoteSupplements.Remove(this);
+					}
+					this._Quote.Entity = value;
+					if ((value != null))
+					{
+						value.QuoteSupplements.Add(this);
+						this._QuoteID = value.ID;
+					}
+					else
+					{
+						this._QuoteID = default(long);
+					}
+					this.SendPropertyChanged("Quote");
+				}
+			}
+		}
+		
+		[Association(Name="BillingType_QuoteSupplement", Storage="_BillingType", ThisKey="BillingTypeID", IsForeignKey=true)]
+		public BillingType BillingType
+		{
+			get
+			{
+				return this._BillingType.Entity;
+			}
+			set
+			{
+				BillingType previousValue = this._BillingType.Entity;
+				if (((previousValue != value) 
+							|| (this._BillingType.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._BillingType.Entity = null;
+						previousValue.QuoteSupplements.Remove(this);
+					}
+					this._BillingType.Entity = value;
+					if ((value != null))
+					{
+						value.QuoteSupplements.Add(this);
+						this._BillingTypeID = value.ID;
+					}
+					else
+					{
+						this._BillingTypeID = default(Nullable<long>);
+					}
+					this.SendPropertyChanged("BillingType");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[Table(Name="dbo.BillingTypes")]
+	public partial class BillingType : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private long _ID;
+		
+		private string _Name;
+		
+		private EntitySet<QuoteSupplement> _QuoteSupplements;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDChanging(long value);
+    partial void OnIDChanged();
+    partial void OnNameChanging(string value);
+    partial void OnNameChanged();
+    #endregion
+		
+		public BillingType()
+		{
+			this._QuoteSupplements = new EntitySet<QuoteSupplement>(new Action<QuoteSupplement>(this.attach_QuoteSupplements), new Action<QuoteSupplement>(this.detach_QuoteSupplements));
+			OnCreated();
+		}
+		
+		[Column(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="BigInt NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public long ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this.OnIDChanging(value);
+					this.SendPropertyChanging();
+					this._ID = value;
+					this.SendPropertyChanged("ID");
+					this.OnIDChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_Name", DbType="VarChar(50)")]
+		public string Name
+		{
+			get
+			{
+				return this._Name;
+			}
+			set
+			{
+				if ((this._Name != value))
+				{
+					this.OnNameChanging(value);
+					this.SendPropertyChanging();
+					this._Name = value;
+					this.SendPropertyChanged("Name");
+					this.OnNameChanged();
+				}
+			}
+		}
+		
+		[Association(Name="BillingType_QuoteSupplement", Storage="_QuoteSupplements", OtherKey="BillingTypeID")]
+		public EntitySet<QuoteSupplement> QuoteSupplements
+		{
+			get
+			{
+				return this._QuoteSupplements;
+			}
+			set
+			{
+				this._QuoteSupplements.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_QuoteSupplements(QuoteSupplement entity)
+		{
+			this.SendPropertyChanging();
+			entity.BillingType = this;
+		}
+		
+		private void detach_QuoteSupplements(QuoteSupplement entity)
+		{
+			this.SendPropertyChanging();
+			entity.BillingType = null;
 		}
 	}
 }

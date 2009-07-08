@@ -39,7 +39,7 @@
                     <Expander Name="expanderQuotes" Header="Quotes" Style="{StaticResource SectionExpander}" Expanded="ExpandQuotes">
                         <StackPanel Name="linksQuotes" Style="{StaticResource SectionExpanderContent}" VerticalAlignment="Top"></StackPanel>
                     </Expander>
-                    <Expander Name="expanderJobs" Header="Jobs" Style="{StaticResource SectionExpander}" IsEnabled="False">
+                    <Expander Name="expanderJobs" Header="Jobs" Style="{StaticResource SectionExpander}" Expanded="ExpandJobs">
                         <StackPanel Name="linksJobs" Style="{StaticResource SectionExpanderContent}" VerticalAlignment="Top"></StackPanel>
                     </Expander>
                     <Expander Name="expanderBilling" Header="Billing" Style="{StaticResource SectionExpander}" IsEnabled="False">

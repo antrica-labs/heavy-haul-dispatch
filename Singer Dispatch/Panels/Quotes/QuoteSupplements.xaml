@@ -2,7 +2,8 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:WPF="http://schemas.microsoft.com/wpf/2008/toolkit"
-    xmlns:Quotes="clr-namespace:SingerDispatch.Panels.Quotes">
+    xmlns:Quotes="clr-namespace:SingerDispatch.Panels.Quotes"
+    Loaded="QuoteUserControl_Loaded" Width="750">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -11,12 +12,13 @@
         </ResourceDictionary>
     </UserControl.Resources>
     <StackPanel>
-        <WPF:DataGrid Style="{StaticResource ListDisplay}" AutoGenerateColumns="False" Margin="0,0,0,5" MinHeight="200">
+        <WPF:DataGrid Name="dgSupplements" Style="{StaticResource ListDisplay}" SelectionChanged="dgSupplements_SelectionChanged" RowEditEnding="DataGridCommit" AutoGenerateColumns="False" Margin="0,0,0,5" MinHeight="200">
             <WPF:DataGrid.Columns>
-                <WPF:DataGridTextColumn Header="Name" />
-                <WPF:DataGridTextColumn Header="Description" />
-                <WPF:DataGridTextColumn Header="Quantity" />
-                <WPF:DataGridTextColumn Header="Cost" />
+                <WPF:DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
+                <WPF:DataGridTextColumn Header="Details" Binding="{Binding Details}" />
+                <WPF:DataGridTextColumn Header="Billing Type" Binding="{Binding BillingType.Name}" IsReadOnly="True" />
+                <WPF:DataGridTextColumn Header="Quantity" Binding="{Binding Quantity}" />
+                <WPF:DataGridTextColumn Header="Cost" Binding="{Binding CostPerItem}" />
             </WPF:DataGrid.Columns>   
         </WPF:DataGrid>
 
@@ -28,11 +30,11 @@
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
 
-            <Button Grid.Column="0">New Supplement</Button>
-            <Button Grid.Column="3">Remove Supplement</Button>
+            <Button Name="btnNewSupplement" Grid.Column="0" Click="btnNewSupplement_Click">New Supplement</Button>
+            <Button Name="btnRemoveSupplement"  Grid.Column="3" Click="btnRemoveSupplement_Click">Remove Supplement</Button>
         </Grid>
 
-        <GroupBox Header="Supplement Details" Margin="0,0,0,10">
+        <GroupBox Name="grpSupplementDetails" Header="Supplement Details" Margin="0,0,0,10">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="75" />
@@ -47,26 +49,22 @@
                 </Grid.RowDefinitions>
                                 
                 <Label Grid.Row="0" Grid.Column="0">Name:</Label>
-                <TextBox Grid.Row="0" Grid.Column="1" />
+                <TextBox Name="txtName" Grid.Row="0" Grid.Column="1" Text="{Binding Name}" />
                 
-                <Label Grid.Row="1" Grid.Column="0">Description:</Label>
-                <TextBox Grid.Row="1" Grid.Column="1" />
-                                
-                <Label Grid.Row="0" Grid.Column="2">Quantity:</Label>
-                <TextBox Grid.Row="0" Grid.Column="3"/>
+                <Label Grid.Row="1" Grid.Column="0">Details:</Label>
+                <TextBox Name="txtDetails" Grid.Row="1" Grid.Column="1" Text="{Binding Details}" />
+                        
+                <Label Grid.Row="0" Grid.Column="2">Billing Type:</Label>
+                <ComboBox Name="cmbBillingType" Grid.Row="0" Grid.Column="3" SelectedItem="{Binding BillingType}" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectionChanged="cmbBillingType_SelectionChanged" />
                 
-                <Label Grid.Row="1" Grid.Column="2">Cost Per:</Label>
-                <TextBox Grid.Row="1" Grid.Column="3"/>
-
-                <Label Grid.Row="2" Grid.Column="2">Billing Type:</Label>
-                <ComboBox Grid.Row="2" Grid.Column="3">
-                    <ComboBoxItem>Per hour</ComboBoxItem>
-                    <ComboBoxItem>Per item</ComboBoxItem>
-                    <ComboBoxItem>Cost included</ComboBoxItem>
-                </ComboBox>
+                <Label Grid.Row="1" Grid.Column="2">Quantity:</Label>
+                <TextBox Name="txtQuantity" Grid.Row="1" Grid.Column="3" Text="{Binding Quantity}" />
+                
+                <Label Grid.Row="2" Grid.Column="2">Cost:</Label>
+                <TextBox Name="txtCostPerItem" Grid.Row="2" Grid.Column="3" Text="{Binding CostPerItem}" />                
             </Grid>
         </GroupBox>
 
-        <Button>Save Supplement</Button>
+        <Button Name="btnSave" Click="btnSave_Click">Save Supplement</Button>
     </StackPanel>
 </Quotes:QuoteUserControl>

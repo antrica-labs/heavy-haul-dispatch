@@ -153,6 +153,15 @@
       <Association Name="ServiceType_Service" Member="ServiceType" ThisKey="ServiceTypeID" Type="ServiceType" IsForeignKey="true" />
     </Type>
   </Table>
+  <Table Name="dbo.Users" Member="Users">
+    <Type Name="User">
+      <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="FirstName" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Column Name="LastName" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Column Name="Email" Type="System.String" DbType="VarChar(355)" CanBeNull="true" />
+      <Association Name="User_Quote" Member="Quotes" OtherKey="QuotedByUserID" Type="Quote" />
+    </Type>
+  </Table>
   <Table Name="dbo.Quotes" Member="Quotes">
     <Type Name="Quote">
       <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -163,8 +172,59 @@
       <Column Name="Description" Type="System.String" DbType="VarChar(1000)" CanBeNull="true" />
       <Column Name="CreationDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
       <Column Name="ExpirationDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="QuotedByUserID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Association Name="Quote_QuoteCommodity" Member="QuoteCommodities" OtherKey="QuoteID" Type="QuoteCommodity" />
+      <Association Name="Quote_QuoteSupplement" Member="QuoteSupplements" OtherKey="QuoteID" Type="QuoteSupplement" />
       <Association Name="Company_Quote" Member="Company" ThisKey="CompanyID" Type="Company" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
       <Association Name="Company_Quote1" Member="Company1" ThisKey="CareOfCompanyID" Type="Company" IsForeignKey="true" />
+      <Association Name="User_Quote" Member="User" ThisKey="QuotedByUserID" Type="User" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.QuoteCommodities" Member="QuoteCommodities">
+    <Type Name="QuoteCommodity">
+      <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="QuoteID" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="OriginalCommodityID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="DepartureSiteName" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Column Name="DepartureAddress" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Column Name="ArrivalSiteName" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Column Name="ArrivalAddress" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Column Name="Value" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="Serial" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Column Name="Unit" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Column Name="Owner" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Column Name="Length" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Width" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Height" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Weight" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="SizeEstimated" Type="System.Byte" DbType="TinyInt" CanBeNull="true" />
+      <Column Name="WeightEstimated" Type="System.Byte" DbType="TinyInt" CanBeNull="true" />
+      <Column Name="Quantity" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="CostPerItem" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="Notes" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
+      <Association Name="Quote_QuoteCommodity" Member="Quote" ThisKey="QuoteID" Type="Quote" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.QuoteSupplements" Member="QuoteSupplements">
+    <Type Name="QuoteSupplement">
+      <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="QuoteID" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Column Name="Details" Type="System.String" DbType="VarChar(700)" CanBeNull="true" />
+      <Column Name="BillingTypeID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="IsCostIncluded" Type="System.Byte" DbType="TinyInt" CanBeNull="true" />
+      <Column Name="Quantity" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="CostPerItem" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Association Name="Quote_QuoteSupplement" Member="Quote" ThisKey="QuoteID" Type="Quote" IsForeignKey="true" />
+      <Association Name="BillingType_QuoteSupplement" Member="BillingType" ThisKey="BillingTypeID" Type="BillingType" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.BillingTypes" Member="BillingTypes">
+    <Type Name="BillingType">
+      <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Association Name="BillingType_QuoteSupplement" Member="QuoteSupplements" OtherKey="BillingTypeID" Type="QuoteSupplement" />
     </Type>
   </Table>
 </Database>

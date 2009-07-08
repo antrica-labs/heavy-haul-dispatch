@@ -14,16 +14,16 @@
     <StackPanel DataContext="{Binding ElementName=companiesPanel}">        
         <TabControl Name="tabs">
             <TabItem Header="Addresses &amp; Contacts">
-                <Company:AddressesAndContactsControl SelectedCompany="{Binding Path=SelectedCompany}" />
+                <Company:AddressesAndContactsControl SelectedCompany="{Binding Path=SelectedCompany}" Width="Auto" Height="Auto" />
             </TabItem>
             <TabItem Header="Commodities">
-                <Company:CommoditiesControl SelectedCompany="{Binding Path=SelectedCompany}" />
+                <Company:CommoditiesControl SelectedCompany="{Binding Path=SelectedCompany}" Width="Auto" Height="Auto" />
             </TabItem>
             <TabItem Header="Services">
-                <Company:ServicesControl />
+                <Company:ServicesControl Width="Auto" Height="Auto" />
             </TabItem>
             <TabItem Header="Credit &amp; Rates">
-                <Company:CreditAndRatesControl SelectedCompany="{Binding Path=SelectedCompany}" />
+                <Company:CreditAndRatesControl SelectedCompany="{Binding Path=SelectedCompany}" Width="Auto" Height="Auto" />
             </TabItem>
         </TabControl>
     </StackPanel>

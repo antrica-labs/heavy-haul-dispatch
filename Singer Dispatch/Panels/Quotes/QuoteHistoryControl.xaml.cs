@@ -1,17 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
 using SingerDispatch.Panels.Companies;
+using System.Collections;
+using System.Collections.ObjectModel;
 
 namespace SingerDispatch.Panels.Quotes
 {
@@ -30,8 +24,9 @@ namespace SingerDispatch.Panels.Quotes
         }
 
         private void ControlLoaded(object sender, RoutedEventArgs e)
-        {            
+        {
             dgQuoteContacts.ItemsSource = (from c in database.Contacts select c).ToList();
+            cmbQuotedBy.ItemsSource = (from u in database.Users select u).ToList();
         }
 
         private void EmailClick(object sender, RequestNavigateEventArgs e)
@@ -44,7 +39,7 @@ namespace SingerDispatch.Panels.Quotes
 
             if (newValue != null)
             {
-                dgQuotes.ItemsSource = newValue.Quotes;
+                dgQuotes.ItemsSource = new ObservableCollection<Quote>(newValue.Quotes);
                 cmbCareOfCompanies.ItemsSource = (from c in database.Companies where c.ID != newValue.ID select c).ToList();                
                 dgQuoteContacts.ItemsSource = (from c in database.Contacts where c.Address.Company == newValue orderby c.LastName, c.FirstName select c).ToList();
             }
@@ -69,6 +64,7 @@ namespace SingerDispatch.Panels.Quotes
             quote.CreationDate = DateTime.Now;
             quote.ExpirationDate = DateTime.Now.AddDays(30);
 
+            dgQuotes.SelectedItem = null;
             panelQuoteDetails.DataContext = quote;
         }
 
@@ -103,6 +99,16 @@ namespace SingerDispatch.Panels.Quotes
             {
                 dgQuoteContacts.ItemsSource = (from c in database.Contacts where c.Address.Company == SelectedCompany orderby c.LastName, c.FirstName select c).ToList();
             }            
+        }
+
+        private void btnCreateJob_Click(object sender, RoutedEventArgs e)
+        {
+            Quote quote = (Quote)dgQuotes.SelectedItem;
+
+            if (quote != null)
+            {
+                MessageBoxResult confirmation = MessageBox.Show("Are you sure you wish to create a new job from the selected quote?", "New job confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            }
         }
 
         

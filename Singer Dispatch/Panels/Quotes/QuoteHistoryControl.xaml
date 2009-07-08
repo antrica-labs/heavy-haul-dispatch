@@ -3,7 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:WPF="http://schemas.microsoft.com/wpf/2008/toolkit"
     xmlns:Company="clr-namespace:SingerDispatch.Panels.Companies"
-    Loaded="ControlLoaded">
+    Loaded="ControlLoaded" Width="750">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -28,7 +28,8 @@
                 <ColumnDefinition />                               
             </Grid.ColumnDefinitions>
             
-            <Button Name="btnCreateQuote" Grid.Column="0" Click="btnCreateQuote_Click">Create Quote</Button>
+            <Button Name="btnCreateQuote" Grid.Column="0" Click="btnCreateQuote_Click">New Quote</Button>
+            <Button Name="btnCreateJob" Grid.Column="2" Click="btnCreateJob_Click">Create Job</Button>
             <Button Name="btnPrintQuote" Grid.Column="3">Print Quote</Button>
         </Grid>
         
@@ -63,46 +64,45 @@
                         <TextBox Grid.Row="1" Grid.Column="1" IsReadOnly="True" Text="{Binding Revision}" />
                         
                         <Label Grid.Row="0" Grid.Column="2">Author:</Label>
-                        <TextBox Grid.Row="1" Grid.Column="2" Text="{Binding Revision}" />
+                        <ComboBox Name="cmbQuotedBy" Grid.Row="1" Grid.Column="2" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectedItem="{Binding User}" TextSearch.TextPath="Name"></ComboBox>
                         
                         <Label Grid.Row="0" Grid.Column="3">Quote Price:</Label>
                         <TextBox Grid.Row="2" Grid.Column="3" />
                     </Grid>
                     
                     <Label>Care Of:</Label>
-                    <ComboBox Name="cmbCareOfCompanies" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectionChanged="cmbCareOfCompanies_SelectionChanged" SelectedItem="{Binding Company1}" />
+                    <ComboBox Name="cmbCareOfCompanies" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectionChanged="cmbCareOfCompanies_SelectionChanged" SelectedItem="{Binding Company1}" TextSearch.TextPath="Name" IsEditable="True" />
                     
                     <Label>Project Description</Label>
-                    <TextBox Height="40" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Disabled" Text="{Binding Description}"/>
+                    <TextBox Height="40" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Disabled" Text="{Binding Description}"/>                    
                 </StackPanel>    
             </GroupBox>
             
             <GroupBox Header="Quote Timeline" Name="gbQuoteTimeline" Grid.Column="0" Grid.Row="1" Margin="0,5,0,5">
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="43*" />
-                        <ColumnDefinition Width="52.75*" />
-                        <ColumnDefinition Width="96*" />
-                        <ColumnDefinition Width="96*" />
-                        <ColumnDefinition Width="96*" />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition />
                         <RowDefinition />
                     </Grid.RowDefinitions>
                     
-                    <Label Grid.ColumnSpan="3" Margin="0,0,95.625,0">Creation Date:</Label>
-                    <WPF:DatePicker Name="dpCreationDate" Grid.Row="1" SelectedDate="{Binding CreationDate}" Grid.ColumnSpan="2" />
+                    <Label Grid.Row="0" Grid.Column="0">Creation Date:</Label>
+                    <WPF:DatePicker Name="dpCreationDate" Grid.Row="1" Grid.Column="0" SelectedDate="{Binding CreationDate}" />
                     
-                    <Label Grid.Column="2" Grid.ColumnSpan="2">Expiration Date:</Label>
-                    <WPF:DatePicker Name="dpExpirationDate" Grid.Column="2" Grid.Row="1" Margin="2" SelectedDate="{Binding ExpirationDate}" />
-                </Grid>
-    
+                    <Label Grid.Row="0" Grid.Column="1">Expiration Date:</Label>
+                    <WPF:DatePicker Name="dpExpirationDate" Grid.Row="1" Grid.Column="1" SelectedDate="{Binding ExpirationDate}" />
+                </Grid>    
             </GroupBox>
             
             <GroupBox Header="Contact List" Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" Margin="0,0,5,5">
                 <StackPanel>
-                    <WPF:DataGrid Name="dgQuoteContacts" Style="{StaticResource ListDisplay}" HorizontalScrollBarVisibility="Disabled" AutoGenerateColumns="False" MinHeight="125" Margin="0,0,0,5">
+                    <WPF:DataGrid Name="dgQuoteContacts" Style="{StaticResource ListDisplay}" HorizontalScrollBarVisibility="Disabled" AutoGenerateColumns="False" MinHeight="150" Margin="0,0,0,5">
                         <WPF:DataGrid.Columns>
                             <WPF:DataGridTextColumn Header="First" Binding="{Binding FirstName}" IsReadOnly="True" />
                             <WPF:DataGridTextColumn Header="Last" Binding="{Binding LastName}" IsReadOnly="True" />

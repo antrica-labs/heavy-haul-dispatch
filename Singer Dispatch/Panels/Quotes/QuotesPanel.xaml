@@ -22,13 +22,13 @@
         
         <TabControl Name="tabs">
             <TabItem Header="Quotes">
-                <Quote:QuoteHistoryControl SelectedCompany="{Binding SelectedCompany}" />
+                <Quote:QuoteHistoryControl Width="Auto" Height="Auto" SelectedCompany="{Binding SelectedCompany}" />
             </TabItem>
             <TabItem Name="tabCommodities" Header="Commodities" IsEnabled="False">
-                <Quote:QuoteCommoditiesControl />
+                <Quote:QuoteCommoditiesControl Width="Auto" Height="Auto" />
             </TabItem>                
             <TabItem Name="tabSupplements" Header="Supplements" IsEnabled="False">
-                <Quote:QuoteSupplements />
+                <Quote:QuoteSupplements Width="Auto" Height="Auto" SelectedQuote="{Binding SelectedQuote}" />
             </TabItem>            
             <TabItem Header="Storage" IsEnabled="False" />
             <TabItem Header="Conditions" IsEnabled="False" />
