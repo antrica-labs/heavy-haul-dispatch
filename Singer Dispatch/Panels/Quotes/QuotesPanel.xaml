@@ -15,8 +15,10 @@
     <StackPanel DataContext="{Binding ElementName=quotesPanel}">
         <Border Background="LightGoldenrodYellow" BorderBrush="LightGray" BorderThickness="1" Margin="0,0,0,5">
             <StackPanel Orientation="Horizontal">
-                <Label Grid.Column="0">Active Quote #:</Label>
-                <Label Grid.Column="1" Content="{Binding Path=SelectedQuote.Number}" FontWeight="Bold" />                
+                <Label>Active Quote #:</Label>
+                <Label Content="{Binding Path=SelectedQuote.Number}" FontWeight="Bold" />
+                <Label>-</Label>
+                <Label Content="{Binding Path=SelectedQuote.Revision}" FontWeight="Bold"/>
             </StackPanel>
         </Border>
         
@@ -25,13 +27,13 @@
                 <Quote:QuoteHistoryControl Width="Auto" Height="Auto" SelectedCompany="{Binding SelectedCompany}" />
             </TabItem>
             <TabItem Name="tabCommodities" Header="Commodities" IsEnabled="False">
-                <Quote:QuoteCommoditiesControl Width="Auto" Height="Auto" />
-            </TabItem>                
+                <Quote:QuoteCommoditiesControl Width="Auto" Height="Auto" SelectedQuote="{Binding SelectedQuote}" />
+            </TabItem>
             <TabItem Name="tabSupplements" Header="Supplements" IsEnabled="False">
                 <Quote:QuoteSupplements Width="Auto" Height="Auto" SelectedQuote="{Binding SelectedQuote}" />
-            </TabItem>            
+            </TabItem>
             <TabItem Header="Storage" IsEnabled="False" />
             <TabItem Header="Conditions" IsEnabled="False" />
         </TabControl>
-    </StackPanel>    
+    </StackPanel>
 </Company:CompanyUserControl>

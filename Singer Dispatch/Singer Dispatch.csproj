@@ -113,6 +113,9 @@
       <DependentUpon>ServicesControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Panels\Companies\CompanyUserControl.cs" />
+    <Compile Include="Panels\Jobs\JobHistoryControl.xaml.cs">
+      <DependentUpon>JobHistoryControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Panels\Jobs\JobsPanel.xaml.cs">
       <DependentUpon>JobsPanel.xaml</DependentUpon>
     </Compile>
@@ -179,6 +182,7 @@
       <LastGenOutput>SingerDispatch.designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </None>
+    <None Include="SQL\rates.sql" />
     <None Include="SQL\servicetypes.sql" />
     <AppDesigner Include="Properties\" />
   </ItemGroup>
@@ -208,6 +212,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Panels\Companies\ServicesControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Panels\Jobs\JobHistoryControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

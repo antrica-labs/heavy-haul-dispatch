@@ -25,7 +25,6 @@ namespace SingerDispatch.Panels.Quotes
 
         private void ControlLoaded(object sender, RoutedEventArgs e)
         {
-            dgQuoteContacts.ItemsSource = (from c in database.Contacts select c).ToList();
             cmbQuotedBy.ItemsSource = (from u in database.Users select u).ToList();
         }
 
@@ -34,12 +33,12 @@ namespace SingerDispatch.Panels.Quotes
         }
 
         protected override void SelectedCompanyChanged(Company newValue, Company oldValue)
-        {
+        {            
             base.SelectedCompanyChanged(newValue, oldValue);
 
             if (newValue != null)
-            {
-                dgQuotes.ItemsSource = new ObservableCollection<Quote>(newValue.Quotes);
+            {                
+                dgQuotes.ItemsSource = new ObservableCollection<Quote>((from q in database.Quotes where q.CompanyID == newValue.ID select q).ToList());
                 cmbCareOfCompanies.ItemsSource = (from c in database.Companies where c.ID != newValue.ID select c).ToList();                
                 dgQuoteContacts.ItemsSource = (from c in database.Contacts where c.Address.Company == newValue orderby c.LastName, c.FirstName select c).ToList();
             }
@@ -51,7 +50,18 @@ namespace SingerDispatch.Panels.Quotes
 
             if (quote != null && quote.ID == 0)
             {
+                try
+                {
+                    quote.Number = (from q in database.Quotes select q.Number).Max() + 1;
+                }
+                catch
+                {
+                    quote.Number = 0;
+                }
+
                 database.Quotes.InsertOnSubmit(quote);
+                ((ObservableCollection<Quote>)dgQuotes.ItemsSource).Add(quote);
+                dgQuotes.SelectedItem = quote;
             }
 
             database.SubmitChanges();
@@ -59,13 +69,13 @@ namespace SingerDispatch.Panels.Quotes
 
         private void btnCreateQuote_Click(object sender, RoutedEventArgs e)
         {
-            Quote quote = new Quote() { CompanyID = SelectedCompany.ID };
-                        
-            quote.CreationDate = DateTime.Now;
-            quote.ExpirationDate = DateTime.Now.AddDays(30);
+            Quote quote = new Quote() { CompanyID = SelectedCompany.ID, Revision = 0 };
+
+            quote.CreationDate = DateTime.Today;
+            quote.ExpirationDate = DateTime.Today.AddDays(1);
 
             dgQuotes.SelectedItem = null;
-            panelQuoteDetails.DataContext = quote;
+            panelQuoteDetails.DataContext = quote;            
         }
 
         private void dgQuotes_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -109,6 +119,16 @@ namespace SingerDispatch.Panels.Quotes
             {
                 MessageBoxResult confirmation = MessageBox.Show("Are you sure you wish to create a new job from the selected quote?", "New job confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
             }
+        }
+
+        private void dpCreationDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            
+        }
+
+        private void dpExpirationDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            
         }
 
         

@@ -33,7 +33,7 @@ namespace SingerDispatch
             cmbCompanies.ItemsSource = companies;
             cmbOperators.ItemsSource = companies;
 
-            expanderQuotes.IsExpanded = true; 
+            expanderCompanies.IsExpanded = true; 
         }                
 
         private void menuCreateCompany_Click(object sender, RoutedEventArgs e)

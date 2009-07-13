@@ -3,7 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:WPF="http://schemas.microsoft.com/wpf/2008/toolkit"
     xmlns:Company="clr-namespace:SingerDispatch.Panels.Companies"
-    x:Name="commoditiesControl">
+    x:Name="commoditiesControl" Width="750">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -13,7 +13,7 @@
     </UserControl.Resources>
     <Grid Margin="5">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="350" />
+            <ColumnDefinition Width="375" />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
@@ -21,7 +21,7 @@
             <RowDefinition />
         </Grid.RowDefinitions>
 
-        <WPF:DataGrid Name="dgCommodities" Grid.Column="0" HorizontalScrollBarVisibility="Disabled" Grid.Row="0" Style="{StaticResource ListDisplay}" AutoGenerateColumns="False" Margin="0,0,4,4" RowEditEnding="DataGridCommit">
+        <WPF:DataGrid Name="dgCommodities" Height="auto" Grid.Column="0" HorizontalScrollBarVisibility="Disabled" Grid.Row="0" Style="{StaticResource ListDisplay}" AutoGenerateColumns="False" Margin="0,0,4,4" RowEditEnding="DataGridCommit">
             <WPF:DataGrid.Columns>
                 <WPF:DataGridTextColumn Header="Unit" Binding="{Binding Unit}" />
                 <WPF:DataGridTextColumn Header="Name" Width="2*" Binding="{Binding Name}" />                
@@ -43,7 +43,7 @@
         <GroupBox Name="panelCommodityDetails" Header="Commodity Details" Grid.Column="1" Grid.Row="0" Margin="0,0,0,5" DataContext="{Binding ElementName=dgCommodities, Path=SelectedItem}">            
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="105" />
+                    <ColumnDefinition Width="100"/>
                     <ColumnDefinition />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
@@ -84,10 +84,10 @@
                 <Label Grid.Row="7" Grid.Column="0">Notes:</Label>
                 <TextBox Name="txtCommodityNotes" Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="2" Height="60" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" Text="{Binding Notes}" />
                                     
-                <GroupBox Header="Dimentions (meters/kg)" Grid.Row="0" Grid.Column="2" Grid.RowSpan="7" Margin="5,0,0,0">
+                <GroupBox Header="Dimentions (m/kg)" Grid.Row="0" Grid.Column="2" Grid.RowSpan="7" Margin="5,0,0,0">
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="70" />
+                            <ColumnDefinition Width="60"/>
                             <ColumnDefinition />
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>                            

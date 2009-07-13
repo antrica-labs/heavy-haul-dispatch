@@ -39,8 +39,16 @@ namespace SingerDispatch.Panels.Quotes
         {
             base.SelectedQuoteChanged(newValue, oldValue);
 
-            dgSupplements.ItemsSource = new ObservableCollection<QuoteSupplement>(newValue.QuoteSupplements);
-            grpSupplementDetails.DataContext = new QuoteSupplement() { QuoteID = newValue.ID };
+            if (newValue != null)
+            {
+                dgSupplements.ItemsSource = new ObservableCollection<QuoteSupplement>(newValue.QuoteSupplements);
+                grpSupplementDetails.DataContext = new QuoteSupplement() { QuoteID = newValue.ID };
+            }
+            else
+            {
+                dgSupplements.ItemsSource = null;
+                grpSupplementDetails.DataContext = null;
+            }
         }
 
         private void dgSupplements_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -59,17 +67,16 @@ namespace SingerDispatch.Panels.Quotes
         {
             QuoteSupplement supplement = (QuoteSupplement)grpSupplementDetails.DataContext;
 
-            if (supplement != null)
+            if (supplement != null && supplement.ID == 0)
             {
-                if (supplement.ID == 0)
-                {
-                    database.QuoteSupplements.InsertOnSubmit(supplement);
-                    ((ObservableCollection<QuoteSupplement>)dgSupplements.ItemsSource).Add(supplement);
-                    dgSupplements.SelectedItem = supplement;
-                }
-
-                database.SubmitChanges();
+                
+                database.QuoteSupplements.InsertOnSubmit(supplement);
+                ((ObservableCollection<QuoteSupplement>)dgSupplements.ItemsSource).Add(supplement);
+                dgSupplements.SelectedItem = supplement;
+                
             }
+
+            database.SubmitChanges();            
         }
 
         private void cmbBillingType_SelectionChanged(object sender, SelectionChangedEventArgs e)

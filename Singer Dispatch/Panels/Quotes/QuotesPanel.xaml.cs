@@ -37,19 +37,25 @@ namespace SingerDispatch.Panels.Quotes
             if (quote == null)
             {
                 panel.tabSupplements.IsEnabled = false;
+                ((UserControl)panel.tabSupplements.Content).IsEnabled = false;
+
                 panel.tabCommodities.IsEnabled = false;
+                ((UserControl)panel.tabCommodities.Content).IsEnabled = false;
             }
             else
             {
+                panel.tabSupplements.IsEnabled = true;
+                ((UserControl)panel.tabSupplements.Content).IsEnabled = true;
+
                 panel.tabCommodities.IsEnabled = true;
-                panel.tabSupplements.IsEnabled = true;               
+                ((UserControl)panel.tabCommodities.Content).IsEnabled = true;
             }
         }
 
         protected override void SelectedCompanyChanged(Company newValue, Company oldValue)
         {
             base.SelectedCompanyChanged(newValue, oldValue);
-
+            
             if (newValue == null)
             {
                 this.IsEnabled = false;

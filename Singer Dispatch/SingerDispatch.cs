@@ -21,4 +21,15 @@ namespace SingerDispatch
             }
         }
     }
+
+    partial class Quote
+    {
+        public string NumberAndRev
+        {
+            get
+            {
+                return Number + ":" + Revision;
+            }
+        }
+    }
 }

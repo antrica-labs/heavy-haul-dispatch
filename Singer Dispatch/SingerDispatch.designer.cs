@@ -72,18 +72,18 @@ namespace SingerDispatch
     partial void InsertUser(User instance);
     partial void UpdateUser(User instance);
     partial void DeleteUser(User instance);
-    partial void InsertQuote(Quote instance);
-    partial void UpdateQuote(Quote instance);
-    partial void DeleteQuote(Quote instance);
-    partial void InsertQuoteCommodity(QuoteCommodity instance);
-    partial void UpdateQuoteCommodity(QuoteCommodity instance);
-    partial void DeleteQuoteCommodity(QuoteCommodity instance);
     partial void InsertQuoteSupplement(QuoteSupplement instance);
     partial void UpdateQuoteSupplement(QuoteSupplement instance);
     partial void DeleteQuoteSupplement(QuoteSupplement instance);
     partial void InsertBillingType(BillingType instance);
     partial void UpdateBillingType(BillingType instance);
     partial void DeleteBillingType(BillingType instance);
+    partial void InsertQuote(Quote instance);
+    partial void UpdateQuote(Quote instance);
+    partial void DeleteQuote(Quote instance);
+    partial void InsertQuoteCommodity(QuoteCommodity instance);
+    partial void UpdateQuoteCommodity(QuoteCommodity instance);
+    partial void DeleteQuoteCommodity(QuoteCommodity instance);
     #endregion
 		
 		public SingerDispatchDataContext() : 
@@ -228,22 +228,6 @@ namespace SingerDispatch
 			}
 		}
 		
-		public System.Data.Linq.Table<Quote> Quotes
-		{
-			get
-			{
-				return this.GetTable<Quote>();
-			}
-		}
-		
-		public System.Data.Linq.Table<QuoteCommodity> QuoteCommodities
-		{
-			get
-			{
-				return this.GetTable<QuoteCommodity>();
-			}
-		}
-		
 		public System.Data.Linq.Table<QuoteSupplement> QuoteSupplements
 		{
 			get
@@ -257,6 +241,22 @@ namespace SingerDispatch
 			get
 			{
 				return this.GetTable<BillingType>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Quote> Quotes
+		{
+			get
+			{
+				return this.GetTable<Quote>();
+			}
+		}
+		
+		public System.Data.Linq.Table<QuoteCommodity> QuoteCommodities
+		{
+			get
+			{
+				return this.GetTable<QuoteCommodity>();
 			}
 		}
 	}
@@ -3556,6 +3556,432 @@ namespace SingerDispatch
 		}
 	}
 	
+	[Table(Name="dbo.QuoteSupplements")]
+	public partial class QuoteSupplement : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private long _ID;
+		
+		private long _QuoteID;
+		
+		private string _Name;
+		
+		private string _Details;
+		
+		private System.Nullable<long> _BillingTypeID;
+		
+		private System.Nullable<byte> _IsCostIncluded;
+		
+		private System.Nullable<int> _Quantity;
+		
+		private System.Nullable<decimal> _CostPerItem;
+		
+		private EntityRef<BillingType> _BillingType;
+		
+		private EntityRef<Quote> _Quote;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDChanging(long value);
+    partial void OnIDChanged();
+    partial void OnQuoteIDChanging(long value);
+    partial void OnQuoteIDChanged();
+    partial void OnNameChanging(string value);
+    partial void OnNameChanged();
+    partial void OnDetailsChanging(string value);
+    partial void OnDetailsChanged();
+    partial void OnBillingTypeIDChanging(System.Nullable<long> value);
+    partial void OnBillingTypeIDChanged();
+    partial void OnIsCostIncludedChanging(System.Nullable<byte> value);
+    partial void OnIsCostIncludedChanged();
+    partial void OnQuantityChanging(System.Nullable<int> value);
+    partial void OnQuantityChanged();
+    partial void OnCostPerItemChanging(System.Nullable<decimal> value);
+    partial void OnCostPerItemChanged();
+    #endregion
+		
+		public QuoteSupplement()
+		{
+			this._BillingType = default(EntityRef<BillingType>);
+			this._Quote = default(EntityRef<Quote>);
+			OnCreated();
+		}
+		
+		[Column(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="BigInt NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public long ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this.OnIDChanging(value);
+					this.SendPropertyChanging();
+					this._ID = value;
+					this.SendPropertyChanged("ID");
+					this.OnIDChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_QuoteID", DbType="BigInt NOT NULL")]
+		public long QuoteID
+		{
+			get
+			{
+				return this._QuoteID;
+			}
+			set
+			{
+				if ((this._QuoteID != value))
+				{
+					if (this._Quote.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnQuoteIDChanging(value);
+					this.SendPropertyChanging();
+					this._QuoteID = value;
+					this.SendPropertyChanged("QuoteID");
+					this.OnQuoteIDChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_Name", DbType="VarChar(255)")]
+		public string Name
+		{
+			get
+			{
+				return this._Name;
+			}
+			set
+			{
+				if ((this._Name != value))
+				{
+					this.OnNameChanging(value);
+					this.SendPropertyChanging();
+					this._Name = value;
+					this.SendPropertyChanged("Name");
+					this.OnNameChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_Details", DbType="VarChar(700)")]
+		public string Details
+		{
+			get
+			{
+				return this._Details;
+			}
+			set
+			{
+				if ((this._Details != value))
+				{
+					this.OnDetailsChanging(value);
+					this.SendPropertyChanging();
+					this._Details = value;
+					this.SendPropertyChanged("Details");
+					this.OnDetailsChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_BillingTypeID", DbType="BigInt")]
+		public System.Nullable<long> BillingTypeID
+		{
+			get
+			{
+				return this._BillingTypeID;
+			}
+			set
+			{
+				if ((this._BillingTypeID != value))
+				{
+					if (this._BillingType.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnBillingTypeIDChanging(value);
+					this.SendPropertyChanging();
+					this._BillingTypeID = value;
+					this.SendPropertyChanged("BillingTypeID");
+					this.OnBillingTypeIDChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_IsCostIncluded", DbType="TinyInt")]
+		public System.Nullable<byte> IsCostIncluded
+		{
+			get
+			{
+				return this._IsCostIncluded;
+			}
+			set
+			{
+				if ((this._IsCostIncluded != value))
+				{
+					this.OnIsCostIncludedChanging(value);
+					this.SendPropertyChanging();
+					this._IsCostIncluded = value;
+					this.SendPropertyChanged("IsCostIncluded");
+					this.OnIsCostIncludedChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_Quantity", DbType="Int")]
+		public System.Nullable<int> Quantity
+		{
+			get
+			{
+				return this._Quantity;
+			}
+			set
+			{
+				if ((this._Quantity != value))
+				{
+					this.OnQuantityChanging(value);
+					this.SendPropertyChanging();
+					this._Quantity = value;
+					this.SendPropertyChanged("Quantity");
+					this.OnQuantityChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_CostPerItem", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> CostPerItem
+		{
+			get
+			{
+				return this._CostPerItem;
+			}
+			set
+			{
+				if ((this._CostPerItem != value))
+				{
+					this.OnCostPerItemChanging(value);
+					this.SendPropertyChanging();
+					this._CostPerItem = value;
+					this.SendPropertyChanged("CostPerItem");
+					this.OnCostPerItemChanged();
+				}
+			}
+		}
+		
+		[Association(Name="BillingType_QuoteSupplement", Storage="_BillingType", ThisKey="BillingTypeID", IsForeignKey=true)]
+		public BillingType BillingType
+		{
+			get
+			{
+				return this._BillingType.Entity;
+			}
+			set
+			{
+				BillingType previousValue = this._BillingType.Entity;
+				if (((previousValue != value) 
+							|| (this._BillingType.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._BillingType.Entity = null;
+						previousValue.QuoteSupplements.Remove(this);
+					}
+					this._BillingType.Entity = value;
+					if ((value != null))
+					{
+						value.QuoteSupplements.Add(this);
+						this._BillingTypeID = value.ID;
+					}
+					else
+					{
+						this._BillingTypeID = default(Nullable<long>);
+					}
+					this.SendPropertyChanged("BillingType");
+				}
+			}
+		}
+		
+		[Association(Name="Quote_QuoteSupplement", Storage="_Quote", ThisKey="QuoteID", IsForeignKey=true)]
+		public Quote Quote
+		{
+			get
+			{
+				return this._Quote.Entity;
+			}
+			set
+			{
+				Quote previousValue = this._Quote.Entity;
+				if (((previousValue != value) 
+							|| (this._Quote.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Quote.Entity = null;
+						previousValue.QuoteSupplements.Remove(this);
+					}
+					this._Quote.Entity = value;
+					if ((value != null))
+					{
+						value.QuoteSupplements.Add(this);
+						this._QuoteID = value.ID;
+					}
+					else
+					{
+						this._QuoteID = default(long);
+					}
+					this.SendPropertyChanged("Quote");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[Table(Name="dbo.BillingTypes")]
+	public partial class BillingType : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private long _ID;
+		
+		private string _Name;
+		
+		private EntitySet<QuoteSupplement> _QuoteSupplements;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDChanging(long value);
+    partial void OnIDChanged();
+    partial void OnNameChanging(string value);
+    partial void OnNameChanged();
+    #endregion
+		
+		public BillingType()
+		{
+			this._QuoteSupplements = new EntitySet<QuoteSupplement>(new Action<QuoteSupplement>(this.attach_QuoteSupplements), new Action<QuoteSupplement>(this.detach_QuoteSupplements));
+			OnCreated();
+		}
+		
+		[Column(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="BigInt NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public long ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this.OnIDChanging(value);
+					this.SendPropertyChanging();
+					this._ID = value;
+					this.SendPropertyChanged("ID");
+					this.OnIDChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_Name", DbType="VarChar(50)")]
+		public string Name
+		{
+			get
+			{
+				return this._Name;
+			}
+			set
+			{
+				if ((this._Name != value))
+				{
+					this.OnNameChanging(value);
+					this.SendPropertyChanging();
+					this._Name = value;
+					this.SendPropertyChanged("Name");
+					this.OnNameChanged();
+				}
+			}
+		}
+		
+		[Association(Name="BillingType_QuoteSupplement", Storage="_QuoteSupplements", OtherKey="BillingTypeID")]
+		public EntitySet<QuoteSupplement> QuoteSupplements
+		{
+			get
+			{
+				return this._QuoteSupplements;
+			}
+			set
+			{
+				this._QuoteSupplements.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_QuoteSupplements(QuoteSupplement entity)
+		{
+			this.SendPropertyChanging();
+			entity.BillingType = this;
+		}
+		
+		private void detach_QuoteSupplements(QuoteSupplement entity)
+		{
+			this.SendPropertyChanging();
+			entity.BillingType = null;
+		}
+	}
+	
 	[Table(Name="dbo.Quotes")]
 	public partial class Quote : INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -3566,7 +3992,7 @@ namespace SingerDispatch
 		
 		private long _CompanyID;
 		
-		private System.Nullable<int> _Number;
+		private int _Number;
 		
 		private System.Nullable<int> _Revision;
 		
@@ -3580,9 +4006,11 @@ namespace SingerDispatch
 		
 		private System.Nullable<long> _QuotedByUserID;
 		
-		private EntitySet<QuoteCommodity> _QuoteCommodities;
+		private System.Nullable<decimal> _Price;
 		
 		private EntitySet<QuoteSupplement> _QuoteSupplements;
+		
+		private EntitySet<QuoteCommodity> _QuoteCommodities;
 		
 		private EntityRef<Company> _Company;
 		
@@ -3598,7 +4026,7 @@ namespace SingerDispatch
     partial void OnIDChanged();
     partial void OnCompanyIDChanging(long value);
     partial void OnCompanyIDChanged();
-    partial void OnNumberChanging(System.Nullable<int> value);
+    partial void OnNumberChanging(int value);
     partial void OnNumberChanged();
     partial void OnRevisionChanging(System.Nullable<int> value);
     partial void OnRevisionChanged();
@@ -3612,12 +4040,14 @@ namespace SingerDispatch
     partial void OnExpirationDateChanged();
     partial void OnQuotedByUserIDChanging(System.Nullable<long> value);
     partial void OnQuotedByUserIDChanged();
+    partial void OnPriceChanging(System.Nullable<decimal> value);
+    partial void OnPriceChanged();
     #endregion
 		
 		public Quote()
 		{
-			this._QuoteCommodities = new EntitySet<QuoteCommodity>(new Action<QuoteCommodity>(this.attach_QuoteCommodities), new Action<QuoteCommodity>(this.detach_QuoteCommodities));
 			this._QuoteSupplements = new EntitySet<QuoteSupplement>(new Action<QuoteSupplement>(this.attach_QuoteSupplements), new Action<QuoteSupplement>(this.detach_QuoteSupplements));
+			this._QuoteCommodities = new EntitySet<QuoteCommodity>(new Action<QuoteCommodity>(this.attach_QuoteCommodities), new Action<QuoteCommodity>(this.detach_QuoteCommodities));
 			this._Company = default(EntityRef<Company>);
 			this._Company1 = default(EntityRef<Company>);
 			this._User = default(EntityRef<User>);
@@ -3668,8 +4098,8 @@ namespace SingerDispatch
 			}
 		}
 		
-		[Column(Storage="_Number", DbType="Int")]
-		public System.Nullable<int> Number
+		[Column(Storage="_Number", DbType="Int NOT NULL")]
+		public int Number
 		{
 			get
 			{
@@ -3816,16 +4246,23 @@ namespace SingerDispatch
 			}
 		}
 		
-		[Association(Name="Quote_QuoteCommodity", Storage="_QuoteCommodities", OtherKey="QuoteID")]
-		public EntitySet<QuoteCommodity> QuoteCommodities
+		[Column(Storage="_Price", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> Price
 		{
 			get
 			{
-				return this._QuoteCommodities;
+				return this._Price;
 			}
 			set
 			{
-				this._QuoteCommodities.Assign(value);
+				if ((this._Price != value))
+				{
+					this.OnPriceChanging(value);
+					this.SendPropertyChanging();
+					this._Price = value;
+					this.SendPropertyChanged("Price");
+					this.OnPriceChanged();
+				}
 			}
 		}
 		
@@ -3839,6 +4276,19 @@ namespace SingerDispatch
 			set
 			{
 				this._QuoteSupplements.Assign(value);
+			}
+		}
+		
+		[Association(Name="Quote_QuoteCommodity", Storage="_QuoteCommodities", OtherKey="QuoteID")]
+		public EntitySet<QuoteCommodity> QuoteCommodities
+		{
+			get
+			{
+				return this._QuoteCommodities;
+			}
+			set
+			{
+				this._QuoteCommodities.Assign(value);
 			}
 		}
 		
@@ -3964,18 +4414,6 @@ namespace SingerDispatch
 			}
 		}
 		
-		private void attach_QuoteCommodities(QuoteCommodity entity)
-		{
-			this.SendPropertyChanging();
-			entity.Quote = this;
-		}
-		
-		private void detach_QuoteCommodities(QuoteCommodity entity)
-		{
-			this.SendPropertyChanging();
-			entity.Quote = null;
-		}
-		
 		private void attach_QuoteSupplements(QuoteSupplement entity)
 		{
 			this.SendPropertyChanging();
@@ -3983,6 +4421,18 @@ namespace SingerDispatch
 		}
 		
 		private void detach_QuoteSupplements(QuoteSupplement entity)
+		{
+			this.SendPropertyChanging();
+			entity.Quote = null;
+		}
+		
+		private void attach_QuoteCommodities(QuoteCommodity entity)
+		{
+			this.SendPropertyChanging();
+			entity.Quote = this;
+		}
+		
+		private void detach_QuoteCommodities(QuoteCommodity entity)
 		{
 			this.SendPropertyChanging();
 			entity.Quote = null;
@@ -4018,6 +4468,10 @@ namespace SingerDispatch
 		private string _Unit;
 		
 		private string _Owner;
+		
+		private string _LastLocation;
+		
+		private string _LastAddress;
 		
 		private System.Nullable<double> _Length;
 		
@@ -4067,6 +4521,10 @@ namespace SingerDispatch
     partial void OnUnitChanged();
     partial void OnOwnerChanging(string value);
     partial void OnOwnerChanged();
+    partial void OnLastLocationChanging(string value);
+    partial void OnLastLocationChanged();
+    partial void OnLastAddressChanging(string value);
+    partial void OnLastAddressChanged();
     partial void OnLengthChanging(System.Nullable<double> value);
     partial void OnLengthChanged();
     partial void OnWidthChanging(System.Nullable<double> value);
@@ -4337,6 +4795,46 @@ namespace SingerDispatch
 			}
 		}
 		
+		[Column(Storage="_LastLocation", DbType="VarChar(255)")]
+		public string LastLocation
+		{
+			get
+			{
+				return this._LastLocation;
+			}
+			set
+			{
+				if ((this._LastLocation != value))
+				{
+					this.OnLastLocationChanging(value);
+					this.SendPropertyChanging();
+					this._LastLocation = value;
+					this.SendPropertyChanged("LastLocation");
+					this.OnLastLocationChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_LastAddress", DbType="VarChar(255)")]
+		public string LastAddress
+		{
+			get
+			{
+				return this._LastAddress;
+			}
+			set
+			{
+				if ((this._LastAddress != value))
+				{
+					this.OnLastAddressChanging(value);
+					this.SendPropertyChanging();
+					this._LastAddress = value;
+					this.SendPropertyChanged("LastAddress");
+					this.OnLastAddressChanged();
+				}
+			}
+		}
+		
 		[Column(Storage="_Length", DbType="Float")]
 		public System.Nullable<double> Length
 		{
@@ -4569,432 +5067,6 @@ namespace SingerDispatch
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
-		}
-	}
-	
-	[Table(Name="dbo.QuoteSupplements")]
-	public partial class QuoteSupplement : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private long _ID;
-		
-		private long _QuoteID;
-		
-		private string _Name;
-		
-		private string _Details;
-		
-		private System.Nullable<long> _BillingTypeID;
-		
-		private System.Nullable<byte> _IsCostIncluded;
-		
-		private System.Nullable<int> _Quantity;
-		
-		private System.Nullable<decimal> _CostPerItem;
-		
-		private EntityRef<Quote> _Quote;
-		
-		private EntityRef<BillingType> _BillingType;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIDChanging(long value);
-    partial void OnIDChanged();
-    partial void OnQuoteIDChanging(long value);
-    partial void OnQuoteIDChanged();
-    partial void OnNameChanging(string value);
-    partial void OnNameChanged();
-    partial void OnDetailsChanging(string value);
-    partial void OnDetailsChanged();
-    partial void OnBillingTypeIDChanging(System.Nullable<long> value);
-    partial void OnBillingTypeIDChanged();
-    partial void OnIsCostIncludedChanging(System.Nullable<byte> value);
-    partial void OnIsCostIncludedChanged();
-    partial void OnQuantityChanging(System.Nullable<int> value);
-    partial void OnQuantityChanged();
-    partial void OnCostPerItemChanging(System.Nullable<decimal> value);
-    partial void OnCostPerItemChanged();
-    #endregion
-		
-		public QuoteSupplement()
-		{
-			this._Quote = default(EntityRef<Quote>);
-			this._BillingType = default(EntityRef<BillingType>);
-			OnCreated();
-		}
-		
-		[Column(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="BigInt NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public long ID
-		{
-			get
-			{
-				return this._ID;
-			}
-			set
-			{
-				if ((this._ID != value))
-				{
-					this.OnIDChanging(value);
-					this.SendPropertyChanging();
-					this._ID = value;
-					this.SendPropertyChanged("ID");
-					this.OnIDChanged();
-				}
-			}
-		}
-		
-		[Column(Storage="_QuoteID", DbType="BigInt NOT NULL")]
-		public long QuoteID
-		{
-			get
-			{
-				return this._QuoteID;
-			}
-			set
-			{
-				if ((this._QuoteID != value))
-				{
-					if (this._Quote.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnQuoteIDChanging(value);
-					this.SendPropertyChanging();
-					this._QuoteID = value;
-					this.SendPropertyChanged("QuoteID");
-					this.OnQuoteIDChanged();
-				}
-			}
-		}
-		
-		[Column(Storage="_Name", DbType="VarChar(255)")]
-		public string Name
-		{
-			get
-			{
-				return this._Name;
-			}
-			set
-			{
-				if ((this._Name != value))
-				{
-					this.OnNameChanging(value);
-					this.SendPropertyChanging();
-					this._Name = value;
-					this.SendPropertyChanged("Name");
-					this.OnNameChanged();
-				}
-			}
-		}
-		
-		[Column(Storage="_Details", DbType="VarChar(700)")]
-		public string Details
-		{
-			get
-			{
-				return this._Details;
-			}
-			set
-			{
-				if ((this._Details != value))
-				{
-					this.OnDetailsChanging(value);
-					this.SendPropertyChanging();
-					this._Details = value;
-					this.SendPropertyChanged("Details");
-					this.OnDetailsChanged();
-				}
-			}
-		}
-		
-		[Column(Storage="_BillingTypeID", DbType="BigInt")]
-		public System.Nullable<long> BillingTypeID
-		{
-			get
-			{
-				return this._BillingTypeID;
-			}
-			set
-			{
-				if ((this._BillingTypeID != value))
-				{
-					if (this._BillingType.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnBillingTypeIDChanging(value);
-					this.SendPropertyChanging();
-					this._BillingTypeID = value;
-					this.SendPropertyChanged("BillingTypeID");
-					this.OnBillingTypeIDChanged();
-				}
-			}
-		}
-		
-		[Column(Storage="_IsCostIncluded", DbType="TinyInt")]
-		public System.Nullable<byte> IsCostIncluded
-		{
-			get
-			{
-				return this._IsCostIncluded;
-			}
-			set
-			{
-				if ((this._IsCostIncluded != value))
-				{
-					this.OnIsCostIncludedChanging(value);
-					this.SendPropertyChanging();
-					this._IsCostIncluded = value;
-					this.SendPropertyChanged("IsCostIncluded");
-					this.OnIsCostIncludedChanged();
-				}
-			}
-		}
-		
-		[Column(Storage="_Quantity", DbType="Int")]
-		public System.Nullable<int> Quantity
-		{
-			get
-			{
-				return this._Quantity;
-			}
-			set
-			{
-				if ((this._Quantity != value))
-				{
-					this.OnQuantityChanging(value);
-					this.SendPropertyChanging();
-					this._Quantity = value;
-					this.SendPropertyChanged("Quantity");
-					this.OnQuantityChanged();
-				}
-			}
-		}
-		
-		[Column(Storage="_CostPerItem", DbType="Decimal(18,2)")]
-		public System.Nullable<decimal> CostPerItem
-		{
-			get
-			{
-				return this._CostPerItem;
-			}
-			set
-			{
-				if ((this._CostPerItem != value))
-				{
-					this.OnCostPerItemChanging(value);
-					this.SendPropertyChanging();
-					this._CostPerItem = value;
-					this.SendPropertyChanged("CostPerItem");
-					this.OnCostPerItemChanged();
-				}
-			}
-		}
-		
-		[Association(Name="Quote_QuoteSupplement", Storage="_Quote", ThisKey="QuoteID", IsForeignKey=true)]
-		public Quote Quote
-		{
-			get
-			{
-				return this._Quote.Entity;
-			}
-			set
-			{
-				Quote previousValue = this._Quote.Entity;
-				if (((previousValue != value) 
-							|| (this._Quote.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Quote.Entity = null;
-						previousValue.QuoteSupplements.Remove(this);
-					}
-					this._Quote.Entity = value;
-					if ((value != null))
-					{
-						value.QuoteSupplements.Add(this);
-						this._QuoteID = value.ID;
-					}
-					else
-					{
-						this._QuoteID = default(long);
-					}
-					this.SendPropertyChanged("Quote");
-				}
-			}
-		}
-		
-		[Association(Name="BillingType_QuoteSupplement", Storage="_BillingType", ThisKey="BillingTypeID", IsForeignKey=true)]
-		public BillingType BillingType
-		{
-			get
-			{
-				return this._BillingType.Entity;
-			}
-			set
-			{
-				BillingType previousValue = this._BillingType.Entity;
-				if (((previousValue != value) 
-							|| (this._BillingType.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._BillingType.Entity = null;
-						previousValue.QuoteSupplements.Remove(this);
-					}
-					this._BillingType.Entity = value;
-					if ((value != null))
-					{
-						value.QuoteSupplements.Add(this);
-						this._BillingTypeID = value.ID;
-					}
-					else
-					{
-						this._BillingTypeID = default(Nullable<long>);
-					}
-					this.SendPropertyChanged("BillingType");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
-	[Table(Name="dbo.BillingTypes")]
-	public partial class BillingType : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private long _ID;
-		
-		private string _Name;
-		
-		private EntitySet<QuoteSupplement> _QuoteSupplements;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIDChanging(long value);
-    partial void OnIDChanged();
-    partial void OnNameChanging(string value);
-    partial void OnNameChanged();
-    #endregion
-		
-		public BillingType()
-		{
-			this._QuoteSupplements = new EntitySet<QuoteSupplement>(new Action<QuoteSupplement>(this.attach_QuoteSupplements), new Action<QuoteSupplement>(this.detach_QuoteSupplements));
-			OnCreated();
-		}
-		
-		[Column(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="BigInt NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public long ID
-		{
-			get
-			{
-				return this._ID;
-			}
-			set
-			{
-				if ((this._ID != value))
-				{
-					this.OnIDChanging(value);
-					this.SendPropertyChanging();
-					this._ID = value;
-					this.SendPropertyChanged("ID");
-					this.OnIDChanged();
-				}
-			}
-		}
-		
-		[Column(Storage="_Name", DbType="VarChar(50)")]
-		public string Name
-		{
-			get
-			{
-				return this._Name;
-			}
-			set
-			{
-				if ((this._Name != value))
-				{
-					this.OnNameChanging(value);
-					this.SendPropertyChanging();
-					this._Name = value;
-					this.SendPropertyChanged("Name");
-					this.OnNameChanged();
-				}
-			}
-		}
-		
-		[Association(Name="BillingType_QuoteSupplement", Storage="_QuoteSupplements", OtherKey="BillingTypeID")]
-		public EntitySet<QuoteSupplement> QuoteSupplements
-		{
-			get
-			{
-				return this._QuoteSupplements;
-			}
-			set
-			{
-				this._QuoteSupplements.Assign(value);
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_QuoteSupplements(QuoteSupplement entity)
-		{
-			this.SendPropertyChanging();
-			entity.BillingType = this;
-		}
-		
-		private void detach_QuoteSupplements(QuoteSupplement entity)
-		{
-			this.SendPropertyChanging();
-			entity.BillingType = null;
 		}
 	}
 }

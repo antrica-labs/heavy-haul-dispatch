@@ -4,7 +4,7 @@
     xmlns:WPF="http://schemas.microsoft.com/wpf/2008/toolkit"
     xmlns:Company="clr-namespace:SingerDispatch.Panels.Companies"
     x:Name="creditAndRatesControl"
-    Loaded="Control_Loaded">
+    Loaded="Control_Loaded" Width="750">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -17,13 +17,13 @@
     </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="350" />
+            <ColumnDefinition Width="1.5*" />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
                
-        <WPF:DataGrid Name="dgCreditRates" Grid.Column="0" Margin="5" Style="{StaticResource ListDisplay}" AutoGenerateColumns="False" RowEditEnding="DataGridCommit" HorizontalScrollBarVisibility="Disabled">
+        <WPF:DataGrid Name="dgCreditRates" MaxHeight="380" IsReadOnly="True" Grid.Column="0" Margin="5" Style="{StaticResource ListDisplay}" AutoGenerateColumns="False" RowEditEnding="DataGridCommit" HorizontalScrollBarVisibility="Disabled">
             <WPF:DataGrid.Columns>
-                <WPF:DataGridTextColumn Header="Type" Binding="{Binding Name}" />
+                <WPF:DataGridTextColumn Header="Type" Binding="{Binding Name}" Width="2*" />
                 <WPF:DataGridTextColumn Header="Hourly" Binding="{Binding Path=Hourly, StringFormat=c}" />
                 <WPF:DataGridTextColumn Header="Daily" Binding="{Binding Path=Daily, StringFormat=c}" />
                 <WPF:DataGridTextColumn Header="Weekly" Binding="{Binding Path=Weekly, StringFormat=c}" />
@@ -36,7 +36,7 @@
             <GroupBox Header="Rate Adjustments" Name="grpRateAdjustment">
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="100"/>
+                        <ColumnDefinition Width="140"/>
                         <ColumnDefinition />
                         <ColumnDefinition Width="20" />
                     </Grid.ColumnDefinitions>
@@ -69,7 +69,7 @@
                 <StackPanel VerticalAlignment="Top">
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="150" />
+                            <ColumnDefinition Width="140" />
                             <ColumnDefinition />
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>

@@ -41,9 +41,9 @@
                     <ColumnDefinition />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
-            
-                <Button Name="btnRemoveAddress" Grid.Column="0" Margin="3,0,2,0" Click="btnRemoveAddress_Click">Remove address</Button>
-                <Button Name="btnNewAddress" Grid.Column="1" Margin="2,0,3,0" Click="btnNewAddress_Click">New address</Button>
+                            
+                <Button Name="btnNewAddress" Grid.Column="0" Margin="2,0,3,0" Click="btnNewAddress_Click">New address</Button>
+                <Button Name="btnRemoveAddress" Grid.Column="1" Margin="3,0,2,0" Click="btnRemoveAddress_Click">Remove address</Button>
             </Grid>            
         </StackPanel>
         
@@ -122,8 +122,8 @@
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
 
-                <Button Name="btnRemoveContact" Grid.Column="0" Margin="3,0,2,0" Click="btnRemoveContact_Click">Remove contact</Button>
-                <Button Name="btnNewContact" Grid.Column="1" Margin="2,0,3,0" Click="btnNewContact_Click">New contact</Button>
+                <Button Name="btnNewContact" Grid.Column="0" Margin="2,0,3,0" Click="btnNewContact_Click">New contact</Button>
+                <Button Name="btnRemoveContact" Grid.Column="1" Margin="3,0,2,0" Click="btnRemoveContact_Click">Remove contact</Button>                
             </Grid>
 
             

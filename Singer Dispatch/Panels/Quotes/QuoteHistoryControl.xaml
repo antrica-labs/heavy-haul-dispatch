@@ -28,9 +28,9 @@
                 <ColumnDefinition />                               
             </Grid.ColumnDefinitions>
             
-            <Button Name="btnCreateQuote" Grid.Column="0" Click="btnCreateQuote_Click">New Quote</Button>
-            <Button Name="btnCreateJob" Grid.Column="2" Click="btnCreateJob_Click">Create Job</Button>
-            <Button Name="btnPrintQuote" Grid.Column="3">Print Quote</Button>
+            <Button Name="btnCreateQuote" Grid.Column="1" Click="btnCreateQuote_Click" TabIndex="0">New Quote</Button>
+            <Button Name="btnCreateJob" Grid.Column="0" Click="btnCreateJob_Click" TabIndex="1">Create Job From Quote</Button>
+            <Button Name="btnPrintQuote" Grid.Column="3" TabIndex="2">Print Quote</Button>
         </Grid>
         
         <Grid Name="panelQuoteDetails">
@@ -64,17 +64,17 @@
                         <TextBox Grid.Row="1" Grid.Column="1" IsReadOnly="True" Text="{Binding Revision}" />
                         
                         <Label Grid.Row="0" Grid.Column="2">Author:</Label>
-                        <ComboBox Name="cmbQuotedBy" Grid.Row="1" Grid.Column="2" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectedItem="{Binding User}" TextSearch.TextPath="Name"></ComboBox>
+                        <ComboBox Name="cmbQuotedBy" TabIndex="3" Grid.Row="1" Grid.Column="2" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectedItem="{Binding User}" TextSearch.TextPath="Name"></ComboBox>
                         
                         <Label Grid.Row="0" Grid.Column="3">Quote Price:</Label>
-                        <TextBox Grid.Row="2" Grid.Column="3" />
+                        <TextBox Grid.Row="2" Grid.Column="3" Text="{Binding Price}" TabIndex="4" />
                     </Grid>
                     
                     <Label>Care Of:</Label>
-                    <ComboBox Name="cmbCareOfCompanies" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectionChanged="cmbCareOfCompanies_SelectionChanged" SelectedItem="{Binding Company1}" TextSearch.TextPath="Name" IsEditable="True" />
+                    <ComboBox Name="cmbCareOfCompanies" TabIndex="5" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectionChanged="cmbCareOfCompanies_SelectionChanged" SelectedItem="{Binding Company1}" TextSearch.TextPath="Name" IsEditable="True" />
                     
                     <Label>Project Description</Label>
-                    <TextBox Height="40" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Disabled" Text="{Binding Description}"/>                    
+                    <TextBox TabIndex="6" Height="40" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Disabled" Text="{Binding Description}"/>                    
                 </StackPanel>    
             </GroupBox>
             
@@ -93,10 +93,10 @@
                     </Grid.RowDefinitions>
                     
                     <Label Grid.Row="0" Grid.Column="0">Creation Date:</Label>
-                    <WPF:DatePicker Name="dpCreationDate" Grid.Row="1" Grid.Column="0" SelectedDate="{Binding CreationDate}" />
+                    <WPF:DatePicker TabIndex="7" Name="dpCreationDate" Grid.Row="1" Grid.Column="0" SelectedDate="{Binding CreationDate}" SelectedDateChanged="dpCreationDate_SelectedDateChanged" />
                     
                     <Label Grid.Row="0" Grid.Column="1">Expiration Date:</Label>
-                    <WPF:DatePicker Name="dpExpirationDate" Grid.Row="1" Grid.Column="1" SelectedDate="{Binding ExpirationDate}" />
+                    <WPF:DatePicker TabIndex="8" Name="dpExpirationDate" Grid.Row="1" Grid.Column="1" SelectedDate="{Binding ExpirationDate}" SelectedDateChanged="dpExpirationDate_SelectedDateChanged" />
                 </Grid>    
             </GroupBox>
             
@@ -150,6 +150,6 @@
             </GroupBox>
         </Grid>
         
-        <Button Name="btnCommitQuoteChanges" Click="btnCommitQuoteChanges_Click">Commit Quote Changes</Button>
+        <Button Name="btnCommitQuoteChanges" TabIndex="11" Click="btnCommitQuoteChanges_Click">Commit Quote Changes</Button>
     </StackPanel>
 </Company:CompanyUserControl>
