@@ -20,7 +20,7 @@
                 <Company:CommoditiesControl SelectedCompany="{Binding Path=SelectedCompany}" Width="Auto" Height="Auto" />
             </TabItem>
             <TabItem Header="Services">
-                <Company:ServicesControl Width="Auto" Height="Auto" />
+                <Company:ServicesControl SelectedCompany="{Binding Path=SelectedCompany}" Width="Auto" Height="Auto" />
             </TabItem>
             <TabItem Header="Credit &amp; Rates">
                 <Company:CreditAndRatesControl SelectedCompany="{Binding Path=SelectedCompany}" Width="Auto" Height="Auto" />

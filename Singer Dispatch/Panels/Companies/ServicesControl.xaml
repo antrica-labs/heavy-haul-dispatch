@@ -9,14 +9,16 @@
                 <ResourceDictionary Source="/SingerDispatchDictionary.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <Style TargetType="CheckBox">
-                <Setter Property="Margin" Value="0,0,0,8" />
+                <Setter Property="Margin" Value="0,0,0,9" />
             </Style>
         </ResourceDictionary>
     </UserControl.Resources>
     <StackPanel>
         <GroupBox Header="Provided Services">
-            <StackPanel Name="panelServiceTypes" Margin="20,15,20,15">
-                <Label>Loading...</Label>
+            <StackPanel>
+                <StackPanel Name="panelServiceTypes" Margin="20" />
+                
+                <Button Name="btnUpdateServices" Click="btnUpdateServices_Click">Update Services</Button>
             </StackPanel>
         </GroupBox>
     </StackPanel>
