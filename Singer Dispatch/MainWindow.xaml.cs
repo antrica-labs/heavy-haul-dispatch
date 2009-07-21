@@ -7,6 +7,7 @@ using SingerDispatch.Controls;
 using SingerDispatch.Panels.Quotes;
 using SingerDispatch.Panels.Companies;
 using SingerDispatch.Panels.Jobs;
+using System;
 
 namespace SingerDispatch
 {
@@ -20,16 +21,23 @@ namespace SingerDispatch
 
         public MainWindow()
         {   
-            InitializeComponent();
+            InitializeComponent();           
 
-            this.database = SingerConstants.CommonDataContext;            
-            this.companies = new ObservableCollection<Company>(
-                (from c in database.Companies orderby c.Name select c).ToList()
-            );
+            this.database = SingerConstants.CommonDataContext;
+            this.companies = new ObservableCollection<Company>();
+
+            if (!database.DatabaseExists())
+            {
+                database.CreateDatabase();
+            }
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            companies = new ObservableCollection<Company>(
+                (from c in database.Companies orderby c.Name select c).ToList()
+            );
+
             cmbCompanies.ItemsSource = companies;
             cmbOperators.ItemsSource = companies;
 

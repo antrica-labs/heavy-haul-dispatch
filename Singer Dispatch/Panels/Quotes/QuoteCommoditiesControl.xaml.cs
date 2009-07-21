@@ -82,12 +82,9 @@ namespace SingerDispatch.Panels.Quotes
 
             if (commodity != null)
             {
-                if (commodity.ID == 0)
-                {
-                    database.QuoteCommodities.InsertOnSubmit(commodity);
-                }
-
-                database.SubmitChanges();
+                SelectedQuote.QuoteCommodities.Add(commodity);
+                ((ObservableCollection<QuoteCommodity>)dgQuoteCommodities.ItemsSource).Add(commodity);
+                dgQuoteCommodities.SelectedItem = commodity;
             }
         }
         

@@ -1,5 +1,5 @@
 ﻿using System.Windows.Controls;
-
+using System.Linq;
 using SingerDispatch.Panels.Companies;
 using System.Windows;
 
@@ -12,9 +12,13 @@ namespace SingerDispatch.Panels.Quotes
     {
         public static DependencyProperty SelectedQuoteProperty = DependencyProperty.Register("SelectedQuote", typeof(Quote), typeof(QuotesPanel), new PropertyMetadata(null, QuotesPanel.SelectedQuotePropertyChanged));
 
+        private SingerDispatchDataContext database;
+
         public QuotesPanel()
         {
             InitializeComponent();
+
+            database = SingerConstants.CommonDataContext;
         }
 
         public Quote SelectedQuote
@@ -41,6 +45,9 @@ namespace SingerDispatch.Panels.Quotes
 
                 panel.tabCommodities.IsEnabled = false;
                 ((UserControl)panel.tabCommodities.Content).IsEnabled = false;
+
+                panel.btnCommitChanges.IsEnabled = false;
+                panel.btnDiscardChanges.IsEnabled = false;
             }
             else
             {
@@ -49,6 +56,9 @@ namespace SingerDispatch.Panels.Quotes
 
                 panel.tabCommodities.IsEnabled = true;
                 ((UserControl)panel.tabCommodities.Content).IsEnabled = true;
+
+                panel.btnCommitChanges.IsEnabled = true;
+                panel.btnDiscardChanges.IsEnabled = true;
             }
         }
 
@@ -63,6 +73,37 @@ namespace SingerDispatch.Panels.Quotes
             else
             {
                 this.IsEnabled = true;
+            }
+        }
+
+        private void btnDiscardChanges_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnCommitChanges_Click(object sender, RoutedEventArgs e)
+        {
+            if (SelectedQuote != null)
+            {
+                if (SelectedQuote.Number < 0)
+                {
+                    try
+                    {
+                        SelectedQuote.Number = (from q in database.Quotes select q.Number).Max() + 1;
+                    }
+                    catch
+                    {
+                        SelectedQuote.Number = 1;
+                    }
+                }
+
+                SelectedQuote.Revision += 1;
+
+                database.Quotes.InsertOnSubmit(SelectedQuote);
+                database.SubmitChanges();
+
+                panelQuoteHistory.SelectedQuote = null;
+                panelQuoteHistory.SelectedQuote = SelectedQuote;
             }
         }
     }

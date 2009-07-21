@@ -14,23 +14,35 @@
     </UserControl.Resources>
     <StackPanel DataContext="{Binding ElementName=quotesPanel}">
         <Border Background="LightGoldenrodYellow" BorderBrush="LightGray" BorderThickness="1" Margin="0,0,0,5">
-            <StackPanel Orientation="Horizontal">
-                <Label>Active Quote #:</Label>
-                <Label Content="{Binding Path=SelectedQuote.Number}" FontWeight="Bold" />
-                <Label>-</Label>
-                <Label Content="{Binding Path=SelectedQuote.Revision}" FontWeight="Bold"/>
-            </StackPanel>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0" Orientation="Horizontal" Margin="0,5,0,5">
+                    <Label>Active Quote #:</Label>
+                    <Label Content="{Binding Path=SelectedQuote.Number}" FontWeight="Bold" />
+                    <Label>:</Label>
+                    <Label Content="{Binding Path=SelectedQuote.Revision}" FontWeight="Bold"/>
+                </StackPanel>
+                
+                <Button Name="btnDiscardChanges" Grid.Column="2" Margin="5" IsEnabled="False" Click="btnDiscardChanges_Click">Discard Changes</Button>
+                <Button Name="btnCommitChanges" Grid.Column="3" Margin="0,5,5,5" IsEnabled="False" Click="btnCommitChanges_Click">Commit Changes</Button>                
+            </Grid>
         </Border>
         
         <TabControl Name="tabs">
             <TabItem Header="Quotes">
-                <Quote:QuoteHistoryControl Width="Auto" Height="Auto" SelectedCompany="{Binding SelectedCompany}" />
+                <Quote:QuoteHistoryControl x:Name="panelQuoteHistory" Width="Auto" Height="Auto" SelectedCompany="{Binding SelectedCompany}" />
             </TabItem>
             <TabItem Name="tabCommodities" Header="Commodities" IsEnabled="False">
-                <Quote:QuoteCommoditiesControl Width="Auto" Height="Auto" SelectedQuote="{Binding SelectedQuote}" />
+                <Quote:QuoteCommoditiesControl x:Name="panelQuoteCommodities" Width="Auto" Height="Auto" SelectedQuote="{Binding SelectedQuote}" />
             </TabItem>
             <TabItem Name="tabSupplements" Header="Supplements" IsEnabled="False">
-                <Quote:QuoteSupplements Width="Auto" Height="Auto" SelectedQuote="{Binding SelectedQuote}" />
+                <Quote:QuoteSupplements x:Name="panelQuoteSupplements" Width="Auto" Height="Auto" SelectedQuote="{Binding SelectedQuote}" />
             </TabItem>
             <TabItem Header="Storage" IsEnabled="False" />
             <TabItem Header="Conditions" IsEnabled="False" />

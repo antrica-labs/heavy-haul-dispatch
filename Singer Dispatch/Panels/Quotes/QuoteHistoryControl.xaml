@@ -1,7 +1,8 @@
-﻿<Company:CompanyUserControl x:Class="SingerDispatch.Panels.Quotes.QuoteHistoryControl"
+﻿<Quotes:QuoteUserControl x:Class="SingerDispatch.Panels.Quotes.QuoteHistoryControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:WPF="http://schemas.microsoft.com/wpf/2008/toolkit"
+    xmlns:Quotes="clr-namespace:SingerDispatch.Panels.Quotes"
     xmlns:Company="clr-namespace:SingerDispatch.Panels.Companies"
     Loaded="ControlLoaded" Width="750">
     <UserControl.Resources>
@@ -27,9 +28,9 @@
                 <ColumnDefinition />
                 <ColumnDefinition />                               
             </Grid.ColumnDefinitions>
-            
-            <Button Name="btnCreateQuote" Grid.Column="1" Click="btnCreateQuote_Click" TabIndex="0">New Quote</Button>
-            <Button Name="btnCreateJob" Grid.Column="0" Click="btnCreateJob_Click" TabIndex="1">Create Job From Quote</Button>
+
+            <Button Name="btnNewQuote" Grid.Column="0" Click="btnNewQuote_Click" TabIndex="0">New Quote</Button>
+            <Button Name="btnCreateJob" Grid.Column="1" Click="btnCreateJob_Click" TabIndex="1">Create Job From Quote</Button>            
             <Button Name="btnPrintQuote" Grid.Column="3" TabIndex="2">Print Quote</Button>
         </Grid>
         
@@ -78,7 +79,7 @@
                 </StackPanel>    
             </GroupBox>
             
-            <GroupBox Header="Quote Timeline" Name="gbQuoteTimeline" Grid.Column="0" Grid.Row="1" Margin="0,5,0,5">
+            <GroupBox Header="Quote Timeline" Name="gbQuoteTimeline" Grid.Column="0" Grid.Row="1" Margin="0,5,5,5">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition />
@@ -102,7 +103,7 @@
             
             <GroupBox Header="Contact List" Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" Margin="0,0,5,5">
                 <StackPanel>
-                    <WPF:DataGrid Name="dgQuoteContacts" Style="{StaticResource ListDisplay}" HorizontalScrollBarVisibility="Disabled" AutoGenerateColumns="False" MinHeight="150" Margin="0,0,0,5">
+                    <WPF:DataGrid Name="dgQuoteContacts" Style="{StaticResource ListDisplay}" HorizontalScrollBarVisibility="Disabled" AutoGenerateColumns="False" MinHeight="150" Margin="5">
                         <WPF:DataGrid.Columns>
                             <WPF:DataGridTextColumn Header="First" Binding="{Binding FirstName}" IsReadOnly="True" />
                             <WPF:DataGridTextColumn Header="Last" Binding="{Binding LastName}" IsReadOnly="True" />
@@ -148,8 +149,6 @@
                     </Grid>
                 </StackPanel>
             </GroupBox>
-        </Grid>
-        
-        <Button Name="btnCommitQuoteChanges" TabIndex="11" Click="btnCommitQuoteChanges_Click">Commit Quote Changes</Button>
+        </Grid>        
     </StackPanel>
-</Company:CompanyUserControl>
+</Quotes:QuoteUserControl>

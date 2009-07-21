@@ -67,16 +67,14 @@ namespace SingerDispatch.Panels.Quotes
         {
             QuoteSupplement supplement = (QuoteSupplement)grpSupplementDetails.DataContext;
 
-            if (supplement != null && supplement.ID == 0)
+            if (supplement != null)
             {
-                
-                database.QuoteSupplements.InsertOnSubmit(supplement);
+                SelectedQuote.QuoteSupplements.Add(supplement);
                 ((ObservableCollection<QuoteSupplement>)dgSupplements.ItemsSource).Add(supplement);
-                dgSupplements.SelectedItem = supplement;
-                
+                dgSupplements.SelectedItem = supplement;                
             }
 
-            database.SubmitChanges();            
+            //database.SubmitChanges();            
         }
 
         private void cmbBillingType_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -111,16 +109,16 @@ namespace SingerDispatch.Panels.Quotes
 
             if (confirmation == MessageBoxResult.Yes)
             {
-                database.QuoteSupplements.DeleteOnSubmit(supplement);
+                //database.QuoteSupplements.DeleteOnSubmit(supplement);
                 ((ObservableCollection<QuoteSupplement>)dgSupplements.ItemsSource).Remove(supplement);
 
-                database.SubmitChanges();
+                //database.SubmitChanges();
             }
         }
 
         private void DataGridCommit(object sender, DataGridRowEditEndingEventArgs e)
         {
-            database.SubmitChanges();
+            //database.SubmitChanges();
         }
     }
 }
