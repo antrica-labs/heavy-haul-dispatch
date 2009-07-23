@@ -12,15 +12,15 @@
         </ResourceDictionary>
     </UserControl.Resources>
     <StackPanel>
-        <WPF:DataGrid Name="dgQuoteCommodities" Style="{StaticResource ListDisplay}" AutoGenerateColumns="False" Margin="0,0,0,5" MinHeight="200">
+        <WPF:DataGrid Name="dgQuoteCommodities" Style="{StaticResource ListDisplay}" SelectionChanged="dgQuoteCommodities_SelectionChanged" AutoGenerateColumns="False" Margin="0,0,0,5" Height="200">
             <WPF:DataGrid.Columns>
-                <WPF:DataGridTextColumn Header="Unit" />
-                <WPF:DataGridTextColumn Header="Name" />
-                <WPF:DataGridCheckBoxColumn Header="Length" />
-                <WPF:DataGridCheckBoxColumn Header="Width" />
-                <WPF:DataGridCheckBoxColumn Header="Height" />
-                <WPF:DataGridCheckBoxColumn Header="Weight" />
-                <WPF:DataGridCheckBoxColumn Header="Value" />
+                <WPF:DataGridTextColumn Header="Unit" Binding="{Binding Unit}" />
+                <WPF:DataGridTextColumn Header="Name" Binding="{Binding Name}" />
+                <WPF:DataGridTextColumn Header="Length" Binding="{Binding Length}" />                
+                <WPF:DataGridTextColumn Header="Width" Binding="{Binding Width}" />
+                <WPF:DataGridTextColumn Header="Height" Binding="{Binding Height}" />
+                <WPF:DataGridTextColumn Header="Weight" Binding="{Binding Weight}" />
+                <WPF:DataGridTextColumn Header="Value" Binding="{Binding Value, StringFormat=c}" />
             </WPF:DataGrid.Columns>
         </WPF:DataGrid>
 
@@ -32,7 +32,7 @@
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
             
-            <Button Grid.Column="0">New Commodity</Button>
+            <Button Name="btnNewCommodity" Grid.Column="0" Click="btnNewCommodity_Click">New Commodity</Button>
             <Button Grid.Column="3">Remove Commodity</Button>
         </Grid>
 
@@ -57,7 +57,7 @@
                 </Grid.RowDefinitions>
 
                 <Label HorizontalAlignment="Left" Width="125">Commodity Name:</Label>
-                <ComboBox Name="cmbCommodityName" Grid.Row="0" Grid.Column="1" IsEditable="True" ItemTemplate="{StaticResource SimpleNameTemplate}" TextSearch.TextPath="Name" SelectionChanged="cmbCommodityName_SelectionChanged" />
+                <ComboBox Name="cmbCommodityName" Text="{Binding Name}" Grid.Row="0" Grid.Column="1" IsEditable="True" ItemTemplate="{StaticResource SimpleNameTemplate}" TextSearch.TextPath="Name" SelectionChanged="cmbCommodityName_SelectionChanged" />
 
                 <Label Grid.Row="1" Grid.Column="0">Value:</Label>
                 <TextBox Name="txtCommodityValue" Grid.Row="1" Grid.Column="1" Text="{Binding Value}" />

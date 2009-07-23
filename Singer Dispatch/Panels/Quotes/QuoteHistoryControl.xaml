@@ -4,7 +4,8 @@
     xmlns:WPF="http://schemas.microsoft.com/wpf/2008/toolkit"
     xmlns:Quotes="clr-namespace:SingerDispatch.Panels.Quotes"
     xmlns:Company="clr-namespace:SingerDispatch.Panels.Companies"
-    Loaded="ControlLoaded" Width="750">
+    Loaded="ControlLoaded" Width="750"
+    x:Name="panelQuoteHistory">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -13,7 +14,7 @@
         </ResourceDictionary>
     </UserControl.Resources>
     <StackPanel>
-        <WPF:DataGrid Name="dgQuotes" Style="{StaticResource ListDisplay}" AutoGenerateColumns="False" Margin="0,0,0,5" MinHeight="200" SelectionChanged="dgQuotes_SelectionChanged">
+        <WPF:DataGrid Name="dgQuotes" Style="{StaticResource ListDisplay}" AutoGenerateColumns="False" Margin="0,0,0,5" Height="200" SelectedItem="{Binding ElementName=panelQuoteHistory, Path=SelectedQuote}">
             <WPF:DataGrid.Columns>
                 <WPF:DataGridTextColumn Header="Quote #" Width="0.3*" Binding="{Binding Number}"/>
                 <WPF:DataGridTextColumn Header="Revision" Width="0.3*" Binding="{Binding Revision}"/>
@@ -130,7 +131,7 @@
                         
                         <Label Grid.Column="0" Grid.Row="1">Email:</Label>                        
                         <Label Grid.Column="1" Grid.Row="1">
-                            <Hyperlink NavigateUri="{Binding Email, StringFormat=mailto:\{0\}}" RequestNavigate="EmailClick">
+                            <Hyperlink NavigateUri="{Binding Email, StringFormat=mailto:\{0\}}">
                                 <TextBlock Text="{Binding Email}" />
                             </Hyperlink>
                         </Label>

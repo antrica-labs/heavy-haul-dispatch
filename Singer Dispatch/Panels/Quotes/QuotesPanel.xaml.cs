@@ -78,7 +78,9 @@ namespace SingerDispatch.Panels.Quotes
 
         private void btnDiscardChanges_Click(object sender, RoutedEventArgs e)
         {
-
+            SelectedQuote = null;
+            panelQuoteHistory.SelectedQuote = null;
+            tabs.SelectedIndex = 0;
         }
 
         private void btnCommitChanges_Click(object sender, RoutedEventArgs e)

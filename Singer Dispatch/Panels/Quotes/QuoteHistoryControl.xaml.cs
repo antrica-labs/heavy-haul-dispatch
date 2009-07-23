@@ -48,27 +48,49 @@ namespace SingerDispatch.Panels.Quotes
             cmbQuotedBy.ItemsSource = (from u in database.Users select u).ToList();
         }
 
-        private void EmailClick(object sender, RequestNavigateEventArgs e)
-        {           
-        }
-
         protected override void SelectedQuoteChanged(Quote newValue, Quote oldValue)
         {
             base.SelectedQuoteChanged(newValue, oldValue);
 
-            if (newValue != null && !((ObservableCollection<Quote>)dgQuotes.ItemsSource).Contains(newValue))
-            {               
-                ((ObservableCollection<Quote>)dgQuotes.ItemsSource).Insert(0, newValue);                
+            Quote quote = newValue;
+
+            if (quote != null)
+            {
+                if (quote.ID != 0)
+                {
+                    ObservableCollection<Quote> quotes = (ObservableCollection<Quote>)dgQuotes.ItemsSource;
+
+                    if (!quotes.Contains(quote))
+                    {
+                        quotes.Insert(0, quote);
+                        dgQuotes.SelectedItem = quote;
+                    }
+
+                    quote = (Quote)quote.Clone();
+                }
+
+                FrameworkElement parent = (FrameworkElement)this.Parent;
+
+                while (parent != null && !(parent is QuotesPanel))
+                {
+                    parent = (FrameworkElement)parent.Parent;
+                }
+
+                if (parent != null)
+                {
+                    QuotesPanel panel = (QuotesPanel)parent;
+                    panel.SelectedQuote = quote;
+                }
             }
 
-            dgQuotes.SelectedItem = newValue;
+            panelQuoteDetails.DataContext = quote;
         }
 
         protected void SelectedCompanyChanged(Company newValue, Company oldValue)
         {   
             if (newValue != null)
             {                
-                dgQuotes.ItemsSource = new ObservableCollection<Quote>((from q in database.Quotes where q.CompanyID == newValue.ID select q).ToList());
+                dgQuotes.ItemsSource = new ObservableCollection<Quote>((from q in database.Quotes where q.CompanyID == newValue.ID orderby q.Number descending, q.Revision descending select q).ToList());
                 cmbCareOfCompanies.ItemsSource = (from c in database.Companies where c.ID != newValue.ID select c).ToList();                
                 dgQuoteContacts.ItemsSource = (from c in database.Contacts where c.Address.Company == newValue orderby c.LastName, c.FirstName select c).ToList();
             }
@@ -95,34 +117,6 @@ namespace SingerDispatch.Panels.Quotes
             {
                 ((ObservableCollection<Quote>)dgQuotes.ItemsSource).Add(quote);
             }
-        }
-
-        private void dgQuotes_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            Quote quote = (Quote)dgQuotes.SelectedItem;
-            
-            if (quote != null)
-            {   
-                if (quote.ID != 0)
-                {
-                    quote = (Quote)quote.Clone();
-                }
-
-                FrameworkElement parent = (FrameworkElement)this.Parent;
-
-                while (parent != null && !(parent is QuotesPanel))
-                {
-                    parent = (FrameworkElement)parent.Parent;
-                }
-
-                if (parent != null)
-                {
-                    QuotesPanel panel = (QuotesPanel)parent;
-                    panel.SelectedQuote = quote;
-                }
-            }
-
-            panelQuoteDetails.DataContext = quote;
         }
 
         private void cmbCareOfCompanies_SelectionChanged(object sender, SelectionChangedEventArgs e)

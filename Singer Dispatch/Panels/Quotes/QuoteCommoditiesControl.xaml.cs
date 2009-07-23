@@ -43,6 +43,14 @@ namespace SingerDispatch.Panels.Quotes
             if (newValue != null)
             {
                 cmbCommodityName.ItemsSource = new ObservableCollection<Commodity>((from c in database.Commodities where c.CompanyID == newValue.CompanyID || c.CompanyID == newValue.CareOfCompanyID select c).ToList());
+
+                QuoteCommodity commodity = new QuoteCommodity() { QuoteID = newValue.ID };
+
+                gbDetails.DataContext = commodity;
+                gbDepature.DataContext = commodity;
+                gbDestination.DataContext = commodity;
+                                
+                dgQuoteCommodities.ItemsSource = new ObservableCollection<QuoteCommodity>(newValue.QuoteCommodities);
             }
         }
 
@@ -52,7 +60,7 @@ namespace SingerDispatch.Panels.Quotes
 
             if (original != null)
             {
-                QuoteCommodity commodity = new QuoteCommodity() { QuoteID = SelectedQuote.ID };
+                QuoteCommodity commodity = (QuoteCommodity)gbDetails.DataContext;
 
                 commodity.OriginalCommodityID = original.ID;
                 commodity.Name = original.Name;
@@ -69,6 +77,10 @@ namespace SingerDispatch.Panels.Quotes
                 commodity.Notes = original.Notes;
                 commodity.LastAddress = original.LastAddress;
                 commodity.LastLocation = original.LastLocation;
+            }
+            else
+            {
+                QuoteCommodity commodity = new QuoteCommodity() { QuoteID = SelectedQuote.ID };
 
                 gbDetails.DataContext = commodity;
                 gbDepature.DataContext = commodity;
@@ -82,9 +94,32 @@ namespace SingerDispatch.Panels.Quotes
 
             if (commodity != null)
             {
-                SelectedQuote.QuoteCommodities.Add(commodity);
-                ((ObservableCollection<QuoteCommodity>)dgQuoteCommodities.ItemsSource).Add(commodity);
-                dgQuoteCommodities.SelectedItem = commodity;
+               // SelectedQuote.QuoteCommodities.Add(commodity);
+               // ((ObservableCollection<QuoteCommodity>)dgQuoteCommodities.ItemsSource).Add(commodity);
+               // dgQuoteCommodities.SelectedItem = commodity;
+            }
+        }
+
+        private void btnNewCommodity_Click(object sender, RoutedEventArgs e)
+        {
+            QuoteCommodity commodity = new QuoteCommodity() { QuoteID = SelectedQuote.ID };
+
+            gbDetails.DataContext = commodity;
+            gbDepature.DataContext = commodity;
+            gbDestination.DataContext = commodity;
+
+            cmbCommodityName.Focus();
+        }
+
+        private void dgQuoteCommodities_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            QuoteCommodity commodity = (QuoteCommodity)dgQuoteCommodities.SelectedItem;
+
+            if (commodity != null)
+            {
+                gbDetails.DataContext = commodity;
+                gbDepature.DataContext = commodity;
+                gbDestination.DataContext = commodity;
             }
         }
         
