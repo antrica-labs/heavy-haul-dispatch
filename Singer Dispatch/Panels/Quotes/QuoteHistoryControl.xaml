@@ -18,6 +18,7 @@
             <WPF:DataGrid.Columns>
                 <WPF:DataGridTextColumn Header="Quote #" Width="0.3*" Binding="{Binding Number}"/>
                 <WPF:DataGridTextColumn Header="Revision" Width="0.3*" Binding="{Binding Revision}"/>
+                <WPF:DataGridTextColumn Header="Price" Width="0.4*" Binding="{Binding Price, StringFormat=c}" />
                 <WPF:DataGridTextColumn Header="Description" Width="3*" Binding="{Binding Description}" />
             </WPF:DataGrid.Columns>
         </WPF:DataGrid>

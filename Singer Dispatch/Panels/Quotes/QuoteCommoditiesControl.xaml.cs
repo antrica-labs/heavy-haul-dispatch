@@ -31,9 +31,10 @@ namespace SingerDispatch.Panels.Quotes
 
         private void QuoteUserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            gbDetails.DataContext = null;
-            gbDepature.DataContext = null;
-            gbDestination.DataContext = null;
+            if (SelectedQuote != null)
+            {
+                cmbCommodityName.ItemsSource = new ObservableCollection<Commodity>((from c in database.Commodities where c.CompanyID == SelectedQuote.CompanyID || c.CompanyID == SelectedQuote.CareOfCompanyID select c).ToList());
+            }
         }
 
         protected override void SelectedQuoteChanged(Quote newValue, Quote oldValue)
@@ -81,7 +82,7 @@ namespace SingerDispatch.Panels.Quotes
             else
             {
                 QuoteCommodity commodity = new QuoteCommodity() { QuoteID = SelectedQuote.ID };
-
+                
                 gbDetails.DataContext = commodity;
                 gbDepature.DataContext = commodity;
                 gbDestination.DataContext = commodity;
@@ -94,9 +95,9 @@ namespace SingerDispatch.Panels.Quotes
 
             if (commodity != null)
             {
-               // SelectedQuote.QuoteCommodities.Add(commodity);
-               // ((ObservableCollection<QuoteCommodity>)dgQuoteCommodities.ItemsSource).Add(commodity);
-               // dgQuoteCommodities.SelectedItem = commodity;
+                SelectedQuote.QuoteCommodities.Add(commodity);
+                ((ObservableCollection<QuoteCommodity>)dgQuoteCommodities.ItemsSource).Insert(0, commodity);
+                dgQuoteCommodities.SelectedItem = commodity;
             }
         }
 

@@ -87,6 +87,7 @@ namespace SingerDispatch.Panels.Quotes
         {
             if (SelectedQuote != null)
             {
+                /* If this is a brand new quote, generate a quote number for it */
                 if (SelectedQuote.Number < 0)
                 {
                     try
@@ -97,9 +98,14 @@ namespace SingerDispatch.Panels.Quotes
                     {
                         SelectedQuote.Number = 1;
                     }
-                }
 
-                SelectedQuote.Revision += 1;
+                    SelectedQuote.Revision = 0;
+                }
+                else
+                {
+                    SelectedQuote.Revision = (from q in database.Quotes select q.Revision).Max() + 1;
+                }
+                
 
                 database.Quotes.InsertOnSubmit(SelectedQuote);
                 database.SubmitChanges();
