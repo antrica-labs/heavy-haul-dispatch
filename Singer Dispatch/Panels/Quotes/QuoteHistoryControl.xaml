@@ -14,7 +14,7 @@
         </ResourceDictionary>
     </UserControl.Resources>
     <StackPanel>
-        <WPF:DataGrid Name="dgQuotes" Style="{StaticResource ListDisplay}" AutoGenerateColumns="False" Margin="0,0,0,5" Height="200" SelectedItem="{Binding ElementName=panelQuoteHistory, Path=SelectedQuote}">
+        <WPF:DataGrid Name="dgQuotes" Style="{StaticResource ListDisplay}" AutoGenerateColumns="False" Margin="0,0,0,5" Height="200" SelectedItem="{Binding ElementName=panelQuoteHistory, Path=SelectedQuote}"  HorizontalScrollBarVisibility="Disabled">
             <WPF:DataGrid.Columns>
                 <WPF:DataGridTextColumn Header="Quote #" Width="0.3*" Binding="{Binding Number}"/>
                 <WPF:DataGridTextColumn Header="Revision" Width="0.3*" Binding="{Binding Revision}"/>
@@ -31,9 +31,9 @@
                 <ColumnDefinition />                               
             </Grid.ColumnDefinitions>
 
-            <Button Name="btnNewQuote" Grid.Column="0" Click="btnNewQuote_Click" TabIndex="0">New Quote</Button>
-            <Button Name="btnCreateJob" Grid.Column="1" Click="btnCreateJob_Click" TabIndex="1">Create Job From Quote</Button>            
-            <Button Name="btnPrintQuote" Grid.Column="3" TabIndex="2">Print Quote</Button>
+            <Button Name="btnNewQuote" Grid.Column="0" Click="btnNewQuote_Click">New Quote</Button>
+            <Button Name="btnCreateJob" Grid.Column="2" Click="btnCreateJob_Click">Convert to Job</Button>            
+            <Button Name="btnPrintQuote" Grid.Column="3">Print Quote</Button>
         </Grid>
         
         <Grid Name="panelQuoteDetails">
@@ -67,25 +67,23 @@
                         <TextBox Grid.Row="1" Grid.Column="1" IsReadOnly="True" Text="{Binding Revision}" />
                         
                         <Label Grid.Row="0" Grid.Column="2">Author:</Label>
-                        <ComboBox Name="cmbQuotedBy" TabIndex="3" Grid.Row="1" Grid.Column="2" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectedItem="{Binding User}" TextSearch.TextPath="Name"></ComboBox>
+                        <ComboBox Name="cmbQuotedBy" Grid.Row="1" Grid.Column="2" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectedItem="{Binding User}" TextSearch.TextPath="Name"></ComboBox>
                         
                         <Label Grid.Row="0" Grid.Column="3">Quote Price:</Label>
-                        <TextBox Grid.Row="2" Grid.Column="3" Text="{Binding Price}" TabIndex="4" />
+                        <TextBox Grid.Row="2" Grid.Column="3" Text="{Binding Price}" />
                     </Grid>
                     
                     <Label>Care Of:</Label>
-                    <ComboBox Name="cmbCareOfCompanies" TabIndex="5" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectionChanged="cmbCareOfCompanies_SelectionChanged" SelectedItem="{Binding Company1}" TextSearch.TextPath="Name" IsEditable="True" />
+                    <ComboBox Name="cmbCareOfCompanies" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectionChanged="cmbCareOfCompanies_SelectionChanged" SelectedItem="{Binding Company1}" TextSearch.TextPath="Name" IsEditable="True" />
                     
                     <Label>Project Description</Label>
-                    <TextBox TabIndex="6" Height="40" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Disabled" Text="{Binding Description}"/>                    
+                    <TextBox Height="40" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Disabled" Text="{Binding Description}"/>                    
                 </StackPanel>    
             </GroupBox>
             
             <GroupBox Header="Quote Timeline" Name="gbQuoteTimeline" Grid.Column="0" Grid.Row="1" Margin="0,5,5,5">
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition />
-                        <ColumnDefinition />
                         <ColumnDefinition />
                         <ColumnDefinition />
                         <ColumnDefinition />
@@ -96,10 +94,10 @@
                     </Grid.RowDefinitions>
                     
                     <Label Grid.Row="0" Grid.Column="0">Creation Date:</Label>
-                    <WPF:DatePicker TabIndex="7" Name="dpCreationDate" Grid.Row="1" Grid.Column="0" SelectedDate="{Binding CreationDate}" SelectedDateChanged="dpCreationDate_SelectedDateChanged" />
+                    <WPF:DatePicker Name="dpCreationDate" Grid.Row="1" Grid.Column="0" SelectedDate="{Binding CreationDate}" SelectedDateChanged="dpCreationDate_SelectedDateChanged" />
                     
                     <Label Grid.Row="0" Grid.Column="1">Expiration Date:</Label>
-                    <WPF:DatePicker TabIndex="8" Name="dpExpirationDate" Grid.Row="1" Grid.Column="1" SelectedDate="{Binding ExpirationDate}" SelectedDateChanged="dpExpirationDate_SelectedDateChanged" />
+                    <WPF:DatePicker Name="dpExpirationDate" Grid.Row="1" Grid.Column="1" SelectedDate="{Binding ExpirationDate}" SelectedDateChanged="dpExpirationDate_SelectedDateChanged" />
                 </Grid>    
             </GroupBox>
             

@@ -17,11 +17,32 @@ namespace SingerDispatch.Panels.Jobs
     /// <summary>
     /// Interaction logic for JobsPanel.xaml
     /// </summary>
-    public partial class JobsPanel : UserControl
+    public partial class JobsPanel : JobUserControl
     {
+        public static DependencyProperty SelectedCompanyProperty = DependencyProperty.Register("SelectedCompany", typeof(Company), typeof(JobsPanel), new PropertyMetadata(null, JobsPanel.SelectedCompanyPropertyChanged));
+
+        public Company SelectedCompany
+        {
+            get
+            {
+                return (Company)GetValue(SelectedCompanyProperty);
+            }
+            set
+            {
+                SetValue(SelectedCompanyProperty, value);
+            }
+        }
+
         public JobsPanel()
         {
             InitializeComponent();
+        }
+
+        public static void SelectedCompanyPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            JobsPanel control = (JobsPanel)d;
+            Company company = (Company)e.NewValue;
+
         }
     }
 }

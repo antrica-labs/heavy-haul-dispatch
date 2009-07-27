@@ -28,11 +28,12 @@ namespace SingerDispatch.Panels.Quotes
             InitializeComponent();
 
             database = SingerConstants.CommonDataContext;
+
+            cmbBillingType.ItemsSource = (from bt in database.BillingTypes select bt).ToList();
         }
 
         private void QuoteUserControl_Loaded(object sender, RoutedEventArgs e)
-        {
-            cmbBillingType.ItemsSource = (from bt in database.BillingTypes select bt).ToList();
+        {            
         }
 
         protected override void SelectedQuoteChanged(Quote newValue, Quote oldValue)
@@ -61,20 +62,6 @@ namespace SingerDispatch.Panels.Quotes
             dgSupplements.SelectedItem = null;
             grpSupplementDetails.DataContext = new QuoteSupplement() { QuoteID = SelectedQuote.ID };
             txtName.Focus();
-        }
-
-        private void btnSave_Click(object sender, RoutedEventArgs e)
-        {
-            QuoteSupplement supplement = (QuoteSupplement)grpSupplementDetails.DataContext;
-
-            if (supplement != null)
-            {
-                SelectedQuote.QuoteSupplements.Add(supplement);
-                ((ObservableCollection<QuoteSupplement>)dgSupplements.ItemsSource).Add(supplement);
-                dgSupplements.SelectedItem = supplement;                
-            }
-
-            //database.SubmitChanges();            
         }
 
         private void cmbBillingType_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -109,16 +96,22 @@ namespace SingerDispatch.Panels.Quotes
 
             if (confirmation == MessageBoxResult.Yes)
             {
-                //database.QuoteSupplements.DeleteOnSubmit(supplement);
+                SelectedQuote.QuoteSupplements.Remove(supplement);
                 ((ObservableCollection<QuoteSupplement>)dgSupplements.ItemsSource).Remove(supplement);
-
-                //database.SubmitChanges();
             }
         }
 
-        private void DataGridCommit(object sender, DataGridRowEditEndingEventArgs e)
+        private void btnAddSupplement_Click(object sender, RoutedEventArgs e)
         {
-            //database.SubmitChanges();
+            ObservableCollection<QuoteSupplement> list = (ObservableCollection<QuoteSupplement>)dgSupplements.ItemsSource;
+            QuoteSupplement supplement = (QuoteSupplement)grpSupplementDetails.DataContext;
+
+            if (supplement != null && !list.Contains(supplement))
+            {
+                SelectedQuote.QuoteSupplements.Add(supplement);
+                list.Add(supplement);
+                dgSupplements.SelectedItem = supplement;
+            }
         }
     }
 }

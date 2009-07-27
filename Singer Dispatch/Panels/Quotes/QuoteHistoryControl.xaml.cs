@@ -53,13 +53,12 @@ namespace SingerDispatch.Panels.Quotes
             base.SelectedQuoteChanged(newValue, oldValue);
 
             Quote quote = newValue;
+            ObservableCollection<Quote> quotes = (ObservableCollection<Quote>)dgQuotes.ItemsSource;
 
             if (quote != null)
             {
                 if (quote.ID != 0)
                 {
-                    ObservableCollection<Quote> quotes = (ObservableCollection<Quote>)dgQuotes.ItemsSource;
-
                     if (!quotes.Contains(quote))
                     {
                         quotes.Insert(0, quote);
@@ -80,6 +79,17 @@ namespace SingerDispatch.Panels.Quotes
                 {
                     QuotesPanel panel = (QuotesPanel)parent;
                     panel.SelectedQuote = quote;
+                }
+            }
+            else
+            {
+                // Remove any unsaved quotes (user wants them discarded)                
+                foreach (Quote q in quotes.ToList())
+                {
+                    if (q.ID == 0)
+                    {
+                        quotes.Remove(q);
+                    }
                 }
             }
 

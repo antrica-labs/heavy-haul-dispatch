@@ -12,7 +12,7 @@
         </ResourceDictionary>
     </UserControl.Resources>
     <StackPanel>
-        <WPF:DataGrid Name="dgSupplements" Style="{StaticResource ListDisplay}" SelectionChanged="dgSupplements_SelectionChanged" RowEditEnding="DataGridCommit" AutoGenerateColumns="False" Margin="0,0,0,5" MinHeight="200">
+        <WPF:DataGrid Name="dgSupplements" Style="{StaticResource ListDisplay}" HorizontalScrollBarVisibility="Disabled" SelectionChanged="dgSupplements_SelectionChanged" AutoGenerateColumns="False" Margin="0,0,0,5" MinHeight="200">
             <WPF:DataGrid.Columns>
                 <WPF:DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
                 <WPF:DataGridTextColumn Header="Details" Binding="{Binding Details}" />
@@ -65,6 +65,6 @@
             </Grid>
         </GroupBox>
 
-        <Button Name="btnSave" Click="btnSave_Click">Save Supplement</Button>
+        <Button Name="btnAddSupplement" Click="btnAddSupplement_Click">Add Supplement</Button>
     </StackPanel>
 </Quotes:QuoteUserControl>

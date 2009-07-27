@@ -89,14 +89,15 @@ namespace SingerDispatch.Panels.Quotes
             }
         }
 
-        private void btnSaveCommodity_Click(object sender, RoutedEventArgs e)
+        private void btnAddCommodity_Click(object sender, RoutedEventArgs e)
         {
+            ObservableCollection<QuoteCommodity> list = (ObservableCollection<QuoteCommodity>)dgQuoteCommodities.ItemsSource;
             QuoteCommodity commodity = (QuoteCommodity)gbDetails.DataContext;
 
-            if (commodity != null)
+            if (commodity != null && !list.Contains(commodity))
             {
                 SelectedQuote.QuoteCommodities.Add(commodity);
-                ((ObservableCollection<QuoteCommodity>)dgQuoteCommodities.ItemsSource).Insert(0, commodity);
+                list.Insert(0, commodity);
                 dgQuoteCommodities.SelectedItem = commodity;
             }
         }
@@ -121,6 +122,24 @@ namespace SingerDispatch.Panels.Quotes
                 gbDetails.DataContext = commodity;
                 gbDepature.DataContext = commodity;
                 gbDestination.DataContext = commodity;
+            }
+        }
+
+        private void btnRemoveCommodity_Click(object sender, RoutedEventArgs e)
+        {
+            QuoteCommodity commodity = (QuoteCommodity)dgQuoteCommodities.SelectedItem;
+
+            if (commodity == null)
+            {
+                return;
+            }
+
+            MessageBoxResult confirmation = MessageBox.Show("Are you sure you want to remove this commodity?", "Delete confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+            if (confirmation == MessageBoxResult.Yes)
+            {
+                SelectedQuote.QuoteCommodities.Remove(commodity);
+                ((ObservableCollection<QuoteCommodity>)dgQuoteCommodities.ItemsSource).Remove(commodity);
             }
         }
         

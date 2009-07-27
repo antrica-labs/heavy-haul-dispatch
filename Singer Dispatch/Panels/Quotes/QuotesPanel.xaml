@@ -1,4 +1,4 @@
-﻿<Company:CompanyUserControl x:Class="SingerDispatch.Panels.Quotes.QuotesPanel"
+﻿<Quote:QuoteUserControl x:Class="SingerDispatch.Panels.Quotes.QuotesPanel"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:Company="clr-namespace:SingerDispatch.Panels.Companies"
@@ -23,7 +23,7 @@
                 </Grid.ColumnDefinitions>
 
                 <StackPanel Grid.Column="0" Orientation="Horizontal" Margin="0,5,0,5">
-                    <Label>Active Quote #:</Label>
+                    <Label>Selected Quote #:</Label>
                     <Label Content="{Binding Path=SelectedQuote.Number}" FontWeight="Bold" />
                     <Label>:</Label>
                     <Label Content="{Binding Path=SelectedQuote.Revision}" FontWeight="Bold"/>
@@ -48,4 +48,4 @@
             <TabItem Header="Conditions" IsEnabled="False" />
         </TabControl>
     </StackPanel>
-</Company:CompanyUserControl>
+</Quote:QuoteUserControl>

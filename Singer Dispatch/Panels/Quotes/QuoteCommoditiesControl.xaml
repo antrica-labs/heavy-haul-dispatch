@@ -12,7 +12,7 @@
         </ResourceDictionary>
     </UserControl.Resources>
     <StackPanel>
-        <WPF:DataGrid Name="dgQuoteCommodities" Style="{StaticResource ListDisplay}" SelectionChanged="dgQuoteCommodities_SelectionChanged" AutoGenerateColumns="False" Margin="0,0,0,5" Height="200">
+        <WPF:DataGrid Name="dgQuoteCommodities" Style="{StaticResource ListDisplay}" SelectionChanged="dgQuoteCommodities_SelectionChanged" AutoGenerateColumns="False" Margin="0,0,0,5" Height="200" HorizontalScrollBarVisibility="Disabled">
             <WPF:DataGrid.Columns>
                 <WPF:DataGridTextColumn Header="Unit" Binding="{Binding Unit}" />
                 <WPF:DataGridTextColumn Header="Name" Binding="{Binding Name}" />
@@ -33,7 +33,7 @@
             </Grid.ColumnDefinitions>
             
             <Button Name="btnNewCommodity" Grid.Column="0" Click="btnNewCommodity_Click">New Commodity</Button>
-            <Button Grid.Column="3">Remove Commodity</Button>
+            <Button Name="btnRemoveCommodity" Grid.Column="3" Click="btnRemoveCommodity_Click">Remove Commodity</Button>
         </Grid>
 
         <GroupBox Name="gbDetails"  Header="Details" Margin="0,0,0,5">
@@ -163,6 +163,6 @@
             </GroupBox>
         </Grid>
         
-        <Button Name="btnSaveCommodity" Click="btnSaveCommodity_Click">Save Commodity</Button>
+        <Button Name="btnAddCommodity" Click="btnAddCommodity_Click">Add Commodity</Button>
     </StackPanel>
 </Quotes:QuoteUserControl>

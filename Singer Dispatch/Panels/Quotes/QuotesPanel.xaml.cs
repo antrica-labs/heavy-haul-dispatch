@@ -8,9 +8,21 @@ namespace SingerDispatch.Panels.Quotes
     /// <summary>
     /// Interaction logic for QuotesPanel.xaml
     /// </summary>
-    public partial class QuotesPanel : CompanyUserControl
+    public partial class QuotesPanel : QuoteUserControl
     {
-        public static DependencyProperty SelectedQuoteProperty = DependencyProperty.Register("SelectedQuote", typeof(Quote), typeof(QuotesPanel), new PropertyMetadata(null, QuotesPanel.SelectedQuotePropertyChanged));
+        public static DependencyProperty SelectedCompanyProperty = DependencyProperty.Register("SelectedCompany", typeof(Company), typeof(QuotesPanel), new PropertyMetadata(null, QuotesPanel.SelectedCompanyPropertyChanged));
+
+        public Company SelectedCompany
+        {
+            get
+            {
+                return (Company)GetValue(SelectedCompanyProperty);
+            }
+            set
+            {
+                SetValue(SelectedCompanyProperty, value);
+            }
+        }
 
         private SingerDispatchDataContext database;
 
@@ -21,73 +33,66 @@ namespace SingerDispatch.Panels.Quotes
             database = SingerConstants.CommonDataContext;
         }
 
-        public Quote SelectedQuote
+        public static void SelectedCompanyPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            get
+            QuotesPanel control = (QuotesPanel)d;
+            Company company = (Company)e.NewValue;
+
+            if (company == null)
             {
-                return (Quote)GetValue(SelectedQuoteProperty);
-            }
-            set
-            {
-                SetValue(SelectedQuoteProperty, value);
-            }
-        }
-
-        public static void SelectedQuotePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            QuotesPanel panel = (QuotesPanel)d;
-            Quote quote = (Quote)e.NewValue;
-
-            if (quote == null)
-            {
-                panel.tabSupplements.IsEnabled = false;
-                ((UserControl)panel.tabSupplements.Content).IsEnabled = false;
-
-                panel.tabCommodities.IsEnabled = false;
-                ((UserControl)panel.tabCommodities.Content).IsEnabled = false;
-
-                panel.btnCommitChanges.IsEnabled = false;
-                panel.btnDiscardChanges.IsEnabled = false;
+                control.IsEnabled = false;
             }
             else
             {
-                panel.tabSupplements.IsEnabled = true;
-                ((UserControl)panel.tabSupplements.Content).IsEnabled = true;
-
-                panel.tabCommodities.IsEnabled = true;
-                ((UserControl)panel.tabCommodities.Content).IsEnabled = true;
-
-                panel.btnCommitChanges.IsEnabled = true;
-                panel.btnDiscardChanges.IsEnabled = true;
+                control.IsEnabled = true;
             }
         }
 
-        protected override void SelectedCompanyChanged(Company newValue, Company oldValue)
+        protected override void SelectedQuoteChanged(Quote newValue, Quote oldValue)
         {
-            base.SelectedCompanyChanged(newValue, oldValue);
-            
+            base.SelectedQuoteChanged(newValue, oldValue);
+        
             if (newValue == null)
             {
-                this.IsEnabled = false;
+                tabSupplements.IsEnabled = false;
+                ((UserControl)tabSupplements.Content).IsEnabled = false;
+
+                tabCommodities.IsEnabled = false;
+                ((UserControl)tabCommodities.Content).IsEnabled = false;
+
+                btnCommitChanges.IsEnabled = false;
+                btnDiscardChanges.IsEnabled = false;
             }
             else
             {
-                this.IsEnabled = true;
+                tabSupplements.IsEnabled = true;
+                ((UserControl)tabSupplements.Content).IsEnabled = true;
+
+                tabCommodities.IsEnabled = true;
+                ((UserControl)tabCommodities.Content).IsEnabled = true;
+
+                btnCommitChanges.IsEnabled = true;
+                btnDiscardChanges.IsEnabled = true;
             }
         }
-
+      
         private void btnDiscardChanges_Click(object sender, RoutedEventArgs e)
         {
-            SelectedQuote = null;
-            panelQuoteHistory.SelectedQuote = null;
-            tabs.SelectedIndex = 0;
+            MessageBoxResult confirmation = MessageBox.Show("Are you sure you want to discard all changes made to this quote?", "Discard confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+            if (confirmation == MessageBoxResult.Yes)
+            {
+                SelectedQuote = null;
+                panelQuoteHistory.SelectedQuote = null;
+                tabs.SelectedIndex = 0;
+            }
         }
 
         private void btnCommitChanges_Click(object sender, RoutedEventArgs e)
         {
             if (SelectedQuote != null)
             {
-                /* If this is a brand new quote, generate a quote number for it */
+                // If this is a brand new quote, generate a quote number for it
                 if (SelectedQuote.Number < 0)
                 {
                     try
@@ -103,7 +108,7 @@ namespace SingerDispatch.Panels.Quotes
                 }
                 else
                 {
-                    SelectedQuote.Revision = (from q in database.Quotes select q.Revision).Max() + 1;
+                    SelectedQuote.Revision = (from q in database.Quotes where q.Number == SelectedQuote.Number select q.Revision).Max() + 1;
                 }
                 
 

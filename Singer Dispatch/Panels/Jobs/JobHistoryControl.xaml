@@ -1,7 +1,8 @@
-﻿<UserControl x:Class="SingerDispatch.Panels.Jobs.JobHistoryControl"
+﻿<Jobs:JobUserControl x:Class="SingerDispatch.Panels.Jobs.JobHistoryControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:WPF="http://schemas.microsoft.com/wpf/2008/toolkit"
+    xmlns:Jobs="clr-namespace:SingerDispatch.Panels.Jobs"
     Width="750">
     <UserControl.Resources>
         <ResourceDictionary>
@@ -11,14 +12,26 @@
         </ResourceDictionary>
     </UserControl.Resources>
     <StackPanel>
-        <WPF:DataGrid Name="dgJobs" Style="{StaticResource ListDisplay}" AutoGenerateColumns="False" Margin="0,0,0,5" MinHeight="200">
+        <WPF:DataGrid Name="dgJobs" Style="{StaticResource ListDisplay}" AutoGenerateColumns="False" Margin="0,0,0,5" Height="180">
             <WPF:DataGrid.Columns>
                 <WPF:DataGridTextColumn Header="Number" Width="60"/>
                 <WPF:DataGridTextColumn Header="Quote" Width="60" />
                 <WPF:DataGridTextColumn Header="Description" />
             </WPF:DataGrid.Columns>
         </WPF:DataGrid>
-        
+
+        <Grid Margin="0,0,0,5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <Button Name="btnNewJob" Grid.Column="0">New Job</Button>            
+            <Button Name="btnPrintQuote" Grid.Column="3">Print Job</Button>
+        </Grid>
+
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
@@ -49,14 +62,14 @@
                         <TextBox Grid.Row="1" Grid.Column="1" IsReadOnly="True" Text="{Binding Revision}" />
 
                         <Label Grid.Row="0" Grid.Column="2">Author:</Label>
-                        <ComboBox Name="cmbCreatedBy" TabIndex="3" Grid.Row="1" Grid.Column="2" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectedItem="{Binding User}" TextSearch.TextPath="Name"></ComboBox>                       
+                        <ComboBox Name="cmbCreatedBy" Grid.Row="1" Grid.Column="2" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectedItem="{Binding User}" TextSearch.TextPath="Name"></ComboBox>                       
                     </Grid>
 
                     <Label>Care Of:</Label>
-                    <ComboBox Name="cmbCareOfCompanies" TabIndex="5" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectedItem="{Binding Company1}" TextSearch.TextPath="Name" IsEditable="True" />
+                    <ComboBox Name="cmbCareOfCompanies" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectedItem="{Binding Company1}" TextSearch.TextPath="Name" IsEditable="True" />
 
                     <Label>Project Description</Label>
-                    <TextBox TabIndex="6" Height="40" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Disabled" Text="{Binding Description}"/>
+                    <TextBox Height="40" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Disabled" Text="{Binding Description}"/>
                 </StackPanel>
             </GroupBox>
 
@@ -65,9 +78,7 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition />
                         <ColumnDefinition />
-                        <ColumnDefinition />
-                        <ColumnDefinition />
-                        <ColumnDefinition />
+                        <ColumnDefinition />                        
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition />
@@ -75,10 +86,15 @@
                     </Grid.RowDefinitions>
 
                     <Label Grid.Row="0" Grid.Column="0">Start Date:</Label>
-                    <WPF:DatePicker TabIndex="7" Name="dpStartDate" Grid.Row="1" Grid.Column="0" SelectedDate="{Binding CreationDate}" />
+                    <WPF:DatePicker Name="dpStartDate" Grid.Row="1" Grid.Column="0" SelectedDate="{Binding CreationDate}" />
 
                     <Label Grid.Row="0" Grid.Column="1">End Date:</Label>
-                    <WPF:DatePicker TabIndex="8" Name="dpEndDate" Grid.Row="1" Grid.Column="1" SelectedDate="{Binding ExpirationDate}" HorizontalAlignment="Right" Width="72.6" />
+                    <WPF:DatePicker Name="dpEndDate" Grid.Row="1" Grid.Column="1" SelectedDate="{Binding ExpirationDate}" />
+                    
+                    <Label Grid.Row="0" Grid.Column="2">Status</Label>
+                    <ComboBox Grid.Row="1" Grid.Column="2" SelectedItem="{Binding Status}">                        
+                        <ComboBoxItem>Complete</ComboBoxItem>
+                    </ComboBox>
                 </Grid>
             </GroupBox>
 
@@ -132,4 +148,4 @@
             </GroupBox>
         </Grid>
     </StackPanel>
-</UserControl>
+</Jobs:JobUserControl>
