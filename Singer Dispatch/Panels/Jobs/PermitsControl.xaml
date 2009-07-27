@@ -1,0 +1,89 @@
+﻿<Jobs:JobUserControl x:Class="SingerDispatch.Panels.Jobs.PermitsControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:WPF="http://schemas.microsoft.com/wpf/2008/toolkit"
+    xmlns:Jobs="clr-namespace:SingerDispatch.Panels.Jobs"
+    Width="750">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/SingerDispatchDictionary.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <StackPanel>
+        <WPF:DataGrid Style="{StaticResource ListDisplay}" AutoGenerateColumns="False" Margin="0,0,0,5" Height="180">
+
+        </WPF:DataGrid>
+
+        <Grid Margin="0,0,0,5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <Button Grid.Column="0">New Permit</Button>
+            <Button Grid.Column="3">Remove Permit</Button>
+        </Grid>
+
+        <GroupBox Header="Service Details">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="90" />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+
+                <Label Grid.Row="0" Grid.Column="0">Load:</Label>
+                <ComboBox Grid.Row="0" Grid.Column="1"></ComboBox>
+
+                <Label Grid.Row="1" Grid.Column="0">Issuer:</Label>
+                <ComboBox Grid.Row="1" Grid.Column="1"></ComboBox>
+
+                <Label Grid.Row="2" Grid.Column="0">Permit Type:</Label>
+                <TextBox Grid.Row="2" Grid.Column="1" />
+
+                <Label Grid.Row="3" Grid.Column="0">Reference:</Label>
+                <TextBox Grid.Row="3" Grid.Column="1" />
+
+                <Label Grid.Row="4" Grid.Column="0">Conditions:</Label>
+                <TextBox Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" />
+
+                <GroupBox Grid.Column="2" Grid.Row="0" Grid.RowSpan="4" Header="Departure">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+
+                        <Label Grid.Row="0" Grid.Column="0">Date:</Label>
+                        <WPF:DatePicker Grid.Row="0" Grid.Column="1" />
+
+                        <Label Grid.Row="1" Grid.Column="0">Time:</Label>
+                        
+                        <Label Grid.Row="2" Grid.Column="0">Cost:</Label>
+                        <TextBox Grid.Row="2" Grid.Column="1" />
+                    </Grid>
+                </GroupBox>
+            </Grid>
+        </GroupBox>
+        
+        <Button Margin="0,5,0,0">Add Permit</Button>
+    </StackPanel>
+</Jobs:JobUserControl>

@@ -113,11 +113,28 @@
       <DependentUpon>ServicesControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Panels\Companies\CompanyUserControl.cs" />
+    <Compile Include="Panels\Jobs\CommodityMovementControl.xaml.cs">
+      <DependentUpon>CommodityMovementControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Panels\Jobs\DispatchesControl.xaml.cs">
+      <DependentUpon>DispatchesControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Panels\Jobs\JobHistoryControl.xaml.cs">
       <DependentUpon>JobHistoryControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Panels\Jobs\JobsPanel.xaml.cs">
       <DependentUpon>JobsPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Panels\Jobs\JobUserControl.cs">
+    </Compile>
+    <Compile Include="Panels\Jobs\LoadsControl.xaml.cs">
+      <DependentUpon>LoadsControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Panels\Jobs\PermitsControl.xaml.cs">
+      <DependentUpon>PermitsControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Panels\Jobs\ThirdPartyServicesControl.xaml.cs">
+      <DependentUpon>ThirdPartyServicesControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Panels\Quotes\QuoteCommoditiesControl.xaml.cs">
       <DependentUpon>QuoteCommoditiesControl.xaml</DependentUpon>
@@ -212,11 +229,31 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Panels\Jobs\CommodityMovementControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Panels\Jobs\DispatchesControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Panels\Jobs\JobHistoryControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Panels\Jobs\JobsPanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Panels\Jobs\LoadsControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Panels\Jobs\PermitsControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Panels\Jobs\ThirdPartyServicesControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

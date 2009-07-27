@@ -1,0 +1,203 @@
+﻿<Jobs:JobUserControl x:Class="SingerDispatch.Panels.Jobs.LoadsControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:WPF="http://schemas.microsoft.com/wpf/2008/toolkit"
+    xmlns:Jobs="clr-namespace:SingerDispatch.Panels.Jobs" Width="750">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/SingerDispatchDictionary.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <StackPanel>
+        <WPF:DataGrid Style="{StaticResource ListDisplay}" AutoGenerateColumns="False" Margin="0,0,0,5" Height="180">
+            
+        </WPF:DataGrid>
+
+        <Grid Margin="0,0,0,5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <Button Name="btnNewJob" Grid.Column="0">New Load</Button>
+            <Button Name="btnPrintQuote" Grid.Column="3">Remove Load</Button>
+        </Grid>
+        
+        <GroupBox Header="Vehicle">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                
+                <Label Grid.Column="0" Grid.Row="0">Unit:</Label>
+                <ComboBox Grid.Column="0" Grid.Row="1"></ComboBox>
+                
+                <Label Grid.Column="1" Grid.Row="0">Wheel Type:</Label>
+                <ComboBox Grid.Column="1" Grid.Row="1"></ComboBox>                
+                
+                <Label Grid.Column="2" Grid.Row="0">Trailer Combination:</Label>
+                <ComboBox Grid.Column="2" Grid.Row="1"></ComboBox>
+                
+                <Label Grid.Column="3" Grid.Row="0">Info:</Label>
+                <TextBox Grid.Column="3" Grid.Row="1" />
+            </Grid>    
+        </GroupBox>
+        
+        <GroupBox Header="Timeline">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+
+                <Label Grid.Row="0" Grid.Column="0">Start Date:</Label>
+                <WPF:DatePicker Grid.Row="1" Grid.Column="0" />
+
+                <Label Grid.Row="0" Grid.Column="1">End Date:</Label>
+                <WPF:DatePicker Grid.Row="1" Grid.Column="1" />
+
+                <Label Grid.Row="0" Grid.Column="2">Season</Label>
+                <ComboBox Grid.Row="1" Grid.Column="2" SelectedItem="{Binding Status}">
+                    <ComboBoxItem>High</ComboBoxItem>
+                    <ComboBoxItem>Low</ComboBoxItem>
+                </ComboBox>
+                
+                <Label Grid.Row="0" Grid.Column="3">Ban (%)</Label>
+                <TextBox Grid.Row="1" Grid.Column="3" />
+            </Grid>
+        </GroupBox>
+        
+        <GroupBox Header="Instruction">
+            <StackPanel>
+                <Label>Description of Service:</Label>
+                <TextBox />
+                
+                <Label>Additional Notes:</Label>
+                <TextBox Height="50" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" />
+            </StackPanel>
+        </GroupBox>
+        
+        <GroupBox Header="Dimentions">
+            <StackPanel>
+                <Grid>
+                    <Grid.ColumnDefinitions>                        
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    
+                    <Label Grid.Column="0" Grid.Row="0">Axle Weights</Label>
+                    <Label Grid.Column="0" Grid.Row="1">Estimated:</Label>
+                    <Label Grid.Column="0" Grid.Row="2">Scaled:</Label>
+                    
+                    <Label Grid.Column="1" Grid.Row="0">Steer:</Label>
+                    <TextBox Grid.Column="1" Grid.Row="1" />
+                    <TextBox Grid.Column="1" Grid.Row="2" />
+                    
+                    <Label Grid.Column="2" Grid.Row="0">Drive:</Label>
+                    <TextBox Grid.Column="2" Grid.Row="1" />
+                    <TextBox Grid.Column="2" Grid.Row="2" />
+                    
+                    <Label Grid.Column="3" Grid.Row="0">Group 1:</Label>
+                    <TextBox Grid.Column="3" Grid.Row="1" />
+                    <TextBox Grid.Column="3" Grid.Row="2" />
+                    
+                    <Label Grid.Column="4" Grid.Row="0">Group 2:</Label>
+                    <TextBox Grid.Column="4" Grid.Row="1" />
+                    <TextBox Grid.Column="4" Grid.Row="2" />
+                    
+                    <Label Grid.Column="5" Grid.Row="0">Group 3:</Label>
+                    <TextBox Grid.Column="5" Grid.Row="1" />
+                    <TextBox Grid.Column="5" Grid.Row="2" />
+                    
+                    <Label Grid.Column="6" Grid.Row="0">Group 4:</Label>
+                    <TextBox Grid.Column="6" Grid.Row="1" />
+                    <TextBox Grid.Column="6" Grid.Row="2" />
+                    
+                    <Label Grid.Column="7" Grid.Row="0">Group 5:</Label>
+                    <TextBox Grid.Column="7" Grid.Row="1" />
+                    <TextBox Grid.Column="7" Grid.Row="2" />
+                    
+                    <Label Grid.Column="8" Grid.Row="0">Group 6:</Label>
+                    <TextBox Grid.Column="8" Grid.Row="1" />
+                    <TextBox Grid.Column="8" Grid.Row="2" />
+                    
+                    <Label Grid.Column="9" Grid.Row="0">Group 7:</Label>
+                    <TextBox Grid.Column="9" Grid.Row="1" />
+                    <TextBox Grid.Column="9" Grid.Row="2" />
+                    
+                    <Label Grid.Column="10" Grid.Row="0">Group 8:</Label>
+                    <TextBox Grid.Column="10" Grid.Row="1" />
+                    <TextBox Grid.Column="10" Grid.Row="2" />
+                    
+                    <Label Grid.Column="11" Grid.Row="0">Group 9:</Label>
+                    <TextBox Grid.Column="11" Grid.Row="1" />
+                    <TextBox Grid.Column="11" Grid.Row="2" />
+                    
+                    <Label Grid.Column="12" Grid.Row="0">Group 10:</Label>
+                    <TextBox Grid.Column="12" Grid.Row="1" />
+                    <TextBox Grid.Column="12" Grid.Row="2" />
+                </Grid>
+                
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />                        
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />                        
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    
+                    <Label Grid.Column="0">Gross Weight:</Label>
+                    <TextBox Grid.Column="0" Grid.Row="1" />
+                    
+                    <Label Grid.Column="1">Loaded Length:</Label>
+                    <TextBox Grid.Column="1" Grid.Row="1" />
+                    
+                    <Label Grid.Column="2">Loaded Width:</Label>
+                    <TextBox Grid.Column="2" Grid.Row="1" />
+                    
+                    <Label Grid.Column="3">Loaded Height:</Label>
+                    <TextBox Grid.Column="3" Grid.Row="1" />
+                </Grid>
+            </StackPanel>    
+        </GroupBox>
+        
+        <Button Margin="0,5,0,0">Add Load</Button>
+    </StackPanel>
+</Jobs:JobUserControl>
