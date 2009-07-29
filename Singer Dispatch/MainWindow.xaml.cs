@@ -8,6 +8,7 @@ using SingerDispatch.Panels.Quotes;
 using SingerDispatch.Panels.Companies;
 using SingerDispatch.Panels.Jobs;
 using System;
+using SingerDispatch.Panels.Pricing;
 
 namespace SingerDispatch
 {
@@ -168,8 +169,29 @@ namespace SingerDispatch
 
             JobsPanel panel = new JobsPanel();
 
+            Binding binding = new Binding();
+            binding.ElementName = "cmbCompanies";
+            binding.Path = new PropertyPath(ComboBox.SelectedItemProperty);
+
+            panel.SetBinding(JobsPanel.SelectedCompanyProperty, binding);
+
             panelMainContent.Child = panel;
             AddLinksToExpander(linksJobs, panel.tabs.Items);   
+        }
+
+        private void ExpandPricing(object sender, RoutedEventArgs e)
+        {
+            if (panelMainContent.Child is JobPricingPanel)
+            {
+                return;
+            }
+
+            CollapseAllOtherNavigationExpanders((Expander)sender);
+
+            JobPricingPanel panel = new JobPricingPanel();
+
+            panelMainContent.Child = panel;
+            AddLinksToExpander(linksJobs, panel.tabs.Items);
         }
     }
 }

@@ -92,8 +92,15 @@ namespace SingerDispatch.Panels.Quotes
         {
             if (SelectedQuote != null)
             {
+                MessageBoxResult confirm = MessageBox.Show("Are you sure you wish to commit the changes to this quote and all of its properties?", "Save confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+                if (confirm == MessageBoxResult.No)
+                {
+                    return;
+                }
+
                 // If this is a brand new quote, generate a quote number for it
-                if (SelectedQuote.Number < 0)
+                if (SelectedQuote.Number == 0)
                 {
                     try
                     {

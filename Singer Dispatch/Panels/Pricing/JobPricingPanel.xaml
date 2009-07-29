@@ -1,0 +1,45 @@
+﻿<UserControl x:Class="SingerDispatch.Panels.Pricing.JobPricingPanel"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:Price="clr-namespace:SingerDispatch.Panels.Pricing"
+    x:Name="jobPricingPanel"
+    IsEnabled="False">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/SingerDispatchDictionary.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <StackPanel>
+        <Border Background="LightGoldenrodYellow" BorderBrush="LightGray" BorderThickness="1" Margin="0,0,0,5">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0" Orientation="Horizontal" Margin="0,5,0,5">
+                    <Label>Selected Job #:</Label>
+                    <Label Content="{Binding Number}" FontWeight="Bold" />
+                </StackPanel>
+
+                <Button Name="btnCommitJobChanges" Grid.Column="3" Margin="5" Click="btnCommitJobChanges_Click">Save changes</Button>
+            </Grid>
+        </Border>
+
+        <TabControl Name="tabs" DataContext="{Binding ElementName=jobPricingPanel}">
+            <TabItem Header="Job History">
+                <Price:JobPriceControl Width="Auto" />    
+            </TabItem>
+            <TabItem Header="Loads"></TabItem>
+            <TabItem Header="Commodities"></TabItem>
+            <TabItem Header="Dispatches"></TabItem>
+            <TabItem Header="Third Party Services"></TabItem>
+            <TabItem Header="Permits">
+            </TabItem>
+        </TabControl>
+    </StackPanel>
+</UserControl>

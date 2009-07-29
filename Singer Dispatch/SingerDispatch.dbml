@@ -236,16 +236,46 @@
   <Table Name="dbo.Jobs" Member="Jobs">
     <Type Name="Job">
       <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Number" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Number" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="CompanyID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
       <Column Name="QuoteID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
       <Column Name="CareOfCompanyID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
       <Column Name="QuotedByUserID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
       <Column Name="Description" Type="System.String" DbType="VarChar(1000)" CanBeNull="true" />
+      <Column Name="StartDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="EndDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Association Name="Job_Load" Member="Loads" OtherKey="JobID" Type="Load" />
+      <Association Name="Job_Dispatch" Member="Dispatches" OtherKey="JobID" Type="Dispatch" />
       <Association Name="Company_Job" Member="Company" ThisKey="CareOfCompanyID" Type="Company" IsForeignKey="true" />
       <Association Name="Company_Job1" Member="Company1" ThisKey="CompanyID" Type="Company" IsForeignKey="true" />
       <Association Name="Quote_Job" Member="Quote" ThisKey="QuoteID" Type="Quote" IsForeignKey="true" />
       <Association Name="User_Job" Member="User" ThisKey="QuotedByUserID" Type="User" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Loads" Member="Loads">
+    <Type Name="Load">
+      <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="JobID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="Info" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+      <Column Name="StartDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="EndDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="Ban" Type="System.String" DbType="VarChar(15)" CanBeNull="true" />
+      <Column Name="ServiceDescription" Type="System.String" DbType="VarChar(1000)" CanBeNull="true" />
+      <Column Name="Notes" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
+      <Association Name="Load_Dispatch" Member="Dispatches" OtherKey="LoadID" Type="Dispatch" />
+      <Association Name="Job_Load" Member="Job" ThisKey="JobID" Type="Job" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Dispatches" Member="Dispatches">
+    <Type Name="Dispatch">
+      <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="JobID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="LoadID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="ServiceType" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="Description" Type="System.String" DbType="VarChar(1000)" CanBeNull="true" />
+      <Column Name="Notes" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
+      <Association Name="Job_Dispatch" Member="Job" ThisKey="JobID" Type="Job" IsForeignKey="true" />
+      <Association Name="Load_Dispatch" Member="Load" ThisKey="LoadID" Type="Load" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>

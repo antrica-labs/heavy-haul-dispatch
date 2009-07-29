@@ -2,7 +2,9 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:WPF="http://schemas.microsoft.com/wpf/2008/toolkit"
-    xmlns:Jobs="clr-namespace:SingerDispatch.Panels.Jobs" Width="750">
+    xmlns:Jobs="clr-namespace:SingerDispatch.Panels.Jobs" 
+    Loaded="ControlLoaded"
+    Width="750">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -11,8 +13,12 @@
         </ResourceDictionary>
     </UserControl.Resources>
     <StackPanel>
-        <WPF:DataGrid Style="{StaticResource ListDisplay}" AutoGenerateColumns="False" Margin="0,0,0,5" Height="180">
-            
+        <WPF:DataGrid Name="dgLoads" Style="{StaticResource ListDisplay}" AutoGenerateColumns="False" Margin="0,0,0,5" Height="180">
+            <WPF:DataGrid.Columns>
+                <WPF:DataGridTextColumn Header="Unit" Width="0.15*" Binding="{Binding Unit}"/>
+                <WPF:DataGridTextColumn Header="Wheel Type" Width="0.2*" Binding="{Binding WheelType}" />
+                <WPF:DataGridTextColumn Header="Description" Binding="{Binding ServiceDescription}" />
+            </WPF:DataGrid.Columns>   
         </WPF:DataGrid>
 
         <Grid Margin="0,0,0,5">
@@ -23,11 +29,11 @@
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
 
-            <Button Name="btnNewJob" Grid.Column="0">New Load</Button>
-            <Button Name="btnPrintQuote" Grid.Column="3">Remove Load</Button>
+            <Button Name="btnNewLoad" Grid.Column="0" Click="btnNewLoad_Click">New Load</Button>
+            <Button Name="btnRemoveLoad" Grid.Column="3">Remove Load</Button>
         </Grid>
         
-        <GroupBox Header="Vehicle">
+        <GroupBox Header="Vehicle" DataContext="{Binding ElementName=dgLoads, Path=SelectedItem}">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
@@ -41,20 +47,20 @@
                 </Grid.RowDefinitions>
                 
                 <Label Grid.Column="0" Grid.Row="0">Unit:</Label>
-                <ComboBox Grid.Column="0" Grid.Row="1"></ComboBox>
+                <ComboBox Name="cmbUnits" Grid.Column="0" Grid.Row="1" SelectedItem="{Binding Unit}"></ComboBox>
                 
                 <Label Grid.Column="1" Grid.Row="0">Wheel Type:</Label>
-                <ComboBox Grid.Column="1" Grid.Row="1"></ComboBox>                
+                <ComboBox Grid.Column="1" Grid.Row="1" SelectedItem="{Binding WheelType}"></ComboBox>                
                 
                 <Label Grid.Column="2" Grid.Row="0">Trailer Combination:</Label>
-                <ComboBox Grid.Column="2" Grid.Row="1"></ComboBox>
+                <ComboBox Grid.Column="2" Grid.Row="1" SelectedItem="{Binding Trailor}"></ComboBox>
                 
                 <Label Grid.Column="3" Grid.Row="0">Info:</Label>
-                <TextBox Grid.Column="3" Grid.Row="1" />
+                <TextBox Grid.Column="3" Grid.Row="1" Text="{Binding Info}" />
             </Grid>    
         </GroupBox>
         
-        <GroupBox Header="Timeline">
+        <GroupBox Header="Timeline" DataContext="{Binding ElementName=dgLoads, Path=SelectedItem}">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
@@ -68,33 +74,33 @@
                 </Grid.RowDefinitions>
 
                 <Label Grid.Row="0" Grid.Column="0">Start Date:</Label>
-                <WPF:DatePicker Grid.Row="1" Grid.Column="0" />
+                <WPF:DatePicker Grid.Row="1" Grid.Column="0" SelectedDate="{Binding StartDate}" />
 
                 <Label Grid.Row="0" Grid.Column="1">End Date:</Label>
-                <WPF:DatePicker Grid.Row="1" Grid.Column="1" />
+                <WPF:DatePicker Grid.Row="1" Grid.Column="1" SelectedDate="{Binding EndDate}" />
 
                 <Label Grid.Row="0" Grid.Column="2">Season</Label>
-                <ComboBox Grid.Row="1" Grid.Column="2" SelectedItem="{Binding Status}">
+                <ComboBox Grid.Row="1" Grid.Column="2" SelectedItem="{Binding Season}">
                     <ComboBoxItem>High</ComboBoxItem>
                     <ComboBoxItem>Low</ComboBoxItem>
                 </ComboBox>
                 
                 <Label Grid.Row="0" Grid.Column="3">Ban (%)</Label>
-                <TextBox Grid.Row="1" Grid.Column="3" />
+                <TextBox Grid.Row="1" Grid.Column="3" Text="{Binding Ban}"/>
             </Grid>
         </GroupBox>
         
-        <GroupBox Header="Instruction">
+        <GroupBox Header="Instruction" DataContext="{Binding ElementName=dgLoads, Path=SelectedItem}">
             <StackPanel>
                 <Label>Description of Service:</Label>
-                <TextBox />
+                <TextBox Text="{Binding ServiceDescription}"/>
                 
                 <Label>Additional Notes:</Label>
-                <TextBox Height="50" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" />
+                <TextBox Text="{Binding Notes}" Height="50" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" />
             </StackPanel>
         </GroupBox>
         
-        <GroupBox Header="Dimentions">
+        <GroupBox Header="Dimentions" DataContext="{Binding ElementName=dgLoads, Path=SelectedItem}">
             <StackPanel>
                 <Grid>
                     <Grid.ColumnDefinitions>                        
@@ -197,7 +203,5 @@
                 </Grid>
             </StackPanel>    
         </GroupBox>
-        
-        <Button Margin="0,5,0,0">Add Load</Button>
     </StackPanel>
 </Jobs:JobUserControl>

@@ -45,13 +45,16 @@ namespace SingerDispatch
             Quote copy = new Quote();
 
             copy.CompanyID = CompanyID;
+            copy.Company = Company;
             copy.Number = Number;
             copy.Revision = Revision;
             copy.CareOfCompanyID = CareOfCompanyID;
+            copy.Company1 = Company1;
             copy.Description = Description;
             copy.CreationDate = CreationDate;
             copy.ExpirationDate = ExpirationDate;
             copy.QuotedByUserID = QuotedByUserID;
+            copy.User = User;
             copy.Price = Price;
 
             foreach (QuoteCommodity commodity in QuoteCommodities)

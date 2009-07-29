@@ -11,6 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Collections.ObjectModel;
 
 namespace SingerDispatch.Panels.Jobs
 {
@@ -19,6 +20,8 @@ namespace SingerDispatch.Panels.Jobs
     /// </summary>
     public partial class JobHistoryControl : JobUserControl
     {
+        SingerDispatchDataContext database;
+
         public static DependencyProperty SelectedCompanyProperty = DependencyProperty.Register("SelectedCompany", typeof(Company), typeof(JobHistoryControl), new PropertyMetadata(null, JobHistoryControl.SelectedCompanyPropertyChanged));
 
         public Company SelectedCompany
@@ -36,13 +39,94 @@ namespace SingerDispatch.Panels.Jobs
         public JobHistoryControl()
         {
             InitializeComponent();
+
+            database = SingerConstants.CommonDataContext;
+
+            cmbCreatedBy.ItemsSource = (from u in database.Users select u).ToList();
         }
 
         public static void SelectedCompanyPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            JobsPanel control = (JobsPanel)d;
-            Company company = (Company)e.NewValue;
+            JobHistoryControl control = (JobHistoryControl)d;
 
+            control.SelectedCompanyChanged((Company)e.NewValue, (Company)e.OldValue);          
         }
+
+        private void SelectedCompanyChanged(Company newValue, Company oldValue)
+        {
+            Company company = newValue;
+            
+            if (company != null)
+            {
+                dgJobs.ItemsSource = new ObservableCollection<Job>((from j in database.Jobs where j.CompanyID == SelectedCompany.ID orderby j.EndDate descending select j).ToList());
+                cmbCareOfCompanies.ItemsSource = (from c in database.Companies where c.ID != SelectedCompany.ID select c).ToList();
+            }
+            else
+            {
+                ((ObservableCollection<Job>)dgJobs.ItemsSource).Clear();
+                ((List<Company>)cmbCareOfCompanies.ItemsSource).Clear();
+            }
+
+            UpdateContactList();
+        }
+
+        protected override void SelectedJobChanged(Job newValue, Job oldValue)
+        {
+            base.SelectedJobChanged(newValue, oldValue);
+
+            UpdateContactList();
+            BubbleUpJob(newValue);
+        }
+
+        private void BubbleUpJob(Job job)
+        {
+            // Updated the selected job of any parent controls that may have a dependency property
+            FrameworkElement parent = (FrameworkElement)this.Parent;
+
+            while (parent != null && !(parent is JobsPanel))
+            {
+                parent = (FrameworkElement)parent.Parent;
+            }
+
+            if (parent != null)
+            {
+                JobsPanel panel = (JobsPanel)parent;
+                panel.SelectedJob = job;
+            }
+        }
+
+        private void cmbCareOfCompanies_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {           
+            UpdateContactList();
+        }
+
+        private void UpdateContactList()
+        {
+            List<Contact> contacts;
+
+            if (SelectedJob == null)
+            {
+                contacts = new List<Contact>();
+            }
+            else if (SelectedJob.CareOfCompanyID != null)
+            {
+                contacts = (from c in database.Contacts where c.Address.CompanyID == SelectedCompany.ID || c.Address.CompanyID == SelectedJob.CareOfCompanyID select c).ToList();
+            }
+            else
+            {
+                contacts = (from c in database.Contacts where c.Address.CompanyID == SelectedCompany.ID select c).ToList();
+            }
+
+            dgJobContacts.ItemsSource = contacts;
+        }
+
+        private void btnNewJob_Click(object sender, RoutedEventArgs e)
+        {
+            Job job = new Job() { CompanyID = SelectedCompany.ID, Number = 0 };
+
+            ((ObservableCollection<Job>)dgJobs.ItemsSource).Insert(0, job);
+            dgJobs.SelectedItem = job;
+            txtDescription.Focus();
+        }        
     }
 }

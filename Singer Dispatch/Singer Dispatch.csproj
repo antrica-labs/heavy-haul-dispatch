@@ -136,6 +136,12 @@
     <Compile Include="Panels\Jobs\ThirdPartyServicesControl.xaml.cs">
       <DependentUpon>ThirdPartyServicesControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Panels\Pricing\JobPriceControl.xaml.cs">
+      <DependentUpon>JobPriceControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Panels\Pricing\JobPricingPanel.xaml.cs">
+      <DependentUpon>JobPricingPanel.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Panels\Quotes\QuoteCommoditiesControl.xaml.cs">
       <DependentUpon>QuoteCommoditiesControl.xaml</DependentUpon>
     </Compile>
@@ -254,6 +260,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Panels\Jobs\ThirdPartyServicesControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Panels\Pricing\JobPriceControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Panels\Pricing\JobPricingPanel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

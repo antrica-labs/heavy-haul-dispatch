@@ -42,8 +42,8 @@
                     <Expander Name="expanderJobs" Header="Jobs" Style="{StaticResource SectionExpander}" Expanded="ExpandJobs">
                         <StackPanel Name="linksJobs" Style="{StaticResource SectionExpanderContent}" VerticalAlignment="Top"></StackPanel>
                     </Expander>
-                    <Expander Name="expanderBilling" Header="Billing" Style="{StaticResource SectionExpander}" IsEnabled="False">
-                        <StackPanel Name="linksBilling" Style="{StaticResource SectionExpanderContent}" VerticalAlignment="Top"></StackPanel>
+                    <Expander Name="expanderPricing" Header="Job Pricing" Style="{StaticResource SectionExpander}" Expanded="ExpandPricing">
+                        <StackPanel Name="linksPricing" Style="{StaticResource SectionExpanderContent}" VerticalAlignment="Top"></StackPanel>
                     </Expander>
                     <Expander Name="expanderReports" Header="Reports" Style="{StaticResource SectionExpander}" IsEnabled="False">
                         <StackPanel Name="linksReports" Style="{StaticResource SectionExpanderContent}" VerticalAlignment="Top"></StackPanel>

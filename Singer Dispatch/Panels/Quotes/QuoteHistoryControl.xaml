@@ -4,8 +4,8 @@
     xmlns:WPF="http://schemas.microsoft.com/wpf/2008/toolkit"
     xmlns:Quotes="clr-namespace:SingerDispatch.Panels.Quotes"
     xmlns:Company="clr-namespace:SingerDispatch.Panels.Companies"
-    Loaded="ControlLoaded" Width="750"
-    x:Name="panelQuoteHistory">
+    x:Name="panelQuoteHistory"
+    Width="750">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -32,8 +32,8 @@
             </Grid.ColumnDefinitions>
 
             <Button Name="btnNewQuote" Grid.Column="0" Click="btnNewQuote_Click">New Quote</Button>
-            <Button Name="btnCreateJob" Grid.Column="2" Click="btnCreateJob_Click">Convert to Job</Button>            
-            <Button Name="btnPrintQuote" Grid.Column="3">Print Quote</Button>
+            <Button Name="btnCreateJob" Grid.Column="2" Click="btnCreateJob_Click" IsEnabled="False">Convert to Job</Button>            
+            <Button Name="btnPrintQuote" Grid.Column="3" IsEnabled="False">Print Quote</Button>
         </Grid>
         
         <Grid Name="panelQuoteDetails">

@@ -87,6 +87,12 @@ namespace SingerDispatch
     partial void InsertJob(Job instance);
     partial void UpdateJob(Job instance);
     partial void DeleteJob(Job instance);
+    partial void InsertLoad(Load instance);
+    partial void UpdateLoad(Load instance);
+    partial void DeleteLoad(Load instance);
+    partial void InsertDispatch(Dispatch instance);
+    partial void UpdateDispatch(Dispatch instance);
+    partial void DeleteDispatch(Dispatch instance);
     #endregion
 		
 		public SingerDispatchDataContext() : 
@@ -268,6 +274,22 @@ namespace SingerDispatch
 			get
 			{
 				return this.GetTable<Job>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Load> Loads
+		{
+			get
+			{
+				return this.GetTable<Load>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Dispatch> Dispatches
+		{
+			get
+			{
+				return this.GetTable<Dispatch>();
 			}
 		}
 	}
@@ -5177,7 +5199,7 @@ namespace SingerDispatch
 		
 		private long _ID;
 		
-		private System.Nullable<int> _Number;
+		private int _Number;
 		
 		private System.Nullable<long> _CompanyID;
 		
@@ -5188,6 +5210,14 @@ namespace SingerDispatch
 		private System.Nullable<long> _QuotedByUserID;
 		
 		private string _Description;
+		
+		private System.Nullable<System.DateTime> _StartDate;
+		
+		private System.Nullable<System.DateTime> _EndDate;
+		
+		private EntitySet<Load> _Loads;
+		
+		private EntitySet<Dispatch> _Dispatches;
 		
 		private EntityRef<Company> _Company;
 		
@@ -5203,7 +5233,7 @@ namespace SingerDispatch
     partial void OnCreated();
     partial void OnIDChanging(long value);
     partial void OnIDChanged();
-    partial void OnNumberChanging(System.Nullable<int> value);
+    partial void OnNumberChanging(int value);
     partial void OnNumberChanged();
     partial void OnCompanyIDChanging(System.Nullable<long> value);
     partial void OnCompanyIDChanged();
@@ -5215,10 +5245,16 @@ namespace SingerDispatch
     partial void OnQuotedByUserIDChanged();
     partial void OnDescriptionChanging(string value);
     partial void OnDescriptionChanged();
+    partial void OnStartDateChanging(System.Nullable<System.DateTime> value);
+    partial void OnStartDateChanged();
+    partial void OnEndDateChanging(System.Nullable<System.DateTime> value);
+    partial void OnEndDateChanged();
     #endregion
 		
 		public Job()
 		{
+			this._Loads = new EntitySet<Load>(new Action<Load>(this.attach_Loads), new Action<Load>(this.detach_Loads));
+			this._Dispatches = new EntitySet<Dispatch>(new Action<Dispatch>(this.attach_Dispatches), new Action<Dispatch>(this.detach_Dispatches));
 			this._Company = default(EntityRef<Company>);
 			this._Company1 = default(EntityRef<Company>);
 			this._Quote = default(EntityRef<Quote>);
@@ -5246,8 +5282,8 @@ namespace SingerDispatch
 			}
 		}
 		
-		[Column(Storage="_Number", DbType="Int")]
-		public System.Nullable<int> Number
+		[Column(Storage="_Number", DbType="Int NOT NULL")]
+		public int Number
 		{
 			get
 			{
@@ -5379,6 +5415,72 @@ namespace SingerDispatch
 					this.SendPropertyChanged("Description");
 					this.OnDescriptionChanged();
 				}
+			}
+		}
+		
+		[Column(Storage="_StartDate", DbType="DateTime")]
+		public System.Nullable<System.DateTime> StartDate
+		{
+			get
+			{
+				return this._StartDate;
+			}
+			set
+			{
+				if ((this._StartDate != value))
+				{
+					this.OnStartDateChanging(value);
+					this.SendPropertyChanging();
+					this._StartDate = value;
+					this.SendPropertyChanged("StartDate");
+					this.OnStartDateChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_EndDate", DbType="DateTime")]
+		public System.Nullable<System.DateTime> EndDate
+		{
+			get
+			{
+				return this._EndDate;
+			}
+			set
+			{
+				if ((this._EndDate != value))
+				{
+					this.OnEndDateChanging(value);
+					this.SendPropertyChanging();
+					this._EndDate = value;
+					this.SendPropertyChanged("EndDate");
+					this.OnEndDateChanged();
+				}
+			}
+		}
+		
+		[Association(Name="Job_Load", Storage="_Loads", OtherKey="JobID")]
+		public EntitySet<Load> Loads
+		{
+			get
+			{
+				return this._Loads;
+			}
+			set
+			{
+				this._Loads.Assign(value);
+			}
+		}
+		
+		[Association(Name="Job_Dispatch", Storage="_Dispatches", OtherKey="JobID")]
+		public EntitySet<Dispatch> Dispatches
+		{
+			get
+			{
+				return this._Dispatches;
+			}
+			set
+			{
+				this._Dispatches.Assign(value);
 			}
 		}
 		
@@ -5514,6 +5616,593 @@ namespace SingerDispatch
 						this._QuotedByUserID = default(Nullable<long>);
 					}
 					this.SendPropertyChanged("User");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_Loads(Load entity)
+		{
+			this.SendPropertyChanging();
+			entity.Job = this;
+		}
+		
+		private void detach_Loads(Load entity)
+		{
+			this.SendPropertyChanging();
+			entity.Job = null;
+		}
+		
+		private void attach_Dispatches(Dispatch entity)
+		{
+			this.SendPropertyChanging();
+			entity.Job = this;
+		}
+		
+		private void detach_Dispatches(Dispatch entity)
+		{
+			this.SendPropertyChanging();
+			entity.Job = null;
+		}
+	}
+	
+	[Table(Name="dbo.Loads")]
+	public partial class Load : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private long _ID;
+		
+		private System.Nullable<long> _JobID;
+		
+		private string _Info;
+		
+		private System.Nullable<System.DateTime> _StartDate;
+		
+		private System.Nullable<System.DateTime> _EndDate;
+		
+		private string _Ban;
+		
+		private string _ServiceDescription;
+		
+		private string _Notes;
+		
+		private EntitySet<Dispatch> _Dispatches;
+		
+		private EntityRef<Job> _Job;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDChanging(long value);
+    partial void OnIDChanged();
+    partial void OnJobIDChanging(System.Nullable<long> value);
+    partial void OnJobIDChanged();
+    partial void OnInfoChanging(string value);
+    partial void OnInfoChanged();
+    partial void OnStartDateChanging(System.Nullable<System.DateTime> value);
+    partial void OnStartDateChanged();
+    partial void OnEndDateChanging(System.Nullable<System.DateTime> value);
+    partial void OnEndDateChanged();
+    partial void OnBanChanging(string value);
+    partial void OnBanChanged();
+    partial void OnServiceDescriptionChanging(string value);
+    partial void OnServiceDescriptionChanged();
+    partial void OnNotesChanging(string value);
+    partial void OnNotesChanged();
+    #endregion
+		
+		public Load()
+		{
+			this._Dispatches = new EntitySet<Dispatch>(new Action<Dispatch>(this.attach_Dispatches), new Action<Dispatch>(this.detach_Dispatches));
+			this._Job = default(EntityRef<Job>);
+			OnCreated();
+		}
+		
+		[Column(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="BigInt NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public long ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this.OnIDChanging(value);
+					this.SendPropertyChanging();
+					this._ID = value;
+					this.SendPropertyChanged("ID");
+					this.OnIDChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_JobID", DbType="BigInt")]
+		public System.Nullable<long> JobID
+		{
+			get
+			{
+				return this._JobID;
+			}
+			set
+			{
+				if ((this._JobID != value))
+				{
+					if (this._Job.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnJobIDChanging(value);
+					this.SendPropertyChanging();
+					this._JobID = value;
+					this.SendPropertyChanged("JobID");
+					this.OnJobIDChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_Info", DbType="VarChar(500)")]
+		public string Info
+		{
+			get
+			{
+				return this._Info;
+			}
+			set
+			{
+				if ((this._Info != value))
+				{
+					this.OnInfoChanging(value);
+					this.SendPropertyChanging();
+					this._Info = value;
+					this.SendPropertyChanged("Info");
+					this.OnInfoChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_StartDate", DbType="DateTime")]
+		public System.Nullable<System.DateTime> StartDate
+		{
+			get
+			{
+				return this._StartDate;
+			}
+			set
+			{
+				if ((this._StartDate != value))
+				{
+					this.OnStartDateChanging(value);
+					this.SendPropertyChanging();
+					this._StartDate = value;
+					this.SendPropertyChanged("StartDate");
+					this.OnStartDateChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_EndDate", DbType="DateTime")]
+		public System.Nullable<System.DateTime> EndDate
+		{
+			get
+			{
+				return this._EndDate;
+			}
+			set
+			{
+				if ((this._EndDate != value))
+				{
+					this.OnEndDateChanging(value);
+					this.SendPropertyChanging();
+					this._EndDate = value;
+					this.SendPropertyChanged("EndDate");
+					this.OnEndDateChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_Ban", DbType="VarChar(15)")]
+		public string Ban
+		{
+			get
+			{
+				return this._Ban;
+			}
+			set
+			{
+				if ((this._Ban != value))
+				{
+					this.OnBanChanging(value);
+					this.SendPropertyChanging();
+					this._Ban = value;
+					this.SendPropertyChanged("Ban");
+					this.OnBanChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_ServiceDescription", DbType="VarChar(1000)")]
+		public string ServiceDescription
+		{
+			get
+			{
+				return this._ServiceDescription;
+			}
+			set
+			{
+				if ((this._ServiceDescription != value))
+				{
+					this.OnServiceDescriptionChanging(value);
+					this.SendPropertyChanging();
+					this._ServiceDescription = value;
+					this.SendPropertyChanged("ServiceDescription");
+					this.OnServiceDescriptionChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_Notes", DbType="Text", UpdateCheck=UpdateCheck.Never)]
+		public string Notes
+		{
+			get
+			{
+				return this._Notes;
+			}
+			set
+			{
+				if ((this._Notes != value))
+				{
+					this.OnNotesChanging(value);
+					this.SendPropertyChanging();
+					this._Notes = value;
+					this.SendPropertyChanged("Notes");
+					this.OnNotesChanged();
+				}
+			}
+		}
+		
+		[Association(Name="Load_Dispatch", Storage="_Dispatches", OtherKey="LoadID")]
+		public EntitySet<Dispatch> Dispatches
+		{
+			get
+			{
+				return this._Dispatches;
+			}
+			set
+			{
+				this._Dispatches.Assign(value);
+			}
+		}
+		
+		[Association(Name="Job_Load", Storage="_Job", ThisKey="JobID", IsForeignKey=true)]
+		public Job Job
+		{
+			get
+			{
+				return this._Job.Entity;
+			}
+			set
+			{
+				Job previousValue = this._Job.Entity;
+				if (((previousValue != value) 
+							|| (this._Job.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Job.Entity = null;
+						previousValue.Loads.Remove(this);
+					}
+					this._Job.Entity = value;
+					if ((value != null))
+					{
+						value.Loads.Add(this);
+						this._JobID = value.ID;
+					}
+					else
+					{
+						this._JobID = default(Nullable<long>);
+					}
+					this.SendPropertyChanged("Job");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_Dispatches(Dispatch entity)
+		{
+			this.SendPropertyChanging();
+			entity.Load = this;
+		}
+		
+		private void detach_Dispatches(Dispatch entity)
+		{
+			this.SendPropertyChanging();
+			entity.Load = null;
+		}
+	}
+	
+	[Table(Name="dbo.Dispatches")]
+	public partial class Dispatch : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private long _ID;
+		
+		private System.Nullable<long> _JobID;
+		
+		private System.Nullable<long> _LoadID;
+		
+		private string _ServiceType;
+		
+		private string _Description;
+		
+		private string _Notes;
+		
+		private EntityRef<Job> _Job;
+		
+		private EntityRef<Load> _Load;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDChanging(long value);
+    partial void OnIDChanged();
+    partial void OnJobIDChanging(System.Nullable<long> value);
+    partial void OnJobIDChanged();
+    partial void OnLoadIDChanging(System.Nullable<long> value);
+    partial void OnLoadIDChanged();
+    partial void OnServiceTypeChanging(string value);
+    partial void OnServiceTypeChanged();
+    partial void OnDescriptionChanging(string value);
+    partial void OnDescriptionChanged();
+    partial void OnNotesChanging(string value);
+    partial void OnNotesChanged();
+    #endregion
+		
+		public Dispatch()
+		{
+			this._Job = default(EntityRef<Job>);
+			this._Load = default(EntityRef<Load>);
+			OnCreated();
+		}
+		
+		[Column(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="BigInt NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public long ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this.OnIDChanging(value);
+					this.SendPropertyChanging();
+					this._ID = value;
+					this.SendPropertyChanged("ID");
+					this.OnIDChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_JobID", DbType="BigInt")]
+		public System.Nullable<long> JobID
+		{
+			get
+			{
+				return this._JobID;
+			}
+			set
+			{
+				if ((this._JobID != value))
+				{
+					if (this._Job.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnJobIDChanging(value);
+					this.SendPropertyChanging();
+					this._JobID = value;
+					this.SendPropertyChanged("JobID");
+					this.OnJobIDChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_LoadID", DbType="BigInt")]
+		public System.Nullable<long> LoadID
+		{
+			get
+			{
+				return this._LoadID;
+			}
+			set
+			{
+				if ((this._LoadID != value))
+				{
+					if (this._Load.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnLoadIDChanging(value);
+					this.SendPropertyChanging();
+					this._LoadID = value;
+					this.SendPropertyChanged("LoadID");
+					this.OnLoadIDChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_ServiceType", DbType="VarChar(100)")]
+		public string ServiceType
+		{
+			get
+			{
+				return this._ServiceType;
+			}
+			set
+			{
+				if ((this._ServiceType != value))
+				{
+					this.OnServiceTypeChanging(value);
+					this.SendPropertyChanging();
+					this._ServiceType = value;
+					this.SendPropertyChanged("ServiceType");
+					this.OnServiceTypeChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_Description", DbType="VarChar(1000)")]
+		public string Description
+		{
+			get
+			{
+				return this._Description;
+			}
+			set
+			{
+				if ((this._Description != value))
+				{
+					this.OnDescriptionChanging(value);
+					this.SendPropertyChanging();
+					this._Description = value;
+					this.SendPropertyChanged("Description");
+					this.OnDescriptionChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_Notes", DbType="Text", UpdateCheck=UpdateCheck.Never)]
+		public string Notes
+		{
+			get
+			{
+				return this._Notes;
+			}
+			set
+			{
+				if ((this._Notes != value))
+				{
+					this.OnNotesChanging(value);
+					this.SendPropertyChanging();
+					this._Notes = value;
+					this.SendPropertyChanged("Notes");
+					this.OnNotesChanged();
+				}
+			}
+		}
+		
+		[Association(Name="Job_Dispatch", Storage="_Job", ThisKey="JobID", IsForeignKey=true)]
+		public Job Job
+		{
+			get
+			{
+				return this._Job.Entity;
+			}
+			set
+			{
+				Job previousValue = this._Job.Entity;
+				if (((previousValue != value) 
+							|| (this._Job.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Job.Entity = null;
+						previousValue.Dispatches.Remove(this);
+					}
+					this._Job.Entity = value;
+					if ((value != null))
+					{
+						value.Dispatches.Add(this);
+						this._JobID = value.ID;
+					}
+					else
+					{
+						this._JobID = default(Nullable<long>);
+					}
+					this.SendPropertyChanged("Job");
+				}
+			}
+		}
+		
+		[Association(Name="Load_Dispatch", Storage="_Load", ThisKey="LoadID", IsForeignKey=true)]
+		public Load Load
+		{
+			get
+			{
+				return this._Load.Entity;
+			}
+			set
+			{
+				Load previousValue = this._Load.Entity;
+				if (((previousValue != value) 
+							|| (this._Load.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Load.Entity = null;
+						previousValue.Dispatches.Remove(this);
+					}
+					this._Load.Entity = value;
+					if ((value != null))
+					{
+						value.Dispatches.Add(this);
+						this._LoadID = value.ID;
+					}
+					else
+					{
+						this._LoadID = default(Nullable<long>);
+					}
+					this.SendPropertyChanged("Load");
 				}
 			}
 		}

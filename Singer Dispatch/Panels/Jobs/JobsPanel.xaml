@@ -2,7 +2,8 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:Jobs="clr-namespace:SingerDispatch.Panels.Jobs"
-    x:Name="jobsPanel">
+    x:Name="jobsPanel"
+    IsEnabled="False">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -25,27 +26,27 @@
                     <Label Content="{Binding Number}" FontWeight="Bold" />
                 </StackPanel>
                 
-                <Button Grid.Column="3" Margin="5">Save changes</Button>
+                <Button Name="btnCommitChanges" Grid.Column="3" Margin="5" Click="btnCommitChanges_Click">Save changes</Button>
             </Grid>
         </Border>
 
         <TabControl Name="tabs" DataContext="{Binding ElementName=jobsPanel}">
-            <TabItem Header="Job History">
+            <TabItem Name="masterTab" Header="Job History">
                 <Jobs:JobHistoryControl Width="Auto" SelectedCompany="{Binding Path=SelectedCompany}" SelectedJob="{Binding Path=SelectedJob}" />
             </TabItem>
-            <TabItem Header="Loads">
+            <TabItem Header="Loads" IsEnabled="False">
                 <Jobs:LoadsControl Width="Auto" SelectedJob="{Binding Path=SelectedJob}" />
             </TabItem>
-            <TabItem Header="Commodities">
+            <TabItem Header="Commodities" IsEnabled="False">
                 <Jobs:CommodityMovementControl Width="Auto" SelectedJob="{Binding Path=SelectedJob}" />
             </TabItem>
-            <TabItem Header="Dispatches">
+            <TabItem Header="Dispatches" IsEnabled="False">
                 <Jobs:DispatchesControl Width="Auto" SelectedJob="{Binding Path=SelectedJob}" />
             </TabItem>
-            <TabItem Header="Third Party Services">
+            <TabItem Header="Third Party Services" IsEnabled="False">
                 <Jobs:ThirdPartyServicesControl Width="Auto" SelectedJob="{Binding Path=SelectedJob}" />
             </TabItem>
-            <TabItem Header="Permits">
+            <TabItem Header="Permits" IsEnabled="False">
                 <Jobs:PermitsControl Width="Auto" SelectedJob="{Binding Path=SelectedJob}" />
             </TabItem>
         </TabControl>

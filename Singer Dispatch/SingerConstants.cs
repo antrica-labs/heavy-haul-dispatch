@@ -9,6 +9,7 @@ namespace SingerDispatch
     {
         private static List<string> contactMethods = new List<string>();
         private static List<string> customerTypes = new List<string>();
+        private static List<string> serviceTypes = new List<string>();
         private static SingerDispatchDataContext database = new SingerDispatchDataContext();
 
         static SingerConstants()
@@ -19,6 +20,11 @@ namespace SingerDispatch
 
             customerTypes.Add("Singer Specialized");
             customerTypes.Add("M.E. Signer Enterprise");
+
+            serviceTypes.Add("Tractor");
+            serviceTypes.Add("Crane");
+            serviceTypes.Add("Pilot Car");
+            serviceTypes.Add("Swamper");
         }
 
         public static List<string> ContactMethods 
@@ -35,6 +41,14 @@ namespace SingerDispatch
             get
             {
                 return customerTypes;
+            }
+        }
+
+        public static List<string> ServiceTypes
+        {
+            get
+            {
+                return serviceTypes;
             }
         }
 
