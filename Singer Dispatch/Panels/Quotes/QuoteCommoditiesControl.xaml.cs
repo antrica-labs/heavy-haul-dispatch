@@ -89,26 +89,14 @@ namespace SingerDispatch.Panels.Quotes
             }
         }
 
-        private void btnAddCommodity_Click(object sender, RoutedEventArgs e)
-        {
-            ObservableCollection<QuoteCommodity> list = (ObservableCollection<QuoteCommodity>)dgQuoteCommodities.ItemsSource;
-            QuoteCommodity commodity = (QuoteCommodity)gbDetails.DataContext;
-
-            if (commodity != null && !list.Contains(commodity))
-            {
-                SelectedQuote.QuoteCommodities.Add(commodity);
-                list.Insert(0, commodity);
-                dgQuoteCommodities.SelectedItem = commodity;
-            }
-        }
-
         private void btnNewCommodity_Click(object sender, RoutedEventArgs e)
         {
+            ObservableCollection<QuoteCommodity> list = (ObservableCollection<QuoteCommodity>)dgQuoteCommodities.ItemsSource;
             QuoteCommodity commodity = new QuoteCommodity() { QuoteID = SelectedQuote.ID };
 
-            gbDetails.DataContext = commodity;
-            gbDepature.DataContext = commodity;
-            gbDestination.DataContext = commodity;
+            SelectedQuote.QuoteCommodities.Add(commodity);
+            list.Insert(0, commodity);
+            dgQuoteCommodities.SelectedItem = commodity;
 
             cmbCommodityName.Focus();
         }

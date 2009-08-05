@@ -36,7 +36,7 @@
             <Button Name="btnRemoveCommodity" Grid.Column="3" Click="btnRemoveCommodity_Click">Remove Commodity</Button>
         </Grid>
 
-        <GroupBox Name="gbDetails"  Header="Details" Margin="0,0,0,5">
+        <GroupBox Name="gbDetails"  Header="Details" Margin="0,0,0,5" DataContext="{Binding ElementName=dgQuoteCommodities, Path=SelectedItem}">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="105" />
@@ -80,7 +80,7 @@
                 <Label Grid.Row="7" Grid.Column="0">Notes:</Label>
                 <TextBox Name="txtCommodityNotes" Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="2" Height="60" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" Text="{Binding Notes}" />
 
-                <GroupBox Header="Dimentions (meters/kg)" Grid.Row="0" Grid.Column="2" Grid.RowSpan="7" Margin="5,0,0,0">
+                <GroupBox Header="Dimentions (meters/kg)" Grid.Row="0" Grid.Column="2" Grid.RowSpan="7" Margin="5,0,0,0" DataContext="{Binding ElementName=dgQuoteCommodities, Path=SelectedItem}">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="70" />
@@ -135,10 +135,10 @@
                     </Grid.RowDefinitions>
 
                     <Label Grid.Column="0" Grid.Row="0">Site Name:</Label>
-                    <TextBox Grid.Column="1" Grid.Row="0" />
+                    <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding DepartueName}" />
 
                     <Label Grid.Column="0" Grid.Row="1">Address/LSD:</Label>
-                    <TextBox Grid.Column="1" Grid.Row="1" />
+                    <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding DepartureAddress}" />
                 </Grid>
             </GroupBox>
 
@@ -155,14 +155,12 @@
 
 
                     <Label Grid.Column="0" Grid.Row="0">Site Name:</Label>
-                    <TextBox Grid.Column="1" Grid.Row="0" />
+                    <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding DestinationName}"/>
 
                     <Label Grid.Column="0" Grid.Row="1">Address/LSD:</Label>
-                    <TextBox Grid.Column="1" Grid.Row="1" />
+                    <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding DestinationAddress}" />
                 </Grid>
             </GroupBox>
         </Grid>
-        
-        <Button Name="btnAddCommodity" Click="btnAddCommodity_Click">Add Commodity</Button>
     </StackPanel>
 </Quotes:QuoteUserControl>

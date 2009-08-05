@@ -59,28 +59,14 @@ namespace SingerDispatch.Panels.Quotes
 
         private void btnNewSupplement_Click(object sender, RoutedEventArgs e)
         {
-            dgSupplements.SelectedItem = null;
-            grpSupplementDetails.DataContext = new QuoteSupplement() { QuoteID = SelectedQuote.ID };
-            txtName.Focus();
-        }
-
-        private void cmbBillingType_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            BillingType type = (BillingType)((ComboBox)sender).SelectedItem;
-
-            if (type != null && type.Name == "Cost Included")
-            {
-                txtQuantity.Text = null;
-                txtQuantity.IsEnabled = false;
-                txtCostPerItem.Text = null;
-                txtCostPerItem.IsEnabled = false;
-            }
-            else
-            {
-                txtQuantity.IsEnabled = true;
-                txtCostPerItem.IsEnabled = true;
-            }
+            ObservableCollection<QuoteSupplement> list = (ObservableCollection<QuoteSupplement>)dgSupplements.ItemsSource;
+            QuoteSupplement supplement = new QuoteSupplement() { QuoteID = SelectedQuote.ID };
             
+            list.Insert(0, supplement);
+            SelectedQuote.QuoteSupplements.Add(supplement);
+            dgSupplements.SelectedItem = supplement;
+            
+            txtName.Focus();
         }
 
         private void btnRemoveSupplement_Click(object sender, RoutedEventArgs e)
@@ -101,17 +87,23 @@ namespace SingerDispatch.Panels.Quotes
             }
         }
 
-        private void btnAddSupplement_Click(object sender, RoutedEventArgs e)
+        private void cmbBillingType_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            ObservableCollection<QuoteSupplement> list = (ObservableCollection<QuoteSupplement>)dgSupplements.ItemsSource;
-            QuoteSupplement supplement = (QuoteSupplement)grpSupplementDetails.DataContext;
+            BillingType type = (BillingType)((ComboBox)sender).SelectedItem;
 
-            if (supplement != null && !list.Contains(supplement))
+            if (type != null && type.Name == "Cost Included")
             {
-                SelectedQuote.QuoteSupplements.Add(supplement);
-                list.Add(supplement);
-                dgSupplements.SelectedItem = supplement;
+                txtQuantity.Text = null;
+                txtQuantity.IsEnabled = false;
+                txtCostPerItem.Text = null;
+                txtCostPerItem.IsEnabled = false;
             }
+            else
+            {
+                txtQuantity.IsEnabled = true;
+                txtCostPerItem.IsEnabled = true;
+            }
+
         }
     }
 }

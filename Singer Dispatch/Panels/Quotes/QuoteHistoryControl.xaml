@@ -32,8 +32,9 @@
             </Grid.ColumnDefinitions>
 
             <Button Name="btnNewQuote" Grid.Column="0" Click="btnNewQuote_Click">New Quote</Button>
-            <Button Name="btnCreateJob" Grid.Column="2" Click="btnCreateJob_Click" IsEnabled="False">Convert to Job</Button>            
-            <Button Name="btnPrintQuote" Grid.Column="3" IsEnabled="False">Print Quote</Button>
+            <Button Name="btnCreateRevisoin" Grid.Column="1" Click="btnCreateRevisoin_Click">Create Revision</Button>
+            <Button Name="btnCreateJob" Grid.Column="2" Click="btnCreateJob_Click">Convert to Job</Button>            
+            <Button Name="btnPrintQuote" Grid.Column="3" Click="btnPrintQuote_Click">Print Quote</Button>
         </Grid>
         
         <Grid Name="panelQuoteDetails">

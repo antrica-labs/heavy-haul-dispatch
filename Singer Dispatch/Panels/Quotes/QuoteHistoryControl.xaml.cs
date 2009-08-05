@@ -60,9 +60,7 @@ namespace SingerDispatch.Panels.Quotes
                     {
                         quotes.Insert(0, quote);
                         dgQuotes.SelectedItem = quote;
-                    }
-
-                    quote = (Quote)quote.Clone();
+                    }                    
                 }
 
                 BubbleUpQuote(quote);
@@ -187,6 +185,34 @@ namespace SingerDispatch.Panels.Quotes
 
         private void dpExpirationDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
+        }
+
+        private void btnCreateRevisoin_Click(object sender, RoutedEventArgs e)
+        {
+            if (SelectedQuote == null)
+            {
+                return;
+            }
+
+            Quote quote = (Quote)SelectedQuote.Clone();
+            ObservableCollection<Quote> quotes = (ObservableCollection<Quote>)dgQuotes.ItemsSource;
+
+            quote.Revision = (from q in database.Quotes where q.Number == SelectedQuote.Number select q.Revision).Max() + 1;
+
+            quotes.Insert(0, quote);
+            dgQuotes.SelectedItem = quote;
+        }
+
+        private void btnPrintQuote_Click(object sender, RoutedEventArgs e)
+        {
+            if (SelectedQuote == null)
+            {
+                return;
+            }
+
+            SelectedQuote.IsPrinted = 1;
+
+            database.SubmitChanges();
         }        
     }
 }

@@ -92,12 +92,14 @@ namespace SingerDispatch.Panels.Quotes
         {
             if (SelectedQuote != null)
             {
+                /*
                 MessageBoxResult confirm = MessageBox.Show("Are you sure you wish to commit the changes to this quote and all of its properties?", "Save confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
                 if (confirm == MessageBoxResult.No)
                 {
                     return;
                 }
+                */
 
                 // If this is a brand new quote, generate a quote number for it
                 if (SelectedQuote.Number == 0)
@@ -113,13 +115,17 @@ namespace SingerDispatch.Panels.Quotes
 
                     SelectedQuote.Revision = 0;
                 }
-                else
-                {
-                    SelectedQuote.Revision = (from q in database.Quotes where q.Number == SelectedQuote.Number select q.Revision).Max() + 1;
-                }
-                
 
-                database.Quotes.InsertOnSubmit(SelectedQuote);
+                if (SelectedQuote.ID == 0)
+                {
+                    if (SelectedQuote.Revision > 0)
+                    {
+                        SelectedQuote.Revision = (from q in database.Quotes where q.Number == SelectedQuote.Number select q.Revision).Max() + 1;
+                    }
+
+                    database.Quotes.InsertOnSubmit(SelectedQuote);
+                }
+                 
                 database.SubmitChanges();
 
                 panelQuoteHistory.SelectedQuote = null;

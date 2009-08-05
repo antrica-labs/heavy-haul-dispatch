@@ -30,7 +30,7 @@
                 </StackPanel>
                 
                 <Button Name="btnDiscardChanges" Grid.Column="2" Margin="5" IsEnabled="False" Click="btnDiscardChanges_Click">Discard Changes</Button>
-                <Button Name="btnCommitChanges" Grid.Column="3" Margin="0,5,5,5" IsEnabled="False" Click="btnCommitChanges_Click">Commit Changes</Button>                
+                <Button Name="btnCommitChanges" Grid.Column="3" Margin="0,5,5,5" IsEnabled="False" Click="btnCommitChanges_Click">Save Changes</Button>                
             </Grid>
         </Border>
         

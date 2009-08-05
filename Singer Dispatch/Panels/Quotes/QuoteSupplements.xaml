@@ -34,7 +34,7 @@
             <Button Name="btnRemoveSupplement"  Grid.Column="3" Click="btnRemoveSupplement_Click">Remove Supplement</Button>
         </Grid>
 
-        <GroupBox Name="grpSupplementDetails" Header="Supplement Details" Margin="0,0,0,10">
+        <GroupBox Name="grpSupplementDetails" Header="Supplement Details" Margin="0,0,0,10" DataContext="{Binding ElementName=dgQuoteSupplement, Path=SelectedItem}">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="75" />
@@ -64,7 +64,5 @@
                 <TextBox Name="txtCostPerItem" Grid.Row="2" Grid.Column="3" Text="{Binding CostPerItem}" />                
             </Grid>
         </GroupBox>
-
-        <Button Name="btnAddSupplement" Click="btnAddSupplement_Click">Add Supplement</Button>
     </StackPanel>
 </Quotes:QuoteUserControl>

@@ -75,10 +75,10 @@
       <Association Name="Company_Commodity" Member="Commodities" OtherKey="CompanyID" Type="Commodity" />
       <Association Name="Company_RateDiscount" Member="RateDiscounts" OtherKey="CompanyID" Type="RateDiscount" />
       <Association Name="Company_Service" Member="Services" OtherKey="CompanyID" Type="Service" />
-      <Association Name="Company_Quote" Member="Quotes" OtherKey="CompanyID" Type="Quote" />
-      <Association Name="Company_Quote1" Member="Quotes1" OtherKey="CareOfCompanyID" Type="Quote" />
       <Association Name="Company_Job" Member="Jobs" OtherKey="CareOfCompanyID" Type="Job" />
       <Association Name="Company_Job1" Member="Jobs1" OtherKey="CompanyID" Type="Job" />
+      <Association Name="Company_Quote" Member="Quotes" OtherKey="CompanyID" Type="Quote" />
+      <Association Name="Company_Quote1" Member="Quotes1" OtherKey="CareOfCompanyID" Type="Quote" />
       <Association Name="CompanyPriorityLevel_Company" Member="CompanyPriorityLevel" ThisKey="PriorityLevelID" Type="CompanyPriorityLevel" IsForeignKey="true" />
     </Type>
   </Table>
@@ -161,8 +161,8 @@
       <Column Name="FirstName" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
       <Column Name="LastName" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
       <Column Name="Email" Type="System.String" DbType="VarChar(355)" CanBeNull="true" />
-      <Association Name="User_Quote" Member="Quotes" OtherKey="QuotedByUserID" Type="Quote" />
       <Association Name="User_Job" Member="Jobs" OtherKey="QuotedByUserID" Type="Job" />
+      <Association Name="User_Quote" Member="Quotes" OtherKey="QuotedByUserID" Type="Quote" />
     </Type>
   </Table>
   <Table Name="dbo.QuoteSupplements" Member="QuoteSupplements">
@@ -183,26 +183,6 @@
       <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Name" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
       <Association Name="BillingType_QuoteSupplement" Member="QuoteSupplements" OtherKey="BillingTypeID" Type="QuoteSupplement" />
-    </Type>
-  </Table>
-  <Table Name="dbo.Quotes" Member="Quotes">
-    <Type Name="Quote">
-      <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="CompanyID" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
-      <Column Name="Number" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="Revision" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="CareOfCompanyID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
-      <Column Name="Description" Type="System.String" DbType="VarChar(1000)" CanBeNull="true" />
-      <Column Name="CreationDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="ExpirationDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="QuotedByUserID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
-      <Column Name="Price" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
-      <Association Name="Quote_QuoteSupplement" Member="QuoteSupplements" OtherKey="QuoteID" Type="QuoteSupplement" />
-      <Association Name="Quote_QuoteCommodity" Member="QuoteCommodities" OtherKey="QuoteID" Type="QuoteCommodity" />
-      <Association Name="Quote_Job" Member="Jobs" OtherKey="QuoteID" Type="Job" />
-      <Association Name="Company_Quote" Member="Company" ThisKey="CompanyID" Type="Company" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
-      <Association Name="Company_Quote1" Member="Company1" ThisKey="CareOfCompanyID" Type="Company" IsForeignKey="true" />
-      <Association Name="User_Quote" Member="User" ThisKey="QuotedByUserID" Type="User" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.QuoteCommodities" Member="QuoteCommodities">
@@ -248,8 +228,8 @@
       <Association Name="Job_Dispatch" Member="Dispatches" OtherKey="JobID" Type="Dispatch" />
       <Association Name="Company_Job" Member="Company" ThisKey="CareOfCompanyID" Type="Company" IsForeignKey="true" />
       <Association Name="Company_Job1" Member="Company1" ThisKey="CompanyID" Type="Company" IsForeignKey="true" />
-      <Association Name="Quote_Job" Member="Quote" ThisKey="QuoteID" Type="Quote" IsForeignKey="true" />
       <Association Name="User_Job" Member="User" ThisKey="QuotedByUserID" Type="User" IsForeignKey="true" />
+      <Association Name="Quote_Job" Member="Quote" ThisKey="QuoteID" Type="Quote" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.Loads" Member="Loads">
@@ -276,6 +256,27 @@
       <Column Name="Notes" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
       <Association Name="Job_Dispatch" Member="Job" ThisKey="JobID" Type="Job" IsForeignKey="true" />
       <Association Name="Load_Dispatch" Member="Load" ThisKey="LoadID" Type="Load" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Quotes" Member="Quotes">
+    <Type Name="Quote">
+      <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="CompanyID" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="Number" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Revision" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="CareOfCompanyID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="Description" Type="System.String" DbType="VarChar(1000)" CanBeNull="true" />
+      <Column Name="CreationDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ExpirationDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="QuotedByUserID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="Price" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="IsPrinted" Type="System.Byte" DbType="TinyInt" CanBeNull="true" />
+      <Association Name="Quote_QuoteSupplement" Member="QuoteSupplements" OtherKey="QuoteID" Type="QuoteSupplement" />
+      <Association Name="Quote_QuoteCommodity" Member="QuoteCommodities" OtherKey="QuoteID" Type="QuoteCommodity" />
+      <Association Name="Quote_Job" Member="Jobs" OtherKey="QuoteID" Type="Job" />
+      <Association Name="Company_Quote" Member="Company" ThisKey="CompanyID" Type="Company" IsForeignKey="true" />
+      <Association Name="Company_Quote1" Member="Company1" ThisKey="CareOfCompanyID" Type="Company" IsForeignKey="true" />
+      <Association Name="User_Quote" Member="User" ThisKey="QuotedByUserID" Type="User" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>
