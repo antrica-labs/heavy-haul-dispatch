@@ -35,10 +35,9 @@ namespace SingerDispatch
         {
             get
             {
-                return Number + ":" + Revision;
+                return Number + " : " + Revision;
             }
         }
-
 
         public object Clone()
         {
@@ -68,6 +67,22 @@ namespace SingerDispatch
             }
 
             return copy;
+        }
+
+        public Job ToJob()
+        {
+            Job job = new Job();
+
+            // Fill the job properties with as many of the applicable quote properties as possible
+            job.CompanyID = CompanyID;
+            job.Company = Company;
+            job.CareOfCompanyID = CareOfCompanyID;
+            job.Company1 = Company1;
+            job.StartDate = StartDate;
+            job.EndDate = EndDate;
+            job.Description = Description;
+            
+            return job;            
         }
     }
 

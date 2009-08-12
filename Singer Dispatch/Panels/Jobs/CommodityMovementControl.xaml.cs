@@ -19,9 +19,25 @@ namespace SingerDispatch.Panels.Jobs
     /// </summary>
     public partial class CommodityMovementControl : JobUserControl
     {
+        SingerDispatchDataContext database;
+
         public CommodityMovementControl()
         {
             InitializeComponent();
+
+            database = SingerConstants.CommonDataContext;
+        }
+
+        private void ControlLoaded(object sender, RoutedEventArgs e)
+        {
+            if (SelectedJob != null)
+            {
+                cmbCommodityName.ItemsSource = (from c in database.Commodities where c.Company == SelectedJob.Company || c.Company == SelectedJob.Company1 select c).ToList();
+            }
+            else
+            {
+                cmbCommodityName.ItemsSource = null;
+            }
         }
     }
 }

@@ -4,19 +4,25 @@
     xmlns:WPF="http://schemas.microsoft.com/wpf/2008/toolkit"
     xmlns:Jobs="clr-namespace:SingerDispatch.Panels.Jobs"
     x:Name="panelJobHistory"
-    Width="750">
+    Loaded="ControlLoaded" Width="750">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/SingerDispatchDictionary.xaml" />
             </ResourceDictionary.MergedDictionaries>
+
+            <DataTemplate x:Key="QuoteNameTemplate">                
+                <TextBlock Text="{Binding NumberAndRev}" />
+            </DataTemplate>
         </ResourceDictionary>
+        
     </UserControl.Resources>
     <StackPanel>
         <WPF:DataGrid Name="dgJobs" Style="{StaticResource ListDisplay}" AutoGenerateColumns="False" Margin="0,0,0,5" Height="180" SelectedItem="{Binding ElementName=panelJobHistory, Path=SelectedJob}">
             <WPF:DataGrid.Columns>
                 <WPF:DataGridTextColumn Header="Number" Width="60" Binding="{Binding Number}"/>
                 <WPF:DataGridTextColumn Header="Quote" Width="60" Binding="{Binding Quote.Number}" />
+                <WPF:DataGridTextColumn Header="Revision" Width="60" Binding="{Binding Quote.Revision}" />
                 <WPF:DataGridTextColumn Header="Description" Binding="{Binding Description}" />
             </WPF:DataGrid.Columns>
         </WPF:DataGrid>
@@ -60,14 +66,14 @@
                         <TextBox Grid.Row="1" Grid.Column="0" IsReadOnly="True" Text="{Binding Number}" />
 
                         <Label Grid.Row="0" Grid.Column="1">Quote #:</Label>
-                        <TextBox Grid.Row="1" Grid.Column="1" IsReadOnly="True" Text="{Binding Quote.Number}" />
+                        <ComboBox Name="cmbQuotes" Grid.Row="1" Grid.Column="1" SelectedItem="{Binding Quote}" SelectionChanged="cmbQuotes_SelectionChanged" ItemTemplate="{StaticResource QuoteNameTemplate}" />
 
                         <Label Grid.Row="0" Grid.Column="2">Author:</Label>
                         <ComboBox Name="cmbCreatedBy" Grid.Row="1" Grid.Column="2" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectedItem="{Binding User}" TextSearch.TextPath="Name"></ComboBox>                       
                     </Grid>
 
                     <Label>Care Of:</Label>
-                    <ComboBox Name="cmbCareOfCompanies" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectedItem="{Binding Company}" TextSearch.TextPath="Name" IsEditable="True" SelectionChanged="cmbCareOfCompanies_SelectionChanged" />
+                    <ComboBox Name="cmbCareOfCompanies" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectedItem="{Binding Company1}" TextSearch.TextPath="Name" IsEditable="True" SelectionChanged="cmbCareOfCompanies_SelectionChanged" />
 
                     <Label>Project Description</Label>
                     <TextBox Name="txtDescription" Height="40" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Disabled" Text="{Binding Description}"/>
@@ -87,7 +93,7 @@
                     </Grid.RowDefinitions>
 
                     <Label Grid.Row="0" Grid.Column="0">Start Date:</Label>
-                    <WPF:DatePicker Name="dpStartDate" Grid.Row="1" Grid.Column="0" Margin="2" SelectedDate="{Binding StartDate}" />
+                    <WPF:DatePicker Name="dpStartDate" Grid.Row="1" Grid.Column="0" Margin="2" SelectedDate="{Binding StartDate}"></WPF:DatePicker>
 
                     <Label Grid.Row="0" Grid.Column="1">End Date:</Label>
                     <WPF:DatePicker Name="dpEndDate" Grid.Row="1" Grid.Column="1" Margin="2" SelectedDate="{Binding EndDate}" />

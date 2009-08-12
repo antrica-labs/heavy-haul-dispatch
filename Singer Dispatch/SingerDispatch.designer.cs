@@ -81,9 +81,6 @@ namespace SingerDispatch
     partial void InsertQuoteCommodity(QuoteCommodity instance);
     partial void UpdateQuoteCommodity(QuoteCommodity instance);
     partial void DeleteQuoteCommodity(QuoteCommodity instance);
-    partial void InsertJob(Job instance);
-    partial void UpdateJob(Job instance);
-    partial void DeleteJob(Job instance);
     partial void InsertLoad(Load instance);
     partial void UpdateLoad(Load instance);
     partial void DeleteLoad(Load instance);
@@ -93,6 +90,9 @@ namespace SingerDispatch
     partial void InsertQuote(Quote instance);
     partial void UpdateQuote(Quote instance);
     partial void DeleteQuote(Quote instance);
+    partial void InsertJob(Job instance);
+    partial void UpdateJob(Job instance);
+    partial void DeleteJob(Job instance);
     #endregion
 		
 		public SingerDispatchDataContext() : 
@@ -261,14 +261,6 @@ namespace SingerDispatch
 			}
 		}
 		
-		public System.Data.Linq.Table<Job> Jobs
-		{
-			get
-			{
-				return this.GetTable<Job>();
-			}
-		}
-		
 		public System.Data.Linq.Table<Load> Loads
 		{
 			get
@@ -290,6 +282,14 @@ namespace SingerDispatch
 			get
 			{
 				return this.GetTable<Quote>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Job> Jobs
+		{
+			get
+			{
+				return this.GetTable<Job>();
 			}
 		}
 	}
@@ -1586,13 +1586,13 @@ namespace SingerDispatch
 		
 		private EntitySet<Service> _Services;
 		
-		private EntitySet<Job> _Jobs;
-		
-		private EntitySet<Job> _Jobs1;
-		
 		private EntitySet<Quote> _Quotes;
 		
 		private EntitySet<Quote> _Quotes1;
+		
+		private EntitySet<Job> _Jobs;
+		
+		private EntitySet<Job> _Jobs1;
 		
 		private EntityRef<CompanyPriorityLevel> _CompanyPriorityLevel;
 		
@@ -1626,10 +1626,10 @@ namespace SingerDispatch
 			this._Commodities = new EntitySet<Commodity>(new Action<Commodity>(this.attach_Commodities), new Action<Commodity>(this.detach_Commodities));
 			this._RateDiscounts = new EntitySet<RateDiscount>(new Action<RateDiscount>(this.attach_RateDiscounts), new Action<RateDiscount>(this.detach_RateDiscounts));
 			this._Services = new EntitySet<Service>(new Action<Service>(this.attach_Services), new Action<Service>(this.detach_Services));
-			this._Jobs = new EntitySet<Job>(new Action<Job>(this.attach_Jobs), new Action<Job>(this.detach_Jobs));
-			this._Jobs1 = new EntitySet<Job>(new Action<Job>(this.attach_Jobs1), new Action<Job>(this.detach_Jobs1));
 			this._Quotes = new EntitySet<Quote>(new Action<Quote>(this.attach_Quotes), new Action<Quote>(this.detach_Quotes));
 			this._Quotes1 = new EntitySet<Quote>(new Action<Quote>(this.attach_Quotes1), new Action<Quote>(this.detach_Quotes1));
+			this._Jobs = new EntitySet<Job>(new Action<Job>(this.attach_Jobs), new Action<Job>(this.detach_Jobs));
+			this._Jobs1 = new EntitySet<Job>(new Action<Job>(this.attach_Jobs1), new Action<Job>(this.detach_Jobs1));
 			this._CompanyPriorityLevel = default(EntityRef<CompanyPriorityLevel>);
 			OnCreated();
 		}
@@ -1870,32 +1870,6 @@ namespace SingerDispatch
 			}
 		}
 		
-		[Association(Name="Company_Job", Storage="_Jobs", OtherKey="CareOfCompanyID")]
-		public EntitySet<Job> Jobs
-		{
-			get
-			{
-				return this._Jobs;
-			}
-			set
-			{
-				this._Jobs.Assign(value);
-			}
-		}
-		
-		[Association(Name="Company_Job1", Storage="_Jobs1", OtherKey="CompanyID")]
-		public EntitySet<Job> Jobs1
-		{
-			get
-			{
-				return this._Jobs1;
-			}
-			set
-			{
-				this._Jobs1.Assign(value);
-			}
-		}
-		
 		[Association(Name="Company_Quote", Storage="_Quotes", OtherKey="CompanyID")]
 		public EntitySet<Quote> Quotes
 		{
@@ -1919,6 +1893,32 @@ namespace SingerDispatch
 			set
 			{
 				this._Quotes1.Assign(value);
+			}
+		}
+		
+		[Association(Name="Company_Job", Storage="_Jobs", OtherKey="CompanyID")]
+		public EntitySet<Job> Jobs
+		{
+			get
+			{
+				return this._Jobs;
+			}
+			set
+			{
+				this._Jobs.Assign(value);
+			}
+		}
+		
+		[Association(Name="Company_Job1", Storage="_Jobs1", OtherKey="CareOfCompanyID")]
+		public EntitySet<Job> Jobs1
+		{
+			get
+			{
+				return this._Jobs1;
+			}
+			set
+			{
+				this._Jobs1.Assign(value);
 			}
 		}
 		
@@ -2024,30 +2024,6 @@ namespace SingerDispatch
 			entity.Company = null;
 		}
 		
-		private void attach_Jobs(Job entity)
-		{
-			this.SendPropertyChanging();
-			entity.Company = this;
-		}
-		
-		private void detach_Jobs(Job entity)
-		{
-			this.SendPropertyChanging();
-			entity.Company = null;
-		}
-		
-		private void attach_Jobs1(Job entity)
-		{
-			this.SendPropertyChanging();
-			entity.Company1 = this;
-		}
-		
-		private void detach_Jobs1(Job entity)
-		{
-			this.SendPropertyChanging();
-			entity.Company1 = null;
-		}
-		
 		private void attach_Quotes(Quote entity)
 		{
 			this.SendPropertyChanging();
@@ -2067,6 +2043,30 @@ namespace SingerDispatch
 		}
 		
 		private void detach_Quotes1(Quote entity)
+		{
+			this.SendPropertyChanging();
+			entity.Company1 = null;
+		}
+		
+		private void attach_Jobs(Job entity)
+		{
+			this.SendPropertyChanging();
+			entity.Company = this;
+		}
+		
+		private void detach_Jobs(Job entity)
+		{
+			this.SendPropertyChanging();
+			entity.Company = null;
+		}
+		
+		private void attach_Jobs1(Job entity)
+		{
+			this.SendPropertyChanging();
+			entity.Company1 = this;
+		}
+		
+		private void detach_Jobs1(Job entity)
 		{
 			this.SendPropertyChanging();
 			entity.Company1 = null;
@@ -3497,9 +3497,9 @@ namespace SingerDispatch
 		
 		private string _Email;
 		
-		private EntitySet<Job> _Jobs;
-		
 		private EntitySet<Quote> _Quotes;
+		
+		private EntitySet<Job> _Jobs;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -3517,8 +3517,8 @@ namespace SingerDispatch
 		
 		public User()
 		{
-			this._Jobs = new EntitySet<Job>(new Action<Job>(this.attach_Jobs), new Action<Job>(this.detach_Jobs));
 			this._Quotes = new EntitySet<Quote>(new Action<Quote>(this.attach_Quotes), new Action<Quote>(this.detach_Quotes));
+			this._Jobs = new EntitySet<Job>(new Action<Job>(this.attach_Jobs), new Action<Job>(this.detach_Jobs));
 			OnCreated();
 		}
 		
@@ -3602,19 +3602,6 @@ namespace SingerDispatch
 			}
 		}
 		
-		[Association(Name="User_Job", Storage="_Jobs", OtherKey="QuotedByUserID")]
-		public EntitySet<Job> Jobs
-		{
-			get
-			{
-				return this._Jobs;
-			}
-			set
-			{
-				this._Jobs.Assign(value);
-			}
-		}
-		
 		[Association(Name="User_Quote", Storage="_Quotes", OtherKey="QuotedByUserID")]
 		public EntitySet<Quote> Quotes
 		{
@@ -3625,6 +3612,19 @@ namespace SingerDispatch
 			set
 			{
 				this._Quotes.Assign(value);
+			}
+		}
+		
+		[Association(Name="User_Job", Storage="_Jobs", OtherKey="QuotedByUserID")]
+		public EntitySet<Job> Jobs
+		{
+			get
+			{
+				return this._Jobs;
+			}
+			set
+			{
+				this._Jobs.Assign(value);
 			}
 		}
 		
@@ -3648,18 +3648,6 @@ namespace SingerDispatch
 			}
 		}
 		
-		private void attach_Jobs(Job entity)
-		{
-			this.SendPropertyChanging();
-			entity.User = this;
-		}
-		
-		private void detach_Jobs(Job entity)
-		{
-			this.SendPropertyChanging();
-			entity.User = null;
-		}
-		
 		private void attach_Quotes(Quote entity)
 		{
 			this.SendPropertyChanging();
@@ -3667,6 +3655,18 @@ namespace SingerDispatch
 		}
 		
 		private void detach_Quotes(Quote entity)
+		{
+			this.SendPropertyChanging();
+			entity.User = null;
+		}
+		
+		private void attach_Jobs(Job entity)
+		{
+			this.SendPropertyChanging();
+			entity.User = this;
+		}
+		
+		private void detach_Jobs(Job entity)
 		{
 			this.SendPropertyChanging();
 			entity.User = null;
@@ -4706,480 +4706,6 @@ namespace SingerDispatch
 		}
 	}
 	
-	[Table(Name="dbo.Jobs")]
-	public partial class Job : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private long _ID;
-		
-		private int _Number;
-		
-		private System.Nullable<long> _CompanyID;
-		
-		private System.Nullable<long> _QuoteID;
-		
-		private System.Nullable<long> _CareOfCompanyID;
-		
-		private System.Nullable<long> _QuotedByUserID;
-		
-		private string _Description;
-		
-		private System.Nullable<System.DateTime> _StartDate;
-		
-		private System.Nullable<System.DateTime> _EndDate;
-		
-		private EntitySet<Load> _Loads;
-		
-		private EntitySet<Dispatch> _Dispatches;
-		
-		private EntityRef<Company> _Company;
-		
-		private EntityRef<Company> _Company1;
-		
-		private EntityRef<User> _User;
-		
-		private EntityRef<Quote> _Quote;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIDChanging(long value);
-    partial void OnIDChanged();
-    partial void OnNumberChanging(int value);
-    partial void OnNumberChanged();
-    partial void OnCompanyIDChanging(System.Nullable<long> value);
-    partial void OnCompanyIDChanged();
-    partial void OnQuoteIDChanging(System.Nullable<long> value);
-    partial void OnQuoteIDChanged();
-    partial void OnCareOfCompanyIDChanging(System.Nullable<long> value);
-    partial void OnCareOfCompanyIDChanged();
-    partial void OnQuotedByUserIDChanging(System.Nullable<long> value);
-    partial void OnQuotedByUserIDChanged();
-    partial void OnDescriptionChanging(string value);
-    partial void OnDescriptionChanged();
-    partial void OnStartDateChanging(System.Nullable<System.DateTime> value);
-    partial void OnStartDateChanged();
-    partial void OnEndDateChanging(System.Nullable<System.DateTime> value);
-    partial void OnEndDateChanged();
-    #endregion
-		
-		public Job()
-		{
-			this._Loads = new EntitySet<Load>(new Action<Load>(this.attach_Loads), new Action<Load>(this.detach_Loads));
-			this._Dispatches = new EntitySet<Dispatch>(new Action<Dispatch>(this.attach_Dispatches), new Action<Dispatch>(this.detach_Dispatches));
-			this._Company = default(EntityRef<Company>);
-			this._Company1 = default(EntityRef<Company>);
-			this._User = default(EntityRef<User>);
-			this._Quote = default(EntityRef<Quote>);
-			OnCreated();
-		}
-		
-		[Column(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="BigInt NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public long ID
-		{
-			get
-			{
-				return this._ID;
-			}
-			set
-			{
-				if ((this._ID != value))
-				{
-					this.OnIDChanging(value);
-					this.SendPropertyChanging();
-					this._ID = value;
-					this.SendPropertyChanged("ID");
-					this.OnIDChanged();
-				}
-			}
-		}
-		
-		[Column(Storage="_Number", DbType="Int NOT NULL")]
-		public int Number
-		{
-			get
-			{
-				return this._Number;
-			}
-			set
-			{
-				if ((this._Number != value))
-				{
-					this.OnNumberChanging(value);
-					this.SendPropertyChanging();
-					this._Number = value;
-					this.SendPropertyChanged("Number");
-					this.OnNumberChanged();
-				}
-			}
-		}
-		
-		[Column(Storage="_CompanyID", DbType="BigInt")]
-		public System.Nullable<long> CompanyID
-		{
-			get
-			{
-				return this._CompanyID;
-			}
-			set
-			{
-				if ((this._CompanyID != value))
-				{
-					if (this._Company1.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnCompanyIDChanging(value);
-					this.SendPropertyChanging();
-					this._CompanyID = value;
-					this.SendPropertyChanged("CompanyID");
-					this.OnCompanyIDChanged();
-				}
-			}
-		}
-		
-		[Column(Storage="_QuoteID", DbType="BigInt")]
-		public System.Nullable<long> QuoteID
-		{
-			get
-			{
-				return this._QuoteID;
-			}
-			set
-			{
-				if ((this._QuoteID != value))
-				{
-					if (this._Quote.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnQuoteIDChanging(value);
-					this.SendPropertyChanging();
-					this._QuoteID = value;
-					this.SendPropertyChanged("QuoteID");
-					this.OnQuoteIDChanged();
-				}
-			}
-		}
-		
-		[Column(Storage="_CareOfCompanyID", DbType="BigInt")]
-		public System.Nullable<long> CareOfCompanyID
-		{
-			get
-			{
-				return this._CareOfCompanyID;
-			}
-			set
-			{
-				if ((this._CareOfCompanyID != value))
-				{
-					if (this._Company.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnCareOfCompanyIDChanging(value);
-					this.SendPropertyChanging();
-					this._CareOfCompanyID = value;
-					this.SendPropertyChanged("CareOfCompanyID");
-					this.OnCareOfCompanyIDChanged();
-				}
-			}
-		}
-		
-		[Column(Storage="_QuotedByUserID", DbType="BigInt")]
-		public System.Nullable<long> QuotedByUserID
-		{
-			get
-			{
-				return this._QuotedByUserID;
-			}
-			set
-			{
-				if ((this._QuotedByUserID != value))
-				{
-					if (this._User.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnQuotedByUserIDChanging(value);
-					this.SendPropertyChanging();
-					this._QuotedByUserID = value;
-					this.SendPropertyChanged("QuotedByUserID");
-					this.OnQuotedByUserIDChanged();
-				}
-			}
-		}
-		
-		[Column(Storage="_Description", DbType="VarChar(1000)")]
-		public string Description
-		{
-			get
-			{
-				return this._Description;
-			}
-			set
-			{
-				if ((this._Description != value))
-				{
-					this.OnDescriptionChanging(value);
-					this.SendPropertyChanging();
-					this._Description = value;
-					this.SendPropertyChanged("Description");
-					this.OnDescriptionChanged();
-				}
-			}
-		}
-		
-		[Column(Storage="_StartDate", DbType="DateTime")]
-		public System.Nullable<System.DateTime> StartDate
-		{
-			get
-			{
-				return this._StartDate;
-			}
-			set
-			{
-				if ((this._StartDate != value))
-				{
-					this.OnStartDateChanging(value);
-					this.SendPropertyChanging();
-					this._StartDate = value;
-					this.SendPropertyChanged("StartDate");
-					this.OnStartDateChanged();
-				}
-			}
-		}
-		
-		[Column(Storage="_EndDate", DbType="DateTime")]
-		public System.Nullable<System.DateTime> EndDate
-		{
-			get
-			{
-				return this._EndDate;
-			}
-			set
-			{
-				if ((this._EndDate != value))
-				{
-					this.OnEndDateChanging(value);
-					this.SendPropertyChanging();
-					this._EndDate = value;
-					this.SendPropertyChanged("EndDate");
-					this.OnEndDateChanged();
-				}
-			}
-		}
-		
-		[Association(Name="Job_Load", Storage="_Loads", OtherKey="JobID")]
-		public EntitySet<Load> Loads
-		{
-			get
-			{
-				return this._Loads;
-			}
-			set
-			{
-				this._Loads.Assign(value);
-			}
-		}
-		
-		[Association(Name="Job_Dispatch", Storage="_Dispatches", OtherKey="JobID")]
-		public EntitySet<Dispatch> Dispatches
-		{
-			get
-			{
-				return this._Dispatches;
-			}
-			set
-			{
-				this._Dispatches.Assign(value);
-			}
-		}
-		
-		[Association(Name="Company_Job", Storage="_Company", ThisKey="CareOfCompanyID", IsForeignKey=true)]
-		public Company Company
-		{
-			get
-			{
-				return this._Company.Entity;
-			}
-			set
-			{
-				Company previousValue = this._Company.Entity;
-				if (((previousValue != value) 
-							|| (this._Company.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Company.Entity = null;
-						previousValue.Jobs.Remove(this);
-					}
-					this._Company.Entity = value;
-					if ((value != null))
-					{
-						value.Jobs.Add(this);
-						this._CareOfCompanyID = value.ID;
-					}
-					else
-					{
-						this._CareOfCompanyID = default(Nullable<long>);
-					}
-					this.SendPropertyChanged("Company");
-				}
-			}
-		}
-		
-		[Association(Name="Company_Job1", Storage="_Company1", ThisKey="CompanyID", IsForeignKey=true)]
-		public Company Company1
-		{
-			get
-			{
-				return this._Company1.Entity;
-			}
-			set
-			{
-				Company previousValue = this._Company1.Entity;
-				if (((previousValue != value) 
-							|| (this._Company1.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Company1.Entity = null;
-						previousValue.Jobs1.Remove(this);
-					}
-					this._Company1.Entity = value;
-					if ((value != null))
-					{
-						value.Jobs1.Add(this);
-						this._CompanyID = value.ID;
-					}
-					else
-					{
-						this._CompanyID = default(Nullable<long>);
-					}
-					this.SendPropertyChanged("Company1");
-				}
-			}
-		}
-		
-		[Association(Name="User_Job", Storage="_User", ThisKey="QuotedByUserID", IsForeignKey=true)]
-		public User User
-		{
-			get
-			{
-				return this._User.Entity;
-			}
-			set
-			{
-				User previousValue = this._User.Entity;
-				if (((previousValue != value) 
-							|| (this._User.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._User.Entity = null;
-						previousValue.Jobs.Remove(this);
-					}
-					this._User.Entity = value;
-					if ((value != null))
-					{
-						value.Jobs.Add(this);
-						this._QuotedByUserID = value.ID;
-					}
-					else
-					{
-						this._QuotedByUserID = default(Nullable<long>);
-					}
-					this.SendPropertyChanged("User");
-				}
-			}
-		}
-		
-		[Association(Name="Quote_Job", Storage="_Quote", ThisKey="QuoteID", IsForeignKey=true)]
-		public Quote Quote
-		{
-			get
-			{
-				return this._Quote.Entity;
-			}
-			set
-			{
-				Quote previousValue = this._Quote.Entity;
-				if (((previousValue != value) 
-							|| (this._Quote.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Quote.Entity = null;
-						previousValue.Jobs.Remove(this);
-					}
-					this._Quote.Entity = value;
-					if ((value != null))
-					{
-						value.Jobs.Add(this);
-						this._QuoteID = value.ID;
-					}
-					else
-					{
-						this._QuoteID = default(Nullable<long>);
-					}
-					this.SendPropertyChanged("Quote");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_Loads(Load entity)
-		{
-			this.SendPropertyChanging();
-			entity.Job = this;
-		}
-		
-		private void detach_Loads(Load entity)
-		{
-			this.SendPropertyChanging();
-			entity.Job = null;
-		}
-		
-		private void attach_Dispatches(Dispatch entity)
-		{
-			this.SendPropertyChanging();
-			entity.Job = this;
-		}
-		
-		private void detach_Dispatches(Dispatch entity)
-		{
-			this.SendPropertyChanging();
-			entity.Job = null;
-		}
-	}
-	
 	[Table(Name="dbo.Loads")]
 	public partial class Load : INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -5497,9 +5023,9 @@ namespace SingerDispatch
 		
 		private string _Notes;
 		
-		private EntityRef<Job> _Job;
-		
 		private EntityRef<Load> _Load;
+		
+		private EntityRef<Job> _Job;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -5521,8 +5047,8 @@ namespace SingerDispatch
 		
 		public Dispatch()
 		{
-			this._Job = default(EntityRef<Job>);
 			this._Load = default(EntityRef<Load>);
+			this._Job = default(EntityRef<Job>);
 			OnCreated();
 		}
 		
@@ -5654,40 +5180,6 @@ namespace SingerDispatch
 			}
 		}
 		
-		[Association(Name="Job_Dispatch", Storage="_Job", ThisKey="JobID", IsForeignKey=true)]
-		public Job Job
-		{
-			get
-			{
-				return this._Job.Entity;
-			}
-			set
-			{
-				Job previousValue = this._Job.Entity;
-				if (((previousValue != value) 
-							|| (this._Job.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Job.Entity = null;
-						previousValue.Dispatches.Remove(this);
-					}
-					this._Job.Entity = value;
-					if ((value != null))
-					{
-						value.Dispatches.Add(this);
-						this._JobID = value.ID;
-					}
-					else
-					{
-						this._JobID = default(Nullable<long>);
-					}
-					this.SendPropertyChanged("Job");
-				}
-			}
-		}
-		
 		[Association(Name="Load_Dispatch", Storage="_Load", ThisKey="LoadID", IsForeignKey=true)]
 		public Load Load
 		{
@@ -5718,6 +5210,40 @@ namespace SingerDispatch
 						this._LoadID = default(Nullable<long>);
 					}
 					this.SendPropertyChanged("Load");
+				}
+			}
+		}
+		
+		[Association(Name="Job_Dispatch", Storage="_Job", ThisKey="JobID", IsForeignKey=true)]
+		public Job Job
+		{
+			get
+			{
+				return this._Job.Entity;
+			}
+			set
+			{
+				Job previousValue = this._Job.Entity;
+				if (((previousValue != value) 
+							|| (this._Job.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Job.Entity = null;
+						previousValue.Dispatches.Remove(this);
+					}
+					this._Job.Entity = value;
+					if ((value != null))
+					{
+						value.Dispatches.Add(this);
+						this._JobID = value.ID;
+					}
+					else
+					{
+						this._JobID = default(Nullable<long>);
+					}
+					this.SendPropertyChanged("Job");
 				}
 			}
 		}
@@ -5765,6 +5291,10 @@ namespace SingerDispatch
 		
 		private System.Nullable<System.DateTime> _ExpirationDate;
 		
+		private System.Nullable<System.DateTime> _StartDate;
+		
+		private System.Nullable<System.DateTime> _EndDate;
+		
 		private System.Nullable<long> _QuotedByUserID;
 		
 		private System.Nullable<decimal> _Price;
@@ -5803,6 +5333,10 @@ namespace SingerDispatch
     partial void OnCreationDateChanged();
     partial void OnExpirationDateChanging(System.Nullable<System.DateTime> value);
     partial void OnExpirationDateChanged();
+    partial void OnStartDateChanging(System.Nullable<System.DateTime> value);
+    partial void OnStartDateChanged();
+    partial void OnEndDateChanging(System.Nullable<System.DateTime> value);
+    partial void OnEndDateChanged();
     partial void OnQuotedByUserIDChanging(System.Nullable<long> value);
     partial void OnQuotedByUserIDChanged();
     partial void OnPriceChanging(System.Nullable<decimal> value);
@@ -5986,6 +5520,46 @@ namespace SingerDispatch
 					this._ExpirationDate = value;
 					this.SendPropertyChanged("ExpirationDate");
 					this.OnExpirationDateChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_StartDate", DbType="DateTime")]
+		public System.Nullable<System.DateTime> StartDate
+		{
+			get
+			{
+				return this._StartDate;
+			}
+			set
+			{
+				if ((this._StartDate != value))
+				{
+					this.OnStartDateChanging(value);
+					this.SendPropertyChanging();
+					this._StartDate = value;
+					this.SendPropertyChanged("StartDate");
+					this.OnStartDateChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_EndDate", DbType="DateTime")]
+		public System.Nullable<System.DateTime> EndDate
+		{
+			get
+			{
+				return this._EndDate;
+			}
+			set
+			{
+				if ((this._EndDate != value))
+				{
+					this.OnEndDateChanging(value);
+					this.SendPropertyChanging();
+					this._EndDate = value;
+					this.SendPropertyChanged("EndDate");
+					this.OnEndDateChanged();
 				}
 			}
 		}
@@ -6249,6 +5823,480 @@ namespace SingerDispatch
 		{
 			this.SendPropertyChanging();
 			entity.Quote = null;
+		}
+	}
+	
+	[Table(Name="dbo.Jobs")]
+	public partial class Job : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private long _ID;
+		
+		private int _Number;
+		
+		private System.Nullable<long> _CompanyID;
+		
+		private System.Nullable<long> _QuoteID;
+		
+		private System.Nullable<long> _CareOfCompanyID;
+		
+		private System.Nullable<long> _QuotedByUserID;
+		
+		private string _Description;
+		
+		private System.Nullable<System.DateTime> _StartDate;
+		
+		private System.Nullable<System.DateTime> _EndDate;
+		
+		private EntitySet<Load> _Loads;
+		
+		private EntitySet<Dispatch> _Dispatches;
+		
+		private EntityRef<Company> _Company;
+		
+		private EntityRef<Company> _Company1;
+		
+		private EntityRef<Quote> _Quote;
+		
+		private EntityRef<User> _User;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDChanging(long value);
+    partial void OnIDChanged();
+    partial void OnNumberChanging(int value);
+    partial void OnNumberChanged();
+    partial void OnCompanyIDChanging(System.Nullable<long> value);
+    partial void OnCompanyIDChanged();
+    partial void OnQuoteIDChanging(System.Nullable<long> value);
+    partial void OnQuoteIDChanged();
+    partial void OnCareOfCompanyIDChanging(System.Nullable<long> value);
+    partial void OnCareOfCompanyIDChanged();
+    partial void OnQuotedByUserIDChanging(System.Nullable<long> value);
+    partial void OnQuotedByUserIDChanged();
+    partial void OnDescriptionChanging(string value);
+    partial void OnDescriptionChanged();
+    partial void OnStartDateChanging(System.Nullable<System.DateTime> value);
+    partial void OnStartDateChanged();
+    partial void OnEndDateChanging(System.Nullable<System.DateTime> value);
+    partial void OnEndDateChanged();
+    #endregion
+		
+		public Job()
+		{
+			this._Loads = new EntitySet<Load>(new Action<Load>(this.attach_Loads), new Action<Load>(this.detach_Loads));
+			this._Dispatches = new EntitySet<Dispatch>(new Action<Dispatch>(this.attach_Dispatches), new Action<Dispatch>(this.detach_Dispatches));
+			this._Company = default(EntityRef<Company>);
+			this._Company1 = default(EntityRef<Company>);
+			this._Quote = default(EntityRef<Quote>);
+			this._User = default(EntityRef<User>);
+			OnCreated();
+		}
+		
+		[Column(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="BigInt NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public long ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this.OnIDChanging(value);
+					this.SendPropertyChanging();
+					this._ID = value;
+					this.SendPropertyChanged("ID");
+					this.OnIDChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_Number", DbType="Int NOT NULL")]
+		public int Number
+		{
+			get
+			{
+				return this._Number;
+			}
+			set
+			{
+				if ((this._Number != value))
+				{
+					this.OnNumberChanging(value);
+					this.SendPropertyChanging();
+					this._Number = value;
+					this.SendPropertyChanged("Number");
+					this.OnNumberChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_CompanyID", DbType="BigInt")]
+		public System.Nullable<long> CompanyID
+		{
+			get
+			{
+				return this._CompanyID;
+			}
+			set
+			{
+				if ((this._CompanyID != value))
+				{
+					if (this._Company.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnCompanyIDChanging(value);
+					this.SendPropertyChanging();
+					this._CompanyID = value;
+					this.SendPropertyChanged("CompanyID");
+					this.OnCompanyIDChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_QuoteID", DbType="BigInt")]
+		public System.Nullable<long> QuoteID
+		{
+			get
+			{
+				return this._QuoteID;
+			}
+			set
+			{
+				if ((this._QuoteID != value))
+				{
+					if (this._Quote.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnQuoteIDChanging(value);
+					this.SendPropertyChanging();
+					this._QuoteID = value;
+					this.SendPropertyChanged("QuoteID");
+					this.OnQuoteIDChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_CareOfCompanyID", DbType="BigInt")]
+		public System.Nullable<long> CareOfCompanyID
+		{
+			get
+			{
+				return this._CareOfCompanyID;
+			}
+			set
+			{
+				if ((this._CareOfCompanyID != value))
+				{
+					if (this._Company1.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnCareOfCompanyIDChanging(value);
+					this.SendPropertyChanging();
+					this._CareOfCompanyID = value;
+					this.SendPropertyChanged("CareOfCompanyID");
+					this.OnCareOfCompanyIDChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_QuotedByUserID", DbType="BigInt")]
+		public System.Nullable<long> QuotedByUserID
+		{
+			get
+			{
+				return this._QuotedByUserID;
+			}
+			set
+			{
+				if ((this._QuotedByUserID != value))
+				{
+					if (this._User.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnQuotedByUserIDChanging(value);
+					this.SendPropertyChanging();
+					this._QuotedByUserID = value;
+					this.SendPropertyChanged("QuotedByUserID");
+					this.OnQuotedByUserIDChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_Description", DbType="VarChar(1000)")]
+		public string Description
+		{
+			get
+			{
+				return this._Description;
+			}
+			set
+			{
+				if ((this._Description != value))
+				{
+					this.OnDescriptionChanging(value);
+					this.SendPropertyChanging();
+					this._Description = value;
+					this.SendPropertyChanged("Description");
+					this.OnDescriptionChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_StartDate", DbType="DateTime")]
+		public System.Nullable<System.DateTime> StartDate
+		{
+			get
+			{
+				return this._StartDate;
+			}
+			set
+			{
+				if ((this._StartDate != value))
+				{
+					this.OnStartDateChanging(value);
+					this.SendPropertyChanging();
+					this._StartDate = value;
+					this.SendPropertyChanged("StartDate");
+					this.OnStartDateChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_EndDate", DbType="DateTime")]
+		public System.Nullable<System.DateTime> EndDate
+		{
+			get
+			{
+				return this._EndDate;
+			}
+			set
+			{
+				if ((this._EndDate != value))
+				{
+					this.OnEndDateChanging(value);
+					this.SendPropertyChanging();
+					this._EndDate = value;
+					this.SendPropertyChanged("EndDate");
+					this.OnEndDateChanged();
+				}
+			}
+		}
+		
+		[Association(Name="Job_Load", Storage="_Loads", OtherKey="JobID")]
+		public EntitySet<Load> Loads
+		{
+			get
+			{
+				return this._Loads;
+			}
+			set
+			{
+				this._Loads.Assign(value);
+			}
+		}
+		
+		[Association(Name="Job_Dispatch", Storage="_Dispatches", OtherKey="JobID")]
+		public EntitySet<Dispatch> Dispatches
+		{
+			get
+			{
+				return this._Dispatches;
+			}
+			set
+			{
+				this._Dispatches.Assign(value);
+			}
+		}
+		
+		[Association(Name="Company_Job", Storage="_Company", ThisKey="CompanyID", IsForeignKey=true)]
+		public Company Company
+		{
+			get
+			{
+				return this._Company.Entity;
+			}
+			set
+			{
+				Company previousValue = this._Company.Entity;
+				if (((previousValue != value) 
+							|| (this._Company.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Company.Entity = null;
+						previousValue.Jobs.Remove(this);
+					}
+					this._Company.Entity = value;
+					if ((value != null))
+					{
+						value.Jobs.Add(this);
+						this._CompanyID = value.ID;
+					}
+					else
+					{
+						this._CompanyID = default(Nullable<long>);
+					}
+					this.SendPropertyChanged("Company");
+				}
+			}
+		}
+		
+		[Association(Name="Company_Job1", Storage="_Company1", ThisKey="CareOfCompanyID", IsForeignKey=true)]
+		public Company Company1
+		{
+			get
+			{
+				return this._Company1.Entity;
+			}
+			set
+			{
+				Company previousValue = this._Company1.Entity;
+				if (((previousValue != value) 
+							|| (this._Company1.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Company1.Entity = null;
+						previousValue.Jobs1.Remove(this);
+					}
+					this._Company1.Entity = value;
+					if ((value != null))
+					{
+						value.Jobs1.Add(this);
+						this._CareOfCompanyID = value.ID;
+					}
+					else
+					{
+						this._CareOfCompanyID = default(Nullable<long>);
+					}
+					this.SendPropertyChanged("Company1");
+				}
+			}
+		}
+		
+		[Association(Name="Quote_Job", Storage="_Quote", ThisKey="QuoteID", IsForeignKey=true)]
+		public Quote Quote
+		{
+			get
+			{
+				return this._Quote.Entity;
+			}
+			set
+			{
+				Quote previousValue = this._Quote.Entity;
+				if (((previousValue != value) 
+							|| (this._Quote.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Quote.Entity = null;
+						previousValue.Jobs.Remove(this);
+					}
+					this._Quote.Entity = value;
+					if ((value != null))
+					{
+						value.Jobs.Add(this);
+						this._QuoteID = value.ID;
+					}
+					else
+					{
+						this._QuoteID = default(Nullable<long>);
+					}
+					this.SendPropertyChanged("Quote");
+				}
+			}
+		}
+		
+		[Association(Name="User_Job", Storage="_User", ThisKey="QuotedByUserID", IsForeignKey=true)]
+		public User User
+		{
+			get
+			{
+				return this._User.Entity;
+			}
+			set
+			{
+				User previousValue = this._User.Entity;
+				if (((previousValue != value) 
+							|| (this._User.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._User.Entity = null;
+						previousValue.Jobs.Remove(this);
+					}
+					this._User.Entity = value;
+					if ((value != null))
+					{
+						value.Jobs.Add(this);
+						this._QuotedByUserID = value.ID;
+					}
+					else
+					{
+						this._QuotedByUserID = default(Nullable<long>);
+					}
+					this.SendPropertyChanged("User");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_Loads(Load entity)
+		{
+			this.SendPropertyChanging();
+			entity.Job = this;
+		}
+		
+		private void detach_Loads(Load entity)
+		{
+			this.SendPropertyChanging();
+			entity.Job = null;
+		}
+		
+		private void attach_Dispatches(Dispatch entity)
+		{
+			this.SendPropertyChanging();
+			entity.Job = this;
+		}
+		
+		private void detach_Dispatches(Dispatch entity)
+		{
+			this.SendPropertyChanging();
+			entity.Job = null;
 		}
 	}
 }

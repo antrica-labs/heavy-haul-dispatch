@@ -80,4 +80,8 @@
         <Setter Property="CanUserDeleteRows" Value="False" />      
         <Setter Property="ColumnWidth" Value="*" />
     </Style>
+    
+    <Style TargetType="{x:Type WPF:DatePickerTextBox}">
+        <Setter Property="IsReadOnly" Value="True" />
+    </Style>
 </ResourceDictionary>

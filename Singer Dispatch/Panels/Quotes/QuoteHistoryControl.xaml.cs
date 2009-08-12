@@ -179,14 +179,6 @@ namespace SingerDispatch.Panels.Quotes
             dgQuoteContacts.ItemsSource = contacts;
         }
 
-        private void dpCreationDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
-        {
-        }
-
-        private void dpExpirationDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
-        {
-        }
-
         private void btnCreateRevisoin_Click(object sender, RoutedEventArgs e)
         {
             if (SelectedQuote == null)

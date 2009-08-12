@@ -45,6 +45,11 @@ namespace SingerDispatch.Panels.Jobs
             cmbCreatedBy.ItemsSource = (from u in database.Users select u).ToList();
         }
 
+        private void ControlLoaded(object sender, RoutedEventArgs e)
+        {
+            cmbQuotes.ItemsSource = (from q in database.Quotes where q.Company == SelectedCompany select q).ToList();
+        }
+
         public static void SelectedCompanyPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             JobHistoryControl control = (JobHistoryControl)d;
@@ -127,6 +132,11 @@ namespace SingerDispatch.Panels.Jobs
             ((ObservableCollection<Job>)dgJobs.ItemsSource).Insert(0, job);
             dgJobs.SelectedItem = job;
             txtDescription.Focus();
-        }        
+        }
+
+        private void cmbQuotes_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }

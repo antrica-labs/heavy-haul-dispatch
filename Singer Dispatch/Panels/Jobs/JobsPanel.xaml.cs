@@ -20,7 +20,7 @@ namespace SingerDispatch.Panels.Jobs
     public partial class JobsPanel : JobUserControl
     {
         public static DependencyProperty SelectedCompanyProperty = DependencyProperty.Register("SelectedCompany", typeof(Company), typeof(JobsPanel), new PropertyMetadata(null, JobsPanel.SelectedCompanyPropertyChanged));
-
+        
         public Company SelectedCompany
         {
             get
