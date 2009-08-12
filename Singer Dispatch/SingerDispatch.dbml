@@ -57,6 +57,7 @@
       <Column Name="SizeEstimated" Type="System.Byte" DbType="TinyInt" CanBeNull="true" />
       <Column Name="WeightEstimated" Type="System.Byte" DbType="TinyInt" CanBeNull="true" />
       <Column Name="Notes" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
+      <Association Name="Commodity_JobCommodity" Member="JobCommodities" OtherKey="OriginalCommodityID" Type="JobCommodity" />
       <Association Name="Company_Commodity" Member="Company" ThisKey="CompanyID" Type="Company" IsForeignKey="true" />
     </Type>
   </Table>
@@ -275,10 +276,49 @@
       <Column Name="EndDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
       <Association Name="Job_Load" Member="Loads" OtherKey="JobID" Type="Load" />
       <Association Name="Job_Dispatch" Member="Dispatches" OtherKey="JobID" Type="Dispatch" />
+      <Association Name="Job_JobCommodity" Member="JobCommodities" OtherKey="JobID" Type="JobCommodity" />
       <Association Name="Company_Job" Member="Company" ThisKey="CompanyID" Type="Company" IsForeignKey="true" />
       <Association Name="Company_Job1" Member="Company1" ThisKey="CareOfCompanyID" Type="Company" IsForeignKey="true" />
       <Association Name="Quote_Job" Member="Quote" ThisKey="QuoteID" Type="Quote" IsForeignKey="true" />
       <Association Name="User_Job" Member="User" ThisKey="QuotedByUserID" Type="User" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.JobCommodities" Member="JobCommodities">
+    <Type Name="JobCommodity">
+      <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="JobID" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="OriginalCommodityID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Column Name="Value" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="Serial" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Column Name="Unit" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Column Name="Owner" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Column Name="LastLocation" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Column Name="LastAddress" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Column Name="Length" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Width" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Height" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Weight" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="SizeEstimated" Type="System.Byte" DbType="TinyInt" CanBeNull="true" />
+      <Column Name="WeightEstimated" Type="System.Byte" DbType="TinyInt" CanBeNull="true" />
+      <Column Name="Quantity" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="CostPerItem" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="LoadSiteName" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Column Name="LoadAddress" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Column Name="LoadBy" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Column Name="LoadMethod" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Column Name="LoadDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="LoadInstrucitons" Type="System.String" DbType="VarChar(2000)" CanBeNull="true" />
+      <Column Name="LoadRoute" Type="System.String" DbType="VarChar(2000)" CanBeNull="true" />
+      <Column Name="UnloadSiteName" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Column Name="UnloadAddress" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Column Name="UnloadBy" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Column Name="UnloadDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="UnloadInstructions" Type="System.String" DbType="VarChar(2000)" CanBeNull="true" />
+      <Column Name="UnloadRoute" Type="System.String" DbType="VarChar(2000)" CanBeNull="true" />
+      <Column Name="Notes" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
+      <Association Name="Commodity_JobCommodity" Member="Commodity" ThisKey="OriginalCommodityID" Type="Commodity" IsForeignKey="true" />
+      <Association Name="Job_JobCommodity" Member="Job" ThisKey="JobID" Type="Job" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>

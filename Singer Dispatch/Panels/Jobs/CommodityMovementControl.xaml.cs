@@ -39,5 +39,11 @@ namespace SingerDispatch.Panels.Jobs
                 cmbCommodityName.ItemsSource = null;
             }
         }
+
+        private void btnNewCommodity_Click(object sender, RoutedEventArgs e)
+        {
+            JobCommodity commodity = new JobCommodity() { JobID = SelectedJob.ID };
+            
+        }
     }
 }

@@ -93,6 +93,9 @@ namespace SingerDispatch
     partial void InsertJob(Job instance);
     partial void UpdateJob(Job instance);
     partial void DeleteJob(Job instance);
+    partial void InsertJobCommodity(JobCommodity instance);
+    partial void UpdateJobCommodity(JobCommodity instance);
+    partial void DeleteJobCommodity(JobCommodity instance);
     #endregion
 		
 		public SingerDispatchDataContext() : 
@@ -290,6 +293,14 @@ namespace SingerDispatch
 			get
 			{
 				return this.GetTable<Job>();
+			}
+		}
+		
+		public System.Data.Linq.Table<JobCommodity> JobCommodities
+		{
+			get
+			{
+				return this.GetTable<JobCommodity>();
 			}
 		}
 	}
@@ -1129,6 +1140,8 @@ namespace SingerDispatch
 		
 		private string _Notes;
 		
+		private EntitySet<JobCommodity> _JobCommodities;
+		
 		private EntityRef<Company> _Company;
 		
     #region Extensibility Method Definitions
@@ -1171,6 +1184,7 @@ namespace SingerDispatch
 		
 		public Commodity()
 		{
+			this._JobCommodities = new EntitySet<JobCommodity>(new Action<JobCommodity>(this.attach_JobCommodities), new Action<JobCommodity>(this.detach_JobCommodities));
 			this._Company = default(EntityRef<Company>);
 			OnCreated();
 		}
@@ -1499,6 +1513,19 @@ namespace SingerDispatch
 			}
 		}
 		
+		[Association(Name="Commodity_JobCommodity", Storage="_JobCommodities", OtherKey="OriginalCommodityID")]
+		public EntitySet<JobCommodity> JobCommodities
+		{
+			get
+			{
+				return this._JobCommodities;
+			}
+			set
+			{
+				this._JobCommodities.Assign(value);
+			}
+		}
+		
 		[Association(Name="Company_Commodity", Storage="_Company", ThisKey="CompanyID", IsForeignKey=true)]
 		public Company Company
 		{
@@ -1551,6 +1578,18 @@ namespace SingerDispatch
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
+		}
+		
+		private void attach_JobCommodities(JobCommodity entity)
+		{
+			this.SendPropertyChanging();
+			entity.Commodity = this;
+		}
+		
+		private void detach_JobCommodities(JobCommodity entity)
+		{
+			this.SendPropertyChanging();
+			entity.Commodity = null;
 		}
 	}
 	
@@ -5854,6 +5893,8 @@ namespace SingerDispatch
 		
 		private EntitySet<Dispatch> _Dispatches;
 		
+		private EntitySet<JobCommodity> _JobCommodities;
+		
 		private EntityRef<Company> _Company;
 		
 		private EntityRef<Company> _Company1;
@@ -5890,6 +5931,7 @@ namespace SingerDispatch
 		{
 			this._Loads = new EntitySet<Load>(new Action<Load>(this.attach_Loads), new Action<Load>(this.detach_Loads));
 			this._Dispatches = new EntitySet<Dispatch>(new Action<Dispatch>(this.attach_Dispatches), new Action<Dispatch>(this.detach_Dispatches));
+			this._JobCommodities = new EntitySet<JobCommodity>(new Action<JobCommodity>(this.attach_JobCommodities), new Action<JobCommodity>(this.detach_JobCommodities));
 			this._Company = default(EntityRef<Company>);
 			this._Company1 = default(EntityRef<Company>);
 			this._Quote = default(EntityRef<Quote>);
@@ -6119,6 +6161,19 @@ namespace SingerDispatch
 			}
 		}
 		
+		[Association(Name="Job_JobCommodity", Storage="_JobCommodities", OtherKey="JobID")]
+		public EntitySet<JobCommodity> JobCommodities
+		{
+			get
+			{
+				return this._JobCommodities;
+			}
+			set
+			{
+				this._JobCommodities.Assign(value);
+			}
+		}
+		
 		[Association(Name="Company_Job", Storage="_Company", ThisKey="CompanyID", IsForeignKey=true)]
 		public Company Company
 		{
@@ -6297,6 +6352,906 @@ namespace SingerDispatch
 		{
 			this.SendPropertyChanging();
 			entity.Job = null;
+		}
+		
+		private void attach_JobCommodities(JobCommodity entity)
+		{
+			this.SendPropertyChanging();
+			entity.Job = this;
+		}
+		
+		private void detach_JobCommodities(JobCommodity entity)
+		{
+			this.SendPropertyChanging();
+			entity.Job = null;
+		}
+	}
+	
+	[Table(Name="dbo.JobCommodities")]
+	public partial class JobCommodity : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private long _ID;
+		
+		private long _JobID;
+		
+		private System.Nullable<long> _OriginalCommodityID;
+		
+		private string _Name;
+		
+		private System.Nullable<decimal> _Value;
+		
+		private string _Serial;
+		
+		private string _Unit;
+		
+		private string _Owner;
+		
+		private string _LastLocation;
+		
+		private string _LastAddress;
+		
+		private System.Nullable<double> _Length;
+		
+		private System.Nullable<double> _Width;
+		
+		private System.Nullable<double> _Height;
+		
+		private System.Nullable<double> _Weight;
+		
+		private System.Nullable<byte> _SizeEstimated;
+		
+		private System.Nullable<byte> _WeightEstimated;
+		
+		private System.Nullable<int> _Quantity;
+		
+		private System.Nullable<decimal> _CostPerItem;
+		
+		private string _LoadSiteName;
+		
+		private string _LoadAddress;
+		
+		private string _LoadBy;
+		
+		private string _LoadMethod;
+		
+		private System.Nullable<System.DateTime> _LoadDate;
+		
+		private string _LoadInstrucitons;
+		
+		private string _LoadRoute;
+		
+		private string _UnloadSiteName;
+		
+		private string _UnloadAddress;
+		
+		private string _UnloadBy;
+		
+		private System.Nullable<System.DateTime> _UnloadDate;
+		
+		private string _UnloadInstructions;
+		
+		private string _UnloadRoute;
+		
+		private string _Notes;
+		
+		private EntityRef<Commodity> _Commodity;
+		
+		private EntityRef<Job> _Job;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDChanging(long value);
+    partial void OnIDChanged();
+    partial void OnJobIDChanging(long value);
+    partial void OnJobIDChanged();
+    partial void OnOriginalCommodityIDChanging(System.Nullable<long> value);
+    partial void OnOriginalCommodityIDChanged();
+    partial void OnNameChanging(string value);
+    partial void OnNameChanged();
+    partial void OnValueChanging(System.Nullable<decimal> value);
+    partial void OnValueChanged();
+    partial void OnSerialChanging(string value);
+    partial void OnSerialChanged();
+    partial void OnUnitChanging(string value);
+    partial void OnUnitChanged();
+    partial void OnOwnerChanging(string value);
+    partial void OnOwnerChanged();
+    partial void OnLastLocationChanging(string value);
+    partial void OnLastLocationChanged();
+    partial void OnLastAddressChanging(string value);
+    partial void OnLastAddressChanged();
+    partial void OnLengthChanging(System.Nullable<double> value);
+    partial void OnLengthChanged();
+    partial void OnWidthChanging(System.Nullable<double> value);
+    partial void OnWidthChanged();
+    partial void OnHeightChanging(System.Nullable<double> value);
+    partial void OnHeightChanged();
+    partial void OnWeightChanging(System.Nullable<double> value);
+    partial void OnWeightChanged();
+    partial void OnSizeEstimatedChanging(System.Nullable<byte> value);
+    partial void OnSizeEstimatedChanged();
+    partial void OnWeightEstimatedChanging(System.Nullable<byte> value);
+    partial void OnWeightEstimatedChanged();
+    partial void OnQuantityChanging(System.Nullable<int> value);
+    partial void OnQuantityChanged();
+    partial void OnCostPerItemChanging(System.Nullable<decimal> value);
+    partial void OnCostPerItemChanged();
+    partial void OnLoadSiteNameChanging(string value);
+    partial void OnLoadSiteNameChanged();
+    partial void OnLoadAddressChanging(string value);
+    partial void OnLoadAddressChanged();
+    partial void OnLoadByChanging(string value);
+    partial void OnLoadByChanged();
+    partial void OnLoadMethodChanging(string value);
+    partial void OnLoadMethodChanged();
+    partial void OnLoadDateChanging(System.Nullable<System.DateTime> value);
+    partial void OnLoadDateChanged();
+    partial void OnLoadInstrucitonsChanging(string value);
+    partial void OnLoadInstrucitonsChanged();
+    partial void OnLoadRouteChanging(string value);
+    partial void OnLoadRouteChanged();
+    partial void OnUnloadSiteNameChanging(string value);
+    partial void OnUnloadSiteNameChanged();
+    partial void OnUnloadAddressChanging(string value);
+    partial void OnUnloadAddressChanged();
+    partial void OnUnloadByChanging(string value);
+    partial void OnUnloadByChanged();
+    partial void OnUnloadDateChanging(System.Nullable<System.DateTime> value);
+    partial void OnUnloadDateChanged();
+    partial void OnUnloadInstructionsChanging(string value);
+    partial void OnUnloadInstructionsChanged();
+    partial void OnUnloadRouteChanging(string value);
+    partial void OnUnloadRouteChanged();
+    partial void OnNotesChanging(string value);
+    partial void OnNotesChanged();
+    #endregion
+		
+		public JobCommodity()
+		{
+			this._Commodity = default(EntityRef<Commodity>);
+			this._Job = default(EntityRef<Job>);
+			OnCreated();
+		}
+		
+		[Column(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="BigInt NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public long ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this.OnIDChanging(value);
+					this.SendPropertyChanging();
+					this._ID = value;
+					this.SendPropertyChanged("ID");
+					this.OnIDChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_JobID", DbType="BigInt NOT NULL")]
+		public long JobID
+		{
+			get
+			{
+				return this._JobID;
+			}
+			set
+			{
+				if ((this._JobID != value))
+				{
+					if (this._Job.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnJobIDChanging(value);
+					this.SendPropertyChanging();
+					this._JobID = value;
+					this.SendPropertyChanged("JobID");
+					this.OnJobIDChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_OriginalCommodityID", DbType="BigInt")]
+		public System.Nullable<long> OriginalCommodityID
+		{
+			get
+			{
+				return this._OriginalCommodityID;
+			}
+			set
+			{
+				if ((this._OriginalCommodityID != value))
+				{
+					if (this._Commodity.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnOriginalCommodityIDChanging(value);
+					this.SendPropertyChanging();
+					this._OriginalCommodityID = value;
+					this.SendPropertyChanged("OriginalCommodityID");
+					this.OnOriginalCommodityIDChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_Name", DbType="VarChar(255)")]
+		public string Name
+		{
+			get
+			{
+				return this._Name;
+			}
+			set
+			{
+				if ((this._Name != value))
+				{
+					this.OnNameChanging(value);
+					this.SendPropertyChanging();
+					this._Name = value;
+					this.SendPropertyChanged("Name");
+					this.OnNameChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_Value", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> Value
+		{
+			get
+			{
+				return this._Value;
+			}
+			set
+			{
+				if ((this._Value != value))
+				{
+					this.OnValueChanging(value);
+					this.SendPropertyChanging();
+					this._Value = value;
+					this.SendPropertyChanged("Value");
+					this.OnValueChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_Serial", DbType="VarChar(255)")]
+		public string Serial
+		{
+			get
+			{
+				return this._Serial;
+			}
+			set
+			{
+				if ((this._Serial != value))
+				{
+					this.OnSerialChanging(value);
+					this.SendPropertyChanging();
+					this._Serial = value;
+					this.SendPropertyChanged("Serial");
+					this.OnSerialChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_Unit", DbType="VarChar(255)")]
+		public string Unit
+		{
+			get
+			{
+				return this._Unit;
+			}
+			set
+			{
+				if ((this._Unit != value))
+				{
+					this.OnUnitChanging(value);
+					this.SendPropertyChanging();
+					this._Unit = value;
+					this.SendPropertyChanged("Unit");
+					this.OnUnitChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_Owner", DbType="VarChar(255)")]
+		public string Owner
+		{
+			get
+			{
+				return this._Owner;
+			}
+			set
+			{
+				if ((this._Owner != value))
+				{
+					this.OnOwnerChanging(value);
+					this.SendPropertyChanging();
+					this._Owner = value;
+					this.SendPropertyChanged("Owner");
+					this.OnOwnerChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_LastLocation", DbType="VarChar(255)")]
+		public string LastLocation
+		{
+			get
+			{
+				return this._LastLocation;
+			}
+			set
+			{
+				if ((this._LastLocation != value))
+				{
+					this.OnLastLocationChanging(value);
+					this.SendPropertyChanging();
+					this._LastLocation = value;
+					this.SendPropertyChanged("LastLocation");
+					this.OnLastLocationChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_LastAddress", DbType="VarChar(255)")]
+		public string LastAddress
+		{
+			get
+			{
+				return this._LastAddress;
+			}
+			set
+			{
+				if ((this._LastAddress != value))
+				{
+					this.OnLastAddressChanging(value);
+					this.SendPropertyChanging();
+					this._LastAddress = value;
+					this.SendPropertyChanged("LastAddress");
+					this.OnLastAddressChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_Length", DbType="Float")]
+		public System.Nullable<double> Length
+		{
+			get
+			{
+				return this._Length;
+			}
+			set
+			{
+				if ((this._Length != value))
+				{
+					this.OnLengthChanging(value);
+					this.SendPropertyChanging();
+					this._Length = value;
+					this.SendPropertyChanged("Length");
+					this.OnLengthChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_Width", DbType="Float")]
+		public System.Nullable<double> Width
+		{
+			get
+			{
+				return this._Width;
+			}
+			set
+			{
+				if ((this._Width != value))
+				{
+					this.OnWidthChanging(value);
+					this.SendPropertyChanging();
+					this._Width = value;
+					this.SendPropertyChanged("Width");
+					this.OnWidthChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_Height", DbType="Float")]
+		public System.Nullable<double> Height
+		{
+			get
+			{
+				return this._Height;
+			}
+			set
+			{
+				if ((this._Height != value))
+				{
+					this.OnHeightChanging(value);
+					this.SendPropertyChanging();
+					this._Height = value;
+					this.SendPropertyChanged("Height");
+					this.OnHeightChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_Weight", DbType="Float")]
+		public System.Nullable<double> Weight
+		{
+			get
+			{
+				return this._Weight;
+			}
+			set
+			{
+				if ((this._Weight != value))
+				{
+					this.OnWeightChanging(value);
+					this.SendPropertyChanging();
+					this._Weight = value;
+					this.SendPropertyChanged("Weight");
+					this.OnWeightChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_SizeEstimated", DbType="TinyInt")]
+		public System.Nullable<byte> SizeEstimated
+		{
+			get
+			{
+				return this._SizeEstimated;
+			}
+			set
+			{
+				if ((this._SizeEstimated != value))
+				{
+					this.OnSizeEstimatedChanging(value);
+					this.SendPropertyChanging();
+					this._SizeEstimated = value;
+					this.SendPropertyChanged("SizeEstimated");
+					this.OnSizeEstimatedChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_WeightEstimated", DbType="TinyInt")]
+		public System.Nullable<byte> WeightEstimated
+		{
+			get
+			{
+				return this._WeightEstimated;
+			}
+			set
+			{
+				if ((this._WeightEstimated != value))
+				{
+					this.OnWeightEstimatedChanging(value);
+					this.SendPropertyChanging();
+					this._WeightEstimated = value;
+					this.SendPropertyChanged("WeightEstimated");
+					this.OnWeightEstimatedChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_Quantity", DbType="Int")]
+		public System.Nullable<int> Quantity
+		{
+			get
+			{
+				return this._Quantity;
+			}
+			set
+			{
+				if ((this._Quantity != value))
+				{
+					this.OnQuantityChanging(value);
+					this.SendPropertyChanging();
+					this._Quantity = value;
+					this.SendPropertyChanged("Quantity");
+					this.OnQuantityChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_CostPerItem", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> CostPerItem
+		{
+			get
+			{
+				return this._CostPerItem;
+			}
+			set
+			{
+				if ((this._CostPerItem != value))
+				{
+					this.OnCostPerItemChanging(value);
+					this.SendPropertyChanging();
+					this._CostPerItem = value;
+					this.SendPropertyChanged("CostPerItem");
+					this.OnCostPerItemChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_LoadSiteName", DbType="VarChar(255)")]
+		public string LoadSiteName
+		{
+			get
+			{
+				return this._LoadSiteName;
+			}
+			set
+			{
+				if ((this._LoadSiteName != value))
+				{
+					this.OnLoadSiteNameChanging(value);
+					this.SendPropertyChanging();
+					this._LoadSiteName = value;
+					this.SendPropertyChanged("LoadSiteName");
+					this.OnLoadSiteNameChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_LoadAddress", DbType="VarChar(255)")]
+		public string LoadAddress
+		{
+			get
+			{
+				return this._LoadAddress;
+			}
+			set
+			{
+				if ((this._LoadAddress != value))
+				{
+					this.OnLoadAddressChanging(value);
+					this.SendPropertyChanging();
+					this._LoadAddress = value;
+					this.SendPropertyChanged("LoadAddress");
+					this.OnLoadAddressChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_LoadBy", DbType="VarChar(255)")]
+		public string LoadBy
+		{
+			get
+			{
+				return this._LoadBy;
+			}
+			set
+			{
+				if ((this._LoadBy != value))
+				{
+					this.OnLoadByChanging(value);
+					this.SendPropertyChanging();
+					this._LoadBy = value;
+					this.SendPropertyChanged("LoadBy");
+					this.OnLoadByChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_LoadMethod", DbType="VarChar(255)")]
+		public string LoadMethod
+		{
+			get
+			{
+				return this._LoadMethod;
+			}
+			set
+			{
+				if ((this._LoadMethod != value))
+				{
+					this.OnLoadMethodChanging(value);
+					this.SendPropertyChanging();
+					this._LoadMethod = value;
+					this.SendPropertyChanged("LoadMethod");
+					this.OnLoadMethodChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_LoadDate", DbType="DateTime")]
+		public System.Nullable<System.DateTime> LoadDate
+		{
+			get
+			{
+				return this._LoadDate;
+			}
+			set
+			{
+				if ((this._LoadDate != value))
+				{
+					this.OnLoadDateChanging(value);
+					this.SendPropertyChanging();
+					this._LoadDate = value;
+					this.SendPropertyChanged("LoadDate");
+					this.OnLoadDateChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_LoadInstrucitons", DbType="VarChar(2000)")]
+		public string LoadInstrucitons
+		{
+			get
+			{
+				return this._LoadInstrucitons;
+			}
+			set
+			{
+				if ((this._LoadInstrucitons != value))
+				{
+					this.OnLoadInstrucitonsChanging(value);
+					this.SendPropertyChanging();
+					this._LoadInstrucitons = value;
+					this.SendPropertyChanged("LoadInstrucitons");
+					this.OnLoadInstrucitonsChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_LoadRoute", DbType="VarChar(2000)")]
+		public string LoadRoute
+		{
+			get
+			{
+				return this._LoadRoute;
+			}
+			set
+			{
+				if ((this._LoadRoute != value))
+				{
+					this.OnLoadRouteChanging(value);
+					this.SendPropertyChanging();
+					this._LoadRoute = value;
+					this.SendPropertyChanged("LoadRoute");
+					this.OnLoadRouteChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_UnloadSiteName", DbType="VarChar(255)")]
+		public string UnloadSiteName
+		{
+			get
+			{
+				return this._UnloadSiteName;
+			}
+			set
+			{
+				if ((this._UnloadSiteName != value))
+				{
+					this.OnUnloadSiteNameChanging(value);
+					this.SendPropertyChanging();
+					this._UnloadSiteName = value;
+					this.SendPropertyChanged("UnloadSiteName");
+					this.OnUnloadSiteNameChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_UnloadAddress", DbType="VarChar(255)")]
+		public string UnloadAddress
+		{
+			get
+			{
+				return this._UnloadAddress;
+			}
+			set
+			{
+				if ((this._UnloadAddress != value))
+				{
+					this.OnUnloadAddressChanging(value);
+					this.SendPropertyChanging();
+					this._UnloadAddress = value;
+					this.SendPropertyChanged("UnloadAddress");
+					this.OnUnloadAddressChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_UnloadBy", DbType="VarChar(255)")]
+		public string UnloadBy
+		{
+			get
+			{
+				return this._UnloadBy;
+			}
+			set
+			{
+				if ((this._UnloadBy != value))
+				{
+					this.OnUnloadByChanging(value);
+					this.SendPropertyChanging();
+					this._UnloadBy = value;
+					this.SendPropertyChanged("UnloadBy");
+					this.OnUnloadByChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_UnloadDate", DbType="DateTime")]
+		public System.Nullable<System.DateTime> UnloadDate
+		{
+			get
+			{
+				return this._UnloadDate;
+			}
+			set
+			{
+				if ((this._UnloadDate != value))
+				{
+					this.OnUnloadDateChanging(value);
+					this.SendPropertyChanging();
+					this._UnloadDate = value;
+					this.SendPropertyChanged("UnloadDate");
+					this.OnUnloadDateChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_UnloadInstructions", DbType="VarChar(2000)")]
+		public string UnloadInstructions
+		{
+			get
+			{
+				return this._UnloadInstructions;
+			}
+			set
+			{
+				if ((this._UnloadInstructions != value))
+				{
+					this.OnUnloadInstructionsChanging(value);
+					this.SendPropertyChanging();
+					this._UnloadInstructions = value;
+					this.SendPropertyChanged("UnloadInstructions");
+					this.OnUnloadInstructionsChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_UnloadRoute", DbType="VarChar(2000)")]
+		public string UnloadRoute
+		{
+			get
+			{
+				return this._UnloadRoute;
+			}
+			set
+			{
+				if ((this._UnloadRoute != value))
+				{
+					this.OnUnloadRouteChanging(value);
+					this.SendPropertyChanging();
+					this._UnloadRoute = value;
+					this.SendPropertyChanged("UnloadRoute");
+					this.OnUnloadRouteChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_Notes", DbType="Text", UpdateCheck=UpdateCheck.Never)]
+		public string Notes
+		{
+			get
+			{
+				return this._Notes;
+			}
+			set
+			{
+				if ((this._Notes != value))
+				{
+					this.OnNotesChanging(value);
+					this.SendPropertyChanging();
+					this._Notes = value;
+					this.SendPropertyChanged("Notes");
+					this.OnNotesChanged();
+				}
+			}
+		}
+		
+		[Association(Name="Commodity_JobCommodity", Storage="_Commodity", ThisKey="OriginalCommodityID", IsForeignKey=true)]
+		public Commodity Commodity
+		{
+			get
+			{
+				return this._Commodity.Entity;
+			}
+			set
+			{
+				Commodity previousValue = this._Commodity.Entity;
+				if (((previousValue != value) 
+							|| (this._Commodity.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Commodity.Entity = null;
+						previousValue.JobCommodities.Remove(this);
+					}
+					this._Commodity.Entity = value;
+					if ((value != null))
+					{
+						value.JobCommodities.Add(this);
+						this._OriginalCommodityID = value.ID;
+					}
+					else
+					{
+						this._OriginalCommodityID = default(Nullable<long>);
+					}
+					this.SendPropertyChanged("Commodity");
+				}
+			}
+		}
+		
+		[Association(Name="Job_JobCommodity", Storage="_Job", ThisKey="JobID", IsForeignKey=true)]
+		public Job Job
+		{
+			get
+			{
+				return this._Job.Entity;
+			}
+			set
+			{
+				Job previousValue = this._Job.Entity;
+				if (((previousValue != value) 
+							|| (this._Job.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Job.Entity = null;
+						previousValue.JobCommodities.Remove(this);
+					}
+					this._Job.Entity = value;
+					if ((value != null))
+					{
+						value.JobCommodities.Add(this);
+						this._JobID = value.ID;
+					}
+					else
+					{
+						this._JobID = default(long);
+					}
+					this.SendPropertyChanged("Job");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
 		}
 	}
 }

@@ -76,7 +76,7 @@
                 <TextBox Name="txtSiteFax" Grid.Row="8" Grid.Column="2" Text="{Binding Path=Fax}" />
 
                 <Label Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="3">Address Notes:</Label>
-                <TextBox Name="txtAddressNotes" Grid.Row="10" Grid.Column="0" Grid.ColumnSpan="3" Height="60" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" Text="{Binding Path=Notes}" />
+                <TextBox Name="txtAddressNotes" Grid.Row="10" Grid.Column="0" Grid.ColumnSpan="3" Height="60" Style="{StaticResource MultiLine}" Text="{Binding Path=Notes}" />
             </Grid>
         </GroupBox>
         

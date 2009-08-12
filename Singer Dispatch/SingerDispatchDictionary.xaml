@@ -17,11 +17,19 @@
     </Style>
     
     <Style TargetType="TextBox">
-        <Setter Property="Margin" Value="3,3,3,3" />
+        <Setter Property="Margin" Value="3" />
     </Style>
 
     <Style TargetType="ComboBox">
-        <Setter Property="Margin" Value="3,3,3,3" />
+        <Setter Property="Margin" Value="3" />
+    </Style>
+
+    <Style TargetType="TextBox" x:Key="MultiLine">        
+        <Setter Property="Margin" Value="3" />
+        <Setter Property="TextWrapping" Value="Wrap" />
+        <Setter Property="AcceptsReturn" Value="True" />
+        <Setter Property="AcceptsTab" Value="True" />
+        <Setter Property="VerticalScrollBarVisibility" Value="Visible" />
     </Style>
 
     <Style x:Key="Heading" TargetType="Label">
@@ -79,6 +87,10 @@
         <Setter Property="CanUserAddRows" Value="False" />
         <Setter Property="CanUserDeleteRows" Value="False" />      
         <Setter Property="ColumnWidth" Value="*" />
+    </Style>
+    
+    <Style TargetType="{x:Type WPF:DatePicker}">
+        <Setter Property="Margin" Value="3" />
     </Style>
     
     <Style TargetType="{x:Type WPF:DatePickerTextBox}">

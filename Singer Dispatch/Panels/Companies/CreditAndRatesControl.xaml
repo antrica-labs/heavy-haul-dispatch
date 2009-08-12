@@ -98,7 +98,7 @@
 
                     <StackPanel VerticalAlignment="Top">
                         <Label>Addministration Notes:</Label>
-                        <TextBox Name="txtCreditAdminNotes" Height="60" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" Text="{Binding Notes}" />
+                        <TextBox Name="txtCreditAdminNotes" Height="60" Style="{StaticResource MultiLine}" Text="{Binding Notes}" />
                     </StackPanel>
                 </StackPanel>
             </GroupBox>

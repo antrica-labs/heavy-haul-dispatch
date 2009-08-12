@@ -53,7 +53,7 @@
                         <ComboBox Name="cmbCareOfCompanies" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectedItem="{Binding Company1}" TextSearch.TextPath="Name" IsEditable="True" />
 
                         <Label>Project Description</Label>
-                        <TextBox Height="40" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Disabled" Text="{Binding Description}"/>
+                        <TextBox Height="40" Style="{StaticResource MultiLine}" VerticalScrollBarVisibility="Disabled" Text="{Binding Description}"/>
                     </StackPanel>
                 </GroupBox>
                 

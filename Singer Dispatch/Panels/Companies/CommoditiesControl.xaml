@@ -82,7 +82,7 @@
                 <TextBox Name="txtCommodityLastAddress" Grid.Row="6" Grid.Column="1" Text="{Binding LastAddress}" />
 
                 <Label Grid.Row="7" Grid.Column="0">Notes:</Label>
-                <TextBox Name="txtCommodityNotes" Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="2" Height="60" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" Text="{Binding Notes}" />
+                <TextBox Name="txtCommodityNotes" Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="2" Height="60" Style="{StaticResource MultiLine}" Text="{Binding Notes}" />
                                     
                 <GroupBox Header="Dimentions (m/kg)" Grid.Row="0" Grid.Column="2" Grid.RowSpan="7" Margin="5,0,0,0">
                     <Grid>
