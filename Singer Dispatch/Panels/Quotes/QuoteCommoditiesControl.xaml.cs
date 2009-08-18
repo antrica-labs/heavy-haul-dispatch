@@ -58,11 +58,15 @@ namespace SingerDispatch.Panels.Quotes
         private void cmbCommodityName_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             Commodity original = (Commodity)cmbCommodityName.SelectedItem;
+            QuoteCommodity commodity = (QuoteCommodity)dgQuoteCommodities.SelectedItem;
+
+            if (commodity == null)
+            {
+                return;
+            }
 
             if (original != null)
             {
-                QuoteCommodity commodity = (QuoteCommodity)gbDetails.DataContext;
-
                 commodity.OriginalCommodityID = original.ID;
                 commodity.Name = original.Name;
                 commodity.Value = original.Value;
@@ -81,11 +85,21 @@ namespace SingerDispatch.Panels.Quotes
             }
             else
             {
-                QuoteCommodity commodity = new QuoteCommodity() { QuoteID = SelectedQuote.ID };
-                
-                gbDetails.DataContext = commodity;
-                gbDepature.DataContext = commodity;
-                gbDestination.DataContext = commodity;
+                commodity.OriginalCommodityID = null;
+                commodity.Name = null;
+                commodity.Value = null;
+                commodity.Serial = null;
+                commodity.Unit = null;
+                commodity.Owner = null;
+                commodity.Length = null;
+                commodity.Width = null;
+                commodity.Height = null;
+                commodity.Weight = null;
+                commodity.SizeEstimated = null;
+                commodity.WeightEstimated = null;
+                commodity.Notes = null;
+                commodity.LastAddress = null;
+                commodity.LastLocation = null;
             }
         }
 
@@ -126,6 +140,7 @@ namespace SingerDispatch.Panels.Quotes
 
             if (confirmation == MessageBoxResult.Yes)
             {
+                dgQuoteCommodities.SelectedItem = null;
                 SelectedQuote.QuoteCommodities.Remove(commodity);
                 ((ObservableCollection<QuoteCommodity>)dgQuoteCommodities.ItemsSource).Remove(commodity);
             }

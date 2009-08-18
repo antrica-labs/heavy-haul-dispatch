@@ -81,9 +81,6 @@ namespace SingerDispatch
     partial void InsertQuoteCommodity(QuoteCommodity instance);
     partial void UpdateQuoteCommodity(QuoteCommodity instance);
     partial void DeleteQuoteCommodity(QuoteCommodity instance);
-    partial void InsertLoad(Load instance);
-    partial void UpdateLoad(Load instance);
-    partial void DeleteLoad(Load instance);
     partial void InsertDispatch(Dispatch instance);
     partial void UpdateDispatch(Dispatch instance);
     partial void DeleteDispatch(Dispatch instance);
@@ -93,9 +90,24 @@ namespace SingerDispatch
     partial void InsertJob(Job instance);
     partial void UpdateJob(Job instance);
     partial void DeleteJob(Job instance);
+    partial void InsertWheelType(WheelType instance);
+    partial void UpdateWheelType(WheelType instance);
+    partial void DeleteWheelType(WheelType instance);
+    partial void InsertTrailerCombination(TrailerCombination instance);
+    partial void UpdateTrailerCombination(TrailerCombination instance);
+    partial void DeleteTrailerCombination(TrailerCombination instance);
+    partial void InsertUnit(Unit instance);
+    partial void UpdateUnit(Unit instance);
+    partial void DeleteUnit(Unit instance);
+    partial void InsertSeason(Season instance);
+    partial void UpdateSeason(Season instance);
+    partial void DeleteSeason(Season instance);
     partial void InsertJobCommodity(JobCommodity instance);
     partial void UpdateJobCommodity(JobCommodity instance);
     partial void DeleteJobCommodity(JobCommodity instance);
+    partial void InsertLoad(Load instance);
+    partial void UpdateLoad(Load instance);
+    partial void DeleteLoad(Load instance);
     #endregion
 		
 		public SingerDispatchDataContext() : 
@@ -264,14 +276,6 @@ namespace SingerDispatch
 			}
 		}
 		
-		public System.Data.Linq.Table<Load> Loads
-		{
-			get
-			{
-				return this.GetTable<Load>();
-			}
-		}
-		
 		public System.Data.Linq.Table<Dispatch> Dispatches
 		{
 			get
@@ -296,11 +300,51 @@ namespace SingerDispatch
 			}
 		}
 		
+		public System.Data.Linq.Table<WheelType> WheelTypes
+		{
+			get
+			{
+				return this.GetTable<WheelType>();
+			}
+		}
+		
+		public System.Data.Linq.Table<TrailerCombination> TrailerCombinations
+		{
+			get
+			{
+				return this.GetTable<TrailerCombination>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Unit> Units
+		{
+			get
+			{
+				return this.GetTable<Unit>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Season> Seasons
+		{
+			get
+			{
+				return this.GetTable<Season>();
+			}
+		}
+		
 		public System.Data.Linq.Table<JobCommodity> JobCommodities
 		{
 			get
 			{
 				return this.GetTable<JobCommodity>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Load> Loads
+		{
+			get
+			{
+				return this.GetTable<Load>();
 			}
 		}
 	}
@@ -4745,305 +4789,6 @@ namespace SingerDispatch
 		}
 	}
 	
-	[Table(Name="dbo.Loads")]
-	public partial class Load : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private long _ID;
-		
-		private System.Nullable<long> _JobID;
-		
-		private string _Info;
-		
-		private System.Nullable<System.DateTime> _StartDate;
-		
-		private System.Nullable<System.DateTime> _EndDate;
-		
-		private string _Ban;
-		
-		private string _ServiceDescription;
-		
-		private string _Notes;
-		
-		private EntitySet<Dispatch> _Dispatches;
-		
-		private EntityRef<Job> _Job;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIDChanging(long value);
-    partial void OnIDChanged();
-    partial void OnJobIDChanging(System.Nullable<long> value);
-    partial void OnJobIDChanged();
-    partial void OnInfoChanging(string value);
-    partial void OnInfoChanged();
-    partial void OnStartDateChanging(System.Nullable<System.DateTime> value);
-    partial void OnStartDateChanged();
-    partial void OnEndDateChanging(System.Nullable<System.DateTime> value);
-    partial void OnEndDateChanged();
-    partial void OnBanChanging(string value);
-    partial void OnBanChanged();
-    partial void OnServiceDescriptionChanging(string value);
-    partial void OnServiceDescriptionChanged();
-    partial void OnNotesChanging(string value);
-    partial void OnNotesChanged();
-    #endregion
-		
-		public Load()
-		{
-			this._Dispatches = new EntitySet<Dispatch>(new Action<Dispatch>(this.attach_Dispatches), new Action<Dispatch>(this.detach_Dispatches));
-			this._Job = default(EntityRef<Job>);
-			OnCreated();
-		}
-		
-		[Column(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="BigInt NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public long ID
-		{
-			get
-			{
-				return this._ID;
-			}
-			set
-			{
-				if ((this._ID != value))
-				{
-					this.OnIDChanging(value);
-					this.SendPropertyChanging();
-					this._ID = value;
-					this.SendPropertyChanged("ID");
-					this.OnIDChanged();
-				}
-			}
-		}
-		
-		[Column(Storage="_JobID", DbType="BigInt")]
-		public System.Nullable<long> JobID
-		{
-			get
-			{
-				return this._JobID;
-			}
-			set
-			{
-				if ((this._JobID != value))
-				{
-					if (this._Job.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnJobIDChanging(value);
-					this.SendPropertyChanging();
-					this._JobID = value;
-					this.SendPropertyChanged("JobID");
-					this.OnJobIDChanged();
-				}
-			}
-		}
-		
-		[Column(Storage="_Info", DbType="VarChar(500)")]
-		public string Info
-		{
-			get
-			{
-				return this._Info;
-			}
-			set
-			{
-				if ((this._Info != value))
-				{
-					this.OnInfoChanging(value);
-					this.SendPropertyChanging();
-					this._Info = value;
-					this.SendPropertyChanged("Info");
-					this.OnInfoChanged();
-				}
-			}
-		}
-		
-		[Column(Storage="_StartDate", DbType="DateTime")]
-		public System.Nullable<System.DateTime> StartDate
-		{
-			get
-			{
-				return this._StartDate;
-			}
-			set
-			{
-				if ((this._StartDate != value))
-				{
-					this.OnStartDateChanging(value);
-					this.SendPropertyChanging();
-					this._StartDate = value;
-					this.SendPropertyChanged("StartDate");
-					this.OnStartDateChanged();
-				}
-			}
-		}
-		
-		[Column(Storage="_EndDate", DbType="DateTime")]
-		public System.Nullable<System.DateTime> EndDate
-		{
-			get
-			{
-				return this._EndDate;
-			}
-			set
-			{
-				if ((this._EndDate != value))
-				{
-					this.OnEndDateChanging(value);
-					this.SendPropertyChanging();
-					this._EndDate = value;
-					this.SendPropertyChanged("EndDate");
-					this.OnEndDateChanged();
-				}
-			}
-		}
-		
-		[Column(Storage="_Ban", DbType="VarChar(15)")]
-		public string Ban
-		{
-			get
-			{
-				return this._Ban;
-			}
-			set
-			{
-				if ((this._Ban != value))
-				{
-					this.OnBanChanging(value);
-					this.SendPropertyChanging();
-					this._Ban = value;
-					this.SendPropertyChanged("Ban");
-					this.OnBanChanged();
-				}
-			}
-		}
-		
-		[Column(Storage="_ServiceDescription", DbType="VarChar(1000)")]
-		public string ServiceDescription
-		{
-			get
-			{
-				return this._ServiceDescription;
-			}
-			set
-			{
-				if ((this._ServiceDescription != value))
-				{
-					this.OnServiceDescriptionChanging(value);
-					this.SendPropertyChanging();
-					this._ServiceDescription = value;
-					this.SendPropertyChanged("ServiceDescription");
-					this.OnServiceDescriptionChanged();
-				}
-			}
-		}
-		
-		[Column(Storage="_Notes", DbType="Text", UpdateCheck=UpdateCheck.Never)]
-		public string Notes
-		{
-			get
-			{
-				return this._Notes;
-			}
-			set
-			{
-				if ((this._Notes != value))
-				{
-					this.OnNotesChanging(value);
-					this.SendPropertyChanging();
-					this._Notes = value;
-					this.SendPropertyChanged("Notes");
-					this.OnNotesChanged();
-				}
-			}
-		}
-		
-		[Association(Name="Load_Dispatch", Storage="_Dispatches", OtherKey="LoadID")]
-		public EntitySet<Dispatch> Dispatches
-		{
-			get
-			{
-				return this._Dispatches;
-			}
-			set
-			{
-				this._Dispatches.Assign(value);
-			}
-		}
-		
-		[Association(Name="Job_Load", Storage="_Job", ThisKey="JobID", IsForeignKey=true)]
-		public Job Job
-		{
-			get
-			{
-				return this._Job.Entity;
-			}
-			set
-			{
-				Job previousValue = this._Job.Entity;
-				if (((previousValue != value) 
-							|| (this._Job.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Job.Entity = null;
-						previousValue.Loads.Remove(this);
-					}
-					this._Job.Entity = value;
-					if ((value != null))
-					{
-						value.Loads.Add(this);
-						this._JobID = value.ID;
-					}
-					else
-					{
-						this._JobID = default(Nullable<long>);
-					}
-					this.SendPropertyChanged("Job");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_Dispatches(Dispatch entity)
-		{
-			this.SendPropertyChanging();
-			entity.Load = this;
-		}
-		
-		private void detach_Dispatches(Dispatch entity)
-		{
-			this.SendPropertyChanging();
-			entity.Load = null;
-		}
-	}
-	
 	[Table(Name="dbo.Dispatches")]
 	public partial class Dispatch : INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -5062,9 +4807,9 @@ namespace SingerDispatch
 		
 		private string _Notes;
 		
-		private EntityRef<Load> _Load;
-		
 		private EntityRef<Job> _Job;
+		
+		private EntityRef<Load> _Load;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -5086,8 +4831,8 @@ namespace SingerDispatch
 		
 		public Dispatch()
 		{
-			this._Load = default(EntityRef<Load>);
 			this._Job = default(EntityRef<Job>);
+			this._Load = default(EntityRef<Load>);
 			OnCreated();
 		}
 		
@@ -5219,40 +4964,6 @@ namespace SingerDispatch
 			}
 		}
 		
-		[Association(Name="Load_Dispatch", Storage="_Load", ThisKey="LoadID", IsForeignKey=true)]
-		public Load Load
-		{
-			get
-			{
-				return this._Load.Entity;
-			}
-			set
-			{
-				Load previousValue = this._Load.Entity;
-				if (((previousValue != value) 
-							|| (this._Load.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Load.Entity = null;
-						previousValue.Dispatches.Remove(this);
-					}
-					this._Load.Entity = value;
-					if ((value != null))
-					{
-						value.Dispatches.Add(this);
-						this._LoadID = value.ID;
-					}
-					else
-					{
-						this._LoadID = default(Nullable<long>);
-					}
-					this.SendPropertyChanged("Load");
-				}
-			}
-		}
-		
 		[Association(Name="Job_Dispatch", Storage="_Job", ThisKey="JobID", IsForeignKey=true)]
 		public Job Job
 		{
@@ -5283,6 +4994,40 @@ namespace SingerDispatch
 						this._JobID = default(Nullable<long>);
 					}
 					this.SendPropertyChanged("Job");
+				}
+			}
+		}
+		
+		[Association(Name="Load_Dispatch", Storage="_Load", ThisKey="LoadID", IsForeignKey=true)]
+		public Load Load
+		{
+			get
+			{
+				return this._Load.Entity;
+			}
+			set
+			{
+				Load previousValue = this._Load.Entity;
+				if (((previousValue != value) 
+							|| (this._Load.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Load.Entity = null;
+						previousValue.Dispatches.Remove(this);
+					}
+					this._Load.Entity = value;
+					if ((value != null))
+					{
+						value.Dispatches.Add(this);
+						this._LoadID = value.ID;
+					}
+					else
+					{
+						this._LoadID = default(Nullable<long>);
+					}
+					this.SendPropertyChanged("Load");
 				}
 			}
 		}
@@ -5889,11 +5634,11 @@ namespace SingerDispatch
 		
 		private System.Nullable<System.DateTime> _EndDate;
 		
-		private EntitySet<Load> _Loads;
-		
 		private EntitySet<Dispatch> _Dispatches;
 		
 		private EntitySet<JobCommodity> _JobCommodities;
+		
+		private EntitySet<Load> _Loads;
 		
 		private EntityRef<Company> _Company;
 		
@@ -5929,9 +5674,9 @@ namespace SingerDispatch
 		
 		public Job()
 		{
-			this._Loads = new EntitySet<Load>(new Action<Load>(this.attach_Loads), new Action<Load>(this.detach_Loads));
 			this._Dispatches = new EntitySet<Dispatch>(new Action<Dispatch>(this.attach_Dispatches), new Action<Dispatch>(this.detach_Dispatches));
 			this._JobCommodities = new EntitySet<JobCommodity>(new Action<JobCommodity>(this.attach_JobCommodities), new Action<JobCommodity>(this.detach_JobCommodities));
+			this._Loads = new EntitySet<Load>(new Action<Load>(this.attach_Loads), new Action<Load>(this.detach_Loads));
 			this._Company = default(EntityRef<Company>);
 			this._Company1 = default(EntityRef<Company>);
 			this._Quote = default(EntityRef<Quote>);
@@ -6135,19 +5880,6 @@ namespace SingerDispatch
 			}
 		}
 		
-		[Association(Name="Job_Load", Storage="_Loads", OtherKey="JobID")]
-		public EntitySet<Load> Loads
-		{
-			get
-			{
-				return this._Loads;
-			}
-			set
-			{
-				this._Loads.Assign(value);
-			}
-		}
-		
 		[Association(Name="Job_Dispatch", Storage="_Dispatches", OtherKey="JobID")]
 		public EntitySet<Dispatch> Dispatches
 		{
@@ -6171,6 +5903,19 @@ namespace SingerDispatch
 			set
 			{
 				this._JobCommodities.Assign(value);
+			}
+		}
+		
+		[Association(Name="Job_Load", Storage="_Loads", OtherKey="JobID")]
+		public EntitySet<Load> Loads
+		{
+			get
+			{
+				return this._Loads;
+			}
+			set
+			{
+				this._Loads.Assign(value);
 			}
 		}
 		
@@ -6330,18 +6075,6 @@ namespace SingerDispatch
 			}
 		}
 		
-		private void attach_Loads(Load entity)
-		{
-			this.SendPropertyChanging();
-			entity.Job = this;
-		}
-		
-		private void detach_Loads(Load entity)
-		{
-			this.SendPropertyChanging();
-			entity.Job = null;
-		}
-		
 		private void attach_Dispatches(Dispatch entity)
 		{
 			this.SendPropertyChanging();
@@ -6365,6 +6098,474 @@ namespace SingerDispatch
 			this.SendPropertyChanging();
 			entity.Job = null;
 		}
+		
+		private void attach_Loads(Load entity)
+		{
+			this.SendPropertyChanging();
+			entity.Job = this;
+		}
+		
+		private void detach_Loads(Load entity)
+		{
+			this.SendPropertyChanging();
+			entity.Job = null;
+		}
+	}
+	
+	[Table(Name="dbo.WheelTypes")]
+	public partial class WheelType : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private long _ID;
+		
+		private string _Name;
+		
+		private EntitySet<Load> _Loads;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDChanging(long value);
+    partial void OnIDChanged();
+    partial void OnNameChanging(string value);
+    partial void OnNameChanged();
+    #endregion
+		
+		public WheelType()
+		{
+			this._Loads = new EntitySet<Load>(new Action<Load>(this.attach_Loads), new Action<Load>(this.detach_Loads));
+			OnCreated();
+		}
+		
+		[Column(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="BigInt NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public long ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this.OnIDChanging(value);
+					this.SendPropertyChanging();
+					this._ID = value;
+					this.SendPropertyChanged("ID");
+					this.OnIDChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_Name", DbType="VarChar(100)")]
+		public string Name
+		{
+			get
+			{
+				return this._Name;
+			}
+			set
+			{
+				if ((this._Name != value))
+				{
+					this.OnNameChanging(value);
+					this.SendPropertyChanging();
+					this._Name = value;
+					this.SendPropertyChanged("Name");
+					this.OnNameChanged();
+				}
+			}
+		}
+		
+		[Association(Name="WheelType_Load", Storage="_Loads", OtherKey="WheelTypeID")]
+		public EntitySet<Load> Loads
+		{
+			get
+			{
+				return this._Loads;
+			}
+			set
+			{
+				this._Loads.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_Loads(Load entity)
+		{
+			this.SendPropertyChanging();
+			entity.WheelType = this;
+		}
+		
+		private void detach_Loads(Load entity)
+		{
+			this.SendPropertyChanging();
+			entity.WheelType = null;
+		}
+	}
+	
+	[Table(Name="dbo.TrailerCombinations")]
+	public partial class TrailerCombination : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private long _ID;
+		
+		private string _Name;
+		
+		private EntitySet<Load> _Loads;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDChanging(long value);
+    partial void OnIDChanged();
+    partial void OnNameChanging(string value);
+    partial void OnNameChanged();
+    #endregion
+		
+		public TrailerCombination()
+		{
+			this._Loads = new EntitySet<Load>(new Action<Load>(this.attach_Loads), new Action<Load>(this.detach_Loads));
+			OnCreated();
+		}
+		
+		[Column(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="BigInt NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public long ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this.OnIDChanging(value);
+					this.SendPropertyChanging();
+					this._ID = value;
+					this.SendPropertyChanged("ID");
+					this.OnIDChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_Name", DbType="VarChar(100)")]
+		public string Name
+		{
+			get
+			{
+				return this._Name;
+			}
+			set
+			{
+				if ((this._Name != value))
+				{
+					this.OnNameChanging(value);
+					this.SendPropertyChanging();
+					this._Name = value;
+					this.SendPropertyChanged("Name");
+					this.OnNameChanged();
+				}
+			}
+		}
+		
+		[Association(Name="TrailerCombination_Load", Storage="_Loads", OtherKey="TrailerCombinationID")]
+		public EntitySet<Load> Loads
+		{
+			get
+			{
+				return this._Loads;
+			}
+			set
+			{
+				this._Loads.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_Loads(Load entity)
+		{
+			this.SendPropertyChanging();
+			entity.TrailerCombination = this;
+		}
+		
+		private void detach_Loads(Load entity)
+		{
+			this.SendPropertyChanging();
+			entity.TrailerCombination = null;
+		}
+	}
+	
+	[Table(Name="dbo.Units")]
+	public partial class Unit : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private long _ID;
+		
+		private string _Name;
+		
+		private EntitySet<Load> _Loads;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDChanging(long value);
+    partial void OnIDChanged();
+    partial void OnNameChanging(string value);
+    partial void OnNameChanged();
+    #endregion
+		
+		public Unit()
+		{
+			this._Loads = new EntitySet<Load>(new Action<Load>(this.attach_Loads), new Action<Load>(this.detach_Loads));
+			OnCreated();
+		}
+		
+		[Column(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="BigInt NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public long ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this.OnIDChanging(value);
+					this.SendPropertyChanging();
+					this._ID = value;
+					this.SendPropertyChanged("ID");
+					this.OnIDChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_Name", DbType="VarChar(75)")]
+		public string Name
+		{
+			get
+			{
+				return this._Name;
+			}
+			set
+			{
+				if ((this._Name != value))
+				{
+					this.OnNameChanging(value);
+					this.SendPropertyChanging();
+					this._Name = value;
+					this.SendPropertyChanged("Name");
+					this.OnNameChanged();
+				}
+			}
+		}
+		
+		[Association(Name="Unit_Load", Storage="_Loads", OtherKey="UnitID")]
+		public EntitySet<Load> Loads
+		{
+			get
+			{
+				return this._Loads;
+			}
+			set
+			{
+				this._Loads.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_Loads(Load entity)
+		{
+			this.SendPropertyChanging();
+			entity.Unit = this;
+		}
+		
+		private void detach_Loads(Load entity)
+		{
+			this.SendPropertyChanging();
+			entity.Unit = null;
+		}
+	}
+	
+	[Table(Name="dbo.Seasons")]
+	public partial class Season : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private long _ID;
+		
+		private string _Name;
+		
+		private EntitySet<Load> _Loads;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDChanging(long value);
+    partial void OnIDChanged();
+    partial void OnNameChanging(string value);
+    partial void OnNameChanged();
+    #endregion
+		
+		public Season()
+		{
+			this._Loads = new EntitySet<Load>(new Action<Load>(this.attach_Loads), new Action<Load>(this.detach_Loads));
+			OnCreated();
+		}
+		
+		[Column(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="BigInt NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public long ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this.OnIDChanging(value);
+					this.SendPropertyChanging();
+					this._ID = value;
+					this.SendPropertyChanged("ID");
+					this.OnIDChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_Name", DbType="VarChar(75)")]
+		public string Name
+		{
+			get
+			{
+				return this._Name;
+			}
+			set
+			{
+				if ((this._Name != value))
+				{
+					this.OnNameChanging(value);
+					this.SendPropertyChanging();
+					this._Name = value;
+					this.SendPropertyChanged("Name");
+					this.OnNameChanged();
+				}
+			}
+		}
+		
+		[Association(Name="Season_Load", Storage="_Loads", OtherKey="SeasonID")]
+		public EntitySet<Load> Loads
+		{
+			get
+			{
+				return this._Loads;
+			}
+			set
+			{
+				this._Loads.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_Loads(Load entity)
+		{
+			this.SendPropertyChanging();
+			entity.Season = this;
+		}
+		
+		private void detach_Loads(Load entity)
+		{
+			this.SendPropertyChanging();
+			entity.Season = null;
+		}
 	}
 	
 	[Table(Name="dbo.JobCommodities")]
@@ -6376,6 +6577,8 @@ namespace SingerDispatch
 		private long _ID;
 		
 		private long _JobID;
+		
+		private System.Nullable<long> _LoadID;
 		
 		private System.Nullable<long> _OriginalCommodityID;
 		
@@ -6441,6 +6644,8 @@ namespace SingerDispatch
 		
 		private EntityRef<Job> _Job;
 		
+		private EntityRef<Load> _Load;
+		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -6449,6 +6654,8 @@ namespace SingerDispatch
     partial void OnIDChanged();
     partial void OnJobIDChanging(long value);
     partial void OnJobIDChanged();
+    partial void OnLoadIDChanging(System.Nullable<long> value);
+    partial void OnLoadIDChanged();
     partial void OnOriginalCommodityIDChanging(System.Nullable<long> value);
     partial void OnOriginalCommodityIDChanged();
     partial void OnNameChanging(string value);
@@ -6515,6 +6722,7 @@ namespace SingerDispatch
 		{
 			this._Commodity = default(EntityRef<Commodity>);
 			this._Job = default(EntityRef<Job>);
+			this._Load = default(EntityRef<Load>);
 			OnCreated();
 		}
 		
@@ -6558,6 +6766,30 @@ namespace SingerDispatch
 					this._JobID = value;
 					this.SendPropertyChanged("JobID");
 					this.OnJobIDChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_LoadID", DbType="BigInt")]
+		public System.Nullable<long> LoadID
+		{
+			get
+			{
+				return this._LoadID;
+			}
+			set
+			{
+				if ((this._LoadID != value))
+				{
+					if (this._Load.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnLoadIDChanging(value);
+					this.SendPropertyChanging();
+					this._LoadID = value;
+					this.SendPropertyChanged("LoadID");
+					this.OnLoadIDChanged();
 				}
 			}
 		}
@@ -7234,6 +7466,40 @@ namespace SingerDispatch
 			}
 		}
 		
+		[Association(Name="Load_JobCommodity", Storage="_Load", ThisKey="LoadID", IsForeignKey=true)]
+		public Load Load
+		{
+			get
+			{
+				return this._Load.Entity;
+			}
+			set
+			{
+				Load previousValue = this._Load.Entity;
+				if (((previousValue != value) 
+							|| (this._Load.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Load.Entity = null;
+						previousValue.JobCommodities.Remove(this);
+					}
+					this._Load.Entity = value;
+					if ((value != null))
+					{
+						value.JobCommodities.Add(this);
+						this._LoadID = value.ID;
+					}
+					else
+					{
+						this._LoadID = default(Nullable<long>);
+					}
+					this.SendPropertyChanged("Load");
+				}
+			}
+		}
+		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -7252,6 +7518,1001 @@ namespace SingerDispatch
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
+		}
+	}
+	
+	[Table(Name="dbo.Loads")]
+	public partial class Load : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private long _ID;
+		
+		private System.Nullable<long> _JobID;
+		
+		private System.Nullable<long> _UnitID;
+		
+		private System.Nullable<long> _WheelTypeID;
+		
+		private System.Nullable<long> _TrailerCombinationID;
+		
+		private string _Info;
+		
+		private System.Nullable<System.DateTime> _StartDate;
+		
+		private System.Nullable<System.DateTime> _EndDate;
+		
+		private System.Nullable<long> _SeasonID;
+		
+		private string _Ban;
+		
+		private string _ServiceDescription;
+		
+		private string _Notes;
+		
+		private System.Nullable<int> _WeightSteer;
+		
+		private System.Nullable<int> _WeightDrive;
+		
+		private System.Nullable<int> _WeightGroup1;
+		
+		private System.Nullable<int> _WeightGroup2;
+		
+		private System.Nullable<int> _WeightGroup3;
+		
+		private System.Nullable<int> _WeightGroup4;
+		
+		private System.Nullable<int> _WeightGroup5;
+		
+		private System.Nullable<int> _WeightGroup6;
+		
+		private System.Nullable<int> _WeightGroup7;
+		
+		private System.Nullable<int> _WeightGroup8;
+		
+		private System.Nullable<int> _WeightGroup9;
+		
+		private System.Nullable<int> _WeightGroup10;
+		
+		private System.Nullable<byte> _WeightEstimated;
+		
+		private System.Nullable<int> _GrossWeight;
+		
+		private System.Nullable<int> _LoadedLength;
+		
+		private System.Nullable<int> _LoadedWidth;
+		
+		private System.Nullable<int> _LoadedHeight;
+		
+		private EntitySet<Dispatch> _Dispatches;
+		
+		private EntitySet<JobCommodity> _JobCommodities;
+		
+		private EntityRef<Job> _Job;
+		
+		private EntityRef<Season> _Season;
+		
+		private EntityRef<TrailerCombination> _TrailerCombination;
+		
+		private EntityRef<Unit> _Unit;
+		
+		private EntityRef<WheelType> _WheelType;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDChanging(long value);
+    partial void OnIDChanged();
+    partial void OnJobIDChanging(System.Nullable<long> value);
+    partial void OnJobIDChanged();
+    partial void OnUnitIDChanging(System.Nullable<long> value);
+    partial void OnUnitIDChanged();
+    partial void OnWheelTypeIDChanging(System.Nullable<long> value);
+    partial void OnWheelTypeIDChanged();
+    partial void OnTrailerCombinationIDChanging(System.Nullable<long> value);
+    partial void OnTrailerCombinationIDChanged();
+    partial void OnInfoChanging(string value);
+    partial void OnInfoChanged();
+    partial void OnStartDateChanging(System.Nullable<System.DateTime> value);
+    partial void OnStartDateChanged();
+    partial void OnEndDateChanging(System.Nullable<System.DateTime> value);
+    partial void OnEndDateChanged();
+    partial void OnSeasonIDChanging(System.Nullable<long> value);
+    partial void OnSeasonIDChanged();
+    partial void OnBanChanging(string value);
+    partial void OnBanChanged();
+    partial void OnServiceDescriptionChanging(string value);
+    partial void OnServiceDescriptionChanged();
+    partial void OnNotesChanging(string value);
+    partial void OnNotesChanged();
+    partial void OnWeightSteerChanging(System.Nullable<int> value);
+    partial void OnWeightSteerChanged();
+    partial void OnWeightDriveChanging(System.Nullable<int> value);
+    partial void OnWeightDriveChanged();
+    partial void OnWeightGroup1Changing(System.Nullable<int> value);
+    partial void OnWeightGroup1Changed();
+    partial void OnWeightGroup2Changing(System.Nullable<int> value);
+    partial void OnWeightGroup2Changed();
+    partial void OnWeightGroup3Changing(System.Nullable<int> value);
+    partial void OnWeightGroup3Changed();
+    partial void OnWeightGroup4Changing(System.Nullable<int> value);
+    partial void OnWeightGroup4Changed();
+    partial void OnWeightGroup5Changing(System.Nullable<int> value);
+    partial void OnWeightGroup5Changed();
+    partial void OnWeightGroup6Changing(System.Nullable<int> value);
+    partial void OnWeightGroup6Changed();
+    partial void OnWeightGroup7Changing(System.Nullable<int> value);
+    partial void OnWeightGroup7Changed();
+    partial void OnWeightGroup8Changing(System.Nullable<int> value);
+    partial void OnWeightGroup8Changed();
+    partial void OnWeightGroup9Changing(System.Nullable<int> value);
+    partial void OnWeightGroup9Changed();
+    partial void OnWeightGroup10Changing(System.Nullable<int> value);
+    partial void OnWeightGroup10Changed();
+    partial void OnWeightEstimatedChanging(System.Nullable<byte> value);
+    partial void OnWeightEstimatedChanged();
+    partial void OnGrossWeightChanging(System.Nullable<int> value);
+    partial void OnGrossWeightChanged();
+    partial void OnLoadedLengthChanging(System.Nullable<int> value);
+    partial void OnLoadedLengthChanged();
+    partial void OnLoadedWidthChanging(System.Nullable<int> value);
+    partial void OnLoadedWidthChanged();
+    partial void OnLoadedHeightChanging(System.Nullable<int> value);
+    partial void OnLoadedHeightChanged();
+    #endregion
+		
+		public Load()
+		{
+			this._Dispatches = new EntitySet<Dispatch>(new Action<Dispatch>(this.attach_Dispatches), new Action<Dispatch>(this.detach_Dispatches));
+			this._JobCommodities = new EntitySet<JobCommodity>(new Action<JobCommodity>(this.attach_JobCommodities), new Action<JobCommodity>(this.detach_JobCommodities));
+			this._Job = default(EntityRef<Job>);
+			this._Season = default(EntityRef<Season>);
+			this._TrailerCombination = default(EntityRef<TrailerCombination>);
+			this._Unit = default(EntityRef<Unit>);
+			this._WheelType = default(EntityRef<WheelType>);
+			OnCreated();
+		}
+		
+		[Column(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="BigInt NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public long ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this.OnIDChanging(value);
+					this.SendPropertyChanging();
+					this._ID = value;
+					this.SendPropertyChanged("ID");
+					this.OnIDChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_JobID", DbType="BigInt")]
+		public System.Nullable<long> JobID
+		{
+			get
+			{
+				return this._JobID;
+			}
+			set
+			{
+				if ((this._JobID != value))
+				{
+					if (this._Job.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnJobIDChanging(value);
+					this.SendPropertyChanging();
+					this._JobID = value;
+					this.SendPropertyChanged("JobID");
+					this.OnJobIDChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_UnitID", DbType="BigInt")]
+		public System.Nullable<long> UnitID
+		{
+			get
+			{
+				return this._UnitID;
+			}
+			set
+			{
+				if ((this._UnitID != value))
+				{
+					if (this._Unit.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnUnitIDChanging(value);
+					this.SendPropertyChanging();
+					this._UnitID = value;
+					this.SendPropertyChanged("UnitID");
+					this.OnUnitIDChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_WheelTypeID", DbType="BigInt")]
+		public System.Nullable<long> WheelTypeID
+		{
+			get
+			{
+				return this._WheelTypeID;
+			}
+			set
+			{
+				if ((this._WheelTypeID != value))
+				{
+					if (this._WheelType.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnWheelTypeIDChanging(value);
+					this.SendPropertyChanging();
+					this._WheelTypeID = value;
+					this.SendPropertyChanged("WheelTypeID");
+					this.OnWheelTypeIDChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_TrailerCombinationID", DbType="BigInt")]
+		public System.Nullable<long> TrailerCombinationID
+		{
+			get
+			{
+				return this._TrailerCombinationID;
+			}
+			set
+			{
+				if ((this._TrailerCombinationID != value))
+				{
+					if (this._TrailerCombination.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnTrailerCombinationIDChanging(value);
+					this.SendPropertyChanging();
+					this._TrailerCombinationID = value;
+					this.SendPropertyChanged("TrailerCombinationID");
+					this.OnTrailerCombinationIDChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_Info", DbType="VarChar(500)")]
+		public string Info
+		{
+			get
+			{
+				return this._Info;
+			}
+			set
+			{
+				if ((this._Info != value))
+				{
+					this.OnInfoChanging(value);
+					this.SendPropertyChanging();
+					this._Info = value;
+					this.SendPropertyChanged("Info");
+					this.OnInfoChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_StartDate", DbType="DateTime")]
+		public System.Nullable<System.DateTime> StartDate
+		{
+			get
+			{
+				return this._StartDate;
+			}
+			set
+			{
+				if ((this._StartDate != value))
+				{
+					this.OnStartDateChanging(value);
+					this.SendPropertyChanging();
+					this._StartDate = value;
+					this.SendPropertyChanged("StartDate");
+					this.OnStartDateChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_EndDate", DbType="DateTime")]
+		public System.Nullable<System.DateTime> EndDate
+		{
+			get
+			{
+				return this._EndDate;
+			}
+			set
+			{
+				if ((this._EndDate != value))
+				{
+					this.OnEndDateChanging(value);
+					this.SendPropertyChanging();
+					this._EndDate = value;
+					this.SendPropertyChanged("EndDate");
+					this.OnEndDateChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_SeasonID", DbType="BigInt")]
+		public System.Nullable<long> SeasonID
+		{
+			get
+			{
+				return this._SeasonID;
+			}
+			set
+			{
+				if ((this._SeasonID != value))
+				{
+					if (this._Season.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnSeasonIDChanging(value);
+					this.SendPropertyChanging();
+					this._SeasonID = value;
+					this.SendPropertyChanged("SeasonID");
+					this.OnSeasonIDChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_Ban", DbType="VarChar(15)")]
+		public string Ban
+		{
+			get
+			{
+				return this._Ban;
+			}
+			set
+			{
+				if ((this._Ban != value))
+				{
+					this.OnBanChanging(value);
+					this.SendPropertyChanging();
+					this._Ban = value;
+					this.SendPropertyChanged("Ban");
+					this.OnBanChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_ServiceDescription", DbType="VarChar(1000)")]
+		public string ServiceDescription
+		{
+			get
+			{
+				return this._ServiceDescription;
+			}
+			set
+			{
+				if ((this._ServiceDescription != value))
+				{
+					this.OnServiceDescriptionChanging(value);
+					this.SendPropertyChanging();
+					this._ServiceDescription = value;
+					this.SendPropertyChanged("ServiceDescription");
+					this.OnServiceDescriptionChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_Notes", DbType="Text", UpdateCheck=UpdateCheck.Never)]
+		public string Notes
+		{
+			get
+			{
+				return this._Notes;
+			}
+			set
+			{
+				if ((this._Notes != value))
+				{
+					this.OnNotesChanging(value);
+					this.SendPropertyChanging();
+					this._Notes = value;
+					this.SendPropertyChanged("Notes");
+					this.OnNotesChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_WeightSteer", DbType="Int")]
+		public System.Nullable<int> WeightSteer
+		{
+			get
+			{
+				return this._WeightSteer;
+			}
+			set
+			{
+				if ((this._WeightSteer != value))
+				{
+					this.OnWeightSteerChanging(value);
+					this.SendPropertyChanging();
+					this._WeightSteer = value;
+					this.SendPropertyChanged("WeightSteer");
+					this.OnWeightSteerChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_WeightDrive", DbType="Int")]
+		public System.Nullable<int> WeightDrive
+		{
+			get
+			{
+				return this._WeightDrive;
+			}
+			set
+			{
+				if ((this._WeightDrive != value))
+				{
+					this.OnWeightDriveChanging(value);
+					this.SendPropertyChanging();
+					this._WeightDrive = value;
+					this.SendPropertyChanged("WeightDrive");
+					this.OnWeightDriveChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_WeightGroup1", DbType="Int")]
+		public System.Nullable<int> WeightGroup1
+		{
+			get
+			{
+				return this._WeightGroup1;
+			}
+			set
+			{
+				if ((this._WeightGroup1 != value))
+				{
+					this.OnWeightGroup1Changing(value);
+					this.SendPropertyChanging();
+					this._WeightGroup1 = value;
+					this.SendPropertyChanged("WeightGroup1");
+					this.OnWeightGroup1Changed();
+				}
+			}
+		}
+		
+		[Column(Storage="_WeightGroup2", DbType="Int")]
+		public System.Nullable<int> WeightGroup2
+		{
+			get
+			{
+				return this._WeightGroup2;
+			}
+			set
+			{
+				if ((this._WeightGroup2 != value))
+				{
+					this.OnWeightGroup2Changing(value);
+					this.SendPropertyChanging();
+					this._WeightGroup2 = value;
+					this.SendPropertyChanged("WeightGroup2");
+					this.OnWeightGroup2Changed();
+				}
+			}
+		}
+		
+		[Column(Storage="_WeightGroup3", DbType="Int")]
+		public System.Nullable<int> WeightGroup3
+		{
+			get
+			{
+				return this._WeightGroup3;
+			}
+			set
+			{
+				if ((this._WeightGroup3 != value))
+				{
+					this.OnWeightGroup3Changing(value);
+					this.SendPropertyChanging();
+					this._WeightGroup3 = value;
+					this.SendPropertyChanged("WeightGroup3");
+					this.OnWeightGroup3Changed();
+				}
+			}
+		}
+		
+		[Column(Storage="_WeightGroup4", DbType="Int")]
+		public System.Nullable<int> WeightGroup4
+		{
+			get
+			{
+				return this._WeightGroup4;
+			}
+			set
+			{
+				if ((this._WeightGroup4 != value))
+				{
+					this.OnWeightGroup4Changing(value);
+					this.SendPropertyChanging();
+					this._WeightGroup4 = value;
+					this.SendPropertyChanged("WeightGroup4");
+					this.OnWeightGroup4Changed();
+				}
+			}
+		}
+		
+		[Column(Storage="_WeightGroup5", DbType="Int")]
+		public System.Nullable<int> WeightGroup5
+		{
+			get
+			{
+				return this._WeightGroup5;
+			}
+			set
+			{
+				if ((this._WeightGroup5 != value))
+				{
+					this.OnWeightGroup5Changing(value);
+					this.SendPropertyChanging();
+					this._WeightGroup5 = value;
+					this.SendPropertyChanged("WeightGroup5");
+					this.OnWeightGroup5Changed();
+				}
+			}
+		}
+		
+		[Column(Storage="_WeightGroup6", DbType="Int")]
+		public System.Nullable<int> WeightGroup6
+		{
+			get
+			{
+				return this._WeightGroup6;
+			}
+			set
+			{
+				if ((this._WeightGroup6 != value))
+				{
+					this.OnWeightGroup6Changing(value);
+					this.SendPropertyChanging();
+					this._WeightGroup6 = value;
+					this.SendPropertyChanged("WeightGroup6");
+					this.OnWeightGroup6Changed();
+				}
+			}
+		}
+		
+		[Column(Storage="_WeightGroup7", DbType="Int")]
+		public System.Nullable<int> WeightGroup7
+		{
+			get
+			{
+				return this._WeightGroup7;
+			}
+			set
+			{
+				if ((this._WeightGroup7 != value))
+				{
+					this.OnWeightGroup7Changing(value);
+					this.SendPropertyChanging();
+					this._WeightGroup7 = value;
+					this.SendPropertyChanged("WeightGroup7");
+					this.OnWeightGroup7Changed();
+				}
+			}
+		}
+		
+		[Column(Storage="_WeightGroup8", DbType="Int")]
+		public System.Nullable<int> WeightGroup8
+		{
+			get
+			{
+				return this._WeightGroup8;
+			}
+			set
+			{
+				if ((this._WeightGroup8 != value))
+				{
+					this.OnWeightGroup8Changing(value);
+					this.SendPropertyChanging();
+					this._WeightGroup8 = value;
+					this.SendPropertyChanged("WeightGroup8");
+					this.OnWeightGroup8Changed();
+				}
+			}
+		}
+		
+		[Column(Storage="_WeightGroup9", DbType="Int")]
+		public System.Nullable<int> WeightGroup9
+		{
+			get
+			{
+				return this._WeightGroup9;
+			}
+			set
+			{
+				if ((this._WeightGroup9 != value))
+				{
+					this.OnWeightGroup9Changing(value);
+					this.SendPropertyChanging();
+					this._WeightGroup9 = value;
+					this.SendPropertyChanged("WeightGroup9");
+					this.OnWeightGroup9Changed();
+				}
+			}
+		}
+		
+		[Column(Storage="_WeightGroup10", DbType="Int")]
+		public System.Nullable<int> WeightGroup10
+		{
+			get
+			{
+				return this._WeightGroup10;
+			}
+			set
+			{
+				if ((this._WeightGroup10 != value))
+				{
+					this.OnWeightGroup10Changing(value);
+					this.SendPropertyChanging();
+					this._WeightGroup10 = value;
+					this.SendPropertyChanged("WeightGroup10");
+					this.OnWeightGroup10Changed();
+				}
+			}
+		}
+		
+		[Column(Storage="_WeightEstimated", DbType="TinyInt")]
+		public System.Nullable<byte> WeightEstimated
+		{
+			get
+			{
+				return this._WeightEstimated;
+			}
+			set
+			{
+				if ((this._WeightEstimated != value))
+				{
+					this.OnWeightEstimatedChanging(value);
+					this.SendPropertyChanging();
+					this._WeightEstimated = value;
+					this.SendPropertyChanged("WeightEstimated");
+					this.OnWeightEstimatedChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_GrossWeight", DbType="Int")]
+		public System.Nullable<int> GrossWeight
+		{
+			get
+			{
+				return this._GrossWeight;
+			}
+			set
+			{
+				if ((this._GrossWeight != value))
+				{
+					this.OnGrossWeightChanging(value);
+					this.SendPropertyChanging();
+					this._GrossWeight = value;
+					this.SendPropertyChanged("GrossWeight");
+					this.OnGrossWeightChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_LoadedLength", DbType="Int")]
+		public System.Nullable<int> LoadedLength
+		{
+			get
+			{
+				return this._LoadedLength;
+			}
+			set
+			{
+				if ((this._LoadedLength != value))
+				{
+					this.OnLoadedLengthChanging(value);
+					this.SendPropertyChanging();
+					this._LoadedLength = value;
+					this.SendPropertyChanged("LoadedLength");
+					this.OnLoadedLengthChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_LoadedWidth", DbType="Int")]
+		public System.Nullable<int> LoadedWidth
+		{
+			get
+			{
+				return this._LoadedWidth;
+			}
+			set
+			{
+				if ((this._LoadedWidth != value))
+				{
+					this.OnLoadedWidthChanging(value);
+					this.SendPropertyChanging();
+					this._LoadedWidth = value;
+					this.SendPropertyChanged("LoadedWidth");
+					this.OnLoadedWidthChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_LoadedHeight", DbType="Int")]
+		public System.Nullable<int> LoadedHeight
+		{
+			get
+			{
+				return this._LoadedHeight;
+			}
+			set
+			{
+				if ((this._LoadedHeight != value))
+				{
+					this.OnLoadedHeightChanging(value);
+					this.SendPropertyChanging();
+					this._LoadedHeight = value;
+					this.SendPropertyChanged("LoadedHeight");
+					this.OnLoadedHeightChanged();
+				}
+			}
+		}
+		
+		[Association(Name="Load_Dispatch", Storage="_Dispatches", OtherKey="LoadID")]
+		public EntitySet<Dispatch> Dispatches
+		{
+			get
+			{
+				return this._Dispatches;
+			}
+			set
+			{
+				this._Dispatches.Assign(value);
+			}
+		}
+		
+		[Association(Name="Load_JobCommodity", Storage="_JobCommodities", OtherKey="LoadID")]
+		public EntitySet<JobCommodity> JobCommodities
+		{
+			get
+			{
+				return this._JobCommodities;
+			}
+			set
+			{
+				this._JobCommodities.Assign(value);
+			}
+		}
+		
+		[Association(Name="Job_Load", Storage="_Job", ThisKey="JobID", IsForeignKey=true)]
+		public Job Job
+		{
+			get
+			{
+				return this._Job.Entity;
+			}
+			set
+			{
+				Job previousValue = this._Job.Entity;
+				if (((previousValue != value) 
+							|| (this._Job.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Job.Entity = null;
+						previousValue.Loads.Remove(this);
+					}
+					this._Job.Entity = value;
+					if ((value != null))
+					{
+						value.Loads.Add(this);
+						this._JobID = value.ID;
+					}
+					else
+					{
+						this._JobID = default(Nullable<long>);
+					}
+					this.SendPropertyChanged("Job");
+				}
+			}
+		}
+		
+		[Association(Name="Season_Load", Storage="_Season", ThisKey="SeasonID", IsForeignKey=true)]
+		public Season Season
+		{
+			get
+			{
+				return this._Season.Entity;
+			}
+			set
+			{
+				Season previousValue = this._Season.Entity;
+				if (((previousValue != value) 
+							|| (this._Season.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Season.Entity = null;
+						previousValue.Loads.Remove(this);
+					}
+					this._Season.Entity = value;
+					if ((value != null))
+					{
+						value.Loads.Add(this);
+						this._SeasonID = value.ID;
+					}
+					else
+					{
+						this._SeasonID = default(Nullable<long>);
+					}
+					this.SendPropertyChanged("Season");
+				}
+			}
+		}
+		
+		[Association(Name="TrailerCombination_Load", Storage="_TrailerCombination", ThisKey="TrailerCombinationID", IsForeignKey=true)]
+		public TrailerCombination TrailerCombination
+		{
+			get
+			{
+				return this._TrailerCombination.Entity;
+			}
+			set
+			{
+				TrailerCombination previousValue = this._TrailerCombination.Entity;
+				if (((previousValue != value) 
+							|| (this._TrailerCombination.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._TrailerCombination.Entity = null;
+						previousValue.Loads.Remove(this);
+					}
+					this._TrailerCombination.Entity = value;
+					if ((value != null))
+					{
+						value.Loads.Add(this);
+						this._TrailerCombinationID = value.ID;
+					}
+					else
+					{
+						this._TrailerCombinationID = default(Nullable<long>);
+					}
+					this.SendPropertyChanged("TrailerCombination");
+				}
+			}
+		}
+		
+		[Association(Name="Unit_Load", Storage="_Unit", ThisKey="UnitID", IsForeignKey=true)]
+		public Unit Unit
+		{
+			get
+			{
+				return this._Unit.Entity;
+			}
+			set
+			{
+				Unit previousValue = this._Unit.Entity;
+				if (((previousValue != value) 
+							|| (this._Unit.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Unit.Entity = null;
+						previousValue.Loads.Remove(this);
+					}
+					this._Unit.Entity = value;
+					if ((value != null))
+					{
+						value.Loads.Add(this);
+						this._UnitID = value.ID;
+					}
+					else
+					{
+						this._UnitID = default(Nullable<long>);
+					}
+					this.SendPropertyChanged("Unit");
+				}
+			}
+		}
+		
+		[Association(Name="WheelType_Load", Storage="_WheelType", ThisKey="WheelTypeID", IsForeignKey=true)]
+		public WheelType WheelType
+		{
+			get
+			{
+				return this._WheelType.Entity;
+			}
+			set
+			{
+				WheelType previousValue = this._WheelType.Entity;
+				if (((previousValue != value) 
+							|| (this._WheelType.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._WheelType.Entity = null;
+						previousValue.Loads.Remove(this);
+					}
+					this._WheelType.Entity = value;
+					if ((value != null))
+					{
+						value.Loads.Add(this);
+						this._WheelTypeID = value.ID;
+					}
+					else
+					{
+						this._WheelTypeID = default(Nullable<long>);
+					}
+					this.SendPropertyChanged("WheelType");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_Dispatches(Dispatch entity)
+		{
+			this.SendPropertyChanging();
+			entity.Load = this;
+		}
+		
+		private void detach_Dispatches(Dispatch entity)
+		{
+			this.SendPropertyChanging();
+			entity.Load = null;
+		}
+		
+		private void attach_JobCommodities(JobCommodity entity)
+		{
+			this.SendPropertyChanging();
+			entity.Load = this;
+		}
+		
+		private void detach_JobCommodities(JobCommodity entity)
+		{
+			this.SendPropertyChanging();
+			entity.Load = null;
 		}
 	}
 }

@@ -10,12 +10,17 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/SingerDispatchDictionary.xaml" />
             </ResourceDictionary.MergedDictionaries>
+
+            <DataTemplate x:Key="LoadNameTemplate">
+                <TextBlock Text="{Binding Unit.Name}" />
+            </DataTemplate>
         </ResourceDictionary>
     </UserControl.Resources>
     <StackPanel>
         <WPF:DataGrid Name="dgDispatches" Style="{StaticResource ListDisplay}" AutoGenerateColumns="False" Margin="0,0,0,5" Height="180">
-            <WPF:DataGrid.Columns>
-                <WPF:DataGridTextColumn Header="Description" Binding="{Binding Description}" />    
+            <WPF:DataGrid.Columns>                
+                <WPF:DataGridTextColumn Header="Description" Binding="{Binding Description}" />
+                <WPF:DataGridTextColumn Header="Load" Binding="{Binding Load.Description}" />
             </WPF:DataGrid.Columns>
         </WPF:DataGrid>
         
@@ -49,7 +54,7 @@
                 </Grid.RowDefinitions>
                 
                 <Label Grid.Row="0" Grid.Column="0">Load:</Label>
-                <ComboBox Name="cmbLoads" Grid.Row="0" Grid.Column="1" SelectedItem="{Binding Job}"></ComboBox>
+                <ComboBox Name="cmbLoads" Grid.Row="0" Grid.Column="1" SelectedItem="{Binding Load}" ItemTemplate="{StaticResource LoadNameTemplate}" ></ComboBox>
                 
                 <Label Grid.Row="1" Grid.Column="0">Service Type:</Label>
                 <ComboBox Name="cmbServiceTypes" Grid.Row="1" Grid.Column="1" SelectedItem="{Binding ServiceType}" />
@@ -86,6 +91,7 @@
                         <WPF:DatePicker Grid.Row="0" Grid.Column="1" />
                         
                         <Label Grid.Row="1" Grid.Column="0">Time:</Label>
+                        <TextBox Grid.Row="1" Grid.Column="1" />
                         
                         <Label Grid.Row="2" Grid.Column="0">Location:</Label>
                         <TextBox Grid.Row="2" Grid.Column="1" />

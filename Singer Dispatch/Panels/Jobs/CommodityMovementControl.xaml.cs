@@ -11,6 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Collections.ObjectModel;
 
 namespace SingerDispatch.Panels.Jobs
 {
@@ -32,18 +33,99 @@ namespace SingerDispatch.Panels.Jobs
         {
             if (SelectedJob != null)
             {
-                cmbCommodityName.ItemsSource = (from c in database.Commodities where c.Company == SelectedJob.Company || c.Company == SelectedJob.Company1 select c).ToList();
+                cmbLoads.ItemsSource = SelectedJob.Loads;
+                cmbCommodityName.ItemsSource = (from c in database.Commodities where c.Company == SelectedJob.Company || c.Company == SelectedJob.Company1 select c).ToList();                
             }
             else
             {
+                cmbLoads.ItemsSource = null;
                 cmbCommodityName.ItemsSource = null;
             }
+        }
+
+        protected override void SelectedJobChanged(Job newValue, Job oldValue)
+        {
+            base.SelectedJobChanged(newValue, oldValue);
+
+            dgCommodities.ItemsSource = new ObservableCollection<JobCommodity>((from jc in database.JobCommodities where jc.Job == SelectedJob select jc).ToList());
         }
 
         private void btnNewCommodity_Click(object sender, RoutedEventArgs e)
         {
             JobCommodity commodity = new JobCommodity() { JobID = SelectedJob.ID };
-            
+            ObservableCollection<JobCommodity> list = (ObservableCollection<JobCommodity>)dgCommodities.ItemsSource;
+                
+            list.Insert(0, commodity);
+            SelectedJob.JobCommodities.Add(commodity);
+            dgCommodities.SelectedItem = commodity;
+
+            cmbCommodityName.Focus();
+        }
+
+        private void btnRemoveCommodity_Click(object sender, RoutedEventArgs e)
+        {
+            JobCommodity commodity = (JobCommodity)dgCommodities.SelectedItem;
+
+            if (commodity == null)
+            {
+                return;
+            }
+
+            MessageBoxResult confirmation = MessageBox.Show("Are you sure you want to remove this commodity?", "Remove commodity", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+            if (confirmation == MessageBoxResult.Yes)
+            {
+                SelectedJob.JobCommodities.Remove(commodity);
+                ((ObservableCollection<JobCommodity>)dgCommodities.ItemsSource).Remove(commodity);
+            }
+        }
+
+        private void cmbCommodityName_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Commodity original = (Commodity)cmbCommodityName.SelectedItem;
+            JobCommodity commodity = (JobCommodity)dgCommodities.SelectedItem;
+
+            if (commodity != null)
+            {
+                return;
+            }
+
+            if (original != null)
+            {
+                commodity.OriginalCommodityID = original.ID;
+                commodity.Name = original.Name;
+                commodity.Value = original.Value;
+                commodity.Serial = original.Serial;
+                commodity.Unit = original.Unit;
+                commodity.Owner = original.Owner;
+                commodity.Length = original.Length;
+                commodity.Width = original.Width;
+                commodity.Height = original.Height;
+                commodity.Weight = original.Weight;
+                commodity.SizeEstimated = original.SizeEstimated;
+                commodity.WeightEstimated = original.WeightEstimated;
+                commodity.Notes = original.Notes;
+                commodity.LastAddress = original.LastAddress;
+                commodity.LastLocation = original.LastLocation;
+            }
+            else
+            {
+                commodity.OriginalCommodityID = null;
+                commodity.Name = null;
+                commodity.Value = null;
+                commodity.Serial = null;
+                commodity.Unit = null;
+                commodity.Owner = null;
+                commodity.Length = null;
+                commodity.Width = null;
+                commodity.Height = null;
+                commodity.Weight = null;
+                commodity.SizeEstimated = null;
+                commodity.WeightEstimated = null;
+                commodity.Notes = null;
+                commodity.LastAddress = null;
+                commodity.LastLocation = null;
+            }
         }
     }
 }

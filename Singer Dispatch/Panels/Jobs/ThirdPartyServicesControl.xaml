@@ -3,12 +3,16 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:WPF="http://schemas.microsoft.com/wpf/2008/toolkit"
     xmlns:Jobs="clr-namespace:SingerDispatch.Panels.Jobs"
-    Width="750">
+    Loaded="ControlLoaded" Width="750">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/SingerDispatchDictionary.xaml" />
             </ResourceDictionary.MergedDictionaries>
+
+            <DataTemplate x:Key="LoadNameTemplate">
+                <TextBlock Text="{Binding Unit.Name}" />
+            </DataTemplate>
         </ResourceDictionary>
     </UserControl.Resources>
     <StackPanel>
@@ -46,7 +50,7 @@
                 </Grid.RowDefinitions>
 
                 <Label Grid.Row="0" Grid.Column="0">Load:</Label>
-                <ComboBox Grid.Row="0" Grid.Column="1"></ComboBox>
+                <ComboBox Name="cmbLoads"  Grid.Row="0" Grid.Column="1" SelectedItem="{Binding Load}" ItemTemplate="{StaticResource LoadNameTemplate}" />
 
                 <Label Grid.Row="1" Grid.Column="0">Company:</Label>
                 <ComboBox Grid.Row="1" Grid.Column="1"></ComboBox>

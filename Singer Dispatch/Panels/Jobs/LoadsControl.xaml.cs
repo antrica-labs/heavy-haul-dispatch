@@ -30,7 +30,11 @@ namespace SingerDispatch.Panels.Jobs
         }
 
         private void ControlLoaded(object sender, RoutedEventArgs e)
-        {            
+        {
+            cmbWheelTypes.ItemsSource = (from wt in database.WheelTypes select wt).ToList();
+            cmbUnits.ItemsSource = (from u in database.Units select u).ToList();
+            cmbSeasons.ItemsSource = (from s in database.Seasons select s).ToList();
+            cmbTrailerCombinations.ItemsSource = (from tc in database.TrailerCombinations select tc).ToList();
         }
 
         protected override void SelectedJobChanged(Job newValue, Job oldValue)
@@ -49,6 +53,31 @@ namespace SingerDispatch.Panels.Jobs
             dgLoads.SelectedItem = load;
 
             cmbUnits.Focus();
+        }
+
+        private void AxleWeightChanged(object sender, TextChangedEventArgs e)
+        {
+            Load load = (Load)dgLoads.SelectedItem;
+
+            if (load != null)
+            {
+                int? gross = 0;
+
+                gross += load.WeightSteer;
+                gross += load.WeightDrive;
+                gross += load.WeightGroup1;
+                gross += load.WeightGroup2;
+                gross += load.WeightGroup3;
+                gross += load.WeightGroup4;
+                gross += load.WeightGroup5;
+                gross += load.WeightGroup6;
+                gross += load.WeightGroup7;
+                gross += load.WeightGroup8;
+                gross += load.WeightGroup9;
+                gross += load.WeightGroup10;
+
+                load.GrossWeight = gross;
+            }
         }
 
         

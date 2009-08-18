@@ -15,8 +15,8 @@
     <StackPanel>
         <WPF:DataGrid Name="dgLoads" Style="{StaticResource ListDisplay}" AutoGenerateColumns="False" Margin="0,0,0,5" Height="180">
             <WPF:DataGrid.Columns>
-                <WPF:DataGridTextColumn Header="Unit" Width="0.15*" Binding="{Binding Unit}"/>
-                <WPF:DataGridTextColumn Header="Wheel Type" Width="0.2*" Binding="{Binding WheelType}" />
+                <WPF:DataGridTextColumn Header="Unit" Width="0.15*" Binding="{Binding Unit.Name}"/>
+                <WPF:DataGridTextColumn Header="Wheel Type" Width="0.2*" Binding="{Binding WheelType.Name}" />
                 <WPF:DataGridTextColumn Header="Description" Binding="{Binding ServiceDescription}" />
             </WPF:DataGrid.Columns>   
         </WPF:DataGrid>
@@ -47,13 +47,13 @@
                 </Grid.RowDefinitions>
                 
                 <Label Grid.Column="0" Grid.Row="0">Unit:</Label>
-                <ComboBox Name="cmbUnits" Grid.Column="0" Grid.Row="1" SelectedItem="{Binding Unit}"></ComboBox>
+                <ComboBox Name="cmbUnits" Grid.Column="0" Grid.Row="1" SelectedItem="{Binding Unit}" ItemTemplate="{StaticResource SimpleNameTemplate}"></ComboBox>
                 
                 <Label Grid.Column="1" Grid.Row="0">Wheel Type:</Label>
-                <ComboBox Grid.Column="1" Grid.Row="1" SelectedItem="{Binding WheelType}"></ComboBox>                
+                <ComboBox Name="cmbWheelTypes" Grid.Column="1" Grid.Row="1" SelectedItem="{Binding WheelType}" ItemTemplate="{StaticResource SimpleNameTemplate}"></ComboBox>                
                 
                 <Label Grid.Column="2" Grid.Row="0">Trailer Combination:</Label>
-                <ComboBox Grid.Column="2" Grid.Row="1" SelectedItem="{Binding Trailor}"></ComboBox>
+                <ComboBox Name="cmbTrailerCombinations" Grid.Column="2" Grid.Row="1" SelectedItem="{Binding TrailerCombination}" ItemTemplate="{StaticResource SimpleNameTemplate}"></ComboBox>
                 
                 <Label Grid.Column="3" Grid.Row="0">Info:</Label>
                 <TextBox Grid.Column="3" Grid.Row="1" Text="{Binding Info}" />
@@ -80,10 +80,7 @@
                 <WPF:DatePicker Grid.Row="1" Grid.Column="1" SelectedDate="{Binding EndDate}" />
 
                 <Label Grid.Row="0" Grid.Column="2">Season</Label>
-                <ComboBox Grid.Row="1" Grid.Column="2" SelectedItem="{Binding Season}">
-                    <ComboBoxItem>High</ComboBoxItem>
-                    <ComboBoxItem>Low</ComboBoxItem>
-                </ComboBox>
+                <ComboBox Name="cmbSeasons" Grid.Row="1" Grid.Column="2" SelectedItem="{Binding Season}" ItemTemplate="{StaticResource SimpleNameTemplate}" />                    
                 
                 <Label Grid.Row="0" Grid.Column="3">Ban (%)</Label>
                 <TextBox Grid.Row="1" Grid.Column="3" Text="{Binding Ban}"/>
@@ -104,6 +101,7 @@
             <StackPanel>
                 <Grid>
                     <Grid.ColumnDefinitions>                        
+                        <ColumnDefinition Width="76"/>
                         <ColumnDefinition />
                         <ColumnDefinition />
                         <ColumnDefinition />
@@ -122,84 +120,64 @@
                         <RowDefinition />
                         <RowDefinition />
                         <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
                     </Grid.RowDefinitions>
                     
-                    <Label Grid.Column="0" Grid.Row="0">Axle Weights</Label>
-                    <Label Grid.Column="0" Grid.Row="1">Estimated:</Label>
-                    <Label Grid.Column="0" Grid.Row="2">Scaled:</Label>
+                    
+                    <Label Grid.Column="0" Grid.Row="1">Axle Weight:</Label>
                     
                     <Label Grid.Column="1" Grid.Row="0">Steer:</Label>
-                    <TextBox Grid.Column="1" Grid.Row="1" />
-                    <TextBox Grid.Column="1" Grid.Row="2" />
+                    <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding WeightSteer}" TextChanged="AxleWeightChanged" />                    
                     
                     <Label Grid.Column="2" Grid.Row="0">Drive:</Label>
-                    <TextBox Grid.Column="2" Grid.Row="1" />
-                    <TextBox Grid.Column="2" Grid.Row="2" />
+                    <TextBox Grid.Column="2" Grid.Row="1" Text="{Binding WeightDrive}" TextChanged="AxleWeightChanged" />                    
                     
                     <Label Grid.Column="3" Grid.Row="0">Group 1:</Label>
-                    <TextBox Grid.Column="3" Grid.Row="1" />
-                    <TextBox Grid.Column="3" Grid.Row="2" />
+                    <TextBox Grid.Column="3" Grid.Row="1" Text="{Binding WeightGroup1}" TextChanged="AxleWeightChanged" />                    
                     
                     <Label Grid.Column="4" Grid.Row="0">Group 2:</Label>
-                    <TextBox Grid.Column="4" Grid.Row="1" />
-                    <TextBox Grid.Column="4" Grid.Row="2" />
+                    <TextBox Grid.Column="4" Grid.Row="1" Text="{Binding WeightGroup2}" TextChanged="AxleWeightChanged" />                    
                     
                     <Label Grid.Column="5" Grid.Row="0">Group 3:</Label>
-                    <TextBox Grid.Column="5" Grid.Row="1" />
-                    <TextBox Grid.Column="5" Grid.Row="2" />
+                    <TextBox Grid.Column="5" Grid.Row="1" Text="{Binding WeightGroup3}" TextChanged="AxleWeightChanged" />                    
                     
                     <Label Grid.Column="6" Grid.Row="0">Group 4:</Label>
-                    <TextBox Grid.Column="6" Grid.Row="1" />
-                    <TextBox Grid.Column="6" Grid.Row="2" />
+                    <TextBox Grid.Column="6" Grid.Row="1" Text="{Binding WeightGroup4}" TextChanged="AxleWeightChanged" />                    
                     
                     <Label Grid.Column="7" Grid.Row="0">Group 5:</Label>
-                    <TextBox Grid.Column="7" Grid.Row="1" />
-                    <TextBox Grid.Column="7" Grid.Row="2" />
-                    
+                    <TextBox Grid.Column="7" Grid.Row="1" Text="{Binding WeightGroup5}" TextChanged="AxleWeightChanged" />
+                                        
                     <Label Grid.Column="8" Grid.Row="0">Group 6:</Label>
-                    <TextBox Grid.Column="8" Grid.Row="1" />
-                    <TextBox Grid.Column="8" Grid.Row="2" />
+                    <TextBox Grid.Column="8" Grid.Row="1" Text="{Binding WeightGroup6}" TextChanged="AxleWeightChanged" />
                     
                     <Label Grid.Column="9" Grid.Row="0">Group 7:</Label>
-                    <TextBox Grid.Column="9" Grid.Row="1" />
-                    <TextBox Grid.Column="9" Grid.Row="2" />
+                    <TextBox Grid.Column="9" Grid.Row="1" Text="{Binding WeightGroup7}" TextChanged="AxleWeightChanged" />
                     
                     <Label Grid.Column="10" Grid.Row="0">Group 8:</Label>
-                    <TextBox Grid.Column="10" Grid.Row="1" />
-                    <TextBox Grid.Column="10" Grid.Row="2" />
+                    <TextBox Grid.Column="10" Grid.Row="1" Text="{Binding WeightGroup8}" TextChanged="AxleWeightChanged" />
                     
                     <Label Grid.Column="11" Grid.Row="0">Group 9:</Label>
-                    <TextBox Grid.Column="11" Grid.Row="1" />
-                    <TextBox Grid.Column="11" Grid.Row="2" />
+                    <TextBox Grid.Column="11" Grid.Row="1" Text="{Binding WeightGroup9}" TextChanged="AxleWeightChanged" />
                     
                     <Label Grid.Column="12" Grid.Row="0">Group 10:</Label>
-                    <TextBox Grid.Column="12" Grid.Row="1" />
-                    <TextBox Grid.Column="12" Grid.Row="2" />
-                </Grid>
-                
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition />
-                        <ColumnDefinition />
-                        <ColumnDefinition />
-                        <ColumnDefinition />                        
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition />                        
-                        <RowDefinition />
-                    </Grid.RowDefinitions>
+                    <TextBox Grid.Column="12" Grid.Row="1" Text="{Binding WeightGroup10}" TextChanged="AxleWeightChanged" />                    
                     
-                    <Label Grid.Column="0">Gross Weight:</Label>
-                    <TextBox Grid.Column="0" Grid.Row="1" />
-                    
-                    <Label Grid.Column="1">Loaded Length:</Label>
-                    <TextBox Grid.Column="1" Grid.Row="1" />
-                    
-                    <Label Grid.Column="2">Loaded Width:</Label>
-                    <TextBox Grid.Column="2" Grid.Row="1" />
-                    
-                    <Label Grid.Column="3">Loaded Height:</Label>
-                    <TextBox Grid.Column="3" Grid.Row="1" />
+                    <Label Grid.Column="13" Grid.Row="0">Esitmate:</Label>
+                    <CheckBox Grid.Column="13" Grid.Row="1" Margin="5" />
+
+                    <Label Grid.Column="0" Grid.Row="2">Gross Weight:</Label>
+                    <TextBox Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="2" Text="{Binding GrossWeight}" />
+
+                    <Label Grid.Column="3" Grid.Row="2">Length:</Label>
+                    <TextBox Grid.Column="4" Grid.Row="2" Grid.ColumnSpan="2" Text="{Binding LoadedLength}" />
+
+                    <Label Grid.Column="6" Grid.Row="2">Width:</Label>
+                    <TextBox Grid.Column="7" Grid.Row="2" Grid.ColumnSpan="2" Text="{Binding LoadedWidth}" />
+
+                    <Label Grid.Column="9" Grid.Row="2">Height:</Label>
+                    <TextBox Grid.Column="10" Grid.Row="2" Grid.ColumnSpan="2" Text="{Binding LoadedHeight}" />
                 </Grid>
             </StackPanel>    
         </GroupBox>

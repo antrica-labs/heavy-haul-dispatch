@@ -116,7 +116,7 @@ namespace SingerDispatch
             copy.Notes = Notes;
             
             return copy;
-        }        
+        }
     }
 
     partial class QuoteSupplement : ICloneable

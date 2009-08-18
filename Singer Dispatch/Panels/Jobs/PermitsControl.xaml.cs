@@ -23,5 +23,18 @@ namespace SingerDispatch.Panels.Jobs
         {
             InitializeComponent();
         }
+
+        private void ControlLoaded(object sender, RoutedEventArgs e)
+        {
+            if (SelectedJob != null)
+            {
+                cmbLoads.ItemsSource = SelectedJob.Loads;
+            }
+            else
+            {
+                cmbLoads.ItemsSource = null;
+            }
+
+        }
     }
 }

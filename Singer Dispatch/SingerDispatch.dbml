@@ -214,20 +214,6 @@
       <Association Name="Quote_QuoteCommodity" Member="Quote" ThisKey="QuoteID" Type="Quote" IsForeignKey="true" />
     </Type>
   </Table>
-  <Table Name="dbo.Loads" Member="Loads">
-    <Type Name="Load">
-      <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="JobID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
-      <Column Name="Info" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
-      <Column Name="StartDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="EndDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="Ban" Type="System.String" DbType="VarChar(15)" CanBeNull="true" />
-      <Column Name="ServiceDescription" Type="System.String" DbType="VarChar(1000)" CanBeNull="true" />
-      <Column Name="Notes" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
-      <Association Name="Load_Dispatch" Member="Dispatches" OtherKey="LoadID" Type="Dispatch" />
-      <Association Name="Job_Load" Member="Job" ThisKey="JobID" Type="Job" IsForeignKey="true" />
-    </Type>
-  </Table>
   <Table Name="dbo.Dispatches" Member="Dispatches">
     <Type Name="Dispatch">
       <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -236,8 +222,8 @@
       <Column Name="ServiceType" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
       <Column Name="Description" Type="System.String" DbType="VarChar(1000)" CanBeNull="true" />
       <Column Name="Notes" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
-      <Association Name="Load_Dispatch" Member="Load" ThisKey="LoadID" Type="Load" IsForeignKey="true" />
       <Association Name="Job_Dispatch" Member="Job" ThisKey="JobID" Type="Job" IsForeignKey="true" />
+      <Association Name="Load_Dispatch" Member="Load" ThisKey="LoadID" Type="Load" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.Quotes" Member="Quotes">
@@ -274,19 +260,48 @@
       <Column Name="Description" Type="System.String" DbType="VarChar(1000)" CanBeNull="true" />
       <Column Name="StartDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
       <Column Name="EndDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Association Name="Job_Load" Member="Loads" OtherKey="JobID" Type="Load" />
       <Association Name="Job_Dispatch" Member="Dispatches" OtherKey="JobID" Type="Dispatch" />
       <Association Name="Job_JobCommodity" Member="JobCommodities" OtherKey="JobID" Type="JobCommodity" />
+      <Association Name="Job_Load" Member="Loads" OtherKey="JobID" Type="Load" />
       <Association Name="Company_Job" Member="Company" ThisKey="CompanyID" Type="Company" IsForeignKey="true" />
       <Association Name="Company_Job1" Member="Company1" ThisKey="CareOfCompanyID" Type="Company" IsForeignKey="true" />
       <Association Name="Quote_Job" Member="Quote" ThisKey="QuoteID" Type="Quote" IsForeignKey="true" />
       <Association Name="User_Job" Member="User" ThisKey="QuotedByUserID" Type="User" IsForeignKey="true" />
     </Type>
   </Table>
+  <Table Name="dbo.WheelTypes" Member="WheelTypes">
+    <Type Name="WheelType">
+      <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Association Name="WheelType_Load" Member="Loads" OtherKey="WheelTypeID" Type="Load" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TrailerCombinations" Member="TrailerCombinations">
+    <Type Name="TrailerCombination">
+      <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Association Name="TrailerCombination_Load" Member="Loads" OtherKey="TrailerCombinationID" Type="Load" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Units" Member="Units">
+    <Type Name="Unit">
+      <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(75)" CanBeNull="true" />
+      <Association Name="Unit_Load" Member="Loads" OtherKey="UnitID" Type="Load" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Seasons" Member="Seasons">
+    <Type Name="Season">
+      <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(75)" CanBeNull="true" />
+      <Association Name="Season_Load" Member="Loads" OtherKey="SeasonID" Type="Load" />
+    </Type>
+  </Table>
   <Table Name="dbo.JobCommodities" Member="JobCommodities">
     <Type Name="JobCommodity">
       <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="JobID" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="LoadID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
       <Column Name="OriginalCommodityID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
       <Column Name="Name" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
       <Column Name="Value" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
@@ -319,6 +334,47 @@
       <Column Name="Notes" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
       <Association Name="Commodity_JobCommodity" Member="Commodity" ThisKey="OriginalCommodityID" Type="Commodity" IsForeignKey="true" />
       <Association Name="Job_JobCommodity" Member="Job" ThisKey="JobID" Type="Job" IsForeignKey="true" />
+      <Association Name="Load_JobCommodity" Member="Load" ThisKey="LoadID" Type="Load" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Loads" Member="Loads">
+    <Type Name="Load">
+      <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="JobID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="UnitID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="WheelTypeID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="TrailerCombinationID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="Info" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+      <Column Name="StartDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="EndDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="SeasonID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="Ban" Type="System.String" DbType="VarChar(15)" CanBeNull="true" />
+      <Column Name="ServiceDescription" Type="System.String" DbType="VarChar(1000)" CanBeNull="true" />
+      <Column Name="Notes" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="WeightSteer" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="WeightDrive" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="WeightGroup1" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="WeightGroup2" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="WeightGroup3" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="WeightGroup4" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="WeightGroup5" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="WeightGroup6" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="WeightGroup7" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="WeightGroup8" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="WeightGroup9" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="WeightGroup10" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="WeightEstimated" Type="System.Byte" DbType="TinyInt" CanBeNull="true" />
+      <Column Name="GrossWeight" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="LoadedLength" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="LoadedWidth" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="LoadedHeight" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="Load_Dispatch" Member="Dispatches" OtherKey="LoadID" Type="Dispatch" />
+      <Association Name="Load_JobCommodity" Member="JobCommodities" OtherKey="LoadID" Type="JobCommodity" />
+      <Association Name="Job_Load" Member="Job" ThisKey="JobID" Type="Job" IsForeignKey="true" />
+      <Association Name="Season_Load" Member="Season" ThisKey="SeasonID" Type="Season" IsForeignKey="true" />
+      <Association Name="TrailerCombination_Load" Member="TrailerCombination" ThisKey="TrailerCombinationID" Type="TrailerCombination" IsForeignKey="true" />
+      <Association Name="Unit_Load" Member="Unit" ThisKey="UnitID" Type="Unit" IsForeignKey="true" />
+      <Association Name="WheelType_Load" Member="WheelType" ThisKey="WheelTypeID" Type="WheelType" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>

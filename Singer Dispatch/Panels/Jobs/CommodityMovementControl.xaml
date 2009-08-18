@@ -2,13 +2,17 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:Jobs="clr-namespace:SingerDispatch.Panels.Jobs"
-    xmlns:WPF="http://schemas.microsoft.com/wpf/2008/toolkit"
+    xmlns:WPF="http://schemas.microsoft.com/wpf/2008/toolkit"    
     Loaded="ControlLoaded" Width="750">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/SingerDispatchDictionary.xaml" />
             </ResourceDictionary.MergedDictionaries>
+            
+            <DataTemplate x:Key="LoadNameTemplate">
+                <TextBlock Text="{Binding Unit.Name}" />
+            </DataTemplate>
         </ResourceDictionary>
     </UserControl.Resources>
     <StackPanel>
@@ -32,12 +36,19 @@
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
 
-            <Button Name="btnNewCommodity" Grid.Column="0">New Commodity</Button>
-            <Button Name="btnRemoveCommodity" Grid.Column="3">Remove Commodity</Button>
+            <Button Name="btnNewCommodity" Grid.Column="0" Click="btnNewCommodity_Click">New Commodity</Button>
+            <Button Name="btnRemoveCommodity" Grid.Column="3" Click="btnRemoveCommodity_Click">Remove Commodity</Button>
         </Grid>
-
+               
+        <Border BorderBrush="LightGray" BorderThickness="1" Margin="0,0,0,5">
+            <StackPanel Orientation="Horizontal" Margin="3" DataContext="{Binding ElementName=dgCommodities, Path=SelectedItem}">            
+                <Label>Assign to Load:</Label>
+                <ComboBox Name="cmbLoads" MinWidth="300" SelectedItem="{Binding Load}" ItemTemplate="{StaticResource LoadNameTemplate}" />
+            </StackPanel>
+        </Border>
+        
         <TabControl>
-            <TabItem Header="Commodity" DataContext="{Binding ElementName=dgCommodities, Path=SelectedItem}">
+            <TabItem Header="Commodity" Name="tabCommodityDetails" DataContext="{Binding ElementName=dgCommodities, Path=SelectedItem}">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="105" />
@@ -45,7 +56,7 @@
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
 
-                    <Grid.RowDefinitions>
+                    <Grid.RowDefinitions>                        
                         <RowDefinition />
                         <RowDefinition />
                         <RowDefinition />
@@ -58,7 +69,7 @@
                     </Grid.RowDefinitions>
 
                     <Label HorizontalAlignment="Left" Width="125">Commodity Name:</Label>
-                    <ComboBox Name="cmbCommodityName" Grid.Row="0" Grid.Column="1" IsEditable="True" ItemTemplate="{StaticResource SimpleNameTemplate}" TextSearch.TextPath="Name" />
+                    <ComboBox Name="cmbCommodityName" Grid.Row="0" Grid.Column="1" IsEditable="True" ItemTemplate="{StaticResource SimpleNameTemplate}" TextSearch.TextPath="Name" SelectionChanged="cmbCommodityName_SelectionChanged" />
 
                     <Label Grid.Row="1" Grid.Column="0">Value:</Label>
                     <TextBox Name="txtCommodityValue" Grid.Row="1" Grid.Column="1" Text="{Binding Value}" />
@@ -105,14 +116,14 @@
                             <Label Grid.Row="2" Grid.Column="0">Height:</Label>
                             <TextBox Name="txtCommodityHeight" Grid.Row="2" Grid.Column="1" Text="{Binding Height}" />
 
-                            <Label Grid.Row="3" Grid.Column="0">Estimated:</Label>
-                            <CheckBox Name="chbCommoditySizeEstimated" Grid.Row="3" Grid.Column="1" Margin="3,6,0,0" IsChecked="{Binding SizeEstimated}" />
+                            <Label Grid.Row="3" Grid.Column="0">imated:</Label>
+                            <CheckBox Name="chbCommoditySizeimated" Grid.Row="3" Grid.Column="1" Margin="3,6,0,0" IsChecked="{Binding Sizeimated}" />
 
                             <Label Grid.Row="4" Grid.Column="0">Weight:</Label>
                             <TextBox Name="txtCommodityWeight" Grid.Row="4" Grid.Column="1" Text="{Binding Weight}" />
 
-                            <Label Grid.Row="5" Grid.Column="0">Estimated:</Label>
-                            <CheckBox Name="chbCommodityWeightEstimated" Grid.Row="5" Grid.Column="1" Margin="3,6,0,0" IsChecked="{Binding WeightEstimated}"/>
+                            <Label Grid.Row="5" Grid.Column="0">imated:</Label>
+                            <CheckBox Name="chbCommodityWeightimated" Grid.Row="5" Grid.Column="1" Margin="3,6,0,0" IsChecked="{Binding Weightimated}"/>
                         </Grid>
                     </GroupBox>
                 </Grid>
@@ -150,13 +161,13 @@
                     <ComboBox Grid.Column="1" Grid.Row="4" Text="{Binding LoadMethod}"/>
                     
                     <Label Grid.Column="0" Grid.Row="5">Loading Date:</Label>
-                    <WPF:DatePicker Grid.Column="1" Grid.Row="5" Text="{Binding LoadDate}" />                        
+                    <WPF:DatePicker Grid.Column="1" Grid.Row="5" Text="{Binding LoadDate}" />
                                         
                     <Label Grid.Column="2" Grid.Row="0">Load Instructions</Label>
                     <TextBox Grid.Column="2" Style="{StaticResource MultiLine}" Grid.Row="1" Grid.RowSpan="2" Text="{Binding LoadInstructions}" />
                     
                     <Label Grid.Column="2" Grid.Row="3">Load Route:</Label>
-                    <TextBox Grid.Column="2" Grid.Row="4" Grid.RowSpan="2" Text="{Binding LoadRoute}"/>
+                    <TextBox Grid.Column="2" Grid.Row="4" Grid.RowSpan="2" Style="{StaticResource MultiLine}" Text="{Binding LoadRoute}"/>
                     
                     
                 </Grid>                
@@ -197,10 +208,10 @@
                     <WPF:DatePicker Grid.Column="1" Grid.Row="5" />
                     
                     <Label Grid.Column="2" Grid.Row="0">Unload Instructions</Label>
-                    <TextBox  Grid.Column="2" Grid.Row="1" Grid.RowSpan="2"/>
+                    <TextBox  Grid.Column="2" Grid.Row="1" Grid.RowSpan="2" Style="{StaticResource MultiLine}" />
 
                     <Label Grid.Column="2" Grid.Row="3">Unload Route:</Label>
-                    <TextBox Grid.Column="2" Grid.Row="4" Grid.RowSpan="2" />                    
+                    <TextBox Grid.Column="2" Grid.Row="4" Grid.RowSpan="2" Style="{StaticResource MultiLine}" />                    
                 </Grid>
             </TabItem>
             
