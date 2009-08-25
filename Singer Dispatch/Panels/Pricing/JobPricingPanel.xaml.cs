@@ -11,13 +11,14 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using SingerDispatch.Panels.Jobs;
 
 namespace SingerDispatch.Panels.Pricing
 {
     /// <summary>
     /// Interaction logic for JobPricingPanel.xaml
     /// </summary>
-    public partial class JobPricingPanel : UserControl
+    public partial class JobPricingPanel : JobUserControl
     {
         public static DependencyProperty SelectedCompanyProperty = DependencyProperty.Register("SelectedCompany", typeof(Company), typeof(JobPricingPanel), new PropertyMetadata(null, JobPricingPanel.SelectedCompanyPropertyChanged));
 

@@ -100,7 +100,13 @@
                     
                     <Label Grid.Row="0" Grid.Column="2">Status</Label>
                     <ComboBox Grid.Row="1" Grid.Column="2" SelectedItem="{Binding Status}">                        
-                        <ComboBoxItem>Complete</ComboBoxItem>
+                        <ComboBoxItem>Billed</ComboBoxItem>
+                        <ComboBoxItem>Cancelled</ComboBoxItem>
+                        <ComboBoxItem>Completed</ComboBoxItem>
+                        <ComboBoxItem>Delayed</ComboBoxItem>
+                        <ComboBoxItem>In Process</ComboBoxItem>
+                        <ComboBoxItem>Pending</ComboBoxItem>
+                        <ComboBoxItem>Storage</ComboBoxItem>
                     </ComboBox>
                 </Grid>
             </GroupBox>

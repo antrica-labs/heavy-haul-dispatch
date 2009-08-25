@@ -80,6 +80,7 @@
       <Association Name="Company_Quote1" Member="Quotes1" OtherKey="CareOfCompanyID" Type="Quote" />
       <Association Name="Company_Job" Member="Jobs" OtherKey="CompanyID" Type="Job" />
       <Association Name="Company_Job1" Member="Jobs1" OtherKey="CareOfCompanyID" Type="Job" />
+      <Association Name="Company_CustomerNumber" Member="CustomerNumbers" OtherKey="CompanyID" Type="CustomerNumber" />
       <Association Name="CompanyPriorityLevel_Company" Member="CompanyPriorityLevel" ThisKey="PriorityLevelID" Type="CompanyPriorityLevel" IsForeignKey="true" />
     </Type>
   </Table>
@@ -375,6 +376,15 @@
       <Association Name="TrailerCombination_Load" Member="TrailerCombination" ThisKey="TrailerCombinationID" Type="TrailerCombination" IsForeignKey="true" />
       <Association Name="Unit_Load" Member="Unit" ThisKey="UnitID" Type="Unit" IsForeignKey="true" />
       <Association Name="WheelType_Load" Member="WheelType" ThisKey="WheelTypeID" Type="WheelType" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.CustomerNumbers" Member="CustomerNumbers">
+    <Type Name="CustomerNumber">
+      <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="CompanyID" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="Field" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Value" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Association Name="Company_CustomerNumber" Member="Company" ThisKey="CompanyID" Type="Company" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>

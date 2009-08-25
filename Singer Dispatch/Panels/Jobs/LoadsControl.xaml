@@ -165,7 +165,7 @@
                     <TextBox Grid.Column="12" Grid.Row="1" Text="{Binding WeightGroup10}" TextChanged="AxleWeightChanged" />                    
                     
                     <Label Grid.Column="13" Grid.Row="0">Esitmate:</Label>
-                    <CheckBox Grid.Column="13" Grid.Row="1" Margin="5" />
+                    <CheckBox Grid.Column="13" Grid.Row="1" Margin="5" IsChecked="{Binding WeightEstimated}" />
 
                     <Label Grid.Column="0" Grid.Row="2">Gross Weight:</Label>
                     <TextBox Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="2" Text="{Binding GrossWeight}" />

@@ -108,6 +108,9 @@ namespace SingerDispatch
     partial void InsertLoad(Load instance);
     partial void UpdateLoad(Load instance);
     partial void DeleteLoad(Load instance);
+    partial void InsertCustomerNumber(CustomerNumber instance);
+    partial void UpdateCustomerNumber(CustomerNumber instance);
+    partial void DeleteCustomerNumber(CustomerNumber instance);
     #endregion
 		
 		public SingerDispatchDataContext() : 
@@ -345,6 +348,14 @@ namespace SingerDispatch
 			get
 			{
 				return this.GetTable<Load>();
+			}
+		}
+		
+		public System.Data.Linq.Table<CustomerNumber> CustomerNumbers
+		{
+			get
+			{
+				return this.GetTable<CustomerNumber>();
 			}
 		}
 	}
@@ -1677,6 +1688,8 @@ namespace SingerDispatch
 		
 		private EntitySet<Job> _Jobs1;
 		
+		private EntitySet<CustomerNumber> _CustomerNumbers;
+		
 		private EntityRef<CompanyPriorityLevel> _CompanyPriorityLevel;
 		
     #region Extensibility Method Definitions
@@ -1713,6 +1726,7 @@ namespace SingerDispatch
 			this._Quotes1 = new EntitySet<Quote>(new Action<Quote>(this.attach_Quotes1), new Action<Quote>(this.detach_Quotes1));
 			this._Jobs = new EntitySet<Job>(new Action<Job>(this.attach_Jobs), new Action<Job>(this.detach_Jobs));
 			this._Jobs1 = new EntitySet<Job>(new Action<Job>(this.attach_Jobs1), new Action<Job>(this.detach_Jobs1));
+			this._CustomerNumbers = new EntitySet<CustomerNumber>(new Action<CustomerNumber>(this.attach_CustomerNumbers), new Action<CustomerNumber>(this.detach_CustomerNumbers));
 			this._CompanyPriorityLevel = default(EntityRef<CompanyPriorityLevel>);
 			OnCreated();
 		}
@@ -2005,6 +2019,19 @@ namespace SingerDispatch
 			}
 		}
 		
+		[Association(Name="Company_CustomerNumber", Storage="_CustomerNumbers", OtherKey="CompanyID")]
+		public EntitySet<CustomerNumber> CustomerNumbers
+		{
+			get
+			{
+				return this._CustomerNumbers;
+			}
+			set
+			{
+				this._CustomerNumbers.Assign(value);
+			}
+		}
+		
 		[Association(Name="CompanyPriorityLevel_Company", Storage="_CompanyPriorityLevel", ThisKey="PriorityLevelID", IsForeignKey=true)]
 		public CompanyPriorityLevel CompanyPriorityLevel
 		{
@@ -2153,6 +2180,18 @@ namespace SingerDispatch
 		{
 			this.SendPropertyChanging();
 			entity.Company1 = null;
+		}
+		
+		private void attach_CustomerNumbers(CustomerNumber entity)
+		{
+			this.SendPropertyChanging();
+			entity.Company = this;
+		}
+		
+		private void detach_CustomerNumbers(CustomerNumber entity)
+		{
+			this.SendPropertyChanging();
+			entity.Company = null;
 		}
 	}
 	
@@ -8513,6 +8552,181 @@ namespace SingerDispatch
 		{
 			this.SendPropertyChanging();
 			entity.Load = null;
+		}
+	}
+	
+	[Table(Name="dbo.CustomerNumbers")]
+	public partial class CustomerNumber : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private long _ID;
+		
+		private long _CompanyID;
+		
+		private string _Field;
+		
+		private string _Value;
+		
+		private EntityRef<Company> _Company;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDChanging(long value);
+    partial void OnIDChanged();
+    partial void OnCompanyIDChanging(long value);
+    partial void OnCompanyIDChanged();
+    partial void OnFieldChanging(string value);
+    partial void OnFieldChanged();
+    partial void OnValueChanging(string value);
+    partial void OnValueChanged();
+    #endregion
+		
+		public CustomerNumber()
+		{
+			this._Company = default(EntityRef<Company>);
+			OnCreated();
+		}
+		
+		[Column(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="BigInt NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public long ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this.OnIDChanging(value);
+					this.SendPropertyChanging();
+					this._ID = value;
+					this.SendPropertyChanged("ID");
+					this.OnIDChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_CompanyID", DbType="BigInt NOT NULL")]
+		public long CompanyID
+		{
+			get
+			{
+				return this._CompanyID;
+			}
+			set
+			{
+				if ((this._CompanyID != value))
+				{
+					if (this._Company.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnCompanyIDChanging(value);
+					this.SendPropertyChanging();
+					this._CompanyID = value;
+					this.SendPropertyChanged("CompanyID");
+					this.OnCompanyIDChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_Field", DbType="VarChar(50)")]
+		public string Field
+		{
+			get
+			{
+				return this._Field;
+			}
+			set
+			{
+				if ((this._Field != value))
+				{
+					this.OnFieldChanging(value);
+					this.SendPropertyChanging();
+					this._Field = value;
+					this.SendPropertyChanged("Field");
+					this.OnFieldChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_Value", DbType="VarChar(50)")]
+		public string Value
+		{
+			get
+			{
+				return this._Value;
+			}
+			set
+			{
+				if ((this._Value != value))
+				{
+					this.OnValueChanging(value);
+					this.SendPropertyChanging();
+					this._Value = value;
+					this.SendPropertyChanged("Value");
+					this.OnValueChanged();
+				}
+			}
+		}
+		
+		[Association(Name="Company_CustomerNumber", Storage="_Company", ThisKey="CompanyID", IsForeignKey=true)]
+		public Company Company
+		{
+			get
+			{
+				return this._Company.Entity;
+			}
+			set
+			{
+				Company previousValue = this._Company.Entity;
+				if (((previousValue != value) 
+							|| (this._Company.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Company.Entity = null;
+						previousValue.CustomerNumbers.Remove(this);
+					}
+					this._Company.Entity = value;
+					if ((value != null))
+					{
+						value.CustomerNumbers.Add(this);
+						this._CompanyID = value.ID;
+					}
+					else
+					{
+						this._CompanyID = default(long);
+					}
+					this.SendPropertyChanged("Company");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
 		}
 	}
 }

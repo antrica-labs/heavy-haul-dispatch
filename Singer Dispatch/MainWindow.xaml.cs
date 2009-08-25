@@ -190,6 +190,12 @@ namespace SingerDispatch
 
             JobPricingPanel panel = new JobPricingPanel();
 
+            Binding binding = new Binding();
+            binding.ElementName = "cmbCompanies";
+            binding.Path = new PropertyPath(ComboBox.SelectedItemProperty);
+
+            panel.SetBinding(JobPricingPanel.SelectedCompanyProperty, binding);
+
             panelMainContent.Child = panel;
             AddLinksToExpander(linksJobs, panel.tabs.Items);
         }
