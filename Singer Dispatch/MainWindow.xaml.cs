@@ -197,7 +197,7 @@ namespace SingerDispatch
             panel.SetBinding(JobPricingPanel.SelectedCompanyProperty, binding);
 
             panelMainContent.Child = panel;
-            AddLinksToExpander(linksJobs, panel.tabs.Items);
+            AddLinksToExpander(linksPricing, panel.tabs.Items);
         }
     }
 }

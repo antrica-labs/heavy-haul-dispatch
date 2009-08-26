@@ -63,8 +63,8 @@ namespace SingerDispatch.Panels.Jobs
             
             if (company != null)
             {
-                dgJobs.ItemsSource = new ObservableCollection<Job>((from j in database.Jobs where j.CompanyID == SelectedCompany.ID orderby j.EndDate descending select j).ToList());
-                cmbCareOfCompanies.ItemsSource = (from c in database.Companies where c.ID != SelectedCompany.ID select c).ToList();
+                dgJobs.ItemsSource = new ObservableCollection<Job>((from j in database.Jobs where j.CompanyID == newValue.ID orderby j.EndDate descending select j).ToList());
+                cmbCareOfCompanies.ItemsSource = (from c in database.Companies where c.ID != newValue.ID select c).ToList();
             }
             else
             {

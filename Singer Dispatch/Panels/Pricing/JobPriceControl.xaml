@@ -1,7 +1,8 @@
-﻿<UserControl x:Class="SingerDispatch.Panels.Pricing.JobPriceControl"
+﻿<Jobs:JobUserControl x:Class="SingerDispatch.Panels.Pricing.JobPriceControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:WPF="http://schemas.microsoft.com/wpf/2008/toolkit"
+    xmlns:Jobs="clr-namespace:SingerDispatch.Panels.Jobs"
     Width="750">
     <UserControl.Resources>
         <ResourceDictionary>
@@ -11,11 +12,12 @@
         </ResourceDictionary>
     </UserControl.Resources>
     <StackPanel>
-        <WPF:DataGrid Name="dgJobs" Style="{StaticResource ListDisplay}" AutoGenerateColumns="False" Margin="0,0,0,5" Height="180">
+        <WPF:DataGrid Name="dgJobs" Style="{StaticResource ListDisplay}" AutoGenerateColumns="False" Margin="0,0,0,5" Height="180" SelectedItem="{Binding ElementName=panelJobHistory, Path=SelectedJob}">
             <WPF:DataGrid.Columns>
-                <WPF:DataGridTextColumn Header="Number" Width="60"/>
-                <WPF:DataGridTextColumn Header="Quote" Width="60" />
-                <WPF:DataGridTextColumn Header="Description" />
+                <WPF:DataGridTextColumn Header="Number" Width="60" Binding="{Binding Number}"/>
+                <WPF:DataGridTextColumn Header="Quote" Width="60" Binding="{Binding Quote.Number}" />
+                <WPF:DataGridTextColumn Header="Revision" Width="60" Binding="{Binding Quote.Revision}" />
+                <WPF:DataGridTextColumn Header="Description" Binding="{Binding Description}" />
             </WPF:DataGrid.Columns>
         </WPF:DataGrid>
 
@@ -196,4 +198,4 @@
             </StackPanel>
         </Grid>
     </StackPanel>
-</UserControl>
+</Jobs:JobUserControl>
