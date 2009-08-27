@@ -9,6 +9,7 @@ using SingerDispatch.Panels.Companies;
 using SingerDispatch.Panels.Jobs;
 using System;
 using SingerDispatch.Panels.Pricing;
+using SingerDispatch.Database;
 
 namespace SingerDispatch
 {
@@ -29,7 +30,9 @@ namespace SingerDispatch
 
             if (!database.DatabaseExists())
             {
-                database.CreateDatabase();
+                DatabaseBuilder builder = new DatabaseBuilder(SingerConstants.CommonDataContext);
+
+                builder.CreateNewDatabase();
             }
         }
 
