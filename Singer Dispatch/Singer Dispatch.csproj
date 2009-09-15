@@ -186,10 +186,6 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <None Include="app.manifest" />
-    <None Include="SQL\addresstypes.sql" />
-    <None Include="SQL\billingtypes.sql" />
-    <None Include="SQL\prioritylevels.sql" />
-    <None Include="SQL\provincesandstates.sql" />
     <None Include="SingerDispatch.dbml.layout">
       <DependentUpon>SingerDispatch.dbml</DependentUpon>
     </None>
@@ -203,8 +199,6 @@
       <LastGenOutput>SingerDispatch.designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </None>
-    <None Include="SQL\rates.sql" />
-    <None Include="SQL\servicetypes.sql" />
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
@@ -322,6 +316,9 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="SQL\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
