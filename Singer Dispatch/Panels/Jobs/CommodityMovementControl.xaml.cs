@@ -20,13 +20,13 @@ namespace SingerDispatch.Panels.Jobs
     /// </summary>
     public partial class CommodityMovementControl : JobUserControl
     {
-        SingerDispatchDataContext database;
+        public SingerDispatchDataContext Database { get; set; }
 
         public CommodityMovementControl()
         {
             InitializeComponent();
 
-            database = SingerConstants.CommonDataContext;
+            Database = SingerConstants.CommonDataContext;
         }
 
         private void ControlLoaded(object sender, RoutedEventArgs e)
@@ -34,7 +34,7 @@ namespace SingerDispatch.Panels.Jobs
             if (SelectedJob != null)
             {
                 cmbLoads.ItemsSource = SelectedJob.Loads;
-                cmbCommodityName.ItemsSource = (from c in database.Commodities where c.Company == SelectedJob.Company || c.Company == SelectedJob.Company1 select c).ToList();                
+                cmbCommodityName.ItemsSource = (from c in Database.Commodities where c.Company == SelectedJob.Company || c.Company == SelectedJob.Company1 select c).ToList();                
             }
             else
             {
@@ -47,7 +47,7 @@ namespace SingerDispatch.Panels.Jobs
         {
             base.SelectedJobChanged(newValue, oldValue);
 
-            dgCommodities.ItemsSource = new ObservableCollection<JobCommodity>((from jc in database.JobCommodities where jc.Job == SelectedJob select jc).ToList());
+            dgCommodities.ItemsSource = new ObservableCollection<JobCommodity>((from jc in Database.JobCommodities where jc.Job == SelectedJob select jc).ToList());
         }
 
         private void btnNewCommodity_Click(object sender, RoutedEventArgs e)

@@ -13,16 +13,16 @@ namespace SingerDispatch.Panels.Companies
     /// </summary>
     public partial class ServicesControl : CompanyUserControl
     {
-        private SingerDispatchDataContext database;
-        private List<CheckBox> serviceTypes;
+        public SingerDispatchDataContext Database { get; set; }
+        private List<CheckBox> ServiceTypes { get; set; }
 
 
         public ServicesControl()
         {
             InitializeComponent();
 
-            database = SingerConstants.CommonDataContext;
-            serviceTypes = new List<CheckBox>();
+            Database = SingerConstants.CommonDataContext;
+            ServiceTypes = new List<CheckBox>();
 
             PopulateServices();            
         }
@@ -37,9 +37,9 @@ namespace SingerDispatch.Panels.Companies
 
             if (newValue != null)
             {
-                var selected = from s in database.Services where s.CompanyID == newValue.ID select s.ServiceType;
+                var selected = from s in Database.Services where s.CompanyID == newValue.ID select s.ServiceType;
 
-                foreach (CheckBox cb in serviceTypes)
+                foreach (CheckBox cb in ServiceTypes)
                 {
                     ServiceType type = (ServiceType)cb.DataContext;
 
@@ -50,14 +50,14 @@ namespace SingerDispatch.Panels.Companies
 
         private void PopulateServices()
         {
-            var types = (from t in database.ServiceTypes select t).ToList();
+            var types = (from t in Database.ServiceTypes select t).ToList();
 
             foreach (ServiceType type in types)
             {
                 CheckBox cb = new CheckBox() { Content = type.Name };                
                 cb.DataContext = type;
 
-                serviceTypes.Add(cb);
+                ServiceTypes.Add(cb);
                 panelServiceTypes.Children.Add(cb);
             }
         }
@@ -66,9 +66,9 @@ namespace SingerDispatch.Panels.Companies
         {
             if (SelectedCompany != null)
             {
-                database.Services.DeleteAllOnSubmit(SelectedCompany.Services);             
+                Database.Services.DeleteAllOnSubmit(SelectedCompany.Services);             
 
-                foreach (CheckBox cb in serviceTypes)
+                foreach (CheckBox cb in ServiceTypes)
                 {
                     if (cb.IsChecked == true)
                     {
@@ -78,7 +78,7 @@ namespace SingerDispatch.Panels.Companies
                     }
                 }
 
-                database.SubmitChanges();
+                Database.SubmitChanges();
             }
         }
 

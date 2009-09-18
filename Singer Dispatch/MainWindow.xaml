@@ -1,8 +1,6 @@
 ﻿<Window x:Class="SingerDispatch.MainWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:Companies="clr-namespace:SingerDispatch.Panels.Companies"
-    xmlns:Quotes="clr-namespace:SingerDispatch.Panels.Quotes"
     Title="Singer Dispatch" MinWidth="780" WindowState="Maximized"
     Loaded="Window_Loaded"
     x:Name="mainWindow">
@@ -23,6 +21,7 @@
         <DockPanel>
             <Menu DockPanel.Dock="Top">
                 <MenuItem Header="_File" >
+                    <MenuItem Name="menuOpenQuoteSample" Header="_Open Quote Sample" Click="menuOpenQuoteSample_Click" />
                     <MenuItem Header="_Exit" Click="Terminate" />
                 </MenuItem>
                 <MenuItem Header="_Create">

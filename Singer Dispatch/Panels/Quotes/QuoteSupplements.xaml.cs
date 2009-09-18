@@ -21,15 +21,15 @@ namespace SingerDispatch.Panels.Quotes
     /// </summary>
     public partial class QuoteSupplements : QuoteUserControl
     {
-        SingerDispatchDataContext database;
+        public SingerDispatchDataContext Database { get; set; }
 
         public QuoteSupplements()
         {
             InitializeComponent();
 
-            database = SingerConstants.CommonDataContext;
+            Database = SingerConstants.CommonDataContext;
 
-            cmbBillingType.ItemsSource = (from bt in database.BillingTypes select bt).ToList();
+            cmbBillingType.ItemsSource = (from bt in Database.BillingTypes select bt).ToList();
         }
 
         private void QuoteUserControl_Loaded(object sender, RoutedEventArgs e)

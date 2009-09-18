@@ -14,7 +14,7 @@ namespace SingerDispatch.Panels.Quotes
     /// </summary>
     public partial class QuoteHistoryControl : QuoteUserControl
     {
-        SingerDispatchDataContext database;
+        public SingerDispatchDataContext Database { get; set; }
 
         public static DependencyProperty SelectedCompanyProperty = DependencyProperty.Register("SelectedCompany", typeof(Company), typeof(QuoteHistoryControl), new PropertyMetadata(null, QuoteHistoryControl.SelectedCompanyPropertyChanged));
 
@@ -34,8 +34,8 @@ namespace SingerDispatch.Panels.Quotes
         {
             InitializeComponent();
 
-            database = SingerConstants.CommonDataContext;
-            cmbQuotedBy.ItemsSource = (from u in database.Users select u).ToList();
+            Database = SingerConstants.CommonDataContext;
+            cmbQuotedBy.ItemsSource = (from u in Database.Users select u).ToList();
         }
 
         public static void SelectedCompanyPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -109,8 +109,8 @@ namespace SingerDispatch.Panels.Quotes
         {
             if (newValue != null)
             {
-                dgQuotes.ItemsSource = new ObservableCollection<Quote>((from q in database.Quotes where q.CompanyID == newValue.ID orderby q.Number descending, q.Revision descending select q).ToList());
-                cmbCareOfCompanies.ItemsSource = (from c in database.Companies where c.ID != newValue.ID select c).ToList();
+                dgQuotes.ItemsSource = new ObservableCollection<Quote>((from q in Database.Quotes where q.CompanyID == newValue.ID orderby q.Number descending, q.Revision descending select q).ToList());
+                cmbCareOfCompanies.ItemsSource = (from c in Database.Companies where c.ID != newValue.ID select c).ToList();
             }
             else
             {
@@ -169,11 +169,11 @@ namespace SingerDispatch.Panels.Quotes
             }
             else if (SelectedQuote.CareOfCompanyID != null)
             {
-                contacts = (from c in database.Contacts where c.Address.CompanyID == SelectedCompany.ID || c.Address.CompanyID == SelectedQuote.CareOfCompanyID select c).ToList();
+                contacts = (from c in Database.Contacts where c.Address.CompanyID == SelectedCompany.ID || c.Address.CompanyID == SelectedQuote.CareOfCompanyID select c).ToList();
             }
             else
             {
-                contacts = (from c in database.Contacts where c.Address.CompanyID == SelectedCompany.ID select c).ToList();
+                contacts = (from c in Database.Contacts where c.Address.CompanyID == SelectedCompany.ID select c).ToList();
             }
             
             dgQuoteContacts.ItemsSource = contacts;
@@ -186,10 +186,10 @@ namespace SingerDispatch.Panels.Quotes
                 return;
             }
 
-            Quote quote = (Quote)SelectedQuote.Clone();
-            ObservableCollection<Quote> quotes = (ObservableCollection<Quote>)dgQuotes.ItemsSource;
+            var quote = (Quote)SelectedQuote.Clone();
+            var quotes = (ObservableCollection<Quote>)dgQuotes.ItemsSource;
 
-            quote.Revision = (from q in database.Quotes where q.Number == SelectedQuote.Number select q.Revision).Max() + 1;
+            quote.Revision = (from q in Database.Quotes where q.Number == SelectedQuote.Number select q.Revision).Max() + 1;
 
             quotes.Insert(0, quote);
             dgQuotes.SelectedItem = quote;
@@ -204,7 +204,7 @@ namespace SingerDispatch.Panels.Quotes
 
             SelectedQuote.IsPrinted = 1;
 
-            database.SubmitChanges();
+            Database.SubmitChanges();
         }        
     }
 }

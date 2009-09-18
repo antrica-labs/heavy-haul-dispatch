@@ -10,13 +10,13 @@ namespace SingerDispatch.Panels.Companies
     /// </summary>
     public partial class CommoditiesControl : CompanyUserControl
     {
-        private SingerDispatchDataContext database;
+        public SingerDispatchDataContext Database { get; set; }
 
         public CommoditiesControl()
         {
             InitializeComponent();
 
-            database = SingerConstants.CommonDataContext;
+            Database = SingerConstants.CommonDataContext;
         }
 
         protected override void SelectedCompanyChanged(Company newValue, Company oldValue)
@@ -28,7 +28,7 @@ namespace SingerDispatch.Panels.Companies
             if (company != null)
             {
                 dgCommodities.ItemsSource = new ObservableCollection<Commodity>(
-                    (from c in database.Commodities where c.CompanyID == company.ID select c).ToList()
+                    (from c in Database.Commodities where c.CompanyID == company.ID select c).ToList()
                 );
             }
             else
@@ -62,10 +62,10 @@ namespace SingerDispatch.Panels.Companies
 
             if (confirmation == MessageBoxResult.Yes)
             {
-                database.Commodities.DeleteOnSubmit(selected);
+                Database.Commodities.DeleteOnSubmit(selected);
                 ((ObservableCollection<Commodity>)dgCommodities.ItemsSource).Remove(selected);
 
-                database.SubmitChanges();
+                Database.SubmitChanges();
             }
         }
 
@@ -85,7 +85,7 @@ namespace SingerDispatch.Panels.Companies
                 CreateNewCommodity(company);
             }
 
-            database.SubmitChanges();           
+            Database.SubmitChanges();           
         }
 
         private void CreateNewCommodity(Company company)
@@ -116,7 +116,7 @@ namespace SingerDispatch.Panels.Companies
             float.TryParse(txtCommodityHeight.Text, out tmpFloat);
             commodity.Height = tmpFloat;
 
-            database.Commodities.InsertOnSubmit(commodity);
+            Database.Commodities.InsertOnSubmit(commodity);
             ((ObservableCollection<Commodity>)dgCommodities.ItemsSource).Add(commodity);
 
             dgCommodities.SelectedItem = commodity;
@@ -124,7 +124,7 @@ namespace SingerDispatch.Panels.Companies
 
         private void DataGridCommit(object sender, Microsoft.Windows.Controls.DataGridRowEditEndingEventArgs e)
         {
-            database.SubmitChanges();
+            Database.SubmitChanges();
         }
     }
 }

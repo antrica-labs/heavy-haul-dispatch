@@ -20,28 +20,28 @@ namespace SingerDispatch.Panels.Jobs
     /// </summary>
     public partial class LoadsControl : JobUserControl
     {
-        SingerDispatchDataContext database;
+        public SingerDispatchDataContext Database { get; set; }
 
         public LoadsControl()
         {
             InitializeComponent();
 
-            database = SingerConstants.CommonDataContext;
+            Database = SingerConstants.CommonDataContext;
         }
 
         private void ControlLoaded(object sender, RoutedEventArgs e)
         {
-            cmbWheelTypes.ItemsSource = (from wt in database.WheelTypes select wt).ToList();
-            cmbUnits.ItemsSource = (from u in database.Units select u).ToList();
-            cmbSeasons.ItemsSource = (from s in database.Seasons select s).ToList();
-            cmbTrailerCombinations.ItemsSource = (from tc in database.TrailerCombinations select tc).ToList();
+            cmbWheelTypes.ItemsSource = (from wt in Database.WheelTypes select wt).ToList();
+            cmbUnits.ItemsSource = (from u in Database.Units select u).ToList();
+            cmbSeasons.ItemsSource = (from s in Database.Seasons select s).ToList();
+            cmbTrailerCombinations.ItemsSource = (from tc in Database.TrailerCombinations select tc).ToList();
         }
 
         protected override void SelectedJobChanged(Job newValue, Job oldValue)
         {
             base.SelectedJobChanged(newValue, oldValue);
 
-            dgLoads.ItemsSource = new ObservableCollection<Load>((from l in database.Loads where l.Job == newValue select l).ToList());
+            dgLoads.ItemsSource = new ObservableCollection<Load>((from l in Database.Loads where l.Job == newValue select l).ToList());
         }
 
         private void btnNewLoad_Click(object sender, RoutedEventArgs e)

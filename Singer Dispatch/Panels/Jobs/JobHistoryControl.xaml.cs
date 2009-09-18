@@ -20,7 +20,7 @@ namespace SingerDispatch.Panels.Jobs
     /// </summary>
     public partial class JobHistoryControl : JobUserControl
     {
-        SingerDispatchDataContext database;
+        public SingerDispatchDataContext Database { get; set; }
 
         public static DependencyProperty SelectedCompanyProperty = DependencyProperty.Register("SelectedCompany", typeof(Company), typeof(JobHistoryControl), new PropertyMetadata(null, JobHistoryControl.SelectedCompanyPropertyChanged));
 
@@ -40,14 +40,14 @@ namespace SingerDispatch.Panels.Jobs
         {
             InitializeComponent();
 
-            database = SingerConstants.CommonDataContext;
+            Database = SingerConstants.CommonDataContext;
 
-            cmbCreatedBy.ItemsSource = (from u in database.Users select u).ToList();
+            cmbCreatedBy.ItemsSource = (from u in Database.Users select u).ToList();
         }
 
         private void ControlLoaded(object sender, RoutedEventArgs e)
         {
-            cmbQuotes.ItemsSource = (from q in database.Quotes where q.Company == SelectedCompany select q).ToList();
+            cmbQuotes.ItemsSource = (from q in Database.Quotes where q.Company == SelectedCompany select q).ToList();
         }
 
         public static void SelectedCompanyPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -63,8 +63,8 @@ namespace SingerDispatch.Panels.Jobs
             
             if (company != null)
             {
-                dgJobs.ItemsSource = new ObservableCollection<Job>((from j in database.Jobs where j.CompanyID == newValue.ID orderby j.EndDate descending select j).ToList());
-                cmbCareOfCompanies.ItemsSource = (from c in database.Companies where c.ID != newValue.ID select c).ToList();
+                dgJobs.ItemsSource = new ObservableCollection<Job>((from j in Database.Jobs where j.CompanyID == newValue.ID orderby j.EndDate descending select j).ToList());
+                cmbCareOfCompanies.ItemsSource = (from c in Database.Companies where c.ID != newValue.ID select c).ToList();
             }
             else
             {
@@ -115,11 +115,11 @@ namespace SingerDispatch.Panels.Jobs
             }
             else if (SelectedJob.CareOfCompanyID != null)
             {
-                contacts = (from c in database.Contacts where c.Address.CompanyID == SelectedCompany.ID || c.Address.CompanyID == SelectedJob.CareOfCompanyID select c).ToList();
+                contacts = (from c in Database.Contacts where c.Address.CompanyID == SelectedCompany.ID || c.Address.CompanyID == SelectedJob.CareOfCompanyID select c).ToList();
             }
             else
             {
-                contacts = (from c in database.Contacts where c.Address.CompanyID == SelectedCompany.ID select c).ToList();
+                contacts = (from c in Database.Contacts where c.Address.CompanyID == SelectedCompany.ID select c).ToList();
             }
 
             dgJobContacts.ItemsSource = contacts;

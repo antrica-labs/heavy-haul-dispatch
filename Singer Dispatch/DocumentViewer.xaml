@@ -1,0 +1,29 @@
+﻿<Window x:Class="SingerDispatch.DocumentViewer"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Title="Document Viewer" Height="400" Width="600">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="31"/>
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        
+        <Border BorderBrush="LightGray" BorderThickness="1" Background="WhiteSmoke" Grid.Row="0">
+            <Grid Margin="4" >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />                    
+                </Grid.ColumnDefinitions>
+                
+                <Button Grid.Column="0">Save</Button>
+                <Button Grid.Column="3">Print</Button>
+            </Grid>
+        </Border>
+        
+        
+        <WebBrowser Grid.Row="1" Name="Browser" />
+        
+    </Grid>
+</Window>

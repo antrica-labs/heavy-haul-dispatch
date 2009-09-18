@@ -12,23 +12,23 @@ namespace SingerDispatch.Panels.Companies
     /// Interaction logic for AddressesAndContactsControl.xaml
     /// </summary>
     public partial class AddressesAndContactsControl : CompanyUserControl
-    {       
-        private SingerDispatchDataContext database;
+    {
+        public SingerDispatchDataContext Database { get; set; }
 
         public AddressesAndContactsControl()
         {
             InitializeComponent();
             this.Width = double.NaN;
 
-            database = SingerConstants.CommonDataContext;            
+            Database = SingerConstants.CommonDataContext;            
         }
 
         private void Control_Loaded(object sender, RoutedEventArgs e)
         {
             cmbContactPreferedContactMethod.ItemsSource = SingerConstants.ContactMethods;
-            cmbProvinceOrState.ItemsSource = (from p in database.ProvincesAndStates orderby p.CountryID, p.Name select p).ToList();
-            cmbContactType.ItemsSource = (from ct in database.ContactTypes select ct).ToList();
-            cmbAddressType.ItemsSource = (from at in database.AddressTypes select at).ToList();
+            cmbProvinceOrState.ItemsSource = (from p in Database.ProvincesAndStates orderby p.CountryID, p.Name select p).ToList();
+            cmbContactType.ItemsSource = (from ct in Database.ContactTypes select ct).ToList();
+            cmbAddressType.ItemsSource = (from at in Database.AddressTypes select at).ToList();
         }
 
 
@@ -39,7 +39,7 @@ namespace SingerDispatch.Panels.Companies
             if (company != null)
             {       
                 dgAddresses.ItemsSource = new ObservableCollection<Address>(
-                    (from a in database.Addresses where a.CompanyID == company.ID select a).ToList()
+                    (from a in Database.Addresses where a.CompanyID == company.ID select a).ToList()
                 );
             }
             else
@@ -56,7 +56,7 @@ namespace SingerDispatch.Panels.Companies
             if (address != null)
             {
                 dgContacts.ItemsSource = new ObservableCollection<Contact>(
-                    (from c in database.Contacts where c.AddressID == address.ID orderby c.LastName select c).ToList()
+                    (from c in Database.Contacts where c.AddressID == address.ID orderby c.LastName select c).ToList()
                 );
             }
             else
@@ -78,10 +78,10 @@ namespace SingerDispatch.Panels.Companies
 
             if (confirmation == MessageBoxResult.Yes)
             {
-                database.Addresses.DeleteOnSubmit(selected);
+                Database.Addresses.DeleteOnSubmit(selected);
                 ((ObservableCollection<Address>)dgAddresses.ItemsSource).Remove(selected);
 
-                database.SubmitChanges();
+                Database.SubmitChanges();
             }
         }
 
@@ -98,10 +98,10 @@ namespace SingerDispatch.Panels.Companies
 
             if (confirmation == MessageBoxResult.Yes)
             {
-                database.Contacts.DeleteOnSubmit(selected);
+                Database.Contacts.DeleteOnSubmit(selected);
                 ((ObservableCollection<Contact>)dgContacts.ItemsSource).Remove(selected);
 
-                database.SubmitChanges();
+                Database.SubmitChanges();
             }
         }
 
@@ -145,7 +145,7 @@ namespace SingerDispatch.Panels.Companies
                 AddNewAddress(company);
             }
 
-            database.SubmitChanges();
+            Database.SubmitChanges();
         }
         
         private void bttnSaveContact_Click(object sender, RoutedEventArgs e)
@@ -164,7 +164,7 @@ namespace SingerDispatch.Panels.Companies
                 AddNewContact(address);
             }            
 
-            database.SubmitChanges();            
+            Database.SubmitChanges();            
         }
 
         private void AddNewContact(Address address)
@@ -180,7 +180,7 @@ namespace SingerDispatch.Panels.Companies
             contact.PreferedContactMethod = (string)cmbContactPreferedContactMethod.SelectedItem;
             contact.Notes = txtContactNotes.Text;
 
-            database.Contacts.InsertOnSubmit(contact);
+            Database.Contacts.InsertOnSubmit(contact);
             ((ObservableCollection<Contact>)dgContacts.ItemsSource).Add(contact);
             dgContacts.SelectedItem = contact;
         }
@@ -202,14 +202,14 @@ namespace SingerDispatch.Panels.Companies
             address.ProvinceStateID = provinceOrState.ID;
             address.AddressType = (AddressType)cmbAddressType.SelectedItem;
 
-            database.Addresses.InsertOnSubmit(address);
+            Database.Addresses.InsertOnSubmit(address);
             ((ObservableCollection<Address>)dgAddresses.ItemsSource).Add(address);
             dgAddresses.SelectedItem = address;
         }
 
         private void DataGridCommit(object sender, DataGridRowEditEndingEventArgs e)
         {
-            database.SubmitChanges();
+            Database.SubmitChanges();
         }
     }
 }

@@ -20,20 +20,20 @@ namespace SingerDispatch.Panels.Quotes
     /// </summary>
     public partial class QuoteCommoditiesControl : QuoteUserControl
     {
-        SingerDispatchDataContext database;
+        public SingerDispatchDataContext Database { get; set; }
 
         public QuoteCommoditiesControl()
         {
             InitializeComponent();
 
-            database = SingerConstants.CommonDataContext;
+            Database = SingerConstants.CommonDataContext;
         }
 
         private void QuoteUserControl_Loaded(object sender, RoutedEventArgs e)
         {
             if (SelectedQuote != null)
             {
-                cmbCommodityName.ItemsSource = new ObservableCollection<Commodity>((from c in database.Commodities where c.CompanyID == SelectedQuote.CompanyID || c.CompanyID == SelectedQuote.CareOfCompanyID select c).ToList());
+                cmbCommodityName.ItemsSource = new ObservableCollection<Commodity>((from c in Database.Commodities where c.CompanyID == SelectedQuote.CompanyID || c.CompanyID == SelectedQuote.CareOfCompanyID select c).ToList());
             }
         }
 
@@ -43,7 +43,7 @@ namespace SingerDispatch.Panels.Quotes
 
             if (newValue != null)
             {
-                cmbCommodityName.ItemsSource = new ObservableCollection<Commodity>((from c in database.Commodities where c.CompanyID == newValue.CompanyID || c.CompanyID == newValue.CareOfCompanyID select c).ToList());
+                cmbCommodityName.ItemsSource = new ObservableCollection<Commodity>((from c in Database.Commodities where c.CompanyID == newValue.CompanyID || c.CompanyID == newValue.CareOfCompanyID select c).ToList());
 
                 QuoteCommodity commodity = new QuoteCommodity() { QuoteID = newValue.ID };
 

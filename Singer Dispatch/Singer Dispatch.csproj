@@ -95,6 +95,9 @@
       <DependentUpon>CreateCompanyWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Database\DatabaseBuilder.cs" />
+    <Compile Include="DocumentViewer.xaml.cs">
+      <DependentUpon>DocumentViewer.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
@@ -203,6 +206,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="CreateCompanyWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DocumentViewer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -316,6 +323,10 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Templates\logo.png" />
+    <Content Include="Templates\sample_quote.html" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="SQL\" />

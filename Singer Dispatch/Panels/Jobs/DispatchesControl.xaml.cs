@@ -20,13 +20,13 @@ namespace SingerDispatch.Panels.Jobs
     /// </summary>
     public partial class DispatchesControl : JobUserControl
     {
-        SingerDispatchDataContext database;
+        public SingerDispatchDataContext Database { get; set; }
 
         public DispatchesControl()
         {
             InitializeComponent();
 
-            database = SingerConstants.CommonDataContext;            
+            Database = SingerConstants.CommonDataContext;            
             cmbServiceTypes.ItemsSource = SingerConstants.ServiceTypes;
         }
 
@@ -48,7 +48,7 @@ namespace SingerDispatch.Panels.Jobs
 
             if (newValue != null)
             {
-                dgDispatches.ItemsSource = new ObservableCollection<Dispatch>((from d in database.Dispatches where d.Job == SelectedJob select d).ToList());
+                dgDispatches.ItemsSource = new ObservableCollection<Dispatch>((from d in Database.Dispatches where d.Job == SelectedJob select d).ToList());
             }
             else
             {

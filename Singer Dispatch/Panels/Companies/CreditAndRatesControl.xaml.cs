@@ -11,23 +11,23 @@ namespace SingerDispatch.Panels.Companies
     /// </summary>
     public partial class CreditAndRatesControl : CompanyUserControl
     {
-        private RateDiscount discount;
-        private SingerDispatchDataContext database;
+        private RateDiscount Discount { get; set; }
+        public SingerDispatchDataContext Database { get; set; }
 
         public CreditAndRatesControl()
         {
             InitializeComponent();
 
-            database = SingerConstants.CommonDataContext;
+            Database = SingerConstants.CommonDataContext;
         }
 
         private void Control_Loaded(object sender, RoutedEventArgs e)
         {
             cmbCreditCustomerType.ItemsSource = SingerConstants.CustomerTypes;
-            cmbCreditPriority.ItemsSource = (from l in database.CompanyPriorityLevels orderby l.Name select l).ToList();
+            cmbCreditPriority.ItemsSource = (from l in Database.CompanyPriorityLevels orderby l.Name select l).ToList();
 
             dgCreditRates.ItemsSource = new ObservableCollection<Rate>(
-                (from r in database.Rates select r).ToList()
+                (from r in Database.Rates select r).ToList()
             );
         }
 
@@ -37,19 +37,19 @@ namespace SingerDispatch.Panels.Companies
 
             if (newValue != null)
             {                               
-                var rateDiscounts = from d in database.RateDiscounts where d.CompanyID == newValue.ID select d;
+                var rateDiscounts = from d in Database.RateDiscounts where d.CompanyID == newValue.ID select d;
 
                 if (rateDiscounts.Count() > 0)
                 {
-                    discount = (RateDiscount)rateDiscounts.First();                    
+                    Discount = (RateDiscount)rateDiscounts.First();                    
                 }
                 else
                 {
-                    discount = new RateDiscount() { CompanyID = newValue.ID };                    
+                    Discount = new RateDiscount() { CompanyID = newValue.ID };                    
                 }
 
                 grpAdministration.DataContext = newValue;
-                grpRateAdjustment.DataContext = discount;
+                grpRateAdjustment.DataContext = Discount;
             }
             else
             {
@@ -59,19 +59,19 @@ namespace SingerDispatch.Panels.Companies
 
         private void DataGridCommit(object sender, Microsoft.Windows.Controls.DataGridRowEditEndingEventArgs e)
         {
-            database.SubmitChanges();
+            Database.SubmitChanges();
         }
 
         private void SaveDetails(object sender, RoutedEventArgs e)
         {
             if (SelectedCompany != null)
             {
-                if (discount != null && discount.ID == 0)
+                if (Discount != null && Discount.ID == 0)
                 {
-                    database.RateDiscounts.InsertOnSubmit(discount);
+                    Database.RateDiscounts.InsertOnSubmit(Discount);
                 }
 
-                database.SubmitChanges();
+                Database.SubmitChanges();
             }
         }
     }

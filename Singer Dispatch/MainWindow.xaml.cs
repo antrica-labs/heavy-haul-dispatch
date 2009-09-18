@@ -2,12 +2,12 @@
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using SingerDispatch.Controls;
 using SingerDispatch.Panels.Quotes;
 using SingerDispatch.Panels.Companies;
 using SingerDispatch.Panels.Jobs;
-using System;
 using SingerDispatch.Panels.Pricing;
 using SingerDispatch.Database;
 
@@ -16,21 +16,21 @@ namespace SingerDispatch
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow
     {
-        SingerDispatchDataContext database;
-        ObservableCollection<Company> companies;
+        private ObservableCollection<Company> Companies { get; set; }
+        private SingerDispatchDataContext Database { get; set; }
 
         public MainWindow()
         {   
-            InitializeComponent();           
+            InitializeComponent();
 
-            this.database = SingerConstants.CommonDataContext;
-            this.companies = new ObservableCollection<Company>();
+            Database = SingerConstants.CommonDataContext;
+            Companies = new ObservableCollection<Company>();
 
-            if (!database.DatabaseExists())
+            if (!Database.DatabaseExists())
             {
-                DatabaseBuilder builder = new DatabaseBuilder(SingerConstants.CommonDataContext);
+                var builder = new DatabaseBuilder(SingerConstants.CommonDataContext);
 
                 builder.CreateNewDatabase();
             }
@@ -38,20 +38,19 @@ namespace SingerDispatch
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            companies = new ObservableCollection<Company>(
-                (from c in database.Companies orderby c.Name select c).ToList()
+            Companies = new ObservableCollection<Company>(
+                (from c in Database.Companies orderby c.Name select c).ToList()
             );
 
-            cmbCompanies.ItemsSource = companies;
-            cmbOperators.ItemsSource = companies;
+            cmbCompanies.ItemsSource = Companies;
+            cmbOperators.ItemsSource = Companies;
 
             expanderCompanies.IsExpanded = true; 
         }                
 
         private void menuCreateCompany_Click(object sender, RoutedEventArgs e)
         {
-            CreateCompanyWindow window = new CreateCompanyWindow(database, companies);
-            window.Owner = this;
+            var window = new CreateCompanyWindow(Database, Companies) { Owner = this };
             Company newCompany = window.CreateCompany();
 
             if (newCompany != null)
@@ -62,12 +61,12 @@ namespace SingerDispatch
 
         private void cmbCompanies_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            cmbOperators.SelectedItem = (Company)cmbCompanies.SelectedItem;
+            cmbOperators.SelectedItem = cmbCompanies.SelectedItem;
         }
 
         private void cmbOperators_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            cmbCompanies.SelectedItem = (Company)cmbOperators.SelectedItem;
+            cmbCompanies.SelectedItem = cmbOperators.SelectedItem;
         }
 
         private void Terminate(object sender, RoutedEventArgs e)
@@ -75,25 +74,24 @@ namespace SingerDispatch
             Application.Current.Shutdown();
         }
 
-        private void AddLinksToExpander(StackPanel panel, ItemCollection tabs)
+        private static void AddLinksToExpander(Panel panel, ItemCollection tabs)
         {
             panel.Children.Clear();
 
             foreach (TabItem tab in tabs)
             {
-                TabIndexHyperlink link = new TabIndexHyperlink(tab);
-                link.Click += new RoutedEventHandler(SwitchTabs);
+                var link = new TabIndexHyperlink(tab);
+                link.Click += SwitchTabs;
 
-                Label label = new Label();
-                label.Content = link;
+                var label = new Label { Content = link };
 
                 panel.Children.Add(label);
             }
         }
 
-        private void SwitchTabs(object sender, RoutedEventArgs e)
+        private static void SwitchTabs(object sender, RoutedEventArgs e)
         {
-            TabIndexHyperlink link = (TabIndexHyperlink)e.Source;
+            var link = (TabIndexHyperlink)e.Source;
 
             link.Tab.IsSelected = true;
         }
@@ -102,14 +100,13 @@ namespace SingerDispatch
         {
             foreach (Control control in altNavigationStack.Children)
             {
-                if (control is Expander)
-                {
-                    Expander expander = (Expander)control;
+                if (!(control is Expander)) continue;
+                
+                var expander = (Expander)control;
 
-                    if (expander != self && expander.IsExpanded)
-                    {
-                        expander.IsExpanded = false;
-                    }
+                if (expander != self && expander.IsExpanded)
+                {
+                    expander.IsExpanded = false;
                 }
             }
         }
@@ -124,13 +121,13 @@ namespace SingerDispatch
 
             CollapseAllOtherNavigationExpanders((Expander)sender);
 
-            CompaniesPanel panel = new CompaniesPanel();
+            var panel = new CompaniesPanel();
 
-            Binding binding = new Binding();
+            var binding = new Binding();
             binding.ElementName = "cmbCompanies";
-            binding.Path = new PropertyPath(ComboBox.SelectedItemProperty);
+            binding.Path = new PropertyPath(Selector.SelectedItemProperty);
 
-            panel.SetBinding(CompaniesPanel.SelectedCompanyProperty, binding);
+            panel.SetBinding(CompanyUserControl.SelectedCompanyProperty, binding);
 
             panelMainContent.Child = panel;
 
@@ -147,11 +144,11 @@ namespace SingerDispatch
 
             CollapseAllOtherNavigationExpanders((Expander)sender);
 
-            QuotesPanel panel = new QuotesPanel();
+            var panel = new QuotesPanel();
 
-            Binding binding = new Binding();
+            var binding = new Binding();
             binding.ElementName = "cmbCompanies";
-            binding.Path = new PropertyPath(ComboBox.SelectedItemProperty);
+            binding.Path = new PropertyPath(Selector.SelectedItemProperty);
 
             panel.SetBinding(QuotesPanel.SelectedCompanyProperty, binding);
 
@@ -170,11 +167,11 @@ namespace SingerDispatch
 
             CollapseAllOtherNavigationExpanders((Expander)sender);
 
-            JobsPanel panel = new JobsPanel();
+            var panel = new JobsPanel();
 
-            Binding binding = new Binding();
+            var binding = new Binding();
             binding.ElementName = "cmbCompanies";
-            binding.Path = new PropertyPath(ComboBox.SelectedItemProperty);
+            binding.Path = new PropertyPath(Selector.SelectedItemProperty);
 
             panel.SetBinding(JobsPanel.SelectedCompanyProperty, binding);
 
@@ -191,16 +188,24 @@ namespace SingerDispatch
 
             CollapseAllOtherNavigationExpanders((Expander)sender);
 
-            JobPricingPanel panel = new JobPricingPanel();
+            var panel = new JobPricingPanel();
 
-            Binding binding = new Binding();
+            var binding = new Binding();
             binding.ElementName = "cmbCompanies";
-            binding.Path = new PropertyPath(ComboBox.SelectedItemProperty);
+            binding.Path = new PropertyPath(Selector.SelectedItemProperty);
 
             panel.SetBinding(JobPricingPanel.SelectedCompanyProperty, binding);
 
             panelMainContent.Child = panel;
             AddLinksToExpander(linksPricing, panel.tabs.Items);
+        }
+
+        private void menuOpenQuoteSample_Click(object sender, RoutedEventArgs e)
+        {
+            var viewer =  new DocumentViewer();
+
+            viewer.Show();
+
         }
     }
 }

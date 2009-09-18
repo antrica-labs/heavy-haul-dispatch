@@ -23,7 +23,7 @@ namespace SingerDispatch.Panels.Pricing
     {
         public static DependencyProperty SelectedCompanyProperty = DependencyProperty.Register("SelectedCompanyProperty", typeof(Company), typeof(JobPriceControl), new PropertyMetadata(null, JobPriceControl.SelectedCompanyPropertyChanged));
 
-        private SingerDispatchDataContext database;
+        public SingerDispatchDataContext Database { get; set; }
 
         public Company SelectedCompany
         {
@@ -41,7 +41,7 @@ namespace SingerDispatch.Panels.Pricing
         {
             InitializeComponent();
 
-            database = SingerConstants.CommonDataContext;
+            Database = SingerConstants.CommonDataContext;
             dgCustomerDetails.ItemsSource = new ObservableCollection<CustomerNumber>();
         }
 
@@ -61,9 +61,9 @@ namespace SingerDispatch.Panels.Pricing
             }
             else
             {
-                dgJobs.ItemsSource = new ObservableCollection<Job>((from j in database.Jobs where j.CompanyID == newValue.ID orderby j.EndDate descending select j).ToList());
+                dgJobs.ItemsSource = new ObservableCollection<Job>((from j in Database.Jobs where j.CompanyID == newValue.ID orderby j.EndDate descending select j).ToList());
                 dgCustomerDetails.ItemsSource = new ObservableCollection<CustomerNumber>(newValue.CustomerNumbers);
-                cmbCareOfCompanies.ItemsSource = (from c in database.Companies where c.ID != newValue.ID select c).ToList();
+                cmbCareOfCompanies.ItemsSource = (from c in Database.Companies where c.ID != newValue.ID select c).ToList();
             }
         }
 
