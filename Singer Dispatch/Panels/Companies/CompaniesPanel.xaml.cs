@@ -17,14 +17,7 @@ namespace SingerDispatch.Panels.Companies
         {
             base.SelectedCompanyChanged(newValue, oldValue);
 
-            if (newValue == null)
-            {
-                this.IsEnabled = false;
-            }
-            else
-            {
-                this.IsEnabled = true;
-            }
+            IsEnabled = newValue != null;
         }
     }
 }

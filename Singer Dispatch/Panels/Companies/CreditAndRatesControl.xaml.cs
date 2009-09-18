@@ -39,14 +39,7 @@ namespace SingerDispatch.Panels.Companies
             {                               
                 var rateDiscounts = from d in Database.RateDiscounts where d.CompanyID == newValue.ID select d;
 
-                if (rateDiscounts.Count() > 0)
-                {
-                    Discount = (RateDiscount)rateDiscounts.First();                    
-                }
-                else
-                {
-                    Discount = new RateDiscount() { CompanyID = newValue.ID };                    
-                }
+                Discount = rateDiscounts.Count() > 0 ? rateDiscounts.First() : new RateDiscount { CompanyID = newValue.ID };
 
                 grpAdministration.DataContext = newValue;
                 grpRateAdjustment.DataContext = Discount;
@@ -64,15 +57,17 @@ namespace SingerDispatch.Panels.Companies
 
         private void SaveDetails(object sender, RoutedEventArgs e)
         {
-            if (SelectedCompany != null)
+            if (SelectedCompany == null)
             {
-                if (Discount != null && Discount.ID == 0)
-                {
-                    Database.RateDiscounts.InsertOnSubmit(Discount);
-                }
-
-                Database.SubmitChanges();
+                return;
             }
+
+            if (Discount != null && Discount.ID == 0)
+            {
+                Database.RateDiscounts.InsertOnSubmit(Discount);
+            }
+
+            Database.SubmitChanges();
         }
     }
 }

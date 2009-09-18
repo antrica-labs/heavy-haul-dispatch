@@ -32,14 +32,7 @@ namespace SingerDispatch.Panels.Jobs
 
         private void ControlLoaded(object sender, RoutedEventArgs e)
         {
-            if (SelectedJob != null)
-            {
-                cmbLoads.ItemsSource = SelectedJob.Loads;
-            }
-            else
-            {
-                cmbLoads.ItemsSource = null;
-            }
+            cmbLoads.ItemsSource = SelectedJob != null ? SelectedJob.Loads : null;
         }
 
         protected override void SelectedJobChanged(Job newValue, Job oldValue)
@@ -58,7 +51,7 @@ namespace SingerDispatch.Panels.Jobs
 
         private void btnNewDispatch_Click(object sender, RoutedEventArgs e)
         {
-            Dispatch dispatch = new Dispatch() { JobID = SelectedJob.ID };
+            var dispatch = new Dispatch { JobID = SelectedJob.ID };
 
             SelectedJob.Dispatches.Add(dispatch);
             ((ObservableCollection<Dispatch>)dgDispatches.ItemsSource).Insert(0, dispatch);

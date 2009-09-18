@@ -27,7 +27,7 @@ namespace SingerDispatch.Panels.Companies
             PopulateServices();            
         }
 
-        private void ControlLoaded(object sender, System.Windows.RoutedEventArgs e)
+        private void ControlLoaded(object sender, RoutedEventArgs e)
         {
         }
 
@@ -41,7 +41,7 @@ namespace SingerDispatch.Panels.Companies
 
                 foreach (CheckBox cb in ServiceTypes)
                 {
-                    ServiceType type = (ServiceType)cb.DataContext;
+                    var type = (ServiceType)cb.DataContext;
 
                     cb.IsChecked = selected.Contains(type);
                 }
@@ -54,8 +54,7 @@ namespace SingerDispatch.Panels.Companies
 
             foreach (ServiceType type in types)
             {
-                CheckBox cb = new CheckBox() { Content = type.Name };                
-                cb.DataContext = type;
+                var cb = new CheckBox { Content = type.Name, DataContext = type };
 
                 ServiceTypes.Add(cb);
                 panelServiceTypes.Children.Add(cb);
@@ -64,22 +63,26 @@ namespace SingerDispatch.Panels.Companies
 
         private void btnUpdateServices_Click(object sender, RoutedEventArgs e)
         {
-            if (SelectedCompany != null)
+            if (SelectedCompany == null)
             {
-                Database.Services.DeleteAllOnSubmit(SelectedCompany.Services);             
+                return;
+            }
 
-                foreach (CheckBox cb in ServiceTypes)
+            Database.Services.DeleteAllOnSubmit(SelectedCompany.Services);             
+
+            foreach (CheckBox cb in ServiceTypes)
+            {
+                if (cb.IsChecked != true)
                 {
-                    if (cb.IsChecked == true)
-                    {
-                        Service service = new Service() { ServiceTypeID = ((ServiceType)cb.DataContext).ID };
-                          
-                        SelectedCompany.Services.Add(service);
-                    }
+                    continue;
                 }
 
-                Database.SubmitChanges();
+                var service = new Service { ServiceTypeID = ((ServiceType)cb.DataContext).ID };
+                          
+                SelectedCompany.Services.Add(service);
             }
+
+            Database.SubmitChanges();
         }
 
     }

@@ -28,12 +28,11 @@ namespace SingerDispatch
             Database = SingerConstants.CommonDataContext;
             Companies = new ObservableCollection<Company>();
 
-            if (!Database.DatabaseExists())
-            {
-                var builder = new DatabaseBuilder(SingerConstants.CommonDataContext);
+            if (Database.DatabaseExists()) return;
 
-                builder.CreateNewDatabase();
-            }
+            var builder = new DatabaseBuilder(SingerConstants.CommonDataContext);
+
+            builder.CreateNewDatabase();
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -205,7 +204,6 @@ namespace SingerDispatch
             var viewer =  new DocumentViewer();
 
             viewer.Show();
-
         }
     }
 }

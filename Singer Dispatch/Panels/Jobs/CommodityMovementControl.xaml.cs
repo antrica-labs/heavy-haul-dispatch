@@ -52,8 +52,8 @@ namespace SingerDispatch.Panels.Jobs
 
         private void btnNewCommodity_Click(object sender, RoutedEventArgs e)
         {
-            JobCommodity commodity = new JobCommodity() { JobID = SelectedJob.ID };
-            ObservableCollection<JobCommodity> list = (ObservableCollection<JobCommodity>)dgCommodities.ItemsSource;
+            var commodity = new JobCommodity { JobID = SelectedJob.ID };
+            var list = (ObservableCollection<JobCommodity>)dgCommodities.ItemsSource;
                 
             list.Insert(0, commodity);
             SelectedJob.JobCommodities.Add(commodity);
@@ -64,7 +64,7 @@ namespace SingerDispatch.Panels.Jobs
 
         private void btnRemoveCommodity_Click(object sender, RoutedEventArgs e)
         {
-            JobCommodity commodity = (JobCommodity)dgCommodities.SelectedItem;
+            var commodity = (JobCommodity)dgCommodities.SelectedItem;
 
             if (commodity == null)
             {
@@ -73,17 +73,19 @@ namespace SingerDispatch.Panels.Jobs
 
             MessageBoxResult confirmation = MessageBox.Show("Are you sure you want to remove this commodity?", "Remove commodity", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
-            if (confirmation == MessageBoxResult.Yes)
+            if (confirmation != MessageBoxResult.Yes)
             {
-                SelectedJob.JobCommodities.Remove(commodity);
-                ((ObservableCollection<JobCommodity>)dgCommodities.ItemsSource).Remove(commodity);
+                return;
             }
+
+            SelectedJob.JobCommodities.Remove(commodity);
+            ((ObservableCollection<JobCommodity>)dgCommodities.ItemsSource).Remove(commodity);
         }
 
         private void cmbCommodityName_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Commodity original = (Commodity)cmbCommodityName.SelectedItem;
-            JobCommodity commodity = (JobCommodity)dgCommodities.SelectedItem;
+            var original = (Commodity)cmbCommodityName.SelectedItem;
+            var commodity = (JobCommodity)dgCommodities.SelectedItem;
 
             if (commodity != null)
             {

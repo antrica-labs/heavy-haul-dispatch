@@ -26,7 +26,7 @@ namespace SingerDispatch.Panels.Quotes
 
         public static void SelectedQuotePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            QuoteUserControl control = (QuoteUserControl)d;
+            var control = (QuoteUserControl)d;
 
             control.SelectedQuoteChanged((Quote)e.NewValue, (Quote)e.OldValue);
         }

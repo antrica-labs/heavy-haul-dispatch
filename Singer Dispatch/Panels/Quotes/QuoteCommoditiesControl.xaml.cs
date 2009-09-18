@@ -45,7 +45,7 @@ namespace SingerDispatch.Panels.Quotes
             {
                 cmbCommodityName.ItemsSource = new ObservableCollection<Commodity>((from c in Database.Commodities where c.CompanyID == newValue.CompanyID || c.CompanyID == newValue.CareOfCompanyID select c).ToList());
 
-                QuoteCommodity commodity = new QuoteCommodity() { QuoteID = newValue.ID };
+                var commodity = new QuoteCommodity { QuoteID = newValue.ID };
 
                 gbDetails.DataContext = commodity;
                 gbDepature.DataContext = commodity;
@@ -57,8 +57,8 @@ namespace SingerDispatch.Panels.Quotes
 
         private void cmbCommodityName_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Commodity original = (Commodity)cmbCommodityName.SelectedItem;
-            QuoteCommodity commodity = (QuoteCommodity)dgQuoteCommodities.SelectedItem;
+            var original = (Commodity)cmbCommodityName.SelectedItem;
+            var commodity = (QuoteCommodity)dgQuoteCommodities.SelectedItem;
 
             if (commodity == null)
             {
@@ -105,8 +105,8 @@ namespace SingerDispatch.Panels.Quotes
 
         private void btnNewCommodity_Click(object sender, RoutedEventArgs e)
         {
-            ObservableCollection<QuoteCommodity> list = (ObservableCollection<QuoteCommodity>)dgQuoteCommodities.ItemsSource;
-            QuoteCommodity commodity = new QuoteCommodity() { QuoteID = SelectedQuote.ID };
+            var list = (ObservableCollection<QuoteCommodity>)dgQuoteCommodities.ItemsSource;
+            var commodity = new QuoteCommodity() { QuoteID = SelectedQuote.ID };
 
             SelectedQuote.QuoteCommodities.Add(commodity);
             list.Insert(0, commodity);
@@ -117,19 +117,21 @@ namespace SingerDispatch.Panels.Quotes
 
         private void dgQuoteCommodities_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            QuoteCommodity commodity = (QuoteCommodity)dgQuoteCommodities.SelectedItem;
+            var commodity = (QuoteCommodity)dgQuoteCommodities.SelectedItem;
 
-            if (commodity != null)
+            if (commodity == null)
             {
-                gbDetails.DataContext = commodity;
-                gbDepature.DataContext = commodity;
-                gbDestination.DataContext = commodity;
+                return;
             }
+
+            gbDetails.DataContext = commodity;
+            gbDepature.DataContext = commodity;
+            gbDestination.DataContext = commodity;
         }
 
         private void btnRemoveCommodity_Click(object sender, RoutedEventArgs e)
         {
-            QuoteCommodity commodity = (QuoteCommodity)dgQuoteCommodities.SelectedItem;
+            var commodity = (QuoteCommodity)dgQuoteCommodities.SelectedItem;
 
             if (commodity == null)
             {
@@ -138,12 +140,14 @@ namespace SingerDispatch.Panels.Quotes
 
             MessageBoxResult confirmation = MessageBox.Show("Are you sure you want to remove this commodity?", "Delete confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
-            if (confirmation == MessageBoxResult.Yes)
+            if (confirmation != MessageBoxResult.Yes)
             {
-                dgQuoteCommodities.SelectedItem = null;
-                SelectedQuote.QuoteCommodities.Remove(commodity);
-                ((ObservableCollection<QuoteCommodity>)dgQuoteCommodities.ItemsSource).Remove(commodity);
+                return;
             }
+
+            dgQuoteCommodities.SelectedItem = null;
+            SelectedQuote.QuoteCommodities.Remove(commodity);
+            ((ObservableCollection<QuoteCommodity>)dgQuoteCommodities.ItemsSource).Remove(commodity);
         }
         
     }

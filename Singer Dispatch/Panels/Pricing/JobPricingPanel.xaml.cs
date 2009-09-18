@@ -41,17 +41,10 @@ namespace SingerDispatch.Panels.Pricing
 
         public static void SelectedCompanyPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            JobPricingPanel control = (JobPricingPanel)d;
-            Company company = (Company)e.NewValue;
+            var control = (JobPricingPanel)d;
+            var company = (Company)e.NewValue;
 
-            if (company == null)
-            {
-                control.IsEnabled = false;
-            }
-            else
-            {
-                control.IsEnabled = true;
-            }
+            control.IsEnabled = company != null;
         }
 
         private void btnCommitJobChanges_Click(object sender, RoutedEventArgs e)

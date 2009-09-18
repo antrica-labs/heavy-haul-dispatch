@@ -23,12 +23,10 @@ namespace SingerDispatch.Panels.Companies
         {
             base.SelectedCompanyChanged(newValue, oldValue);
 
-            Company company = newValue;
-
-            if (company != null)
+            if (newValue != null)
             {
                 dgCommodities.ItemsSource = new ObservableCollection<Commodity>(
-                    (from c in Database.Commodities where c.CompanyID == company.ID select c).ToList()
+                    (from c in Database.Commodities where c.CompanyID == newValue.ID select c).ToList()
                 );
             }
             else
@@ -51,7 +49,7 @@ namespace SingerDispatch.Panels.Companies
 
         private void btnDeleteCommodity_Click(object sender, RoutedEventArgs e)
         {
-            Commodity selected = (Commodity)dgCommodities.SelectedItem;
+            var selected = (Commodity)dgCommodities.SelectedItem;
 
             if (selected == null)
             {                
@@ -71,10 +69,9 @@ namespace SingerDispatch.Panels.Companies
 
         private void btnSaveCommodity_Click(object sender, RoutedEventArgs e)
         {
-            Company company = SelectedCompany;
-            Commodity commodity = (Commodity)dgCommodities.SelectedItem;
+            var commodity = (Commodity)dgCommodities.SelectedItem;
 
-            if (company == null)
+            if (SelectedCompany == null)
             {
                 MessageBox.Show("You must select a company from the company list before you can add or edit any addresses.");
                 return;
@@ -82,7 +79,7 @@ namespace SingerDispatch.Panels.Companies
 
             if (commodity == null)
             {
-                CreateNewCommodity(company);
+                CreateNewCommodity(SelectedCompany);
             }
 
             Database.SubmitChanges();           
@@ -90,7 +87,7 @@ namespace SingerDispatch.Panels.Companies
 
         private void CreateNewCommodity(Company company)
         {
-            Commodity commodity = new Commodity() { CompanyID = company.ID };
+            var commodity = new Commodity() { CompanyID = company.ID };
             float tmpFloat;
             decimal tmpDecimal;
 

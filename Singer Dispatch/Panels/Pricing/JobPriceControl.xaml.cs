@@ -47,7 +47,7 @@ namespace SingerDispatch.Panels.Pricing
 
         public static void SelectedCompanyPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            JobPriceControl control = (JobPriceControl)d;
+            var control = (JobPriceControl)d;
             
             control.SelectedCompanyChanged((Company)e.NewValue, (Company)e.OldValue);            
         }
@@ -69,8 +69,8 @@ namespace SingerDispatch.Panels.Pricing
 
         private void btnNewCustomerDetail_Click(object sender, RoutedEventArgs e)
         {
-            CustomerNumber number = new CustomerNumber();
-            ObservableCollection<CustomerNumber> list = (ObservableCollection<CustomerNumber>)dgCustomerDetails.ItemsSource;
+            var number = new CustomerNumber();
+            var list = (ObservableCollection<CustomerNumber>)dgCustomerDetails.ItemsSource;
 
             list.Insert(0, number);
             dgCustomerDetails.SelectedItem = number;
@@ -78,13 +78,12 @@ namespace SingerDispatch.Panels.Pricing
 
         private void btnRemoveCustomerDetail_Click(object sender, RoutedEventArgs e)
         {
-            CustomerNumber number = (CustomerNumber)dgCustomerDetails.SelectedItem;
+            var number = (CustomerNumber)dgCustomerDetails.SelectedItem;
 
-            if (number != null)
-            {
-                ObservableCollection<CustomerNumber> list = (ObservableCollection<CustomerNumber>)dgCustomerDetails.ItemsSource;
-                list.Remove(number);
-            }
+            if (number == null) return;
+            
+            var list = (ObservableCollection<CustomerNumber>)dgCustomerDetails.ItemsSource;
+            list.Remove(number);
         }
     }
 }

@@ -11,51 +11,51 @@ namespace SingerDispatch
     /// </summary>
     public partial class CreateCompanyWindow : Window
     {
-        private Company company;
-        private Address address;
-        private ObservableCollection<Company> companies;
-        private SingerDispatchDataContext database;
+        private Company Company { get; set; }
+        private Address Address { get; set; }
+        private ObservableCollection<Company> Companies { get; set; }
+        private SingerDispatchDataContext Database { get; set; }
 
         public CreateCompanyWindow(SingerDispatchDataContext database, ObservableCollection<Company> companies)
         {
             InitializeComponent();
                         
-            this.database = database;
-            this.companies = companies;
+            Database = database;
+            Companies = companies;
+            
+            Company = new Company();            
+            companyDetails.DataContext = Company;
 
-            this.company = new Company();            
-            this.companyDetails.DataContext = company;
-
-            this.address = new Address() { Company = company };
-            this.addressDetails.DataContext = address;
+            Address = new Address() { Company = Company };
+            addressDetails.DataContext = Address;
         }
 
         public Company CreateCompany()
         {
-            this.ShowDialog();
+            ShowDialog();
 
-            return company;
+            return Company;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            cmbProvinceOrState.ItemsSource = (from ps in database.ProvincesAndStates orderby ps.CountryID, ps.Name select ps).ToList();
-            cmbAddressType.ItemsSource = (from at in database.AddressTypes select at).ToList();
+            cmbProvinceOrState.ItemsSource = (from ps in Database.ProvincesAndStates orderby ps.CountryID, ps.Name select ps).ToList();
+            cmbAddressType.ItemsSource = (from at in Database.AddressTypes select at).ToList();
         }
 
         private void bttnCreateCompany_Click(object sender, RoutedEventArgs e)
         {
-            address.ProvinceStateID = ((ProvincesAndState)cmbProvinceOrState.SelectedItem).ID;
+            Address.ProvinceStateID = ((ProvincesAndState)cmbProvinceOrState.SelectedItem).ID;
 
-            database.Companies.InsertOnSubmit(company);
-            database.Addresses.InsertOnSubmit(address);
+            Database.Companies.InsertOnSubmit(Company);
+            Database.Addresses.InsertOnSubmit(Address);
 
             try
             {
-                database.SubmitChanges();
-                companies.Add(company);
+                Database.SubmitChanges();
+                Companies.Add(Company);
 
-                this.Close();
+                Close();
             }
             catch (Exception ex)
             {

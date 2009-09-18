@@ -40,7 +40,7 @@ namespace SingerDispatch.Panels.Quotes
 
         public static void SelectedCompanyPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            QuoteHistoryControl control = (QuoteHistoryControl)d;
+            var control = (QuoteHistoryControl)d;
 
             control.SelectedCompanyChanged((Company)e.NewValue, (Company)e.OldValue);
         }
@@ -48,22 +48,21 @@ namespace SingerDispatch.Panels.Quotes
         protected override void SelectedQuoteChanged(Quote newValue, Quote oldValue)
         {
             base.SelectedQuoteChanged(newValue, oldValue);
+            
+            var quotes = (ObservableCollection<Quote>)dgQuotes.ItemsSource;
 
-            Quote quote = newValue;
-            ObservableCollection<Quote> quotes = (ObservableCollection<Quote>)dgQuotes.ItemsSource;
-
-            if (quote != null)
+            if (newValue != null)
             {
-                if (quote.ID != 0)
+                if (newValue.ID != 0)
                 {
-                    if (!quotes.Contains(quote))
+                    if (!quotes.Contains(newValue))
                     {
-                        quotes.Insert(0, quote);
-                        dgQuotes.SelectedItem = quote;
+                        quotes.Insert(0, newValue);
+                        dgQuotes.SelectedItem = newValue;
                     }                    
                 }
 
-                BubbleUpQuote(quote);
+                BubbleUpQuote(newValue);
             }
             else
             {
@@ -71,30 +70,29 @@ namespace SingerDispatch.Panels.Quotes
                 DiscardUnsavedQuotes();          
             }
 
-            panelQuoteDetails.DataContext = quote;
+            panelQuoteDetails.DataContext = newValue;
             UpdateContactList();
         }
 
         private void BubbleUpQuote(Quote quote)
         {
             // Updated the Selected Quote of any parent controls that may have the dependency property
-            FrameworkElement parent = (FrameworkElement)this.Parent;
+            var parent = (FrameworkElement)Parent;
 
             while (parent != null && !(parent is QuotesPanel))
             {
                 parent = (FrameworkElement)parent.Parent;
             }
 
-            if (parent != null)
-            {
-                QuotesPanel panel = (QuotesPanel)parent;
-                panel.SelectedQuote = quote;
-            }
+            if (parent == null) return;
+
+            var panel = (QuotesPanel)parent;
+            panel.SelectedQuote = quote;
         }
 
         private void DiscardUnsavedQuotes()
         {
-            ObservableCollection<Quote> quotes = (ObservableCollection<Quote>)dgQuotes.ItemsSource;
+            var quotes = (ObservableCollection<Quote>)dgQuotes.ItemsSource;
 
             foreach (Quote q in quotes.ToList())
             {
@@ -123,25 +121,12 @@ namespace SingerDispatch.Panels.Quotes
                
         private void btnNewQuote_Click(object sender, RoutedEventArgs e)
         {
-            Quote quote = new Quote() { CompanyID = SelectedCompany.ID, Number = 0, Revision = 0 };
-
-            quote.CreationDate = DateTime.Today;
-            quote.ExpirationDate = DateTime.Today.AddDays(1);
+            var quote = new Quote { CompanyID = SelectedCompany.ID, Number = 0, Revision = 0, CreationDate = DateTime.Today, ExpirationDate = DateTime.Today.AddDays(1) };
                         
             panelQuoteDetails.DataContext = quote;
             ((ObservableCollection<Quote>)dgQuotes.ItemsSource).Insert(0, quote);
                         
             dgQuotes.SelectedItem = quote;
-        }
-
-        private void btnCreateQuote_Click(object sender, RoutedEventArgs e)
-        {
-            Quote quote = (Quote)panelQuoteDetails.DataContext;
-
-            if (quote != null)
-            {
-                ((ObservableCollection<Quote>)dgQuotes.ItemsSource).Add(quote);
-            }
         }
 
         private void cmbCareOfCompanies_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -151,12 +136,11 @@ namespace SingerDispatch.Panels.Quotes
 
         private void btnCreateJob_Click(object sender, RoutedEventArgs e)
         {
-            Quote quote = (Quote)dgQuotes.SelectedItem;
+            var quote = (Quote)dgQuotes.SelectedItem;
 
-            if (quote != null)
-            {
-                MessageBoxResult confirmation = MessageBox.Show("Are you sure you wish to create a new job from the selected quote?", "New job confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
-            }
+            if (quote == null) return;
+
+            MessageBoxResult confirmation = MessageBox.Show("Are you sure you wish to create a new job from the selected quote?", "New job confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
         }
 
         private void UpdateContactList()
@@ -181,10 +165,7 @@ namespace SingerDispatch.Panels.Quotes
 
         private void btnCreateRevisoin_Click(object sender, RoutedEventArgs e)
         {
-            if (SelectedQuote == null)
-            {
-                return;
-            }
+            if (SelectedQuote == null) return;
 
             var quote = (Quote)SelectedQuote.Clone();
             var quotes = (ObservableCollection<Quote>)dgQuotes.ItemsSource;
@@ -197,10 +178,7 @@ namespace SingerDispatch.Panels.Quotes
 
         private void btnPrintQuote_Click(object sender, RoutedEventArgs e)
         {
-            if (SelectedQuote == null)
-            {
-                return;
-            }
+            if (SelectedQuote == null) return;
 
             SelectedQuote.IsPrinted = 1;
 

@@ -40,17 +40,10 @@ namespace SingerDispatch.Panels.Jobs
 
         public static void SelectedCompanyPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            JobsPanel control = (JobsPanel)d;
-            Company company = (Company)e.NewValue;
+            var control = (JobsPanel)d;
+            var company = (Company)e.NewValue;
 
-            if (company == null)
-            {
-                control.IsEnabled = false;
-            }
-            else
-            {
-                control.IsEnabled = true;
-            }
+            control.IsEnabled = company != null;
         }
 
         protected override void SelectedJobChanged(Job newValue, Job oldValue)
@@ -70,31 +63,33 @@ namespace SingerDispatch.Panels.Jobs
 
         private void btnCommitChanges_Click(object sender, RoutedEventArgs e)
         {
-            if (SelectedJob != null)
+            if (SelectedJob == null)
             {
-                MessageBoxResult confirm = MessageBox.Show("Are you sure you wish to commit the changes to this job and all of its properties?", "Save confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
-
-                if (confirm == MessageBoxResult.No)
-                {
-                    return;
-                }
-                                
-                if (SelectedJob.ID == 0)
-                {
-                    try
-                    {
-                        SelectedJob.Number = (from j in SingerConstants.CommonDataContext.Jobs select j.Number).Max() + 1;
-                    }
-                    catch
-                    {
-                        SelectedJob.Number = 1;
-                    }
-
-                    SingerConstants.CommonDataContext.Jobs.InsertOnSubmit(SelectedJob);
-                }
-
-                SingerConstants.CommonDataContext.SubmitChanges();
+                return;
             }
+
+            MessageBoxResult confirm = MessageBox.Show("Are you sure you wish to commit the changes to this job and all of its properties?", "Save confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+            if (confirm == MessageBoxResult.No)
+            {
+                return;
+            }
+                                
+            if (SelectedJob.ID == 0)
+            {
+                try
+                {
+                    SelectedJob.Number = (from j in SingerConstants.CommonDataContext.Jobs select j.Number).Max() + 1;
+                }
+                catch
+                {
+                    SelectedJob.Number = 1;
+                }
+
+                SingerConstants.CommonDataContext.Jobs.InsertOnSubmit(SelectedJob);
+            }
+
+            SingerConstants.CommonDataContext.SubmitChanges();
         }
     }
 }

@@ -43,7 +43,7 @@ namespace SingerDispatch.Panels.Quotes
             if (newValue != null)
             {
                 dgSupplements.ItemsSource = new ObservableCollection<QuoteSupplement>(newValue.QuoteSupplements);
-                grpSupplementDetails.DataContext = new QuoteSupplement() { QuoteID = newValue.ID };
+                grpSupplementDetails.DataContext = new QuoteSupplement { QuoteID = newValue.ID };
             }
             else
             {
@@ -59,8 +59,8 @@ namespace SingerDispatch.Panels.Quotes
 
         private void btnNewSupplement_Click(object sender, RoutedEventArgs e)
         {
-            ObservableCollection<QuoteSupplement> list = (ObservableCollection<QuoteSupplement>)dgSupplements.ItemsSource;
-            QuoteSupplement supplement = new QuoteSupplement() { QuoteID = SelectedQuote.ID };
+            var list = (ObservableCollection<QuoteSupplement>)dgSupplements.ItemsSource;
+            var supplement = new QuoteSupplement { QuoteID = SelectedQuote.ID };
             
             list.Insert(0, supplement);
             SelectedQuote.QuoteSupplements.Add(supplement);
@@ -71,14 +71,14 @@ namespace SingerDispatch.Panels.Quotes
 
         private void btnRemoveSupplement_Click(object sender, RoutedEventArgs e)
         {
-            QuoteSupplement supplement = (QuoteSupplement)dgSupplements.SelectedItem;
+            var supplement = (QuoteSupplement)dgSupplements.SelectedItem;
 
             if (supplement == null)
             {
                 return;
             }
 
-            MessageBoxResult confirmation = MessageBox.Show("Are you sure you want to remove this supplement?", "Delete confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            var confirmation = MessageBox.Show("Are you sure you want to remove this supplement?", "Delete confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
             if (confirmation == MessageBoxResult.Yes)
             {
@@ -89,7 +89,7 @@ namespace SingerDispatch.Panels.Quotes
 
         private void cmbBillingType_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            BillingType type = (BillingType)((ComboBox)sender).SelectedItem;
+            var type = (BillingType)((ComboBox)sender).SelectedItem;
 
             if (type != null && type.Name == "Cost Included")
             {

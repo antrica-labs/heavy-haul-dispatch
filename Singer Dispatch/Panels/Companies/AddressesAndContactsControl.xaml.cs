@@ -34,12 +34,12 @@ namespace SingerDispatch.Panels.Companies
 
         protected override void SelectedCompanyChanged(Company newValue, Company oldValue)
         {
-            Company company = newValue;
+            base.SelectedCompanyChanged(newValue, oldValue);
 
-            if (company != null)
+            if (newValue != null)
             {       
                 dgAddresses.ItemsSource = new ObservableCollection<Address>(
-                    (from a in Database.Addresses where a.CompanyID == company.ID select a).ToList()
+                    (from a in Database.Addresses where a.CompanyID == newValue.ID select a).ToList()
                 );
             }
             else
@@ -67,7 +67,7 @@ namespace SingerDispatch.Panels.Companies
      
         private void btnRemoveAddress_Click(object sender, RoutedEventArgs e)
         {
-            Address selected = (Address)dgAddresses.SelectedItem;
+            var selected = (Address)dgAddresses.SelectedItem;
 
             if (selected == null)
             {
@@ -87,7 +87,7 @@ namespace SingerDispatch.Panels.Companies
 
         private void btnRemoveContact_Click(object sender, RoutedEventArgs e)
         {
-            Contact selected = (Contact)dgContacts.SelectedItem;
+            var selected = (Contact)dgContacts.SelectedItem;
 
             if (selected == null)
             {
@@ -96,13 +96,15 @@ namespace SingerDispatch.Panels.Companies
 
             MessageBoxResult confirmation = MessageBox.Show("Are you sure you want to remove this contact?", "Delete confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
-            if (confirmation == MessageBoxResult.Yes)
+            if (confirmation != MessageBoxResult.Yes)
             {
-                Database.Contacts.DeleteOnSubmit(selected);
-                ((ObservableCollection<Contact>)dgContacts.ItemsSource).Remove(selected);
-
-                Database.SubmitChanges();
+                return;
             }
+
+            Database.Contacts.DeleteOnSubmit(selected);
+            ((ObservableCollection<Contact>)dgContacts.ItemsSource).Remove(selected);
+
+            Database.SubmitChanges();
         }
 
         private void btnNewAddress_Click(object sender, RoutedEventArgs e)
@@ -131,10 +133,9 @@ namespace SingerDispatch.Panels.Companies
 
         private void bttnSaveAddress_Click(object sender, RoutedEventArgs e)
         {
-            Company company = SelectedCompany;
-            Address address = (Address)dgAddresses.SelectedItem;
+            var address = (Address)dgAddresses.SelectedItem;
 
-            if (company == null)
+            if (SelectedCompany == null)
             {
                 MessageBox.Show("You must select a company from the company list before you can add or edit any addresses.");
                 return;
@@ -142,7 +143,7 @@ namespace SingerDispatch.Panels.Companies
 
             if (address == null)
             {
-                AddNewAddress(company);
+                AddNewAddress(SelectedCompany);
             }
 
             Database.SubmitChanges();
@@ -150,8 +151,8 @@ namespace SingerDispatch.Panels.Companies
         
         private void bttnSaveContact_Click(object sender, RoutedEventArgs e)
         {
-            Address address = (Address)dgAddresses.SelectedItem;
-            Contact contact = (Contact)dgContacts.SelectedItem;
+            var address = (Address)dgAddresses.SelectedItem;
+            var contact = (Contact)dgContacts.SelectedItem;
 
             if (address == null)
             {
@@ -169,7 +170,7 @@ namespace SingerDispatch.Panels.Companies
 
         private void AddNewContact(Address address)
         {
-            Contact contact = new Contact();
+            var contact = new Contact();
             contact.AddressID = address.ID;
             contact.FirstName = txtContactFirstName.Text;
             contact.LastName = txtContactLastName.Text;
@@ -187,9 +188,9 @@ namespace SingerDispatch.Panels.Companies
         
         private void AddNewAddress(Company company)
         {
-            ProvincesAndState provinceOrState = (ProvincesAndState)cmbProvinceOrState.SelectedItem;
+            var provinceOrState = (ProvincesAndState)cmbProvinceOrState.SelectedItem;
 
-            Address address = new Address();
+            var address = new Address();
             address.CompanyID = company.ID;
             address.Line1 = txtAddress1.Text;
             address.Line2 = txtAddress2.Text;

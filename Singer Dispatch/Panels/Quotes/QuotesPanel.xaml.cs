@@ -35,17 +35,10 @@ namespace SingerDispatch.Panels.Quotes
 
         public static void SelectedCompanyPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            QuotesPanel control = (QuotesPanel)d;
-            Company company = (Company)e.NewValue;
+            var control = (QuotesPanel)d;
+            var company = (Company)e.NewValue;
 
-            if (company == null)
-            {
-                control.IsEnabled = false;
-            }
-            else
-            {
-                control.IsEnabled = true;
-            }
+            control.IsEnabled = company != null;
         }
 
         protected override void SelectedQuoteChanged(Quote newValue, Quote oldValue)
@@ -80,57 +73,46 @@ namespace SingerDispatch.Panels.Quotes
         {
             MessageBoxResult confirmation = MessageBox.Show("Are you sure you want to discard all changes made to this quote?", "Discard confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
-            if (confirmation == MessageBoxResult.Yes)
-            {
-                SelectedQuote = null;
-                panelQuoteHistory.SelectedQuote = null;
-                tabs.SelectedIndex = 0;
-            }
+            if (confirmation != MessageBoxResult.Yes) return;
+            
+            SelectedQuote = null;
+            panelQuoteHistory.SelectedQuote = null;
+            tabs.SelectedIndex = 0;
         }
 
         private void btnCommitChanges_Click(object sender, RoutedEventArgs e)
         {
-            if (SelectedQuote != null)
+            if (SelectedQuote == null) return;
+
+            // If this is a brand new quote, generate a quote number for it
+            if (SelectedQuote.Number == 0)
             {
-                /*
-                MessageBoxResult confirm = MessageBox.Show("Are you sure you wish to commit the changes to this quote and all of its properties?", "Save confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
-
-                if (confirm == MessageBoxResult.No)
+                try
                 {
-                    return;
+                    SelectedQuote.Number = (from q in database.Quotes select q.Number).Max() + 1;
                 }
-                */
-
-                // If this is a brand new quote, generate a quote number for it
-                if (SelectedQuote.Number == 0)
+                catch
                 {
-                    try
-                    {
-                        SelectedQuote.Number = (from q in database.Quotes select q.Number).Max() + 1;
-                    }
-                    catch
-                    {
-                        SelectedQuote.Number = 1;
-                    }
-
-                    SelectedQuote.Revision = 0;
+                    SelectedQuote.Number = 1;
                 }
 
-                if (SelectedQuote.ID == 0)
-                {
-                    if (SelectedQuote.Revision > 0)
-                    {
-                        SelectedQuote.Revision = (from q in database.Quotes where q.Number == SelectedQuote.Number select q.Revision).Max() + 1;
-                    }
-
-                    database.Quotes.InsertOnSubmit(SelectedQuote);
-                }
-                 
-                database.SubmitChanges();
-
-                panelQuoteHistory.SelectedQuote = null;
-                panelQuoteHistory.SelectedQuote = SelectedQuote;
+                SelectedQuote.Revision = 0;
             }
+
+            if (SelectedQuote.ID == 0)
+            {
+                if (SelectedQuote.Revision > 0)
+                {
+                    SelectedQuote.Revision = (from q in database.Quotes where q.Number == SelectedQuote.Number select q.Revision).Max() + 1;
+                }
+
+                database.Quotes.InsertOnSubmit(SelectedQuote);
+            }
+                 
+            database.SubmitChanges();
+
+            panelQuoteHistory.SelectedQuote = null;
+            panelQuoteHistory.SelectedQuote = SelectedQuote;
         }
     }
 }

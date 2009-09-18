@@ -46,7 +46,7 @@ namespace SingerDispatch.Panels.Jobs
 
         private void btnNewLoad_Click(object sender, RoutedEventArgs e)
         {
-            Load load = new Load() { JobID = SelectedJob.ID };
+            var load = new Load { JobID = SelectedJob.ID };
 
             SelectedJob.Loads.Add(load);
             ((ObservableCollection<Load>)dgLoads.ItemsSource).Insert(0, load);
@@ -57,27 +57,29 @@ namespace SingerDispatch.Panels.Jobs
 
         private void AxleWeightChanged(object sender, TextChangedEventArgs e)
         {
-            Load load = (Load)dgLoads.SelectedItem;
+            var load = (Load)dgLoads.SelectedItem;
 
-            if (load != null)
+            if (load == null)
             {
-                int? gross = 0;
-
-                gross += load.WeightSteer;
-                gross += load.WeightDrive;
-                gross += load.WeightGroup1;
-                gross += load.WeightGroup2;
-                gross += load.WeightGroup3;
-                gross += load.WeightGroup4;
-                gross += load.WeightGroup5;
-                gross += load.WeightGroup6;
-                gross += load.WeightGroup7;
-                gross += load.WeightGroup8;
-                gross += load.WeightGroup9;
-                gross += load.WeightGroup10;
-
-                load.GrossWeight = gross;
+                return;
             }
+            
+            int? gross = 0;
+
+            gross += load.WeightSteer;
+            gross += load.WeightDrive;
+            gross += load.WeightGroup1;
+            gross += load.WeightGroup2;
+            gross += load.WeightGroup3;
+            gross += load.WeightGroup4;
+            gross += load.WeightGroup5;
+            gross += load.WeightGroup6;
+            gross += load.WeightGroup7;
+            gross += load.WeightGroup8;
+            gross += load.WeightGroup9;
+            gross += load.WeightGroup10;
+
+            load.GrossWeight = gross;
         }
 
         

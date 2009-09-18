@@ -21,7 +21,7 @@ namespace SingerDispatch.Panels.Jobs
 
         public static void SelectedJobPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            JobUserControl control = (JobUserControl)d;
+            var control = (JobUserControl)d;
 
             control.SelectedJobChanged((Job)e.NewValue, (Job)e.OldValue);
         }

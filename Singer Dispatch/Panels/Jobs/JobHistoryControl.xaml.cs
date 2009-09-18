@@ -52,16 +52,14 @@ namespace SingerDispatch.Panels.Jobs
 
         public static void SelectedCompanyPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            JobHistoryControl control = (JobHistoryControl)d;
+            var control = (JobHistoryControl)d;
 
             control.SelectedCompanyChanged((Company)e.NewValue, (Company)e.OldValue);          
         }
 
         private void SelectedCompanyChanged(Company newValue, Company oldValue)
         {
-            Company company = newValue;
-            
-            if (company != null)
+            if (newValue != null)
             {
                 dgJobs.ItemsSource = new ObservableCollection<Job>((from j in Database.Jobs where j.CompanyID == newValue.ID orderby j.EndDate descending select j).ToList());
                 cmbCareOfCompanies.ItemsSource = (from c in Database.Companies where c.ID != newValue.ID select c).ToList();
@@ -86,7 +84,7 @@ namespace SingerDispatch.Panels.Jobs
         private void BubbleUpJob(Job job)
         {
             // Updated the selected job of any parent controls that may have a dependency property
-            FrameworkElement parent = (FrameworkElement)this.Parent;
+            var parent = (FrameworkElement)Parent;
 
             while (parent != null && !(parent is JobsPanel))
             {
@@ -95,7 +93,7 @@ namespace SingerDispatch.Panels.Jobs
 
             if (parent != null)
             {
-                JobsPanel panel = (JobsPanel)parent;
+                var panel = (JobsPanel)parent;
                 panel.SelectedJob = job;
             }
         }
@@ -127,7 +125,7 @@ namespace SingerDispatch.Panels.Jobs
 
         private void btnNewJob_Click(object sender, RoutedEventArgs e)
         {
-            Job job = new Job() { CompanyID = SelectedCompany.ID, Number = 0 };
+            var job = new Job { CompanyID = SelectedCompany.ID, Number = 0 };
 
             ((ObservableCollection<Job>)dgJobs.ItemsSource).Insert(0, job);
             dgJobs.SelectedItem = job;
