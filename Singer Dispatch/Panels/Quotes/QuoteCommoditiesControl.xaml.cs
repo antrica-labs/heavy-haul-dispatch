@@ -41,18 +41,17 @@ namespace SingerDispatch.Panels.Quotes
         {
             base.SelectedQuoteChanged(newValue, oldValue);
 
-            if (newValue != null)
-            {
-                cmbCommodityName.ItemsSource = new ObservableCollection<Commodity>((from c in Database.Commodities where c.CompanyID == newValue.CompanyID || c.CompanyID == newValue.CareOfCompanyID select c).ToList());
+            if (newValue == null) return;
+            
+            cmbCommodityName.ItemsSource = new ObservableCollection<Commodity>((from c in Database.Commodities where c.CompanyID == newValue.CompanyID || c.CompanyID == newValue.CareOfCompanyID select c).ToList());
 
-                var commodity = new QuoteCommodity { QuoteID = newValue.ID };
+            var commodity = new QuoteCommodity { QuoteID = newValue.ID };
 
-                gbDetails.DataContext = commodity;
-                gbDepature.DataContext = commodity;
-                gbDestination.DataContext = commodity;
+            gbDetails.DataContext = commodity;
+            gbDepature.DataContext = commodity;
+            gbDestination.DataContext = commodity;
                                 
-                dgQuoteCommodities.ItemsSource = new ObservableCollection<QuoteCommodity>(newValue.QuoteCommodities);
-            }
+            dgQuoteCommodities.ItemsSource = new ObservableCollection<QuoteCommodity>(newValue.QuoteCommodities);
         }
 
         private void cmbCommodityName_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -106,7 +105,7 @@ namespace SingerDispatch.Panels.Quotes
         private void btnNewCommodity_Click(object sender, RoutedEventArgs e)
         {
             var list = (ObservableCollection<QuoteCommodity>)dgQuoteCommodities.ItemsSource;
-            var commodity = new QuoteCommodity() { QuoteID = SelectedQuote.ID };
+            var commodity = new QuoteCommodity { QuoteID = SelectedQuote.ID };
 
             SelectedQuote.QuoteCommodities.Add(commodity);
             list.Insert(0, commodity);
