@@ -24,6 +24,26 @@
         <Setter Property="Margin" Value="3" />
     </Style>
 
+    <Style TargetType="CheckBox">
+        <Setter Property="Margin" Value="3,6,0,0" />
+    </Style>
+
+    <Style TargetType="Button" x:Key="Standard">
+        <Setter Property="Margin" Value="0,3" />
+    </Style>
+    
+    <Style TargetType="Button" x:Key="Bottom">
+        <Setter Property="Margin" Value="0,3,0,0" />
+    </Style>
+    
+    <Style TargetType="Button" x:Key="Horizontal">
+        <Setter Property="Margin" Value="0,3,3,3" />
+    </Style>
+    
+    <Style TargetType="Button" x:Key="HorizontalEnd">
+        <Setter Property="Margin" Value="3,3,0,3" />
+    </Style>
+    
     <Style TargetType="TextBox" x:Key="MultiLine">        
         <Setter Property="Margin" Value="3" />
         <Setter Property="TextWrapping" Value="Wrap" />
@@ -78,15 +98,17 @@
         <Setter Property="Margin" Value="10" />
     </Style>
 
-    <Style x:Key="ListDisplay" TargetType="{x:Type WPF:DataGrid}">
+    <Style x:Key="ListDisplay" TargetType="{x:Type WPF:DataGrid}">        
+        <Setter Property="AutoGenerateColumns" Value="False" />
         <Setter Property="Background" Value="White" />
         <Setter Property="AlternatingRowBackground" Value="#EDEDED" />
         <Setter Property="GridLinesVisibility" Value="None" />
         <Setter Property="HorizontalGridLinesBrush" Value="LightGray" />
+        <Setter Property="HorizontalScrollBarVisibility" Value="Disabled" />
         <Setter Property="SelectionMode" Value="Single" />
         <Setter Property="CanUserAddRows" Value="False" />
         <Setter Property="CanUserDeleteRows" Value="False" />      
-        <Setter Property="ColumnWidth" Value="*" />
+        <Setter Property="ColumnWidth" Value="*" />        
     </Style>
     
     <Style TargetType="{x:Type WPF:DatePicker}">

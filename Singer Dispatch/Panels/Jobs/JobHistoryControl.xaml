@@ -18,7 +18,7 @@
         
     </UserControl.Resources>
     <StackPanel>
-        <WPF:DataGrid Name="dgJobs" Style="{StaticResource ListDisplay}" AutoGenerateColumns="False" Margin="0,0,0,5" Height="180" SelectedItem="{Binding ElementName=panelJobHistory, Path=SelectedJob}">
+        <WPF:DataGrid Name="dgJobs" Style="{StaticResource ListDisplay}" Height="180" SelectedItem="{Binding ElementName=panelJobHistory, Path=SelectedJob}">
             <WPF:DataGrid.Columns>
                 <WPF:DataGridTextColumn Header="Number" Width="60" Binding="{Binding Number}"/>
                 <WPF:DataGridTextColumn Header="Quote" Width="60" Binding="{Binding Quote.Number}" />
@@ -35,8 +35,8 @@
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
 
-            <Button Name="btnNewJob" Grid.Column="0" Click="btnNewJob_Click">New Job</Button>            
-            <Button Name="btnPrintQuote" Grid.Column="3" IsEnabled="False">Print Job</Button>
+            <Button Style="{StaticResource Horizontal}" Name="btnNewJob" Grid.Column="0" Click="btnNewJob_Click">New Job</Button>            
+            <Button Style="{StaticResource HorizontalEnd}" Name="btnPrintQuote" Grid.Column="3" IsEnabled="False">Print Job</Button>
         </Grid>
 
         <Grid>
@@ -113,7 +113,7 @@
 
             <GroupBox Header="Contact List" Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" Margin="0,0,5,5">
                 <StackPanel>
-                    <WPF:DataGrid Name="dgJobContacts" Style="{StaticResource ListDisplay}" HorizontalScrollBarVisibility="Disabled" AutoGenerateColumns="False" Height="100" Margin="0,0,0,5">
+                    <WPF:DataGrid Name="dgJobContacts" Style="{StaticResource ListDisplay}"  Height="100" Margin="0,0,0,5">
                         <WPF:DataGrid.Columns>
                             <WPF:DataGridTextColumn Header="First" Binding="{Binding FirstName}" IsReadOnly="True" />
                             <WPF:DataGridTextColumn Header="Last" Binding="{Binding LastName}" IsReadOnly="True" />

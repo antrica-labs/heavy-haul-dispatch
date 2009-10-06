@@ -14,7 +14,7 @@
         </ResourceDictionary>
     </UserControl.Resources>
     <StackPanel>
-        <WPF:DataGrid Name="dgQuotes" Style="{StaticResource ListDisplay}" AutoGenerateColumns="False" Margin="0,0,0,5" Height="200" SelectedItem="{Binding ElementName=panelQuoteHistory, Path=SelectedQuote}"  HorizontalScrollBarVisibility="Disabled">
+        <WPF:DataGrid Name="dgQuotes" Style="{StaticResource ListDisplay}" Height="200" SelectedItem="{Binding ElementName=panelQuoteHistory, Path=SelectedQuote}"  >
             <WPF:DataGrid.Columns>
                 <WPF:DataGridTextColumn Header="Quote #" Width="0.3*" Binding="{Binding Number}"/>
                 <WPF:DataGridTextColumn Header="Revision" Width="0.3*" Binding="{Binding Revision}"/>
@@ -31,10 +31,10 @@
                 <ColumnDefinition />                               
             </Grid.ColumnDefinitions>
 
-            <Button Name="btnNewQuote" Grid.Column="0" Click="btnNewQuote_Click">New Quote</Button>
-            <Button Name="btnCreateRevisoin" Grid.Column="1" Click="btnCreateRevisoin_Click">Create Revision</Button>
-            <Button Name="btnCreateJob" Grid.Column="2" IsEnabled="False" Click="btnCreateJob_Click">Convert to Job</Button>            
-            <Button Name="btnPrintQuote" Grid.Column="3" Click="btnPrintQuote_Click">Print Quote</Button>
+            <Button Style="{StaticResource Horizontal}" Name="btnNewQuote" Grid.Column="0" Click="btnNewQuote_Click">New Quote</Button>
+            <Button Style="{StaticResource Horizontal}" Name="btnCreateRevisoin" Grid.Column="1" Click="btnCreateRevisoin_Click">Create Revision</Button>
+            <Button Style="{StaticResource Horizontal}" Name="btnCreateJob" Grid.Column="2" IsEnabled="False" Click="btnCreateJob_Click">Convert to Job</Button>            
+            <Button Style="{StaticResource HorizontalEnd}" Name="btnPrintQuote" Grid.Column="3" Click="btnPrintQuote_Click">Print Quote</Button>
         </Grid>
         
         <Grid Name="panelQuoteDetails">
@@ -108,7 +108,7 @@
             
             <GroupBox Header="Contact List" Grid.Column="1" Margin="0,0,5,5">
                 <StackPanel>
-                    <WPF:DataGrid Name="dgQuoteContacts" Style="{StaticResource ListDisplay}" HorizontalScrollBarVisibility="Disabled" AutoGenerateColumns="False" MinHeight="150" Margin="5">
+                    <WPF:DataGrid Name="dgQuoteContacts" Style="{StaticResource ListDisplay}"  MinHeight="150" Margin="5">
                         <WPF:DataGrid.Columns>
                             <WPF:DataGridTextColumn Header="First" Binding="{Binding FirstName}" IsReadOnly="True" />
                             <WPF:DataGridTextColumn Header="Last" Binding="{Binding LastName}" IsReadOnly="True" />

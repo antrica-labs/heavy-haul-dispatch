@@ -80,6 +80,6 @@
             </Grid>
         </GroupBox>
         
-        <Button Name="bttnCreateCompany" Click="bttnCreateCompany_Click">Create</Button>
+        <Button Style="{StaticResource Standard}" Name="bttnCreateCompany" Click="bttnCreateCompany_Click">Create</Button>
     </StackPanel>
 </Window>

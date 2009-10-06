@@ -16,7 +16,7 @@
         </ResourceDictionary>
     </UserControl.Resources>
     <StackPanel>
-        <WPF:DataGrid Name="dgCommodities" Style="{StaticResource ListDisplay}" AutoGenerateColumns="False" Margin="0,0,0,5" Height="180" HorizontalScrollBarVisibility="Disabled">
+        <WPF:DataGrid Name="dgCommodities" Style="{StaticResource ListDisplay}" Height="180" >
             <WPF:DataGrid.Columns>
                 <WPF:DataGridTextColumn Header="Unit" Binding="{Binding Unit}" />
                 <WPF:DataGridTextColumn Header="Name" Binding="{Binding Name}" />
@@ -36,8 +36,8 @@
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
 
-            <Button Name="btnNewCommodity" Grid.Column="0" Click="btnNewCommodity_Click">New Commodity</Button>
-            <Button Name="btnRemoveCommodity" Grid.Column="3" Click="btnRemoveCommodity_Click">Remove Commodity</Button>
+            <Button Style="{StaticResource Horizontal}" Name="btnNewCommodity" Grid.Column="0" Click="btnNewCommodity_Click">New Commodity</Button>
+            <Button Style="{StaticResource HorizontalEnd}" Name="btnRemoveCommodity" Grid.Column="3" Click="btnRemoveCommodity_Click">Remove Commodity</Button>
         </Grid>
                
         <Border BorderBrush="LightGray" BorderThickness="1" Margin="0,0,0,5">
@@ -117,13 +117,13 @@
                             <TextBox Name="txtCommodityHeight" Grid.Row="2" Grid.Column="1" Text="{Binding Height}" />
 
                             <Label Grid.Row="3" Grid.Column="0">imated:</Label>
-                            <CheckBox Name="chbCommoditySizeimated" Grid.Row="3" Grid.Column="1" Margin="3,6,0,0" IsChecked="{Binding Sizeimated}" />
+                            <CheckBox Name="chbCommoditySizeimated" Grid.Row="3" Grid.Column="1" IsChecked="{Binding Sizeimated}" />
 
                             <Label Grid.Row="4" Grid.Column="0">Weight:</Label>
                             <TextBox Name="txtCommodityWeight" Grid.Row="4" Grid.Column="1" Text="{Binding Weight}" />
 
-                            <Label Grid.Row="5" Grid.Column="0">imated:</Label>
-                            <CheckBox Name="chbCommodityWeightimated" Grid.Row="5" Grid.Column="1" Margin="3,6,0,0" IsChecked="{Binding Weightimated}"/>
+                            <Label Grid.Row="5" Grid.Column="0">Estimated:</Label>
+                            <CheckBox Name="chbCommodityWeightimated" Grid.Row="5" Grid.Column="1" IsChecked="{Binding Weightimated}"/>
                         </Grid>
                     </GroupBox>
                 </Grid>

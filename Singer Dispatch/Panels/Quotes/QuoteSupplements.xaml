@@ -12,14 +12,14 @@
         </ResourceDictionary>
     </UserControl.Resources>
     <StackPanel>
-        <WPF:DataGrid Name="dgSupplements" Style="{StaticResource ListDisplay}" HorizontalScrollBarVisibility="Disabled" SelectionChanged="dgSupplements_SelectionChanged" AutoGenerateColumns="False" Margin="0,0,0,5" MinHeight="200">
+        <WPF:DataGrid Name="dgSupplements" Style="{StaticResource ListDisplay}"  SelectionChanged="dgSupplements_SelectionChanged" MinHeight="200">
             <WPF:DataGrid.Columns>
                 <WPF:DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
                 <WPF:DataGridTextColumn Header="Details" Binding="{Binding Details}" />
                 <WPF:DataGridTextColumn Header="Billing Type" Binding="{Binding BillingType.Name}" IsReadOnly="True" />
                 <WPF:DataGridTextColumn Header="Quantity" Binding="{Binding Quantity}" />
                 <WPF:DataGridTextColumn Header="Cost" Binding="{Binding CostPerItem}" />
-            </WPF:DataGrid.Columns>   
+            </WPF:DataGrid.Columns>            
         </WPF:DataGrid>
 
         <Grid Margin="0,0,0,10">
@@ -30,10 +30,10 @@
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
 
-            <Button Name="btnNewSupplement" Grid.Column="0" Click="btnNewSupplement_Click">New Supplement</Button>
-            <Button Name="btnRemoveSupplement"  Grid.Column="3" Click="btnRemoveSupplement_Click">Remove Supplement</Button>
+            <Button Style="{StaticResource Horizontal}" Name="btnNewSupplement" Grid.Column="0" Click="btnNewSupplement_Click">New Supplement</Button>
+            <Button Style="{StaticResource HorizontalEnd}" Name="btnRemoveSupplement"  Grid.Column="3" Click="btnRemoveSupplement_Click">Remove Supplement</Button>
         </Grid>
-
+        
         <GroupBox Name="grpSupplementDetails" Header="Supplement Details" Margin="0,0,0,10" DataContext="{Binding ElementName=dgQuoteSupplement, Path=SelectedItem}">
             <Grid>
                 <Grid.ColumnDefinitions>

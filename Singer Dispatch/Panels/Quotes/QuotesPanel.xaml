@@ -29,8 +29,8 @@
                     <Label Content="{Binding Path=SelectedQuote.Revision}" FontWeight="Bold"/>
                 </StackPanel>
                 
-                <Button Name="btnDiscardChanges" Grid.Column="2" IsEnabled="False" Click="btnDiscardChanges_Click">Discard Changes</Button>
-                <Button Name="btnCommitChanges" Grid.Column="3" IsEnabled="False" Click="btnCommitChanges_Click">Save Changes</Button>                
+                <Button Style="{StaticResource Horizontal}" Name="btnDiscardChanges" Grid.Column="2" IsEnabled="False" Click="btnDiscardChanges_Click">Discard Changes</Button>
+                <Button Style="{StaticResource HorizontalEnd}" Name="btnCommitChanges" Grid.Column="3" IsEnabled="False" Click="btnCommitChanges_Click">Save Changes</Button>                
             </Grid>
         </Border>
         

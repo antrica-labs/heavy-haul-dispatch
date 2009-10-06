@@ -17,7 +17,7 @@
         </ResourceDictionary>
     </UserControl.Resources>
     <StackPanel>
-        <WPF:DataGrid Name="dgDispatches" Style="{StaticResource ListDisplay}" AutoGenerateColumns="False" Margin="0,0,0,5" Height="180">
+        <WPF:DataGrid Name="dgDispatches" Style="{StaticResource ListDisplay}" Height="180">
             <WPF:DataGrid.Columns>                
                 <WPF:DataGridTextColumn Header="Description" Binding="{Binding Description}" />
                 <WPF:DataGridTextColumn Header="Load" Binding="{Binding Load.Description}" />
@@ -32,8 +32,8 @@
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
 
-            <Button Name="btnNewDispatch" Grid.Column="0" Click="btnNewDispatch_Click">New Dispatch</Button>
-            <Button Grid.Column="3">Remove Dispatch</Button>
+            <Button Style="{StaticResource Horizontal}" Name="btnNewDispatch" Grid.Column="0" Click="btnNewDispatch_Click">New Dispatch</Button>
+            <Button Style="{StaticResource HorizontalEnd}" Grid.Column="3">Remove Dispatch</Button>
         </Grid>
         
         <GroupBox Header="Dispatch Details" DataContext="{Binding ElementName=dgDispatches, Path=SelectedItem}">

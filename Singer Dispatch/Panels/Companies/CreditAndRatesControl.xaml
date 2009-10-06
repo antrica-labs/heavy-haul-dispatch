@@ -17,11 +17,11 @@
     </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1.5*" />
+            <ColumnDefinition Width="1.4*" />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
                
-        <WPF:DataGrid Name="dgCreditRates" MaxHeight="380" IsReadOnly="True" Grid.Column="0" Margin="5" Style="{StaticResource ListDisplay}" AutoGenerateColumns="False" RowEditEnding="DataGridCommit" HorizontalScrollBarVisibility="Disabled">
+        <WPF:DataGrid Name="dgCreditRates" MaxHeight="450" IsReadOnly="True" Grid.Column="0" Margin="5" Style="{StaticResource ListDisplay}" RowEditEnding="DataGridCommit">
             <WPF:DataGrid.Columns>
                 <WPF:DataGridTextColumn Header="Type" Binding="{Binding Name}" Width="2*" />
                 <WPF:DataGridTextColumn Header="Hourly" Binding="{Binding Path=Hourly, StringFormat=c}" />
@@ -36,7 +36,7 @@
             <GroupBox Header="Rate Adjustments" Name="grpRateAdjustment">
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="140"/>
+                        <ColumnDefinition Width="145"/>
                         <ColumnDefinition />
                         <ColumnDefinition Width="20" />
                     </Grid.ColumnDefinitions>
@@ -69,7 +69,7 @@
                 <StackPanel VerticalAlignment="Top">
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="140" />
+                            <ColumnDefinition Width="145" />
                             <ColumnDefinition />
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
@@ -93,7 +93,7 @@
                         <TextBox Name="txtCreditAccPacCode" Grid.Row="3" Grid.Column="1"  Text="{Binding AccPacVendorCode}" />
 
                         <Label Grid.Row="4" Grid.Column="0">Equifax Report Complete:</Label>
-                        <CheckBox Name="chbCreditEquifaxComplete" Grid.Row="4" Grid.Column="1" Margin="0,6,0,0" IsChecked="{Binding EquifaxComplete}" />
+                        <CheckBox Name="chbCreditEquifaxComplete" Grid.Row="4" Grid.Column="1" IsChecked="{Binding EquifaxComplete}" />
                     </Grid>
 
                     <StackPanel VerticalAlignment="Top">
@@ -103,7 +103,7 @@
                 </StackPanel>
             </GroupBox>
             
-            <Button Name="btnSaveDetails" Click="SaveDetails">Update Details</Button>
+            <Button Style="{StaticResource Bottom}" Name="btnSaveDetails" Click="SaveDetails">Update Details</Button>
         </StackPanel>
     </Grid>
 </Company:CompanyUserControl>

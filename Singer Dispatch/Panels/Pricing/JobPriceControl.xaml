@@ -12,7 +12,7 @@
         </ResourceDictionary>
     </UserControl.Resources>
     <StackPanel>
-        <WPF:DataGrid Name="dgJobs" Style="{StaticResource ListDisplay}" AutoGenerateColumns="False" Margin="0,0,0,5" Height="180" SelectedItem="{Binding ElementName=panelJobHistory, Path=SelectedJob}">
+        <WPF:DataGrid Name="dgJobs" Style="{StaticResource ListDisplay}" Height="180" SelectedItem="{Binding ElementName=panelJobHistory, Path=SelectedJob}">
             <WPF:DataGrid.Columns>
                 <WPF:DataGridTextColumn Header="Number" Width="60" Binding="{Binding Number}"/>
                 <WPF:DataGridTextColumn Header="Quote" Width="60" Binding="{Binding Quote.Number}" />
@@ -110,14 +110,14 @@
                             <Label Grid.Column="2" Grid.Row="0">Load Load Price:</Label>
                             <TextBox Grid.Column="2" Grid.Row="1"></TextBox>
                             
-                            <CheckBox Grid.Column="3" Grid.Row="1" Margin="4,5,0,0">GST Exempt</CheckBox>
+                            <CheckBox Grid.Column="3" Grid.Row="1">GST Exempt</CheckBox>
                         </Grid>
 
                         <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
                             <RadioButton Margin="0,0,10,0">Job</RadioButton>
                             <RadioButton Margin="0,0,10,0">Load</RadioButton>
                             <RadioButton Margin="0,0,10,0">Progress</RadioButton>
-                            <CheckBox>Itemized Billing</CheckBox>
+                            <CheckBox Margin="0">Itemized Billing</CheckBox>
                         </StackPanel>
                     </StackPanel>
                 </GroupBox>
@@ -126,7 +126,7 @@
             <StackPanel Grid.Column="1" Margin="2">
                 <GroupBox Header="Customer Details" Margin="0,0,0,5">
                     <StackPanel>
-                        <WPF:DataGrid Name="dgCustomerDetails" Style="{StaticResource ListDisplay}" HorizontalScrollBarVisibility="Disabled" AutoGenerateColumns="False" Height="100">
+                        <WPF:DataGrid Name="dgCustomerDetails" Style="{StaticResource ListDisplay}" Height="100">
                             <WPF:DataGrid.Columns>
                                 <WPF:DataGridTextColumn Header="Field" Binding="{Binding Field}" />
                                 <WPF:DataGridTextColumn Header="Value" Binding="{Binding Value}" />
@@ -139,8 +139,8 @@
                                 <ColumnDefinition />
                             </Grid.ColumnDefinitions>
                             
-                            <Button Name="btnNewCustomerDetail" Grid.Column="0" Click="btnNewCustomerDetail_Click">Add</Button>
-                            <Button Name="btnRemoveCustomerDetail" Grid.Column="1" Click="btnRemoveCustomerDetail_Click">Remove</Button>
+                            <Button Style="{StaticResource Horizontal}" Name="btnNewCustomerDetail" Grid.Column="0" Click="btnNewCustomerDetail_Click">Add</Button>
+                            <Button Style="{StaticResource HorizontalEnd}" Name="btnRemoveCustomerDetail" Grid.Column="1" Click="btnRemoveCustomerDetail_Click">Remove</Button>
                         </Grid>
                     </StackPanel>
                 </GroupBox>
@@ -149,7 +149,7 @@
 
                 <GroupBox Header="Contact List" Margin="0,0,5,5">
                     <StackPanel>
-                        <WPF:DataGrid Name="dgJobContacts" Style="{StaticResource ListDisplay}" HorizontalScrollBarVisibility="Disabled" AutoGenerateColumns="False" Height="100" Margin="0,0,0,5">
+                        <WPF:DataGrid Name="dgJobContacts" Style="{StaticResource ListDisplay}" Height="100">
                             <WPF:DataGrid.Columns>
                                 <WPF:DataGridTextColumn Header="First" Binding="{Binding FirstName}" IsReadOnly="True" />
                                 <WPF:DataGridTextColumn Header="Last" Binding="{Binding LastName}" IsReadOnly="True" />

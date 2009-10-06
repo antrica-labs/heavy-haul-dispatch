@@ -23,10 +23,10 @@
             <RowDefinition />            
         </Grid.RowDefinitions>
         
-        <StackPanel Grid.Column="0" Grid.Row="0" Margin="0,0,5,15">
+        <StackPanel Grid.Column="0" Grid.Row="0" Margin="0,0,3,3">
             <Label>Company Addresses:</Label>
             
-            <WPF:DataGrid Name="dgAddresses" Style="{StaticResource ListDisplay}" Grid.Column="0" Grid.Row="0" MinHeight="125" Margin="3" AutoGenerateColumns="False" SelectionChanged="dgAddresses_SelectionChanged" RowEditEnding="DataGridCommit" HorizontalScrollBarVisibility="Disabled">
+            <WPF:DataGrid Name="dgAddresses" Style="{StaticResource ListDisplay}" Grid.Column="0" Grid.Row="0" MinHeight="125" SelectionChanged="dgAddresses_SelectionChanged" RowEditEnding="DataGridCommit">
                 <WPF:DataGrid.Columns>
                     <WPF:DataGridTextColumn Header="Type" Binding="{Binding AddressType.Name}" IsReadOnly="True" />
                     <WPF:DataGridTextColumn Header="Address" Width="1.5*" Binding="{Binding Line1}" />
@@ -34,6 +34,11 @@
                     <WPF:DataGridTextColumn Header="Province" Binding="{Binding ProvincesAndState.Name}" IsReadOnly="True" />
                     <WPF:DataGridTextColumn Header="Country" Binding="{Binding ProvincesAndState.Country.Name}" IsReadOnly="True" />
                 </WPF:DataGrid.Columns>
+                <WPF:DataGrid.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Delete Record" />
+                    </ContextMenu>
+                </WPF:DataGrid.ContextMenu>
             </WPF:DataGrid>
 
             <Grid>
@@ -42,12 +47,12 @@
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
                             
-                <Button Name="btnNewAddress" Grid.Column="0" Click="btnNewAddress_Click">New address</Button>
-                <Button Name="btnRemoveAddress" Grid.Column="1" Click="btnRemoveAddress_Click">Remove address</Button>
+                <Button Style="{StaticResource Horizontal}" Name="btnNewAddress" Grid.Column="0" Click="btnNewAddress_Click">New address</Button>
+                <Button Style="{StaticResource HorizontalEnd}" Name="btnRemoveAddress" Grid.Column="1" Click="btnRemoveAddress_Click">Remove address</Button>
             </Grid>            
         </StackPanel>
         
-        <GroupBox Grid.Column="0" Grid.Row="1"  Header="Address Detials" Margin="0,0,5,0" DataContext="{Binding ElementName=dgAddresses, Path=SelectedItem}">            
+        <GroupBox Grid.Column="0" Grid.Row="1" Margin="0,0,3,0"  Header="Address Detials" DataContext="{Binding ElementName=dgAddresses, Path=SelectedItem}">            
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
@@ -100,14 +105,14 @@
                 <Label Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="3">Address Notes:</Label>
                 <TextBox Name="txtAddressNotes" Grid.Row="10" Grid.Column="0" Grid.ColumnSpan="3" Height="60" Style="{StaticResource MultiLine}" Text="{Binding Notes}"/>
                 
-                <Button Name="bttnSaveAddress" Grid.Row="11" Grid.Column="0" Grid.ColumnSpan="3" Click="bttnSaveAddress_Click">Save address</Button>
+                <Button Style="{StaticResource Bottom}" Name="bttnSaveAddress" Grid.Row="11" Grid.Column="0" Grid.ColumnSpan="3" Click="bttnSaveAddress_Click">Save address</Button>
             </Grid>
         </GroupBox>
         
-        <StackPanel Grid.Column="1" Grid.Row="0" Margin="5,0,0,15">
+        <StackPanel Grid.Column="1" Grid.Row="0" Margin="3,0,3,0">
             <Label>Address Contacts:</Label>
             
-            <WPF:DataGrid Name="dgContacts" Style="{StaticResource ListDisplay}" Grid.Column="0" Grid.Row="0" ItemsSource="{Binding ElementName=dgAddresses, Path=SelectedItem.Contacts}" MinHeight="125" Margin="3" AutoGenerateColumns="False" RowEditEnding="DataGridCommit" HorizontalScrollBarVisibility="Disabled">
+            <WPF:DataGrid Name="dgContacts" Style="{StaticResource ListDisplay}" Grid.Column="0" Grid.Row="0" ItemsSource="{Binding ElementName=dgAddresses, Path=SelectedItem.Contacts}" MinHeight="125" RowEditEnding="DataGridCommit">
                 <WPF:DataGrid.Columns>
                     <WPF:DataGridTextColumn Header="Last name" Binding="{Binding LastName}" />
                     <WPF:DataGridTextColumn Header="First name" Binding="{Binding FirstName}" />
@@ -122,14 +127,12 @@
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
 
-                <Button Name="btnNewContact" Grid.Column="0" Click="btnNewContact_Click">New contact</Button>
-                <Button Name="btnRemoveContact" Grid.Column="1" Click="btnRemoveContact_Click">Remove contact</Button>                
+                <Button Style="{StaticResource Horizontal}" Name="btnNewContact" Grid.Column="0" Click="btnNewContact_Click">New contact</Button>
+                <Button Style="{StaticResource HorizontalEnd}" Name="btnRemoveContact" Grid.Column="1" Click="btnRemoveContact_Click">Remove contact</Button>                
             </Grid>
-
-            
         </StackPanel>
         
-        <GroupBox Grid.Column="1" Grid.Row="1" Header="ContactDetails" Margin="5,0,0,0" DataContext="{Binding ElementName=dgContacts, Path=SelectedItem}">
+        <GroupBox Grid.Column="1" Grid.Row="1" Margin="3,0,0,0" Header="Contact Details" DataContext="{Binding ElementName=dgContacts, Path=SelectedItem}">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
@@ -173,7 +176,7 @@
                 <Label Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="2">Contact Notes:</Label>
                 <TextBox Name="txtContactNotes" Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="2" Height="60" Style="{StaticResource MultiLine}"  Text="{Binding Notes}" />
                 
-                <Button Name="bttnSaveContact" Grid.Row="10" Grid.Column="0" Grid.ColumnSpan="2" Click="bttnSaveContact_Click">Save contact</Button>
+                <Button Style="{StaticResource Bottom}" Name="bttnSaveContact" Grid.Row="10" Grid.Column="0" Grid.ColumnSpan="2" Click="bttnSaveContact_Click">Save contact</Button>
             </Grid>
         </GroupBox>
     </Grid>

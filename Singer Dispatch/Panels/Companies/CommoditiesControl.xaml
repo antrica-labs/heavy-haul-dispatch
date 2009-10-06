@@ -11,7 +11,7 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <Grid Margin="5">
+    <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="375" />
             <ColumnDefinition />
@@ -21,7 +21,7 @@
             <RowDefinition />
         </Grid.RowDefinitions>
 
-        <WPF:DataGrid Name="dgCommodities" Height="auto" Grid.Column="0" HorizontalScrollBarVisibility="Disabled" Grid.Row="0" Style="{StaticResource ListDisplay}" AutoGenerateColumns="False" Margin="0,0,4,4" RowEditEnding="DataGridCommit">
+        <WPF:DataGrid Name="dgCommodities" Grid.Column="0" Grid.Row="0" Style="{StaticResource ListDisplay}" Margin="0,0,3,0" RowEditEnding="DataGridCommit">
             <WPF:DataGrid.Columns>
                 <WPF:DataGridTextColumn Header="Unit" Binding="{Binding Unit}" />
                 <WPF:DataGridTextColumn Header="Name" Width="2*" Binding="{Binding Name}" />                
@@ -30,20 +30,20 @@
             </WPF:DataGrid.Columns>
         </WPF:DataGrid>
 
-        <Grid Grid.Column="0" Grid.Row="1">
+        <Grid Grid.Column="0" Grid.Row="1" Margin="0,0,3,0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
 
-            <Button Name="btnDeleteCommodity" Grid.Column="0" Click="btnDeleteCommodity_Click">Delete commodity</Button>
-            <Button Name="btnNewCommodity" Grid.Column="1" Click="btnNewCommodity_Click">New commodity</Button>            
+            <Button Style="{StaticResource Horizontal}" Name="btnDeleteCommodity" Grid.Column="0" Click="btnDeleteCommodity_Click">Delete commodity</Button>
+            <Button Style="{StaticResource HorizontalEnd}" Name="btnNewCommodity" Grid.Column="1" Click="btnNewCommodity_Click">New commodity</Button>            
         </Grid>        
 
-        <GroupBox Name="panelCommodityDetails" Header="Commodity Details" Grid.Column="1" Grid.Row="0" Margin="0,0,0,5" DataContext="{Binding ElementName=dgCommodities, Path=SelectedItem}">            
+        <GroupBox Name="panelCommodityDetails" Header="Commodity Details" Margin="3,0,0,0"  Grid.Column="1" Grid.Row="0" DataContext="{Binding ElementName=dgCommodities, Path=SelectedItem}">            
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="110"/>
                     <ColumnDefinition />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
@@ -60,7 +60,7 @@
                     <RowDefinition />
                 </Grid.RowDefinitions>
 
-                <Label HorizontalAlignment="Left" Width="125">Commodity Name:</Label>
+                <Label HorizontalAlignment="Left">Commodity Name:</Label>
                 <TextBox Name="txtCommodityName" Grid.Row="0" Grid.Column="1" Text="{Binding Name}"/>
 
                 <Label Grid.Row="1" Grid.Column="0">Value:</Label>
@@ -87,7 +87,7 @@
                 <GroupBox Header="Dimentions (m/kg)" Grid.Row="0" Grid.Column="2" Grid.RowSpan="7" Margin="5,0,0,0">
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="60"/>
+                            <ColumnDefinition Width="65"/>
                             <ColumnDefinition />
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>                            
@@ -109,18 +109,18 @@
                         <TextBox Name="txtCommodityHeight" Grid.Row="2" Grid.Column="1" Text="{Binding Height}" />
 
                         <Label Grid.Row="3" Grid.Column="0">Estimated:</Label>
-                        <CheckBox Name="chbCommoditySizeEstimated" Grid.Row="3" Grid.Column="1" Margin="3,6,0,0" IsChecked="{Binding SizeEstimated}" />
+                        <CheckBox Name="chbCommoditySizeEstimated" Grid.Row="3" Grid.Column="1" IsChecked="{Binding SizeEstimated}" />
 
                         <Label Grid.Row="4" Grid.Column="0">Weight:</Label>
                         <TextBox Name="txtCommodityWeight" Grid.Row="4" Grid.Column="1" Text="{Binding Weight}" />
 
                         <Label Grid.Row="5" Grid.Column="0">Estimated:</Label>
-                        <CheckBox Name="chbCommodityWeightEstimated" Grid.Row="5" Grid.Column="1" Margin="3,6,0,0" IsChecked="{Binding WeightEstimated}"/>
+                        <CheckBox Name="chbCommodityWeightEstimated" Grid.Row="5" Grid.Column="1" IsChecked="{Binding WeightEstimated}"/>
                     </Grid>
                 </GroupBox>
             </Grid>
         </GroupBox>
         
-        <Button Name="btnSaveCommodity" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="3" Click="btnSaveCommodity_Click">Save commodity</Button>
+        <Button Style="{StaticResource HorizontalEnd}" Name="btnSaveCommodity" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="3" Click="btnSaveCommodity_Click">Save commodity</Button>
     </Grid>
 </Company:CompanyUserControl>

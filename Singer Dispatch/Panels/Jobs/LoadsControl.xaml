@@ -13,7 +13,7 @@
         </ResourceDictionary>
     </UserControl.Resources>
     <StackPanel>
-        <WPF:DataGrid Name="dgLoads" Style="{StaticResource ListDisplay}" AutoGenerateColumns="False" Margin="0,0,0,5" Height="180">
+        <WPF:DataGrid Name="dgLoads" Style="{StaticResource ListDisplay}" Height="180">
             <WPF:DataGrid.Columns>
                 <WPF:DataGridTextColumn Header="Unit" Width="0.15*" Binding="{Binding Unit.Name}"/>
                 <WPF:DataGridTextColumn Header="Wheel Type" Width="0.2*" Binding="{Binding WheelType.Name}" />
@@ -29,8 +29,8 @@
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
 
-            <Button Name="btnNewLoad" Grid.Column="0" Click="btnNewLoad_Click">New Load</Button>
-            <Button Name="btnRemoveLoad" Grid.Column="3">Remove Load</Button>
+            <Button Style="{StaticResource Horizontal}" Name="btnNewLoad" Grid.Column="0" Click="btnNewLoad_Click">New Load</Button>
+            <Button Style="{StaticResource HorizontalEnd}" Name="btnRemoveLoad" Grid.Column="3">Remove Load</Button>
         </Grid>
         
         <GroupBox Header="Vehicle" DataContext="{Binding ElementName=dgLoads, Path=SelectedItem}">
@@ -165,7 +165,7 @@
                     <TextBox Grid.Column="12" Grid.Row="1" Text="{Binding WeightGroup10}" TextChanged="AxleWeightChanged" />                    
                     
                     <Label Grid.Column="13" Grid.Row="0">Esitmate:</Label>
-                    <CheckBox Grid.Column="13" Grid.Row="1" Margin="5" IsChecked="{Binding WeightEstimated}" />
+                    <CheckBox Grid.Column="13" Grid.Row="1" IsChecked="{Binding WeightEstimated}" />
 
                     <Label Grid.Column="0" Grid.Row="2">Gross Weight:</Label>
                     <TextBox Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="2" Text="{Binding GrossWeight}" />

@@ -12,7 +12,7 @@
         </ResourceDictionary>
     </UserControl.Resources>
     <StackPanel>
-        <WPF:DataGrid Name="dgQuoteCommodities" Style="{StaticResource ListDisplay}" SelectionChanged="dgQuoteCommodities_SelectionChanged" AutoGenerateColumns="False" Margin="0,0,0,5" Height="200" HorizontalScrollBarVisibility="Disabled">
+        <WPF:DataGrid Name="dgQuoteCommodities" Style="{StaticResource ListDisplay}" SelectionChanged="dgQuoteCommodities_SelectionChanged" Height="200" >
             <WPF:DataGrid.Columns>
                 <WPF:DataGridTextColumn Header="Unit" Binding="{Binding Unit}" />
                 <WPF:DataGridTextColumn Header="Name" Binding="{Binding Name}" />
@@ -32,14 +32,14 @@
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
             
-            <Button Name="btnNewCommodity" Grid.Column="0" Click="btnNewCommodity_Click">New Commodity</Button>
-            <Button Name="btnRemoveCommodity" Grid.Column="3" Click="btnRemoveCommodity_Click">Remove Commodity</Button>
+            <Button Style="{StaticResource Horizontal}" Name="btnNewCommodity" Grid.Column="0" Click="btnNewCommodity_Click">New Commodity</Button>
+            <Button Style="{StaticResource HorizontalEnd}" Name="btnRemoveCommodity" Grid.Column="3" Click="btnRemoveCommodity_Click">Remove Commodity</Button>
         </Grid>
 
         <GroupBox Name="gbDetails"  Header="Details" Margin="0,0,0,5" DataContext="{Binding ElementName=dgQuoteCommodities, Path=SelectedItem}">
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="105" />
+                    <ColumnDefinition Width="110" />
                     <ColumnDefinition />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
@@ -56,7 +56,7 @@
                     <RowDefinition />
                 </Grid.RowDefinitions>
 
-                <Label HorizontalAlignment="Left" Width="125">Commodity Name:</Label>
+                <Label HorizontalAlignment="Left">Commodity Name:</Label>
                 <ComboBox Name="cmbCommodityName" Text="{Binding Name}" Grid.Row="0" Grid.Column="1" IsEditable="True" ItemTemplate="{StaticResource SimpleNameTemplate}" TextSearch.TextPath="Name" SelectionChanged="cmbCommodityName_SelectionChanged" />
 
                 <Label Grid.Row="1" Grid.Column="0">Value:</Label>
@@ -126,7 +126,7 @@
             <GroupBox Name="gbDepature" Header="Departure" Grid.Column="0" Margin="0,0,3,0" DataContext="{Binding ElementName=dgQuoteCommodities, Path=SelectedItem}">
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="75"/>
+                        <ColumnDefinition Width="80"/>
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
@@ -145,7 +145,7 @@
             <GroupBox Name="gbDestination" Header="Destination" Grid.Column="1" Margin="3,0,0,0" DataContext="{Binding ElementName=dgQuoteCommodities, Path=SelectedItem}">
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="75"/>
+                        <ColumnDefinition Width="80"/>
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
