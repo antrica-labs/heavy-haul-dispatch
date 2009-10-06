@@ -103,7 +103,7 @@
                 </StackPanel>
             </GroupBox>
             
-            <Button Name="btnSaveDetails" Click="SaveDetails" Margin="0,4,0,5" >Update Details</Button>
+            <Button Name="btnSaveDetails" Click="SaveDetails">Update Details</Button>
         </StackPanel>
     </Grid>
 </Company:CompanyUserControl>

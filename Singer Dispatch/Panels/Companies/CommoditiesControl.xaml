@@ -36,8 +36,8 @@
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
 
-            <Button Name="btnDeleteCommodity" Grid.Column="0" Margin="0,0,4,0" Click="btnDeleteCommodity_Click">Delete commodity</Button>
-            <Button Name="btnNewCommodity" Grid.Column="1"  Margin="0,0,4,0" Click="btnNewCommodity_Click">New commodity</Button>            
+            <Button Name="btnDeleteCommodity" Grid.Column="0" Click="btnDeleteCommodity_Click">Delete commodity</Button>
+            <Button Name="btnNewCommodity" Grid.Column="1" Click="btnNewCommodity_Click">New commodity</Button>            
         </Grid>        
 
         <GroupBox Name="panelCommodityDetails" Header="Commodity Details" Grid.Column="1" Grid.Row="0" Margin="0,0,0,5" DataContext="{Binding ElementName=dgCommodities, Path=SelectedItem}">            

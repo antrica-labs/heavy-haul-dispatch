@@ -88,6 +88,6 @@
             </Grid>
         </GroupBox>
         
-        <Button Margin="0,5,0,0">Add Permit</Button>
+        <Button>Add Permit</Button>
     </StackPanel>
 </Jobs:JobUserControl>
