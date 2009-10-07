@@ -36,13 +36,13 @@
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
 
-            <Button Style="{StaticResource Horizontal}" Name="btnNewCommodity" Grid.Column="0" Click="btnNewCommodity_Click">New Commodity</Button>
-            <Button Style="{StaticResource HorizontalEnd}" Name="btnRemoveCommodity" Grid.Column="3" Click="btnRemoveCommodity_Click">Remove Commodity</Button>
+            <Button Style="{StaticResource Horizontal}" Name="btnNewCommodity" Grid.Column="0" Click="btnNewCommodity_Click">New commodity</Button>
+            <Button Style="{StaticResource HorizontalEnd}" Name="btnRemoveCommodity" Grid.Column="3" Click="btnRemoveCommodity_Click">Remove commodity</Button>
         </Grid>
                
         <Border BorderBrush="LightGray" BorderThickness="1" Margin="0,0,0,5">
             <StackPanel Orientation="Horizontal" Margin="3" DataContext="{Binding ElementName=dgCommodities, Path=SelectedItem}">            
-                <Label>Assign to Load:</Label>
+                <Label>Assign to load:</Label>
                 <ComboBox Name="cmbLoads" MinWidth="300" SelectedItem="{Binding Load}" ItemTemplate="{StaticResource LoadNameTemplate}" />
             </StackPanel>
         </Border>
@@ -68,25 +68,25 @@
                         <RowDefinition />
                     </Grid.RowDefinitions>
 
-                    <Label HorizontalAlignment="Left" Width="125">Commodity Name:</Label>
+                    <Label HorizontalAlignment="Left" Width="125">Commodity name:</Label>
                     <ComboBox Name="cmbCommodityName" Grid.Row="0" Grid.Column="1" IsEditable="True" ItemTemplate="{StaticResource SimpleNameTemplate}" TextSearch.TextPath="Name" SelectionChanged="cmbCommodityName_SelectionChanged" />
 
                     <Label Grid.Row="1" Grid.Column="0">Value:</Label>
                     <TextBox Name="txtCommodityValue" Grid.Row="1" Grid.Column="1" Text="{Binding Value}" />
 
-                    <Label Grid.Row="2" Grid.Column="0">Serial Number:</Label>
+                    <Label Grid.Row="2" Grid.Column="0">Serial number:</Label>
                     <TextBox Name="txtCommoditySerial" Grid.Row="2" Grid.Column="1" Text="{Binding Serial}" />
 
-                    <Label Grid.Row="3" Grid.Column="0">Unit Number:</Label>
+                    <Label Grid.Row="3" Grid.Column="0">Unit number:</Label>
                     <TextBox Name="txtCommodityUnitNumber" Grid.Row="3" Grid.Column="1" Text="{Binding Unit}" />
 
                     <Label Grid.Row="4" Grid.Column="0">Owner:</Label>
                     <TextBox Name="txtCommodityOwner" Grid.Row="4" Grid.Column="1" Text="{Binding Owner}" />
 
-                    <Label Grid.Row="5" Grid.Column="0">Last Location:</Label>
+                    <Label Grid.Row="5" Grid.Column="0">Last location:</Label>
                     <TextBox Name="txtCommodityLastLocation" Grid.Row="5" Grid.Column="1" Text="{Binding LastLocation}" />
 
-                    <Label Grid.Row="6" Grid.Column="0">Last Address:</Label>
+                    <Label Grid.Row="6" Grid.Column="0">Last address:</Label>
                     <TextBox Name="txtCommodityLastAddress" Grid.Row="6" Grid.Column="1" Text="{Binding LastAddress}" />
 
                     <Label Grid.Row="7" Grid.Column="0">Notes:</Label>
@@ -116,7 +116,7 @@
                             <Label Grid.Row="2" Grid.Column="0">Height:</Label>
                             <TextBox Name="txtCommodityHeight" Grid.Row="2" Grid.Column="1" Text="{Binding Height}" />
 
-                            <Label Grid.Row="3" Grid.Column="0">imated:</Label>
+                            <Label Grid.Row="3" Grid.Column="0">Estimated:</Label>
                             <CheckBox Name="chbCommoditySizeimated" Grid.Row="3" Grid.Column="1" IsChecked="{Binding Sizeimated}" />
 
                             <Label Grid.Row="4" Grid.Column="0">Weight:</Label>
@@ -145,31 +145,29 @@
                         <RowDefinition />
                     </Grid.RowDefinitions>
                     
-                    <Label Grid.Column="0" Grid.Row="0">Site Name:</Label>
+                    <Label Grid.Column="0" Grid.Row="0">Site name:</Label>
                     <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding LoadSiteName}"/>
                     
                     <Label Grid.Column="0" Grid.Row="1">Address/LSD:</Label>
                     <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding LoadAddress}"/>
                     
-                    <Label Grid.Column="0" Grid.Row="2">Site Contact:</Label>
+                    <Label Grid.Column="0" Grid.Row="2">Site contact:</Label>
                     <TextBox Grid.Column="1" Grid.Row="2" />
                     
-                    <Label Grid.Column="0" Grid.Row="3">Load By:</Label>
+                    <Label Grid.Column="0" Grid.Row="3">Load by:</Label>
                     <TextBox Grid.Column="1" Grid.Row="3" Text="{Binding LoadBy}"/>
                     
-                    <Label Grid.Column="0" Grid.Row="4">Load Method:</Label>
+                    <Label Grid.Column="0" Grid.Row="4">Load method:</Label>
                     <ComboBox Grid.Column="1" Grid.Row="4" Text="{Binding LoadMethod}"/>
                     
-                    <Label Grid.Column="0" Grid.Row="5">Loading Date:</Label>
+                    <Label Grid.Column="0" Grid.Row="5">Loading date:</Label>
                     <WPF:DatePicker Grid.Column="1" Grid.Row="5" Text="{Binding LoadDate}" />
                                         
-                    <Label Grid.Column="2" Grid.Row="0">Load Instructions</Label>
+                    <Label Grid.Column="2" Grid.Row="0">Load instructions</Label>
                     <TextBox Grid.Column="2" Style="{StaticResource MultiLine}" Grid.Row="1" Grid.RowSpan="2" Text="{Binding LoadInstructions}" />
                     
-                    <Label Grid.Column="2" Grid.Row="3">Load Route:</Label>
-                    <TextBox Grid.Column="2" Grid.Row="4" Grid.RowSpan="2" Style="{StaticResource MultiLine}" Text="{Binding LoadRoute}"/>
-                    
-                    
+                    <Label Grid.Column="2" Grid.Row="3">Load route:</Label>
+                    <TextBox Grid.Column="2" Grid.Row="4" Grid.RowSpan="2" Style="{StaticResource MultiLine}" Text="{Binding LoadRoute}"/>                    
                 </Grid>                
             </TabItem>           
             
@@ -189,28 +187,28 @@
                         <RowDefinition />
                     </Grid.RowDefinitions>
 
-                    <Label Grid.Column="0" Grid.Row="0">Site Name:</Label>
+                    <Label Grid.Column="0" Grid.Row="0">Site name:</Label>
                     <TextBox Grid.Column="1" Grid.Row="0"/>
 
                     <Label Grid.Column="0" Grid.Row="1">Address/LSD:</Label>
                     <TextBox Grid.Column="1" Grid.Row="1" />
 
-                    <Label Grid.Column="0" Grid.Row="2">Site Contact:</Label>
+                    <Label Grid.Column="0" Grid.Row="2">Site contact:</Label>
                     <TextBox Grid.Column="1" Grid.Row="2" />
 
-                    <Label Grid.Column="0" Grid.Row="3">Unload By:</Label>
+                    <Label Grid.Column="0" Grid.Row="3">Unload by:</Label>
                     <TextBox Grid.Column="1" Grid.Row="3" />
 
-                    <Label Grid.Column="0" Grid.Row="4">Unload Method:</Label>
+                    <Label Grid.Column="0" Grid.Row="4">Unload method:</Label>
                     <ComboBox Grid.Column="1" Grid.Row="4" />
 
-                    <Label Grid.Column="0" Grid.Row="5">Unloading Date:</Label>
+                    <Label Grid.Column="0" Grid.Row="5">Unloading date:</Label>
                     <WPF:DatePicker Grid.Column="1" Grid.Row="5" />
                     
-                    <Label Grid.Column="2" Grid.Row="0">Unload Instructions</Label>
+                    <Label Grid.Column="2" Grid.Row="0">Unload instructions</Label>
                     <TextBox  Grid.Column="2" Grid.Row="1" Grid.RowSpan="2" Style="{StaticResource MultiLine}" />
 
-                    <Label Grid.Column="2" Grid.Row="3">Unload Route:</Label>
+                    <Label Grid.Column="2" Grid.Row="3">Unload route:</Label>
                     <TextBox Grid.Column="2" Grid.Row="4" Grid.RowSpan="2" Style="{StaticResource MultiLine}" />                    
                 </Grid>
             </TabItem>

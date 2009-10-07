@@ -51,10 +51,10 @@
                             <ComboBox Name="cmbCreatedBy" Grid.Row="1" Grid.Column="2" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectedItem="{Binding User}" TextSearch.TextPath="Name"></ComboBox>
                         </Grid>
 
-                        <Label>Care Of:</Label>
+                        <Label>Care of:</Label>
                         <ComboBox Name="cmbCareOfCompanies" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectedItem="{Binding Company1}" TextSearch.TextPath="Name" IsEditable="True" />
 
-                        <Label>Project Description</Label>
+                        <Label>Project description</Label>
                         <TextBox Height="40" Style="{StaticResource MultiLine}" VerticalScrollBarVisibility="Disabled" Text="{Binding Description}"/>
                     </StackPanel>
                 </GroupBox>
@@ -71,10 +71,10 @@
                             <RowDefinition />
                         </Grid.RowDefinitions>
 
-                        <Label Grid.Row="0" Grid.Column="0">Start Date:</Label>
+                        <Label Grid.Row="0" Grid.Column="0">Start date:</Label>
                         <WPF:DatePicker Name="dpStartDate" Grid.Row="1" Grid.Column="0" SelectedDate="{Binding CreationDate}" />
 
-                        <Label Grid.Row="0" Grid.Column="1">End Date:</Label>
+                        <Label Grid.Row="0" Grid.Column="1">End date:</Label>
                         <WPF:DatePicker Name="dpEndDate" Grid.Row="1" Grid.Column="1" SelectedDate="{Binding ExpirationDate}" />
 
                         <Label Grid.Row="0" Grid.Column="2">Status</Label>
@@ -104,20 +104,20 @@
                             <Label Grid.Column="0" Grid.Row="0">Hours:</Label>
                             <TextBox Grid.Column="0" Grid.Row="1"></TextBox>
                             
-                            <Label Grid.Column="1" Grid.Row="0">Hourly Price:</Label>
+                            <Label Grid.Column="1" Grid.Row="0">Hourly price:</Label>
                             <TextBox Grid.Column="1" Grid.Row="1"></TextBox>
                             
-                            <Label Grid.Column="2" Grid.Row="0">Load Load Price:</Label>
+                            <Label Grid.Column="2" Grid.Row="0">Load load price:</Label>
                             <TextBox Grid.Column="2" Grid.Row="1"></TextBox>
                             
-                            <CheckBox Grid.Column="3" Grid.Row="1">GST Exempt</CheckBox>
+                            <CheckBox Grid.Column="3" Grid.Row="1">GST exempt</CheckBox>
                         </Grid>
 
                         <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
                             <RadioButton Margin="0,0,10,0">Job</RadioButton>
                             <RadioButton Margin="0,0,10,0">Load</RadioButton>
                             <RadioButton Margin="0,0,10,0">Progress</RadioButton>
-                            <CheckBox Margin="0">Itemized Billing</CheckBox>
+                            <CheckBox Margin="0">Itemized billing</CheckBox>
                         </StackPanel>
                     </StackPanel>
                 </GroupBox>
@@ -159,10 +159,10 @@
 
                         <Grid DataContext="{Binding ElementName=dgJobContacts, Path=SelectedItem}">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="60"/>
+                                <ColumnDefinition Width="65"/>
                                 <ColumnDefinition Width="2*"/>
                                 <ColumnDefinition Width="10"/>
-                                <ColumnDefinition Width="52"/>
+                                <ColumnDefinition Width="58"/>
                                 <ColumnDefinition Width="1.1*" />
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>

@@ -80,30 +80,30 @@
                             <RowDefinition />
                         </Grid.RowDefinitions>
                         
-                        <Label Grid.Row="0" Grid.Column="0">Customer Type</Label>
+                        <Label Grid.Row="0" Grid.Column="0">Customer type</Label>
                         <ComboBox Name="cmbCreditCustomerType" Grid.Row="0" Grid.Column="1" SelectedItem="{Binding Type}" />
                         
-                        <Label Grid.Row="1" Grid.Column="0">Available Credit:</Label>
+                        <Label Grid.Row="1" Grid.Column="0">Available credit:</Label>
                         <TextBox Name="txtCreditAvailableCredit" Grid.Row="1" Grid.Column="1" Text="{Binding AvailableCredit}" />
                        
-                        <Label Grid.Row="2" Grid.Column="0">Priority Level:</Label>
+                        <Label Grid.Row="2" Grid.Column="0">Priority level:</Label>
                         <ComboBox Name="cmbCreditPriority" Grid.Row="2" Grid.Column="1" ItemTemplate="{StaticResource nameTemplate}" SelectedItem="{Binding CompanyPriorityLevel}" />
 
-                        <Label Grid.Row="3" Grid.Column="0">AccPac Vendor Code:</Label>
+                        <Label Grid.Row="3" Grid.Column="0">AccPac vendor code:</Label>
                         <TextBox Name="txtCreditAccPacCode" Grid.Row="3" Grid.Column="1"  Text="{Binding AccPacVendorCode}" />
 
-                        <Label Grid.Row="4" Grid.Column="0">Equifax Report Complete:</Label>
+                        <Label Grid.Row="4" Grid.Column="0">Equifax report complete:</Label>
                         <CheckBox Name="chbCreditEquifaxComplete" Grid.Row="4" Grid.Column="1" IsChecked="{Binding EquifaxComplete}" />
                     </Grid>
 
                     <StackPanel VerticalAlignment="Top">
-                        <Label>Addministration Notes:</Label>
+                        <Label>Addministration notes:</Label>
                         <TextBox Name="txtCreditAdminNotes" Height="60" Style="{StaticResource MultiLine}" Text="{Binding Notes}" />
                     </StackPanel>
                 </StackPanel>
             </GroupBox>
             
-            <Button Style="{StaticResource Bottom}" Name="btnSaveDetails" Click="SaveDetails">Update Details</Button>
+            <Button Style="{StaticResource Bottom}" Name="btnSaveDetails" Click="SaveDetails">Save adjustments</Button>
         </StackPanel>
     </Grid>
 </Company:CompanyUserControl>

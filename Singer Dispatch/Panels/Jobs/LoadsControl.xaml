@@ -16,7 +16,7 @@
         <WPF:DataGrid Name="dgLoads" Style="{StaticResource ListDisplay}" Height="180">
             <WPF:DataGrid.Columns>
                 <WPF:DataGridTextColumn Header="Unit" Width="0.15*" Binding="{Binding Unit.Name}"/>
-                <WPF:DataGridTextColumn Header="Wheel Type" Width="0.2*" Binding="{Binding WheelType.Name}" />
+                <WPF:DataGridTextColumn Header="Wheel type" Width="0.2*" Binding="{Binding WheelType.Name}" />
                 <WPF:DataGridTextColumn Header="Description" Binding="{Binding ServiceDescription}" />
             </WPF:DataGrid.Columns>   
         </WPF:DataGrid>
@@ -29,8 +29,8 @@
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
 
-            <Button Style="{StaticResource Horizontal}" Name="btnNewLoad" Grid.Column="0" Click="btnNewLoad_Click">New Load</Button>
-            <Button Style="{StaticResource HorizontalEnd}" Name="btnRemoveLoad" Grid.Column="3">Remove Load</Button>
+            <Button Style="{StaticResource Horizontal}" Name="btnNewLoad" Grid.Column="0" Click="btnNewLoad_Click">New load</Button>
+            <Button Style="{StaticResource HorizontalEnd}" Name="btnRemoveLoad" Grid.Column="3">Remove load</Button>
         </Grid>
         
         <GroupBox Header="Vehicle" DataContext="{Binding ElementName=dgLoads, Path=SelectedItem}">
@@ -49,10 +49,10 @@
                 <Label Grid.Column="0" Grid.Row="0">Unit:</Label>
                 <ComboBox Name="cmbUnits" Grid.Column="0" Grid.Row="1" SelectedItem="{Binding Unit}" ItemTemplate="{StaticResource SimpleNameTemplate}"></ComboBox>
                 
-                <Label Grid.Column="1" Grid.Row="0">Wheel Type:</Label>
+                <Label Grid.Column="1" Grid.Row="0">Wheel type:</Label>
                 <ComboBox Name="cmbWheelTypes" Grid.Column="1" Grid.Row="1" SelectedItem="{Binding WheelType}" ItemTemplate="{StaticResource SimpleNameTemplate}"></ComboBox>                
                 
-                <Label Grid.Column="2" Grid.Row="0">Trailer Combination:</Label>
+                <Label Grid.Column="2" Grid.Row="0">Trailer combination:</Label>
                 <ComboBox Name="cmbTrailerCombinations" Grid.Column="2" Grid.Row="1" SelectedItem="{Binding TrailerCombination}" ItemTemplate="{StaticResource SimpleNameTemplate}"></ComboBox>
                 
                 <Label Grid.Column="3" Grid.Row="0">Info:</Label>
@@ -73,10 +73,10 @@
                     <RowDefinition />
                 </Grid.RowDefinitions>
 
-                <Label Grid.Row="0" Grid.Column="0">Start Date:</Label>
+                <Label Grid.Row="0" Grid.Column="0">Start date:</Label>
                 <WPF:DatePicker Grid.Row="1" Grid.Column="0" SelectedDate="{Binding StartDate}" />
 
-                <Label Grid.Row="0" Grid.Column="1">End Date:</Label>
+                <Label Grid.Row="0" Grid.Column="1">End date:</Label>
                 <WPF:DatePicker Grid.Row="1" Grid.Column="1" SelectedDate="{Binding EndDate}" />
 
                 <Label Grid.Row="0" Grid.Column="2">Season</Label>
@@ -89,10 +89,10 @@
         
         <GroupBox Header="Instruction" DataContext="{Binding ElementName=dgLoads, Path=SelectedItem}">
             <StackPanel>
-                <Label>Description of Service:</Label>
+                <Label>Description of service:</Label>
                 <TextBox Text="{Binding ServiceDescription}"/>
                 
-                <Label>Additional Notes:</Label>
+                <Label>Additional notes:</Label>
                 <TextBox Text="{Binding Notes}" Height="50" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" />
             </StackPanel>
         </GroupBox>
@@ -126,7 +126,7 @@
                     </Grid.RowDefinitions>
                     
                     
-                    <Label Grid.Column="0" Grid.Row="1">Axle Weight:</Label>
+                    <Label Grid.Column="0" Grid.Row="1">Axle weight:</Label>
                     
                     <Label Grid.Column="1" Grid.Row="0">Steer:</Label>
                     <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding WeightSteer}" TextChanged="AxleWeightChanged" />                    
@@ -167,7 +167,7 @@
                     <Label Grid.Column="13" Grid.Row="0">Esitmate:</Label>
                     <CheckBox Grid.Column="13" Grid.Row="1" IsChecked="{Binding WeightEstimated}" />
 
-                    <Label Grid.Column="0" Grid.Row="2">Gross Weight:</Label>
+                    <Label Grid.Column="0" Grid.Row="2">Gross weight:</Label>
                     <TextBox Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="2" Text="{Binding GrossWeight}" />
 
                     <Label Grid.Column="3" Grid.Row="2">Length:</Label>

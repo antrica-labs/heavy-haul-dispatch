@@ -18,7 +18,7 @@
             <StackPanel>
                 <StackPanel Name="panelServiceTypes" Margin="20" />
                 
-                <Button Style="{StaticResource Bottom}" Name="btnUpdateServices" Click="btnUpdateServices_Click">Update Services</Button>
+                <Button Style="{StaticResource Bottom}" Name="btnUpdateServices" Click="btnUpdateServices_Click">Save services</Button>
             </StackPanel>
         </GroupBox>
     </StackPanel>

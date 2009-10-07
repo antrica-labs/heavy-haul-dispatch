@@ -35,9 +35,9 @@
                 <ColumnDefinition />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
-
-            <Button Style="{StaticResource Horizontal}" Name="btnDeleteCommodity" Grid.Column="0" Click="btnDeleteCommodity_Click">Delete commodity</Button>
-            <Button Style="{StaticResource HorizontalEnd}" Name="btnNewCommodity" Grid.Column="1" Click="btnNewCommodity_Click">New commodity</Button>            
+            
+            <Button Style="{StaticResource Horizontal}" Name="btnNewCommodity" Grid.Column="0" Click="btnNewCommodity_Click">New commodity</Button>
+            <Button Style="{StaticResource HorizontalEnd}" Name="btnDeleteCommodity" Grid.Column="1" Click="btnDeleteCommodity_Click">Delete commodity</Button>            
         </Grid>        
 
         <GroupBox Name="panelCommodityDetails" Header="Commodity Details" Margin="3,0,0,0"  Grid.Column="1" Grid.Row="0" DataContext="{Binding ElementName=dgCommodities, Path=SelectedItem}">            
@@ -60,25 +60,25 @@
                     <RowDefinition />
                 </Grid.RowDefinitions>
 
-                <Label HorizontalAlignment="Left">Commodity Name:</Label>
+                <Label HorizontalAlignment="Left">Commodity name:</Label>
                 <TextBox Name="txtCommodityName" Grid.Row="0" Grid.Column="1" Text="{Binding Name}"/>
 
                 <Label Grid.Row="1" Grid.Column="0">Value:</Label>
                 <TextBox Name="txtCommodityValue" Grid.Row="1" Grid.Column="1" Text="{Binding Value}" />
 
-                <Label Grid.Row="2" Grid.Column="0">Serial Number:</Label>
+                <Label Grid.Row="2" Grid.Column="0">Serial number:</Label>
                 <TextBox Name="txtCommoditySerial" Grid.Row="2" Grid.Column="1" Text="{Binding Serial}" />
 
-                <Label Grid.Row="3" Grid.Column="0">Unit Number:</Label>
+                <Label Grid.Row="3" Grid.Column="0">Unit number:</Label>
                 <TextBox Name="txtCommodityUnitNumber" Grid.Row="3" Grid.Column="1" Text="{Binding Unit}" />
 
                 <Label Grid.Row="4" Grid.Column="0">Owner:</Label>
                 <TextBox Name="txtCommodityOwner" Grid.Row="4" Grid.Column="1" Text="{Binding Owner}" />
 
-                <Label Grid.Row="5" Grid.Column="0">Last Location:</Label>
+                <Label Grid.Row="5" Grid.Column="0">Last location:</Label>
                 <TextBox Name="txtCommodityLastLocation" Grid.Row="5" Grid.Column="1" Text="{Binding LastLocation}" />
 
-                <Label Grid.Row="6" Grid.Column="0">Last Address:</Label>
+                <Label Grid.Row="6" Grid.Column="0">Last address:</Label>
                 <TextBox Name="txtCommodityLastAddress" Grid.Row="6" Grid.Column="1" Text="{Binding LastAddress}" />
 
                 <Label Grid.Row="7" Grid.Column="0">Notes:</Label>

@@ -35,8 +35,8 @@
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
 
-            <Button Style="{StaticResource Horizontal}" Name="btnNewJob" Grid.Column="0" Click="btnNewJob_Click">New Job</Button>            
-            <Button Style="{StaticResource HorizontalEnd}" Name="btnPrintQuote" Grid.Column="3" IsEnabled="False">Print Job</Button>
+            <Button Style="{StaticResource Horizontal}" Name="btnNewJob" Grid.Column="0" Click="btnNewJob_Click">New job</Button>            
+            <Button Style="{StaticResource HorizontalEnd}" Name="btnPrintQuote" Grid.Column="3" IsEnabled="False">Print job</Button>
         </Grid>
 
         <Grid>
@@ -72,10 +72,10 @@
                         <ComboBox Name="cmbCreatedBy" Grid.Row="1" Grid.Column="2" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectedItem="{Binding User}" TextSearch.TextPath="Name"></ComboBox>                       
                     </Grid>
 
-                    <Label>Care Of:</Label>
+                    <Label>Care of:</Label>
                     <ComboBox Name="cmbCareOfCompanies" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectedItem="{Binding Company1}" TextSearch.TextPath="Name" IsEditable="True" SelectionChanged="cmbCareOfCompanies_SelectionChanged" />
 
-                    <Label>Project Description</Label>
+                    <Label>Project description</Label>
                     <TextBox Name="txtDescription" Height="40" Style="{StaticResource MultiLine}" VerticalScrollBarVisibility="Disabled" Text="{Binding Description}"/>
                 </StackPanel>
             </GroupBox>
@@ -92,10 +92,10 @@
                         <RowDefinition />
                     </Grid.RowDefinitions>
 
-                    <Label Grid.Row="0" Grid.Column="0">Start Date:</Label>
+                    <Label Grid.Row="0" Grid.Column="0">Start date:</Label>
                     <WPF:DatePicker Name="dpStartDate" Grid.Row="1" Grid.Column="0" Margin="2" SelectedDate="{Binding StartDate}"></WPF:DatePicker>
 
-                    <Label Grid.Row="0" Grid.Column="1">End Date:</Label>
+                    <Label Grid.Row="0" Grid.Column="1">End date:</Label>
                     <WPF:DatePicker Name="dpEndDate" Grid.Row="1" Grid.Column="1" Margin="2" SelectedDate="{Binding EndDate}" />
                     
                     <Label Grid.Row="0" Grid.Column="2">Status</Label>
@@ -123,10 +123,10 @@
 
                     <Grid DataContext="{Binding ElementName=dgJobContacts, Path=SelectedItem}">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="60"/>
+                            <ColumnDefinition Width="65"/>
                             <ColumnDefinition Width="2*"/>
                             <ColumnDefinition Width="10"/>
-                            <ColumnDefinition Width="52"/>
+                            <ColumnDefinition Width="57"/>
                             <ColumnDefinition Width="1.1*" />
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>

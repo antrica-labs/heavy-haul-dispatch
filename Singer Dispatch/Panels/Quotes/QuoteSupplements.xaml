@@ -16,7 +16,7 @@
             <WPF:DataGrid.Columns>
                 <WPF:DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
                 <WPF:DataGridTextColumn Header="Details" Binding="{Binding Details}" />
-                <WPF:DataGridTextColumn Header="Billing Type" Binding="{Binding BillingType.Name}" IsReadOnly="True" />
+                <WPF:DataGridTextColumn Header="Billing type" Binding="{Binding BillingType.Name}" IsReadOnly="True" />
                 <WPF:DataGridTextColumn Header="Quantity" Binding="{Binding Quantity}" />
                 <WPF:DataGridTextColumn Header="Cost" Binding="{Binding CostPerItem}" />
             </WPF:DataGrid.Columns>            
@@ -30,8 +30,8 @@
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
 
-            <Button Style="{StaticResource Horizontal}" Name="btnNewSupplement" Grid.Column="0" Click="btnNewSupplement_Click">New Supplement</Button>
-            <Button Style="{StaticResource HorizontalEnd}" Name="btnRemoveSupplement"  Grid.Column="3" Click="btnRemoveSupplement_Click">Remove Supplement</Button>
+            <Button Style="{StaticResource Horizontal}" Name="btnNewSupplement" Grid.Column="0" Click="btnNewSupplement_Click">New supplement</Button>
+            <Button Style="{StaticResource HorizontalEnd}" Name="btnRemoveSupplement"  Grid.Column="3" Click="btnRemoveSupplement_Click">Remove supplement</Button>
         </Grid>
         
         <GroupBox Name="grpSupplementDetails" Header="Supplement Details" Margin="0,0,0,10" DataContext="{Binding ElementName=dgQuoteSupplement, Path=SelectedItem}">
@@ -54,7 +54,7 @@
                 <Label Grid.Row="1" Grid.Column="0">Details:</Label>
                 <TextBox Name="txtDetails" Grid.Row="1" Grid.Column="1" Text="{Binding Details}" />
                         
-                <Label Grid.Row="0" Grid.Column="2">Billing Type:</Label>
+                <Label Grid.Row="0" Grid.Column="2">Billing type:</Label>
                 <ComboBox Name="cmbBillingType" Grid.Row="0" Grid.Column="3" SelectedItem="{Binding BillingType}" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectionChanged="cmbBillingType_SelectionChanged" />
                 
                 <Label Grid.Row="1" Grid.Column="2">Quantity:</Label>

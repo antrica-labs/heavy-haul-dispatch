@@ -28,8 +28,8 @@
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
 
-            <Button Style="{StaticResource Horizontal}"  Grid.Column="0">New Permit</Button>
-            <Button Style="{StaticResource HorizontalEnd}" Grid.Column="3">Remove Permit</Button>
+            <Button Style="{StaticResource Horizontal}"  Grid.Column="0">New permit</Button>
+            <Button Style="{StaticResource HorizontalEnd}" Grid.Column="3">Remove permit</Button>
         </Grid>
 
         <GroupBox Header="Service Details">
@@ -55,7 +55,7 @@
                 <Label Grid.Row="1" Grid.Column="0">Issuer:</Label>
                 <ComboBox Grid.Row="1" Grid.Column="1"></ComboBox>
 
-                <Label Grid.Row="2" Grid.Column="0">Permit Type:</Label>
+                <Label Grid.Row="2" Grid.Column="0">Permit type:</Label>
                 <TextBox Grid.Row="2" Grid.Column="1" />
 
                 <Label Grid.Row="3" Grid.Column="0">Reference:</Label>
@@ -67,7 +67,7 @@
                 <GroupBox Grid.Column="2" Grid.Row="0" Grid.RowSpan="4" Header="Departure">
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition />
+                            <ColumnDefinition Width="60" />
                             <ColumnDefinition />
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
@@ -87,7 +87,5 @@
                 </GroupBox>
             </Grid>
         </GroupBox>
-        
-        <Button Style="{StaticResource Bottom}">Add Permit</Button>
     </StackPanel>
 </Jobs:JobUserControl>

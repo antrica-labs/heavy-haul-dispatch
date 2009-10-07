@@ -52,7 +52,7 @@
             </Grid>            
         </StackPanel>
         
-        <GroupBox Grid.Column="0" Grid.Row="1" Margin="0,0,3,0"  Header="Address Detials" DataContext="{Binding ElementName=dgAddresses, Path=SelectedItem}">            
+        <GroupBox Grid.Column="0" Grid.Row="1" Margin="0,0,3,0"  Header="Address Details" DataContext="{Binding ElementName=dgAddresses, Path=SelectedItem}">            
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
@@ -87,22 +87,22 @@
                 <Label Grid.Row="3" Grid.Column="2">Country:</Label>
                 <TextBox Name="txtCountry" Grid.Row="4" Grid.Column="2" IsEnabled="False" Text="{Binding ElementName=cmbProvinceOrState, Path=SelectedItem.Country.Name}" TextSearch.TextPath="Name" />
 
-                <Label Grid.Row="5" Grid.Column="0">Postal/Zip Code:</Label>
+                <Label Grid.Row="5" Grid.Column="0">Postal/Zip code:</Label>
                 <TextBox Name="txtPostalZip" Grid.Row="6" Grid.Column="0" Text="{Binding PostalZip}" />
 
-                <Label Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2">Address Type:</Label>
+                <Label Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2">Address type:</Label>
                 <ComboBox Name="cmbAddressType" Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectedItem="{Binding AddressType}" TextSearch.TextPath="Name" />
 
-                <Label Grid.Row="7" Grid.Column="0">Site Main Phone:</Label>
+                <Label Grid.Row="7" Grid.Column="0">Primary phone:</Label>
                 <TextBox Name="txtSiteMainPhone" Grid.Row="8" Grid.Column="0" Text="{Binding PrimaryPhone}" />
 
-                <Label Grid.Row="7" Grid.Column="1">Site Secondary:</Label>
+                <Label Grid.Row="7" Grid.Column="1">Secondary phone:</Label>
                 <TextBox Name="txtSiteSecondaryPhone" Grid.Row="8" Grid.Column="1" Text="{Binding SecondaryPhone}" />
 
-                <Label Grid.Row="7" Grid.Column="2">Site Fax:</Label>
+                <Label Grid.Row="7" Grid.Column="2">Fax:</Label>
                 <TextBox Name="txtSiteFax" Grid.Row="8" Grid.Column="2" Text="{Binding Fax}" />
 
-                <Label Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="3">Address Notes:</Label>
+                <Label Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="3">Address notes:</Label>
                 <TextBox Name="txtAddressNotes" Grid.Row="10" Grid.Column="0" Grid.ColumnSpan="3" Height="60" Style="{StaticResource MultiLine}" Text="{Binding Notes}"/>
                 
                 <Button Style="{StaticResource Bottom}" Name="bttnSaveAddress" Grid.Row="11" Grid.Column="0" Grid.ColumnSpan="3" Click="bttnSaveAddress_Click">Save address</Button>
@@ -152,28 +152,28 @@
                     <RowDefinition />
                 </Grid.RowDefinitions>
 
-                <Label Grid.Column="0" Grid.Row="0">First Name:</Label>
+                <Label Grid.Column="0" Grid.Row="0">First name:</Label>
                 <TextBox Name="txtContactFirstName" Grid.Column="0" Grid.Row="1" Text="{Binding FirstName}" />
 
-                <Label Grid.Column="1" Grid.Row="0">Last Name:</Label>
+                <Label Grid.Column="1" Grid.Row="0">Last name:</Label>
                 <TextBox Name="txtContactLastName" Grid.Column="1" Grid.Row="1" Text="{Binding LastName}" />
 
-                <Label Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2">Email Address:</Label>
+                <Label Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2">Email address:</Label>
                 <TextBox Name="txtContactEmail" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" Text="{Binding Email}" />
 
-                <Label Grid.Row="4" Grid.Column="0">Primary Phone:</Label>
+                <Label Grid.Row="4" Grid.Column="0">Primary phone:</Label>
                 <TextBox Name="txtContactPrimaryPhone" Grid.Column="0" Grid.Row="5" Text="{Binding PrimaryPhone}"/>
 
-                <Label Grid.Row="4" Grid.Column="1">Secondary Phone:</Label>
+                <Label Grid.Row="4" Grid.Column="1">Secondary phone:</Label>
                 <TextBox Name="txtContactSecondaryPhone" Grid.Row="5" Grid.Column="1" Text="{Binding SecondaryPhone}" />
 
-                <Label Grid.Row="6" Grid.Column="0">Contact Type:</Label>
+                <Label Grid.Row="6" Grid.Column="0">Contact type:</Label>
                 <ComboBox Name="cmbContactType" Grid.Row="7" Grid.Column="0" ItemTemplate="{StaticResource SimpleNameTemplate}"  SelectedItem="{Binding ContactType}" TextSearch.TextPath="Name" />
 
-                <Label Grid.Row="6" Grid.Column="1">Preferred Contact Method:</Label>
+                <Label Grid.Row="6" Grid.Column="1">Preferred contact method:</Label>
                 <ComboBox Name="cmbContactPreferedContactMethod" Grid.Row="7" Grid.Column="1" SelectedItem="{Binding PreferedContactMethod}" />
 
-                <Label Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="2">Contact Notes:</Label>
+                <Label Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="2">Contact notes:</Label>
                 <TextBox Name="txtContactNotes" Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="2" Height="60" Style="{StaticResource MultiLine}"  Text="{Binding Notes}" />
                 
                 <Button Style="{StaticResource Bottom}" Name="bttnSaveContact" Grid.Row="10" Grid.Column="0" Grid.ColumnSpan="2" Click="bttnSaveContact_Click">Save contact</Button>
