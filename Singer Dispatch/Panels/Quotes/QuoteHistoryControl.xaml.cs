@@ -119,13 +119,23 @@ namespace SingerDispatch.Panels.Quotes
         {
             var quote = (Quote)dgQuotes.SelectedItem;
 
-            //if (quote == null) return;
+            if (quote == null) return;
 
-            //MessageBoxResult confirmation = MessageBox.Show("Are you sure you wish to create a new job from the selected quote?", "New job confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            MessageBoxResult confirmation = MessageBox.Show("Are you sure you wish to create a new job from the selected quote? Doing so will save any changes made to this quote.", "New job confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
+            if (confirmation != MessageBoxResult.Yes)
+            {
+                return;
+            }
+            
             var window = (MainWindow)Application.Current.MainWindow;
+            var job = quote.ToJob();
 
-            window.OpenSection();
+            SelectedCompany.Jobs.Add(job);
+            Database.Jobs.InsertOnSubmit(job);
+            Database.SubmitChanges();
+
+            window.HighlightJob(job);
         }
 
         private void UpdateContactList()

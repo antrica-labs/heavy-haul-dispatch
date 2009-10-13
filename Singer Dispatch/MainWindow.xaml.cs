@@ -127,6 +127,7 @@ namespace SingerDispatch
 
             panelMainContent.Child = content;
             AddLinksToExpander((Panel)expander.Content, tabs);
+            expander.IsExpanded = true;
         }
 
         private void ExpandCompanies(object sender, RoutedEventArgs e)
@@ -164,9 +165,19 @@ namespace SingerDispatch
             viewer.Show();
         }
 
-        public void OpenSection()
+        public void HighlightJob(Job job)
         {
-            MessageBox.Show("Hello!");
+            if (job.Company != cmbCompanies.SelectedItem)
+            {
+                return;
+            }
+
+            var panel = new JobsPanel();
+
+            ExpandSection(expanderJobs, panel, panel.Tabs.Items);
+
+            panel.SelectedCompany = (Company)cmbCompanies.SelectedItem;
+            panel.SelectedJob = job;
         }
     }
 }
