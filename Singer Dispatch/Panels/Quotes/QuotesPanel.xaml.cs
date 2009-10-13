@@ -10,20 +10,6 @@ namespace SingerDispatch.Panels.Quotes
     /// </summary>
     public partial class QuotesPanel : QuoteUserControl
     {
-        public static DependencyProperty SelectedCompanyProperty = DependencyProperty.Register("SelectedCompany", typeof(Company), typeof(QuotesPanel), new PropertyMetadata(null, QuotesPanel.SelectedCompanyPropertyChanged));
-
-        public Company SelectedCompany
-        {
-            get
-            {
-                return (Company)GetValue(SelectedCompanyProperty);
-            }
-            set
-            {
-                SetValue(SelectedCompanyProperty, value);
-            }
-        }
-
         private SingerDispatchDataContext database;
 
         public QuotesPanel()
@@ -33,12 +19,11 @@ namespace SingerDispatch.Panels.Quotes
             database = SingerConstants.CommonDataContext;
         }
 
-        public static void SelectedCompanyPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        protected override void SelectedCompanyChanged(Company newValue, Company oldValue)
         {
-            var control = (QuotesPanel)d;
-            var company = (Company)e.NewValue;
+            base.SelectedCompanyChanged(newValue, oldValue);
 
-            control.IsEnabled = company != null;
+            IsEnabled = newValue != null;
         }
 
         protected override void SelectedQuoteChanged(Quote newValue, Quote oldValue)
@@ -77,7 +62,7 @@ namespace SingerDispatch.Panels.Quotes
             
             SelectedQuote = null;
             panelQuoteHistory.SelectedQuote = null;
-            tabs.SelectedIndex = 0;
+            Tabs.SelectedIndex = 0;
         }
 
         private void btnCommitChanges_Click(object sender, RoutedEventArgs e)

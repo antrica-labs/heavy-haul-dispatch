@@ -22,21 +22,7 @@ namespace SingerDispatch.Panels.Jobs
     {
         public SingerDispatchDataContext Database { get; set; }
 
-        public static DependencyProperty SelectedCompanyProperty = DependencyProperty.Register("SelectedCompany", typeof(Company), typeof(JobHistoryControl), new PropertyMetadata(null, JobHistoryControl.SelectedCompanyPropertyChanged));
-
-        public Company SelectedCompany
-        {
-            get
-            {
-                return (Company)GetValue(SelectedCompanyProperty);
-            }
-            set
-            {
-                SetValue(SelectedCompanyProperty, value);
-            }
-        }
-
-        public JobHistoryControl()
+          public JobHistoryControl()
         {
             InitializeComponent();
 
@@ -50,15 +36,11 @@ namespace SingerDispatch.Panels.Jobs
             cmbQuotes.ItemsSource = (from q in Database.Quotes where q.Company == SelectedCompany select q).ToList();
         }
 
-        public static void SelectedCompanyPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var control = (JobHistoryControl)d;
 
-            control.SelectedCompanyChanged((Company)e.NewValue, (Company)e.OldValue);          
-        }
-
-        private void SelectedCompanyChanged(Company newValue, Company oldValue)
+        protected override void SelectedCompanyChanged(Company newValue, Company oldValue)
         {
+            base.SelectedCompanyChanged(newValue, oldValue);
+
             if (newValue != null)
             {
                 dgJobs.ItemsSource = new ObservableCollection<Job>((from j in Database.Jobs where j.CompanyID == newValue.ID orderby j.EndDate descending select j).ToList());

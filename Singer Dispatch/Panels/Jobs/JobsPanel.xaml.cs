@@ -19,31 +19,16 @@ namespace SingerDispatch.Panels.Jobs
     /// </summary>
     public partial class JobsPanel : JobUserControl
     {
-        public static DependencyProperty SelectedCompanyProperty = DependencyProperty.Register("SelectedCompany", typeof(Company), typeof(JobsPanel), new PropertyMetadata(null, JobsPanel.SelectedCompanyPropertyChanged));
-        
-        public Company SelectedCompany
-        {
-            get
-            {
-                return (Company)GetValue(SelectedCompanyProperty);
-            }
-            set
-            {
-                SetValue(SelectedCompanyProperty, value);
-            }
-        }
-
         public JobsPanel()
         {
             InitializeComponent();
         }
 
-        public static void SelectedCompanyPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        protected override void SelectedCompanyChanged(Company newValue, Company oldValue)
         {
-            var control = (JobsPanel)d;
-            var company = (Company)e.NewValue;
+            base.SelectedCompanyChanged(newValue, oldValue);
 
-            control.IsEnabled = company != null;
+            IsEnabled = newValue != null;
         }
 
         protected override void SelectedJobChanged(Job newValue, Job oldValue)
@@ -52,7 +37,7 @@ namespace SingerDispatch.Panels.Jobs
 
             bool enable = (newValue != null);
 
-            foreach (TabItem tab in tabs.Items)
+            foreach (TabItem tab in Tabs.Items)
             {
                 if (tab != masterTab)
                 {

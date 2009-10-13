@@ -34,7 +34,7 @@
             </Grid>
         </Border>
         
-        <TabControl Name="tabs">
+        <TabControl Name="Tabs">
             <TabItem Header="Quotes">
                 <Quote:QuoteHistoryControl x:Name="panelQuoteHistory" Width="Auto" Height="Auto" SelectedCompany="{Binding SelectedCompany}" />
             </TabItem>

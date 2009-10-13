@@ -110,100 +110,63 @@ namespace SingerDispatch
             }
         }
 
-        private void ExpandCompanies(object sender, RoutedEventArgs e)
+        private void ExpandSection(Expander expander, CompanyUserControl content, ItemCollection tabs)
         {
-            if (panelMainContent.Child is CompaniesPanel)
+            if (panelMainContent.Child.GetType() == content.GetType())
             {
-                // This panel is already visible, so we don't need to reload it.
                 return;
             }
 
-            CollapseAllOtherNavigationExpanders((Expander)sender);
-
-            var panel = new CompaniesPanel();
+            CollapseAllOtherNavigationExpanders(expander);
 
             var binding = new Binding();
             binding.ElementName = "cmbCompanies";
             binding.Path = new PropertyPath(Selector.SelectedItemProperty);
 
-            panel.SetBinding(CompanyUserControl.SelectedCompanyProperty, binding);
+            content.SetBinding(CompanyUserControl.SelectedCompanyProperty, binding);
 
-            panelMainContent.Child = panel;
+            panelMainContent.Child = content;
+            AddLinksToExpander((Panel)expander.Content, tabs);
+        }
 
-            AddLinksToExpander(linksCompanies, panel.tabs.Items);            
+        private void ExpandCompanies(object sender, RoutedEventArgs e)
+        {
+            var panel = new CompaniesPanel();
+
+            ExpandSection((Expander)sender, panel, panel.Tabs.Items);
         }
 
         private void ExpandQuotes(object sender, RoutedEventArgs e)
         {
-            if (panelMainContent.Child is QuotesPanel)
-            {
-                // This panel is already visible, so we don't need to reload it.
-                return;
-            }
-
-            CollapseAllOtherNavigationExpanders((Expander)sender);
-
             var panel = new QuotesPanel();
 
-            var binding = new Binding();
-            binding.ElementName = "cmbCompanies";
-            binding.Path = new PropertyPath(Selector.SelectedItemProperty);
-
-            panel.SetBinding(QuotesPanel.SelectedCompanyProperty, binding);
-
-            panelMainContent.Child = panel;
-
-            AddLinksToExpander(linksQuotes, panel.tabs.Items);
+            ExpandSection((Expander)sender, panel, panel.Tabs.Items);
         }
-
 
         private void ExpandJobs(object sender, RoutedEventArgs e)
         {
-            if (panelMainContent.Child is JobsPanel)
-            {
-                return;
-            }
-
-            CollapseAllOtherNavigationExpanders((Expander)sender);
-
             var panel = new JobsPanel();
 
-            var binding = new Binding();
-            binding.ElementName = "cmbCompanies";
-            binding.Path = new PropertyPath(Selector.SelectedItemProperty);
-
-            panel.SetBinding(JobsPanel.SelectedCompanyProperty, binding);
-
-            panelMainContent.Child = panel;
-            AddLinksToExpander(linksJobs, panel.tabs.Items);   
+            ExpandSection((Expander)sender, panel, panel.Tabs.Items);
         }
 
         private void ExpandPricing(object sender, RoutedEventArgs e)
         {
-            if (panelMainContent.Child is JobPricingPanel)
-            {
-                return;
-            }
-
-            CollapseAllOtherNavigationExpanders((Expander)sender);
-
             var panel = new JobPricingPanel();
 
-            var binding = new Binding();
-            binding.ElementName = "cmbCompanies";
-            binding.Path = new PropertyPath(Selector.SelectedItemProperty);
-
-            panel.SetBinding(JobPricingPanel.SelectedCompanyProperty, binding);
-
-            panelMainContent.Child = panel;
-            AddLinksToExpander(linksPricing, panel.tabs.Items);
-        }
+            ExpandSection((Expander)sender, panel, panel.Tabs.Items);
+        }        
 
         private void menuOpenQuoteSample_Click(object sender, RoutedEventArgs e)
         {
             var viewer =  new DocumentViewer();
 
             viewer.Show();
+        }
+
+        public void OpenSection()
+        {
+            MessageBox.Show("Hello!");
         }
     }
 }

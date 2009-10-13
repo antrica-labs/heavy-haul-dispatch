@@ -31,7 +31,7 @@
             </Grid>
         </Border>
 
-        <TabControl Name="tabs" DataContext="{Binding ElementName=jobPricingPanel}">
+        <TabControl Name="Tabs" DataContext="{Binding ElementName=jobPricingPanel}">
             <TabItem Header="Job History">
                 <Price:JobPriceControl Width="Auto" />    
             </TabItem>

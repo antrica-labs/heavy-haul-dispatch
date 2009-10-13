@@ -4,11 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
+using SingerDispatch.Panels.Companies;
 
 
 namespace SingerDispatch.Panels.Quotes
 {
-    public class QuoteUserControl : UserControl
+    public class QuoteUserControl : CompanyUserControl
     {       
         public static DependencyProperty SelectedQuoteProperty = DependencyProperty.Register("SelectedQuote", typeof(Quote), typeof(QuoteUserControl), new PropertyMetadata(null, QuoteUserControl.SelectedQuotePropertyChanged));
 

@@ -30,7 +30,7 @@
             </Grid>
         </Border>
 
-        <TabControl Name="tabs" DataContext="{Binding ElementName=jobsPanel}">
+        <TabControl Name="Tabs" DataContext="{Binding ElementName=jobsPanel}">
             <TabItem Name="masterTab" Header="Job History">
                 <Jobs:JobHistoryControl Width="Auto" SelectedCompany="{Binding Path=SelectedCompany}" SelectedJob="{Binding Path=SelectedJob}" />
             </TabItem>

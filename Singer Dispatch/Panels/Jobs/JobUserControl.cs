@@ -1,9 +1,10 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using SingerDispatch.Panels.Companies;
 
 namespace SingerDispatch.Panels.Jobs
 {
-    public class JobUserControl : UserControl
+    public class JobUserControl : CompanyUserControl
     {
         public static DependencyProperty SelectedJobProperty = DependencyProperty.Register("SelectedJob", typeof(Job), typeof(JobUserControl), new PropertyMetadata(null, JobUserControl.SelectedJobPropertyChanged));
 

@@ -21,21 +21,7 @@ namespace SingerDispatch.Panels.Pricing
     /// </summary>
     public partial class JobPriceControl : JobUserControl
     {
-        public static DependencyProperty SelectedCompanyProperty = DependencyProperty.Register("SelectedCompanyProperty", typeof(Company), typeof(JobPriceControl), new PropertyMetadata(null, JobPriceControl.SelectedCompanyPropertyChanged));
-
         public SingerDispatchDataContext Database { get; set; }
-
-        public Company SelectedCompany
-        {
-            get
-            {
-                return (Company)GetValue(SelectedCompanyProperty);
-            }
-            set
-            {
-                SetValue(SelectedCompanyProperty, value);
-            }
-        }
 
         public JobPriceControl()
         {
@@ -45,15 +31,10 @@ namespace SingerDispatch.Panels.Pricing
             dgCustomerDetails.ItemsSource = new ObservableCollection<CustomerNumber>();
         }
 
-        public static void SelectedCompanyPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        protected override void SelectedCompanyChanged(Company newValue, Company oldValue)
         {
-            var control = (JobPriceControl)d;
-            
-            control.SelectedCompanyChanged((Company)e.NewValue, (Company)e.OldValue);            
-        }
+            base.SelectedCompanyChanged(newValue, oldValue);
 
-        private void SelectedCompanyChanged(Company newValue, Company oldValue)
-        {
             if (newValue == null)
             {                
                 dgCustomerDetails.ItemsSource = new ObservableCollection<CustomerNumber>();

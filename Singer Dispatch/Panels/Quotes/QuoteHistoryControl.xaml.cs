@@ -16,20 +16,6 @@ namespace SingerDispatch.Panels.Quotes
     {
         public SingerDispatchDataContext Database { get; set; }
 
-        public static DependencyProperty SelectedCompanyProperty = DependencyProperty.Register("SelectedCompany", typeof(Company), typeof(QuoteHistoryControl), new PropertyMetadata(null, QuoteHistoryControl.SelectedCompanyPropertyChanged));
-
-        public Company SelectedCompany
-        {
-            get
-            {
-                return (Company)GetValue(SelectedCompanyProperty);
-            }
-            set
-            {
-                SetValue(SelectedCompanyProperty, value);
-            }
-        }
-
         public QuoteHistoryControl()
         {
             InitializeComponent();
@@ -38,11 +24,22 @@ namespace SingerDispatch.Panels.Quotes
             cmbQuotedBy.ItemsSource = (from u in Database.Users select u).ToList();
         }
 
-        public static void SelectedCompanyPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        protected override void SelectedCompanyChanged(Company newValue, Company oldValue)
         {
-            var control = (QuoteHistoryControl)d;
+            base.SelectedCompanyChanged(newValue, oldValue);
 
-            control.SelectedCompanyChanged((Company)e.NewValue, (Company)e.OldValue);
+            if (newValue != null)
+            {
+                dgQuotes.ItemsSource = new ObservableCollection<Quote>((from q in Database.Quotes where q.CompanyID == newValue.ID orderby q.Number descending, q.Revision descending select q).ToList());
+                cmbCareOfCompanies.ItemsSource = (from c in Database.Companies where c.ID != newValue.ID select c).ToList();
+            }
+            else
+            {
+                ((ObservableCollection<Quote>)dgQuotes.ItemsSource).Clear();
+                ((List<Company>)cmbCareOfCompanies.ItemsSource).Clear();
+            }
+
+            UpdateContactList();
         }
 
         protected override void SelectedQuoteChanged(Quote newValue, Quote oldValue)
@@ -102,22 +99,6 @@ namespace SingerDispatch.Panels.Quotes
                 }
             }
         }
-
-        protected void SelectedCompanyChanged(Company newValue, Company oldValue)
-        {
-            if (newValue != null)
-            {
-                dgQuotes.ItemsSource = new ObservableCollection<Quote>((from q in Database.Quotes where q.CompanyID == newValue.ID orderby q.Number descending, q.Revision descending select q).ToList());
-                cmbCareOfCompanies.ItemsSource = (from c in Database.Companies where c.ID != newValue.ID select c).ToList();
-            }
-            else
-            {
-                ((ObservableCollection<Quote>)dgQuotes.ItemsSource).Clear();
-                ((List<Company>)cmbCareOfCompanies.ItemsSource).Clear();
-            }
-
-            UpdateContactList();
-        }   
                
         private void btnNewQuote_Click(object sender, RoutedEventArgs e)
         {
@@ -138,9 +119,13 @@ namespace SingerDispatch.Panels.Quotes
         {
             var quote = (Quote)dgQuotes.SelectedItem;
 
-            if (quote == null) return;
+            //if (quote == null) return;
 
-            MessageBoxResult confirmation = MessageBox.Show("Are you sure you wish to create a new job from the selected quote?", "New job confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            //MessageBoxResult confirmation = MessageBox.Show("Are you sure you wish to create a new job from the selected quote?", "New job confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+            var window = (MainWindow)Application.Current.MainWindow;
+
+            window.OpenSection();
         }
 
         private void UpdateContactList()

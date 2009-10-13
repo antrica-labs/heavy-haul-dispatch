@@ -12,7 +12,7 @@
         </ResourceDictionary>
     </UserControl.Resources>
     <StackPanel DataContext="{Binding ElementName=companiesPanel}">        
-        <TabControl Name="tabs">
+        <TabControl Name="Tabs">
             <TabItem Header="Addresses &amp; Contacts">
                 <Company:AddressesAndContactsControl SelectedCompany="{Binding Path=SelectedCompany}" Width="Auto" Height="Auto" />
             </TabItem>

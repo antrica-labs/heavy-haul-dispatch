@@ -20,31 +20,16 @@ namespace SingerDispatch.Panels.Pricing
     /// </summary>
     public partial class JobPricingPanel : JobUserControl
     {
-        public static DependencyProperty SelectedCompanyProperty = DependencyProperty.Register("SelectedCompany", typeof(Company), typeof(JobPricingPanel), new PropertyMetadata(null, JobPricingPanel.SelectedCompanyPropertyChanged));
-
-        public Company SelectedCompany
-        {
-            get
-            {
-                return (Company)GetValue(SelectedCompanyProperty);
-            }
-            set
-            {
-                SetValue(SelectedCompanyProperty, value);
-            }
-        }
-
         public JobPricingPanel()
         {
             InitializeComponent();
         }
 
-        public static void SelectedCompanyPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        protected override void SelectedCompanyChanged(Company newValue, Company oldValue)
         {
-            var control = (JobPricingPanel)d;
-            var company = (Company)e.NewValue;
+            base.SelectedCompanyChanged(newValue, oldValue);
 
-            control.IsEnabled = company != null;
+            IsEnabled = newValue != null;
         }
 
         private void btnCommitJobChanges_Click(object sender, RoutedEventArgs e)
