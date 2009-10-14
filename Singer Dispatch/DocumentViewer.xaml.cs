@@ -10,6 +10,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using SingerDispatch.Printing;
 
 namespace SingerDispatch
 {
@@ -21,6 +22,16 @@ namespace SingerDispatch
         public DocumentViewer()
         {
             InitializeComponent();
+        }
+
+        public void DisplayQuotePrintout(Quote quote)
+        {
+            QuoteRenderer renderer = new QuoteRenderer();
+
+            String document = renderer.GenerateQuotePrintout(quote);
+            Browser.NavigateToString(document);
+
+            Show();
         }
     }
 }

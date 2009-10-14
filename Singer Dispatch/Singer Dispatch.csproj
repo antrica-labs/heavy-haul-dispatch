@@ -160,6 +160,7 @@
     </Compile>
     <Compile Include="Panels\Quotes\QuoteUserControl.cs">
     </Compile>
+    <Compile Include="Printing\QuoteRenderer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

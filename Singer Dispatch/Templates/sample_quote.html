@@ -25,7 +25,8 @@
             }
             body 
             {
-                line-height: 1.2em;                
+                line-height: 1.2em;
+                padding: 5px;
             }
             ol, ul 
             {
@@ -66,61 +67,69 @@
             {                                
                 color: #767676;
             }
-            
+                        
             div#header span 
             {
                 display: block;
             }
             
-            div#header div#logo 
+            div#header table
+            {
+                width: 100%;
+            }
+            
+            div#header table td
             {
                 width: 33%;
-                float: left;
             }
             
-            div#header div#quote_name 
-            {
-                width: 34%;
-                text-align: center;
-                float: left;
+            
+            div#header td#quote_name 
+            {                
+                text-align: center;                
             }
             
-            div#header div#quote_name span.title 
-            {
+            div#header td#quote_name span.title 
+            {                
                 font-size: 52px;
-                margin-bottom: 5px;
+                margin: 20px 0;
             }
             
-            div#header div#hq_location 
-            {
-                width: 33%;
-                float: left;
+            div#header td#hq_location 
+            {                
                 text-align: right;
             }
             
+            
             div#recipient 
-            {
-                clear: both;
-                padding-top: 30px;
+            {             
+                margin-top: 50px;
             }
-                
+            
+            div#recipient table
+            {
+                width: 100%;
+            }             
+             
             div#recipient span
             {
                 display: block;
             }
-            
-            div#recipient div#address 
+             
+            div#recipient span#quote_date
             {
-                text-align: left;
-                width: 50%;
-                float: left;
+                margin-bottom: 20px;
             }
             
-            div#recipient div#contact
-            {
-                text-align: right;
+            div#recipient td#address 
+            {                
                 width: 50%;
-                float: left;
+            }
+            
+            div#recipient td#contact
+            {
+                text-align: right;                
+                width: 50%;                
             }
             
             div#description 
@@ -174,12 +183,17 @@
                 margin-bottom: 15px;
             }
 
+            td
+            {
+                vertical-align: top;
+            }            
+
             div.break 
             {
                 clear: both;    
             }
-
-            table 
+            
+            table.itemized 
             {
                 border-collapse: collapse;
                 border-spacing: 0;
@@ -187,24 +201,20 @@
                 margin: 0 auto;
             }
 
-            table.itemized 
-            {
-                border-collapse: collapse;
-            }
-
             table.itemized th 
             {
                 text-align: left;
                 text-transform: uppercase;
                 border-bottom: 2px #000000 solid;
-                padding-right: 15px;
+                padding: 4px;
+                padding-right: 15px;                
             }
 
             table.itemized td 
             {
-                padding-top: 4px;
-                padding-bottom: 4px;
+                padding: 4px;                
                 padding-right: 25px;
+                border-bottom: 1px #000000 solid;
             }
 
             table.itemized tbody 
@@ -239,40 +249,45 @@
 
     <body>
         <div id="header">
-            <div id="logo">
-                <span class="logo"><img src="logo.png" alt="Singer Specialized"></span>            
-            </div>
-            
-            <div id="quote_name">
-                <span class="title">Quote</span>            
-                <span class="quote_number">#101 Revision 2</span>
-            </div>
-            
-            <div id="hq_location">
-                <span class="address">Site 12 Box 26 RR5. Calgary, AB T2P 2G6</span>
-                <span class="phone">Ph: (403) 569 - 8605</span>
-                <span class="fax">Fax: (403) 569 - 7643</span>
-            </div>            
+            <table>
+                <tr>
+                    <td id="logo">
+                        <span class="logo"><img src="logo.png" alt="Singer Specialized"></span>                        
+                    </td>
+                    <td id="quote_name">
+                        <span class="title">Quote</span>
+                        <span class="quote_number">#101 Revision 2</span>
+                    </td>
+                    <td id="hq_location">
+                        <span class="address">Site 12 Box 26 RR5. Calgary, AB T2P 2G6</span>
+                        <span class="phone">Ph: (403) 569 - 8605</span>
+                        <span class="fax">Fax: (403) 569 - 7643</span>
+                    </td>
+                </tr>
+            </table>                    
         </div>
 
         <div id="recipient">
             <span id="quote_date">October 15, 2009</span>
-            
-            <div id="address">
-                <span>Xyz Company</span>
-                <span>C/O Somothere Systems</span>
-                <span>Calgary, Alberta</span>
-                <span>Canada</span>
-                <span>X2X 2X3</span>
-            </div>
-            
-            <div id="contact">
-                <span>Telephone: (403) 279-8388</span>
-                <span>Fax: (403) 279-8390</span>
-                <span>Email: dosomethign@xyzcompany.com</span>
-            </div>
-        </div>
         
+            <table>
+                <tr>                    
+                    <td id="address">
+                        <span>Xyz Company</span>
+                        <span>C/O Somothere Systems</span>
+                        <span>Calgary, Alberta</span>
+                        <span>Canada</span>
+                        <span>X2X 2X3</span>
+                    </td>
+                    <td id="contact">
+                        <span>Telephone: (403) 279-8388</span>
+                        <span>Fax: (403) 279-8390</span>
+                        <span>Email: dosomethign@xyzcompany.com</span>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
         <div id="description">
             <span class="attention">Attention: <span class="name">Darren Something</span></span>
             

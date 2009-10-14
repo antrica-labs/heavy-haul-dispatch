@@ -48,7 +48,7 @@ namespace SingerDispatch.Panels.Quotes
             var commodity = new QuoteCommodity { QuoteID = newValue.ID };
 
             gbDetails.DataContext = commodity;
-            gbDepature.DataContext = commodity;
+            gbDeparture.DataContext = commodity;
             gbDestination.DataContext = commodity;
                                 
             dgQuoteCommodities.ItemsSource = new ObservableCollection<QuoteCommodity>(newValue.QuoteCommodities);
@@ -124,7 +124,7 @@ namespace SingerDispatch.Panels.Quotes
             }
 
             gbDetails.DataContext = commodity;
-            gbDepature.DataContext = commodity;
+            gbDeparture.DataContext = commodity;
             gbDestination.DataContext = commodity;
         }
 

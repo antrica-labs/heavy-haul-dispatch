@@ -59,5 +59,13 @@ namespace SingerDispatch
                 return database;
             }
         }
+
+        public static string PrintedDateFormatString
+        {
+            get
+            {
+                return "MMMM d, yyyy";
+            }
+        }
     }
 }

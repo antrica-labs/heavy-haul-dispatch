@@ -175,9 +175,8 @@ namespace SingerDispatch.Panels.Quotes
         {
             if (SelectedQuote == null) return;
 
-            SelectedQuote.IsPrinted = 1;
-
-            Database.SubmitChanges();
+            var viewer = new DocumentViewer();
+            viewer.DisplayQuotePrintout(SelectedQuote);
         }        
     }
 }
