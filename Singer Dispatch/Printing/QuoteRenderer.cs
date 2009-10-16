@@ -9,7 +9,7 @@ namespace SingerDispatch.Printing
     class QuoteRenderer
     {
 
-        public string GenerateQuotePrintout(Quote quote)
+        public string GeneratePrintout(Quote quote)
         {
             var content = new StringBuilder();
 
@@ -397,8 +397,7 @@ namespace SingerDispatch.Printing
                                 <th>From</th>
                                 <th>To</th>
                                 <th>Dimensions (LxWxH)</th>
-                                <th>Weight (kg)</th>
-                                <th>Cost</th>
+                                <th>Weight (kg)</th>                                
                             </tr>
                         </thead>
                         <tbody>
@@ -437,10 +436,6 @@ namespace SingerDispatch.Printing
                 rows.Append("</td>");
                 rows.Append("<td>");
                 rows.Append(commodity.Weight);
-                rows.Append("</td>");
-                rows.Append("<td>");
-                rows.Append("$");
-                rows.Append(commodity.Value);
                 rows.Append("</td>");
                 rows.Append("</tr>");
 

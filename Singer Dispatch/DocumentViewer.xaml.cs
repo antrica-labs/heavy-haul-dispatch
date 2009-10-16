@@ -28,7 +28,7 @@ namespace SingerDispatch
         {
             QuoteRenderer renderer = new QuoteRenderer();
 
-            String document = renderer.GenerateQuotePrintout(quote);
+            String document = renderer.GeneratePrintout(quote);
             Browser.NavigateToString(document);
 
             Show();

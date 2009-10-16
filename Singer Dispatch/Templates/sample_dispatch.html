@@ -1,0 +1,306 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+    <head>
+        <title>Singer Specialized - Dispatch Template</title>
+        
+        <style type="text/css">
+            /***** RESET DEFAULT BROWSER STYLES *****/
+            html, body, div, span, applet, object, iframe,
+            h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+            a, abbr, acronym, address, big, cite, code,
+            del, dfn, em, font, img, ins, kbd, q, s, samp,
+            small, strike, strong, sub, sup, tt, var,
+            b, u, i, center,
+            dl, dt, dd, ol, ul, li,
+            fieldset, form, label, legend,
+            table, caption, tbody, tfoot, thead, tr, th, td 
+            {
+                margin: 0;
+                padding: 0;
+                border: 0;
+                outline: 0;
+                font-size: 100%;
+                vertical-align: baseline;
+                background: transparent;
+            }
+            body 
+            {
+                line-height: 1.2em;
+                padding: 5px;
+            }
+            ol, ul 
+            {
+                list-style: none;
+            }
+            blockquote, q 
+            {
+                quotes: none;
+            }
+            blockquote:before, blockquote:after,
+            q:before, q:after 
+            {
+                content: '';
+                content: none;
+            }
+
+            /* remember to define focus styles! */
+            :focus 
+            {
+                outline: 0;
+            }
+
+            /* remember to highlight inserts somehow! */
+            ins
+            {
+                text-decoration: none;
+            }
+            del 
+            {
+                text-decoration: line-through;
+            }
+            
+            
+            /*******/
+            
+            body
+            {
+                font-size: 0.8em;
+                font-family: Arial, Helvetica, Tahoma, sans-serif;
+            }
+            
+            div#header
+            {
+                border: 1px #000000 solid;
+                border-bottom: 1px #000000 solid;                
+            }
+            
+            div#header table 
+            {
+                width: 100%;
+                border-collapse: collapse;
+            }
+            
+            div#header td
+            {                
+                vertical-align: top;
+                padding: 10px;
+            }
+            
+            div#header td#logo_col
+            {
+                width: 200px;
+                
+            }
+            
+            div#header td#address_col
+            {
+                
+            }
+            
+            div#header td#id_col
+            {
+                border-left: solid 1px #000000;
+                text-align: center;
+                font-weight: bold;
+            }
+            
+            div#header span
+            {
+                display: block;
+            }
+            
+            div#header span.title
+            {
+                display: block;
+                font-weight: bold;
+                font-size: 1.5em;
+                padding: 0.3em;
+                text-align: center;
+                border-top: solid 1px #000000;
+            }
+            
+            div#details
+            {
+                border-left: solid 1px #000000;
+                border-right: solid 1px #000000;
+                border-bottom: solid 1px #000000;                
+            }
+            
+            div#details table
+            {
+                margin-bottom: 15px;
+            }
+            
+            div#details td.field 
+            {
+                font-weight: bold;
+                padding: 5px;
+            }
+            
+            div#details td.value
+            {
+                padding: 5px;
+            }
+            
+            div#details td.col1_4
+            {
+                width: 65px;
+            }            
+            
+            div#details td.col2_4
+            {
+                width: 135px;
+            }
+            
+            div#details td.col3_4
+            {
+                width: 95px;
+            }
+            
+            div#details span.field
+            {
+                font-weight: bold;
+            }
+            
+            div#details span.value
+            {
+                
+            }
+            
+            div.section
+            {
+                padding: 10px 15px;
+                border: 1px #000000 solid;
+                border-top: 2px #000000 solid;
+                margin-top: 2px;                
+            }
+            
+            div.section span.heading
+            {
+                font-weight: bold;
+                display: block;
+                text-decoration: underline;
+                margin-bottom: 10px;
+            }
+        </style>
+    </head>
+    
+    <body>
+        <div id="header">
+            <table>
+                <tr>
+                    <td id="logo_col">
+                        <span class="logo"><img src="logo.png" alt="Singer Specialized"></span>
+                    </td>
+                    <td id="address_col">
+                        <span>Singer Specialized Ltd.</span>
+                        <span>Site 12 Box 26 RR5</span>
+                        <span>Calgary, AB T2P 2G6</span>
+                        <span>Phone: (403) 569 - 8605</span>
+                    </td>
+                    <td id="id_col">
+                        <span>File Copy</span>
+                    </td>
+                </tr>
+            </table>
+            
+            <span class="title">Dispatch Order</span>            
+        </div>
+        
+        <div id="details">
+            <table id="dispatch_info">
+                <tr>
+                    <td class="field col1_4">Date:</td>
+                    <td class="value col2_4">January 6, 2009</td>
+                    <td class="field col3_4">Customer #:</td>
+                    <td class="value col4_4">Harmattan Gas Processing Partnership C/O Excelsior Engineering</td>
+                </tr>
+                <tr>
+                    <td class="field">Unit #:</td>
+                    <td class="value">03-12</td>
+                    <td class="field">Trailer #:</td>
+                    <td class="value">64Wheel - 35-81,35-67-29-67</td>
+                </tr>
+                <tr>
+                    <td class="field">Driver:</td>
+                    <td class="value">John Hall</td>
+                    <td class="field">Swampers:</td>
+                    <td class="value"></td>
+                </tr>
+            </table>
+            
+            <table id="departure_info">                
+                <tr>
+                    <td class="field col1_6">Depart Date:</td>
+                    <td class="value col2_6">Jan 7, 09 - 09:00</td>
+                    <td class="field col3_6">Depart From:</td>
+                    <td class="value col4_6">Propak Main Yard</td>
+                    <td class="field col5_6">Depart Units:</td>
+                    <td class="value col6_6">#12,9909,55,47,18,42</td>
+                </tr>
+            </table>
+            
+            <!--
+            <span class="heading">Customer References:</span>
+            
+            <ul>
+                <li><span class="field">AFE</span>: <span class="value">9342</span></li>
+                <li><span class="field">PO#</span>: <span class="value">13940</span></li>
+            </ul>
+            -->
+        </div>
+        
+        <div id="description" class="section">
+            <span class="heading">Dispatch Description</span>
+            
+            <p>Supply mean and equipment to transport 1450 HP compressor package skid - Winter weight restriction</p>
+        </div>
+        
+        <div id="equipment_requirements" class="section">
+            <span class="heading">Equipment Required Information</span>
+            
+        </div>
+        
+        <div id="schuedule" class="section">
+            <span class="heading">Dispatch Schedule</span>
+            
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce quis est sapien. Donec tempor, tortor at auctor scelerisque, justo elit condimentum enim, ac tristique nunc risus eu neque. Nam scelerisque nulla vel sapien facilisis ut commodo velit feugiat. Phasellus non mi ullamcorper neque porttitor semper at at dolor. Nullam ut erat at ipsum molestie tempus in nec lectus. Morbi risus ipsum, consectetur id laoreet ut, ullamcorper id urna. Duis a iaculis quam. Donec tempor, arcu eu cursus egestas, purus purus mattis velit, in suscipit neque metus nec augue. Nunc id justo vitae massa porta placerat sed vitae tellus. Aliquam erat.</p>
+        </div>
+        
+        <div id="load_and_unload" class="section">
+            <span class="heading">Load/Unload Information</span>
+        </div>
+        
+        <div id="dimensions" class="section">
+            <span class="heading">Dimensional Information</span>
+        </div>
+        
+        <div id="tractors" class="section">
+            <span class="heading">Tractors (Singer Service)</span>
+        </div>
+        
+        <div id="other_equipment" class="section">
+            <span class="heading">Pilot Car and Other Equipment (Singer Service)</span>
+        </div>
+        
+        <div id="third_party_pilot" class="section">
+            <span class="heading">Pilot Car (Thrid Party)</span>
+        </div>
+        
+        <div id="thid_party_services" class="section">
+            <span class="heading">Third Party Services</span>
+        </div>
+        
+        <div id="wire_lifts" class="section">
+            <span class="heading">Wire Lift Information</span>
+        </div>
+        
+        <div id="permits" class="section">
+            <span class="heading">Permit Information</span>
+        </div>
+        
+        <div id="other_info" class="section">
+            <span class="heading">Other Information</span>
+        </div>
+    </body>
+</html>
