@@ -328,6 +328,7 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Templates\logo.png" />
+    <Content Include="Templates\sample_dispatch.html" />
     <Content Include="Templates\sample_quote.html" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
