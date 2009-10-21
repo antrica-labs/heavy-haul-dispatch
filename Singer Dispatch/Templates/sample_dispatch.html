@@ -59,8 +59,10 @@
                 text-decoration: line-through;
             }
             table
+            {             
+            }
+            td
             {
-                border-collapse: collapse;
             }
             
             
@@ -71,7 +73,7 @@
                 font-size: 11px;
                 font-family: Arial, Helvetica, Tahoma, sans-serif;
             }
-            
+
             th
             {
                 text-align: left;
@@ -126,13 +128,15 @@
                 display: block;
                 font-weight: bold;
                 font-size: 1.5em;
-                padding: 0.3em;
-                text-align: center;                
+                padding: 0.5em 0.3em;
+                text-align: center;
+                border-top: dotted 1px #000000;
+                border-bottom: dotted 1px #000000;
             }
             
             div#details
             {
-                padding: 10px;
+                padding: 10px;                
             }            
             
             div#details table#dispatch_info, div#details table#departure_info
@@ -157,25 +161,45 @@
             {
                 padding: 10px;
                 margin-top: 2px;
-                border-top: dotted 1px #000000;                
+                border-top: dotted 1px #000000;
             }
             
             div.section span.heading
             {
                 font-weight: bold;
                 display: block;                
-                margin-bottom: 5px;
+                margin-bottom: 10px;
+            }
+
+            div#load_and_unload span.heading
+            {
+                
+            }
+
+            div#load_and_unload hr
+            {
+                border: none;
+                border-top: dotted 1px #000000;
+                margin: 10px 0;
+            }
+
+            div#load_and_unload div.commodity
+            {
             }
 
             div#load_and_unload span.commodity_name
             {
-                font-weight: bold;
-                text-decoration: underline;
+                font-weight: bold;                
             }
 
             div#load_and_unload div.loading, div#load_and_unload div.unloading
             {
                 margin-top: 10px;                
+            }
+
+            div#load_and_unload div.loading span.heading, div#load_and_unload div.unloading span.heading
+            {
+                text-decoration: underline;
             }
 
             div#load_and_unload td
@@ -185,7 +209,7 @@
 
             div#load_and_unload table.instructions
             {
-                margin-top: 5px;
+                margin-top: 10px;
                 width: 100%;
             }
 
@@ -235,12 +259,20 @@
                 width: 100%;
             }
 
+            div#third_party_pilot th, 
+            div#thid_party_services th,
+            div#wire_lifts th,
+            div#permits th
+            {
+                padding-bottom: 10px;
+            }
+
             div#third_party_pilot tr.comments td, 
             div#thid_party_services tr.comments td,
             div#wire_lifts tr.comments td,
             div#permits tr.comments td
             {
-                padding: 5px 25px;
+                padding: 5px 15px;
                 padding-bottom: 10px;                
             }
         </style>
@@ -428,7 +460,106 @@
                         </tbody>
                     </table>
                 </div>
-            </div>            
+            </div>
+
+            <hr>
+
+            <div class="commodity">
+                <span class="commodity_name">1450 HP Compressor Package Skid</span>
+
+                <div class="dimensions">
+                    <span class="weight">74843kg</span>
+                    <span class="size">11.8m x 7.24m x 6.25m (L x W x H)</span>
+                </div>
+
+                <div class="loading">
+                    <span class="heading">Load Information</span>
+
+                    <table class="details">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Time</th>
+                                <th>Load Location</th>
+                                <th>Load Site Contact</th>
+                                <th>Load By</th>
+                                <th>Loading Contact</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Jan 7, 2009</td>
+                                <td>14:00</td>
+                                <td>Harmattan Gas Processiong Parnership - Harmatton-9-27-31-4-W4M</td>
+                                <td>Gord Fox (403) 335 - 7528</td>
+                                <td>Singer Specialized</td>
+                                <td>Jordy Cropley (403) 816 - 1645</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <table class="instructions">
+                        <thead>
+                            <tr>
+                                <th>Unload Route</th>
+                                <th>Unload Instruction</th>
+                                <th>Unload Placement/Orientation</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Eastlake Rd north-567 west-772 south-567 west-22 north-Twp320(Bergen Rd) eas-RR402 south to site-Enter thru the Pipe yard</td>
+                                <td>Deliver both loads to Harmatton site in convoy and offload as directed</td>
+                                <td>See Gord Fox onsite for direction</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="unloading">
+                    <span class="heading">Unload Information</span>
+
+                    <table class="details">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Time</th>
+                                <th>Load Location</th>
+                                <th>Load Site Contact</th>
+                                <th>Load By</th>
+                                <th>Loading Contact</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Jan 07, 2009</td>
+                                <td>10:00</td>
+                                <td>Propak Systems - 404 East Lake Rd, Airdrie</td>
+                                <td>Rob Ogle (403) 333 - 5369</td>
+                                <td>Singer Specialized</td>
+                                <td>Jordy Cropley (403) 816 - 1645</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <table class="instructions">
+                        <thead>
+                            <tr>
+                                <th>Load Route</th>
+                                <th>Load Instruction</th>
+                                <th>Load Placement/Orientation</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>84st-16ave-Deerfoot-2-567 east-right onto Eastlake rd to Propak</td>
+                                <td>Travel to Propack and load compressor by J&amp;R and load cooler with pickers</td>
+                                <td>Load compressor evenly between necks</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
         
         <div id="dimensions" class="section">
