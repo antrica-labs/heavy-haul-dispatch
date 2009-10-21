@@ -11,6 +11,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using SingerDispatch.Printing;
+using System.Runtime.InteropServices;
+using mshtml;
+using Microsoft.Win32;
 
 namespace SingerDispatch
 {
@@ -26,12 +29,38 @@ namespace SingerDispatch
 
         public void DisplayQuotePrintout(Quote quote)
         {
-            QuoteRenderer renderer = new QuoteRenderer();
+            var renderer = new QuoteRenderer();
 
-            String document = renderer.GeneratePrintout(quote);
-            Browser.NavigateToString(document);
+            Browser.NavigateToString(renderer.GeneratePrintout(quote));
 
             Show();
+        }
+
+        public void DisplayDispatchPrintout()
+        {
+            var renderer = new DispatchRenderer();
+
+            Browser.NavigateToString(renderer.GeneratePrintout());
+
+            Show();
+        }
+
+        private void btnPrint_Click(object sender, RoutedEventArgs e)
+        {
+            IHTMLDocument2 document = Browser.Document as IHTMLDocument2;
+            RegistryKey psKey = Registry.CurrentUser.CreateSubKey("SOFTWARE\\MICROSOFT\\Internet Explorer\\PageSetup");
+
+            var header = psKey.GetValue("header");
+            var footer = psKey.GetValue("footer");
+            
+            psKey.SetValue("header", "");
+            psKey.SetValue("footer", "");
+
+            document.execCommand("Print", true, null);
+
+            // These actually need to be set back the way they were AFTER the execCommand is done... wont work this way.
+            psKey.SetValue("header", header);
+            psKey.SetValue("footer", footer);
         }
     }
 }

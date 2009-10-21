@@ -22,6 +22,7 @@
             <Menu DockPanel.Dock="Top">
                 <MenuItem Header="_File" >
                     <MenuItem Name="menuOpenQuoteSample" Header="_Open Quote Sample" Click="menuOpenQuoteSample_Click" />
+                    <MenuItem Header="_Print Sample Dispatch" Click="PrintSampleDispatch" />
                     <MenuItem Header="_Exit" Click="Terminate" />
                 </MenuItem>
                 <MenuItem Header="_Create">

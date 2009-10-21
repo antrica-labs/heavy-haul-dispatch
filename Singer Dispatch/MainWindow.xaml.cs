@@ -179,5 +179,11 @@ namespace SingerDispatch
             panel.SelectedCompany = (Company)cmbCompanies.SelectedItem;
             panel.SelectedJob = job;
         }
+
+        private void PrintSampleDispatch(object sender, RoutedEventArgs e)
+        {
+            var viewer = new DocumentViewer();
+            viewer.DisplayDispatchPrintout();
+        }
     }
 }

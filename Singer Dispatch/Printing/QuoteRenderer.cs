@@ -15,6 +15,7 @@ namespace SingerDispatch.Printing
 
             content.Append(@"<!DOCTYPE HTML PUBLIC ""-//W3C//DTD HTML 4.01//EN"" ""http://www.w3.org/TR/html4/strict.dtd""><html>");
             content.Append("<head>");
+            content.Append(@"<meta http-equiv=""Content-Type"" content=""text/html;charset=utf-8"">");
             content.Append(GetTitle("Quote - " + quote.Company.Name + " - " + quote.NumberAndRev));
             content.Append(GetStyles());
             content.Append("</head>");
@@ -299,7 +300,7 @@ namespace SingerDispatch.Printing
                     <table>
                         <tr>
                             <td id=""logo"">
-                                <span class=""logo""><img src=""logo.png"" alt=""Singer Specialized""></span>                        
+                                <span class=""logo""><img src=""\\sindcx001\Storage\Programers\logo.png"" alt=""Singer Specialized""></span>                        
                             </td>
                             <td id=""quote_name"">
                                 <span class=""title"">Quote</span>
