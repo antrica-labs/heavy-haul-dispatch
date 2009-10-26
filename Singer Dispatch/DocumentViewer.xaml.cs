@@ -33,7 +33,7 @@ namespace SingerDispatch
 
             Browser.NavigateToString(renderer.GeneratePrintout(quote));
 
-            Show();
+            ShowDialog();
         }
 
         public void DisplayDispatchPrintout()
@@ -42,7 +42,7 @@ namespace SingerDispatch
 
             Browser.NavigateToString(renderer.GeneratePrintout());
 
-            Show();
+            ShowDialog();
         }
 
         private void btnPrint_Click(object sender, RoutedEventArgs e)

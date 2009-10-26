@@ -31,17 +31,14 @@
         </Border>
 
         <TabControl Name="Tabs" DataContext="{Binding ElementName=jobsPanel}">
-            <TabItem Name="masterTab" Header="Job History">
+            <TabItem Name="masterTab" Header="Jobs History">
                 <Jobs:JobHistoryControl Width="Auto" SelectedCompany="{Binding Path=SelectedCompany}" SelectedJob="{Binding Path=SelectedJob}" />
-            </TabItem>
-            <TabItem Header="Loads" IsEnabled="False">
-                <Jobs:LoadsControl Width="Auto" SelectedJob="{Binding Path=SelectedJob}" />
             </TabItem>
             <TabItem Header="Commodities" IsEnabled="False">
                 <Jobs:CommodityMovementControl Width="Auto" SelectedJob="{Binding Path=SelectedJob}" />
             </TabItem>
-            <TabItem Header="Dispatches" IsEnabled="False">
-                <Jobs:DispatchesControl Width="Auto" SelectedJob="{Binding Path=SelectedJob}" />
+            <TabItem Header="Loads" IsEnabled="False">
+                <Jobs:LoadsControl Width="Auto" SelectedJob="{Binding Path=SelectedJob}" />
             </TabItem>
             <TabItem Header="Third Party Services" IsEnabled="False">
                 <Jobs:ThirdPartyServicesControl Width="Auto" SelectedJob="{Binding Path=SelectedJob}" />
@@ -49,6 +46,9 @@
             <TabItem Header="Permits" IsEnabled="False">
                 <Jobs:PermitsControl Width="Auto" SelectedJob="{Binding Path=SelectedJob}" />
             </TabItem>
+            <TabItem Header="Dispatches" IsEnabled="False">
+                <Jobs:DispatchesControl Width="Auto" SelectedJob="{Binding Path=SelectedJob}" />
+            </TabItem>           
         </TabControl>
     </StackPanel>
 </Jobs:JobUserControl>

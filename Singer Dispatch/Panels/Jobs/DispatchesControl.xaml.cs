@@ -12,6 +12,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Collections.ObjectModel;
+using SingerDispatch.Printing;
 
 namespace SingerDispatch.Panels.Jobs
 {
@@ -49,7 +50,7 @@ namespace SingerDispatch.Panels.Jobs
             }
         }
 
-        private void btnNewDispatch_Click(object sender, RoutedEventArgs e)
+        private void NewDispatch_Click(object sender, RoutedEventArgs e)
         {
             var dispatch = new Dispatch { JobID = SelectedJob.ID };
 
@@ -59,6 +60,36 @@ namespace SingerDispatch.Panels.Jobs
 
             cmbLoads.Focus();
         }
-       
+
+        private void PrintDispatch_Click(object sender, RoutedEventArgs e)
+        {
+            if (dgDispatches.SelectedItem == null)
+            {
+                return;
+            }
+
+            var window = new DispatchRenderer();
+            window.GeneratePrintout();
+        }
+
+        private void RemoveDispatch_Click(object sender, RoutedEventArgs e)
+        {
+            if (dgDispatches.SelectedItem == null)
+            {
+                return;
+            }
+
+            MessageBoxResult confirmation = MessageBox.Show("Are you sure you want to remove this dispatch?", "Remove dispatch", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+            if (confirmation != MessageBoxResult.Yes)
+            {
+                return;
+            }
+
+            var dispatch = (Dispatch)dgDispatches.SelectedItem;
+
+            SelectedJob.Dispatches.Remove(dispatch);
+            ((ObservableCollection<Dispatch>)dgDispatches.ItemsSource).Remove(dispatch);
+        }
     }
 }

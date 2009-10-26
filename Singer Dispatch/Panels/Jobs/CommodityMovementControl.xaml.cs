@@ -32,13 +32,11 @@ namespace SingerDispatch.Panels.Jobs
         private void ControlLoaded(object sender, RoutedEventArgs e)
         {
             if (SelectedJob != null)
-            {
-                cmbLoads.ItemsSource = SelectedJob.Loads;
+            {                
                 cmbCommodityName.ItemsSource = (from c in Database.Commodities where c.Company == SelectedJob.Company || c.Company == SelectedJob.Company1 select c).ToList();                
             }
             else
-            {
-                cmbLoads.ItemsSource = null;
+            {                
                 cmbCommodityName.ItemsSource = null;
             }
         }
@@ -50,7 +48,7 @@ namespace SingerDispatch.Panels.Jobs
             dgCommodities.ItemsSource = new ObservableCollection<JobCommodity>((from jc in Database.JobCommodities where jc.Job == SelectedJob select jc).ToList());
         }
 
-        private void btnNewCommodity_Click(object sender, RoutedEventArgs e)
+        private void NewCommodity_Click(object sender, RoutedEventArgs e)
         {
             var commodity = new JobCommodity { JobID = SelectedJob.ID };
             var list = (ObservableCollection<JobCommodity>)dgCommodities.ItemsSource;
@@ -62,7 +60,7 @@ namespace SingerDispatch.Panels.Jobs
             cmbCommodityName.Focus();
         }
 
-        private void btnRemoveCommodity_Click(object sender, RoutedEventArgs e)
+        private void RemoveCommodity_Click(object sender, RoutedEventArgs e)
         {
             var commodity = (JobCommodity)dgCommodities.SelectedItem;
 

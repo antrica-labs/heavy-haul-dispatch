@@ -36,16 +36,9 @@
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
 
-            <Button Style="{StaticResource Horizontal}" Name="btnNewCommodity" Grid.Column="0" Click="btnNewCommodity_Click">New commodity</Button>
-            <Button Style="{StaticResource HorizontalEnd}" Name="btnRemoveCommodity" Grid.Column="3" Click="btnRemoveCommodity_Click">Remove commodity</Button>
-        </Grid>
-               
-        <Border BorderBrush="LightGray" BorderThickness="1" Margin="0,0,0,5">
-            <StackPanel Orientation="Horizontal" Margin="3" DataContext="{Binding ElementName=dgCommodities, Path=SelectedItem}">            
-                <Label>Assign to load:</Label>
-                <ComboBox Name="cmbLoads" MinWidth="300" SelectedItem="{Binding Load}" ItemTemplate="{StaticResource LoadNameTemplate}" />
-            </StackPanel>
-        </Border>
+            <Button Style="{StaticResource Horizontal}" Name="btnNewCommodity" Grid.Column="0" Click="NewCommodity_Click">New commodity</Button>
+            <Button Style="{StaticResource HorizontalEnd}" Name="btnRemoveCommodity" Grid.Column="3" Click="RemoveCommodity_Click">Remove commodity</Button>
+        </Grid>       
         
         <TabControl>
             <TabItem Header="Commodity" Name="tabCommodityDetails" DataContext="{Binding ElementName=dgCommodities, Path=SelectedItem}">

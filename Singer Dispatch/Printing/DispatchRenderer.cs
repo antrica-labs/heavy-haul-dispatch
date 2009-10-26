@@ -331,7 +331,7 @@ namespace SingerDispatch.Printing
                     <table>
                         <tr>
                             <td id=""logo_col"">
-                                <span class=""logo""><img src=""logo.png"" alt=""Singer Specialized""></span>
+                                <span class=""logo""><img src=""\\sindcx001\Storage\Programers\logo.png"" alt=""Singer Specialized""></span>
                             </td>
                             <td id=""address_col"">
                                 <span>Singer Specialized Ltd.</span>

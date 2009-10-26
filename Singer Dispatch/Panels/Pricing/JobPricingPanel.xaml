@@ -34,13 +34,7 @@
         <TabControl Name="Tabs" DataContext="{Binding ElementName=jobPricingPanel}">
             <TabItem Header="Job History">
                 <Price:JobPriceControl Width="Auto" />    
-            </TabItem>
-            <TabItem Header="Loads"></TabItem>
-            <TabItem Header="Commodities"></TabItem>
-            <TabItem Header="Dispatches"></TabItem>
-            <TabItem Header="Third Party Services"></TabItem>
-            <TabItem Header="Permits">
-            </TabItem>
+            </TabItem>            
         </TabControl>
     </StackPanel>
 </Jobs:JobUserControl>

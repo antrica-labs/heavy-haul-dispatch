@@ -19,8 +19,10 @@
     <StackPanel>
         <WPF:DataGrid Name="dgDispatches" Style="{StaticResource ListDisplay}" Height="180">
             <WPF:DataGrid.Columns>                
-                <WPF:DataGridTextColumn Header="Description" Binding="{Binding Description}" />
-                <WPF:DataGridTextColumn Header="Load" Binding="{Binding Load.Description}" />
+                <WPF:DataGridTextColumn Header="Unit" Binding="{Binding Unit}" Width="0.2*" />
+                <WPF:DataGridTextColumn Header="Driver" Binding="{Binding Employee}" Width="0.3*" />
+                <WPF:DataGridTextColumn Header="Service Type" Binding="{Binding ServiceType}" Width="0.3*" />
+                <WPF:DataGridTextColumn Header="Description" Binding="{Binding Description}" />                
             </WPF:DataGrid.Columns>
         </WPF:DataGrid>
         
@@ -32,8 +34,9 @@
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
 
-            <Button Style="{StaticResource Horizontal}" Name="btnNewDispatch" Grid.Column="0" Click="btnNewDispatch_Click">New dispatch</Button>
-            <Button Style="{StaticResource HorizontalEnd}" Grid.Column="3">Remove dispatch</Button>
+            <Button Style="{StaticResource Horizontal}" Grid.Column="0" Click="NewDispatch_Click">New dispatch</Button>
+            <Button Style="{StaticResource Horizontal}" Grid.Column="1" Click="PrintDispatch_Click">Print dispatch</Button>
+            <Button Style="{StaticResource HorizontalEnd}" Grid.Column="3" Click="RemoveDispatch_Click">Remove dispatch</Button>
         </Grid>
         
         <GroupBox Header="Dispatch Details" DataContext="{Binding ElementName=dgDispatches, Path=SelectedItem}">

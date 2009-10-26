@@ -17,6 +17,7 @@
             <WPF:DataGrid.Columns>
                 <WPF:DataGridTextColumn Header="Unit" Width="0.15*" Binding="{Binding Unit.Name}"/>
                 <WPF:DataGridTextColumn Header="Wheel type" Width="0.2*" Binding="{Binding WheelType.Name}" />
+                <WPF:DataGridTextColumn Header="Trailer" Width="0.2*" Binding="{Binding TrailerCombination.Name}" />
                 <WPF:DataGridTextColumn Header="Description" Binding="{Binding ServiceDescription}" />
             </WPF:DataGrid.Columns>   
         </WPF:DataGrid>

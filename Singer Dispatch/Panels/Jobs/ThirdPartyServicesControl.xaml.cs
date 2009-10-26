@@ -28,5 +28,15 @@ namespace SingerDispatch.Panels.Jobs
         {
             cmbLoads.ItemsSource = SelectedJob != null ? SelectedJob.Loads : null;
         }
+
+        private void NewService_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void RemoveService_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
