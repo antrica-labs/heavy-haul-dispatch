@@ -15,10 +15,10 @@
       <Column Name="SecondaryPhone" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
       <Column Name="Fax" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
       <Column Name="Notes" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
-      <Association Name="Address_Contact" Member="Contacts" OtherKey="AddressID" Type="Contact" />
-      <Association Name="AddressType_Address" Member="AddressType" ThisKey="AddressTypeID" Type="AddressType" IsForeignKey="true" />
-      <Association Name="Company_Address" Member="Company" ThisKey="CompanyID" Type="Company" IsForeignKey="true" />
-      <Association Name="ProvincesAndState_Address" Member="ProvincesAndState" ThisKey="ProvinceStateID" Type="ProvincesAndState" IsForeignKey="true" />
+      <Association Name="Address_Contact" Member="Contacts" ThisKey="ID" OtherKey="AddressID" Type="Contact" />
+      <Association Name="AddressType_Address" Member="AddressType" ThisKey="AddressTypeID" OtherKey="ID" Type="AddressType" IsForeignKey="true" />
+      <Association Name="Company_Address" Member="Company" ThisKey="CompanyID" OtherKey="ID" Type="Company" IsForeignKey="true" />
+      <Association Name="ProvincesAndState_Address" Member="ProvincesAndState" ThisKey="ProvinceStateID" OtherKey="ID" Type="ProvincesAndState" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.Rates" Member="Rates">
@@ -36,7 +36,7 @@
     <Type Name="AddressType">
       <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Name" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
-      <Association Name="AddressType_Address" Member="Addresses" OtherKey="AddressTypeID" Type="Address" />
+      <Association Name="AddressType_Address" Member="Addresses" ThisKey="ID" OtherKey="AddressTypeID" Type="Address" />
     </Type>
   </Table>
   <Table Name="dbo.Commodities" Member="Commodities">
@@ -57,8 +57,8 @@
       <Column Name="SizeEstimated" Type="System.Byte" DbType="TinyInt" CanBeNull="true" />
       <Column Name="WeightEstimated" Type="System.Byte" DbType="TinyInt" CanBeNull="true" />
       <Column Name="Notes" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
-      <Association Name="Commodity_JobCommodity" Member="JobCommodities" OtherKey="OriginalCommodityID" Type="JobCommodity" />
-      <Association Name="Company_Commodity" Member="Company" ThisKey="CompanyID" Type="Company" IsForeignKey="true" />
+      <Association Name="Commodity_JobCommodity" Member="JobCommodities" ThisKey="ID" OtherKey="OriginalCommodityID" Type="JobCommodity" />
+      <Association Name="Company_Commodity" Member="Company" ThisKey="CompanyID" OtherKey="ID" Type="Company" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.Companies" Member="Companies">
@@ -72,23 +72,24 @@
       <Column Name="EquifaxComplete" Type="System.Byte" DbType="TinyInt" CanBeNull="true" />
       <Column Name="PriorityLevelID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
       <Column Name="Notes" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
-      <Association Name="Company_Address" Member="Addresses" OtherKey="CompanyID" Type="Address" />
-      <Association Name="Company_Commodity" Member="Commodities" OtherKey="CompanyID" Type="Commodity" />
-      <Association Name="Company_RateDiscount" Member="RateDiscounts" OtherKey="CompanyID" Type="RateDiscount" />
-      <Association Name="Company_Service" Member="Services" OtherKey="CompanyID" Type="Service" />
-      <Association Name="Company_Quote" Member="Quotes" OtherKey="CompanyID" Type="Quote" />
-      <Association Name="Company_Quote1" Member="Quotes1" OtherKey="CareOfCompanyID" Type="Quote" />
-      <Association Name="Company_Job" Member="Jobs" OtherKey="CompanyID" Type="Job" />
-      <Association Name="Company_Job1" Member="Jobs1" OtherKey="CareOfCompanyID" Type="Job" />
-      <Association Name="Company_CustomerNumber" Member="CustomerNumbers" OtherKey="CompanyID" Type="CustomerNumber" />
-      <Association Name="CompanyPriorityLevel_Company" Member="CompanyPriorityLevel" ThisKey="PriorityLevelID" Type="CompanyPriorityLevel" IsForeignKey="true" />
+      <Association Name="Company_Address" Member="Addresses" ThisKey="ID" OtherKey="CompanyID" Type="Address" />
+      <Association Name="Company_Commodity" Member="Commodities" ThisKey="ID" OtherKey="CompanyID" Type="Commodity" />
+      <Association Name="Company_RateDiscount" Member="RateDiscounts" ThisKey="ID" OtherKey="CompanyID" Type="RateDiscount" />
+      <Association Name="Company_Service" Member="Services" ThisKey="ID" OtherKey="CompanyID" Type="Service" />
+      <Association Name="Company_Quote" Member="Quotes" ThisKey="ID" OtherKey="CompanyID" Type="Quote" />
+      <Association Name="Company_Quote1" Member="Quotes1" ThisKey="ID" OtherKey="CareOfCompanyID" Type="Quote" />
+      <Association Name="Company_Job" Member="Jobs" ThisKey="ID" OtherKey="CompanyID" Type="Job" />
+      <Association Name="Company_Job1" Member="Jobs1" ThisKey="ID" OtherKey="CareOfCompanyID" Type="Job" />
+      <Association Name="Company_CustomerNumber" Member="CustomerNumbers" ThisKey="ID" OtherKey="CompanyID" Type="CustomerNumber" />
+      <Association Name="Company_ThirdPartyService" Member="ThirdPartyServices" ThisKey="ID" OtherKey="CompanyID" Type="ThirdPartyService" />
+      <Association Name="CompanyPriorityLevel_Company" Member="CompanyPriorityLevel" ThisKey="PriorityLevelID" OtherKey="ID" Type="CompanyPriorityLevel" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.CompanyPriorityLevels" Member="CompanyPriorityLevels">
     <Type Name="CompanyPriorityLevel">
       <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Name" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
-      <Association Name="CompanyPriorityLevel_Company" Member="Companies" OtherKey="PriorityLevelID" Type="Company" />
+      <Association Name="CompanyPriorityLevel_Company" Member="Companies" ThisKey="ID" OtherKey="PriorityLevelID" Type="Company" />
     </Type>
   </Table>
   <Table Name="dbo.Contacts" Member="Contacts">
@@ -103,22 +104,23 @@
       <Column Name="AddressID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
       <Column Name="TypeID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
       <Column Name="Notes" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
-      <Association Name="Address_Contact" Member="Address" ThisKey="AddressID" Type="Address" IsForeignKey="true" />
-      <Association Name="ContactType_Contact" Member="ContactType" ThisKey="TypeID" Type="ContactType" IsForeignKey="true" />
+      <Association Name="Contact_ThirdPartyService" Member="ThirdPartyServices" ThisKey="ID" OtherKey="ContactID" Type="ThirdPartyService" />
+      <Association Name="Address_Contact" Member="Address" ThisKey="AddressID" OtherKey="ID" Type="Address" IsForeignKey="true" />
+      <Association Name="ContactType_Contact" Member="ContactType" ThisKey="TypeID" OtherKey="ID" Type="ContactType" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.ContactTypes" Member="ContactTypes">
     <Type Name="ContactType">
       <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Name" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
-      <Association Name="ContactType_Contact" Member="Contacts" OtherKey="TypeID" Type="Contact" />
+      <Association Name="ContactType_Contact" Member="Contacts" ThisKey="ID" OtherKey="TypeID" Type="Contact" />
     </Type>
   </Table>
   <Table Name="dbo.Countries" Member="Countries">
     <Type Name="Country">
       <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Name" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
-      <Association Name="Country_ProvincesAndState" Member="ProvincesAndStates" OtherKey="CountryID" Type="ProvincesAndState" />
+      <Association Name="Country_ProvincesAndState" Member="ProvincesAndStates" ThisKey="ID" OtherKey="CountryID" Type="ProvincesAndState" />
     </Type>
   </Table>
   <Table Name="dbo.ProvincesAndStates" Member="ProvincesAndStates">
@@ -126,8 +128,8 @@
       <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Name" Type="System.String" DbType="VarChar(255) NOT NULL" CanBeNull="false" />
       <Column Name="CountryID" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
-      <Association Name="ProvincesAndState_Address" Member="Addresses" OtherKey="ProvinceStateID" Type="Address" />
-      <Association Name="Country_ProvincesAndState" Member="Country" ThisKey="CountryID" Type="Country" IsForeignKey="true" />
+      <Association Name="ProvincesAndState_Address" Member="Addresses" ThisKey="ID" OtherKey="ProvinceStateID" Type="Address" />
+      <Association Name="Country_ProvincesAndState" Member="Country" ThisKey="CountryID" OtherKey="ID" Type="Country" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.RateDiscounts" Member="RateDiscounts">
@@ -138,14 +140,14 @@
       <Column Name="Daily" Type="System.Double" DbType="Float" CanBeNull="true" />
       <Column Name="Weekly" Type="System.Double" DbType="Float" CanBeNull="true" />
       <Column Name="Monthly" Type="System.Double" DbType="Float" CanBeNull="true" />
-      <Association Name="Company_RateDiscount" Member="Company" ThisKey="CompanyID" Type="Company" IsForeignKey="true" />
+      <Association Name="Company_RateDiscount" Member="Company" ThisKey="CompanyID" OtherKey="ID" Type="Company" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.ServiceTypes" Member="ServiceTypes">
     <Type Name="ServiceType">
       <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Name" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
-      <Association Name="ServiceType_Service" Member="Services" OtherKey="ServiceTypeID" Type="Service" />
+      <Association Name="ServiceType_Service" Member="Services" ThisKey="ID" OtherKey="ServiceTypeID" Type="Service" />
     </Type>
   </Table>
   <Table Name="dbo.Services" Member="Services">
@@ -153,8 +155,9 @@
       <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="CompanyID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
       <Column Name="ServiceTypeID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
-      <Association Name="Company_Service" Member="Company" ThisKey="CompanyID" Type="Company" IsForeignKey="true" />
-      <Association Name="ServiceType_Service" Member="ServiceType" ThisKey="ServiceTypeID" Type="ServiceType" IsForeignKey="true" />
+      <Association Name="Service_ThirdPartyService" Member="ThirdPartyServices" ThisKey="ID" OtherKey="ServiceTypeID" Type="ThirdPartyService" />
+      <Association Name="Company_Service" Member="Company" ThisKey="CompanyID" OtherKey="ID" Type="Company" IsForeignKey="true" />
+      <Association Name="ServiceType_Service" Member="ServiceType" ThisKey="ServiceTypeID" OtherKey="ID" Type="ServiceType" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.Users" Member="Users">
@@ -163,8 +166,8 @@
       <Column Name="FirstName" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
       <Column Name="LastName" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
       <Column Name="Email" Type="System.String" DbType="VarChar(355)" CanBeNull="true" />
-      <Association Name="User_Quote" Member="Quotes" OtherKey="QuotedByUserID" Type="Quote" />
-      <Association Name="User_Job" Member="Jobs" OtherKey="QuotedByUserID" Type="Job" />
+      <Association Name="User_Quote" Member="Quotes" ThisKey="ID" OtherKey="QuotedByUserID" Type="Quote" />
+      <Association Name="User_Job" Member="Jobs" ThisKey="ID" OtherKey="QuotedByUserID" Type="Job" />
     </Type>
   </Table>
   <Table Name="dbo.QuoteSupplements" Member="QuoteSupplements">
@@ -176,15 +179,15 @@
       <Column Name="BillingTypeID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
       <Column Name="Quantity" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="CostPerItem" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
-      <Association Name="BillingType_QuoteSupplement" Member="BillingType" ThisKey="BillingTypeID" Type="BillingType" IsForeignKey="true" />
-      <Association Name="Quote_QuoteSupplement" Member="Quote" ThisKey="QuoteID" Type="Quote" IsForeignKey="true" />
+      <Association Name="BillingType_QuoteSupplement" Member="BillingType" ThisKey="BillingTypeID" OtherKey="ID" Type="BillingType" IsForeignKey="true" />
+      <Association Name="Quote_QuoteSupplement" Member="Quote" ThisKey="QuoteID" OtherKey="ID" Type="Quote" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.BillingTypes" Member="BillingTypes">
     <Type Name="BillingType">
       <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Name" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
-      <Association Name="BillingType_QuoteSupplement" Member="QuoteSupplements" OtherKey="BillingTypeID" Type="QuoteSupplement" />
+      <Association Name="BillingType_QuoteSupplement" Member="QuoteSupplements" ThisKey="ID" OtherKey="BillingTypeID" Type="QuoteSupplement" />
     </Type>
   </Table>
   <Table Name="dbo.QuoteCommodities" Member="QuoteCommodities">
@@ -212,7 +215,7 @@
       <Column Name="Quantity" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="CostPerItem" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
       <Column Name="Notes" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
-      <Association Name="Quote_QuoteCommodity" Member="Quote" ThisKey="QuoteID" Type="Quote" IsForeignKey="true" />
+      <Association Name="Quote_QuoteCommodity" Member="Quote" ThisKey="QuoteID" OtherKey="ID" Type="Quote" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.Dispatches" Member="Dispatches">
@@ -223,8 +226,8 @@
       <Column Name="ServiceType" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
       <Column Name="Description" Type="System.String" DbType="VarChar(1000)" CanBeNull="true" />
       <Column Name="Notes" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
-      <Association Name="Job_Dispatch" Member="Job" ThisKey="JobID" Type="Job" IsForeignKey="true" />
-      <Association Name="Load_Dispatch" Member="Load" ThisKey="LoadID" Type="Load" IsForeignKey="true" />
+      <Association Name="Job_Dispatch" Member="Job" ThisKey="JobID" OtherKey="ID" Type="Job" IsForeignKey="true" />
+      <Association Name="Load_Dispatch" Member="Load" ThisKey="LoadID" OtherKey="ID" Type="Load" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.Quotes" Member="Quotes">
@@ -242,12 +245,12 @@
       <Column Name="QuotedByUserID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
       <Column Name="Price" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
       <Column Name="IsPrinted" Type="System.Byte" DbType="TinyInt" CanBeNull="true" />
-      <Association Name="Quote_QuoteSupplement" Member="QuoteSupplements" OtherKey="QuoteID" Type="QuoteSupplement" />
-      <Association Name="Quote_QuoteCommodity" Member="QuoteCommodities" OtherKey="QuoteID" Type="QuoteCommodity" />
-      <Association Name="Quote_Job" Member="Jobs" OtherKey="QuoteID" Type="Job" />
-      <Association Name="Company_Quote" Member="Company" ThisKey="CompanyID" Type="Company" IsForeignKey="true" />
-      <Association Name="Company_Quote1" Member="Company1" ThisKey="CareOfCompanyID" Type="Company" IsForeignKey="true" />
-      <Association Name="User_Quote" Member="User" ThisKey="QuotedByUserID" Type="User" IsForeignKey="true" />
+      <Association Name="Quote_QuoteSupplement" Member="QuoteSupplements" ThisKey="ID" OtherKey="QuoteID" Type="QuoteSupplement" />
+      <Association Name="Quote_QuoteCommodity" Member="QuoteCommodities" ThisKey="ID" OtherKey="QuoteID" Type="QuoteCommodity" />
+      <Association Name="Quote_Job" Member="Jobs" ThisKey="ID" OtherKey="QuoteID" Type="Job" />
+      <Association Name="Company_Quote" Member="Company" ThisKey="CompanyID" OtherKey="ID" Type="Company" IsForeignKey="true" />
+      <Association Name="Company_Quote1" Member="Company1" ThisKey="CareOfCompanyID" OtherKey="ID" Type="Company" IsForeignKey="true" />
+      <Association Name="User_Quote" Member="User" ThisKey="QuotedByUserID" OtherKey="ID" Type="User" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.Jobs" Member="Jobs">
@@ -261,41 +264,43 @@
       <Column Name="Description" Type="System.String" DbType="VarChar(1000)" CanBeNull="true" />
       <Column Name="StartDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
       <Column Name="EndDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Association Name="Job_Dispatch" Member="Dispatches" OtherKey="JobID" Type="Dispatch" />
-      <Association Name="Job_JobCommodity" Member="JobCommodities" OtherKey="JobID" Type="JobCommodity" />
-      <Association Name="Job_Load" Member="Loads" OtherKey="JobID" Type="Load" />
-      <Association Name="Company_Job" Member="Company" ThisKey="CompanyID" Type="Company" IsForeignKey="true" />
-      <Association Name="Company_Job1" Member="Company1" ThisKey="CareOfCompanyID" Type="Company" IsForeignKey="true" />
-      <Association Name="Quote_Job" Member="Quote" ThisKey="QuoteID" Type="Quote" IsForeignKey="true" />
-      <Association Name="User_Job" Member="User" ThisKey="QuotedByUserID" Type="User" IsForeignKey="true" />
+      <Association Name="Job_Dispatch" Member="Dispatches" ThisKey="ID" OtherKey="JobID" Type="Dispatch" />
+      <Association Name="Job_JobCommodity" Member="JobCommodities" ThisKey="ID" OtherKey="JobID" Type="JobCommodity" />
+      <Association Name="Job_Load" Member="Loads" ThisKey="ID" OtherKey="JobID" Type="Load" />
+      <Association Name="Job_ThirdPartyService" Member="ThirdPartyServices" ThisKey="ID" OtherKey="JobID" Type="ThirdPartyService" />
+      <Association Name="Job_Permit" Member="Permits" ThisKey="ID" OtherKey="JobID" Type="Permit" />
+      <Association Name="Company_Job" Member="Company" ThisKey="CompanyID" OtherKey="ID" Type="Company" IsForeignKey="true" />
+      <Association Name="Company_Job1" Member="Company1" ThisKey="CareOfCompanyID" OtherKey="ID" Type="Company" IsForeignKey="true" />
+      <Association Name="Quote_Job" Member="Quote" ThisKey="QuoteID" OtherKey="ID" Type="Quote" IsForeignKey="true" />
+      <Association Name="User_Job" Member="User" ThisKey="QuotedByUserID" OtherKey="ID" Type="User" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.WheelTypes" Member="WheelTypes">
     <Type Name="WheelType">
       <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Name" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
-      <Association Name="WheelType_Load" Member="Loads" OtherKey="WheelTypeID" Type="Load" />
+      <Association Name="WheelType_Load" Member="Loads" ThisKey="ID" OtherKey="WheelTypeID" Type="Load" />
     </Type>
   </Table>
   <Table Name="dbo.TrailerCombinations" Member="TrailerCombinations">
     <Type Name="TrailerCombination">
       <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Name" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
-      <Association Name="TrailerCombination_Load" Member="Loads" OtherKey="TrailerCombinationID" Type="Load" />
+      <Association Name="TrailerCombination_Load" Member="Loads" ThisKey="ID" OtherKey="TrailerCombinationID" Type="Load" />
     </Type>
   </Table>
   <Table Name="dbo.Units" Member="Units">
     <Type Name="Unit">
       <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Name" Type="System.String" DbType="VarChar(75)" CanBeNull="true" />
-      <Association Name="Unit_Load" Member="Loads" OtherKey="UnitID" Type="Load" />
+      <Association Name="Unit_Load" Member="Loads" ThisKey="ID" OtherKey="UnitID" Type="Load" />
     </Type>
   </Table>
   <Table Name="dbo.Seasons" Member="Seasons">
     <Type Name="Season">
       <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Name" Type="System.String" DbType="VarChar(75)" CanBeNull="true" />
-      <Association Name="Season_Load" Member="Loads" OtherKey="SeasonID" Type="Load" />
+      <Association Name="Season_Load" Member="Loads" ThisKey="ID" OtherKey="SeasonID" Type="Load" />
     </Type>
   </Table>
   <Table Name="dbo.JobCommodities" Member="JobCommodities">
@@ -333,9 +338,9 @@
       <Column Name="UnloadInstructions" Type="System.String" DbType="VarChar(2000)" CanBeNull="true" />
       <Column Name="UnloadRoute" Type="System.String" DbType="VarChar(2000)" CanBeNull="true" />
       <Column Name="Notes" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
-      <Association Name="Commodity_JobCommodity" Member="Commodity" ThisKey="OriginalCommodityID" Type="Commodity" IsForeignKey="true" />
-      <Association Name="Job_JobCommodity" Member="Job" ThisKey="JobID" Type="Job" IsForeignKey="true" />
-      <Association Name="Load_JobCommodity" Member="Load" ThisKey="LoadID" Type="Load" IsForeignKey="true" />
+      <Association Name="Commodity_JobCommodity" Member="Commodity" ThisKey="OriginalCommodityID" OtherKey="ID" Type="Commodity" IsForeignKey="true" />
+      <Association Name="Job_JobCommodity" Member="Job" ThisKey="JobID" OtherKey="ID" Type="Job" IsForeignKey="true" />
+      <Association Name="Load_JobCommodity" Member="Load" ThisKey="LoadID" OtherKey="ID" Type="Load" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.Loads" Member="Loads">
@@ -369,13 +374,15 @@
       <Column Name="LoadedLength" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="LoadedWidth" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="LoadedHeight" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Association Name="Load_Dispatch" Member="Dispatches" OtherKey="LoadID" Type="Dispatch" />
-      <Association Name="Load_JobCommodity" Member="JobCommodities" OtherKey="LoadID" Type="JobCommodity" />
-      <Association Name="Job_Load" Member="Job" ThisKey="JobID" Type="Job" IsForeignKey="true" />
-      <Association Name="Season_Load" Member="Season" ThisKey="SeasonID" Type="Season" IsForeignKey="true" />
-      <Association Name="TrailerCombination_Load" Member="TrailerCombination" ThisKey="TrailerCombinationID" Type="TrailerCombination" IsForeignKey="true" />
-      <Association Name="Unit_Load" Member="Unit" ThisKey="UnitID" Type="Unit" IsForeignKey="true" />
-      <Association Name="WheelType_Load" Member="WheelType" ThisKey="WheelTypeID" Type="WheelType" IsForeignKey="true" />
+      <Association Name="Load_Dispatch" Member="Dispatches" ThisKey="ID" OtherKey="LoadID" Type="Dispatch" />
+      <Association Name="Load_JobCommodity" Member="JobCommodities" ThisKey="ID" OtherKey="LoadID" Type="JobCommodity" />
+      <Association Name="Load_ThirdPartyService" Member="ThirdPartyServices" ThisKey="ID" OtherKey="LoadID" Type="ThirdPartyService" />
+      <Association Name="Load_Permit" Member="Permits" ThisKey="ID" OtherKey="LoadID" Type="Permit" />
+      <Association Name="Job_Load" Member="Job" ThisKey="JobID" OtherKey="ID" Type="Job" IsForeignKey="true" />
+      <Association Name="Season_Load" Member="Season" ThisKey="SeasonID" OtherKey="ID" Type="Season" IsForeignKey="true" />
+      <Association Name="TrailerCombination_Load" Member="TrailerCombination" ThisKey="TrailerCombinationID" OtherKey="ID" Type="TrailerCombination" IsForeignKey="true" />
+      <Association Name="Unit_Load" Member="Unit" ThisKey="UnitID" OtherKey="ID" Type="Unit" IsForeignKey="true" />
+      <Association Name="WheelType_Load" Member="WheelType" ThisKey="WheelTypeID" OtherKey="ID" Type="WheelType" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.CustomerNumbers" Member="CustomerNumbers">
@@ -384,7 +391,43 @@
       <Column Name="CompanyID" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
       <Column Name="Field" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
       <Column Name="Value" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
-      <Association Name="Company_CustomerNumber" Member="Company" ThisKey="CompanyID" Type="Company" IsForeignKey="true" />
+      <Association Name="Company_CustomerNumber" Member="Company" ThisKey="CompanyID" OtherKey="ID" Type="Company" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ThirdPartyServices" Member="ThirdPartyServices">
+    <Type Name="ThirdPartyService">
+      <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="JobID" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="LoadID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="CompanyID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="ServiceTypeID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="ContactID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="ServiceDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ServiceTime" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Location" Type="System.String" DbType="VarChar(1000)" CanBeNull="true" />
+      <Column Name="Reference" Type="System.String" DbType="VarChar(1000)" CanBeNull="true" />
+      <Column Name="Notes" Type="System.String" DbType="VarChar(1000)" CanBeNull="true" />
+      <Association Name="Company_ThirdPartyService" Member="Company" ThisKey="CompanyID" OtherKey="ID" Type="Company" IsForeignKey="true" />
+      <Association Name="Contact_ThirdPartyService" Member="Contact" ThisKey="ContactID" OtherKey="ID" Type="Contact" IsForeignKey="true" />
+      <Association Name="Job_ThirdPartyService" Member="Job" ThisKey="JobID" OtherKey="ID" Type="Job" IsForeignKey="true" />
+      <Association Name="Load_ThirdPartyService" Member="Load" ThisKey="LoadID" OtherKey="ID" Type="Load" IsForeignKey="true" />
+      <Association Name="Service_ThirdPartyService" Member="Service" ThisKey="ServiceTypeID" OtherKey="ID" Type="Service" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Permits" Member="Permits">
+    <Type Name="Permit">
+      <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="JobID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="LoadID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="Issuer" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Column Name="PermitType" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Column Name="Reference" Type="System.String" DbType="VarChar(1000)" CanBeNull="true" />
+      <Column Name="Conditions" Type="System.String" DbType="VarChar(1000)" CanBeNull="true" />
+      <Column Name="Cost" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="PermitDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="PermitTime" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Association Name="Job_Permit" Member="Job" ThisKey="JobID" OtherKey="ID" Type="Job" IsForeignKey="true" />
+      <Association Name="Load_Permit" Member="Load" ThisKey="LoadID" OtherKey="ID" Type="Load" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>

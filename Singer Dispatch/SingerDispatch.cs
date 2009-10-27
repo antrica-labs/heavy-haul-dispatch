@@ -1,6 +1,3 @@
-using System;
-using System.Linq;
-
 namespace SingerDispatch
 {
     partial class QuoteCommodity
@@ -29,7 +26,7 @@ namespace SingerDispatch
         }
     }
 
-    partial class Quote : ICloneable
+    partial class Quote : System.ICloneable
     {
         public string NumberAndRev
         {
@@ -86,7 +83,7 @@ namespace SingerDispatch
         }
     }
 
-    partial class QuoteCommodity : ICloneable
+    partial class QuoteCommodity : System.ICloneable
     {
         public object Clone()
         {
@@ -119,7 +116,7 @@ namespace SingerDispatch
         }
     }
 
-    partial class QuoteSupplement : ICloneable
+    partial class QuoteSupplement : System.ICloneable
     {
         public object Clone()
         {

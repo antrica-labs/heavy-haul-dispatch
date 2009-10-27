@@ -53,10 +53,10 @@
                 <ComboBox Name="cmbLoads"  Grid.Row="0" Grid.Column="1" SelectedItem="{Binding Load}" ItemTemplate="{StaticResource LoadNameTemplate}" />
 
                 <Label Grid.Row="1" Grid.Column="0">Company:</Label>
-                <ComboBox Grid.Row="1" Grid.Column="1"></ComboBox>
+                <ComboBox Grid.Row="1" Grid.Column="1" SelectedItem="{Binding Company}" />
 
                 <Label Grid.Row="2" Grid.Column="0">Service type:</Label>
-                <ComboBox Grid.Row="2" Grid.Column="1">
+                <ComboBox Grid.Row="2" Grid.Column="1" SelectedItem="{Binding ServiceType}">
                     <ComboBoxItem>Tractor</ComboBoxItem>
                     <ComboBoxItem>Crane</ComboBoxItem>
                     <ComboBoxItem>Pilot Car</ComboBoxItem>
@@ -64,16 +64,16 @@
                 </ComboBox>
 
                 <Label Grid.Row="3" Grid.Column="0">Contact:</Label>
-                <ComboBox Grid.Row="3" Grid.Column="1" />
+                <ComboBox Grid.Row="3" Grid.Column="1" SelectedItem="{Binding Contact}" />
 
                 <Label Grid.Row="4" Grid.Column="0">Location:</Label>
-                <TextBox Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" />
+                <TextBox Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Location}" />
 
                 <Label Grid.Row="5" Grid.Column="0">Reference:</Label>
-                <TextBox Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" />
+                <TextBox Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Reference}" />
 
                 <Label Grid.Row="6" Grid.Column="0">Notes:</Label>
-                <TextBox Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2" />
+                <TextBox Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Notes}" />
 
 
                 <GroupBox Grid.Column="2" Grid.Row="0" Grid.RowSpan="3" Header="Departure">
@@ -88,9 +88,10 @@
                         </Grid.RowDefinitions>
 
                         <Label Grid.Row="0" Grid.Column="0">Date:</Label>
-                        <WPF:DatePicker Grid.Row="0" Grid.Column="1" />
+                        <WPF:DatePicker Grid.Row="0" Grid.Column="1" SelectedDate="{Binding ServiceDate}" />
 
-                        <Label Grid.Row="1" Grid.Column="0">Time:</Label>                        
+                        <Label Grid.Row="1" Grid.Column="0">Time:</Label>
+                        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding ServiceTime}" />
                     </Grid>
                 </GroupBox>
             </Grid>
