@@ -17,7 +17,11 @@
     </UserControl.Resources>
     <StackPanel>
         <WPF:DataGrid Style="{StaticResource ListDisplay}" Height="180">
-
+            <WPF:DataGrid.Columns>
+                <WPF:DataGridTextColumn Header="Issuer" Binding="{Binding Issuer}" Width="0.4*"  />
+                <WPF:DataGridTextColumn Header="Permit Type" Binding="{Binding PermitType}" Width="0.3*" />
+                <WPF:DataGridTextColumn Header="Conditions" Binding="{Binding Conditions}" />
+            </WPF:DataGrid.Columns>
         </WPF:DataGrid>
 
         <Grid Margin="0,0,0,5">
@@ -31,8 +35,8 @@
             <Button Style="{StaticResource Horizontal}" Grid.Column="0" Click="NewPermit_Click">New permit</Button>
             <Button Style="{StaticResource HorizontalEnd}" Grid.Column="3" Click="RemovePermit_Click">Remove permit</Button>
         </Grid>
-
-        <GroupBox Header="Service Details">
+ 
+        <GroupBox Header="Service Details" DataContext="{Binding ElementName=dgPermits, Path=SelectedItem}">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="90" />
@@ -50,7 +54,7 @@
                 </Grid.RowDefinitions>
 
                 <Label Grid.Row="0" Grid.Column="0">Load:</Label>
-                <ComboBox Name="cmbLoads"  Grid.Row="0" Grid.Column="1" SelectedItem="{Binding Load}" ItemTemplate="{StaticResource LoadNameTemplate}" />
+                <ComboBox Name="cmbLoads" Grid.Column="1" SelectedItem="{Binding Load}" ItemTemplate="{StaticResource LoadNameTemplate}" Margin="4,3,2,3" />
 
                 <Label Grid.Row="1" Grid.Column="0">Issuer:</Label>
                 <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Issuer}" />

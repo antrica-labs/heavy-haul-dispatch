@@ -80,7 +80,7 @@ namespace SingerDispatch.Panels.Jobs
             ((ObservableCollection<JobCommodity>)dgCommodities.ItemsSource).Remove(commodity);
         }
 
-        private void cmbCommodityName_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void CommodityName_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var original = (Commodity)cmbCommodityName.SelectedItem;
             var commodity = (JobCommodity)dgCommodities.SelectedItem;

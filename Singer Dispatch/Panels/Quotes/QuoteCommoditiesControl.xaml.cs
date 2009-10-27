@@ -54,7 +54,7 @@ namespace SingerDispatch.Panels.Quotes
             dgQuoteCommodities.ItemsSource = new ObservableCollection<QuoteCommodity>(newValue.QuoteCommodities);
         }
 
-        private void cmbCommodityName_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void CommodityName_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var original = (Commodity)cmbCommodityName.SelectedItem;
             var commodity = (QuoteCommodity)dgQuoteCommodities.SelectedItem;

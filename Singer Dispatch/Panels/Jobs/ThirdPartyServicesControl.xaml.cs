@@ -19,14 +19,19 @@ namespace SingerDispatch.Panels.Jobs
     /// </summary>
     public partial class ThirdPartyServicesControl : JobUserControl
     {
+        public SingerDispatchDataContext Database { get; set; }
+
         public ThirdPartyServicesControl()
         {
             InitializeComponent();
+
+            Database = SingerConstants.CommonDataContext;
         }
 
         private void ControlLoaded(object sender, RoutedEventArgs e)
         {
             cmbLoads.ItemsSource = SelectedJob != null ? SelectedJob.Loads : null;
+            
         }
 
         private void NewService_Click(object sender, RoutedEventArgs e)

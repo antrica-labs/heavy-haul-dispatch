@@ -57,7 +57,7 @@
                 </Grid.RowDefinitions>
 
                 <Label HorizontalAlignment="Left">Commodity name:</Label>
-                <ComboBox Name="cmbCommodityName" Text="{Binding Name}" Grid.Row="0" Grid.Column="1" IsEditable="True" ItemTemplate="{StaticResource SimpleNameTemplate}" TextSearch.TextPath="Name" SelectionChanged="cmbCommodityName_SelectionChanged" />
+                <ComboBox Name="cmbCommodityName" Text="{Binding Name}" Grid.Row="0" Grid.Column="1" IsEditable="True" ItemTemplate="{StaticResource SimpleNameTemplate}" TextSearch.TextPath="Name" SelectionChanged="CommodityName_SelectionChanged" />
 
                 <Label Grid.Row="1" Grid.Column="0">Value:</Label>
                 <TextBox Name="txtCommodityValue" Grid.Row="1" Grid.Column="1" Text="{Binding Value}" />

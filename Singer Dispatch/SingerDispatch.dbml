@@ -155,7 +155,6 @@
       <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="CompanyID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
       <Column Name="ServiceTypeID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
-      <Association Name="Service_ThirdPartyService" Member="ThirdPartyServices" ThisKey="ID" OtherKey="ServiceTypeID" Type="ThirdPartyService" />
       <Association Name="Company_Service" Member="Company" ThisKey="CompanyID" OtherKey="ID" Type="Company" IsForeignKey="true" />
       <Association Name="ServiceType_Service" Member="ServiceType" ThisKey="ServiceTypeID" OtherKey="ID" Type="ServiceType" IsForeignKey="true" />
     </Type>
@@ -267,8 +266,8 @@
       <Association Name="Job_Dispatch" Member="Dispatches" ThisKey="ID" OtherKey="JobID" Type="Dispatch" />
       <Association Name="Job_JobCommodity" Member="JobCommodities" ThisKey="ID" OtherKey="JobID" Type="JobCommodity" />
       <Association Name="Job_Load" Member="Loads" ThisKey="ID" OtherKey="JobID" Type="Load" />
-      <Association Name="Job_ThirdPartyService" Member="ThirdPartyServices" ThisKey="ID" OtherKey="JobID" Type="ThirdPartyService" />
       <Association Name="Job_Permit" Member="Permits" ThisKey="ID" OtherKey="JobID" Type="Permit" />
+      <Association Name="Job_ThirdPartyService" Member="ThirdPartyServices" ThisKey="ID" OtherKey="JobID" Type="ThirdPartyService" />
       <Association Name="Company_Job" Member="Company" ThisKey="CompanyID" OtherKey="ID" Type="Company" IsForeignKey="true" />
       <Association Name="Company_Job1" Member="Company1" ThisKey="CareOfCompanyID" OtherKey="ID" Type="Company" IsForeignKey="true" />
       <Association Name="Quote_Job" Member="Quote" ThisKey="QuoteID" OtherKey="ID" Type="Quote" IsForeignKey="true" />
@@ -376,8 +375,8 @@
       <Column Name="LoadedHeight" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Association Name="Load_Dispatch" Member="Dispatches" ThisKey="ID" OtherKey="LoadID" Type="Dispatch" />
       <Association Name="Load_JobCommodity" Member="JobCommodities" ThisKey="ID" OtherKey="LoadID" Type="JobCommodity" />
-      <Association Name="Load_ThirdPartyService" Member="ThirdPartyServices" ThisKey="ID" OtherKey="LoadID" Type="ThirdPartyService" />
       <Association Name="Load_Permit" Member="Permits" ThisKey="ID" OtherKey="LoadID" Type="Permit" />
+      <Association Name="Load_ThirdPartyService" Member="ThirdPartyServices" ThisKey="ID" OtherKey="LoadID" Type="ThirdPartyService" />
       <Association Name="Job_Load" Member="Job" ThisKey="JobID" OtherKey="ID" Type="Job" IsForeignKey="true" />
       <Association Name="Season_Load" Member="Season" ThisKey="SeasonID" OtherKey="ID" Type="Season" IsForeignKey="true" />
       <Association Name="TrailerCombination_Load" Member="TrailerCombination" ThisKey="TrailerCombinationID" OtherKey="ID" Type="TrailerCombination" IsForeignKey="true" />
@@ -394,26 +393,6 @@
       <Association Name="Company_CustomerNumber" Member="Company" ThisKey="CompanyID" OtherKey="ID" Type="Company" IsForeignKey="true" />
     </Type>
   </Table>
-  <Table Name="dbo.ThirdPartyServices" Member="ThirdPartyServices">
-    <Type Name="ThirdPartyService">
-      <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="JobID" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
-      <Column Name="LoadID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
-      <Column Name="CompanyID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
-      <Column Name="ServiceTypeID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
-      <Column Name="ContactID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
-      <Column Name="ServiceDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="ServiceTime" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
-      <Column Name="Location" Type="System.String" DbType="VarChar(1000)" CanBeNull="true" />
-      <Column Name="Reference" Type="System.String" DbType="VarChar(1000)" CanBeNull="true" />
-      <Column Name="Notes" Type="System.String" DbType="VarChar(1000)" CanBeNull="true" />
-      <Association Name="Company_ThirdPartyService" Member="Company" ThisKey="CompanyID" OtherKey="ID" Type="Company" IsForeignKey="true" />
-      <Association Name="Contact_ThirdPartyService" Member="Contact" ThisKey="ContactID" OtherKey="ID" Type="Contact" IsForeignKey="true" />
-      <Association Name="Job_ThirdPartyService" Member="Job" ThisKey="JobID" OtherKey="ID" Type="Job" IsForeignKey="true" />
-      <Association Name="Load_ThirdPartyService" Member="Load" ThisKey="LoadID" OtherKey="ID" Type="Load" IsForeignKey="true" />
-      <Association Name="Service_ThirdPartyService" Member="Service" ThisKey="ServiceTypeID" OtherKey="ID" Type="Service" IsForeignKey="true" />
-    </Type>
-  </Table>
   <Table Name="dbo.Permits" Member="Permits">
     <Type Name="Permit">
       <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -428,6 +407,25 @@
       <Column Name="PermitTime" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
       <Association Name="Job_Permit" Member="Job" ThisKey="JobID" OtherKey="ID" Type="Job" IsForeignKey="true" />
       <Association Name="Load_Permit" Member="Load" ThisKey="LoadID" OtherKey="ID" Type="Load" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ThirdPartyServices" Member="ThirdPartyServices">
+    <Type Name="ThirdPartyService">
+      <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="JobID" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="LoadID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="CompanyID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="ServiceType" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="ContactID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="ServiceDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ServiceTime" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Location" Type="System.String" DbType="VarChar(1000)" CanBeNull="true" />
+      <Column Name="Reference" Type="System.String" DbType="VarChar(1000)" CanBeNull="true" />
+      <Column Name="Notes" Type="System.String" DbType="VarChar(1000)" CanBeNull="true" />
+      <Association Name="Company_ThirdPartyService" Member="Company" ThisKey="CompanyID" OtherKey="ID" Type="Company" IsForeignKey="true" />
+      <Association Name="Contact_ThirdPartyService" Member="Contact" ThisKey="ContactID" OtherKey="ID" Type="Contact" IsForeignKey="true" />
+      <Association Name="Job_ThirdPartyService" Member="Job" ThisKey="JobID" OtherKey="ID" Type="Job" IsForeignKey="true" />
+      <Association Name="Load_ThirdPartyService" Member="Load" ThisKey="LoadID" OtherKey="ID" Type="Load" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>

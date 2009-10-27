@@ -19,9 +19,13 @@ namespace SingerDispatch.Panels.Jobs
     /// </summary>
     public partial class PermitsControl : JobUserControl
     {
+        public SingerDispatchDataContext Database { get; set; }
+
         public PermitsControl()
         {
             InitializeComponent();
+
+            Database = SingerConstants.CommonDataContext;
         }
 
         private void ControlLoaded(object sender, RoutedEventArgs e)

@@ -111,12 +111,12 @@ namespace SingerDispatch
     partial void InsertCustomerNumber(CustomerNumber instance);
     partial void UpdateCustomerNumber(CustomerNumber instance);
     partial void DeleteCustomerNumber(CustomerNumber instance);
-    partial void InsertThirdPartyService(ThirdPartyService instance);
-    partial void UpdateThirdPartyService(ThirdPartyService instance);
-    partial void DeleteThirdPartyService(ThirdPartyService instance);
     partial void InsertPermit(Permit instance);
     partial void UpdatePermit(Permit instance);
     partial void DeletePermit(Permit instance);
+    partial void InsertThirdPartyService(ThirdPartyService instance);
+    partial void UpdateThirdPartyService(ThirdPartyService instance);
+    partial void DeleteThirdPartyService(ThirdPartyService instance);
     #endregion
 		
 		public SingerDispatchDataContext() : 
@@ -365,19 +365,19 @@ namespace SingerDispatch
 			}
 		}
 		
-		public System.Data.Linq.Table<ThirdPartyService> ThirdPartyServices
-		{
-			get
-			{
-				return this.GetTable<ThirdPartyService>();
-			}
-		}
-		
 		public System.Data.Linq.Table<Permit> Permits
 		{
 			get
 			{
 				return this.GetTable<Permit>();
+			}
+		}
+		
+		public System.Data.Linq.Table<ThirdPartyService> ThirdPartyServices
+		{
+			get
+			{
+				return this.GetTable<ThirdPartyService>();
 			}
 		}
 	}
@@ -3503,8 +3503,6 @@ namespace SingerDispatch
 		
 		private System.Nullable<long> _ServiceTypeID;
 		
-		private EntitySet<ThirdPartyService> _ThirdPartyServices;
-		
 		private EntityRef<Company> _Company;
 		
 		private EntityRef<ServiceType> _ServiceType;
@@ -3523,7 +3521,6 @@ namespace SingerDispatch
 		
 		public Service()
 		{
-			this._ThirdPartyServices = new EntitySet<ThirdPartyService>(new Action<ThirdPartyService>(this.attach_ThirdPartyServices), new Action<ThirdPartyService>(this.detach_ThirdPartyServices));
 			this._Company = default(EntityRef<Company>);
 			this._ServiceType = default(EntityRef<ServiceType>);
 			OnCreated();
@@ -3594,19 +3591,6 @@ namespace SingerDispatch
 					this.SendPropertyChanged("ServiceTypeID");
 					this.OnServiceTypeIDChanged();
 				}
-			}
-		}
-		
-		[Association(Name="Service_ThirdPartyService", Storage="_ThirdPartyServices", ThisKey="ID", OtherKey="ServiceTypeID")]
-		public EntitySet<ThirdPartyService> ThirdPartyServices
-		{
-			get
-			{
-				return this._ThirdPartyServices;
-			}
-			set
-			{
-				this._ThirdPartyServices.Assign(value);
 			}
 		}
 		
@@ -3696,18 +3680,6 @@ namespace SingerDispatch
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
-		}
-		
-		private void attach_ThirdPartyServices(ThirdPartyService entity)
-		{
-			this.SendPropertyChanging();
-			entity.Service = this;
-		}
-		
-		private void detach_ThirdPartyServices(ThirdPartyService entity)
-		{
-			this.SendPropertyChanging();
-			entity.Service = null;
 		}
 	}
 	
@@ -5785,9 +5757,9 @@ namespace SingerDispatch
 		
 		private EntitySet<Load> _Loads;
 		
-		private EntitySet<ThirdPartyService> _ThirdPartyServices;
-		
 		private EntitySet<Permit> _Permits;
+		
+		private EntitySet<ThirdPartyService> _ThirdPartyServices;
 		
 		private EntityRef<Company> _Company;
 		
@@ -5826,8 +5798,8 @@ namespace SingerDispatch
 			this._Dispatches = new EntitySet<Dispatch>(new Action<Dispatch>(this.attach_Dispatches), new Action<Dispatch>(this.detach_Dispatches));
 			this._JobCommodities = new EntitySet<JobCommodity>(new Action<JobCommodity>(this.attach_JobCommodities), new Action<JobCommodity>(this.detach_JobCommodities));
 			this._Loads = new EntitySet<Load>(new Action<Load>(this.attach_Loads), new Action<Load>(this.detach_Loads));
-			this._ThirdPartyServices = new EntitySet<ThirdPartyService>(new Action<ThirdPartyService>(this.attach_ThirdPartyServices), new Action<ThirdPartyService>(this.detach_ThirdPartyServices));
 			this._Permits = new EntitySet<Permit>(new Action<Permit>(this.attach_Permits), new Action<Permit>(this.detach_Permits));
+			this._ThirdPartyServices = new EntitySet<ThirdPartyService>(new Action<ThirdPartyService>(this.attach_ThirdPartyServices), new Action<ThirdPartyService>(this.detach_ThirdPartyServices));
 			this._Company = default(EntityRef<Company>);
 			this._Company1 = default(EntityRef<Company>);
 			this._Quote = default(EntityRef<Quote>);
@@ -6070,19 +6042,6 @@ namespace SingerDispatch
 			}
 		}
 		
-		[Association(Name="Job_ThirdPartyService", Storage="_ThirdPartyServices", ThisKey="ID", OtherKey="JobID")]
-		public EntitySet<ThirdPartyService> ThirdPartyServices
-		{
-			get
-			{
-				return this._ThirdPartyServices;
-			}
-			set
-			{
-				this._ThirdPartyServices.Assign(value);
-			}
-		}
-		
 		[Association(Name="Job_Permit", Storage="_Permits", ThisKey="ID", OtherKey="JobID")]
 		public EntitySet<Permit> Permits
 		{
@@ -6093,6 +6052,19 @@ namespace SingerDispatch
 			set
 			{
 				this._Permits.Assign(value);
+			}
+		}
+		
+		[Association(Name="Job_ThirdPartyService", Storage="_ThirdPartyServices", ThisKey="ID", OtherKey="JobID")]
+		public EntitySet<ThirdPartyService> ThirdPartyServices
+		{
+			get
+			{
+				return this._ThirdPartyServices;
+			}
+			set
+			{
+				this._ThirdPartyServices.Assign(value);
 			}
 		}
 		
@@ -6288,18 +6260,6 @@ namespace SingerDispatch
 			entity.Job = null;
 		}
 		
-		private void attach_ThirdPartyServices(ThirdPartyService entity)
-		{
-			this.SendPropertyChanging();
-			entity.Job = this;
-		}
-		
-		private void detach_ThirdPartyServices(ThirdPartyService entity)
-		{
-			this.SendPropertyChanging();
-			entity.Job = null;
-		}
-		
 		private void attach_Permits(Permit entity)
 		{
 			this.SendPropertyChanging();
@@ -6307,6 +6267,18 @@ namespace SingerDispatch
 		}
 		
 		private void detach_Permits(Permit entity)
+		{
+			this.SendPropertyChanging();
+			entity.Job = null;
+		}
+		
+		private void attach_ThirdPartyServices(ThirdPartyService entity)
+		{
+			this.SendPropertyChanging();
+			entity.Job = this;
+		}
+		
+		private void detach_ThirdPartyServices(ThirdPartyService entity)
 		{
 			this.SendPropertyChanging();
 			entity.Job = null;
@@ -7790,9 +7762,9 @@ namespace SingerDispatch
 		
 		private EntitySet<JobCommodity> _JobCommodities;
 		
-		private EntitySet<ThirdPartyService> _ThirdPartyServices;
-		
 		private EntitySet<Permit> _Permits;
+		
+		private EntitySet<ThirdPartyService> _ThirdPartyServices;
 		
 		private EntityRef<Job> _Job;
 		
@@ -7872,8 +7844,8 @@ namespace SingerDispatch
 		{
 			this._Dispatches = new EntitySet<Dispatch>(new Action<Dispatch>(this.attach_Dispatches), new Action<Dispatch>(this.detach_Dispatches));
 			this._JobCommodities = new EntitySet<JobCommodity>(new Action<JobCommodity>(this.attach_JobCommodities), new Action<JobCommodity>(this.detach_JobCommodities));
-			this._ThirdPartyServices = new EntitySet<ThirdPartyService>(new Action<ThirdPartyService>(this.attach_ThirdPartyServices), new Action<ThirdPartyService>(this.detach_ThirdPartyServices));
 			this._Permits = new EntitySet<Permit>(new Action<Permit>(this.attach_Permits), new Action<Permit>(this.detach_Permits));
+			this._ThirdPartyServices = new EntitySet<ThirdPartyService>(new Action<ThirdPartyService>(this.attach_ThirdPartyServices), new Action<ThirdPartyService>(this.detach_ThirdPartyServices));
 			this._Job = default(EntityRef<Job>);
 			this._Season = default(EntityRef<Season>);
 			this._TrailerCombination = default(EntityRef<TrailerCombination>);
@@ -8508,19 +8480,6 @@ namespace SingerDispatch
 			}
 		}
 		
-		[Association(Name="Load_ThirdPartyService", Storage="_ThirdPartyServices", ThisKey="ID", OtherKey="LoadID")]
-		public EntitySet<ThirdPartyService> ThirdPartyServices
-		{
-			get
-			{
-				return this._ThirdPartyServices;
-			}
-			set
-			{
-				this._ThirdPartyServices.Assign(value);
-			}
-		}
-		
 		[Association(Name="Load_Permit", Storage="_Permits", ThisKey="ID", OtherKey="LoadID")]
 		public EntitySet<Permit> Permits
 		{
@@ -8531,6 +8490,19 @@ namespace SingerDispatch
 			set
 			{
 				this._Permits.Assign(value);
+			}
+		}
+		
+		[Association(Name="Load_ThirdPartyService", Storage="_ThirdPartyServices", ThisKey="ID", OtherKey="LoadID")]
+		public EntitySet<ThirdPartyService> ThirdPartyServices
+		{
+			get
+			{
+				return this._ThirdPartyServices;
+			}
+			set
+			{
+				this._ThirdPartyServices.Assign(value);
 			}
 		}
 		
@@ -8748,18 +8720,6 @@ namespace SingerDispatch
 			entity.Load = null;
 		}
 		
-		private void attach_ThirdPartyServices(ThirdPartyService entity)
-		{
-			this.SendPropertyChanging();
-			entity.Load = this;
-		}
-		
-		private void detach_ThirdPartyServices(ThirdPartyService entity)
-		{
-			this.SendPropertyChanging();
-			entity.Load = null;
-		}
-		
 		private void attach_Permits(Permit entity)
 		{
 			this.SendPropertyChanging();
@@ -8767,6 +8727,18 @@ namespace SingerDispatch
 		}
 		
 		private void detach_Permits(Permit entity)
+		{
+			this.SendPropertyChanging();
+			entity.Load = null;
+		}
+		
+		private void attach_ThirdPartyServices(ThirdPartyService entity)
+		{
+			this.SendPropertyChanging();
+			entity.Load = this;
+		}
+		
+		private void detach_ThirdPartyServices(ThirdPartyService entity)
 		{
 			this.SendPropertyChanging();
 			entity.Load = null;
@@ -8923,513 +8895,6 @@ namespace SingerDispatch
 						this._CompanyID = default(long);
 					}
 					this.SendPropertyChanged("Company");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
-	[Table(Name="dbo.ThirdPartyServices")]
-	public partial class ThirdPartyService : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private long _ID;
-		
-		private long _JobID;
-		
-		private System.Nullable<long> _LoadID;
-		
-		private System.Nullable<long> _CompanyID;
-		
-		private System.Nullable<long> _ServiceTypeID;
-		
-		private System.Nullable<long> _ContactID;
-		
-		private System.Nullable<System.DateTime> _ServiceDate;
-		
-		private string _ServiceTime;
-		
-		private string _Location;
-		
-		private string _Reference;
-		
-		private string _Notes;
-		
-		private EntityRef<Company> _Company;
-		
-		private EntityRef<Contact> _Contact;
-		
-		private EntityRef<Job> _Job;
-		
-		private EntityRef<Load> _Load;
-		
-		private EntityRef<Service> _Service;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIDChanging(long value);
-    partial void OnIDChanged();
-    partial void OnJobIDChanging(long value);
-    partial void OnJobIDChanged();
-    partial void OnLoadIDChanging(System.Nullable<long> value);
-    partial void OnLoadIDChanged();
-    partial void OnCompanyIDChanging(System.Nullable<long> value);
-    partial void OnCompanyIDChanged();
-    partial void OnServiceTypeIDChanging(System.Nullable<long> value);
-    partial void OnServiceTypeIDChanged();
-    partial void OnContactIDChanging(System.Nullable<long> value);
-    partial void OnContactIDChanged();
-    partial void OnServiceDateChanging(System.Nullable<System.DateTime> value);
-    partial void OnServiceDateChanged();
-    partial void OnServiceTimeChanging(string value);
-    partial void OnServiceTimeChanged();
-    partial void OnLocationChanging(string value);
-    partial void OnLocationChanged();
-    partial void OnReferenceChanging(string value);
-    partial void OnReferenceChanged();
-    partial void OnNotesChanging(string value);
-    partial void OnNotesChanged();
-    #endregion
-		
-		public ThirdPartyService()
-		{
-			this._Company = default(EntityRef<Company>);
-			this._Contact = default(EntityRef<Contact>);
-			this._Job = default(EntityRef<Job>);
-			this._Load = default(EntityRef<Load>);
-			this._Service = default(EntityRef<Service>);
-			OnCreated();
-		}
-		
-		[Column(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="BigInt NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public long ID
-		{
-			get
-			{
-				return this._ID;
-			}
-			set
-			{
-				if ((this._ID != value))
-				{
-					this.OnIDChanging(value);
-					this.SendPropertyChanging();
-					this._ID = value;
-					this.SendPropertyChanged("ID");
-					this.OnIDChanged();
-				}
-			}
-		}
-		
-		[Column(Storage="_JobID", DbType="BigInt NOT NULL")]
-		public long JobID
-		{
-			get
-			{
-				return this._JobID;
-			}
-			set
-			{
-				if ((this._JobID != value))
-				{
-					if (this._Job.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnJobIDChanging(value);
-					this.SendPropertyChanging();
-					this._JobID = value;
-					this.SendPropertyChanged("JobID");
-					this.OnJobIDChanged();
-				}
-			}
-		}
-		
-		[Column(Storage="_LoadID", DbType="BigInt")]
-		public System.Nullable<long> LoadID
-		{
-			get
-			{
-				return this._LoadID;
-			}
-			set
-			{
-				if ((this._LoadID != value))
-				{
-					if (this._Load.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnLoadIDChanging(value);
-					this.SendPropertyChanging();
-					this._LoadID = value;
-					this.SendPropertyChanged("LoadID");
-					this.OnLoadIDChanged();
-				}
-			}
-		}
-		
-		[Column(Storage="_CompanyID", DbType="BigInt")]
-		public System.Nullable<long> CompanyID
-		{
-			get
-			{
-				return this._CompanyID;
-			}
-			set
-			{
-				if ((this._CompanyID != value))
-				{
-					if (this._Company.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnCompanyIDChanging(value);
-					this.SendPropertyChanging();
-					this._CompanyID = value;
-					this.SendPropertyChanged("CompanyID");
-					this.OnCompanyIDChanged();
-				}
-			}
-		}
-		
-		[Column(Storage="_ServiceTypeID", DbType="BigInt")]
-		public System.Nullable<long> ServiceTypeID
-		{
-			get
-			{
-				return this._ServiceTypeID;
-			}
-			set
-			{
-				if ((this._ServiceTypeID != value))
-				{
-					if (this._Service.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnServiceTypeIDChanging(value);
-					this.SendPropertyChanging();
-					this._ServiceTypeID = value;
-					this.SendPropertyChanged("ServiceTypeID");
-					this.OnServiceTypeIDChanged();
-				}
-			}
-		}
-		
-		[Column(Storage="_ContactID", DbType="BigInt")]
-		public System.Nullable<long> ContactID
-		{
-			get
-			{
-				return this._ContactID;
-			}
-			set
-			{
-				if ((this._ContactID != value))
-				{
-					if (this._Contact.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnContactIDChanging(value);
-					this.SendPropertyChanging();
-					this._ContactID = value;
-					this.SendPropertyChanged("ContactID");
-					this.OnContactIDChanged();
-				}
-			}
-		}
-		
-		[Column(Storage="_ServiceDate", DbType="DateTime")]
-		public System.Nullable<System.DateTime> ServiceDate
-		{
-			get
-			{
-				return this._ServiceDate;
-			}
-			set
-			{
-				if ((this._ServiceDate != value))
-				{
-					this.OnServiceDateChanging(value);
-					this.SendPropertyChanging();
-					this._ServiceDate = value;
-					this.SendPropertyChanged("ServiceDate");
-					this.OnServiceDateChanged();
-				}
-			}
-		}
-		
-		[Column(Storage="_ServiceTime", DbType="VarChar(50)")]
-		public string ServiceTime
-		{
-			get
-			{
-				return this._ServiceTime;
-			}
-			set
-			{
-				if ((this._ServiceTime != value))
-				{
-					this.OnServiceTimeChanging(value);
-					this.SendPropertyChanging();
-					this._ServiceTime = value;
-					this.SendPropertyChanged("ServiceTime");
-					this.OnServiceTimeChanged();
-				}
-			}
-		}
-		
-		[Column(Storage="_Location", DbType="VarChar(1000)")]
-		public string Location
-		{
-			get
-			{
-				return this._Location;
-			}
-			set
-			{
-				if ((this._Location != value))
-				{
-					this.OnLocationChanging(value);
-					this.SendPropertyChanging();
-					this._Location = value;
-					this.SendPropertyChanged("Location");
-					this.OnLocationChanged();
-				}
-			}
-		}
-		
-		[Column(Storage="_Reference", DbType="VarChar(1000)")]
-		public string Reference
-		{
-			get
-			{
-				return this._Reference;
-			}
-			set
-			{
-				if ((this._Reference != value))
-				{
-					this.OnReferenceChanging(value);
-					this.SendPropertyChanging();
-					this._Reference = value;
-					this.SendPropertyChanged("Reference");
-					this.OnReferenceChanged();
-				}
-			}
-		}
-		
-		[Column(Storage="_Notes", DbType="VarChar(1000)")]
-		public string Notes
-		{
-			get
-			{
-				return this._Notes;
-			}
-			set
-			{
-				if ((this._Notes != value))
-				{
-					this.OnNotesChanging(value);
-					this.SendPropertyChanging();
-					this._Notes = value;
-					this.SendPropertyChanged("Notes");
-					this.OnNotesChanged();
-				}
-			}
-		}
-		
-		[Association(Name="Company_ThirdPartyService", Storage="_Company", ThisKey="CompanyID", OtherKey="ID", IsForeignKey=true)]
-		public Company Company
-		{
-			get
-			{
-				return this._Company.Entity;
-			}
-			set
-			{
-				Company previousValue = this._Company.Entity;
-				if (((previousValue != value) 
-							|| (this._Company.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Company.Entity = null;
-						previousValue.ThirdPartyServices.Remove(this);
-					}
-					this._Company.Entity = value;
-					if ((value != null))
-					{
-						value.ThirdPartyServices.Add(this);
-						this._CompanyID = value.ID;
-					}
-					else
-					{
-						this._CompanyID = default(Nullable<long>);
-					}
-					this.SendPropertyChanged("Company");
-				}
-			}
-		}
-		
-		[Association(Name="Contact_ThirdPartyService", Storage="_Contact", ThisKey="ContactID", OtherKey="ID", IsForeignKey=true)]
-		public Contact Contact
-		{
-			get
-			{
-				return this._Contact.Entity;
-			}
-			set
-			{
-				Contact previousValue = this._Contact.Entity;
-				if (((previousValue != value) 
-							|| (this._Contact.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Contact.Entity = null;
-						previousValue.ThirdPartyServices.Remove(this);
-					}
-					this._Contact.Entity = value;
-					if ((value != null))
-					{
-						value.ThirdPartyServices.Add(this);
-						this._ContactID = value.ID;
-					}
-					else
-					{
-						this._ContactID = default(Nullable<long>);
-					}
-					this.SendPropertyChanged("Contact");
-				}
-			}
-		}
-		
-		[Association(Name="Job_ThirdPartyService", Storage="_Job", ThisKey="JobID", OtherKey="ID", IsForeignKey=true)]
-		public Job Job
-		{
-			get
-			{
-				return this._Job.Entity;
-			}
-			set
-			{
-				Job previousValue = this._Job.Entity;
-				if (((previousValue != value) 
-							|| (this._Job.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Job.Entity = null;
-						previousValue.ThirdPartyServices.Remove(this);
-					}
-					this._Job.Entity = value;
-					if ((value != null))
-					{
-						value.ThirdPartyServices.Add(this);
-						this._JobID = value.ID;
-					}
-					else
-					{
-						this._JobID = default(long);
-					}
-					this.SendPropertyChanged("Job");
-				}
-			}
-		}
-		
-		[Association(Name="Load_ThirdPartyService", Storage="_Load", ThisKey="LoadID", OtherKey="ID", IsForeignKey=true)]
-		public Load Load
-		{
-			get
-			{
-				return this._Load.Entity;
-			}
-			set
-			{
-				Load previousValue = this._Load.Entity;
-				if (((previousValue != value) 
-							|| (this._Load.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Load.Entity = null;
-						previousValue.ThirdPartyServices.Remove(this);
-					}
-					this._Load.Entity = value;
-					if ((value != null))
-					{
-						value.ThirdPartyServices.Add(this);
-						this._LoadID = value.ID;
-					}
-					else
-					{
-						this._LoadID = default(Nullable<long>);
-					}
-					this.SendPropertyChanged("Load");
-				}
-			}
-		}
-		
-		[Association(Name="Service_ThirdPartyService", Storage="_Service", ThisKey="ServiceTypeID", OtherKey="ID", IsForeignKey=true)]
-		public Service Service
-		{
-			get
-			{
-				return this._Service.Entity;
-			}
-			set
-			{
-				Service previousValue = this._Service.Entity;
-				if (((previousValue != value) 
-							|| (this._Service.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Service.Entity = null;
-						previousValue.ThirdPartyServices.Remove(this);
-					}
-					this._Service.Entity = value;
-					if ((value != null))
-					{
-						value.ThirdPartyServices.Add(this);
-						this._ServiceTypeID = value.ID;
-					}
-					else
-					{
-						this._ServiceTypeID = default(Nullable<long>);
-					}
-					this.SendPropertyChanged("Service");
 				}
 			}
 		}
@@ -9783,6 +9248,472 @@ namespace SingerDispatch
 					if ((value != null))
 					{
 						value.Permits.Add(this);
+						this._LoadID = value.ID;
+					}
+					else
+					{
+						this._LoadID = default(Nullable<long>);
+					}
+					this.SendPropertyChanged("Load");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[Table(Name="dbo.ThirdPartyServices")]
+	public partial class ThirdPartyService : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private long _ID;
+		
+		private long _JobID;
+		
+		private System.Nullable<long> _LoadID;
+		
+		private System.Nullable<long> _CompanyID;
+		
+		private string _ServiceType;
+		
+		private System.Nullable<long> _ContactID;
+		
+		private System.Nullable<System.DateTime> _ServiceDate;
+		
+		private string _ServiceTime;
+		
+		private string _Location;
+		
+		private string _Reference;
+		
+		private string _Notes;
+		
+		private EntityRef<Company> _Company;
+		
+		private EntityRef<Contact> _Contact;
+		
+		private EntityRef<Job> _Job;
+		
+		private EntityRef<Load> _Load;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDChanging(long value);
+    partial void OnIDChanged();
+    partial void OnJobIDChanging(long value);
+    partial void OnJobIDChanged();
+    partial void OnLoadIDChanging(System.Nullable<long> value);
+    partial void OnLoadIDChanged();
+    partial void OnCompanyIDChanging(System.Nullable<long> value);
+    partial void OnCompanyIDChanged();
+    partial void OnServiceTypeChanging(string value);
+    partial void OnServiceTypeChanged();
+    partial void OnContactIDChanging(System.Nullable<long> value);
+    partial void OnContactIDChanged();
+    partial void OnServiceDateChanging(System.Nullable<System.DateTime> value);
+    partial void OnServiceDateChanged();
+    partial void OnServiceTimeChanging(string value);
+    partial void OnServiceTimeChanged();
+    partial void OnLocationChanging(string value);
+    partial void OnLocationChanged();
+    partial void OnReferenceChanging(string value);
+    partial void OnReferenceChanged();
+    partial void OnNotesChanging(string value);
+    partial void OnNotesChanged();
+    #endregion
+		
+		public ThirdPartyService()
+		{
+			this._Company = default(EntityRef<Company>);
+			this._Contact = default(EntityRef<Contact>);
+			this._Job = default(EntityRef<Job>);
+			this._Load = default(EntityRef<Load>);
+			OnCreated();
+		}
+		
+		[Column(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="BigInt NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public long ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this.OnIDChanging(value);
+					this.SendPropertyChanging();
+					this._ID = value;
+					this.SendPropertyChanged("ID");
+					this.OnIDChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_JobID", DbType="BigInt NOT NULL")]
+		public long JobID
+		{
+			get
+			{
+				return this._JobID;
+			}
+			set
+			{
+				if ((this._JobID != value))
+				{
+					if (this._Job.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnJobIDChanging(value);
+					this.SendPropertyChanging();
+					this._JobID = value;
+					this.SendPropertyChanged("JobID");
+					this.OnJobIDChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_LoadID", DbType="BigInt")]
+		public System.Nullable<long> LoadID
+		{
+			get
+			{
+				return this._LoadID;
+			}
+			set
+			{
+				if ((this._LoadID != value))
+				{
+					if (this._Load.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnLoadIDChanging(value);
+					this.SendPropertyChanging();
+					this._LoadID = value;
+					this.SendPropertyChanged("LoadID");
+					this.OnLoadIDChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_CompanyID", DbType="BigInt")]
+		public System.Nullable<long> CompanyID
+		{
+			get
+			{
+				return this._CompanyID;
+			}
+			set
+			{
+				if ((this._CompanyID != value))
+				{
+					if (this._Company.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnCompanyIDChanging(value);
+					this.SendPropertyChanging();
+					this._CompanyID = value;
+					this.SendPropertyChanged("CompanyID");
+					this.OnCompanyIDChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_ServiceType", DbType="VarChar(100)")]
+		public string ServiceType
+		{
+			get
+			{
+				return this._ServiceType;
+			}
+			set
+			{
+				if ((this._ServiceType != value))
+				{
+					this.OnServiceTypeChanging(value);
+					this.SendPropertyChanging();
+					this._ServiceType = value;
+					this.SendPropertyChanged("ServiceType");
+					this.OnServiceTypeChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_ContactID", DbType="BigInt")]
+		public System.Nullable<long> ContactID
+		{
+			get
+			{
+				return this._ContactID;
+			}
+			set
+			{
+				if ((this._ContactID != value))
+				{
+					if (this._Contact.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnContactIDChanging(value);
+					this.SendPropertyChanging();
+					this._ContactID = value;
+					this.SendPropertyChanged("ContactID");
+					this.OnContactIDChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_ServiceDate", DbType="DateTime")]
+		public System.Nullable<System.DateTime> ServiceDate
+		{
+			get
+			{
+				return this._ServiceDate;
+			}
+			set
+			{
+				if ((this._ServiceDate != value))
+				{
+					this.OnServiceDateChanging(value);
+					this.SendPropertyChanging();
+					this._ServiceDate = value;
+					this.SendPropertyChanged("ServiceDate");
+					this.OnServiceDateChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_ServiceTime", DbType="VarChar(50)")]
+		public string ServiceTime
+		{
+			get
+			{
+				return this._ServiceTime;
+			}
+			set
+			{
+				if ((this._ServiceTime != value))
+				{
+					this.OnServiceTimeChanging(value);
+					this.SendPropertyChanging();
+					this._ServiceTime = value;
+					this.SendPropertyChanged("ServiceTime");
+					this.OnServiceTimeChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_Location", DbType="VarChar(1000)")]
+		public string Location
+		{
+			get
+			{
+				return this._Location;
+			}
+			set
+			{
+				if ((this._Location != value))
+				{
+					this.OnLocationChanging(value);
+					this.SendPropertyChanging();
+					this._Location = value;
+					this.SendPropertyChanged("Location");
+					this.OnLocationChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_Reference", DbType="VarChar(1000)")]
+		public string Reference
+		{
+			get
+			{
+				return this._Reference;
+			}
+			set
+			{
+				if ((this._Reference != value))
+				{
+					this.OnReferenceChanging(value);
+					this.SendPropertyChanging();
+					this._Reference = value;
+					this.SendPropertyChanged("Reference");
+					this.OnReferenceChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_Notes", DbType="VarChar(1000)")]
+		public string Notes
+		{
+			get
+			{
+				return this._Notes;
+			}
+			set
+			{
+				if ((this._Notes != value))
+				{
+					this.OnNotesChanging(value);
+					this.SendPropertyChanging();
+					this._Notes = value;
+					this.SendPropertyChanged("Notes");
+					this.OnNotesChanged();
+				}
+			}
+		}
+		
+		[Association(Name="Company_ThirdPartyService", Storage="_Company", ThisKey="CompanyID", OtherKey="ID", IsForeignKey=true)]
+		public Company Company
+		{
+			get
+			{
+				return this._Company.Entity;
+			}
+			set
+			{
+				Company previousValue = this._Company.Entity;
+				if (((previousValue != value) 
+							|| (this._Company.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Company.Entity = null;
+						previousValue.ThirdPartyServices.Remove(this);
+					}
+					this._Company.Entity = value;
+					if ((value != null))
+					{
+						value.ThirdPartyServices.Add(this);
+						this._CompanyID = value.ID;
+					}
+					else
+					{
+						this._CompanyID = default(Nullable<long>);
+					}
+					this.SendPropertyChanged("Company");
+				}
+			}
+		}
+		
+		[Association(Name="Contact_ThirdPartyService", Storage="_Contact", ThisKey="ContactID", OtherKey="ID", IsForeignKey=true)]
+		public Contact Contact
+		{
+			get
+			{
+				return this._Contact.Entity;
+			}
+			set
+			{
+				Contact previousValue = this._Contact.Entity;
+				if (((previousValue != value) 
+							|| (this._Contact.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Contact.Entity = null;
+						previousValue.ThirdPartyServices.Remove(this);
+					}
+					this._Contact.Entity = value;
+					if ((value != null))
+					{
+						value.ThirdPartyServices.Add(this);
+						this._ContactID = value.ID;
+					}
+					else
+					{
+						this._ContactID = default(Nullable<long>);
+					}
+					this.SendPropertyChanged("Contact");
+				}
+			}
+		}
+		
+		[Association(Name="Job_ThirdPartyService", Storage="_Job", ThisKey="JobID", OtherKey="ID", IsForeignKey=true)]
+		public Job Job
+		{
+			get
+			{
+				return this._Job.Entity;
+			}
+			set
+			{
+				Job previousValue = this._Job.Entity;
+				if (((previousValue != value) 
+							|| (this._Job.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Job.Entity = null;
+						previousValue.ThirdPartyServices.Remove(this);
+					}
+					this._Job.Entity = value;
+					if ((value != null))
+					{
+						value.ThirdPartyServices.Add(this);
+						this._JobID = value.ID;
+					}
+					else
+					{
+						this._JobID = default(long);
+					}
+					this.SendPropertyChanged("Job");
+				}
+			}
+		}
+		
+		[Association(Name="Load_ThirdPartyService", Storage="_Load", ThisKey="LoadID", OtherKey="ID", IsForeignKey=true)]
+		public Load Load
+		{
+			get
+			{
+				return this._Load.Entity;
+			}
+			set
+			{
+				Load previousValue = this._Load.Entity;
+				if (((previousValue != value) 
+							|| (this._Load.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Load.Entity = null;
+						previousValue.ThirdPartyServices.Remove(this);
+					}
+					this._Load.Entity = value;
+					if ((value != null))
+					{
+						value.ThirdPartyServices.Add(this);
 						this._LoadID = value.ID;
 					}
 					else

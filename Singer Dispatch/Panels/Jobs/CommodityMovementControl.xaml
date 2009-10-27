@@ -62,7 +62,7 @@
                     </Grid.RowDefinitions>
 
                     <Label HorizontalAlignment="Left" Width="125">Commodity name:</Label>
-                    <ComboBox Name="cmbCommodityName" Grid.Row="0" Grid.Column="1" IsEditable="True" ItemTemplate="{StaticResource SimpleNameTemplate}" TextSearch.TextPath="Name" SelectionChanged="cmbCommodityName_SelectionChanged" />
+                    <ComboBox Name="cmbCommodityName" Grid.Row="0" Grid.Column="1" Text="{Binding Name}" IsEditable="True" ItemTemplate="{StaticResource SimpleNameTemplate}" TextSearch.TextPath="Name" SelectionChanged="CommodityName_SelectionChanged" />
 
                     <Label Grid.Row="1" Grid.Column="0">Value:</Label>
                     <TextBox Name="txtCommodityValue" Grid.Row="1" Grid.Column="1" Text="{Binding Value}" />
@@ -85,7 +85,7 @@
                     <Label Grid.Row="7" Grid.Column="0">Notes:</Label>
                     <TextBox Name="txtCommodityNotes" Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="2" Height="60" Style="{StaticResource MultiLine}" Text="{Binding Notes}" />
 
-                    <GroupBox Header="Dimentions (meters/kg)" Grid.Row="0" Grid.Column="2" Grid.RowSpan="7" Margin="5,0,0,0" DataContext="{Binding ElementName=dgQuoteCommodities, Path=SelectedItem}">
+                    <GroupBox Header="Dimentions (meters/kg)" Grid.Row="0" Grid.Column="2" Grid.RowSpan="7" Margin="5,0,0,0">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="70" />
@@ -110,13 +110,13 @@
                             <TextBox Name="txtCommodityHeight" Grid.Row="2" Grid.Column="1" Text="{Binding Height}" />
 
                             <Label Grid.Row="3" Grid.Column="0">Estimated:</Label>
-                            <CheckBox Name="chbCommoditySizeimated" Grid.Row="3" Grid.Column="1" IsChecked="{Binding Sizeimated}" />
+                            <CheckBox Name="chbCommoditySizeimated" Grid.Row="3" Grid.Column="1" IsChecked="{Binding SizeEstimated}" />
 
                             <Label Grid.Row="4" Grid.Column="0">Weight:</Label>
                             <TextBox Name="txtCommodityWeight" Grid.Row="4" Grid.Column="1" Text="{Binding Weight}" />
 
                             <Label Grid.Row="5" Grid.Column="0">Estimated:</Label>
-                            <CheckBox Name="chbCommodityWeightimated" Grid.Row="5" Grid.Column="1" IsChecked="{Binding Weightimated}"/>
+                            <CheckBox Name="chbCommodityWeightimated" Grid.Row="5" Grid.Column="1" IsChecked="{Binding WeightEstimated}"/>
                         </Grid>
                     </GroupBox>
                 </Grid>
