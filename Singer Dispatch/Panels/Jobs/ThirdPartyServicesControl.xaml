@@ -57,7 +57,7 @@
                 <ComboBox Name="cmbLoads"  Grid.Row="0" Grid.Column="1" SelectedItem="{Binding Load}" ItemTemplate="{StaticResource LoadNameTemplate}" />
 
                 <Label Grid.Row="1" Grid.Column="0">Company:</Label>
-                <ComboBox Name="cmbCompanies" Grid.Row="1" Grid.Column="1" SelectedItem="{Binding Company}" TextSearch.TextPath="Name" ItemTemplate="{StaticResource SimpleNameTemplate}" />
+                <ComboBox Name="cmbCompanies" Grid.Row="1" Grid.Column="1" SelectedItem="{Binding Company}" TextSearch.TextPath="Name" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectionChanged="SelectedCompany_Changed" />
 
                 <Label Grid.Row="2" Grid.Column="0">Service type:</Label>
                 <ComboBox Name="cmbServiceType" Grid.Row="2" Grid.Column="1" SelectedItem="{Binding ServiceType}">

@@ -20,9 +20,9 @@
     <StackPanel>
         <WPF:DataGrid Name="dgJobs" Style="{StaticResource ListDisplay}" Height="180" SelectedItem="{Binding ElementName=panelJobHistory, Path=SelectedJob}">
             <WPF:DataGrid.Columns>
-                <WPF:DataGridTextColumn Header="Number" Width="60" Binding="{Binding Number}"/>
-                <WPF:DataGridTextColumn Header="Quote" Width="60" Binding="{Binding Quote.Number}" />
-                <WPF:DataGridTextColumn Header="Revision" Width="60" Binding="{Binding Quote.Revision}" />
+                <WPF:DataGridTextColumn Header="Number" Width="0.15*" Binding="{Binding Number}"/>
+                <WPF:DataGridTextColumn Header="Quote" Width="0.15*" Binding="{Binding Quote.NumberAndRev}" />
+                <WPF:DataGridTextColumn Header="Status" Width="0.2*" Binding="{Binding Status}" />
                 <WPF:DataGridTextColumn Header="Description" Binding="{Binding Description}" />
             </WPF:DataGrid.Columns>
         </WPF:DataGrid>

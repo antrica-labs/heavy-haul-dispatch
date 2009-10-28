@@ -11,6 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Collections.ObjectModel;
 
 namespace SingerDispatch.Panels.Jobs
 {
@@ -31,11 +32,36 @@ namespace SingerDispatch.Panels.Jobs
         private void ControlLoaded(object sender, RoutedEventArgs e)
         {
             cmbLoads.ItemsSource = SelectedJob != null ? SelectedJob.Loads : null;
-            
+            cmbCompanies.ItemsSource = (from c in Database.Companies orderby c.Name select c).ToList();            
+        }
+
+        protected override void SelectedJobChanged(Job newValue, Job oldValue)
+        {
+            base.SelectedJobChanged(newValue, oldValue);
+
+            dgServices.ItemsSource = new ObservableCollection<ThirdPartyService>((from s in Database.ThirdPartyServices where s.Job == newValue select s).ToList());
+        }
+
+        private void SelectedCompany_Changed(object sender, SelectionChangedEventArgs e)
+        {
+            cmbContacts.ItemsSource = new List<Contact>(0);
+
+            if (cmbCompanies.SelectedItem != null)
+            {
+                var company = (Company)cmbCompanies.SelectedItem;
+
+                foreach (Address address in company.Addresses)
+                {
+                    var contacts = address.Contacts.ToList<Contact>();
+
+                    ((List<Contact>)cmbContacts.ItemsSource).AddRange(contacts);
+                }
+            }       
         }
 
         private void NewService_Click(object sender, RoutedEventArgs e)
         {
+            var service = new ThirdPartyService() { Job = SelectedJob };
 
         }
 
@@ -43,5 +69,6 @@ namespace SingerDispatch.Panels.Jobs
         {
 
         }
+        
     }
 }
