@@ -44,7 +44,7 @@ namespace SingerDispatch.Panels.Jobs
             dgLoads.ItemsSource = new ObservableCollection<Load>((from l in Database.Loads where l.Job == newValue select l).ToList());
         }
 
-        private void btnNewLoad_Click(object sender, RoutedEventArgs e)
+        private void NewLoad_Click(object sender, RoutedEventArgs e)
         {
             var load = new Load { JobID = SelectedJob.ID };
 
@@ -80,6 +80,11 @@ namespace SingerDispatch.Panels.Jobs
             gross += load.WeightGroup10;
 
             load.GrossWeight = gross;
+        }
+
+        private void RemoveLoad_Click(object sender, RoutedEventArgs e)
+        {
+            
         }
 
         

@@ -12,14 +12,14 @@
 
             <DataTemplate x:Key="LoadNameTemplate">
                 <TextBlock Text="{Binding Unit.Name}" />
-            </DataTemplate>            
+            </DataTemplate>
         </ResourceDictionary>
     </UserControl.Resources>
     <StackPanel>
         <WPF:DataGrid Name="dgServices" Style="{StaticResource ListDisplay}" Height="180">
             <WPF:DataGrid.Columns>
                 <WPF:DataGridTextColumn Header="Company" Binding="{Binding Company.Name}" Width="0.4*" />
-                <WPF:DataGridTextColumn Header="Service Type" Binding="{Binding ServiceType.Name}" Width="0.3*" />                
+                <WPF:DataGridTextColumn Header="Service Type" Binding="{Binding ThirdPartyServiceType.Name}" Width="0.3*" />                
                 <WPF:DataGridTextColumn Header="Notes" Binding="{Binding Notes}" />                    
             </WPF:DataGrid.Columns>
         </WPF:DataGrid>
@@ -60,12 +60,7 @@
                 <ComboBox Name="cmbCompanies" Grid.Row="1" Grid.Column="1" SelectedItem="{Binding Company}" TextSearch.TextPath="Name" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectionChanged="SelectedCompany_Changed" />
 
                 <Label Grid.Row="2" Grid.Column="0">Service type:</Label>
-                <ComboBox Name="cmbServiceType" Grid.Row="2" Grid.Column="1" SelectedItem="{Binding ServiceType}">
-                    <ComboBoxItem>Crane</ComboBoxItem>
-                    <ComboBoxItem>Pilot Car</ComboBoxItem>
-                    <ComboBoxItem>Swamper</ComboBoxItem>
-                    <ComboBoxItem>Tractor</ComboBoxItem>
-                </ComboBox>
+                <ComboBox Name="cmbServiceTypes" Grid.Row="2" Grid.Column="1" SelectedItem="{Binding ThirdPartyServiceType}" ItemTemplate="{StaticResource SimpleNameTemplate}" />
 
                 <Label Grid.Row="3" Grid.Column="0">Contact:</Label>
                 <ComboBox Name="cmbContacts" Grid.Row="3" Grid.Column="1" SelectedItem="{Binding Contact}" TextSearch.TextPath="Name" ItemTemplate="{StaticResource SimpleNameTemplate}" />

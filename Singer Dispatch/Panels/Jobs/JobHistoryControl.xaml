@@ -27,7 +27,7 @@
             </WPF:DataGrid.Columns>
         </WPF:DataGrid>
 
-        <Grid Margin="0,0,0,5">
+        <Grid Margin="0,0,0,5">            
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
                 <ColumnDefinition />
@@ -35,7 +35,7 @@
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
 
-            <Button Style="{StaticResource Horizontal}" Name="btnNewJob" Grid.Column="0" Click="btnNewJob_Click">New job</Button>            
+            <Button Style="{StaticResource Horizontal}" Name="btnNewJob" Grid.Column="0" Click="NewJob_Click">New job</Button>            
             <Button Style="{StaticResource HorizontalEnd}" Name="btnPrintQuote" Grid.Column="3" IsEnabled="False">Print job</Button>
         </Grid>
 
@@ -99,15 +99,7 @@
                     <WPF:DatePicker Name="dpEndDate" Grid.Row="1" Grid.Column="1" Margin="2" SelectedDate="{Binding EndDate}" />
                     
                     <Label Grid.Row="0" Grid.Column="2">Status</Label>
-                    <ComboBox Grid.Row="1" Grid.Column="2" SelectedItem="{Binding Status}">                        
-                        <ComboBoxItem>Billed</ComboBoxItem>
-                        <ComboBoxItem>Cancelled</ComboBoxItem>
-                        <ComboBoxItem>Completed</ComboBoxItem>
-                        <ComboBoxItem>Delayed</ComboBoxItem>
-                        <ComboBoxItem>In Process</ComboBoxItem>
-                        <ComboBoxItem>Pending</ComboBoxItem>
-                        <ComboBoxItem>Storage</ComboBoxItem>
-                    </ComboBox>
+                    <ComboBox Name="cmbStausTypes" Grid.Row="1" Grid.Column="2" SelectedItem="{Binding StatusType}" ItemTemplate="{StaticResource SimpleNameTemplate}" />
                 </Grid>
             </GroupBox>
 

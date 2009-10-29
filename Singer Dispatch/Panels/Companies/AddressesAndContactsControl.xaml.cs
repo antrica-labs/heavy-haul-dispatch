@@ -65,7 +65,7 @@ namespace SingerDispatch.Panels.Companies
             }
         }
      
-        private void btnRemoveAddress_Click(object sender, RoutedEventArgs e)
+        private void RemoveAddress_Click(object sender, RoutedEventArgs e)
         {
             var selected = (Address)dgAddresses.SelectedItem;
 
@@ -76,16 +76,18 @@ namespace SingerDispatch.Panels.Companies
 
             MessageBoxResult confirmation = MessageBox.Show("Are you sure you want to remove this address and all of its coresponding contacts?", "Delete confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
-            if (confirmation == MessageBoxResult.Yes)
+            if (confirmation != MessageBoxResult.Yes)
             {
-                Database.Addresses.DeleteOnSubmit(selected);
-                ((ObservableCollection<Address>)dgAddresses.ItemsSource).Remove(selected);
-
-                Database.SubmitChanges();
+                return;
             }
+
+            SelectedCompany.Addresses.Remove(selected);
+            ((ObservableCollection<Address>)dgAddresses.ItemsSource).Remove(selected);
+
+            Database.SubmitChanges();            
         }
 
-        private void btnRemoveContact_Click(object sender, RoutedEventArgs e)
+        private void RemoveContact_Click(object sender, RoutedEventArgs e)
         {
             var selected = (Contact)dgContacts.SelectedItem;
 
@@ -101,71 +103,45 @@ namespace SingerDispatch.Panels.Companies
                 return;
             }
 
-            Database.Contacts.DeleteOnSubmit(selected);
+            selected.Address.Contacts.Remove(selected);
             ((ObservableCollection<Contact>)dgContacts.ItemsSource).Remove(selected);
 
             Database.SubmitChanges();
         }
 
-        private void btnNewAddress_Click(object sender, RoutedEventArgs e)
+        private void NewAddress_Click(object sender, RoutedEventArgs e)
         {
-            if (SelectedCompany == null)
-            {
-                MessageBox.Show("You must select a company from the company list before you can add or edit any addresses.");
-                return;
-            }
+            var address = new Address() { CompanyID = SelectedCompany.ID };
 
-            dgAddresses.SelectedItem = null;
+            SelectedCompany.Addresses.Add(address);
+            ((ObservableCollection<Address>)dgAddresses.ItemsSource).Add(address);
+            dgAddresses.SelectedItem = address;
+
             txtAddress1.Focus();            
         }
 
-        private void btnNewContact_Click(object sender, RoutedEventArgs e)
+        private void NewContact_Click(object sender, RoutedEventArgs e)
         {
-            if (dgAddresses.SelectedItem == null)
+            var address = (Address)dgAddresses.SelectedItem;
+
+            if (address == null)
             {
                 MessageBox.Show("You must select an address from the address list before you can add or edit any contacts.");
                 return;
             }
 
-            dgContacts.SelectedItem = null;
+            var contact = new Contact() { Address = address };
+
+            address.Contacts.Add(contact);
+            ((ObservableCollection<Contact>)dgContacts.ItemsSource).Add(contact);
+            dgContacts.SelectedItem = contact;
+
             txtContactFirstName.Focus();
         }
 
-        private void bttnSaveAddress_Click(object sender, RoutedEventArgs e)
-        {
-            var address = (Address)dgAddresses.SelectedItem;
-
-            if (SelectedCompany == null)
-            {
-                MessageBox.Show("You must select a company from the company list before you can add or edit any addresses.");
-                return;
-            }
-
-            if (address == null)
-            {
-                AddNewAddress(SelectedCompany);
-            }
-
+        private void Save_Click(object sender, RoutedEventArgs e)
+        {               
             Database.SubmitChanges();
-        }
-        
-        private void bttnSaveContact_Click(object sender, RoutedEventArgs e)
-        {
-            var address = (Address)dgAddresses.SelectedItem;
-            var contact = (Contact)dgContacts.SelectedItem;
-
-            if (address == null)
-            {
-                MessageBox.Show("You must select an address from the address list before you can add or edit any contacts.");
-                return;
-            }
-
-            if (contact == null)
-            {
-                AddNewContact(address);
-            }            
-
-            Database.SubmitChanges();            
         }
 
         private void AddNewContact(Address address)
@@ -184,29 +160,7 @@ namespace SingerDispatch.Panels.Companies
             Database.Contacts.InsertOnSubmit(contact);
             ((ObservableCollection<Contact>)dgContacts.ItemsSource).Add(contact);
             dgContacts.SelectedItem = contact;
-        }
-        
-        private void AddNewAddress(Company company)
-        {
-            var provinceOrState = (ProvincesAndState)cmbProvinceOrState.SelectedItem;
-
-            var address = new Address();
-            address.CompanyID = company.ID;
-            address.Line1 = txtAddress1.Text;
-            address.Line2 = txtAddress2.Text;
-            address.City = txtCity.Text;
-            address.PostalZip = txtPostalZip.Text;
-            address.PrimaryPhone = txtSiteMainPhone.Text;
-            address.SecondaryPhone = txtSiteSecondaryPhone.Text;
-            address.Fax = txtSiteFax.Text;
-            address.Notes = txtAddressNotes.Text;
-            address.ProvinceStateID = provinceOrState.ID;
-            address.AddressType = (AddressType)cmbAddressType.SelectedItem;
-
-            Database.Addresses.InsertOnSubmit(address);
-            ((ObservableCollection<Address>)dgAddresses.ItemsSource).Add(address);
-            dgAddresses.SelectedItem = address;
-        }
+        }        
 
         private void DataGridCommit(object sender, DataGridRowEditEndingEventArgs e)
         {

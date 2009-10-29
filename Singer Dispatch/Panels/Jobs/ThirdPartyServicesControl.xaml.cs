@@ -27,6 +27,8 @@ namespace SingerDispatch.Panels.Jobs
             InitializeComponent();
 
             Database = SingerConstants.CommonDataContext;
+
+            cmbServiceTypes.ItemsSource = (from t in Database.ThirdPartyServiceTypes select t).ToList();
         }
 
         private void ControlLoaded(object sender, RoutedEventArgs e)
@@ -61,13 +63,28 @@ namespace SingerDispatch.Panels.Jobs
 
         private void NewService_Click(object sender, RoutedEventArgs e)
         {
-            var service = new ThirdPartyService() { Job = SelectedJob };
+            var service = new ThirdPartyService() { JobID = SelectedJob.ID };
 
+            SelectedJob.ThirdPartyServices.Add(service);
+            ((ObservableCollection<ThirdPartyService>)dgServices.ItemsSource).Add(service);
+            dgServices.SelectedItem = service;
+
+            cmbLoads.Focus();
         }
 
         private void RemoveService_Click(object sender, RoutedEventArgs e)
         {
+            var service = (ThirdPartyService)dgServices.SelectedItem;
 
+            if (service == null)
+            {
+                return;
+            }
+
+            ((ObservableCollection<ThirdPartyService>)dgServices.ItemsSource).Remove(service);
+            SelectedJob.ThirdPartyServices.Remove(service);
+
+            dgServices.SelectedItem = null;
         }
         
     }

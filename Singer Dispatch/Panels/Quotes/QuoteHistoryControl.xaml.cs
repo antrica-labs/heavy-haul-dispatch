@@ -100,7 +100,7 @@ namespace SingerDispatch.Panels.Quotes
             }
         }
                
-        private void btnNewQuote_Click(object sender, RoutedEventArgs e)
+        private void NewQuote_Click(object sender, RoutedEventArgs e)
         {
             var quote = new Quote { CompanyID = SelectedCompany.ID, Number = 0, Revision = 0, CreationDate = DateTime.Today, ExpirationDate = DateTime.Today.AddDays(1) };
                         
@@ -108,14 +108,16 @@ namespace SingerDispatch.Panels.Quotes
             ((ObservableCollection<Quote>)dgQuotes.ItemsSource).Insert(0, quote);
                         
             dgQuotes.SelectedItem = quote;
+
+            txtPrice.Focus();
         }
 
-        private void cmbCareOfCompanies_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void CareOfCompanies_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             UpdateContactList();           
         }
 
-        private void btnCreateJob_Click(object sender, RoutedEventArgs e)
+        private void CreateJob_Click(object sender, RoutedEventArgs e)
         {
             var quote = (Quote)dgQuotes.SelectedItem;
 
@@ -158,7 +160,7 @@ namespace SingerDispatch.Panels.Quotes
             dgQuoteContacts.ItemsSource = contacts;
         }
 
-        private void btnCreateRevisoin_Click(object sender, RoutedEventArgs e)
+        private void CreateRevisoin_Click(object sender, RoutedEventArgs e)
         {
             if (SelectedQuote == null) return;
 
@@ -171,7 +173,7 @@ namespace SingerDispatch.Panels.Quotes
             dgQuotes.SelectedItem = quote;
         }
 
-        private void btnPrintQuote_Click(object sender, RoutedEventArgs e)
+        private void PrintQuote_Click(object sender, RoutedEventArgs e)
         {
             if (SelectedQuote == null) return;
 

@@ -261,6 +261,21 @@ namespace SingerDispatch.Database
             database.Rates.InsertOnSubmit(new Rate() { Name = "Trojan Loader", IsSpecialized = 1, Hourly = 170.00 });
             database.Rates.InsertOnSubmit(new Rate() { Name = "Trojan Loader", IsSpecialized = 0, Hourly = 170.00 });
 
+            // Third party service types
+            database.ThirdPartyServiceTypes.InsertOnSubmit(new ThirdPartyServiceType() { Name = "Crane" });
+            database.ThirdPartyServiceTypes.InsertOnSubmit(new ThirdPartyServiceType() { Name = "Pilot Car" });
+            database.ThirdPartyServiceTypes.InsertOnSubmit(new ThirdPartyServiceType() { Name = "Swamper" });
+            database.ThirdPartyServiceTypes.InsertOnSubmit(new ThirdPartyServiceType() { Name = "Tractor" });
+
+            // Job status types
+            database.JobStatusTypes.InsertOnSubmit(new JobStatusType() { Name = "Billed" });
+            database.JobStatusTypes.InsertOnSubmit(new JobStatusType() { Name = "Cancelled" });
+            database.JobStatusTypes.InsertOnSubmit(new JobStatusType() { Name = "Completed" });
+            database.JobStatusTypes.InsertOnSubmit(new JobStatusType() { Name = "Delayed" });
+            database.JobStatusTypes.InsertOnSubmit(new JobStatusType() { Name = "In Process" });
+            database.JobStatusTypes.InsertOnSubmit(new JobStatusType() { Name = "Pending" });
+            database.JobStatusTypes.InsertOnSubmit(new JobStatusType() { Name = "Storage" });
+
             database.SubmitChanges();
         }
     }

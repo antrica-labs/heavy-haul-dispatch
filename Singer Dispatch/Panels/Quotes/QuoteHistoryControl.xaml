@@ -32,11 +32,11 @@
                 <ColumnDefinition />                               
             </Grid.ColumnDefinitions>
 
-            <Button Style="{StaticResource Horizontal}" Name="btnNewQuote" Grid.Column="0" Click="btnNewQuote_Click">New quote</Button>
-            <Button Style="{StaticResource Horizontal}" Name="btnCreateRevisoin" Grid.Column="1" Click="btnCreateRevisoin_Click">Create revision</Button>
+            <Button Style="{StaticResource Horizontal}" Name="btnNewQuote" Grid.Column="0" Click="NewQuote_Click">New quote</Button>
+            <Button Style="{StaticResource Horizontal}" Name="btnCreateRevisoin" Grid.Column="1" Click="CreateRevisoin_Click">Create revision</Button>
             <Button Style="{StaticResource Horizontal}" Name="btnRemoveQuote" Grid.Column="2">Remove quote</Button>
-            <Button Style="{StaticResource Horizontal}" Name="btnCreateJob" Grid.Column="3" Click="btnCreateJob_Click">Convert to job</Button>            
-            <Button Style="{StaticResource HorizontalEnd}" Name="btnPrintQuote" Grid.Column="4" Click="btnPrintQuote_Click">Print quote</Button>
+            <Button Style="{StaticResource Horizontal}" Name="btnCreateJob" Grid.Column="3" Click="CreateJob_Click">Convert to job</Button>            
+            <Button Style="{StaticResource HorizontalEnd}" Name="btnPrintQuote" Grid.Column="4" Click="PrintQuote_Click">Print quote</Button>
         </Grid>
         
         <Grid Name="panelQuoteDetails">
@@ -70,11 +70,11 @@
                             <ComboBox Name="cmbQuotedBy" Grid.Row="1" Grid.Column="2" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectedItem="{Binding User}" TextSearch.TextPath="Name"></ComboBox>
                             
                             <Label Grid.Row="0" Grid.Column="3">Quote price:</Label>
-                            <TextBox Grid.Row="2" Grid.Column="3" Text="{Binding Price}" />
+                            <TextBox Name="txtPrice" Grid.Row="2" Grid.Column="3" Text="{Binding Price}" />
                         </Grid>
                         
                         <Label>Care of:</Label>
-                        <ComboBox Name="cmbCareOfCompanies" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectionChanged="cmbCareOfCompanies_SelectionChanged" SelectedItem="{Binding Company1}" TextSearch.TextPath="Name" IsEditable="True" />
+                        <ComboBox Name="cmbCareOfCompanies" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectionChanged="CareOfCompanies_SelectionChanged" SelectedItem="{Binding Company1}" TextSearch.TextPath="Name" IsEditable="True" />
                         
                         <Label>Project description</Label>
                         <TextBox Height="40" Style="{StaticResource MultiLine}" VerticalScrollBarVisibility="Disabled" Text="{Binding Description}"/>

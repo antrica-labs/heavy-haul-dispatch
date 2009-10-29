@@ -22,20 +22,20 @@ namespace SingerDispatch.Panels.Jobs
     {
         public SingerDispatchDataContext Database { get; set; }
 
-          public JobHistoryControl()
+        public JobHistoryControl()
         {
             InitializeComponent();
 
             Database = SingerConstants.CommonDataContext;
 
             cmbCreatedBy.ItemsSource = (from u in Database.Users select u).ToList();
+            cmbStausTypes.ItemsSource = (from s in Database.JobStatusTypes select s).ToList();
         }
 
         private void ControlLoaded(object sender, RoutedEventArgs e)
         {
             cmbQuotes.ItemsSource = (from q in Database.Quotes where q.Company == SelectedCompany select q).ToList();
         }
-
 
         protected override void SelectedCompanyChanged(Company newValue, Company oldValue)
         {
@@ -44,6 +44,7 @@ namespace SingerDispatch.Panels.Jobs
             if (newValue != null)
             {
                 dgJobs.ItemsSource = new ObservableCollection<Job>((from j in Database.Jobs where j.CompanyID == newValue.ID orderby j.EndDate descending select j).ToList());
+                cmbQuotes.ItemsSource = (from q in Database.Quotes where q.Company == newValue select q).ToList();
                 cmbCareOfCompanies.ItemsSource = (from c in Database.Companies where c.ID != newValue.ID select c).ToList();
             }
             else
@@ -105,7 +106,7 @@ namespace SingerDispatch.Panels.Jobs
             dgJobContacts.ItemsSource = contacts;
         }
 
-        private void btnNewJob_Click(object sender, RoutedEventArgs e)
+        private void NewJob_Click(object sender, RoutedEventArgs e)
         {
             var job = new Job { CompanyID = SelectedCompany.ID, Number = 0 };
 

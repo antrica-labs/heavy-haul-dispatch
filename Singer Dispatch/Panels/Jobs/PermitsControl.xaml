@@ -16,7 +16,7 @@
         </ResourceDictionary>
     </UserControl.Resources>
     <StackPanel>
-        <WPF:DataGrid Style="{StaticResource ListDisplay}" Height="180">
+        <WPF:DataGrid Name="dgPermits" Style="{StaticResource ListDisplay}" Height="180">
             <WPF:DataGrid.Columns>
                 <WPF:DataGridTextColumn Header="Issuer" Binding="{Binding Issuer}" Width="0.4*"  />
                 <WPF:DataGridTextColumn Header="Permit Type" Binding="{Binding PermitType}" Width="0.3*" />

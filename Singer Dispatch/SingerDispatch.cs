@@ -71,6 +71,7 @@ namespace SingerDispatch
             Job job = new Job();
 
             // Fill the job properties with as many of the applicable quote properties as possible
+            job.Quote = this;
             job.CompanyID = CompanyID;
             job.Company = Company;
             job.CareOfCompanyID = CareOfCompanyID;
