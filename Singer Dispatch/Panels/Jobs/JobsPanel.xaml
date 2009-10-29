@@ -1,6 +1,7 @@
-﻿<Jobs:JobUserControl x:Class="SingerDispatch.Panels.Jobs.JobsPanel"
+﻿<Panels:JobUserControl x:Class="SingerDispatch.Panels.Jobs.JobsPanel"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:Panels="clr-namespace:SingerDispatch.Panels"
     xmlns:Jobs="clr-namespace:SingerDispatch.Panels.Jobs"
     x:Name="jobsPanel"
     IsEnabled="False">
@@ -51,4 +52,4 @@
             </TabItem>           
         </TabControl>
     </StackPanel>
-</Jobs:JobUserControl>
+</Panels:JobUserControl>

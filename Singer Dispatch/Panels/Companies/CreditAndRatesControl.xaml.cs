@@ -10,10 +10,23 @@ namespace SingerDispatch.Panels.Companies
     /// Interaction logic for CreditAndRatesControl.xaml
     /// </summary>
     public partial class CreditAndRatesControl : CompanyUserControl
-    {
-        private RateDiscount Discount { get; set; }
-        public SingerDispatchDataContext Database { get; set; }
+    {        
+        public static DependencyProperty SelectedRateDiscountProperty = DependencyProperty.Register("SelectedRateDiscount", typeof(RateDiscount), typeof(CreditAndRatesControl));
 
+        public RateDiscount SelectedRateDiscount
+        {
+            get
+            {
+                return (RateDiscount)GetValue(SelectedRateDiscountProperty);
+            }
+            set
+            {
+                SetValue(SelectedRateDiscountProperty, value);
+            }
+        }
+
+        public SingerDispatchDataContext Database { get; set; }
+        
         public CreditAndRatesControl()
         {
             InitializeComponent();
@@ -35,19 +48,14 @@ namespace SingerDispatch.Panels.Companies
         {
             base.SelectedCompanyChanged(newValue, oldValue);
 
-            if (newValue != null)
-            {                               
-                var rateDiscounts = from d in Database.RateDiscounts where d.CompanyID == newValue.ID select d;
-
-                Discount = rateDiscounts.Count() > 0 ? rateDiscounts.First() : new RateDiscount { CompanyID = newValue.ID };
-
-                grpAdministration.DataContext = newValue;
-                grpRateAdjustment.DataContext = Discount;
-            }
-            else
+            if (newValue == null)
             {
-                grpRateAdjustment.DataContext = null;
+                return;
             }
+
+            var rateDiscounts = from d in Database.RateDiscounts where d.CompanyID == newValue.ID select d;
+
+            SelectedRateDiscount = rateDiscounts.Count() > 0 ? rateDiscounts.First() : new RateDiscount { CompanyID = newValue.ID };
         }
 
         private void DataGridCommit(object sender, Microsoft.Windows.Controls.DataGridRowEditEndingEventArgs e)
@@ -62,9 +70,9 @@ namespace SingerDispatch.Panels.Companies
                 return;
             }
 
-            if (Discount != null && Discount.ID == 0)
+            if (SelectedRateDiscount != null && SelectedRateDiscount.ID == 0)
             {
-                Database.RateDiscounts.InsertOnSubmit(Discount);
+                Database.RateDiscounts.InsertOnSubmit(SelectedRateDiscount);
             }
 
             Database.SubmitChanges();

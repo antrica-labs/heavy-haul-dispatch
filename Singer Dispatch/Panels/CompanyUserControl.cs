@@ -5,7 +5,7 @@ using System.Text;
 using System.Windows.Controls;
 using System.Windows;
 
-namespace SingerDispatch.Panels.Companies
+namespace SingerDispatch.Panels
 {
     public class CompanyUserControl : UserControl
     {

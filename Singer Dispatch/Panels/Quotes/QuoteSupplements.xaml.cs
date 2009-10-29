@@ -42,22 +42,15 @@ namespace SingerDispatch.Panels.Quotes
 
             if (newValue != null)
             {
-                dgSupplements.ItemsSource = new ObservableCollection<QuoteSupplement>(newValue.QuoteSupplements);
-                grpSupplementDetails.DataContext = new QuoteSupplement { QuoteID = newValue.ID };
+                dgSupplements.ItemsSource = new ObservableCollection<QuoteSupplement>(newValue.QuoteSupplements);                
             }
             else
             {
-                dgSupplements.ItemsSource = null;
-                grpSupplementDetails.DataContext = null;
+                dgSupplements.ItemsSource = new ObservableCollection<QuoteSupplement>();
             }
         }
 
-        private void dgSupplements_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            grpSupplementDetails.DataContext = dgSupplements.SelectedItem;
-        }
-
-        private void btnNewSupplement_Click(object sender, RoutedEventArgs e)
+        private void NewSupplement_Click(object sender, RoutedEventArgs e)
         {
             var list = (ObservableCollection<QuoteSupplement>)dgSupplements.ItemsSource;
             var supplement = new QuoteSupplement { QuoteID = SelectedQuote.ID };
@@ -69,7 +62,7 @@ namespace SingerDispatch.Panels.Quotes
             txtName.Focus();
         }
 
-        private void btnRemoveSupplement_Click(object sender, RoutedEventArgs e)
+        private void RemoveSupplement_Click(object sender, RoutedEventArgs e)
         {
             var supplement = (QuoteSupplement)dgSupplements.SelectedItem;
 
@@ -87,7 +80,7 @@ namespace SingerDispatch.Panels.Quotes
             }
         }
 
-        private void cmbBillingType_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void BillingType_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var type = (BillingType)((ComboBox)sender).SelectedItem;
 

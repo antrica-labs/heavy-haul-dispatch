@@ -1,8 +1,8 @@
-﻿<Jobs:JobUserControl x:Class="SingerDispatch.Panels.Jobs.ThirdPartyServicesControl"
+﻿<Panels:JobUserControl x:Class="SingerDispatch.Panels.Jobs.ThirdPartyServicesControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:WPF="http://schemas.microsoft.com/wpf/2008/toolkit"
-    xmlns:Jobs="clr-namespace:SingerDispatch.Panels.Jobs"
+    xmlns:Panels="clr-namespace:SingerDispatch.Panels"
     Loaded="ControlLoaded" Width="750">
     <UserControl.Resources>
         <ResourceDictionary>
@@ -96,4 +96,4 @@
             </Grid>
         </GroupBox>
     </StackPanel>
-</Jobs:JobUserControl>
+</Panels:JobUserControl>

@@ -1,8 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
-using SingerDispatch.Panels.Companies;
 
-namespace SingerDispatch.Panels.Jobs
+namespace SingerDispatch.Panels
 {
     public class JobUserControl : CompanyUserControl
     {

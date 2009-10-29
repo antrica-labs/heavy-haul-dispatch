@@ -1,8 +1,8 @@
-﻿<Jobs:JobUserControl x:Class="SingerDispatch.Panels.Pricing.JobPricingPanel"
+﻿<Panels:JobUserControl x:Class="SingerDispatch.Panels.Pricing.JobPricingPanel"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:Price="clr-namespace:SingerDispatch.Panels.Pricing"
-    xmlns:Jobs="clr-namespace:SingerDispatch.Panels.Jobs"
+    xmlns:Panels="clr-namespace:SingerDispatch.Panels"
+    xmlns:Pricing="clr-namespace:SingerDispatch.Panels.Pricing"
     x:Name="jobPricingPanel"
     IsEnabled="False">
     <UserControl.Resources>
@@ -33,8 +33,8 @@
 
         <TabControl Name="Tabs" DataContext="{Binding ElementName=jobPricingPanel}">
             <TabItem Header="Job History">
-                <Price:JobPriceControl Width="Auto" />    
+              <Pricing:JobPriceControl Width="Auto" />    
             </TabItem>            
         </TabControl>
     </StackPanel>
-</Jobs:JobUserControl>
+</Panels:JobUserControl>

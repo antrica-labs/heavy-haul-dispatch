@@ -1,9 +1,9 @@
-﻿<Quotes:QuoteUserControl x:Class="SingerDispatch.Panels.Quotes.QuoteCommoditiesControl"
+﻿<Panels:QuoteUserControl x:Class="SingerDispatch.Panels.Quotes.QuoteCommoditiesControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:WPF="http://schemas.microsoft.com/wpf/2008/toolkit"
-    xmlns:Quotes="clr-namespace:SingerDispatch.Panels.Quotes"
-    Loaded="QuoteUserControl_Loaded" Width="750">
+    xmlns:Panels="clr-namespace:SingerDispatch.Panels" 
+    Width="750">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -163,4 +163,4 @@
             </GroupBox>
         </Grid>
     </StackPanel>
-</Quotes:QuoteUserControl>
+</Panels:QuoteUserControl>

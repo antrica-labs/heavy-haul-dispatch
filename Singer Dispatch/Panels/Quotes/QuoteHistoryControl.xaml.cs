@@ -66,8 +66,7 @@ namespace SingerDispatch.Panels.Quotes
                 // Remove any unsaved quotes (user wants them discarded) 
                 DiscardUnsavedQuotes();          
             }
-
-            panelQuoteDetails.DataContext = newValue;
+                        
             UpdateContactList();
         }
 
@@ -103,10 +102,8 @@ namespace SingerDispatch.Panels.Quotes
         private void NewQuote_Click(object sender, RoutedEventArgs e)
         {
             var quote = new Quote { CompanyID = SelectedCompany.ID, Number = 0, Revision = 0, CreationDate = DateTime.Today, ExpirationDate = DateTime.Today.AddDays(1) };
-                        
-            panelQuoteDetails.DataContext = quote;
-            ((ObservableCollection<Quote>)dgQuotes.ItemsSource).Insert(0, quote);
-                        
+                                    
+            ((ObservableCollection<Quote>)dgQuotes.ItemsSource).Insert(0, quote);                        
             dgQuotes.SelectedItem = quote;
 
             txtPrice.Focus();

@@ -1,8 +1,8 @@
-﻿<Company:CompanyUserControl x:Class="SingerDispatch.Panels.Companies.CommoditiesControl"
+﻿<Panels:CompanyUserControl x:Class="SingerDispatch.Panels.Companies.CommoditiesControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:WPF="http://schemas.microsoft.com/wpf/2008/toolkit"
-    xmlns:Company="clr-namespace:SingerDispatch.Panels.Companies"
+    xmlns:Panels="clr-namespace:SingerDispatch.Panels"
     x:Name="commoditiesControl" Width="750">
     <UserControl.Resources>
         <ResourceDictionary>
@@ -123,4 +123,4 @@
         
         <Button Style="{StaticResource HorizontalEnd}" Name="btnSaveCommodity" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="3" Click="SaveCommodity_Click">Save commodity</Button>
     </Grid>
-</Company:CompanyUserControl>
+</Panels:CompanyUserControl>

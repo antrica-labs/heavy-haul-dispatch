@@ -1,8 +1,8 @@
-﻿<Jobs:JobUserControl x:Class="SingerDispatch.Panels.Pricing.JobPriceControl"
+﻿<Panels:JobUserControl x:Class="SingerDispatch.Panels.Pricing.JobPriceControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:WPF="http://schemas.microsoft.com/wpf/2008/toolkit"
-    xmlns:Jobs="clr-namespace:SingerDispatch.Panels.Jobs"
+    xmlns:Panels="clr-namespace:SingerDispatch.Panels"
     Width="750">
     <UserControl.Resources>
         <ResourceDictionary>
@@ -12,7 +12,7 @@
         </ResourceDictionary>
     </UserControl.Resources>
     <StackPanel>
-        <WPF:DataGrid Name="dgJobs" Style="{StaticResource ListDisplay}" Height="180" SelectedItem="{Binding ElementName=panelJobHistory, Path=SelectedJob}">
+        <WPF:DataGrid Name="dgJobs" Style="{StaticResource ListDisplay}" Height="180">
             <WPF:DataGrid.Columns>
                 <WPF:DataGridTextColumn Header="Number" Width="60" Binding="{Binding Number}"/>
                 <WPF:DataGridTextColumn Header="Quote" Width="60" Binding="{Binding Quote.Number}" />
@@ -28,7 +28,7 @@
             </Grid.ColumnDefinitions>          
 
             <StackPanel Grid.Column="0" Margin="2">
-                <GroupBox Header="Job Details" Name="gbJobDetails" Margin="0,0,0,5">
+                <GroupBox Header="Job Details" Name="gbJobDetails" DataContext="{Binding ElementName=dgJobs, Path=SelectedItem}" Margin="0,0,0,5">
                     <StackPanel>
                         <Grid>
                             <Grid.ColumnDefinitions>
@@ -59,7 +59,7 @@
                     </StackPanel>
                 </GroupBox>
                 
-                <GroupBox Header="Job Timeline" Margin="0,0,0,5">
+                <GroupBox Header="Job Timeline" DataContext="{Binding ElementName=dgJobs, Path=SelectedItem}" Margin="0,0,0,5">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition />
@@ -84,7 +84,7 @@
                     </Grid>
                 </GroupBox>
                 
-                <GroupBox Header="Job Billing">
+                <GroupBox Header="Job Billing" DataContext="{Binding ElementName=dgJobs, Path=SelectedItem}">
                     <StackPanel>
                         <Label>Comment:</Label>
                         <TextBox></TextBox>
@@ -124,7 +124,7 @@
             </StackPanel>
             
             <StackPanel Grid.Column="1" Margin="2">
-                <GroupBox Header="Customer Details" Margin="0,0,0,5">
+                <GroupBox Header="Customer Details" DataContext="{Binding ElementName=dgJobs, Path=SelectedItem}" Margin="0,0,0,5">
                     <StackPanel>
                         <WPF:DataGrid Name="dgCustomerDetails" Style="{StaticResource ListDisplay}" Height="100">
                             <WPF:DataGrid.Columns>
@@ -143,9 +143,7 @@
                             <Button Style="{StaticResource HorizontalEnd}" Name="btnRemoveCustomerDetail" Grid.Column="1" Click="btnRemoveCustomerDetail_Click">Remove</Button>
                         </Grid>
                     </StackPanel>
-                </GroupBox>
-
-                
+                </GroupBox>                
 
                 <GroupBox Header="Contact List" Margin="0,0,5,5">
                     <StackPanel>
@@ -198,4 +196,4 @@
             </StackPanel>
         </Grid>
     </StackPanel>
-</Jobs:JobUserControl>
+</Panels:JobUserControl>

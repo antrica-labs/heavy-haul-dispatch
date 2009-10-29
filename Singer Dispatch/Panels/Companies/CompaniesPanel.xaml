@@ -1,7 +1,8 @@
-﻿<Company:CompanyUserControl x:Class="SingerDispatch.Panels.Companies.CompaniesPanel"
+﻿<Panels:CompanyUserControl x:Class="SingerDispatch.Panels.Companies.CompaniesPanel"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:Company="clr-namespace:SingerDispatch.Panels.Companies"
+    xmlns:Panels="clr-namespace:SingerDispatch.Panels"
+    xmlns:Companies="clr-namespace:SingerDispatch.Panels.Companies"
     x:Name="companiesPanel"
     IsEnabled="False">
     <UserControl.Resources>
@@ -14,17 +15,17 @@
     <StackPanel DataContext="{Binding ElementName=companiesPanel}">        
         <TabControl Name="Tabs">
             <TabItem Header="Addresses &amp; Contacts">
-                <Company:AddressesAndContactsControl SelectedCompany="{Binding Path=SelectedCompany}" Width="Auto" Height="Auto" />
+                <Companies:AddressesAndContactsControl SelectedCompany="{Binding Path=SelectedCompany}" Width="Auto" Height="Auto" />
             </TabItem>
             <TabItem Header="Commodities">
-                <Company:CommoditiesControl SelectedCompany="{Binding Path=SelectedCompany}" Width="Auto" Height="Auto" />
+                <Companies:CommoditiesControl SelectedCompany="{Binding Path=SelectedCompany}" Width="Auto" Height="Auto" />
             </TabItem>
             <TabItem Header="Services">
-                <Company:ServicesControl SelectedCompany="{Binding Path=SelectedCompany}" Width="Auto" Height="Auto" />
+                <Companies:ServicesControl SelectedCompany="{Binding Path=SelectedCompany}" Width="Auto" Height="Auto" />
             </TabItem>
             <TabItem Header="Credit &amp; Rates">
-                <Company:CreditAndRatesControl SelectedCompany="{Binding Path=SelectedCompany}" Width="Auto" Height="Auto" />
+                <Companies:CreditAndRatesControl SelectedCompany="{Binding Path=SelectedCompany}" Width="Auto" Height="Auto" />
             </TabItem>
         </TabControl>
     </StackPanel>
-</Company:CompanyUserControl>
+</Panels:CompanyUserControl>

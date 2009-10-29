@@ -1,8 +1,8 @@
-﻿<Company:CompanyUserControl x:Class="SingerDispatch.Panels.Companies.CreditAndRatesControl"
+﻿<Panels:CompanyUserControl x:Class="SingerDispatch.Panels.Companies.CreditAndRatesControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:WPF="http://schemas.microsoft.com/wpf/2008/toolkit"
-    xmlns:Company="clr-namespace:SingerDispatch.Panels.Companies"
+    xmlns:Panels="clr-namespace:SingerDispatch.Panels"
     x:Name="creditAndRatesControl"
     Loaded="Control_Loaded" Width="750">
     <UserControl.Resources>
@@ -33,7 +33,7 @@
        
 
         <StackPanel VerticalAlignment="Top" Grid.Column="1">
-            <GroupBox Header="Rate Adjustments" Name="grpRateAdjustment">
+            <GroupBox Header="Rate Adjustments" DataContext="{Binding ElementName=creditAndRatesControl, Path=SelectedRateDiscount}">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="145"/>
@@ -48,24 +48,24 @@
                     </Grid.RowDefinitions>
 
                     <Label Grid.Column="0" Grid.Row="0">Hourly:</Label>
-                    <TextBox Name="txtCreditRateHourly" Grid.Column="1" Grid.Row="0" Text="{Binding Path=Hourly, ValidatesOnExceptions=true}" />
+                    <TextBox Name="txtCreditRateHourly" Grid.Column="1" Grid.Row="0" Text="{Binding Hourly}" />
                     <Label Grid.Column="2" Grid.Row="0">%</Label>
 
                     <Label Grid.Column="0" Grid.Row="1">Daily:</Label>
-                    <TextBox Name="txtCreditRateDaily" Grid.Column="1" Grid.Row="1" Text="{Binding Path=Daily, ValidatesOnExceptions=true}" />                     
+                    <TextBox Name="txtCreditRateDaily" Grid.Column="1" Grid.Row="1" Text="{Binding Daily}" />                     
                     <Label Grid.Column="2" Grid.Row="1">%</Label>
 
                     <Label Grid.Column="0" Grid.Row="2">Weekly:</Label>
-                    <TextBox Name="txtCreditRateWeekly" Grid.Column="1" Grid.Row="2" Text="{Binding Path=Weekly, ValidatesOnExceptions=true}" />
+                    <TextBox Name="txtCreditRateWeekly" Grid.Column="1" Grid.Row="2" Text="{Binding Weekly}" />
                     <Label Grid.Column="2" Grid.Row="2">%</Label>
 
                     <Label Grid.Column="0" Grid.Row="3">Monthly:</Label>
-                    <TextBox Name="txtCreditRateMonthly" Grid.Column="1" Grid.Row="3" Text="{Binding Path=Monthly, ValidatesOnExceptions=true}" />
+                    <TextBox Name="txtCreditRateMonthly" Grid.Column="1" Grid.Row="3" Text="{Binding Monthly}" />
                     <Label Grid.Column="2" Grid.Row="3">%</Label>
                 </Grid>
             </GroupBox>           
 
-            <GroupBox Header="Administration" Name="grpAdministration">
+            <GroupBox Header="Administration" DataContext="{Binding ElementName=creditAndRatesControl, Path=SelectedCompany}">
                 <StackPanel VerticalAlignment="Top">
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -106,4 +106,4 @@
             <Button Style="{StaticResource Bottom}" Name="btnSaveDetails" Click="SaveDetails">Save adjustments</Button>
         </StackPanel>
     </Grid>
-</Company:CompanyUserControl>
+</Panels:CompanyUserControl>

@@ -1,7 +1,7 @@
-﻿<Company:CompanyUserControl x:Class="SingerDispatch.Panels.Companies.ServicesControl"
+﻿<Panels:CompanyUserControl x:Class="SingerDispatch.Panels.Companies.ServicesControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:Company="clr-namespace:SingerDispatch.Panels.Companies"
+    xmlns:Panels="clr-namespace:SingerDispatch.Panels"
     Loaded="ControlLoaded">
     <UserControl.Resources>
         <ResourceDictionary>
@@ -22,4 +22,4 @@
             </StackPanel>
         </GroupBox>
     </StackPanel>
-</Company:CompanyUserControl>
+</Panels:CompanyUserControl>

@@ -29,14 +29,6 @@ namespace SingerDispatch.Panels.Quotes
             Database = SingerConstants.CommonDataContext;
         }
 
-        private void QuoteUserControl_Loaded(object sender, RoutedEventArgs e)
-        {
-            if (SelectedQuote != null)
-            {
-                cmbCommodityName.ItemsSource = new ObservableCollection<Commodity>((from c in Database.Commodities where c.CompanyID == SelectedQuote.CompanyID || c.CompanyID == SelectedQuote.CareOfCompanyID select c).ToList());
-            }
-        }
-
         protected override void SelectedQuoteChanged(Quote newValue, Quote oldValue)
         {
             base.SelectedQuoteChanged(newValue, oldValue);

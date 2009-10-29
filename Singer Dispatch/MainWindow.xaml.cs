@@ -5,6 +5,7 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using SingerDispatch.Controls;
+using SingerDispatch.Panels;
 using SingerDispatch.Panels.Quotes;
 using SingerDispatch.Panels.Companies;
 using SingerDispatch.Panels.Jobs;
@@ -24,6 +25,8 @@ namespace SingerDispatch
         public MainWindow()
         {   
             InitializeComponent();
+
+            SingerConstants.CommonDataContext.Log = System.Console.Out;
 
             Database = SingerConstants.CommonDataContext;
             Companies = new ObservableCollection<Company>();

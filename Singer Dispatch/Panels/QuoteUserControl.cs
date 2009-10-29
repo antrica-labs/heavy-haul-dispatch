@@ -4,10 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using SingerDispatch.Panels.Companies;
 
-
-namespace SingerDispatch.Panels.Quotes
+namespace SingerDispatch.Panels
 {
     public class QuoteUserControl : CompanyUserControl
     {       

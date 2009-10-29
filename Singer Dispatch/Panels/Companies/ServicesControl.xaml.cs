@@ -50,7 +50,7 @@ namespace SingerDispatch.Panels.Companies
 
         private void PopulateServices()
         {
-            var types = (from t in Database.ServiceTypes select t).ToList();
+            var types = from t in Database.ServiceTypes select t;
 
             foreach (ServiceType type in types)
             {
