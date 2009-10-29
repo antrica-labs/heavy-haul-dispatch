@@ -4,11 +4,4 @@
     xmlns:UserControls="clr-namespace:SingerDispatch.Controls"
     xmlns:WPF="http://schemas.microsoft.com/wpf/2008/toolkit"
     StartupUri="MainWindow.xaml">
-    <Application.Resources>
-        <ResourceDictionary>
-            <Style x:Key="ListDisplay" TargetType="{x:Type WPF:DataGrid}">
-                <Setter Property="ColumnWidth" Value="*" />
-            </Style>
-        </ResourceDictionary>        
-    </Application.Resources>
 </Application>
