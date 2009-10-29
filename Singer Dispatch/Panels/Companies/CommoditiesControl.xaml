@@ -121,6 +121,6 @@
             </Grid>
         </GroupBox>
         
-        <Button Style="{StaticResource HorizontalEnd}" Name="btnSaveCommodity" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="3" Click="btnSaveCommodity_Click">Save commodity</Button>
+        <Button Style="{StaticResource HorizontalEnd}" Name="btnSaveCommodity" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="3" Click="SaveCommodity_Click">Save commodity</Button>
     </Grid>
 </Company:CompanyUserControl>

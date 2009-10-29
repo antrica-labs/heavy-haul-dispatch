@@ -35,7 +35,7 @@ namespace SingerDispatch.Panels.Companies
             }
         }
 
-        private void btnNewCommodity_Click(object sender, RoutedEventArgs e)
+        private void NewCommodity_Click(object sender, RoutedEventArgs e)
         {
             if (SelectedCompany == null)
             {
@@ -47,7 +47,7 @@ namespace SingerDispatch.Panels.Companies
             txtCommodityName.Focus();            
         }
 
-        private void btnDeleteCommodity_Click(object sender, RoutedEventArgs e)
+        private void DeleteCommodity_Click(object sender, RoutedEventArgs e)
         {
             var selected = (Commodity)dgCommodities.SelectedItem;
 
@@ -67,7 +67,7 @@ namespace SingerDispatch.Panels.Companies
             }
         }
 
-        private void btnSaveCommodity_Click(object sender, RoutedEventArgs e)
+        private void SaveCommodity_Click(object sender, RoutedEventArgs e)
         {
             var commodity = (Commodity)dgCommodities.SelectedItem;
 
