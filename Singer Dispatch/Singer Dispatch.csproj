@@ -113,9 +113,6 @@
       <DependentUpon>ServicesControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Panels\CompanyUserControl.cs" />
-    <Compile Include="Panels\Jobs\CommodityAssignmentControl.xaml.cs">
-      <DependentUpon>CommodityAssignmentControl.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Panels\Jobs\JobCommoditiesControl.xaml.cs">
       <DependentUpon>JobCommoditiesControl.xaml</DependentUpon>
     </Compile>
@@ -235,10 +232,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Panels\Companies\ServicesControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Panels\Jobs\CommodityAssignmentControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

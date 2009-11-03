@@ -35,14 +35,11 @@
             <TabItem Name="masterTab" Header="Jobs History">
                 <Jobs:JobHistoryControl Width="Auto" SelectedCompany="{Binding Path=SelectedCompany}" SelectedJob="{Binding Path=SelectedJob}" />
             </TabItem>
-            <TabItem Header="Commodities" IsEnabled="False">
-                <Jobs:JobCommoditiesControl Width="Auto" SelectedJob="{Binding Path=SelectedJob}" />
-            </TabItem>
             <TabItem Header="Loads" IsEnabled="False">
                 <Jobs:LoadsControl Width="Auto" SelectedJob="{Binding Path=SelectedJob}" />
             </TabItem>
-            <TabItem Header="Load Assignments" IsEnabled="False">
-                <Jobs:CommodityAssignmentControl Width="Auto" SelectedJob="{Binding Path=SelectedJob}" />
+            <TabItem Header="Commodities" IsEnabled="False">
+                <Jobs:JobCommoditiesControl Width="Auto" SelectedJob="{Binding Path=SelectedJob}" />
             </TabItem>
             <TabItem Header="Third Party Services" IsEnabled="False">
                 <Jobs:ThirdPartyServicesControl Width="Auto" SelectedJob="{Binding Path=SelectedJob}" />

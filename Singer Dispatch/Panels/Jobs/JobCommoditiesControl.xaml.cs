@@ -32,12 +32,14 @@ namespace SingerDispatch.Panels.Jobs
         private void ControlLoaded(object sender, RoutedEventArgs e)
         {
             if (SelectedJob != null)
-            {                
+            {
+                cmbLoads.ItemsSource = SelectedJob.Loads;
                 cmbCommodityName.ItemsSource = (from c in Database.Commodities where c.Company == SelectedJob.Company || c.Company == SelectedJob.Company1 select c).ToList();                
             }
             else
             {                
                 cmbCommodityName.ItemsSource = null;
+                cmbLoads.ItemsSource = null;
             }
         }
 

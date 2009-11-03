@@ -184,13 +184,6 @@ namespace SingerDispatch
             ExpandSection(expanderPricing, typeof(JobPricingPanel));
         }        
 
-        private void menuOpenQuoteSample_Click(object sender, RoutedEventArgs e)
-        {
-            var viewer =  new DocumentViewer();
-
-            viewer.Show();
-        }
-
         public void ViewJob(Job job)
         {
             if (job.Company == null)
