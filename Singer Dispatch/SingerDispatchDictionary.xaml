@@ -103,8 +103,9 @@
         <Setter Property="AutoGenerateColumns" Value="False" />
         <Setter Property="Background" Value="White" />
         <Setter Property="AlternatingRowBackground" Value="#EDEDED" />
-        <Setter Property="GridLinesVisibility" Value="None" />
+        <Setter Property="GridLinesVisibility" Value="None" />      
         <Setter Property="HorizontalGridLinesBrush" Value="LightGray" />
+        <Setter Property="VerticalScrollBarVisibility" Value="Visible" />
         <Setter Property="HorizontalScrollBarVisibility" Value="Disabled" />
         <Setter Property="SelectionMode" Value="Single" />
         <Setter Property="CanUserAddRows" Value="False" />

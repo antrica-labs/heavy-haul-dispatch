@@ -11,6 +11,11 @@ using SingerDispatch.Panels.Companies;
 using SingerDispatch.Panels.Jobs;
 using SingerDispatch.Panels.Pricing;
 using SingerDispatch.Database;
+using System.Windows.Documents;
+using System.Collections.Generic;
+using System.Collections;
+using System;
+using System.Reflection;
 
 namespace SingerDispatch
 {
@@ -19,6 +24,7 @@ namespace SingerDispatch
     /// </summary>
     public partial class MainWindow
     {
+        private Dictionary<System.Type, UserControl> Panels { get; set; }        
         private ObservableCollection<Company> Companies { get; set; }
         private SingerDispatchDataContext Database { get; set; }
 
@@ -28,6 +34,7 @@ namespace SingerDispatch
 
             SingerConstants.CommonDataContext.Log = System.Console.Out;
 
+            Panels = new Dictionary<System.Type, UserControl>();
             Database = SingerConstants.CommonDataContext;
             Companies = new ObservableCollection<Company>();
 
@@ -113,52 +120,69 @@ namespace SingerDispatch
             }
         }
 
-        private void ExpandSection(Expander expander, CompanyUserControl content, ItemCollection tabs)
+        private void ExpandSection(Expander expander, System.Type panelType)
         {
-            if (panelMainContent.Child.GetType() == content.GetType())
+            if (panelMainContent.Child.GetType() == panelType)
             {
-                return;
+                // This panel is already visible, so don't do anything
+                return;               
             }
-
+            
             CollapseAllOtherNavigationExpanders(expander);
 
-            var binding = new Binding();
-            binding.ElementName = "cmbCompanies";
-            binding.Path = new PropertyPath(Selector.SelectedItemProperty);
+            UserControl panel;
 
-            content.SetBinding(CompanyUserControl.SelectedCompanyProperty, binding);
+            try
+            {
+                panel = Panels[panelType];
+            }
+            catch
+            {
+                panel = (UserControl)Activator.CreateInstance(panelType);
+                var fields = panel.GetType().GetFields(BindingFlags.Instance | BindingFlags.NonPublic);
+                               
+                foreach (var field in fields)
+                {
+                    if (field.Name == "Tabs" && field.FieldType == typeof(TabControl))
+                    {
+                        var tabs = (TabControl)field.GetValue(panel);
+                        AddLinksToExpander((Panel)expander.Content, tabs.Items);
 
-            panelMainContent.Child = content;
-            AddLinksToExpander((Panel)expander.Content, tabs);
-            expander.IsExpanded = true;
+                        break;
+                    }
+                }
+
+                var binding = new Binding();
+                binding.ElementName = "cmbCompanies";
+                binding.Path = new PropertyPath(Selector.SelectedItemProperty);
+                panel.SetBinding(CompanyUserControl.SelectedCompanyProperty, binding);
+                                
+                expander.IsExpanded = true;
+
+                Panels.Add(panel.GetType(), panel);
+            }
+
+            panelMainContent.Child = panel;
         }
 
         private void ExpandCompanies(object sender, RoutedEventArgs e)
         {
-            var panel = new CompaniesPanel();
-
-            ExpandSection((Expander)sender, panel, panel.Tabs.Items);
+            ExpandSection((Expander)sender, typeof(CompaniesPanel));
         }
 
         private void ExpandQuotes(object sender, RoutedEventArgs e)
         {
-            var panel = new QuotesPanel();
-
-            ExpandSection((Expander)sender, panel, panel.Tabs.Items);
+            ExpandSection((Expander)sender, typeof(QuotesPanel));
         }
 
         private void ExpandJobs(object sender, RoutedEventArgs e)
         {
-            var panel = new JobsPanel();
-
-            ExpandSection((Expander)sender, panel, panel.Tabs.Items);
+            ExpandSection((Expander)sender, typeof(JobsPanel));
         }
 
         private void ExpandPricing(object sender, RoutedEventArgs e)
         {
-            var panel = new JobPricingPanel();
-
-            ExpandSection((Expander)sender, panel, panel.Tabs.Items);
+            ExpandSection((Expander)sender, typeof(JobPricingPanel));
         }        
 
         private void menuOpenQuoteSample_Click(object sender, RoutedEventArgs e)
@@ -177,7 +201,7 @@ namespace SingerDispatch
 
             var panel = new JobsPanel();
 
-            ExpandSection(expanderJobs, panel, panel.Tabs.Items);
+            ExpandSection(expanderJobs, typeof(JobsPanel));
 
             panel.SelectedCompany = (Company)cmbCompanies.SelectedItem;
             panel.SelectedJob = job;

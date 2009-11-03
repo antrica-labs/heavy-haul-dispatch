@@ -30,6 +30,7 @@
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <ApplicationIcon>Logo.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -332,6 +333,7 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Templates\logo.png" />
+    <Resource Include="Logo.ico" />
     <Content Include="Templates\sample_dispatch.html" />
     <Content Include="Templates\sample_quote.html" />
   </ItemGroup>

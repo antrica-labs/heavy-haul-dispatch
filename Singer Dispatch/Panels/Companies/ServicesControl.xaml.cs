@@ -24,7 +24,7 @@ namespace SingerDispatch.Panels.Companies
             Database = SingerConstants.CommonDataContext;
             ServiceTypes = new List<CheckBox>();
 
-            PopulateServices();            
+            //PopulateServices();            
         }
 
         private void ControlLoaded(object sender, RoutedEventArgs e)
@@ -35,6 +35,7 @@ namespace SingerDispatch.Panels.Companies
         {
             base.SelectedCompanyChanged(newValue, oldValue);
 
+            /*
             if (newValue != null)
             {
                 var selected = from s in Database.Services where s.CompanyID == newValue.ID select s.ServiceType;
@@ -46,6 +47,7 @@ namespace SingerDispatch.Panels.Companies
                     cb.IsChecked = selected.Contains(type);
                 }
             }
+            */
         }
 
         private void PopulateServices()
