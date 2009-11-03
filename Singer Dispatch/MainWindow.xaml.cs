@@ -156,33 +156,32 @@ namespace SingerDispatch
                 binding.ElementName = "cmbCompanies";
                 binding.Path = new PropertyPath(Selector.SelectedItemProperty);
                 panel.SetBinding(CompanyUserControl.SelectedCompanyProperty, binding);
-                                
-                expander.IsExpanded = true;
-
+                
                 Panels.Add(panel.GetType(), panel);
             }
 
+            expander.IsExpanded = true;
             panelMainContent.Child = panel;
         }
 
         private void ExpandCompanies(object sender, RoutedEventArgs e)
         {
-            ExpandSection((Expander)sender, typeof(CompaniesPanel));
+            ExpandSection(expanderCompanies, typeof(CompaniesPanel));
         }
 
         private void ExpandQuotes(object sender, RoutedEventArgs e)
         {
-            ExpandSection((Expander)sender, typeof(QuotesPanel));
+            ExpandSection(expanderQuotes, typeof(QuotesPanel));
         }
 
         private void ExpandJobs(object sender, RoutedEventArgs e)
         {
-            ExpandSection((Expander)sender, typeof(JobsPanel));
+            ExpandSection(expanderJobs, typeof(JobsPanel));
         }
 
         private void ExpandPricing(object sender, RoutedEventArgs e)
         {
-            ExpandSection((Expander)sender, typeof(JobPricingPanel));
+            ExpandSection(expanderPricing, typeof(JobPricingPanel));
         }        
 
         private void menuOpenQuoteSample_Click(object sender, RoutedEventArgs e)
@@ -192,19 +191,32 @@ namespace SingerDispatch
             viewer.Show();
         }
 
-        public void HighlightJob(Job job)
+        public void ViewJob(Job job)
         {
-            if (job.Company != cmbCompanies.SelectedItem)
+            if (job.Company == null)
             {
                 return;
             }
 
-            var panel = new JobsPanel();
-
+            cmbCompanies.SelectedItem = job.Company;            
+                        
             ExpandSection(expanderJobs, typeof(JobsPanel));
+            ((JobsPanel)panelMainContent.Child).SelectedCompany = job.Company;
+            ((JobsPanel)panelMainContent.Child).SelectedJob = job;           
+        }
 
-            panel.SelectedCompany = (Company)cmbCompanies.SelectedItem;
-            panel.SelectedJob = job;
+        public void ViewQuote(Quote quote)
+        {
+            if (quote.Company == null)
+            {
+                return;
+            }
+            
+            cmbCompanies.SelectedItem = quote.Company;
+
+            ExpandSection(expanderQuotes, typeof(QuotesPanel));
+            ((QuotesPanel)panelMainContent.Child).SelectedCompany = quote.Company;
+            ((QuotesPanel)panelMainContent.Child).SelectedQuote = quote;
         }
 
         private void PrintSampleDispatch(object sender, RoutedEventArgs e)

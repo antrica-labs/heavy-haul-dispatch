@@ -61,19 +61,10 @@
     <Reference Include="System.Data.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Xml.Linq">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
     <Reference Include="System.Data.DataSetExtensions">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
-    <Reference Include="UIAutomationProvider">
-      <RequiredTargetFramework>3.0</RequiredTargetFramework>
-    </Reference>
     <Reference Include="WindowsBase">
       <RequiredTargetFramework>3.0</RequiredTargetFramework>
     </Reference>
@@ -122,8 +113,11 @@
       <DependentUpon>ServicesControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Panels\CompanyUserControl.cs" />
-    <Compile Include="Panels\Jobs\CommodityMovementControl.xaml.cs">
-      <DependentUpon>CommodityMovementControl.xaml</DependentUpon>
+    <Compile Include="Panels\Jobs\CommodityAssignmentControl.xaml.cs">
+      <DependentUpon>CommodityAssignmentControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Panels\Jobs\JobCommoditiesControl.xaml.cs">
+      <DependentUpon>JobCommoditiesControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Panels\Jobs\DispatchesControl.xaml.cs">
       <DependentUpon>DispatchesControl.xaml</DependentUpon>
@@ -244,7 +238,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Panels\Jobs\CommodityMovementControl.xaml">
+    <Page Include="Panels\Jobs\CommodityAssignmentControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Panels\Jobs\JobCommoditiesControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

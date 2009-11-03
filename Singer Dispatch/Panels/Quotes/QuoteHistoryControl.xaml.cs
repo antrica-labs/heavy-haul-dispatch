@@ -20,8 +20,7 @@ namespace SingerDispatch.Panels.Quotes
         {
             InitializeComponent();
 
-            Database = SingerConstants.CommonDataContext;
-            cmbQuotedBy.ItemsSource = (from u in Database.Users select u).ToList();
+            Database = SingerConstants.CommonDataContext;            
         }
 
         protected override void SelectedCompanyChanged(Company newValue, Company oldValue)
@@ -134,7 +133,7 @@ namespace SingerDispatch.Panels.Quotes
             Database.Jobs.InsertOnSubmit(job);
             Database.SubmitChanges();
 
-            window.HighlightJob(job);
+            window.ViewJob(job);
         }
 
         private void UpdateContactList()
@@ -157,7 +156,7 @@ namespace SingerDispatch.Panels.Quotes
             dgQuoteContacts.ItemsSource = contacts;
         }
 
-        private void CreateRevisoin_Click(object sender, RoutedEventArgs e)
+        private void CreateRevision_Click(object sender, RoutedEventArgs e)
         {
             if (SelectedQuote == null) return;
 

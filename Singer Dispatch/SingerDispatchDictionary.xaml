@@ -98,7 +98,7 @@
         <Setter Property="Margin" Value="10" />
     </Style>
 
-    <Style x:Key="ListDisplay" TargetType="{x:Type WPF:DataGrid}">  
+    <Style x:Key="ListDisplay" TargetType="{x:Type WPF:DataGrid}">
         <Setter Property="IsReadOnly" Value="True" />
         <Setter Property="AutoGenerateColumns" Value="False" />
         <Setter Property="Background" Value="White" />

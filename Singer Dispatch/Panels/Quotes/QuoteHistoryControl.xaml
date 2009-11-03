@@ -33,7 +33,7 @@
             </Grid.ColumnDefinitions>
 
             <Button Style="{StaticResource Horizontal}" Name="btnNewQuote" Grid.Column="0" Click="NewQuote_Click">New quote</Button>
-            <Button Style="{StaticResource Horizontal}" Name="btnCreateRevisoin" Grid.Column="1" Click="CreateRevisoin_Click">Create revision</Button>
+            <Button Style="{StaticResource Horizontal}" Name="btnCreateRevisoin" Grid.Column="1" Click="CreateRevision_Click">Create revision</Button>
             <Button Style="{StaticResource Horizontal}" Name="btnRemoveQuote" Grid.Column="2">Remove quote</Button>
             <Button Style="{StaticResource Horizontal}" Name="btnCreateJob" Grid.Column="3" Click="CreateJob_Click">Convert to job</Button>            
             <Button Style="{StaticResource HorizontalEnd}" Name="btnPrintQuote" Grid.Column="4" Click="PrintQuote_Click">Print quote</Button>

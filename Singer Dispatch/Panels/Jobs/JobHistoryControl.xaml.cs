@@ -114,10 +114,16 @@ namespace SingerDispatch.Panels.Jobs
             dgJobs.SelectedItem = job;
             txtDescription.Focus();
         }
-
-        private void cmbQuotes_SelectionChanged(object sender, SelectionChangedEventArgs e)
+               
+        private void ViewQuote_Click(object sender, RoutedEventArgs e)
         {
+            if (SelectedJob == null || SelectedJob.Quote == null)
+            {
+                return;
+            }
 
+            var window = (MainWindow)Application.Current.MainWindow;
+            window.ViewQuote(SelectedJob.Quote);
         }
     }
 }

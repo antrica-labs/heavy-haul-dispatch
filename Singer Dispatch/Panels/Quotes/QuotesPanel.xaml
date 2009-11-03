@@ -36,7 +36,7 @@
         
         <TabControl Name="Tabs">
             <TabItem Header="Quotes">
-                <Quotes:QuoteHistoryControl x:Name="panelQuoteHistory" Width="Auto" Height="Auto" SelectedCompany="{Binding SelectedCompany}" />
+                <Quotes:QuoteHistoryControl x:Name="panelQuoteHistory" Width="Auto" Height="Auto" SelectedCompany="{Binding SelectedCompany}" SelectedQuote="{Binding SelectedQuote}" />
             </TabItem>
             <TabItem Name="tabCommodities" Header="Commodities" IsEnabled="False">
                 <Quotes:QuoteCommoditiesControl x:Name="panelQuoteCommodities" Width="Auto" Height="Auto" SelectedQuote="{Binding SelectedQuote}" />
@@ -44,8 +44,10 @@
             <TabItem Name="tabSupplements" Header="Supplements" IsEnabled="False">
                 <Quotes:QuoteSupplements x:Name="panelQuoteSupplements" Width="Auto" Height="Auto" SelectedQuote="{Binding SelectedQuote}" />
             </TabItem>
+            <!--
             <TabItem Header="Storage" IsEnabled="False" />
             <TabItem Header="Conditions" IsEnabled="False" />
+            -->
         </TabControl>
     </StackPanel>
 </Panels:QuoteUserControl>

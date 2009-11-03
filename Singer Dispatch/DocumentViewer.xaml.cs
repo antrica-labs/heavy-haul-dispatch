@@ -31,7 +31,7 @@ namespace SingerDispatch
         {
             var renderer = new QuoteRenderer();
 
-            Browser.NavigateToString(renderer.GeneratePrintout(quote));
+            TheBrowser.NavigateToString(renderer.GeneratePrintout(quote));
 
             ShowDialog();
         }
@@ -40,14 +40,14 @@ namespace SingerDispatch
         {
             var renderer = new DispatchRenderer();
 
-            Browser.NavigateToString(renderer.GeneratePrintout());
+            TheBrowser.NavigateToString(renderer.GeneratePrintout());
 
             ShowDialog();
         }
-
-        private void btnPrint_Click(object sender, RoutedEventArgs e)
+        
+        private void Print_Click(object sender, RoutedEventArgs e)
         {
-            IHTMLDocument2 document = Browser.Document as IHTMLDocument2;
+            IHTMLDocument2 document = TheBrowser.Document as IHTMLDocument2;
             RegistryKey psKey = Registry.CurrentUser.CreateSubKey("SOFTWARE\\MICROSOFT\\Internet Explorer\\PageSetup");
 
             var header = psKey.GetValue("header");

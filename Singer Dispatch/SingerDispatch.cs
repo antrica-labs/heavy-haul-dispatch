@@ -79,7 +79,12 @@ namespace SingerDispatch
             job.StartDate = StartDate;
             job.EndDate = EndDate;
             job.Description = Description;
-            
+
+            foreach (var commodity in QuoteCommodities)
+            {
+                job.JobCommodities.Add(commodity.ToJobCommodity());
+            }
+
             return job;            
         }
     }
@@ -114,6 +119,35 @@ namespace SingerDispatch
             copy.Notes = Notes;
             
             return copy;
+        }
+
+        public JobCommodity ToJobCommodity()
+        {
+            var jc = new JobCommodity();
+
+            jc.OriginalCommodityID = OriginalCommodityID;            
+            jc.Name = Name;
+            jc.Value = Value;
+            jc.Serial = Serial;
+            jc.Unit = Unit;
+            jc.Owner = Owner;
+            jc.LastLocation = LastLocation;
+            jc.LastAddress = LastAddress;
+            jc.Length = Length;
+            jc.Width = Width;
+            jc.Height = Height;
+            jc.Weight = Weight;
+            jc.SizeEstimated = SizeEstimated;
+            jc.WeightEstimated = WeightEstimated;
+            jc.Quantity = Quantity;
+            jc.CostPerItem = CostPerItem;
+            jc.Notes = Notes;
+            jc.LoadAddress = DepartureAddress;
+            jc.LoadSiteName = DepartureSiteName;
+            jc.UnloadAddress = ArrivalAddress;
+            jc.UnloadSiteName = ArrivalSiteName;
+
+            return jc;
         }
     }
 

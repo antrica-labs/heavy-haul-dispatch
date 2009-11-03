@@ -18,11 +18,11 @@ namespace SingerDispatch.Panels.Jobs
     /// <summary>
     /// Interaction logic for CommodityMovementControl.xaml
     /// </summary>
-    public partial class CommodityMovementControl : JobUserControl
+    public partial class JobCommoditiesControl : JobUserControl
     {
         public SingerDispatchDataContext Database { get; set; }
 
-        public CommodityMovementControl()
+        public JobCommoditiesControl()
         {
             InitializeComponent();
 

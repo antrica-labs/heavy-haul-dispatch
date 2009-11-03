@@ -35,8 +35,9 @@
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
 
-            <Button Style="{StaticResource Horizontal}" Name="btnNewJob" Grid.Column="0" Click="NewJob_Click">New job</Button>            
-            <Button Style="{StaticResource HorizontalEnd}" Name="btnPrintQuote" Grid.Column="3" IsEnabled="False">Print job</Button>
+            <Button Style="{StaticResource Horizontal}" Grid.Column="0" Click="NewJob_Click">New job</Button>
+            <Button Style="{StaticResource Horizontal}" Grid.Column="1" Click="ViewQuote_Click">View quote</Button>            
+            <Button Style="{StaticResource HorizontalEnd}" Grid.Column="3">Remove Job</Button>
         </Grid>
 
         <Grid>
@@ -66,7 +67,7 @@
                         <TextBox Grid.Row="1" Grid.Column="0" IsReadOnly="True" Text="{Binding Number}" />
 
                         <Label Grid.Row="0" Grid.Column="1">Quote #:</Label>
-                        <ComboBox Name="cmbQuotes" Grid.Row="1" Grid.Column="1" SelectedItem="{Binding Quote}" SelectionChanged="cmbQuotes_SelectionChanged" ItemTemplate="{StaticResource QuoteNameTemplate}" />
+                        <ComboBox Name="cmbQuotes" Grid.Row="1" Grid.Column="1" SelectedItem="{Binding Quote}" ItemTemplate="{StaticResource QuoteNameTemplate}" />
 
                         <Label Grid.Row="0" Grid.Column="2">Author:</Label>
                         <ComboBox Name="cmbCreatedBy" Grid.Row="1" Grid.Column="2" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectedItem="{Binding User}" TextSearch.TextPath="Name"></ComboBox>                       

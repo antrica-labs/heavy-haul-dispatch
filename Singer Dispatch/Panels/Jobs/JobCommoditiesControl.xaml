@@ -1,4 +1,4 @@
-﻿<Panels:JobUserControl x:Class="SingerDispatch.Panels.Jobs.CommodityMovementControl"
+﻿<Panels:JobUserControl x:Class="SingerDispatch.Panels.Jobs.JobCommoditiesControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:Panels="clr-namespace:SingerDispatch.Panels"

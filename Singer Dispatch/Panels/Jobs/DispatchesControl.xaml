@@ -34,9 +34,9 @@
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
 
-            <Button Style="{StaticResource Horizontal}" Grid.Column="0" Click="NewDispatch_Click">New dispatch</Button>
-            <Button Style="{StaticResource Horizontal}" Grid.Column="1" Click="PrintDispatch_Click">Print dispatch</Button>
-            <Button Style="{StaticResource HorizontalEnd}" Grid.Column="3" Click="RemoveDispatch_Click">Remove dispatch</Button>
+            <Button Style="{StaticResource Horizontal}" Grid.Column="0" Click="NewDispatch_Click">New dispatch</Button>            
+            <Button Style="{StaticResource Horizontal}" Grid.Column="1" Click="RemoveDispatch_Click">Remove dispatch</Button>
+            <Button Style="{StaticResource HorizontalEnd}" Grid.Column="3" Click="PrintDispatch_Click">Print dispatch</Button>
         </Grid>
         
         <GroupBox Header="Dispatch Details" DataContext="{Binding ElementName=dgDispatches, Path=SelectedItem}">
