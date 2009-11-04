@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Database Name="SingerDispatch-Development" Class="SingerDispatchDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="AppSettings" ConnectionString="Data Source=SIMONT-MACWIN\SQLEXPRESS;Initial Catalog=SingerDispatch-Development;Integrated Security=True" SettingsObjectName="SingerDispatch.Properties.Settings" SettingsPropertyName="SingerDispatchDBConnectionString" Provider="System.Data.SqlClient" />
+  <Connection Mode="AppSettings" ConnectionString="Data Source=SIMON-B71DE53EA\SQLEXPRESS;Initial Catalog=SingerDispatch-Development;Integrated Security=True" SettingsObjectName="SingerDispatch.Properties.Settings" SettingsPropertyName="SingerDispatchDBConnectionString" Provider="System.Data.SqlClient" />
   <Table Name="dbo.Addresses" Member="Addresses">
     <Type Name="Address">
       <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -443,6 +443,56 @@
       <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Name" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
       <Association Name="JobStatusType_Job" Member="Jobs" ThisKey="ID" OtherKey="StatusTypeID" Type="Job" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Employees" Member="Employees">
+    <Type Name="Employee">
+      <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="FirstName" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="LastName" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="Phone" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Mobile" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="IsAvailable" Type="System.Byte" DbType="TinyInt" CanBeNull="true" />
+      <Column Name="IsSupervisor" Type="System.Byte" DbType="TinyInt" CanBeNull="true" />
+      <Column Name="IsSingerStaff" Type="System.Byte" DbType="TinyInt" CanBeNull="true" />
+      <Column Name="StartDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="EndDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="Responsibilities" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Column Name="Notes" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
+    </Type>
+  </Table>
+  <Table Name="dbo.EquipmentTypes" Member="EquipmentTypes">
+    <Type Name="EquipmentType">
+      <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Prefix" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Equipment" Member="Equipments">
+    <Type Name="Equipment">
+      <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="UnitNumber" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Serial" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Column Name="Make" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="Model" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="Year" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="LicencePlate" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="EngineMake" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="EngineModel" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="EngineType" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="IsDispatchable" Type="System.Byte" DbType="TinyInt" CanBeNull="true" />
+      <Column Name="Class" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Tare" Type="System.Decimal" DbType="Decimal(18,3)" CanBeNull="true" />
+      <Column Name="Height" Type="System.Decimal" DbType="Decimal(18,3)" CanBeNull="true" />
+      <Column Name="AxleConfig" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="HasWinch" Type="System.Byte" DbType="TinyInt" CanBeNull="true" />
+      <Column Name="SteerTireSize" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="DriveTireSize" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="IsProrated" Type="System.Byte" DbType="TinyInt" CanBeNull="true" />
+      <Column Name="IsOnlyForScheuerle" Type="System.Byte" DbType="TinyInt" CanBeNull="true" />
+      <Column Name="IsOnlyForPushing" Type="System.Byte" DbType="TinyInt" CanBeNull="true" />
+      <Column Name="InServiceDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="OutOfServiceDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
     </Type>
   </Table>
 </Database>
