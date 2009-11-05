@@ -37,13 +37,12 @@ namespace SingerDispatch.Panels.Companies
 
         private void NewCommodity_Click(object sender, RoutedEventArgs e)
         {
-            if (SelectedCompany == null)
-            {
-                MessageBox.Show("You must select a company from the company list before you can add or edit any addresses.");
-                return;
-            }
+            var commodity = new Commodity();
 
-            dgCommodities.SelectedItem = null;
+            SelectedCompany.Commodities.Add(commodity);
+            ((ObservableCollection<Commodity>)dgCommodities.ItemsSource).Add(commodity);
+            dgCommodities.SelectedItem = commodity;
+
             txtCommodityName.Focus();            
         }
 
@@ -59,8 +58,8 @@ namespace SingerDispatch.Panels.Companies
             MessageBoxResult confirmation = MessageBox.Show("Are you sure you want to remove this commodity and all of it's history?", "Delete confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
             if (confirmation == MessageBoxResult.Yes)
-            {
-                Database.Commodities.DeleteOnSubmit(selected);
+            {                
+                SelectedCompany.Commodities.Remove(selected);
                 ((ObservableCollection<Commodity>)dgCommodities.ItemsSource).Remove(selected);
 
                 Database.SubmitChanges();
@@ -69,19 +68,6 @@ namespace SingerDispatch.Panels.Companies
 
         private void SaveCommodity_Click(object sender, RoutedEventArgs e)
         {
-            var commodity = (Commodity)dgCommodities.SelectedItem;
-
-            if (SelectedCompany == null)
-            {
-                MessageBox.Show("You must select a company from the company list before you can add or edit any addresses.");
-                return;
-            }
-
-            if (commodity == null)
-            {
-                CreateNewCommodity(SelectedCompany);
-            }
-
             Database.SubmitChanges();           
         }
 

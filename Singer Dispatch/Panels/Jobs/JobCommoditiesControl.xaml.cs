@@ -109,6 +109,8 @@ namespace SingerDispatch.Panels.Jobs
                 commodity.Notes = original.Notes;
                 commodity.LastAddress = original.LastAddress;
                 commodity.LastLocation = original.LastLocation;
+                commodity.LoadAddress = original.LastAddress;
+                commodity.LoadSiteName = original.LastLocation;
             }
             else
             {
@@ -127,6 +129,8 @@ namespace SingerDispatch.Panels.Jobs
                 commodity.Notes = null;
                 commodity.LastAddress = null;
                 commodity.LastLocation = null;
+                commodity.LoadAddress = null;
+                commodity.LoadSiteName = null;
             }
         }
     }

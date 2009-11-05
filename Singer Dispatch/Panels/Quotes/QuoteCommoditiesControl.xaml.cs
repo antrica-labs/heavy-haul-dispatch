@@ -73,6 +73,8 @@ namespace SingerDispatch.Panels.Quotes
                 commodity.Notes = original.Notes;
                 commodity.LastAddress = original.LastAddress;
                 commodity.LastLocation = original.LastLocation;
+                commodity.DepartureAddress = original.LastAddress;
+                commodity.DepartureSiteName = original.LastLocation;
             }
             else
             {
@@ -91,6 +93,8 @@ namespace SingerDispatch.Panels.Quotes
                 commodity.Notes = null;
                 commodity.LastAddress = null;
                 commodity.LastLocation = null;
+                commodity.DepartureAddress = null;
+                commodity.DepartureSiteName = null;
             }
         }
 

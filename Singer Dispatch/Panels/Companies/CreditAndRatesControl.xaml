@@ -13,7 +13,7 @@
             <DataTemplate x:Key="nameTemplate">
                 <TextBlock Text="{Binding Path=Name}" />
             </DataTemplate>
-        </ResourceDictionary>        
+        </ResourceDictionary>
     </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>

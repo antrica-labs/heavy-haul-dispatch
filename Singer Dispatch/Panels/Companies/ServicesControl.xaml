@@ -17,7 +17,7 @@
         <GroupBox Header="Provided Services">
             <StackPanel>
                 <StackPanel Name="panelServiceTypes" Margin="20">
-                    <Label>Fix this area!</Label>
+                    
                 </StackPanel>
 
                 <Button Style="{StaticResource Bottom}" Name="btnUpdateServices" Click="btnUpdateServices_Click">Save services</Button>
