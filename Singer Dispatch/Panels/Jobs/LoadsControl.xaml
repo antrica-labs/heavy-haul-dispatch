@@ -10,12 +10,16 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/SingerDispatchDictionary.xaml" />
             </ResourceDictionary.MergedDictionaries>
+            
+            <DataTemplate x:Key="EquipmentNameTemplate">
+                <TextBlock Text="{Binding UnitNumber}" />
+            </DataTemplate>
         </ResourceDictionary>
     </UserControl.Resources>
     <StackPanel>
         <WPF:DataGrid Name="dgLoads" Style="{StaticResource ListDisplay}" Height="180">
             <WPF:DataGrid.Columns>
-                <WPF:DataGridTextColumn Header="Unit" Width="0.15*" Binding="{Binding Unit.Name}"/>
+                <WPF:DataGridTextColumn Header="Unit" Width="0.15*" Binding="{Binding Equipment.UnitNumber}"/>
                 <WPF:DataGridTextColumn Header="Wheel type" Width="0.2*" Binding="{Binding WheelType.Name}" />
                 <WPF:DataGridTextColumn Header="Trailer" Width="0.2*" Binding="{Binding TrailerCombination.Name}" />
                 <WPF:DataGridTextColumn Header="Description" Binding="{Binding ServiceDescription}" />
@@ -48,7 +52,7 @@
                 </Grid.RowDefinitions>
                 
                 <Label Grid.Column="0" Grid.Row="0">Unit:</Label>
-                <ComboBox Name="cmbUnits" Grid.Column="0" Grid.Row="1" SelectedItem="{Binding Unit}" ItemTemplate="{StaticResource SimpleNameTemplate}"></ComboBox>
+                <ComboBox Name="cmbUnits" Grid.Column="0" Grid.Row="1" SelectedItem="{Binding Equipment}" ItemTemplate="{StaticResource EquipmentNameTemplate}"></ComboBox>
                 
                 <Label Grid.Column="1" Grid.Row="0">Wheel type:</Label>
                 <ComboBox Name="cmbWheelTypes" Grid.Column="1" Grid.Row="1" SelectedItem="{Binding WheelType}" ItemTemplate="{StaticResource SimpleNameTemplate}"></ComboBox>                
