@@ -32,7 +32,7 @@ namespace SingerDispatch
         {   
             InitializeComponent();
 
-            SingerConstants.CommonDataContext.Log = System.Console.Out;
+            //SingerConstants.CommonDataContext.Log = System.Console.Out;
 
             Panels = new Dictionary<System.Type, UserControl>();
             Database = SingerConstants.CommonDataContext;
