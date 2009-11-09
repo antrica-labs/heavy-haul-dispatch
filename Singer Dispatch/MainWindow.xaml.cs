@@ -16,6 +16,7 @@ using System.Collections.Generic;
 using System.Collections;
 using System;
 using System.Reflection;
+using SingerDispatch.Panels.Admin;
 
 namespace SingerDispatch
 {
@@ -180,7 +181,12 @@ namespace SingerDispatch
         private void ExpandPricing(object sender, RoutedEventArgs e)
         {
             ExpandSection(expanderPricing, typeof(JobPricingPanel));
-        }        
+        }
+
+        private void ExpandAdmin(object sender, RoutedEventArgs e)
+        {
+            ExpandSection(expanderAdmin, typeof(AdminPanel));
+        }
 
         public void ViewJob(Job job)
         {

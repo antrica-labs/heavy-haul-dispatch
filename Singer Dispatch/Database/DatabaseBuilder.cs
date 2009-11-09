@@ -423,6 +423,7 @@ namespace SingerDispatch.Database
             employees.Add(new Employee() { FirstName = "Cody", LastName = "Hanna", Phone = "(403)285-7318", Mobile = "(403)465-6702", IsAvailable = 1, IsSupervisor = 0, IsSingerStaff = 1, StartDate = DateTime.ParseExact("1/26/2009", dateFormat, provider), EndDate = null, Responsibilities = null });
             employees.Add(new Employee() { FirstName = "Julien", LastName = "Barré", Phone = null, Mobile = "(403)921-8294", IsAvailable = 1, IsSupervisor = 0, IsSingerStaff = 1, StartDate = DateTime.ParseExact("8/1/2005", dateFormat, provider), EndDate = null, Responsibilities = "Tractor" });
 
+            database.Employees.InsertAllOnSubmit(employees);
 
             
             // Create equipment types
@@ -484,6 +485,8 @@ namespace SingerDispatch.Database
             equipmenttypes.Add(new EquipmentType() { Prefix = "Hired", Name = "Hired Equipment" });
             equipmenttypes.Add(new EquipmentType() { Prefix = "Rental", Name = "Rental Equipment" });
             equipmenttypes.Add(new EquipmentType() { Prefix = "Scheuerle", Name = "Scheuerle" });
+
+            database.EquipmentTypes.InsertAllOnSubmit(equipmenttypes);
 
 
             // Populate the Equipment table

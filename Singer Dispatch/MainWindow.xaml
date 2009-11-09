@@ -44,10 +44,12 @@
                     <Expander Name="expanderPricing" Header="Job Pricing" Style="{StaticResource SectionExpander}" Expanded="ExpandPricing">
                         <StackPanel Name="linksPricing" Style="{StaticResource SectionExpanderContent}" VerticalAlignment="Top"></StackPanel>
                     </Expander>
+                    <!--
                     <Expander Name="expanderReports" Header="Reports" Style="{StaticResource SectionExpander}" IsEnabled="False">
                         <StackPanel Name="linksReports" Style="{StaticResource SectionExpanderContent}" VerticalAlignment="Top"></StackPanel>
                     </Expander>
-                    <Expander Name="expanderAdmin" Header="Admin" Style="{StaticResource SectionExpander}" IsEnabled="False">
+                    -->
+                    <Expander Name="expanderAdmin" Header="Admin" Style="{StaticResource SectionExpander}" Expanded="ExpandAdmin">
                         <StackPanel Name="linksAdmin" Style="{StaticResource SectionExpanderContent}" VerticalAlignment="Top"></StackPanel>
                     </Expander>                    
                 </StackPanel>

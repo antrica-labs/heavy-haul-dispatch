@@ -3575,6 +3575,8 @@ namespace SingerDispatch
 		
 		private string _Notes;
 		
+		private string _Email;
+		
 		private EntitySet<Equipment> _Equipments;
 		
     #region Extensibility Method Definitions
@@ -3605,6 +3607,8 @@ namespace SingerDispatch
     partial void OnResponsibilitiesChanged();
     partial void OnNotesChanging(string value);
     partial void OnNotesChanged();
+    partial void OnEmailChanging(string value);
+    partial void OnEmailChanged();
     #endregion
 		
 		public Employee()
@@ -3849,6 +3853,26 @@ namespace SingerDispatch
 					this._Notes = value;
 					this.SendPropertyChanged("Notes");
 					this.OnNotesChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_Email", DbType="VarChar(255)")]
+		public string Email
+		{
+			get
+			{
+				return this._Email;
+			}
+			set
+			{
+				if ((this._Email != value))
+				{
+					this.OnEmailChanging(value);
+					this.SendPropertyChanging();
+					this._Email = value;
+					this.SendPropertyChanged("Email");
+					this.OnEmailChanged();
 				}
 			}
 		}
