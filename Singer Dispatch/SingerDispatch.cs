@@ -1,5 +1,17 @@
 namespace SingerDispatch
 {
+    partial class Employee
+    {
+        public string Name
+        {
+            get
+            {
+                return FirstName + " " + LastName;
+            }
+        }
+
+    }
+
     partial class QuoteCommodity
     {
     }

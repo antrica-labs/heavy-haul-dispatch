@@ -31,11 +31,8 @@ namespace SingerDispatch.Panels.Admin
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            dgEmployees.MaxHeight = dgEmployees.ActualHeight;
-
-            var employees = new ObservableCollection<Employee>(from emp in Database.Employees select emp);
-                        
-            dgEmployees.ItemsSource = employees;
+            dgEmployees.MaxHeight = dgDetails.ActualHeight;                        
+            dgEmployees.ItemsSource = new ObservableCollection<Employee>(from emp in Database.Employees select emp);
         }
 
         private void NewEmployee_Click(object sender, RoutedEventArgs e)

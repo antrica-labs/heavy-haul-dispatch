@@ -29,7 +29,7 @@
             </WPF:DataGrid.Columns>
         </WPF:DataGrid>
         
-        <GroupBox Header="Employee details" Grid.Column="1" Grid.Row="0" DataContext="{Binding ElementName=dgEmployees, Path=SelectedItem}">
+        <GroupBox Header="Employee details" Name="dgDetails" Grid.Column="1" Grid.Row="0" DataContext="{Binding ElementName=dgEmployees, Path=SelectedItem}">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />

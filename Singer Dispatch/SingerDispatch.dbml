@@ -144,9 +144,9 @@
       <Column Name="ServiceType" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
       <Column Name="Description" Type="System.String" DbType="VarChar(1000)" CanBeNull="true" />
       <Column Name="Notes" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
-      <Association Name="Equipment_Dispatch" Member="Equipment" ThisKey="EquipmentID" OtherKey="ID" Type="Equipment" IsForeignKey="true" />
       <Association Name="Job_Dispatch" Member="Job" ThisKey="JobID" OtherKey="ID" Type="Job" IsForeignKey="true" />
       <Association Name="Load_Dispatch" Member="Load" ThisKey="LoadID" OtherKey="ID" Type="Load" IsForeignKey="true" />
+      <Association Name="Equipment_Dispatch" Member="Equipment" ThisKey="EquipmentID" OtherKey="ID" Type="Equipment" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.Employees" Member="Employees">
@@ -165,37 +165,6 @@
       <Column Name="Notes" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
       <Column Name="Email" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
       <Association Name="Employee_Equipment" Member="Equipments" ThisKey="ID" OtherKey="DefaultDriverID" Type="Equipment" />
-    </Type>
-  </Table>
-  <Table Name="dbo.Equipment" Member="Equipments">
-    <Type Name="Equipment">
-      <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="UnitNumber" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
-      <Column Name="Serial" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
-      <Column Name="DefaultDriverID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
-      <Column Name="Make" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
-      <Column Name="Model" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
-      <Column Name="Year" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
-      <Column Name="LicencePlate" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
-      <Column Name="EngineMake" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
-      <Column Name="EngineModel" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
-      <Column Name="EngineType" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
-      <Column Name="IsDispatchable" Type="System.Byte" DbType="TinyInt" CanBeNull="true" />
-      <Column Name="Class" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
-      <Column Name="Tare" Type="System.Decimal" DbType="Decimal(18,3)" CanBeNull="true" />
-      <Column Name="Height" Type="System.Decimal" DbType="Decimal(18,3)" CanBeNull="true" />
-      <Column Name="AxleConfig" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
-      <Column Name="HasWinch" Type="System.Byte" DbType="TinyInt" CanBeNull="true" />
-      <Column Name="SteerTireSize" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
-      <Column Name="DriveTireSize" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
-      <Column Name="IsProrated" Type="System.Byte" DbType="TinyInt" CanBeNull="true" />
-      <Column Name="IsOnlyForScheuerle" Type="System.Byte" DbType="TinyInt" CanBeNull="true" />
-      <Column Name="IsOnlyForPushing" Type="System.Byte" DbType="TinyInt" CanBeNull="true" />
-      <Column Name="InServiceDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="OutOfServiceDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Association Name="Equipment_Dispatch" Member="Dispatches" ThisKey="ID" OtherKey="EquipmentID" Type="Dispatch" />
-      <Association Name="Equipment_Load" Member="Loads" ThisKey="ID" OtherKey="EquipmentID" Type="Load" />
-      <Association Name="Employee_Equipment" Member="Employee" ThisKey="DefaultDriverID" OtherKey="ID" Type="Employee" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.EquipmentTypes" Member="EquipmentTypes">
@@ -311,11 +280,11 @@
       <Association Name="Load_JobCommodity" Member="JobCommodities" ThisKey="ID" OtherKey="LoadID" Type="JobCommodity" />
       <Association Name="Load_Permit" Member="Permits" ThisKey="ID" OtherKey="LoadID" Type="Permit" />
       <Association Name="Load_ThirdPartyService" Member="ThirdPartyServices" ThisKey="ID" OtherKey="LoadID" Type="ThirdPartyService" />
-      <Association Name="Equipment_Load" Member="Equipment" ThisKey="EquipmentID" OtherKey="ID" Type="Equipment" IsForeignKey="true" />
       <Association Name="Job_Load" Member="Job" ThisKey="JobID" OtherKey="ID" Type="Job" IsForeignKey="true" />
       <Association Name="WheelType_Load" Member="WheelType" ThisKey="WheelTypeID" OtherKey="ID" Type="WheelType" IsForeignKey="true" />
       <Association Name="Season_Load" Member="Season" ThisKey="SeasonID" OtherKey="ID" Type="Season" IsForeignKey="true" />
       <Association Name="TrailerCombination_Load" Member="TrailerCombination" ThisKey="TrailerCombinationID" OtherKey="ID" Type="TrailerCombination" IsForeignKey="true" />
+      <Association Name="Equipment_Load" Member="Equipment" ThisKey="EquipmentID" OtherKey="ID" Type="Equipment" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.Permits" Member="Permits">
@@ -494,6 +463,45 @@
       <Column Name="Email" Type="System.String" DbType="VarChar(355)" CanBeNull="true" />
       <Association Name="User_Job" Member="Jobs" ThisKey="ID" OtherKey="QuotedByUserID" Type="Job" />
       <Association Name="User_Quote" Member="Quotes" ThisKey="ID" OtherKey="QuotedByUserID" Type="Quote" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Equipment" Member="Equipments">
+    <Type Name="Equipment">
+      <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="UnitNumber" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Serial" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Column Name="DefaultDriverID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="Make" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="Model" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="Year" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="LicencePlate" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="EngineMake" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="EngineModel" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="EngineType" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="IsDispatchable" Type="System.Byte" DbType="TinyInt" CanBeNull="true" />
+      <Column Name="ClassID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="Tare" Type="System.Decimal" DbType="Decimal(18,3)" CanBeNull="true" />
+      <Column Name="Height" Type="System.Decimal" DbType="Decimal(18,3)" CanBeNull="true" />
+      <Column Name="AxleConfig" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="HasWinch" Type="System.Byte" DbType="TinyInt" CanBeNull="true" />
+      <Column Name="SteerTireSize" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="DriveTireSize" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="IsProrated" Type="System.Byte" DbType="TinyInt" CanBeNull="true" />
+      <Column Name="IsOnlyForScheuerle" Type="System.Byte" DbType="TinyInt" CanBeNull="true" />
+      <Column Name="IsOnlyForPushing" Type="System.Byte" DbType="TinyInt" CanBeNull="true" />
+      <Column Name="InServiceDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="OutOfServiceDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Association Name="Equipment_Dispatch" Member="Dispatches" ThisKey="ID" OtherKey="EquipmentID" Type="Dispatch" />
+      <Association Name="Equipment_Load" Member="Loads" ThisKey="ID" OtherKey="EquipmentID" Type="Load" />
+      <Association Name="Employee_Equipment" Member="Employee" ThisKey="DefaultDriverID" OtherKey="ID" Type="Employee" IsForeignKey="true" />
+      <Association Name="EquipmentClass_Equipment" Member="EquipmentClass" ThisKey="ClassID" OtherKey="ID" Type="EquipmentClass" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.EquipmentClasses" Member="EquipmentClasses">
+    <Type Name="EquipmentClass">
+      <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Association Name="EquipmentClass_Equipment" Member="Equipments" ThisKey="ID" OtherKey="ClassID" Type="Equipment" />
     </Type>
   </Table>
 </Database>
