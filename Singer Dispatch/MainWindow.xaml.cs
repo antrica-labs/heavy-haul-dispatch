@@ -215,11 +215,5 @@ namespace SingerDispatch
             ((QuotesPanel)panelMainContent.Child).SelectedCompany = quote.Company;
             ((QuotesPanel)panelMainContent.Child).SelectedQuote = quote;
         }
-
-        private void PrintSampleDispatch(object sender, RoutedEventArgs e)
-        {
-            var viewer = new DocumentViewer();
-            viewer.DisplayDispatchPrintout();
-        }
     }
 }

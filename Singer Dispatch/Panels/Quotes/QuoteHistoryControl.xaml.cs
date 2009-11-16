@@ -2,8 +2,6 @@
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Navigation;
-using System.Collections;
 using System.Collections.ObjectModel;
 using System.Collections.Generic;
 

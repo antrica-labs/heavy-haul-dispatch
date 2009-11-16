@@ -1,6 +1,5 @@
 ﻿using System.Windows.Controls;
 using System.Linq;
-using SingerDispatch.Panels.Companies;
 using System.Windows;
 
 namespace SingerDispatch.Panels.Quotes

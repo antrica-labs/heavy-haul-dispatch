@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Singer Dispatch", "Singer Dispatch\Singer Dispatch.csproj", "{63304703-1763-4541-9B42-BBAA82BCDB46}"
 EndProject
 Global
