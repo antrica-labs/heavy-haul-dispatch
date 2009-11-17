@@ -63,9 +63,6 @@ namespace SingerDispatch
     partial void InsertCustomerNumber(CustomerNumber instance);
     partial void UpdateCustomerNumber(CustomerNumber instance);
     partial void DeleteCustomerNumber(CustomerNumber instance);
-    partial void InsertDispatch(Dispatch instance);
-    partial void UpdateDispatch(Dispatch instance);
-    partial void DeleteDispatch(Dispatch instance);
     partial void InsertEmployee(Employee instance);
     partial void UpdateEmployee(Employee instance);
     partial void DeleteEmployee(Employee instance);
@@ -132,6 +129,9 @@ namespace SingerDispatch
     partial void InsertEquipmentClass(EquipmentClass instance);
     partial void UpdateEquipmentClass(EquipmentClass instance);
     partial void DeleteEquipmentClass(EquipmentClass instance);
+    partial void InsertDispatch(Dispatch instance);
+    partial void UpdateDispatch(Dispatch instance);
+    partial void DeleteDispatch(Dispatch instance);
     #endregion
 		
 		public SingerDispatchDataContext() : 
@@ -249,14 +249,6 @@ namespace SingerDispatch
 			get
 			{
 				return this.GetTable<CustomerNumber>();
-			}
-		}
-		
-		public System.Data.Linq.Table<Dispatch> Dispatches
-		{
-			get
-			{
-				return this.GetTable<Dispatch>();
 			}
 		}
 		
@@ -433,6 +425,14 @@ namespace SingerDispatch
 			get
 			{
 				return this.GetTable<EquipmentClass>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Dispatch> Dispatches
+		{
+			get
+			{
+				return this.GetTable<Dispatch>();
 			}
 		}
 	}
@@ -3227,335 +3227,6 @@ namespace SingerDispatch
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Dispatches")]
-	public partial class Dispatch : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private long _ID;
-		
-		private System.Nullable<long> _JobID;
-		
-		private System.Nullable<long> _LoadID;
-		
-		private System.Nullable<long> _EquipmentID;
-		
-		private string _ServiceType;
-		
-		private string _Description;
-		
-		private string _Notes;
-		
-		private EntityRef<Job> _Job;
-		
-		private EntityRef<Load> _Load;
-		
-		private EntityRef<Equipment> _Equipment;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIDChanging(long value);
-    partial void OnIDChanged();
-    partial void OnJobIDChanging(System.Nullable<long> value);
-    partial void OnJobIDChanged();
-    partial void OnLoadIDChanging(System.Nullable<long> value);
-    partial void OnLoadIDChanged();
-    partial void OnEquipmentIDChanging(System.Nullable<long> value);
-    partial void OnEquipmentIDChanged();
-    partial void OnServiceTypeChanging(string value);
-    partial void OnServiceTypeChanged();
-    partial void OnDescriptionChanging(string value);
-    partial void OnDescriptionChanged();
-    partial void OnNotesChanging(string value);
-    partial void OnNotesChanged();
-    #endregion
-		
-		public Dispatch()
-		{
-			this._Job = default(EntityRef<Job>);
-			this._Load = default(EntityRef<Load>);
-			this._Equipment = default(EntityRef<Equipment>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="BigInt NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public long ID
-		{
-			get
-			{
-				return this._ID;
-			}
-			set
-			{
-				if ((this._ID != value))
-				{
-					this.OnIDChanging(value);
-					this.SendPropertyChanging();
-					this._ID = value;
-					this.SendPropertyChanged("ID");
-					this.OnIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_JobID", DbType="BigInt")]
-		public System.Nullable<long> JobID
-		{
-			get
-			{
-				return this._JobID;
-			}
-			set
-			{
-				if ((this._JobID != value))
-				{
-					if (this._Job.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnJobIDChanging(value);
-					this.SendPropertyChanging();
-					this._JobID = value;
-					this.SendPropertyChanged("JobID");
-					this.OnJobIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LoadID", DbType="BigInt")]
-		public System.Nullable<long> LoadID
-		{
-			get
-			{
-				return this._LoadID;
-			}
-			set
-			{
-				if ((this._LoadID != value))
-				{
-					if (this._Load.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnLoadIDChanging(value);
-					this.SendPropertyChanging();
-					this._LoadID = value;
-					this.SendPropertyChanged("LoadID");
-					this.OnLoadIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EquipmentID", DbType="BigInt")]
-		public System.Nullable<long> EquipmentID
-		{
-			get
-			{
-				return this._EquipmentID;
-			}
-			set
-			{
-				if ((this._EquipmentID != value))
-				{
-					if (this._Equipment.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnEquipmentIDChanging(value);
-					this.SendPropertyChanging();
-					this._EquipmentID = value;
-					this.SendPropertyChanged("EquipmentID");
-					this.OnEquipmentIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ServiceType", DbType="VarChar(100)")]
-		public string ServiceType
-		{
-			get
-			{
-				return this._ServiceType;
-			}
-			set
-			{
-				if ((this._ServiceType != value))
-				{
-					this.OnServiceTypeChanging(value);
-					this.SendPropertyChanging();
-					this._ServiceType = value;
-					this.SendPropertyChanged("ServiceType");
-					this.OnServiceTypeChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Description", DbType="VarChar(1000)")]
-		public string Description
-		{
-			get
-			{
-				return this._Description;
-			}
-			set
-			{
-				if ((this._Description != value))
-				{
-					this.OnDescriptionChanging(value);
-					this.SendPropertyChanging();
-					this._Description = value;
-					this.SendPropertyChanged("Description");
-					this.OnDescriptionChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Notes", DbType="Text", UpdateCheck=UpdateCheck.Never)]
-		public string Notes
-		{
-			get
-			{
-				return this._Notes;
-			}
-			set
-			{
-				if ((this._Notes != value))
-				{
-					this.OnNotesChanging(value);
-					this.SendPropertyChanging();
-					this._Notes = value;
-					this.SendPropertyChanged("Notes");
-					this.OnNotesChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Job_Dispatch", Storage="_Job", ThisKey="JobID", OtherKey="ID", IsForeignKey=true)]
-		public Job Job
-		{
-			get
-			{
-				return this._Job.Entity;
-			}
-			set
-			{
-				Job previousValue = this._Job.Entity;
-				if (((previousValue != value) 
-							|| (this._Job.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Job.Entity = null;
-						previousValue.Dispatches.Remove(this);
-					}
-					this._Job.Entity = value;
-					if ((value != null))
-					{
-						value.Dispatches.Add(this);
-						this._JobID = value.ID;
-					}
-					else
-					{
-						this._JobID = default(Nullable<long>);
-					}
-					this.SendPropertyChanged("Job");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Load_Dispatch", Storage="_Load", ThisKey="LoadID", OtherKey="ID", IsForeignKey=true)]
-		public Load Load
-		{
-			get
-			{
-				return this._Load.Entity;
-			}
-			set
-			{
-				Load previousValue = this._Load.Entity;
-				if (((previousValue != value) 
-							|| (this._Load.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Load.Entity = null;
-						previousValue.Dispatches.Remove(this);
-					}
-					this._Load.Entity = value;
-					if ((value != null))
-					{
-						value.Dispatches.Add(this);
-						this._LoadID = value.ID;
-					}
-					else
-					{
-						this._LoadID = default(Nullable<long>);
-					}
-					this.SendPropertyChanged("Load");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Equipment_Dispatch", Storage="_Equipment", ThisKey="EquipmentID", OtherKey="ID", IsForeignKey=true)]
-		public Equipment Equipment
-		{
-			get
-			{
-				return this._Equipment.Entity;
-			}
-			set
-			{
-				Equipment previousValue = this._Equipment.Entity;
-				if (((previousValue != value) 
-							|| (this._Equipment.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Equipment.Entity = null;
-						previousValue.Dispatches.Remove(this);
-					}
-					this._Equipment.Entity = value;
-					if ((value != null))
-					{
-						value.Dispatches.Add(this);
-						this._EquipmentID = value.ID;
-					}
-					else
-					{
-						this._EquipmentID = default(Nullable<long>);
-					}
-					this.SendPropertyChanged("Equipment");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Employees")]
 	public partial class Employee : INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -5023,8 +4694,6 @@ namespace SingerDispatch
 		
 		private System.Nullable<long> _StatusTypeID;
 		
-		private EntitySet<Dispatch> _Dispatches;
-		
 		private EntitySet<JobCommodity> _JobCommodities;
 		
 		private EntitySet<Load> _Loads;
@@ -5032,6 +4701,8 @@ namespace SingerDispatch
 		private EntitySet<Permit> _Permits;
 		
 		private EntitySet<ThirdPartyService> _ThirdPartyServices;
+		
+		private EntitySet<Dispatch> _Dispatches;
 		
 		private EntityRef<Company> _Company;
 		
@@ -5071,11 +4742,11 @@ namespace SingerDispatch
 		
 		public Job()
 		{
-			this._Dispatches = new EntitySet<Dispatch>(new Action<Dispatch>(this.attach_Dispatches), new Action<Dispatch>(this.detach_Dispatches));
 			this._JobCommodities = new EntitySet<JobCommodity>(new Action<JobCommodity>(this.attach_JobCommodities), new Action<JobCommodity>(this.detach_JobCommodities));
 			this._Loads = new EntitySet<Load>(new Action<Load>(this.attach_Loads), new Action<Load>(this.detach_Loads));
 			this._Permits = new EntitySet<Permit>(new Action<Permit>(this.attach_Permits), new Action<Permit>(this.detach_Permits));
 			this._ThirdPartyServices = new EntitySet<ThirdPartyService>(new Action<ThirdPartyService>(this.attach_ThirdPartyServices), new Action<ThirdPartyService>(this.detach_ThirdPartyServices));
+			this._Dispatches = new EntitySet<Dispatch>(new Action<Dispatch>(this.attach_Dispatches), new Action<Dispatch>(this.detach_Dispatches));
 			this._Company = default(EntityRef<Company>);
 			this._Company1 = default(EntityRef<Company>);
 			this._JobStatusType = default(EntityRef<JobStatusType>);
@@ -5304,19 +4975,6 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Job_Dispatch", Storage="_Dispatches", ThisKey="ID", OtherKey="JobID")]
-		public EntitySet<Dispatch> Dispatches
-		{
-			get
-			{
-				return this._Dispatches;
-			}
-			set
-			{
-				this._Dispatches.Assign(value);
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Job_JobCommodity", Storage="_JobCommodities", ThisKey="ID", OtherKey="JobID")]
 		public EntitySet<JobCommodity> JobCommodities
 		{
@@ -5366,6 +5024,19 @@ namespace SingerDispatch
 			set
 			{
 				this._ThirdPartyServices.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Job_Dispatch", Storage="_Dispatches", ThisKey="ID", OtherKey="JobID")]
+		public EntitySet<Dispatch> Dispatches
+		{
+			get
+			{
+				return this._Dispatches;
+			}
+			set
+			{
+				this._Dispatches.Assign(value);
 			}
 		}
 		
@@ -5559,18 +5230,6 @@ namespace SingerDispatch
 			}
 		}
 		
-		private void attach_Dispatches(Dispatch entity)
-		{
-			this.SendPropertyChanging();
-			entity.Job = this;
-		}
-		
-		private void detach_Dispatches(Dispatch entity)
-		{
-			this.SendPropertyChanging();
-			entity.Job = null;
-		}
-		
 		private void attach_JobCommodities(JobCommodity entity)
 		{
 			this.SendPropertyChanging();
@@ -5614,6 +5273,18 @@ namespace SingerDispatch
 		}
 		
 		private void detach_ThirdPartyServices(ThirdPartyService entity)
+		{
+			this.SendPropertyChanging();
+			entity.Job = null;
+		}
+		
+		private void attach_Dispatches(Dispatch entity)
+		{
+			this.SendPropertyChanging();
+			entity.Job = this;
+		}
+		
+		private void detach_Dispatches(Dispatch entity)
 		{
 			this.SendPropertyChanging();
 			entity.Job = null;
@@ -5798,13 +5469,13 @@ namespace SingerDispatch
 		
 		private System.Nullable<int> _LoadedHeight;
 		
-		private EntitySet<Dispatch> _Dispatches;
-		
 		private EntitySet<JobCommodity> _JobCommodities;
 		
 		private EntitySet<Permit> _Permits;
 		
 		private EntitySet<ThirdPartyService> _ThirdPartyServices;
+		
+		private EntitySet<Dispatch> _Dispatches;
 		
 		private EntityRef<Job> _Job;
 		
@@ -5882,10 +5553,10 @@ namespace SingerDispatch
 		
 		public Load()
 		{
-			this._Dispatches = new EntitySet<Dispatch>(new Action<Dispatch>(this.attach_Dispatches), new Action<Dispatch>(this.detach_Dispatches));
 			this._JobCommodities = new EntitySet<JobCommodity>(new Action<JobCommodity>(this.attach_JobCommodities), new Action<JobCommodity>(this.detach_JobCommodities));
 			this._Permits = new EntitySet<Permit>(new Action<Permit>(this.attach_Permits), new Action<Permit>(this.detach_Permits));
 			this._ThirdPartyServices = new EntitySet<ThirdPartyService>(new Action<ThirdPartyService>(this.attach_ThirdPartyServices), new Action<ThirdPartyService>(this.detach_ThirdPartyServices));
+			this._Dispatches = new EntitySet<Dispatch>(new Action<Dispatch>(this.attach_Dispatches), new Action<Dispatch>(this.detach_Dispatches));
 			this._Job = default(EntityRef<Job>);
 			this._WheelType = default(EntityRef<WheelType>);
 			this._Season = default(EntityRef<Season>);
@@ -6494,19 +6165,6 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Load_Dispatch", Storage="_Dispatches", ThisKey="ID", OtherKey="LoadID")]
-		public EntitySet<Dispatch> Dispatches
-		{
-			get
-			{
-				return this._Dispatches;
-			}
-			set
-			{
-				this._Dispatches.Assign(value);
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Load_JobCommodity", Storage="_JobCommodities", ThisKey="ID", OtherKey="LoadID")]
 		public EntitySet<JobCommodity> JobCommodities
 		{
@@ -6543,6 +6201,19 @@ namespace SingerDispatch
 			set
 			{
 				this._ThirdPartyServices.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Load_Dispatch", Storage="_Dispatches", ThisKey="ID", OtherKey="LoadID")]
+		public EntitySet<Dispatch> Dispatches
+		{
+			get
+			{
+				return this._Dispatches;
+			}
+			set
+			{
+				this._Dispatches.Assign(value);
 			}
 		}
 		
@@ -6736,18 +6407,6 @@ namespace SingerDispatch
 			}
 		}
 		
-		private void attach_Dispatches(Dispatch entity)
-		{
-			this.SendPropertyChanging();
-			entity.Load = this;
-		}
-		
-		private void detach_Dispatches(Dispatch entity)
-		{
-			this.SendPropertyChanging();
-			entity.Load = null;
-		}
-		
 		private void attach_JobCommodities(JobCommodity entity)
 		{
 			this.SendPropertyChanging();
@@ -6779,6 +6438,18 @@ namespace SingerDispatch
 		}
 		
 		private void detach_ThirdPartyServices(ThirdPartyService entity)
+		{
+			this.SendPropertyChanging();
+			entity.Load = null;
+		}
+		
+		private void attach_Dispatches(Dispatch entity)
+		{
+			this.SendPropertyChanging();
+			entity.Load = this;
+		}
+		
+		private void detach_Dispatches(Dispatch entity)
 		{
 			this.SendPropertyChanging();
 			entity.Load = null;
@@ -9547,6 +9218,8 @@ namespace SingerDispatch
 		
 		private EntitySet<Service> _Services;
 		
+		private EntitySet<Dispatch> _Dispatches;
+		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -9560,6 +9233,7 @@ namespace SingerDispatch
 		public ServiceType()
 		{
 			this._Services = new EntitySet<Service>(new Action<Service>(this.attach_Services), new Action<Service>(this.detach_Services));
+			this._Dispatches = new EntitySet<Dispatch>(new Action<Dispatch>(this.attach_Dispatches), new Action<Dispatch>(this.detach_Dispatches));
 			OnCreated();
 		}
 		
@@ -9616,6 +9290,19 @@ namespace SingerDispatch
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ServiceType_Dispatch", Storage="_Dispatches", ThisKey="ID", OtherKey="ServiceTypeID")]
+		public EntitySet<Dispatch> Dispatches
+		{
+			get
+			{
+				return this._Dispatches;
+			}
+			set
+			{
+				this._Dispatches.Assign(value);
+			}
+		}
+		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -9643,6 +9330,18 @@ namespace SingerDispatch
 		}
 		
 		private void detach_Services(Service entity)
+		{
+			this.SendPropertyChanging();
+			entity.ServiceType = null;
+		}
+		
+		private void attach_Dispatches(Dispatch entity)
+		{
+			this.SendPropertyChanging();
+			entity.ServiceType = this;
+		}
+		
+		private void detach_Dispatches(Dispatch entity)
 		{
 			this.SendPropertyChanging();
 			entity.ServiceType = null;
@@ -10628,9 +10327,9 @@ namespace SingerDispatch
 		
 		private System.Nullable<System.DateTime> _OutOfServiceDate;
 		
-		private EntitySet<Dispatch> _Dispatches;
-		
 		private EntitySet<Load> _Loads;
+		
+		private EntitySet<Dispatch> _Dispatches;
 		
 		private EntityRef<Employee> _Employee;
 		
@@ -10692,8 +10391,8 @@ namespace SingerDispatch
 		
 		public Equipment()
 		{
-			this._Dispatches = new EntitySet<Dispatch>(new Action<Dispatch>(this.attach_Dispatches), new Action<Dispatch>(this.detach_Dispatches));
 			this._Loads = new EntitySet<Load>(new Action<Load>(this.attach_Loads), new Action<Load>(this.detach_Loads));
+			this._Dispatches = new EntitySet<Dispatch>(new Action<Dispatch>(this.attach_Dispatches), new Action<Dispatch>(this.detach_Dispatches));
 			this._Employee = default(EntityRef<Employee>);
 			this._EquipmentClass = default(EntityRef<EquipmentClass>);
 			OnCreated();
@@ -11187,19 +10886,6 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Equipment_Dispatch", Storage="_Dispatches", ThisKey="ID", OtherKey="EquipmentID")]
-		public EntitySet<Dispatch> Dispatches
-		{
-			get
-			{
-				return this._Dispatches;
-			}
-			set
-			{
-				this._Dispatches.Assign(value);
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Equipment_Load", Storage="_Loads", ThisKey="ID", OtherKey="EquipmentID")]
 		public EntitySet<Load> Loads
 		{
@@ -11210,6 +10896,19 @@ namespace SingerDispatch
 			set
 			{
 				this._Loads.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Equipment_Dispatch", Storage="_Dispatches", ThisKey="ID", OtherKey="EquipmentID")]
+		public EntitySet<Dispatch> Dispatches
+		{
+			get
+			{
+				return this._Dispatches;
+			}
+			set
+			{
+				this._Dispatches.Assign(value);
 			}
 		}
 		
@@ -11301,18 +11000,6 @@ namespace SingerDispatch
 			}
 		}
 		
-		private void attach_Dispatches(Dispatch entity)
-		{
-			this.SendPropertyChanging();
-			entity.Equipment = this;
-		}
-		
-		private void detach_Dispatches(Dispatch entity)
-		{
-			this.SendPropertyChanging();
-			entity.Equipment = null;
-		}
-		
 		private void attach_Loads(Load entity)
 		{
 			this.SendPropertyChanging();
@@ -11320,6 +11007,18 @@ namespace SingerDispatch
 		}
 		
 		private void detach_Loads(Load entity)
+		{
+			this.SendPropertyChanging();
+			entity.Equipment = null;
+		}
+		
+		private void attach_Dispatches(Dispatch entity)
+		{
+			this.SendPropertyChanging();
+			entity.Equipment = this;
+		}
+		
+		private void detach_Dispatches(Dispatch entity)
 		{
 			this.SendPropertyChanging();
 			entity.Equipment = null;
@@ -11437,6 +11136,376 @@ namespace SingerDispatch
 		{
 			this.SendPropertyChanging();
 			entity.EquipmentClass = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Dispatches")]
+	public partial class Dispatch : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private long _ID;
+		
+		private System.Nullable<long> _JobID;
+		
+		private System.Nullable<long> _LoadID;
+		
+		private System.Nullable<long> _EquipmentID;
+		
+		private string _Description;
+		
+		private string _Notes;
+		
+		private System.Nullable<long> _ServiceTypeID;
+		
+		private EntityRef<Equipment> _Equipment;
+		
+		private EntityRef<Job> _Job;
+		
+		private EntityRef<Load> _Load;
+		
+		private EntityRef<ServiceType> _ServiceType;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDChanging(long value);
+    partial void OnIDChanged();
+    partial void OnJobIDChanging(System.Nullable<long> value);
+    partial void OnJobIDChanged();
+    partial void OnLoadIDChanging(System.Nullable<long> value);
+    partial void OnLoadIDChanged();
+    partial void OnEquipmentIDChanging(System.Nullable<long> value);
+    partial void OnEquipmentIDChanged();
+    partial void OnDescriptionChanging(string value);
+    partial void OnDescriptionChanged();
+    partial void OnNotesChanging(string value);
+    partial void OnNotesChanged();
+    partial void OnServiceTypeIDChanging(System.Nullable<long> value);
+    partial void OnServiceTypeIDChanged();
+    #endregion
+		
+		public Dispatch()
+		{
+			this._Equipment = default(EntityRef<Equipment>);
+			this._Job = default(EntityRef<Job>);
+			this._Load = default(EntityRef<Load>);
+			this._ServiceType = default(EntityRef<ServiceType>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="BigInt NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public long ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this.OnIDChanging(value);
+					this.SendPropertyChanging();
+					this._ID = value;
+					this.SendPropertyChanged("ID");
+					this.OnIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_JobID", DbType="BigInt")]
+		public System.Nullable<long> JobID
+		{
+			get
+			{
+				return this._JobID;
+			}
+			set
+			{
+				if ((this._JobID != value))
+				{
+					if (this._Job.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnJobIDChanging(value);
+					this.SendPropertyChanging();
+					this._JobID = value;
+					this.SendPropertyChanged("JobID");
+					this.OnJobIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LoadID", DbType="BigInt")]
+		public System.Nullable<long> LoadID
+		{
+			get
+			{
+				return this._LoadID;
+			}
+			set
+			{
+				if ((this._LoadID != value))
+				{
+					if (this._Load.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnLoadIDChanging(value);
+					this.SendPropertyChanging();
+					this._LoadID = value;
+					this.SendPropertyChanged("LoadID");
+					this.OnLoadIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EquipmentID", DbType="BigInt")]
+		public System.Nullable<long> EquipmentID
+		{
+			get
+			{
+				return this._EquipmentID;
+			}
+			set
+			{
+				if ((this._EquipmentID != value))
+				{
+					if (this._Equipment.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnEquipmentIDChanging(value);
+					this.SendPropertyChanging();
+					this._EquipmentID = value;
+					this.SendPropertyChanged("EquipmentID");
+					this.OnEquipmentIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Description", DbType="VarChar(1000)")]
+		public string Description
+		{
+			get
+			{
+				return this._Description;
+			}
+			set
+			{
+				if ((this._Description != value))
+				{
+					this.OnDescriptionChanging(value);
+					this.SendPropertyChanging();
+					this._Description = value;
+					this.SendPropertyChanged("Description");
+					this.OnDescriptionChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Notes", DbType="Text", UpdateCheck=UpdateCheck.Never)]
+		public string Notes
+		{
+			get
+			{
+				return this._Notes;
+			}
+			set
+			{
+				if ((this._Notes != value))
+				{
+					this.OnNotesChanging(value);
+					this.SendPropertyChanging();
+					this._Notes = value;
+					this.SendPropertyChanged("Notes");
+					this.OnNotesChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ServiceTypeID", DbType="BigInt")]
+		public System.Nullable<long> ServiceTypeID
+		{
+			get
+			{
+				return this._ServiceTypeID;
+			}
+			set
+			{
+				if ((this._ServiceTypeID != value))
+				{
+					if (this._ServiceType.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnServiceTypeIDChanging(value);
+					this.SendPropertyChanging();
+					this._ServiceTypeID = value;
+					this.SendPropertyChanged("ServiceTypeID");
+					this.OnServiceTypeIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Equipment_Dispatch", Storage="_Equipment", ThisKey="EquipmentID", OtherKey="ID", IsForeignKey=true)]
+		public Equipment Equipment
+		{
+			get
+			{
+				return this._Equipment.Entity;
+			}
+			set
+			{
+				Equipment previousValue = this._Equipment.Entity;
+				if (((previousValue != value) 
+							|| (this._Equipment.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Equipment.Entity = null;
+						previousValue.Dispatches.Remove(this);
+					}
+					this._Equipment.Entity = value;
+					if ((value != null))
+					{
+						value.Dispatches.Add(this);
+						this._EquipmentID = value.ID;
+					}
+					else
+					{
+						this._EquipmentID = default(Nullable<long>);
+					}
+					this.SendPropertyChanged("Equipment");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Job_Dispatch", Storage="_Job", ThisKey="JobID", OtherKey="ID", IsForeignKey=true)]
+		public Job Job
+		{
+			get
+			{
+				return this._Job.Entity;
+			}
+			set
+			{
+				Job previousValue = this._Job.Entity;
+				if (((previousValue != value) 
+							|| (this._Job.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Job.Entity = null;
+						previousValue.Dispatches.Remove(this);
+					}
+					this._Job.Entity = value;
+					if ((value != null))
+					{
+						value.Dispatches.Add(this);
+						this._JobID = value.ID;
+					}
+					else
+					{
+						this._JobID = default(Nullable<long>);
+					}
+					this.SendPropertyChanged("Job");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Load_Dispatch", Storage="_Load", ThisKey="LoadID", OtherKey="ID", IsForeignKey=true)]
+		public Load Load
+		{
+			get
+			{
+				return this._Load.Entity;
+			}
+			set
+			{
+				Load previousValue = this._Load.Entity;
+				if (((previousValue != value) 
+							|| (this._Load.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Load.Entity = null;
+						previousValue.Dispatches.Remove(this);
+					}
+					this._Load.Entity = value;
+					if ((value != null))
+					{
+						value.Dispatches.Add(this);
+						this._LoadID = value.ID;
+					}
+					else
+					{
+						this._LoadID = default(Nullable<long>);
+					}
+					this.SendPropertyChanged("Load");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ServiceType_Dispatch", Storage="_ServiceType", ThisKey="ServiceTypeID", OtherKey="ID", IsForeignKey=true)]
+		public ServiceType ServiceType
+		{
+			get
+			{
+				return this._ServiceType.Entity;
+			}
+			set
+			{
+				ServiceType previousValue = this._ServiceType.Entity;
+				if (((previousValue != value) 
+							|| (this._ServiceType.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._ServiceType.Entity = null;
+						previousValue.Dispatches.Remove(this);
+					}
+					this._ServiceType.Entity = value;
+					if ((value != null))
+					{
+						value.Dispatches.Add(this);
+						this._ServiceTypeID = value.ID;
+					}
+					else
+					{
+						this._ServiceTypeID = default(Nullable<long>);
+					}
+					this.SendPropertyChanged("ServiceType");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
 		}
 	}
 }

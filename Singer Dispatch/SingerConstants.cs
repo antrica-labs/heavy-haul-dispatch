@@ -17,11 +17,6 @@ namespace SingerDispatch
 
             customerTypes.Add("Singer Specialized");
             customerTypes.Add("M.E. Signer Enterprise");
-
-            serviceTypes.Add("Tractor");
-            serviceTypes.Add("Crane");
-            serviceTypes.Add("Pilot Car");
-            serviceTypes.Add("Swamper");
         }
 
         public static List<string> ContactMethods 

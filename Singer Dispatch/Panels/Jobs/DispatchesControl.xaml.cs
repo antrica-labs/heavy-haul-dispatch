@@ -16,8 +16,8 @@ namespace SingerDispatch.Panels.Jobs
         {
             InitializeComponent();
 
-            Database = SingerConstants.CommonDataContext;            
-            cmbServiceTypes.ItemsSource = SingerConstants.ServiceTypes;
+            Database = SingerConstants.CommonDataContext;
+            cmbServiceTypes.ItemsSource = from t in Database.ServiceTypes select t;
         }
 
         private void ControlLoaded(object sender, RoutedEventArgs e)

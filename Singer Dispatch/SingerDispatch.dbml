@@ -1,6 +1,5 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Database Name="SingerDispatch-Development" Class="SingerDispatchDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="AppSettings" ConnectionString="Data Source=SIMON-B71DE53EA\SQLEXPRESS;Initial Catalog=SingerDispatch-Development;Integrated Security=True" SettingsObjectName="SingerDispatch.Properties.Settings" SettingsPropertyName="SingerDispatchDBConnectionString" Provider="System.Data.SqlClient" />
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="SingerDispatch-Development" Class="SingerDispatchDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=D141QFG1\SQLEXPRESS;Initial Catalog=SingerDispatch-Development;Integrated Security=True" SettingsObjectName="SingerDispatch.Properties.Settings" SettingsPropertyName="SingerDispatchDBConnectionString" Provider="System.Data.SqlClient" />
   <Table Name="dbo.WheelTypes" Member="WheelTypes">
     <Type Name="WheelType">
       <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -135,20 +134,6 @@
       <Association Name="Company_CustomerNumber" Member="Company" ThisKey="CompanyID" OtherKey="ID" Type="Company" IsForeignKey="true" />
     </Type>
   </Table>
-  <Table Name="dbo.Dispatches" Member="Dispatches">
-    <Type Name="Dispatch">
-      <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="JobID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
-      <Column Name="LoadID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
-      <Column Name="EquipmentID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
-      <Column Name="ServiceType" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
-      <Column Name="Description" Type="System.String" DbType="VarChar(1000)" CanBeNull="true" />
-      <Column Name="Notes" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
-      <Association Name="Job_Dispatch" Member="Job" ThisKey="JobID" OtherKey="ID" Type="Job" IsForeignKey="true" />
-      <Association Name="Load_Dispatch" Member="Load" ThisKey="LoadID" OtherKey="ID" Type="Load" IsForeignKey="true" />
-      <Association Name="Equipment_Dispatch" Member="Equipment" ThisKey="EquipmentID" OtherKey="ID" Type="Equipment" IsForeignKey="true" />
-    </Type>
-  </Table>
   <Table Name="dbo.Employees" Member="Employees">
     <Type Name="Employee">
       <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -226,11 +211,11 @@
       <Column Name="StartDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
       <Column Name="EndDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
       <Column Name="StatusTypeID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
-      <Association Name="Job_Dispatch" Member="Dispatches" ThisKey="ID" OtherKey="JobID" Type="Dispatch" />
       <Association Name="Job_JobCommodity" Member="JobCommodities" ThisKey="ID" OtherKey="JobID" Type="JobCommodity" />
       <Association Name="Job_Load" Member="Loads" ThisKey="ID" OtherKey="JobID" Type="Load" />
       <Association Name="Job_Permit" Member="Permits" ThisKey="ID" OtherKey="JobID" Type="Permit" />
       <Association Name="Job_ThirdPartyService" Member="ThirdPartyServices" ThisKey="ID" OtherKey="JobID" Type="ThirdPartyService" />
+      <Association Name="Job_Dispatch" Member="Dispatches" ThisKey="ID" OtherKey="JobID" Type="Dispatch" />
       <Association Name="Company_Job" Member="Company" ThisKey="CompanyID" OtherKey="ID" Type="Company" IsForeignKey="true" />
       <Association Name="Company_Job1" Member="Company1" ThisKey="CareOfCompanyID" OtherKey="ID" Type="Company" IsForeignKey="true" />
       <Association Name="JobStatusType_Job" Member="JobStatusType" ThisKey="StatusTypeID" OtherKey="ID" Type="JobStatusType" IsForeignKey="true" />
@@ -276,10 +261,10 @@
       <Column Name="LoadedLength" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="LoadedWidth" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="LoadedHeight" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Association Name="Load_Dispatch" Member="Dispatches" ThisKey="ID" OtherKey="LoadID" Type="Dispatch" />
       <Association Name="Load_JobCommodity" Member="JobCommodities" ThisKey="ID" OtherKey="LoadID" Type="JobCommodity" />
       <Association Name="Load_Permit" Member="Permits" ThisKey="ID" OtherKey="LoadID" Type="Permit" />
       <Association Name="Load_ThirdPartyService" Member="ThirdPartyServices" ThisKey="ID" OtherKey="LoadID" Type="ThirdPartyService" />
+      <Association Name="Load_Dispatch" Member="Dispatches" ThisKey="ID" OtherKey="LoadID" Type="Dispatch" />
       <Association Name="Job_Load" Member="Job" ThisKey="JobID" OtherKey="ID" Type="Job" IsForeignKey="true" />
       <Association Name="WheelType_Load" Member="WheelType" ThisKey="WheelTypeID" OtherKey="ID" Type="WheelType" IsForeignKey="true" />
       <Association Name="Season_Load" Member="Season" ThisKey="SeasonID" OtherKey="ID" Type="Season" IsForeignKey="true" />
@@ -419,6 +404,7 @@
       <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Name" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
       <Association Name="ServiceType_Service" Member="Services" ThisKey="ID" OtherKey="ServiceTypeID" Type="Service" />
+      <Association Name="ServiceType_Dispatch" Member="Dispatches" ThisKey="ID" OtherKey="ServiceTypeID" Type="Dispatch" />
     </Type>
   </Table>
   <Table Name="dbo.ThirdPartyServices" Member="ThirdPartyServices">
@@ -491,8 +477,8 @@
       <Column Name="IsOnlyForPushing" Type="System.Byte" DbType="TinyInt" CanBeNull="true" />
       <Column Name="InServiceDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
       <Column Name="OutOfServiceDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Association Name="Equipment_Dispatch" Member="Dispatches" ThisKey="ID" OtherKey="EquipmentID" Type="Dispatch" />
       <Association Name="Equipment_Load" Member="Loads" ThisKey="ID" OtherKey="EquipmentID" Type="Load" />
+      <Association Name="Equipment_Dispatch" Member="Dispatches" ThisKey="ID" OtherKey="EquipmentID" Type="Dispatch" />
       <Association Name="Employee_Equipment" Member="Employee" ThisKey="DefaultDriverID" OtherKey="ID" Type="Employee" IsForeignKey="true" />
       <Association Name="EquipmentClass_Equipment" Member="EquipmentClass" ThisKey="ClassID" OtherKey="ID" Type="EquipmentClass" IsForeignKey="true" />
     </Type>
@@ -502,6 +488,21 @@
       <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Name" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
       <Association Name="EquipmentClass_Equipment" Member="Equipments" ThisKey="ID" OtherKey="ClassID" Type="Equipment" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Dispatches" Member="Dispatches">
+    <Type Name="Dispatch">
+      <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="JobID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="LoadID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="EquipmentID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="Description" Type="System.String" DbType="VarChar(1000)" CanBeNull="true" />
+      <Column Name="Notes" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="ServiceTypeID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Association Name="Equipment_Dispatch" Member="Equipment" ThisKey="EquipmentID" OtherKey="ID" Type="Equipment" IsForeignKey="true" />
+      <Association Name="Job_Dispatch" Member="Job" ThisKey="JobID" OtherKey="ID" Type="Job" IsForeignKey="true" />
+      <Association Name="Load_Dispatch" Member="Load" ThisKey="LoadID" OtherKey="ID" Type="Load" IsForeignKey="true" />
+      <Association Name="ServiceType_Dispatch" Member="ServiceType" ThisKey="ServiceTypeID" OtherKey="ID" Type="ServiceType" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>
