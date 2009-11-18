@@ -412,7 +412,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		public System.Data.Linq.Table<Equipment> Equipments
+		public System.Data.Linq.Table<Equipment> Equipment
 		{
 			get
 			{
@@ -437,7 +437,7 @@ namespace SingerDispatch
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.WheelTypes")]
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="")]
 	public partial class WheelType : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
@@ -465,7 +465,7 @@ namespace SingerDispatch
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="BigInt NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, IsPrimaryKey=true, IsDbGenerated=true)]
 		public long ID
 		{
 			get
@@ -485,7 +485,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="VarChar(100)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name")]
 		public string Name
 		{
 			get
@@ -551,7 +551,7 @@ namespace SingerDispatch
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Addresses")]
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="")]
 	public partial class Address : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
@@ -628,7 +628,7 @@ namespace SingerDispatch
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="BigInt NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, IsPrimaryKey=true, IsDbGenerated=true)]
 		public long ID
 		{
 			get
@@ -648,7 +648,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CompanyID", DbType="BigInt NOT NULL")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CompanyID")]
 		public long CompanyID
 		{
 			get
@@ -672,7 +672,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AddressTypeID", DbType="BigInt")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AddressTypeID")]
 		public System.Nullable<long> AddressTypeID
 		{
 			get
@@ -696,7 +696,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Line1", DbType="VarChar(255)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Line1")]
 		public string Line1
 		{
 			get
@@ -716,7 +716,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Line2", DbType="VarChar(255)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Line2")]
 		public string Line2
 		{
 			get
@@ -736,7 +736,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_City", DbType="VarChar(255)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_City")]
 		public string City
 		{
 			get
@@ -756,7 +756,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ProvinceStateID", DbType="BigInt NOT NULL")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ProvinceStateID")]
 		public long ProvinceStateID
 		{
 			get
@@ -780,7 +780,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PostalZip", DbType="VarChar(50)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PostalZip")]
 		public string PostalZip
 		{
 			get
@@ -800,7 +800,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PrimaryPhone", DbType="VarChar(50)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PrimaryPhone")]
 		public string PrimaryPhone
 		{
 			get
@@ -820,7 +820,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SecondaryPhone", DbType="VarChar(50)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SecondaryPhone")]
 		public string SecondaryPhone
 		{
 			get
@@ -840,7 +840,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Fax", DbType="VarChar(50)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Fax")]
 		public string Fax
 		{
 			get
@@ -860,7 +860,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Notes", DbType="Text", UpdateCheck=UpdateCheck.Never)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Notes", UpdateCheck=UpdateCheck.Never)]
 		public string Notes
 		{
 			get
@@ -1028,7 +1028,7 @@ namespace SingerDispatch
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.AddressTypes")]
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="")]
 	public partial class AddressType : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
@@ -1056,7 +1056,7 @@ namespace SingerDispatch
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="BigInt NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, IsPrimaryKey=true, IsDbGenerated=true)]
 		public long ID
 		{
 			get
@@ -1076,7 +1076,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="VarChar(255)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name")]
 		public string Name
 		{
 			get
@@ -1142,7 +1142,7 @@ namespace SingerDispatch
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.BillingTypes")]
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="")]
 	public partial class BillingType : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
@@ -1170,7 +1170,7 @@ namespace SingerDispatch
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="BigInt NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, IsPrimaryKey=true, IsDbGenerated=true)]
 		public long ID
 		{
 			get
@@ -1190,7 +1190,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="VarChar(50)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name")]
 		public string Name
 		{
 			get
@@ -1256,7 +1256,7 @@ namespace SingerDispatch
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Commodities")]
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="")]
 	public partial class Commodity : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
@@ -1288,9 +1288,9 @@ namespace SingerDispatch
 		
 		private System.Nullable<double> _Weight;
 		
-		private System.Nullable<byte> _SizeEstimated;
+		private System.Nullable<bool> _SizeEstimated;
 		
-		private System.Nullable<byte> _WeightEstimated;
+		private System.Nullable<bool> _WeightEstimated;
 		
 		private string _Notes;
 		
@@ -1328,9 +1328,9 @@ namespace SingerDispatch
     partial void OnHeightChanged();
     partial void OnWeightChanging(System.Nullable<double> value);
     partial void OnWeightChanged();
-    partial void OnSizeEstimatedChanging(System.Nullable<byte> value);
+    partial void OnSizeEstimatedChanging(System.Nullable<bool> value);
     partial void OnSizeEstimatedChanged();
-    partial void OnWeightEstimatedChanging(System.Nullable<byte> value);
+    partial void OnWeightEstimatedChanging(System.Nullable<bool> value);
     partial void OnWeightEstimatedChanged();
     partial void OnNotesChanging(string value);
     partial void OnNotesChanged();
@@ -1343,7 +1343,7 @@ namespace SingerDispatch
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="BigInt NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, IsPrimaryKey=true, IsDbGenerated=true)]
 		public long ID
 		{
 			get
@@ -1363,7 +1363,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CompanyID", DbType="BigInt NOT NULL")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CompanyID")]
 		public long CompanyID
 		{
 			get
@@ -1387,7 +1387,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="VarChar(255)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name")]
 		public string Name
 		{
 			get
@@ -1407,7 +1407,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Value", DbType="Decimal(18,2)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Value")]
 		public System.Nullable<decimal> Value
 		{
 			get
@@ -1427,7 +1427,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Serial", DbType="VarChar(255)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Serial")]
 		public string Serial
 		{
 			get
@@ -1447,7 +1447,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Unit", DbType="VarChar(50)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Unit")]
 		public string Unit
 		{
 			get
@@ -1467,7 +1467,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Owner", DbType="VarChar(255)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Owner")]
 		public string Owner
 		{
 			get
@@ -1487,7 +1487,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LastLocation", DbType="VarChar(255)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LastLocation")]
 		public string LastLocation
 		{
 			get
@@ -1507,7 +1507,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LastAddress", DbType="VarChar(255)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LastAddress")]
 		public string LastAddress
 		{
 			get
@@ -1527,7 +1527,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Length", DbType="Float")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Length")]
 		public System.Nullable<double> Length
 		{
 			get
@@ -1547,7 +1547,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Width", DbType="Float")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Width")]
 		public System.Nullable<double> Width
 		{
 			get
@@ -1567,7 +1567,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Height", DbType="Float")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Height")]
 		public System.Nullable<double> Height
 		{
 			get
@@ -1587,7 +1587,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Weight", DbType="Float")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Weight")]
 		public System.Nullable<double> Weight
 		{
 			get
@@ -1607,8 +1607,8 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SizeEstimated", DbType="TinyInt")]
-		public System.Nullable<byte> SizeEstimated
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SizeEstimated")]
+		public System.Nullable<bool> SizeEstimated
 		{
 			get
 			{
@@ -1627,8 +1627,8 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WeightEstimated", DbType="TinyInt")]
-		public System.Nullable<byte> WeightEstimated
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WeightEstimated")]
+		public System.Nullable<bool> WeightEstimated
 		{
 			get
 			{
@@ -1647,7 +1647,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Notes", DbType="Text", UpdateCheck=UpdateCheck.Never)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Notes", UpdateCheck=UpdateCheck.Never)]
 		public string Notes
 		{
 			get
@@ -1747,7 +1747,7 @@ namespace SingerDispatch
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Companies")]
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="")]
 	public partial class Company : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
@@ -1765,7 +1765,7 @@ namespace SingerDispatch
 		
 		private string _AccPacVendorCode;
 		
-		private System.Nullable<byte> _EquifaxComplete;
+		private System.Nullable<bool> _EquifaxComplete;
 		
 		private System.Nullable<long> _PriorityLevelID;
 		
@@ -1809,7 +1809,7 @@ namespace SingerDispatch
     partial void OnAvailableCreditChanged();
     partial void OnAccPacVendorCodeChanging(string value);
     partial void OnAccPacVendorCodeChanged();
-    partial void OnEquifaxCompleteChanging(System.Nullable<byte> value);
+    partial void OnEquifaxCompleteChanging(System.Nullable<bool> value);
     partial void OnEquifaxCompleteChanged();
     partial void OnPriorityLevelIDChanging(System.Nullable<long> value);
     partial void OnPriorityLevelIDChanged();
@@ -1833,7 +1833,7 @@ namespace SingerDispatch
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="BigInt NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, IsPrimaryKey=true, IsDbGenerated=true)]
 		public long ID
 		{
 			get
@@ -1853,7 +1853,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="VarChar(255)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name")]
 		public string Name
 		{
 			get
@@ -1873,7 +1873,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OperatingAs", DbType="VarChar(255)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OperatingAs")]
 		public string OperatingAs
 		{
 			get
@@ -1893,7 +1893,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Type", DbType="VarChar(100)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Type")]
 		public string Type
 		{
 			get
@@ -1913,7 +1913,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AvailableCredit", DbType="Int")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AvailableCredit")]
 		public System.Nullable<int> AvailableCredit
 		{
 			get
@@ -1933,7 +1933,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AccPacVendorCode", DbType="VarChar(50)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AccPacVendorCode")]
 		public string AccPacVendorCode
 		{
 			get
@@ -1953,8 +1953,8 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EquifaxComplete", DbType="TinyInt")]
-		public System.Nullable<byte> EquifaxComplete
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EquifaxComplete")]
+		public System.Nullable<bool> EquifaxComplete
 		{
 			get
 			{
@@ -1973,7 +1973,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PriorityLevelID", DbType="BigInt")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PriorityLevelID")]
 		public System.Nullable<long> PriorityLevelID
 		{
 			get
@@ -1997,7 +1997,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Notes", DbType="Text", UpdateCheck=UpdateCheck.Never)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Notes", UpdateCheck=UpdateCheck.Never)]
 		public string Notes
 		{
 			get
@@ -2322,7 +2322,7 @@ namespace SingerDispatch
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.CompanyPriorityLevels")]
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="")]
 	public partial class CompanyPriorityLevel : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
@@ -2350,7 +2350,7 @@ namespace SingerDispatch
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="BigInt NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, IsPrimaryKey=true, IsDbGenerated=true)]
 		public long ID
 		{
 			get
@@ -2370,7 +2370,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="VarChar(100)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name")]
 		public string Name
 		{
 			get
@@ -2436,7 +2436,7 @@ namespace SingerDispatch
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Contacts")]
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="")]
 	public partial class Contact : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
@@ -2502,7 +2502,7 @@ namespace SingerDispatch
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="BigInt NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, IsPrimaryKey=true, IsDbGenerated=true)]
 		public long ID
 		{
 			get
@@ -2522,7 +2522,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FirstName", DbType="VarChar(255)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FirstName")]
 		public string FirstName
 		{
 			get
@@ -2542,7 +2542,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LastName", DbType="VarChar(255)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LastName")]
 		public string LastName
 		{
 			get
@@ -2562,7 +2562,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Email", DbType="VarChar(255)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Email")]
 		public string Email
 		{
 			get
@@ -2582,7 +2582,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PrimaryPhone", DbType="VarChar(50)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PrimaryPhone")]
 		public string PrimaryPhone
 		{
 			get
@@ -2602,7 +2602,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SecondaryPhone", DbType="VarChar(50)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SecondaryPhone")]
 		public string SecondaryPhone
 		{
 			get
@@ -2622,7 +2622,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PreferedContactMethod", DbType="VarChar(50)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PreferedContactMethod")]
 		public string PreferedContactMethod
 		{
 			get
@@ -2642,7 +2642,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AddressID", DbType="BigInt")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AddressID")]
 		public System.Nullable<long> AddressID
 		{
 			get
@@ -2666,7 +2666,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TypeID", DbType="BigInt")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TypeID")]
 		public System.Nullable<long> TypeID
 		{
 			get
@@ -2690,7 +2690,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Notes", DbType="Text", UpdateCheck=UpdateCheck.Never)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Notes", UpdateCheck=UpdateCheck.Never)]
 		public string Notes
 		{
 			get
@@ -2824,7 +2824,7 @@ namespace SingerDispatch
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.ContactTypes")]
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="")]
 	public partial class ContactType : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
@@ -2852,7 +2852,7 @@ namespace SingerDispatch
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="BigInt NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, IsPrimaryKey=true, IsDbGenerated=true)]
 		public long ID
 		{
 			get
@@ -2872,7 +2872,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="VarChar(255)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name")]
 		public string Name
 		{
 			get
@@ -2938,7 +2938,7 @@ namespace SingerDispatch
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Countries")]
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="")]
 	public partial class Country : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
@@ -2966,7 +2966,7 @@ namespace SingerDispatch
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="BigInt NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, IsPrimaryKey=true, IsDbGenerated=true)]
 		public long ID
 		{
 			get
@@ -2986,7 +2986,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="VarChar(255)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name")]
 		public string Name
 		{
 			get
@@ -3052,7 +3052,7 @@ namespace SingerDispatch
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.CustomerNumbers")]
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="")]
 	public partial class CustomerNumber : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
@@ -3088,7 +3088,7 @@ namespace SingerDispatch
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="BigInt NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, IsPrimaryKey=true, IsDbGenerated=true)]
 		public long ID
 		{
 			get
@@ -3108,7 +3108,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CompanyID", DbType="BigInt NOT NULL")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CompanyID")]
 		public long CompanyID
 		{
 			get
@@ -3132,7 +3132,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Field", DbType="VarChar(50)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Field")]
 		public string Field
 		{
 			get
@@ -3152,7 +3152,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Value", DbType="VarChar(50)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Value")]
 		public string Value
 		{
 			get
@@ -3227,7 +3227,7 @@ namespace SingerDispatch
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Employees")]
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="")]
 	public partial class Employee : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
@@ -3243,11 +3243,11 @@ namespace SingerDispatch
 		
 		private string _Mobile;
 		
-		private System.Nullable<byte> _IsAvailable;
+		private System.Nullable<bool> _IsAvailable;
 		
-		private System.Nullable<byte> _IsSupervisor;
+		private System.Nullable<bool> _IsSupervisor;
 		
-		private System.Nullable<byte> _IsSingerStaff;
+		private System.Nullable<bool> _IsSingerStaff;
 		
 		private System.Nullable<System.DateTime> _StartDate;
 		
@@ -3275,11 +3275,11 @@ namespace SingerDispatch
     partial void OnPhoneChanged();
     partial void OnMobileChanging(string value);
     partial void OnMobileChanged();
-    partial void OnIsAvailableChanging(System.Nullable<byte> value);
+    partial void OnIsAvailableChanging(System.Nullable<bool> value);
     partial void OnIsAvailableChanged();
-    partial void OnIsSupervisorChanging(System.Nullable<byte> value);
+    partial void OnIsSupervisorChanging(System.Nullable<bool> value);
     partial void OnIsSupervisorChanged();
-    partial void OnIsSingerStaffChanging(System.Nullable<byte> value);
+    partial void OnIsSingerStaffChanging(System.Nullable<bool> value);
     partial void OnIsSingerStaffChanged();
     partial void OnStartDateChanging(System.Nullable<System.DateTime> value);
     partial void OnStartDateChanged();
@@ -3299,7 +3299,7 @@ namespace SingerDispatch
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="BigInt NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, IsPrimaryKey=true, IsDbGenerated=true)]
 		public long ID
 		{
 			get
@@ -3319,7 +3319,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FirstName", DbType="VarChar(100)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FirstName")]
 		public string FirstName
 		{
 			get
@@ -3339,7 +3339,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LastName", DbType="VarChar(100)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LastName")]
 		public string LastName
 		{
 			get
@@ -3359,7 +3359,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Phone", DbType="VarChar(50)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Phone")]
 		public string Phone
 		{
 			get
@@ -3379,7 +3379,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Mobile", DbType="VarChar(50)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Mobile")]
 		public string Mobile
 		{
 			get
@@ -3399,8 +3399,8 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsAvailable", DbType="TinyInt")]
-		public System.Nullable<byte> IsAvailable
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsAvailable")]
+		public System.Nullable<bool> IsAvailable
 		{
 			get
 			{
@@ -3419,8 +3419,8 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsSupervisor", DbType="TinyInt")]
-		public System.Nullable<byte> IsSupervisor
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsSupervisor")]
+		public System.Nullable<bool> IsSupervisor
 		{
 			get
 			{
@@ -3439,8 +3439,8 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsSingerStaff", DbType="TinyInt")]
-		public System.Nullable<byte> IsSingerStaff
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsSingerStaff")]
+		public System.Nullable<bool> IsSingerStaff
 		{
 			get
 			{
@@ -3459,7 +3459,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_StartDate", DbType="DateTime")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_StartDate")]
 		public System.Nullable<System.DateTime> StartDate
 		{
 			get
@@ -3479,7 +3479,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EndDate", DbType="DateTime")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EndDate")]
 		public System.Nullable<System.DateTime> EndDate
 		{
 			get
@@ -3499,7 +3499,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Responsibilities", DbType="VarChar(255)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Responsibilities")]
 		public string Responsibilities
 		{
 			get
@@ -3519,7 +3519,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Notes", DbType="Text", UpdateCheck=UpdateCheck.Never)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Notes", UpdateCheck=UpdateCheck.Never)]
 		public string Notes
 		{
 			get
@@ -3539,7 +3539,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Email", DbType="VarChar(255)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Email")]
 		public string Email
 		{
 			get
@@ -3605,7 +3605,7 @@ namespace SingerDispatch
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.EquipmentTypes")]
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="")]
 	public partial class EquipmentType : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
@@ -3634,7 +3634,7 @@ namespace SingerDispatch
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="BigInt NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, IsPrimaryKey=true, IsDbGenerated=true)]
 		public long ID
 		{
 			get
@@ -3654,7 +3654,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Prefix", DbType="VarChar(50)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Prefix")]
 		public string Prefix
 		{
 			get
@@ -3674,7 +3674,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="VarChar(255)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name")]
 		public string Name
 		{
 			get
@@ -3715,7 +3715,7 @@ namespace SingerDispatch
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.JobCommodities")]
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="")]
 	public partial class JobCommodity : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
@@ -3751,9 +3751,9 @@ namespace SingerDispatch
 		
 		private System.Nullable<double> _Weight;
 		
-		private System.Nullable<byte> _SizeEstimated;
+		private System.Nullable<bool> _SizeEstimated;
 		
-		private System.Nullable<byte> _WeightEstimated;
+		private System.Nullable<bool> _WeightEstimated;
 		
 		private System.Nullable<int> _Quantity;
 		
@@ -3827,9 +3827,9 @@ namespace SingerDispatch
     partial void OnHeightChanged();
     partial void OnWeightChanging(System.Nullable<double> value);
     partial void OnWeightChanged();
-    partial void OnSizeEstimatedChanging(System.Nullable<byte> value);
+    partial void OnSizeEstimatedChanging(System.Nullable<bool> value);
     partial void OnSizeEstimatedChanged();
-    partial void OnWeightEstimatedChanging(System.Nullable<byte> value);
+    partial void OnWeightEstimatedChanging(System.Nullable<bool> value);
     partial void OnWeightEstimatedChanged();
     partial void OnQuantityChanging(System.Nullable<int> value);
     partial void OnQuantityChanged();
@@ -3873,7 +3873,7 @@ namespace SingerDispatch
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="BigInt NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, IsPrimaryKey=true, IsDbGenerated=true)]
 		public long ID
 		{
 			get
@@ -3893,7 +3893,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_JobID", DbType="BigInt NOT NULL")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_JobID")]
 		public long JobID
 		{
 			get
@@ -3917,7 +3917,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LoadID", DbType="BigInt")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LoadID")]
 		public System.Nullable<long> LoadID
 		{
 			get
@@ -3941,7 +3941,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OriginalCommodityID", DbType="BigInt")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OriginalCommodityID")]
 		public System.Nullable<long> OriginalCommodityID
 		{
 			get
@@ -3965,7 +3965,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="VarChar(255)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name")]
 		public string Name
 		{
 			get
@@ -4005,7 +4005,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Serial", DbType="VarChar(255)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Serial")]
 		public string Serial
 		{
 			get
@@ -4025,7 +4025,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Unit", DbType="VarChar(255)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Unit")]
 		public string Unit
 		{
 			get
@@ -4045,7 +4045,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Owner", DbType="VarChar(255)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Owner")]
 		public string Owner
 		{
 			get
@@ -4065,7 +4065,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LastLocation", DbType="VarChar(255)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LastLocation")]
 		public string LastLocation
 		{
 			get
@@ -4085,7 +4085,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LastAddress", DbType="VarChar(255)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LastAddress")]
 		public string LastAddress
 		{
 			get
@@ -4105,7 +4105,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Length", DbType="Float")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Length")]
 		public System.Nullable<double> Length
 		{
 			get
@@ -4125,7 +4125,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Width", DbType="Float")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Width")]
 		public System.Nullable<double> Width
 		{
 			get
@@ -4145,7 +4145,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Height", DbType="Float")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Height")]
 		public System.Nullable<double> Height
 		{
 			get
@@ -4165,7 +4165,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Weight", DbType="Float")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Weight")]
 		public System.Nullable<double> Weight
 		{
 			get
@@ -4185,8 +4185,8 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SizeEstimated", DbType="TinyInt")]
-		public System.Nullable<byte> SizeEstimated
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SizeEstimated")]
+		public System.Nullable<bool> SizeEstimated
 		{
 			get
 			{
@@ -4205,8 +4205,8 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WeightEstimated", DbType="TinyInt")]
-		public System.Nullable<byte> WeightEstimated
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WeightEstimated")]
+		public System.Nullable<bool> WeightEstimated
 		{
 			get
 			{
@@ -4225,7 +4225,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Quantity", DbType="Int")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Quantity")]
 		public System.Nullable<int> Quantity
 		{
 			get
@@ -4265,7 +4265,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LoadSiteName", DbType="VarChar(255)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LoadSiteName")]
 		public string LoadSiteName
 		{
 			get
@@ -4285,7 +4285,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LoadAddress", DbType="VarChar(255)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LoadAddress")]
 		public string LoadAddress
 		{
 			get
@@ -4305,7 +4305,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LoadBy", DbType="VarChar(255)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LoadBy")]
 		public string LoadBy
 		{
 			get
@@ -4325,7 +4325,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LoadMethod", DbType="VarChar(255)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LoadMethod")]
 		public string LoadMethod
 		{
 			get
@@ -4345,7 +4345,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LoadDate", DbType="DateTime")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LoadDate")]
 		public System.Nullable<System.DateTime> LoadDate
 		{
 			get
@@ -4365,7 +4365,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LoadInstrucitons", DbType="VarChar(2000)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LoadInstrucitons")]
 		public string LoadInstrucitons
 		{
 			get
@@ -4385,7 +4385,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LoadRoute", DbType="VarChar(2000)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LoadRoute")]
 		public string LoadRoute
 		{
 			get
@@ -4405,7 +4405,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UnloadSiteName", DbType="VarChar(255)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UnloadSiteName")]
 		public string UnloadSiteName
 		{
 			get
@@ -4425,7 +4425,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UnloadAddress", DbType="VarChar(255)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UnloadAddress")]
 		public string UnloadAddress
 		{
 			get
@@ -4445,7 +4445,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UnloadBy", DbType="VarChar(255)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UnloadBy")]
 		public string UnloadBy
 		{
 			get
@@ -4465,7 +4465,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UnloadDate", DbType="DateTime")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UnloadDate")]
 		public System.Nullable<System.DateTime> UnloadDate
 		{
 			get
@@ -4485,7 +4485,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UnloadInstructions", DbType="VarChar(2000)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UnloadInstructions")]
 		public string UnloadInstructions
 		{
 			get
@@ -4505,7 +4505,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UnloadRoute", DbType="VarChar(2000)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UnloadRoute")]
 		public string UnloadRoute
 		{
 			get
@@ -4525,7 +4525,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Notes", DbType="Text", UpdateCheck=UpdateCheck.Never)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Notes", UpdateCheck=UpdateCheck.Never)]
 		public string Notes
 		{
 			get
@@ -4668,7 +4668,7 @@ namespace SingerDispatch
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Jobs")]
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="")]
 	public partial class Job : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
@@ -4755,7 +4755,7 @@ namespace SingerDispatch
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="BigInt NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, IsPrimaryKey=true, IsDbGenerated=true)]
 		public long ID
 		{
 			get
@@ -4775,7 +4775,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Number", DbType="Int NOT NULL")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Number")]
 		public int Number
 		{
 			get
@@ -4795,7 +4795,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CompanyID", DbType="BigInt")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CompanyID")]
 		public System.Nullable<long> CompanyID
 		{
 			get
@@ -4819,7 +4819,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_QuoteID", DbType="BigInt")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_QuoteID")]
 		public System.Nullable<long> QuoteID
 		{
 			get
@@ -4843,7 +4843,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CareOfCompanyID", DbType="BigInt")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CareOfCompanyID")]
 		public System.Nullable<long> CareOfCompanyID
 		{
 			get
@@ -4867,7 +4867,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_QuotedByUserID", DbType="BigInt")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_QuotedByUserID")]
 		public System.Nullable<long> QuotedByUserID
 		{
 			get
@@ -4891,7 +4891,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Description", DbType="VarChar(1000)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Description")]
 		public string Description
 		{
 			get
@@ -4911,7 +4911,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_StartDate", DbType="DateTime")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_StartDate")]
 		public System.Nullable<System.DateTime> StartDate
 		{
 			get
@@ -4931,7 +4931,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EndDate", DbType="DateTime")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EndDate")]
 		public System.Nullable<System.DateTime> EndDate
 		{
 			get
@@ -4951,7 +4951,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_StatusTypeID", DbType="BigInt")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_StatusTypeID")]
 		public System.Nullable<long> StatusTypeID
 		{
 			get
@@ -5291,7 +5291,7 @@ namespace SingerDispatch
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.JobStatusTypes")]
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="")]
 	public partial class JobStatusType : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
@@ -5319,7 +5319,7 @@ namespace SingerDispatch
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="BigInt NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, IsPrimaryKey=true, IsDbGenerated=true)]
 		public long ID
 		{
 			get
@@ -5339,7 +5339,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="VarChar(50)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name")]
 		public string Name
 		{
 			get
@@ -5405,7 +5405,7 @@ namespace SingerDispatch
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Loads")]
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="")]
 	public partial class Load : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
@@ -5459,7 +5459,7 @@ namespace SingerDispatch
 		
 		private System.Nullable<int> _WeightGroup10;
 		
-		private System.Nullable<byte> _WeightEstimated;
+		private System.Nullable<bool> _WeightEstimated;
 		
 		private System.Nullable<int> _GrossWeight;
 		
@@ -5539,7 +5539,7 @@ namespace SingerDispatch
     partial void OnWeightGroup9Changed();
     partial void OnWeightGroup10Changing(System.Nullable<int> value);
     partial void OnWeightGroup10Changed();
-    partial void OnWeightEstimatedChanging(System.Nullable<byte> value);
+    partial void OnWeightEstimatedChanging(System.Nullable<bool> value);
     partial void OnWeightEstimatedChanged();
     partial void OnGrossWeightChanging(System.Nullable<int> value);
     partial void OnGrossWeightChanged();
@@ -5565,7 +5565,7 @@ namespace SingerDispatch
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="BigInt NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, IsPrimaryKey=true, IsDbGenerated=true)]
 		public long ID
 		{
 			get
@@ -5585,7 +5585,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_JobID", DbType="BigInt")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_JobID")]
 		public System.Nullable<long> JobID
 		{
 			get
@@ -5609,7 +5609,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EquipmentID", DbType="BigInt")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EquipmentID")]
 		public System.Nullable<long> EquipmentID
 		{
 			get
@@ -5633,7 +5633,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WheelTypeID", DbType="BigInt")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WheelTypeID")]
 		public System.Nullable<long> WheelTypeID
 		{
 			get
@@ -5657,7 +5657,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TrailerCombinationID", DbType="BigInt")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TrailerCombinationID")]
 		public System.Nullable<long> TrailerCombinationID
 		{
 			get
@@ -5681,7 +5681,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Info", DbType="VarChar(500)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Info")]
 		public string Info
 		{
 			get
@@ -5701,7 +5701,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_StartDate", DbType="DateTime")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_StartDate")]
 		public System.Nullable<System.DateTime> StartDate
 		{
 			get
@@ -5721,7 +5721,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EndDate", DbType="DateTime")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EndDate")]
 		public System.Nullable<System.DateTime> EndDate
 		{
 			get
@@ -5741,7 +5741,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SeasonID", DbType="BigInt")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SeasonID")]
 		public System.Nullable<long> SeasonID
 		{
 			get
@@ -5765,7 +5765,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Ban", DbType="VarChar(15)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Ban")]
 		public string Ban
 		{
 			get
@@ -5785,7 +5785,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ServiceDescription", DbType="VarChar(1000)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ServiceDescription")]
 		public string ServiceDescription
 		{
 			get
@@ -5805,7 +5805,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Notes", DbType="Text", UpdateCheck=UpdateCheck.Never)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Notes", UpdateCheck=UpdateCheck.Never)]
 		public string Notes
 		{
 			get
@@ -5825,7 +5825,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WeightSteer", DbType="Int")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WeightSteer")]
 		public System.Nullable<int> WeightSteer
 		{
 			get
@@ -5845,7 +5845,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WeightDrive", DbType="Int")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WeightDrive")]
 		public System.Nullable<int> WeightDrive
 		{
 			get
@@ -5865,7 +5865,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WeightGroup1", DbType="Int")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WeightGroup1")]
 		public System.Nullable<int> WeightGroup1
 		{
 			get
@@ -5885,7 +5885,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WeightGroup2", DbType="Int")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WeightGroup2")]
 		public System.Nullable<int> WeightGroup2
 		{
 			get
@@ -5905,7 +5905,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WeightGroup3", DbType="Int")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WeightGroup3")]
 		public System.Nullable<int> WeightGroup3
 		{
 			get
@@ -5925,7 +5925,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WeightGroup4", DbType="Int")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WeightGroup4")]
 		public System.Nullable<int> WeightGroup4
 		{
 			get
@@ -5945,7 +5945,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WeightGroup5", DbType="Int")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WeightGroup5")]
 		public System.Nullable<int> WeightGroup5
 		{
 			get
@@ -5965,7 +5965,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WeightGroup6", DbType="Int")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WeightGroup6")]
 		public System.Nullable<int> WeightGroup6
 		{
 			get
@@ -5985,7 +5985,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WeightGroup7", DbType="Int")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WeightGroup7")]
 		public System.Nullable<int> WeightGroup7
 		{
 			get
@@ -6005,7 +6005,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WeightGroup8", DbType="Int")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WeightGroup8")]
 		public System.Nullable<int> WeightGroup8
 		{
 			get
@@ -6025,7 +6025,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WeightGroup9", DbType="Int")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WeightGroup9")]
 		public System.Nullable<int> WeightGroup9
 		{
 			get
@@ -6045,7 +6045,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WeightGroup10", DbType="Int")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WeightGroup10")]
 		public System.Nullable<int> WeightGroup10
 		{
 			get
@@ -6065,8 +6065,8 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WeightEstimated", DbType="TinyInt")]
-		public System.Nullable<byte> WeightEstimated
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WeightEstimated")]
+		public System.Nullable<bool> WeightEstimated
 		{
 			get
 			{
@@ -6085,7 +6085,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_GrossWeight", DbType="Int")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_GrossWeight")]
 		public System.Nullable<int> GrossWeight
 		{
 			get
@@ -6105,7 +6105,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LoadedLength", DbType="Int")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LoadedLength")]
 		public System.Nullable<int> LoadedLength
 		{
 			get
@@ -6125,7 +6125,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LoadedWidth", DbType="Int")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LoadedWidth")]
 		public System.Nullable<int> LoadedWidth
 		{
 			get
@@ -6145,7 +6145,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LoadedHeight", DbType="Int")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LoadedHeight")]
 		public System.Nullable<int> LoadedHeight
 		{
 			get
@@ -6456,7 +6456,7 @@ namespace SingerDispatch
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Permits")]
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="")]
 	public partial class Permit : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
@@ -6519,7 +6519,7 @@ namespace SingerDispatch
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="BigInt NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, IsPrimaryKey=true, IsDbGenerated=true)]
 		public long ID
 		{
 			get
@@ -6539,7 +6539,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_JobID", DbType="BigInt")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_JobID")]
 		public System.Nullable<long> JobID
 		{
 			get
@@ -6563,7 +6563,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LoadID", DbType="BigInt")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LoadID")]
 		public System.Nullable<long> LoadID
 		{
 			get
@@ -6587,7 +6587,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Issuer", DbType="VarChar(255)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Issuer")]
 		public string Issuer
 		{
 			get
@@ -6607,7 +6607,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PermitType", DbType="VarChar(255)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PermitType")]
 		public string PermitType
 		{
 			get
@@ -6627,7 +6627,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Reference", DbType="VarChar(1000)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Reference")]
 		public string Reference
 		{
 			get
@@ -6647,7 +6647,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Conditions", DbType="VarChar(1000)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Conditions")]
 		public string Conditions
 		{
 			get
@@ -6687,7 +6687,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PermitDate", DbType="DateTime")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PermitDate")]
 		public System.Nullable<System.DateTime> PermitDate
 		{
 			get
@@ -6707,7 +6707,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PermitTime", DbType="DateTime")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PermitTime")]
 		public System.Nullable<System.DateTime> PermitTime
 		{
 			get
@@ -6816,7 +6816,7 @@ namespace SingerDispatch
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.ProvincesAndStates")]
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="")]
 	public partial class ProvincesAndState : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
@@ -6851,7 +6851,7 @@ namespace SingerDispatch
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="BigInt NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, IsPrimaryKey=true, IsDbGenerated=true)]
 		public long ID
 		{
 			get
@@ -6871,7 +6871,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="VarChar(255) NOT NULL", CanBeNull=false)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", CanBeNull=false)]
 		public string Name
 		{
 			get
@@ -6891,7 +6891,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CountryID", DbType="BigInt NOT NULL")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CountryID")]
 		public long CountryID
 		{
 			get
@@ -6995,7 +6995,7 @@ namespace SingerDispatch
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.QuoteCommodities")]
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="")]
 	public partial class QuoteCommodity : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
@@ -7037,9 +7037,9 @@ namespace SingerDispatch
 		
 		private System.Nullable<double> _Weight;
 		
-		private System.Nullable<byte> _SizeEstimated;
+		private System.Nullable<bool> _SizeEstimated;
 		
-		private System.Nullable<byte> _WeightEstimated;
+		private System.Nullable<bool> _WeightEstimated;
 		
 		private System.Nullable<int> _Quantity;
 		
@@ -7089,9 +7089,9 @@ namespace SingerDispatch
     partial void OnHeightChanged();
     partial void OnWeightChanging(System.Nullable<double> value);
     partial void OnWeightChanged();
-    partial void OnSizeEstimatedChanging(System.Nullable<byte> value);
+    partial void OnSizeEstimatedChanging(System.Nullable<bool> value);
     partial void OnSizeEstimatedChanged();
-    partial void OnWeightEstimatedChanging(System.Nullable<byte> value);
+    partial void OnWeightEstimatedChanging(System.Nullable<bool> value);
     partial void OnWeightEstimatedChanged();
     partial void OnQuantityChanging(System.Nullable<int> value);
     partial void OnQuantityChanged();
@@ -7107,7 +7107,7 @@ namespace SingerDispatch
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="BigInt NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, IsPrimaryKey=true, IsDbGenerated=true)]
 		public long ID
 		{
 			get
@@ -7127,7 +7127,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_QuoteID", DbType="BigInt NOT NULL")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_QuoteID")]
 		public long QuoteID
 		{
 			get
@@ -7151,7 +7151,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OriginalCommodityID", DbType="BigInt")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OriginalCommodityID")]
 		public System.Nullable<long> OriginalCommodityID
 		{
 			get
@@ -7171,7 +7171,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DepartureSiteName", DbType="VarChar(255)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DepartureSiteName")]
 		public string DepartureSiteName
 		{
 			get
@@ -7191,7 +7191,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DepartureAddress", DbType="VarChar(255)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DepartureAddress")]
 		public string DepartureAddress
 		{
 			get
@@ -7211,7 +7211,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ArrivalSiteName", DbType="VarChar(255)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ArrivalSiteName")]
 		public string ArrivalSiteName
 		{
 			get
@@ -7231,7 +7231,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ArrivalAddress", DbType="VarChar(255)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ArrivalAddress")]
 		public string ArrivalAddress
 		{
 			get
@@ -7251,7 +7251,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="VarChar(255)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name")]
 		public string Name
 		{
 			get
@@ -7291,7 +7291,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Serial", DbType="VarChar(255)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Serial")]
 		public string Serial
 		{
 			get
@@ -7311,7 +7311,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Unit", DbType="VarChar(255)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Unit")]
 		public string Unit
 		{
 			get
@@ -7331,7 +7331,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Owner", DbType="VarChar(255)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Owner")]
 		public string Owner
 		{
 			get
@@ -7351,7 +7351,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LastLocation", DbType="VarChar(255)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LastLocation")]
 		public string LastLocation
 		{
 			get
@@ -7371,7 +7371,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LastAddress", DbType="VarChar(255)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LastAddress")]
 		public string LastAddress
 		{
 			get
@@ -7391,7 +7391,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Length", DbType="Float")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Length")]
 		public System.Nullable<double> Length
 		{
 			get
@@ -7411,7 +7411,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Width", DbType="Float")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Width")]
 		public System.Nullable<double> Width
 		{
 			get
@@ -7431,7 +7431,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Height", DbType="Float")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Height")]
 		public System.Nullable<double> Height
 		{
 			get
@@ -7451,7 +7451,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Weight", DbType="Float")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Weight")]
 		public System.Nullable<double> Weight
 		{
 			get
@@ -7471,8 +7471,8 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SizeEstimated", DbType="TinyInt")]
-		public System.Nullable<byte> SizeEstimated
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SizeEstimated")]
+		public System.Nullable<bool> SizeEstimated
 		{
 			get
 			{
@@ -7491,8 +7491,8 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WeightEstimated", DbType="TinyInt")]
-		public System.Nullable<byte> WeightEstimated
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WeightEstimated")]
+		public System.Nullable<bool> WeightEstimated
 		{
 			get
 			{
@@ -7511,7 +7511,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Quantity", DbType="Int")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Quantity")]
 		public System.Nullable<int> Quantity
 		{
 			get
@@ -7551,7 +7551,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Notes", DbType="Text", UpdateCheck=UpdateCheck.Never)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Notes", UpdateCheck=UpdateCheck.Never)]
 		public string Notes
 		{
 			get
@@ -7626,7 +7626,7 @@ namespace SingerDispatch
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Quotes")]
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="")]
 	public partial class Quote : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
@@ -7656,7 +7656,7 @@ namespace SingerDispatch
 		
 		private System.Nullable<decimal> _Price;
 		
-		private System.Nullable<byte> _IsPrinted;
+		private System.Nullable<bool> _IsPrinted;
 		
 		private EntitySet<Job> _Jobs;
 		
@@ -7698,7 +7698,7 @@ namespace SingerDispatch
     partial void OnQuotedByUserIDChanged();
     partial void OnPriceChanging(System.Nullable<decimal> value);
     partial void OnPriceChanged();
-    partial void OnIsPrintedChanging(System.Nullable<byte> value);
+    partial void OnIsPrintedChanging(System.Nullable<bool> value);
     partial void OnIsPrintedChanged();
     #endregion
 		
@@ -7713,7 +7713,7 @@ namespace SingerDispatch
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="BigInt NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, IsPrimaryKey=true, IsDbGenerated=true)]
 		public long ID
 		{
 			get
@@ -7733,7 +7733,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CompanyID", DbType="BigInt NOT NULL")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CompanyID")]
 		public long CompanyID
 		{
 			get
@@ -7757,7 +7757,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Number", DbType="Int NOT NULL")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Number")]
 		public int Number
 		{
 			get
@@ -7777,7 +7777,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Revision", DbType="Int")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Revision")]
 		public System.Nullable<int> Revision
 		{
 			get
@@ -7797,7 +7797,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CareOfCompanyID", DbType="BigInt")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CareOfCompanyID")]
 		public System.Nullable<long> CareOfCompanyID
 		{
 			get
@@ -7821,7 +7821,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Description", DbType="VarChar(1000)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Description")]
 		public string Description
 		{
 			get
@@ -7841,7 +7841,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreationDate", DbType="DateTime")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreationDate")]
 		public System.Nullable<System.DateTime> CreationDate
 		{
 			get
@@ -7861,7 +7861,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ExpirationDate", DbType="DateTime")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ExpirationDate")]
 		public System.Nullable<System.DateTime> ExpirationDate
 		{
 			get
@@ -7881,7 +7881,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_StartDate", DbType="DateTime")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_StartDate")]
 		public System.Nullable<System.DateTime> StartDate
 		{
 			get
@@ -7901,7 +7901,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EndDate", DbType="DateTime")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EndDate")]
 		public System.Nullable<System.DateTime> EndDate
 		{
 			get
@@ -7921,7 +7921,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_QuotedByUserID", DbType="BigInt")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_QuotedByUserID")]
 		public System.Nullable<long> QuotedByUserID
 		{
 			get
@@ -7965,8 +7965,8 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsPrinted", DbType="TinyInt")]
-		public System.Nullable<byte> IsPrinted
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsPrinted")]
+		public System.Nullable<bool> IsPrinted
 		{
 			get
 			{
@@ -8183,7 +8183,7 @@ namespace SingerDispatch
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.QuoteSupplements")]
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="")]
 	public partial class QuoteSupplement : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
@@ -8234,7 +8234,7 @@ namespace SingerDispatch
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="BigInt NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, IsPrimaryKey=true, IsDbGenerated=true)]
 		public long ID
 		{
 			get
@@ -8254,7 +8254,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_QuoteID", DbType="BigInt NOT NULL")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_QuoteID")]
 		public long QuoteID
 		{
 			get
@@ -8278,7 +8278,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="VarChar(255)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name")]
 		public string Name
 		{
 			get
@@ -8298,7 +8298,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Details", DbType="VarChar(700)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Details")]
 		public string Details
 		{
 			get
@@ -8318,7 +8318,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BillingTypeID", DbType="BigInt")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BillingTypeID")]
 		public System.Nullable<long> BillingTypeID
 		{
 			get
@@ -8342,7 +8342,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Quantity", DbType="Int")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Quantity")]
 		public System.Nullable<int> Quantity
 		{
 			get
@@ -8471,7 +8471,7 @@ namespace SingerDispatch
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.RateDiscounts")]
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="")]
 	public partial class RateDiscount : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
@@ -8515,7 +8515,7 @@ namespace SingerDispatch
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="BigInt NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, IsPrimaryKey=true, IsDbGenerated=true)]
 		public long ID
 		{
 			get
@@ -8535,7 +8535,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CompanyID", DbType="BigInt NOT NULL")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CompanyID")]
 		public long CompanyID
 		{
 			get
@@ -8559,7 +8559,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Hourly", DbType="Float")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Hourly")]
 		public System.Nullable<double> Hourly
 		{
 			get
@@ -8579,7 +8579,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Daily", DbType="Float")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Daily")]
 		public System.Nullable<double> Daily
 		{
 			get
@@ -8599,7 +8599,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Weekly", DbType="Float")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Weekly")]
 		public System.Nullable<double> Weekly
 		{
 			get
@@ -8619,7 +8619,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Monthly", DbType="Float")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Monthly")]
 		public System.Nullable<double> Monthly
 		{
 			get
@@ -8694,7 +8694,7 @@ namespace SingerDispatch
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Rates")]
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="")]
 	public partial class Rate : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
@@ -8712,7 +8712,7 @@ namespace SingerDispatch
 		
 		private System.Nullable<double> _Monthly;
 		
-		private byte _IsSpecialized;
+		private bool _IsSpecialized;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -8730,7 +8730,7 @@ namespace SingerDispatch
     partial void OnWeeklyChanged();
     partial void OnMonthlyChanging(System.Nullable<double> value);
     partial void OnMonthlyChanged();
-    partial void OnIsSpecializedChanging(byte value);
+    partial void OnIsSpecializedChanging(bool value);
     partial void OnIsSpecializedChanged();
     #endregion
 		
@@ -8739,7 +8739,7 @@ namespace SingerDispatch
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="BigInt NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, IsPrimaryKey=true, IsDbGenerated=true)]
 		public long ID
 		{
 			get
@@ -8759,7 +8759,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="VarChar(255)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name")]
 		public string Name
 		{
 			get
@@ -8779,7 +8779,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Hourly", DbType="Float")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Hourly")]
 		public System.Nullable<double> Hourly
 		{
 			get
@@ -8799,7 +8799,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Daily", DbType="Float")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Daily")]
 		public System.Nullable<double> Daily
 		{
 			get
@@ -8819,7 +8819,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Weekly", DbType="Float")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Weekly")]
 		public System.Nullable<double> Weekly
 		{
 			get
@@ -8839,7 +8839,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Monthly", DbType="Float")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Monthly")]
 		public System.Nullable<double> Monthly
 		{
 			get
@@ -8859,8 +8859,8 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsSpecialized", DbType="TinyInt NOT NULL")]
-		public byte IsSpecialized
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsSpecialized")]
+		public bool IsSpecialized
 		{
 			get
 			{
@@ -8900,7 +8900,7 @@ namespace SingerDispatch
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Seasons")]
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="")]
 	public partial class Season : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
@@ -8928,7 +8928,7 @@ namespace SingerDispatch
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="BigInt NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, IsPrimaryKey=true, IsDbGenerated=true)]
 		public long ID
 		{
 			get
@@ -8948,7 +8948,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="VarChar(75)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name")]
 		public string Name
 		{
 			get
@@ -9014,7 +9014,7 @@ namespace SingerDispatch
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Services")]
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="")]
 	public partial class Service : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
@@ -9049,7 +9049,7 @@ namespace SingerDispatch
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="BigInt NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, IsPrimaryKey=true, IsDbGenerated=true)]
 		public long ID
 		{
 			get
@@ -9069,7 +9069,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CompanyID", DbType="BigInt")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CompanyID")]
 		public System.Nullable<long> CompanyID
 		{
 			get
@@ -9093,7 +9093,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ServiceTypeID", DbType="BigInt")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ServiceTypeID")]
 		public System.Nullable<long> ServiceTypeID
 		{
 			get
@@ -9206,7 +9206,7 @@ namespace SingerDispatch
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.ServiceTypes")]
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="")]
 	public partial class ServiceType : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
@@ -9237,7 +9237,7 @@ namespace SingerDispatch
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="BigInt NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, IsPrimaryKey=true, IsDbGenerated=true)]
 		public long ID
 		{
 			get
@@ -9257,7 +9257,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="VarChar(100)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name")]
 		public string Name
 		{
 			get
@@ -9348,7 +9348,7 @@ namespace SingerDispatch
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.ThirdPartyServices")]
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="")]
 	public partial class ThirdPartyService : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
@@ -9424,7 +9424,7 @@ namespace SingerDispatch
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="BigInt NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, IsPrimaryKey=true, IsDbGenerated=true)]
 		public long ID
 		{
 			get
@@ -9444,7 +9444,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_JobID", DbType="BigInt NOT NULL")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_JobID")]
 		public long JobID
 		{
 			get
@@ -9468,7 +9468,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LoadID", DbType="BigInt")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LoadID")]
 		public System.Nullable<long> LoadID
 		{
 			get
@@ -9492,7 +9492,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CompanyID", DbType="BigInt")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CompanyID")]
 		public System.Nullable<long> CompanyID
 		{
 			get
@@ -9516,7 +9516,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ThirdPartyServiceTypeID", DbType="BigInt")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ThirdPartyServiceTypeID")]
 		public System.Nullable<long> ThirdPartyServiceTypeID
 		{
 			get
@@ -9540,7 +9540,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ContactID", DbType="BigInt")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ContactID")]
 		public System.Nullable<long> ContactID
 		{
 			get
@@ -9564,7 +9564,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ServiceDate", DbType="DateTime")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ServiceDate")]
 		public System.Nullable<System.DateTime> ServiceDate
 		{
 			get
@@ -9584,7 +9584,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ServiceTime", DbType="VarChar(50)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ServiceTime")]
 		public string ServiceTime
 		{
 			get
@@ -9604,7 +9604,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Location", DbType="VarChar(1000)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Location")]
 		public string Location
 		{
 			get
@@ -9624,7 +9624,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Reference", DbType="VarChar(1000)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Reference")]
 		public string Reference
 		{
 			get
@@ -9644,7 +9644,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Notes", DbType="VarChar(1000)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Notes")]
 		public string Notes
 		{
 			get
@@ -9855,7 +9855,7 @@ namespace SingerDispatch
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.ThirdPartyServiceType")]
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="")]
 	public partial class ThirdPartyServiceType : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
@@ -9883,7 +9883,7 @@ namespace SingerDispatch
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="BigInt NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, IsPrimaryKey=true, IsDbGenerated=true)]
 		public long ID
 		{
 			get
@@ -9903,7 +9903,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="VarChar(50)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name")]
 		public string Name
 		{
 			get
@@ -9969,7 +9969,7 @@ namespace SingerDispatch
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.TrailerCombinations")]
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="")]
 	public partial class TrailerCombination : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
@@ -9997,7 +9997,7 @@ namespace SingerDispatch
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="BigInt NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, IsPrimaryKey=true, IsDbGenerated=true)]
 		public long ID
 		{
 			get
@@ -10017,7 +10017,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="VarChar(100)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name")]
 		public string Name
 		{
 			get
@@ -10083,7 +10083,7 @@ namespace SingerDispatch
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Users")]
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="")]
 	public partial class User : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
@@ -10122,7 +10122,7 @@ namespace SingerDispatch
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="BigInt NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, IsPrimaryKey=true, IsDbGenerated=true)]
 		public long ID
 		{
 			get
@@ -10142,7 +10142,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FirstName", DbType="VarChar(255)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FirstName")]
 		public string FirstName
 		{
 			get
@@ -10162,7 +10162,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LastName", DbType="VarChar(255)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LastName")]
 		public string LastName
 		{
 			get
@@ -10182,7 +10182,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Email", DbType="VarChar(355)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Email")]
 		public string Email
 		{
 			get
@@ -10273,7 +10273,7 @@ namespace SingerDispatch
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Equipment")]
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="")]
 	public partial class Equipment : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
@@ -10301,7 +10301,7 @@ namespace SingerDispatch
 		
 		private string _EngineType;
 		
-		private System.Nullable<byte> _IsDispatchable;
+		private System.Nullable<bool> _IsDispatchable;
 		
 		private System.Nullable<long> _ClassID;
 		
@@ -10311,17 +10311,17 @@ namespace SingerDispatch
 		
 		private string _AxleConfig;
 		
-		private System.Nullable<byte> _HasWinch;
+		private System.Nullable<bool> _HasWinch;
 		
 		private string _SteerTireSize;
 		
 		private string _DriveTireSize;
 		
-		private System.Nullable<byte> _IsProrated;
+		private System.Nullable<bool> _IsProrated;
 		
-		private System.Nullable<byte> _IsOnlyForScheuerle;
+		private System.Nullable<bool> _IsOnlyForScheuerle;
 		
-		private System.Nullable<byte> _IsOnlyForPushing;
+		private System.Nullable<bool> _IsOnlyForPushing;
 		
 		private System.Nullable<System.DateTime> _InServiceDate;
 		
@@ -10361,7 +10361,7 @@ namespace SingerDispatch
     partial void OnEngineModelChanged();
     partial void OnEngineTypeChanging(string value);
     partial void OnEngineTypeChanged();
-    partial void OnIsDispatchableChanging(System.Nullable<byte> value);
+    partial void OnIsDispatchableChanging(System.Nullable<bool> value);
     partial void OnIsDispatchableChanged();
     partial void OnClassIDChanging(System.Nullable<long> value);
     partial void OnClassIDChanged();
@@ -10371,17 +10371,17 @@ namespace SingerDispatch
     partial void OnHeightChanged();
     partial void OnAxleConfigChanging(string value);
     partial void OnAxleConfigChanged();
-    partial void OnHasWinchChanging(System.Nullable<byte> value);
+    partial void OnHasWinchChanging(System.Nullable<bool> value);
     partial void OnHasWinchChanged();
     partial void OnSteerTireSizeChanging(string value);
     partial void OnSteerTireSizeChanged();
     partial void OnDriveTireSizeChanging(string value);
     partial void OnDriveTireSizeChanged();
-    partial void OnIsProratedChanging(System.Nullable<byte> value);
+    partial void OnIsProratedChanging(System.Nullable<bool> value);
     partial void OnIsProratedChanged();
-    partial void OnIsOnlyForScheuerleChanging(System.Nullable<byte> value);
+    partial void OnIsOnlyForScheuerleChanging(System.Nullable<bool> value);
     partial void OnIsOnlyForScheuerleChanged();
-    partial void OnIsOnlyForPushingChanging(System.Nullable<byte> value);
+    partial void OnIsOnlyForPushingChanging(System.Nullable<bool> value);
     partial void OnIsOnlyForPushingChanged();
     partial void OnInServiceDateChanging(System.Nullable<System.DateTime> value);
     partial void OnInServiceDateChanged();
@@ -10398,7 +10398,7 @@ namespace SingerDispatch
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="BigInt NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, IsPrimaryKey=true, IsDbGenerated=true)]
 		public long ID
 		{
 			get
@@ -10418,7 +10418,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UnitNumber", DbType="VarChar(50)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UnitNumber")]
 		public string UnitNumber
 		{
 			get
@@ -10438,7 +10438,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Serial", DbType="VarChar(255)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Serial")]
 		public string Serial
 		{
 			get
@@ -10458,7 +10458,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DefaultDriverID", DbType="BigInt")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DefaultDriverID")]
 		public System.Nullable<long> DefaultDriverID
 		{
 			get
@@ -10482,7 +10482,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Make", DbType="VarChar(100)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Make")]
 		public string Make
 		{
 			get
@@ -10502,7 +10502,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Model", DbType="VarChar(100)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Model")]
 		public string Model
 		{
 			get
@@ -10522,7 +10522,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Year", DbType="VarChar(10)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Year")]
 		public string Year
 		{
 			get
@@ -10542,7 +10542,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LicencePlate", DbType="VarChar(50)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LicencePlate")]
 		public string LicencePlate
 		{
 			get
@@ -10562,7 +10562,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EngineMake", DbType="VarChar(100)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EngineMake")]
 		public string EngineMake
 		{
 			get
@@ -10582,7 +10582,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EngineModel", DbType="VarChar(100)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EngineModel")]
 		public string EngineModel
 		{
 			get
@@ -10602,7 +10602,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EngineType", DbType="VarChar(100)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EngineType")]
 		public string EngineType
 		{
 			get
@@ -10622,8 +10622,8 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsDispatchable", DbType="TinyInt")]
-		public System.Nullable<byte> IsDispatchable
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsDispatchable")]
+		public System.Nullable<bool> IsDispatchable
 		{
 			get
 			{
@@ -10642,7 +10642,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ClassID", DbType="BigInt")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ClassID")]
 		public System.Nullable<long> ClassID
 		{
 			get
@@ -10706,7 +10706,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AxleConfig", DbType="VarChar(100)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AxleConfig")]
 		public string AxleConfig
 		{
 			get
@@ -10726,8 +10726,8 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_HasWinch", DbType="TinyInt")]
-		public System.Nullable<byte> HasWinch
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_HasWinch")]
+		public System.Nullable<bool> HasWinch
 		{
 			get
 			{
@@ -10746,7 +10746,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SteerTireSize", DbType="VarChar(50)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SteerTireSize")]
 		public string SteerTireSize
 		{
 			get
@@ -10766,7 +10766,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DriveTireSize", DbType="VarChar(50)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DriveTireSize")]
 		public string DriveTireSize
 		{
 			get
@@ -10786,8 +10786,8 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsProrated", DbType="TinyInt")]
-		public System.Nullable<byte> IsProrated
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsProrated")]
+		public System.Nullable<bool> IsProrated
 		{
 			get
 			{
@@ -10806,8 +10806,8 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsOnlyForScheuerle", DbType="TinyInt")]
-		public System.Nullable<byte> IsOnlyForScheuerle
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsOnlyForScheuerle")]
+		public System.Nullable<bool> IsOnlyForScheuerle
 		{
 			get
 			{
@@ -10826,8 +10826,8 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsOnlyForPushing", DbType="TinyInt")]
-		public System.Nullable<byte> IsOnlyForPushing
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsOnlyForPushing")]
+		public System.Nullable<bool> IsOnlyForPushing
 		{
 			get
 			{
@@ -10846,7 +10846,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_InServiceDate", DbType="DateTime")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_InServiceDate")]
 		public System.Nullable<System.DateTime> InServiceDate
 		{
 			get
@@ -10866,7 +10866,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OutOfServiceDate", DbType="DateTime")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OutOfServiceDate")]
 		public System.Nullable<System.DateTime> OutOfServiceDate
 		{
 			get
@@ -11025,7 +11025,7 @@ namespace SingerDispatch
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.EquipmentClasses")]
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="")]
 	public partial class EquipmentClass : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
@@ -11053,7 +11053,7 @@ namespace SingerDispatch
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="BigInt NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, IsPrimaryKey=true, IsDbGenerated=true)]
 		public long ID
 		{
 			get
@@ -11073,7 +11073,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="VarChar(50)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name")]
 		public string Name
 		{
 			get
@@ -11139,7 +11139,7 @@ namespace SingerDispatch
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Dispatches")]
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="")]
 	public partial class Dispatch : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
@@ -11196,7 +11196,7 @@ namespace SingerDispatch
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="BigInt NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, IsPrimaryKey=true, IsDbGenerated=true)]
 		public long ID
 		{
 			get
@@ -11216,7 +11216,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_JobID", DbType="BigInt")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_JobID")]
 		public System.Nullable<long> JobID
 		{
 			get
@@ -11240,7 +11240,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LoadID", DbType="BigInt")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LoadID")]
 		public System.Nullable<long> LoadID
 		{
 			get
@@ -11264,7 +11264,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EquipmentID", DbType="BigInt")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EquipmentID")]
 		public System.Nullable<long> EquipmentID
 		{
 			get
@@ -11288,7 +11288,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Description", DbType="VarChar(1000)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Description")]
 		public string Description
 		{
 			get
@@ -11308,7 +11308,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Notes", DbType="Text", UpdateCheck=UpdateCheck.Never)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Notes", UpdateCheck=UpdateCheck.Never)]
 		public string Notes
 		{
 			get
@@ -11328,7 +11328,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ServiceTypeID", DbType="BigInt")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ServiceTypeID")]
 		public System.Nullable<long> ServiceTypeID
 		{
 			get

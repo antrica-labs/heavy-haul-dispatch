@@ -70,6 +70,7 @@
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Data" />
+    <Reference Include="System.DirectoryServices" />
     <Reference Include="WindowsBase">
       <RequiredTargetFramework>3.0</RequiredTargetFramework>
     </Reference>
@@ -172,6 +173,7 @@
     </Compile>
     <Compile Include="Panels\QuoteUserControl.cs">
     </Compile>
+    <Compile Include="Permissions\AuthenticationService.cs" />
     <Compile Include="Printing\DispatchRenderer.cs" />
     <Compile Include="Printing\QuoteRenderer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -421,6 +423,7 @@
     <Content Include="Templates\sample_dispatch.html" />
     <Content Include="Templates\sample_quote.html" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

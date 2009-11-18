@@ -109,8 +109,8 @@ namespace SingerDispatch.Panels.Companies
 
         private void NewAddress_Click(object sender, RoutedEventArgs e)
         {
-            var address = new Address() { CompanyID = SelectedCompany.ID };
-
+            var address = new Address();
+            
             SelectedCompany.Addresses.Add(address);
             ((ObservableCollection<Address>)dgAddresses.ItemsSource).Add(address);
             dgAddresses.SelectedItem = address;
@@ -128,7 +128,7 @@ namespace SingerDispatch.Panels.Companies
                 return;
             }
 
-            var contact = new Contact() { Address = address };
+            var contact = new Contact();
 
             address.Contacts.Add(contact);
             ((ObservableCollection<Contact>)dgContacts.ItemsSource).Add(contact);
@@ -139,29 +139,6 @@ namespace SingerDispatch.Panels.Companies
 
         private void Save_Click(object sender, RoutedEventArgs e)
         {               
-            Database.SubmitChanges();
-        }
-
-        private void AddNewContact(Address address)
-        {
-            var contact = new Contact();
-            contact.AddressID = address.ID;
-            contact.FirstName = txtContactFirstName.Text;
-            contact.LastName = txtContactLastName.Text;
-            contact.Email = txtContactEmail.Text;
-            contact.PrimaryPhone = txtContactPrimaryPhone.Text;
-            contact.SecondaryPhone = txtContactSecondaryPhone.Text;
-            contact.ContactType = (ContactType)cmbContactType.SelectedItem;            
-            contact.PreferedContactMethod = (string)cmbContactPreferedContactMethod.SelectedItem;
-            contact.Notes = txtContactNotes.Text;
-
-            Database.Contacts.InsertOnSubmit(contact);
-            ((ObservableCollection<Contact>)dgContacts.ItemsSource).Add(contact);
-            dgContacts.SelectedItem = contact;
-        }        
-
-        private void DataGridCommit(object sender, DataGridRowEditEndingEventArgs e)
-        {
             Database.SubmitChanges();
         }
     }

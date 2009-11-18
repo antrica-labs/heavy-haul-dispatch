@@ -22,7 +22,7 @@ namespace SingerDispatch.Panels.Jobs
         private void ControlLoaded(object sender, RoutedEventArgs e)
         {
             cmbWheelTypes.ItemsSource = (from wt in Database.WheelTypes select wt).ToList();
-            cmbUnits.ItemsSource = (from u in Database.Equipments where u.EquipmentClass.Name == "Tractor" || u.EquipmentClass.Name == "Trailor" select u).ToList();
+            cmbUnits.ItemsSource = (from u in Database.Equipment where u.EquipmentClass.Name == "Tractor" || u.EquipmentClass.Name == "Trailor" select u).ToList();
             cmbSeasons.ItemsSource = (from s in Database.Seasons select s).ToList();
             cmbTrailerCombinations.ItemsSource = (from tc in Database.TrailerCombinations select tc).ToList();
         }

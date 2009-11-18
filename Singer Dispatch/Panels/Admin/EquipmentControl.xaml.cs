@@ -25,7 +25,7 @@ namespace SingerDispatch.Panels.Admin
         {
             cmbEmployees.ItemsSource = from emp in Database.Employees orderby emp.FirstName select emp;
             dgEquipment.MaxHeight = gbDetails.ActualHeight;
-            dgEquipment.ItemsSource = new ObservableCollection<Equipment>(from equip in Database.Equipments select equip);
+            dgEquipment.ItemsSource = new ObservableCollection<Equipment>(from equip in Database.Equipment select equip);
         }
 
         private void NewEquipment_Click(object sender, RoutedEventArgs e)
@@ -33,7 +33,7 @@ namespace SingerDispatch.Panels.Admin
             var unit = new Equipment();
 
             ((ObservableCollection<Equipment>)dgEquipment.ItemsSource).Insert(0, unit);
-            Database.Equipments.InsertOnSubmit(unit);
+            Database.Equipment.InsertOnSubmit(unit);
             dgEquipment.SelectedItem = unit;
             txtUnitNumber.Focus();
         }
@@ -55,7 +55,7 @@ namespace SingerDispatch.Panels.Admin
             }
 
             ((ObservableCollection<Equipment>)dgEquipment.ItemsSource).Remove(unit);
-            Database.Equipments.DeleteOnSubmit(unit);
+            Database.Equipment.DeleteOnSubmit(unit);
             dgEquipment.SelectedItem = null;
             Database.SubmitChanges();
         }
