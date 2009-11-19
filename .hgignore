@@ -1,4 +1,4 @@
 bin/
 obj/
 .suo
-_ReSharper.Singer Dispatch/
+Singer Dispatch/app.config
