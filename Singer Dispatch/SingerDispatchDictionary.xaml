@@ -11,6 +11,8 @@
         <TextBlock Text="{Binding Name}" />
     </DataTemplate>
     
+    <Controls:IsEnabledNullConverter x:Key="IsEnabledNullConverter" />
+    
     <Style TargetType="Menu">        
         <Setter Property="BorderBrush" Value="LightGray" />
         <Setter Property="BorderThickness" Value="0,0,0,1" />
