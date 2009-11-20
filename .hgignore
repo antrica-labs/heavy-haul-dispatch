@@ -1,4 +1,7 @@
 bin/
 obj/
 .suo
+.user
+.tmp_proj
+.swp
 Singer Dispatch/app.config
