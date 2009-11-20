@@ -1,6 +1,7 @@
 ﻿using System.Windows.Controls;
 using System.Linq;
 using System.Windows;
+using System.ComponentModel;
 
 namespace SingerDispatch.Panels.Quotes
 {
@@ -36,9 +37,6 @@ namespace SingerDispatch.Panels.Quotes
 
                 tabCommodities.IsEnabled = false;
                 ((UserControl)tabCommodities.Content).IsEnabled = false;
-
-                btnCommitChanges.IsEnabled = false;
-                btnDiscardChanges.IsEnabled = false;
             }
             else
             {

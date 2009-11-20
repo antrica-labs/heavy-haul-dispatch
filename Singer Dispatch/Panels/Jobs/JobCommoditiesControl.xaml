@@ -37,17 +37,17 @@
             </Grid.ColumnDefinitions>
 
             <Button Style="{StaticResource Horizontal}" Name="btnNewCommodity" Grid.Column="0" Click="NewCommodity_Click">New commodity</Button>
-            <Button Style="{StaticResource HorizontalEnd}" Name="btnRemoveCommodity" Grid.Column="3" Click="RemoveCommodity_Click">Remove commodity</Button>
+            <Button Style="{StaticResource HorizontalEnd}" Name="btnRemoveCommodity" Grid.Column="3" Click="RemoveCommodity_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgCommodities, Path=SelectedItem}" >Remove commodity</Button>
         </Grid>
 
-        <Border BorderBrush="LightGray" BorderThickness="1" Margin="0,0,0,5">            
+        <Border BorderBrush="LightGray" BorderThickness="1" Margin="0,0,0,5" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgCommodities, Path=SelectedItem}">            
             <StackPanel Orientation="Horizontal" Margin="3" DataContext="{Binding ElementName=dgCommodities, Path=SelectedItem}">                
                 <Label>Assign to load:</Label>
                 <ComboBox Name="cmbLoads" MinWidth="300" SelectedItem="{Binding Load}" ItemTemplate="{StaticResource LoadNameTemplate}" />
             </StackPanel>
         </Border>
 
-        <TabControl>
+        <TabControl IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgCommodities, Path=SelectedItem}">
             <TabItem Header="Commodity" Name="tabCommodityDetails" DataContext="{Binding ElementName=dgCommodities, Path=SelectedItem}">
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -212,8 +212,6 @@
                     <TextBox Grid.Column="2" Grid.Row="4" Grid.RowSpan="2" Style="{StaticResource MultiLine}" />                    
                 </Grid>
             </TabItem>
-            
-            <!-- <TabItem Header="Bill of Landing" DataContext="{Binding ElementName=dgCommodities, Path=SelectedItem}"></TabItem> -->            
         </TabControl>
     </StackPanel>
 </Panels:JobUserControl>

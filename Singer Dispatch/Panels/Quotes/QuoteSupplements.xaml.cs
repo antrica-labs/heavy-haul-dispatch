@@ -17,12 +17,11 @@ namespace SingerDispatch.Panels.Quotes
             InitializeComponent();
 
             Database = SingerConstants.CommonDataContext;
-
-            cmbBillingType.ItemsSource = (from bt in Database.BillingTypes select bt).ToList();
         }
 
         private void QuoteUserControl_Loaded(object sender, RoutedEventArgs e)
-        {            
+        {
+            cmbBillingType.ItemsSource = (from bt in Database.BillingTypes select bt).ToList();
         }
 
         protected override void SelectedQuoteChanged(Quote newValue, Quote oldValue)

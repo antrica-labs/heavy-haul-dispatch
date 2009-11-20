@@ -35,10 +35,10 @@
             </Grid.ColumnDefinitions>
 
             <Button Style="{StaticResource Horizontal}" Name="btnNewLoad" Grid.Column="0" Click="NewLoad_Click">New load</Button>
-            <Button Style="{StaticResource HorizontalEnd}" Name="btnRemoveLoad" Grid.Column="3" Click="RemoveLoad_Click">Remove load</Button>
+            <Button Style="{StaticResource HorizontalEnd}" Name="btnRemoveLoad" Grid.Column="3" Click="RemoveLoad_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgLoads, Path=SelectedItem}">Remove load</Button>
         </Grid>
         
-        <GroupBox Header="Vehicle" DataContext="{Binding ElementName=dgLoads, Path=SelectedItem}">
+        <GroupBox Header="Vehicle" DataContext="{Binding ElementName=dgLoads, Path=SelectedItem}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgLoads, Path=SelectedItem}">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
@@ -65,7 +65,7 @@
             </Grid>    
         </GroupBox>
         
-        <GroupBox Header="Timeline" DataContext="{Binding ElementName=dgLoads, Path=SelectedItem}">
+        <GroupBox Header="Timeline" DataContext="{Binding ElementName=dgLoads, Path=SelectedItem}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgLoads, Path=SelectedItem}">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
@@ -92,7 +92,7 @@
             </Grid>
         </GroupBox>
         
-        <GroupBox Header="Instruction" DataContext="{Binding ElementName=dgLoads, Path=SelectedItem}">
+        <GroupBox Header="Instruction" DataContext="{Binding ElementName=dgLoads, Path=SelectedItem}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgLoads, Path=SelectedItem}">
             <StackPanel>
                 <Label>Description of service:</Label>
                 <TextBox Text="{Binding ServiceDescription}"/>
@@ -102,7 +102,7 @@
             </StackPanel>
         </GroupBox>
         
-        <GroupBox Header="Dimentions" DataContext="{Binding ElementName=dgLoads, Path=SelectedItem}">
+        <GroupBox Header="Dimentions" DataContext="{Binding ElementName=dgLoads, Path=SelectedItem}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgLoads, Path=SelectedItem}">
             <StackPanel>
                 <Grid>
                     <Grid.ColumnDefinitions>                        

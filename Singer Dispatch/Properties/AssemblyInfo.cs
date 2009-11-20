@@ -10,7 +10,7 @@ using System.Windows;
 [assembly: AssemblyTitle("Singer Dispatch")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Singer Dispatch")]
+[assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("Singer Dispatch")]
 [assembly: AssemblyCopyright("Copyright ©  2009")]
 [assembly: AssemblyTrademark("")]

@@ -21,7 +21,7 @@
             <RowDefinition />
         </Grid.RowDefinitions>
 
-        <WPF:DataGrid Name="dgCommodities" Grid.Column="0" Grid.Row="0" Style="{StaticResource ListDisplay}" Margin="0,0,3,0" RowEditEnding="DataGridCommit">
+        <WPF:DataGrid Name="dgCommodities" Grid.Column="0" Grid.Row="0" Style="{StaticResource ListDisplay}" Margin="0,0,3,0">
             <WPF:DataGrid.Columns>
                 <WPF:DataGridTextColumn Header="Unit" Binding="{Binding Unit}" />
                 <WPF:DataGridTextColumn Header="Name" Width="2*" Binding="{Binding Name}" />                
@@ -37,10 +37,10 @@
             </Grid.ColumnDefinitions>
             
             <Button Style="{StaticResource Horizontal}" Name="btnNewCommodity" Grid.Column="0" Click="NewCommodity_Click">New commodity</Button>
-            <Button Style="{StaticResource HorizontalEnd}" Name="btnDeleteCommodity" Grid.Column="1" Click="DeleteCommodity_Click">Delete commodity</Button>            
+            <Button Style="{StaticResource HorizontalEnd}" Name="btnDeleteCommodity" Grid.Column="1" Click="DeleteCommodity_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgCommodities, Path=SelectedItem}">Delete commodity</Button>            
         </Grid>        
 
-        <GroupBox Name="panelCommodityDetails" Header="Commodity Details" Margin="3,0,0,0"  Grid.Column="1" Grid.Row="0" DataContext="{Binding ElementName=dgCommodities, Path=SelectedItem}">            
+        <GroupBox Name="panelCommodityDetails" Header="Commodity Details" Margin="3,0,0,0"  Grid.Column="1" Grid.Row="0" DataContext="{Binding ElementName=dgCommodities, Path=SelectedItem}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgCommodities, Path=SelectedItem}">            
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="110"/>
@@ -121,6 +121,6 @@
             </Grid>
         </GroupBox>
         
-        <Button Style="{StaticResource HorizontalEnd}" Name="btnSaveCommodity" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="3" Click="SaveCommodity_Click">Save commodity</Button>
+        <Button Style="{StaticResource HorizontalEnd}" Name="btnSaveCommodity" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="3" Click="SaveCommodity_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgCommodities, Path=SelectedItem}">Save commodity</Button>
     </Grid>
 </Panels:CompanyUserControl>

@@ -40,6 +40,14 @@ namespace SingerDispatch
 
     partial class Quote : System.ICloneable
     {
+        public string FriendlyName
+        {
+            get
+            {
+                return string.Format("#{0} rev {1}", Number, Revision);
+            }
+        }
+
         public string NumberAndRev
         {
             get
@@ -97,7 +105,7 @@ namespace SingerDispatch
                 job.JobCommodities.Add(commodity.ToJobCommodity());
             }
 
-            return job;            
+            return job;
         }
     }
 
@@ -129,7 +137,7 @@ namespace SingerDispatch
             copy.Quantity = Quantity;
             copy.CostPerItem = CostPerItem;
             copy.Notes = Notes;
-            
+
             return copy;
         }
 
@@ -137,7 +145,7 @@ namespace SingerDispatch
         {
             var jc = new JobCommodity();
 
-            jc.OriginalCommodityID = OriginalCommodityID;            
+            jc.OriginalCommodityID = OriginalCommodityID;
             jc.Name = Name;
             jc.Value = Value;
             jc.Serial = Serial;
@@ -179,5 +187,4 @@ namespace SingerDispatch
             return copy;
         }
     }
-
 }

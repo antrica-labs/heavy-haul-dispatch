@@ -31,10 +31,10 @@
             </Grid.ColumnDefinitions>
 
             <Button Style="{StaticResource Horizontal}" Grid.Column="0" Click="NewSupplement_Click">New supplement</Button>
-            <Button Style="{StaticResource HorizontalEnd}" Grid.Column="3" Click="RemoveSupplement_Click">Remove supplement</Button>
+            <Button Style="{StaticResource HorizontalEnd}" Grid.Column="3" Click="RemoveSupplement_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgSupplements, Path=SelectedItem}">Remove supplement</Button>
         </Grid>
         
-        <GroupBox Name="grpSupplementDetails" Header="Supplement Details" Margin="0,0,0,10" DataContext="{Binding ElementName=dgSupplements, Path=SelectedItem}">
+        <GroupBox Name="grpSupplementDetails" Header="Supplement Details" Margin="0,0,0,10" DataContext="{Binding ElementName=dgSupplements, Path=SelectedItem}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgSupplements, Path=SelectedItem}">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="75" />

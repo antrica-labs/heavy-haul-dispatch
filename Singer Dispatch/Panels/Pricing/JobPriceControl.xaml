@@ -27,7 +27,7 @@
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>          
 
-            <StackPanel Grid.Column="0" Margin="2">
+            <StackPanel Grid.Column="0" Margin="2" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgJobs, Path=SelectedItem}">
                 <GroupBox Header="Job Details" Name="gbJobDetails" DataContext="{Binding ElementName=dgJobs, Path=SelectedItem}" Margin="0,0,0,5">
                     <StackPanel>
                         <Grid>
@@ -123,7 +123,7 @@
                 </GroupBox>
             </StackPanel>
             
-            <StackPanel Grid.Column="1" Margin="2">
+            <StackPanel Grid.Column="1" Margin="2" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgJobs, Path=SelectedItem}">
                 <GroupBox Header="Customer Details" DataContext="{Binding ElementName=dgJobs, Path=SelectedItem}" Margin="0,0,0,5">
                     <StackPanel>
                         <WPF:DataGrid Name="dgCustomerDetails" Style="{StaticResource ListDisplay}" Height="100">

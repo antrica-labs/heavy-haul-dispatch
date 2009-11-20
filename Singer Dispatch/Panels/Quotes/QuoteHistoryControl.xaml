@@ -33,13 +33,13 @@
             </Grid.ColumnDefinitions>
 
             <Button Style="{StaticResource Horizontal}" Name="btnNewQuote" Grid.Column="0" Click="NewQuote_Click">New quote</Button>
-            <Button Style="{StaticResource Horizontal}" Name="btnCreateRevisoin" Grid.Column="1" Click="CreateRevision_Click">Create revision</Button>
-            <Button Style="{StaticResource Horizontal}" Name="btnRemoveQuote" Grid.Column="2">Remove quote</Button>
-            <Button Style="{StaticResource Horizontal}" Name="btnCreateJob" Grid.Column="3" Click="CreateJob_Click">Convert to job</Button>            
-            <Button Style="{StaticResource HorizontalEnd}" Name="btnPrintQuote" Grid.Column="4" Click="PrintQuote_Click">Print quote</Button>
+            <Button Style="{StaticResource Horizontal}" Name="btnCreateRevisoin" Grid.Column="1" Click="CreateRevision_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgQuotes, Path=SelectedItem}">Create revision</Button>
+            <Button Style="{StaticResource Horizontal}" Name="btnRemoveQuote" Grid.Column="2" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgQuotes, Path=SelectedItem}">Remove quote</Button>
+            <Button Style="{StaticResource Horizontal}" Name="btnCreateJob" Grid.Column="3" Click="CreateJob_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgQuotes, Path=SelectedItem}">Convert to job</Button>            
+            <Button Style="{StaticResource HorizontalEnd}" Name="btnPrintQuote" Grid.Column="4" Click="PrintQuote_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgQuotes, Path=SelectedItem}">Print quote</Button>
         </Grid>
         
-        <Grid Name="panelQuoteDetails" DataContext="{Binding ElementName=dgQuotes, Path=SelectedItem}">
+        <Grid Name="panelQuoteDetails" DataContext="{Binding ElementName=dgQuotes, Path=SelectedItem}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgQuotes, Path=SelectedItem}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
                 <ColumnDefinition />                
@@ -108,7 +108,7 @@
             </StackPanel>
 
             
-            <GroupBox Header="Contact List" Grid.Column="1" Margin="0,0,5,5">
+            <GroupBox Header="Contact List" Grid.Column="1" Margin="0,0,5,5" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgQuotes, Path=SelectedItem}">
                 <StackPanel>
                     <WPF:DataGrid Name="dgQuoteContacts" Style="{StaticResource ListDisplay}"  MinHeight="150" Margin="5">
                         <WPF:DataGrid.Columns>

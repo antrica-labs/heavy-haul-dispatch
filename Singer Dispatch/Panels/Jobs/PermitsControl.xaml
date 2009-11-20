@@ -33,10 +33,10 @@
             </Grid.ColumnDefinitions>
 
             <Button Style="{StaticResource Horizontal}" Grid.Column="0" Click="NewPermit_Click">New permit</Button>
-            <Button Style="{StaticResource HorizontalEnd}" Grid.Column="3" Click="RemovePermit_Click">Remove permit</Button>
+            <Button Style="{StaticResource HorizontalEnd}" Grid.Column="3" Click="RemovePermit_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgPermits, Path=SelectedItem}">Remove permit</Button>
         </Grid>
  
-        <GroupBox Header="Service Details" DataContext="{Binding ElementName=dgPermits, Path=SelectedItem}">
+        <GroupBox Header="Service Details" DataContext="{Binding ElementName=dgPermits, Path=SelectedItem}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgPermits, Path=SelectedItem}">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="90" />

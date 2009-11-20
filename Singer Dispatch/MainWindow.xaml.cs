@@ -101,7 +101,8 @@ namespace SingerDispatch
         {
             var link = (TabIndexHyperlink)e.Source;
 
-            link.Tab.IsSelected = true;
+			if (link.Tab.IsEnabled)
+            	link.Tab.IsSelected = true;
         }
 
         private void CollapseAllOtherNavigationExpanders(Expander self)

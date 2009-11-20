@@ -29,7 +29,7 @@
             </WPF:DataGrid.Columns>
         </WPF:DataGrid>
         
-        <GroupBox Header="Equipment details" Name="gbDetails" Grid.Row="0" Grid.Column="1" DataContext="{Binding ElementName=dgEquipment, Path=SelectedItem}">
+        <GroupBox Header="Equipment details" Name="gbDetails" Grid.Row="0" Grid.Column="1" DataContext="{Binding ElementName=dgEquipment, Path=SelectedItem}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgEquipment, Path=SelectedItem}">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
@@ -143,9 +143,9 @@
             </Grid.ColumnDefinitions>
 
             <Button Style="{StaticResource Horizontal}" Grid.Column="0" Click="NewEquipment_Click">New equipment</Button>
-            <Button Style="{StaticResource HorizontalEnd}" Grid.Column="1" Click="RemoveEquipment_Click">Remove equipment</Button>
+            <Button Style="{StaticResource HorizontalEnd}" Grid.Column="1" Click="RemoveEquipment_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgEquipment, Path=SelectedItem}">Remove equipment</Button>
         </Grid>
 
-        <Button Style="{StaticResource HorizontalEnd}" Grid.Column="1" Grid.Row="1" Click="SaveEquipment_Click">Save equipment</Button>
+        <Button Style="{StaticResource HorizontalEnd}" Grid.Column="1" Grid.Row="1" Click="SaveEquipment_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgEquipment, Path=SelectedItem}">Save equipment</Button>
     </Grid>
 </UserControl>

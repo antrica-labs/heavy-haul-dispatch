@@ -10,8 +10,8 @@
             </ResourceDictionary.MergedDictionaries>
             <DataTemplate x:Key="nameTemplate">
                 <TextBlock Text="{Binding Path=Name}" />
-        </DataTemplate>
-        </ResourceDictionary>        
+            </DataTemplate>
+        </ResourceDictionary>
     </Window.Resources>
     <StackPanel Margin="5,5,5,5">
         <Label Style="{StaticResource Heading}">Create New Company</Label>

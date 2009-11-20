@@ -12,7 +12,7 @@
             </ResourceDictionary.MergedDictionaries>
 
             <DataTemplate x:Key="QuoteNameTemplate">                
-                <TextBlock Text="{Binding NumberAndRev}" />
+                <TextBlock Text="{Binding FriendlyName}" />
             </DataTemplate>
         </ResourceDictionary>
         
@@ -21,7 +21,7 @@
         <WPF:DataGrid Name="dgJobs" Style="{StaticResource ListDisplay}" Height="180" SelectedItem="{Binding ElementName=panelJobHistory, Path=SelectedJob}">
             <WPF:DataGrid.Columns>
                 <WPF:DataGridTextColumn Header="Number" Width="0.15*" Binding="{Binding Number}"/>
-                <WPF:DataGridTextColumn Header="Quote" Width="0.15*" Binding="{Binding Quote.NumberAndRev}" />
+                <WPF:DataGridTextColumn Header="Quote" Width="0.15*" Binding="{Binding Quote.FriendlyName}" />
                 <WPF:DataGridTextColumn Header="Status" Width="0.2*" Binding="{Binding Status}" />
                 <WPF:DataGridTextColumn Header="Description" Binding="{Binding Description}" />
             </WPF:DataGrid.Columns>
@@ -36,8 +36,8 @@
             </Grid.ColumnDefinitions>
 
             <Button Style="{StaticResource Horizontal}" Grid.Column="0" Click="NewJob_Click">New job</Button>
-            <Button Style="{StaticResource Horizontal}" Grid.Column="1" Click="ViewQuote_Click">View quote</Button>            
-            <Button Style="{StaticResource HorizontalEnd}" Grid.Column="3">Remove Job</Button>
+            <Button Style="{StaticResource Horizontal}" Grid.Column="1" Click="ViewQuote_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgJobs, Path=SelectedItem}">View quote</Button>            
+            <Button Style="{StaticResource HorizontalEnd}" Grid.Column="3" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgJobs, Path=SelectedItem}">Remove Job</Button>
         </Grid>
 
         <Grid>
@@ -50,7 +50,7 @@
                 <RowDefinition />
             </Grid.RowDefinitions>
 
-            <GroupBox Header="Job Details" Name="gbJobDetails" Grid.Column="0" Grid.Row="0" Margin="0,0,5,0" DataContext="{Binding ElementName=dgJobs, Path=SelectedItem}">
+            <GroupBox Header="Job Details" Name="gbJobDetails" Grid.Column="0" Grid.Row="0" Margin="0,0,5,0" DataContext="{Binding ElementName=dgJobs, Path=SelectedItem}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgJobs, Path=SelectedItem}">
                 <StackPanel>
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -81,7 +81,7 @@
                 </StackPanel>
             </GroupBox>
 
-            <GroupBox Header="Job Timeline" Name="gbJobTimeline" Grid.Column="0" Grid.Row="1" Margin="0,5,5,5" DataContext="{Binding ElementName=dgJobs, Path=SelectedItem}">
+            <GroupBox Header="Job Timeline" Name="gbJobTimeline" Grid.Column="0" Grid.Row="1" Margin="0,5,5,5" DataContext="{Binding ElementName=dgJobs, Path=SelectedItem}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgJobs, Path=SelectedItem}">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition />
@@ -104,7 +104,7 @@
                 </Grid>
             </GroupBox>
 
-            <GroupBox Header="Contact List" Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" Margin="0,0,5,5">
+            <GroupBox Header="Contact List" Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" Margin="0,0,5,5" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgJobs, Path=SelectedItem}">
                 <StackPanel>
                     <WPF:DataGrid Name="dgJobContacts" Style="{StaticResource ListDisplay}"  Height="100" Margin="0,0,0,5">
                         <WPF:DataGrid.Columns>
