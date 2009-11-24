@@ -96,9 +96,6 @@ namespace SingerDispatch
     partial void InsertQuoteSupplement(QuoteSupplement instance);
     partial void UpdateQuoteSupplement(QuoteSupplement instance);
     partial void DeleteQuoteSupplement(QuoteSupplement instance);
-    partial void InsertRateDiscount(RateDiscount instance);
-    partial void UpdateRateDiscount(RateDiscount instance);
-    partial void DeleteRateDiscount(RateDiscount instance);
     partial void InsertRate(Rate instance);
     partial void UpdateRate(Rate instance);
     partial void DeleteRate(Rate instance);
@@ -337,14 +334,6 @@ namespace SingerDispatch
 			get
 			{
 				return this.GetTable<QuoteSupplement>();
-			}
-		}
-		
-		public System.Data.Linq.Table<RateDiscount> RateDiscounts
-		{
-			get
-			{
-				return this.GetTable<RateDiscount>();
 			}
 		}
 		
@@ -1771,6 +1760,8 @@ namespace SingerDispatch
 		
 		private string _Notes;
 		
+		private System.Nullable<double> _RateAdjustment;
+		
 		private EntitySet<Address> _Addresses;
 		
 		private EntitySet<Commodity> _Commodities;
@@ -1784,8 +1775,6 @@ namespace SingerDispatch
 		private EntitySet<Quote> _Quotes;
 		
 		private EntitySet<Quote> _Quotes1;
-		
-		private EntitySet<RateDiscount> _RateDiscounts;
 		
 		private EntitySet<Service> _Services;
 		
@@ -1815,6 +1804,8 @@ namespace SingerDispatch
     partial void OnPriorityLevelIDChanged();
     partial void OnNotesChanging(string value);
     partial void OnNotesChanged();
+    partial void OnRateAdjustmentChanging(System.Nullable<double> value);
+    partial void OnRateAdjustmentChanged();
     #endregion
 		
 		public Company()
@@ -1826,7 +1817,6 @@ namespace SingerDispatch
 			this._Jobs1 = new EntitySet<Job>(new Action<Job>(this.attach_Jobs1), new Action<Job>(this.detach_Jobs1));
 			this._Quotes = new EntitySet<Quote>(new Action<Quote>(this.attach_Quotes), new Action<Quote>(this.detach_Quotes));
 			this._Quotes1 = new EntitySet<Quote>(new Action<Quote>(this.attach_Quotes1), new Action<Quote>(this.detach_Quotes1));
-			this._RateDiscounts = new EntitySet<RateDiscount>(new Action<RateDiscount>(this.attach_RateDiscounts), new Action<RateDiscount>(this.detach_RateDiscounts));
 			this._Services = new EntitySet<Service>(new Action<Service>(this.attach_Services), new Action<Service>(this.detach_Services));
 			this._ThirdPartyServices = new EntitySet<ThirdPartyService>(new Action<ThirdPartyService>(this.attach_ThirdPartyServices), new Action<ThirdPartyService>(this.detach_ThirdPartyServices));
 			this._CompanyPriorityLevel = default(EntityRef<CompanyPriorityLevel>);
@@ -2017,6 +2007,26 @@ namespace SingerDispatch
 			}
 		}
 		
+		[Column(Storage="_RateAdjustment")]
+		public System.Nullable<double> RateAdjustment
+		{
+			get
+			{
+				return this._RateAdjustment;
+			}
+			set
+			{
+				if ((this._RateAdjustment != value))
+				{
+					this.OnRateAdjustmentChanging(value);
+					this.SendPropertyChanging();
+					this._RateAdjustment = value;
+					this.SendPropertyChanged("RateAdjustment");
+					this.OnRateAdjustmentChanged();
+				}
+			}
+		}
+		
 		[Association(Name="Company_Address", Storage="_Addresses", ThisKey="ID", OtherKey="CompanyID")]
 		public EntitySet<Address> Addresses
 		{
@@ -2105,19 +2115,6 @@ namespace SingerDispatch
 			set
 			{
 				this._Quotes1.Assign(value);
-			}
-		}
-		
-		[Association(Name="Company_RateDiscount", Storage="_RateDiscounts", ThisKey="ID", OtherKey="CompanyID")]
-		public EntitySet<RateDiscount> RateDiscounts
-		{
-			get
-			{
-				return this._RateDiscounts;
-			}
-			set
-			{
-				this._RateDiscounts.Assign(value);
 			}
 		}
 		
@@ -2283,18 +2280,6 @@ namespace SingerDispatch
 		{
 			this.SendPropertyChanging();
 			entity.Company1 = null;
-		}
-		
-		private void attach_RateDiscounts(RateDiscount entity)
-		{
-			this.SendPropertyChanging();
-			entity.Company = this;
-		}
-		
-		private void detach_RateDiscounts(RateDiscount entity)
-		{
-			this.SendPropertyChanging();
-			entity.Company = null;
 		}
 		
 		private void attach_Services(Service entity)
@@ -7003,7 +6988,7 @@ namespace SingerDispatch
 		
 		private long _ID;
 		
-		private long _QuoteID;
+		private System.Nullable<long> _QuoteID;
 		
 		private System.Nullable<long> _OriginalCommodityID;
 		
@@ -7055,7 +7040,7 @@ namespace SingerDispatch
     partial void OnCreated();
     partial void OnIDChanging(long value);
     partial void OnIDChanged();
-    partial void OnQuoteIDChanging(long value);
+    partial void OnQuoteIDChanging(System.Nullable<long> value);
     partial void OnQuoteIDChanged();
     partial void OnOriginalCommodityIDChanging(System.Nullable<long> value);
     partial void OnOriginalCommodityIDChanged();
@@ -7128,7 +7113,7 @@ namespace SingerDispatch
 		}
 		
 		[Column(Storage="_QuoteID")]
-		public long QuoteID
+		public System.Nullable<long> QuoteID
 		{
 			get
 			{
@@ -7598,7 +7583,7 @@ namespace SingerDispatch
 					}
 					else
 					{
-						this._QuoteID = default(long);
+						this._QuoteID = default(Nullable<long>);
 					}
 					this.SendPropertyChanged("Quote");
 				}
@@ -8191,7 +8176,7 @@ namespace SingerDispatch
 		
 		private long _ID;
 		
-		private long _QuoteID;
+		private System.Nullable<long> _QuoteID;
 		
 		private string _Name;
 		
@@ -8213,7 +8198,7 @@ namespace SingerDispatch
     partial void OnCreated();
     partial void OnIDChanging(long value);
     partial void OnIDChanged();
-    partial void OnQuoteIDChanging(long value);
+    partial void OnQuoteIDChanging(System.Nullable<long> value);
     partial void OnQuoteIDChanged();
     partial void OnNameChanging(string value);
     partial void OnNameChanged();
@@ -8255,7 +8240,7 @@ namespace SingerDispatch
 		}
 		
 		[Column(Storage="_QuoteID")]
-		public long QuoteID
+		public System.Nullable<long> QuoteID
 		{
 			get
 			{
@@ -8443,232 +8428,9 @@ namespace SingerDispatch
 					}
 					else
 					{
-						this._QuoteID = default(long);
+						this._QuoteID = default(Nullable<long>);
 					}
 					this.SendPropertyChanged("Quote");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
-	[Table(Name="")]
-	public partial class RateDiscount : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private long _ID;
-		
-		private long _CompanyID;
-		
-		private System.Nullable<double> _Hourly;
-		
-		private System.Nullable<double> _Daily;
-		
-		private System.Nullable<double> _Weekly;
-		
-		private System.Nullable<double> _Monthly;
-		
-		private EntityRef<Company> _Company;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIDChanging(long value);
-    partial void OnIDChanged();
-    partial void OnCompanyIDChanging(long value);
-    partial void OnCompanyIDChanged();
-    partial void OnHourlyChanging(System.Nullable<double> value);
-    partial void OnHourlyChanged();
-    partial void OnDailyChanging(System.Nullable<double> value);
-    partial void OnDailyChanged();
-    partial void OnWeeklyChanging(System.Nullable<double> value);
-    partial void OnWeeklyChanged();
-    partial void OnMonthlyChanging(System.Nullable<double> value);
-    partial void OnMonthlyChanged();
-    #endregion
-		
-		public RateDiscount()
-		{
-			this._Company = default(EntityRef<Company>);
-			OnCreated();
-		}
-		
-		[Column(Storage="_ID", AutoSync=AutoSync.OnInsert, IsPrimaryKey=true, IsDbGenerated=true)]
-		public long ID
-		{
-			get
-			{
-				return this._ID;
-			}
-			set
-			{
-				if ((this._ID != value))
-				{
-					this.OnIDChanging(value);
-					this.SendPropertyChanging();
-					this._ID = value;
-					this.SendPropertyChanged("ID");
-					this.OnIDChanged();
-				}
-			}
-		}
-		
-		[Column(Storage="_CompanyID")]
-		public long CompanyID
-		{
-			get
-			{
-				return this._CompanyID;
-			}
-			set
-			{
-				if ((this._CompanyID != value))
-				{
-					if (this._Company.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnCompanyIDChanging(value);
-					this.SendPropertyChanging();
-					this._CompanyID = value;
-					this.SendPropertyChanged("CompanyID");
-					this.OnCompanyIDChanged();
-				}
-			}
-		}
-		
-		[Column(Storage="_Hourly")]
-		public System.Nullable<double> Hourly
-		{
-			get
-			{
-				return this._Hourly;
-			}
-			set
-			{
-				if ((this._Hourly != value))
-				{
-					this.OnHourlyChanging(value);
-					this.SendPropertyChanging();
-					this._Hourly = value;
-					this.SendPropertyChanged("Hourly");
-					this.OnHourlyChanged();
-				}
-			}
-		}
-		
-		[Column(Storage="_Daily")]
-		public System.Nullable<double> Daily
-		{
-			get
-			{
-				return this._Daily;
-			}
-			set
-			{
-				if ((this._Daily != value))
-				{
-					this.OnDailyChanging(value);
-					this.SendPropertyChanging();
-					this._Daily = value;
-					this.SendPropertyChanged("Daily");
-					this.OnDailyChanged();
-				}
-			}
-		}
-		
-		[Column(Storage="_Weekly")]
-		public System.Nullable<double> Weekly
-		{
-			get
-			{
-				return this._Weekly;
-			}
-			set
-			{
-				if ((this._Weekly != value))
-				{
-					this.OnWeeklyChanging(value);
-					this.SendPropertyChanging();
-					this._Weekly = value;
-					this.SendPropertyChanged("Weekly");
-					this.OnWeeklyChanged();
-				}
-			}
-		}
-		
-		[Column(Storage="_Monthly")]
-		public System.Nullable<double> Monthly
-		{
-			get
-			{
-				return this._Monthly;
-			}
-			set
-			{
-				if ((this._Monthly != value))
-				{
-					this.OnMonthlyChanging(value);
-					this.SendPropertyChanging();
-					this._Monthly = value;
-					this.SendPropertyChanged("Monthly");
-					this.OnMonthlyChanged();
-				}
-			}
-		}
-		
-		[Association(Name="Company_RateDiscount", Storage="_Company", ThisKey="CompanyID", OtherKey="ID", IsForeignKey=true)]
-		public Company Company
-		{
-			get
-			{
-				return this._Company.Entity;
-			}
-			set
-			{
-				Company previousValue = this._Company.Entity;
-				if (((previousValue != value) 
-							|| (this._Company.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Company.Entity = null;
-						previousValue.RateDiscounts.Remove(this);
-					}
-					this._Company.Entity = value;
-					if ((value != null))
-					{
-						value.RateDiscounts.Add(this);
-						this._CompanyID = value.ID;
-					}
-					else
-					{
-						this._CompanyID = default(long);
-					}
-					this.SendPropertyChanged("Company");
 				}
 			}
 		}
@@ -8706,12 +8468,6 @@ namespace SingerDispatch
 		
 		private System.Nullable<double> _Hourly;
 		
-		private System.Nullable<double> _Daily;
-		
-		private System.Nullable<double> _Weekly;
-		
-		private System.Nullable<double> _Monthly;
-		
 		private bool _IsSpecialized;
 		
     #region Extensibility Method Definitions
@@ -8724,12 +8480,6 @@ namespace SingerDispatch
     partial void OnNameChanged();
     partial void OnHourlyChanging(System.Nullable<double> value);
     partial void OnHourlyChanged();
-    partial void OnDailyChanging(System.Nullable<double> value);
-    partial void OnDailyChanged();
-    partial void OnWeeklyChanging(System.Nullable<double> value);
-    partial void OnWeeklyChanged();
-    partial void OnMonthlyChanging(System.Nullable<double> value);
-    partial void OnMonthlyChanged();
     partial void OnIsSpecializedChanging(bool value);
     partial void OnIsSpecializedChanged();
     #endregion
@@ -8795,66 +8545,6 @@ namespace SingerDispatch
 					this._Hourly = value;
 					this.SendPropertyChanged("Hourly");
 					this.OnHourlyChanged();
-				}
-			}
-		}
-		
-		[Column(Storage="_Daily")]
-		public System.Nullable<double> Daily
-		{
-			get
-			{
-				return this._Daily;
-			}
-			set
-			{
-				if ((this._Daily != value))
-				{
-					this.OnDailyChanging(value);
-					this.SendPropertyChanging();
-					this._Daily = value;
-					this.SendPropertyChanged("Daily");
-					this.OnDailyChanged();
-				}
-			}
-		}
-		
-		[Column(Storage="_Weekly")]
-		public System.Nullable<double> Weekly
-		{
-			get
-			{
-				return this._Weekly;
-			}
-			set
-			{
-				if ((this._Weekly != value))
-				{
-					this.OnWeeklyChanging(value);
-					this.SendPropertyChanging();
-					this._Weekly = value;
-					this.SendPropertyChanged("Weekly");
-					this.OnWeeklyChanged();
-				}
-			}
-		}
-		
-		[Column(Storage="_Monthly")]
-		public System.Nullable<double> Monthly
-		{
-			get
-			{
-				return this._Monthly;
-			}
-			set
-			{
-				if ((this._Monthly != value))
-				{
-					this.OnMonthlyChanging(value);
-					this.SendPropertyChanging();
-					this._Monthly = value;
-					this.SendPropertyChanged("Monthly");
-					this.OnMonthlyChanged();
 				}
 			}
 		}

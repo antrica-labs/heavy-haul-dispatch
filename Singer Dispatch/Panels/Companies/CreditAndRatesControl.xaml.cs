@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using System.Linq;
 using System.Collections.ObjectModel;
+using System.Collections.Generic;
 
 namespace SingerDispatch.Panels.Companies
 {
@@ -8,21 +9,7 @@ namespace SingerDispatch.Panels.Companies
     /// Interaction logic for CreditAndRatesControl.xaml
     /// </summary>
     public partial class CreditAndRatesControl : CompanyUserControl
-    {        
-        public static DependencyProperty SelectedRateDiscountProperty = DependencyProperty.Register("SelectedRateDiscount", typeof(RateDiscount), typeof(CreditAndRatesControl));
-
-        public RateDiscount SelectedRateDiscount
-        {
-            get
-            {
-                return (RateDiscount)GetValue(SelectedRateDiscountProperty);
-            }
-            set
-            {
-                SetValue(SelectedRateDiscountProperty, value);
-            }
-        }
-
+    {   
         public SingerDispatchDataContext Database { get; set; }
         
         public CreditAndRatesControl()
@@ -37,42 +24,39 @@ namespace SingerDispatch.Panels.Companies
             cmbCreditCustomerType.ItemsSource = SingerConstants.CustomerTypes;
             cmbCreditPriority.ItemsSource = (from l in Database.CompanyPriorityLevels orderby l.Name select l).ToList();
 
-            dgCreditRates.ItemsSource = new ObservableCollection<Rate>(
-                (from r in Database.Rates select r).ToList()
-            );
+            if (SelectedCompany != null)
+            {
+                dgCreditRates.ItemsSource = GetAdjustedRates(SelectedCompany.RateAdjustment);
+            }
         }
 
         protected override void SelectedCompanyChanged(Company newValue, Company oldValue)
         {
             base.SelectedCompanyChanged(newValue, oldValue);
-
-            if (newValue == null)
-            {
-                return;
-            }
-
-            var rateDiscounts = from d in Database.RateDiscounts where d.CompanyID == newValue.ID select d;
-
-            SelectedRateDiscount = rateDiscounts.Count() > 0 ? rateDiscounts.First() : new RateDiscount { CompanyID = newValue.ID };
         }
 
-        private void DataGridCommit(object sender, Microsoft.Windows.Controls.DataGridRowEditEndingEventArgs e)
+        private List<Rate> GetAdjustedRates(double? discount)
         {
-            Database.SubmitChanges();
+            var rates = from r in Database.Rates select r;
+
+            if (discount == null)
+            {
+                return rates.ToList();
+            }
+            
+            foreach (var rate in rates)
+            {
+                if (rate.Hourly != null)
+                {
+                    rate.Adjusted = rate.Hourly * (1 + (discount / 100));
+                }
+            }            
+
+            return rates.ToList();
         }
 
         private void SaveDetails(object sender, RoutedEventArgs e)
         {
-            if (SelectedCompany == null)
-            {
-                return;
-            }
-
-            if (SelectedRateDiscount != null && SelectedRateDiscount.ID == 0)
-            {
-                Database.RateDiscounts.InsertOnSubmit(SelectedRateDiscount);
-            }
-
             Database.SubmitChanges();
         }
     }

@@ -26,7 +26,7 @@ namespace SingerDispatch
             Company = new Company();            
             companyDetails.DataContext = Company;
 
-            Address = new Address() { Company = Company };
+            Address = new Address();
             addressDetails.DataContext = Address;
         }
 
@@ -45,11 +45,13 @@ namespace SingerDispatch
 
         private void bttnCreateCompany_Click(object sender, RoutedEventArgs e)
         {
-            Address.ProvinceStateID = ((ProvincesAndState)cmbProvinceOrState.SelectedItem).ID;
+            if (cmbProvinceOrState.SelectedItem != null)
+            {
+                Company.Addresses.Add(Address);
+            }
 
             Database.Companies.InsertOnSubmit(Company);
-            Database.Addresses.InsertOnSubmit(Address);
-
+         
             try
             {
                 Database.SubmitChanges();

@@ -33,10 +33,10 @@
             </Grid.ColumnDefinitions>
 
             <Button Style="{StaticResource Horizontal}" Name="btnNewQuote" Grid.Column="0" Click="NewQuote_Click">New quote</Button>
-            <Button Style="{StaticResource Horizontal}" Name="btnCreateRevisoin" Grid.Column="1" Click="CreateRevision_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgQuotes, Path=SelectedItem}">Create revision</Button>
-            <Button Style="{StaticResource Horizontal}" Name="btnRemoveQuote" Grid.Column="2" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgQuotes, Path=SelectedItem}">Remove quote</Button>
-            <Button Style="{StaticResource Horizontal}" Name="btnCreateJob" Grid.Column="3" Click="CreateJob_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgQuotes, Path=SelectedItem}">Convert to job</Button>            
-            <Button Style="{StaticResource HorizontalEnd}" Name="btnPrintQuote" Grid.Column="4" Click="PrintQuote_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgQuotes, Path=SelectedItem}">Print quote</Button>
+            <Button Style="{StaticResource Horizontal}" Name="btnCreateRevisoin" Grid.Column="1" Click="CreateRevision_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgQuotes, Path=SelectedItem}">Create revision</Button>            
+            <Button Style="{StaticResource Horizontal}" Name="btnCreateJob" Grid.Column="2" Click="CreateJob_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgQuotes, Path=SelectedItem}">Convert to job</Button>            
+            <Button Style="{StaticResource Horizontal}" Name="btnPrintQuote" Grid.Column="3" Click="PrintQuote_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgQuotes, Path=SelectedItem}">Print quote</Button>
+            <Button Style="{StaticResource HorizontalEnd}" Name="btnRemoveQuote" Grid.Column="4" IsEnabled="false">Remove quote</Button>
         </Grid>
         
         <Grid Name="panelQuoteDetails" DataContext="{Binding ElementName=dgQuotes, Path=SelectedItem}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgQuotes, Path=SelectedItem}">

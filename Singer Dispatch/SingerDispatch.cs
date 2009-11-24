@@ -1,5 +1,9 @@
 namespace SingerDispatch
 {
+    partial class JobCommodity
+    {
+    }
+
     partial class Employee
     {
         public string Name
@@ -10,10 +14,6 @@ namespace SingerDispatch
             }
         }
 
-    }
-
-    partial class QuoteCommodity
-    {
     }
 
     partial class User
@@ -109,8 +109,37 @@ namespace SingerDispatch
         }
     }
 
+    partial class Commodity
+    {
+        partial void OnCreated()
+        {
+            if (WeightEstimated == null)
+            {
+                WeightEstimated = false;
+            }
+
+            if (SizeEstimated == null)
+            {
+                SizeEstimated = false;
+            }
+        }
+    }
+
     partial class QuoteCommodity : System.ICloneable
     {
+        partial void OnCreated()
+        {
+            if (WeightEstimated == null)
+            {
+                WeightEstimated = false;
+            }
+
+            if (SizeEstimated == null)
+            {
+                SizeEstimated = false;
+            }
+        }
+
         public object Clone()
         {
             QuoteCommodity copy = new QuoteCommodity();
@@ -171,6 +200,22 @@ namespace SingerDispatch
         }
     }
 
+    partial class JobCommodity
+    {
+        partial void OnCreated()
+        {
+            if (WeightEstimated == null)
+            {
+                WeightEstimated = false;
+            }
+
+            if (SizeEstimated == null)
+            {
+                SizeEstimated = false;
+            }
+        }
+    }
+
     partial class QuoteSupplement : System.ICloneable
     {
         public object Clone()
@@ -186,5 +231,10 @@ namespace SingerDispatch
 
             return copy;
         }
+    }
+
+    partial class Rate
+    {
+        public double? Adjusted { get; set; }
     }
 }
