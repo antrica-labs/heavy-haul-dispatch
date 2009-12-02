@@ -23,7 +23,14 @@ namespace SingerDispatch.Database
                 throw new Exception("Database already exists!");
             }
 
-            database.CreateDatabase();
+            try
+            {
+                database.CreateDatabase();
+            }
+            catch (Exception e)
+            {
+                var message = e.Message;
+            }
       
             // Populate countries and provinces
 
@@ -701,6 +708,20 @@ namespace SingerDispatch.Database
             database.Equipment.InsertAllOnSubmit(equipment);
                   
             
+            database.SubmitChanges();
+
+
+            AddTestData();
+        }
+
+        private void AddTestData()
+        {
+            var database = SingerConstants.CommonDataContext;
+
+            var company = new Company() { Name = "Siconix Inc", OperatingAs = "Siconix" };
+
+
+            database.Companies.InsertOnSubmit(company);
             database.SubmitChanges();
         }
     }

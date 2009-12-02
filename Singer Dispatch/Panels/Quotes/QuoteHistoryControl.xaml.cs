@@ -4,6 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Collections.ObjectModel;
 using System.Collections.Generic;
+using SingerDispatch.Database;
 
 namespace SingerDispatch.Panels.Quotes
 {
@@ -25,6 +26,8 @@ namespace SingerDispatch.Panels.Quotes
         {
             base.SelectedCompanyChanged(newValue, oldValue);
 
+            var list = new ObservableCollection<Quote>();
+
             if (newValue != null)
             {
                 dgQuotes.ItemsSource = new ObservableCollection<Quote>((from q in Database.Quotes where q.CompanyID == newValue.ID orderby q.Number descending, q.Revision descending select q).ToList());
@@ -41,29 +44,9 @@ namespace SingerDispatch.Panels.Quotes
 
         protected override void SelectedQuoteChanged(Quote newValue, Quote oldValue)
         {
-            base.SelectedQuoteChanged(newValue, oldValue);
-            
-            var quotes = (ObservableCollection<Quote>)dgQuotes.ItemsSource;
+            base.SelectedQuoteChanged(newValue, oldValue);         
 
-            if (newValue != null)
-            {
-                if (newValue.ID != 0)
-                {
-                    if (!quotes.Contains(newValue))
-                    {
-                        quotes.Insert(0, newValue);
-                        dgQuotes.SelectedItem = newValue;
-                    }                    
-                }
-
-                BubbleUpQuote(newValue);
-            }
-            else
-            {
-                // Remove any unsaved quotes (user wants them discarded) 
-                DiscardUnsavedQuotes();          
-            }
-                        
+            BubbleUpQuote(newValue);
             UpdateContactList();
         }
 
@@ -87,7 +70,7 @@ namespace SingerDispatch.Panels.Quotes
         {
             var quotes = (ObservableCollection<Quote>)dgQuotes.ItemsSource;
 
-            foreach (Quote q in quotes.ToList())
+            foreach (Quote q in quotes)
             {
                 if (q.ID == 0)
                 {
@@ -173,6 +156,25 @@ namespace SingerDispatch.Panels.Quotes
 
             var viewer = new DocumentViewer();
             viewer.DisplayQuotePrintout(SelectedQuote);
-        }        
+        }
+
+        private void DeleteQuote_Click(object sender, RoutedEventArgs e)
+        {
+            if (SelectedQuote == null)
+            {
+                return;
+            }
+
+            var quote = SelectedQuote;
+
+            BubbleUpQuote(null);
+
+            ((ObservableCollection<Quote>)dgQuotes.ItemsSource).Remove(quote);
+            SelectedCompany.Quotes.Remove(quote);
+
+            EntityHelper.PrepareEntityDelete(quote, Database);            
+            
+            Database.SubmitChanges();
+        }
     }
 }

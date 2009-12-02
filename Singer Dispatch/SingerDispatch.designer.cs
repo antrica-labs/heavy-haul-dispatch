@@ -548,7 +548,7 @@ namespace SingerDispatch
 		
 		private long _ID;
 		
-		private long _CompanyID;
+		private System.Nullable<long> _CompanyID;
 		
 		private System.Nullable<long> _AddressTypeID;
 		
@@ -584,7 +584,7 @@ namespace SingerDispatch
     partial void OnCreated();
     partial void OnIDChanging(long value);
     partial void OnIDChanged();
-    partial void OnCompanyIDChanging(long value);
+    partial void OnCompanyIDChanging(System.Nullable<long> value);
     partial void OnCompanyIDChanged();
     partial void OnAddressTypeIDChanging(System.Nullable<long> value);
     partial void OnAddressTypeIDChanged();
@@ -638,7 +638,7 @@ namespace SingerDispatch
 		}
 		
 		[Column(Storage="_CompanyID")]
-		public long CompanyID
+		public System.Nullable<long> CompanyID
 		{
 			get
 			{
@@ -943,7 +943,7 @@ namespace SingerDispatch
 					}
 					else
 					{
-						this._CompanyID = default(long);
+						this._CompanyID = default(Nullable<long>);
 					}
 					this.SendPropertyChanged("Company");
 				}
@@ -1253,7 +1253,7 @@ namespace SingerDispatch
 		
 		private long _ID;
 		
-		private long _CompanyID;
+		private System.Nullable<long> _CompanyID;
 		
 		private string _Name;
 		
@@ -1293,7 +1293,7 @@ namespace SingerDispatch
     partial void OnCreated();
     partial void OnIDChanging(long value);
     partial void OnIDChanged();
-    partial void OnCompanyIDChanging(long value);
+    partial void OnCompanyIDChanging(System.Nullable<long> value);
     partial void OnCompanyIDChanged();
     partial void OnNameChanging(string value);
     partial void OnNameChanged();
@@ -1353,7 +1353,7 @@ namespace SingerDispatch
 		}
 		
 		[Column(Storage="_CompanyID")]
-		public long CompanyID
+		public System.Nullable<long> CompanyID
 		{
 			get
 			{
@@ -1696,7 +1696,7 @@ namespace SingerDispatch
 					}
 					else
 					{
-						this._CompanyID = default(long);
+						this._CompanyID = default(Nullable<long>);
 					}
 					this.SendPropertyChanged("Company");
 				}
@@ -1744,6 +1744,8 @@ namespace SingerDispatch
 		
 		private long _ID;
 		
+		private System.Nullable<long> _PriorityLevelID;
+		
 		private string _Name;
 		
 		private string _OperatingAs;
@@ -1755,8 +1757,6 @@ namespace SingerDispatch
 		private string _AccPacVendorCode;
 		
 		private System.Nullable<bool> _EquifaxComplete;
-		
-		private System.Nullable<long> _PriorityLevelID;
 		
 		private string _Notes;
 		
@@ -1788,6 +1788,8 @@ namespace SingerDispatch
     partial void OnCreated();
     partial void OnIDChanging(long value);
     partial void OnIDChanged();
+    partial void OnPriorityLevelIDChanging(System.Nullable<long> value);
+    partial void OnPriorityLevelIDChanged();
     partial void OnNameChanging(string value);
     partial void OnNameChanged();
     partial void OnOperatingAsChanging(string value);
@@ -1800,8 +1802,6 @@ namespace SingerDispatch
     partial void OnAccPacVendorCodeChanged();
     partial void OnEquifaxCompleteChanging(System.Nullable<bool> value);
     partial void OnEquifaxCompleteChanged();
-    partial void OnPriorityLevelIDChanging(System.Nullable<long> value);
-    partial void OnPriorityLevelIDChanged();
     partial void OnNotesChanging(string value);
     partial void OnNotesChanged();
     partial void OnRateAdjustmentChanging(System.Nullable<double> value);
@@ -1839,6 +1839,30 @@ namespace SingerDispatch
 					this._ID = value;
 					this.SendPropertyChanged("ID");
 					this.OnIDChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_PriorityLevelID")]
+		public System.Nullable<long> PriorityLevelID
+		{
+			get
+			{
+				return this._PriorityLevelID;
+			}
+			set
+			{
+				if ((this._PriorityLevelID != value))
+				{
+					if (this._CompanyPriorityLevel.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnPriorityLevelIDChanging(value);
+					this.SendPropertyChanging();
+					this._PriorityLevelID = value;
+					this.SendPropertyChanged("PriorityLevelID");
+					this.OnPriorityLevelIDChanged();
 				}
 			}
 		}
@@ -1959,30 +1983,6 @@ namespace SingerDispatch
 					this._EquifaxComplete = value;
 					this.SendPropertyChanged("EquifaxComplete");
 					this.OnEquifaxCompleteChanged();
-				}
-			}
-		}
-		
-		[Column(Storage="_PriorityLevelID")]
-		public System.Nullable<long> PriorityLevelID
-		{
-			get
-			{
-				return this._PriorityLevelID;
-			}
-			set
-			{
-				if ((this._PriorityLevelID != value))
-				{
-					if (this._CompanyPriorityLevel.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnPriorityLevelIDChanging(value);
-					this.SendPropertyChanging();
-					this._PriorityLevelID = value;
-					this.SendPropertyChanged("PriorityLevelID");
-					this.OnPriorityLevelIDChanged();
 				}
 			}
 		}
@@ -2429,6 +2429,10 @@ namespace SingerDispatch
 		
 		private long _ID;
 		
+		private System.Nullable<long> _AddressID;
+		
+		private System.Nullable<long> _TypeID;
+		
 		private string _FirstName;
 		
 		private string _LastName;
@@ -2440,10 +2444,6 @@ namespace SingerDispatch
 		private string _SecondaryPhone;
 		
 		private string _PreferedContactMethod;
-		
-		private System.Nullable<long> _AddressID;
-		
-		private System.Nullable<long> _TypeID;
 		
 		private string _Notes;
 		
@@ -2459,6 +2459,10 @@ namespace SingerDispatch
     partial void OnCreated();
     partial void OnIDChanging(long value);
     partial void OnIDChanged();
+    partial void OnAddressIDChanging(System.Nullable<long> value);
+    partial void OnAddressIDChanged();
+    partial void OnTypeIDChanging(System.Nullable<long> value);
+    partial void OnTypeIDChanged();
     partial void OnFirstNameChanging(string value);
     partial void OnFirstNameChanged();
     partial void OnLastNameChanging(string value);
@@ -2471,10 +2475,6 @@ namespace SingerDispatch
     partial void OnSecondaryPhoneChanged();
     partial void OnPreferedContactMethodChanging(string value);
     partial void OnPreferedContactMethodChanged();
-    partial void OnAddressIDChanging(System.Nullable<long> value);
-    partial void OnAddressIDChanged();
-    partial void OnTypeIDChanging(System.Nullable<long> value);
-    partial void OnTypeIDChanged();
     partial void OnNotesChanging(string value);
     partial void OnNotesChanged();
     #endregion
@@ -2503,6 +2503,54 @@ namespace SingerDispatch
 					this._ID = value;
 					this.SendPropertyChanged("ID");
 					this.OnIDChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_AddressID")]
+		public System.Nullable<long> AddressID
+		{
+			get
+			{
+				return this._AddressID;
+			}
+			set
+			{
+				if ((this._AddressID != value))
+				{
+					if (this._Address.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnAddressIDChanging(value);
+					this.SendPropertyChanging();
+					this._AddressID = value;
+					this.SendPropertyChanged("AddressID");
+					this.OnAddressIDChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_TypeID")]
+		public System.Nullable<long> TypeID
+		{
+			get
+			{
+				return this._TypeID;
+			}
+			set
+			{
+				if ((this._TypeID != value))
+				{
+					if (this._ContactType.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnTypeIDChanging(value);
+					this.SendPropertyChanging();
+					this._TypeID = value;
+					this.SendPropertyChanged("TypeID");
+					this.OnTypeIDChanged();
 				}
 			}
 		}
@@ -2623,54 +2671,6 @@ namespace SingerDispatch
 					this._PreferedContactMethod = value;
 					this.SendPropertyChanged("PreferedContactMethod");
 					this.OnPreferedContactMethodChanged();
-				}
-			}
-		}
-		
-		[Column(Storage="_AddressID")]
-		public System.Nullable<long> AddressID
-		{
-			get
-			{
-				return this._AddressID;
-			}
-			set
-			{
-				if ((this._AddressID != value))
-				{
-					if (this._Address.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnAddressIDChanging(value);
-					this.SendPropertyChanging();
-					this._AddressID = value;
-					this.SendPropertyChanged("AddressID");
-					this.OnAddressIDChanged();
-				}
-			}
-		}
-		
-		[Column(Storage="_TypeID")]
-		public System.Nullable<long> TypeID
-		{
-			get
-			{
-				return this._TypeID;
-			}
-			set
-			{
-				if ((this._TypeID != value))
-				{
-					if (this._ContactType.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnTypeIDChanging(value);
-					this.SendPropertyChanging();
-					this._TypeID = value;
-					this.SendPropertyChanged("TypeID");
-					this.OnTypeIDChanged();
 				}
 			}
 		}
@@ -3045,7 +3045,7 @@ namespace SingerDispatch
 		
 		private long _ID;
 		
-		private long _CompanyID;
+		private System.Nullable<long> _CompanyID;
 		
 		private string _Field;
 		
@@ -3059,7 +3059,7 @@ namespace SingerDispatch
     partial void OnCreated();
     partial void OnIDChanging(long value);
     partial void OnIDChanged();
-    partial void OnCompanyIDChanging(long value);
+    partial void OnCompanyIDChanging(System.Nullable<long> value);
     partial void OnCompanyIDChanged();
     partial void OnFieldChanging(string value);
     partial void OnFieldChanged();
@@ -3094,7 +3094,7 @@ namespace SingerDispatch
 		}
 		
 		[Column(Storage="_CompanyID")]
-		public long CompanyID
+		public System.Nullable<long> CompanyID
 		{
 			get
 			{
@@ -3184,7 +3184,7 @@ namespace SingerDispatch
 					}
 					else
 					{
-						this._CompanyID = default(long);
+						this._CompanyID = default(Nullable<long>);
 					}
 					this.SendPropertyChanged("Company");
 				}
@@ -3754,7 +3754,7 @@ namespace SingerDispatch
 		
 		private System.Nullable<System.DateTime> _LoadDate;
 		
-		private string _LoadInstrucitons;
+		private string _LoadInstructions;
 		
 		private string _LoadRoute;
 		
@@ -3830,8 +3830,8 @@ namespace SingerDispatch
     partial void OnLoadMethodChanged();
     partial void OnLoadDateChanging(System.Nullable<System.DateTime> value);
     partial void OnLoadDateChanged();
-    partial void OnLoadInstrucitonsChanging(string value);
-    partial void OnLoadInstrucitonsChanged();
+    partial void OnLoadInstructionsChanging(string value);
+    partial void OnLoadInstructionsChanged();
     partial void OnLoadRouteChanging(string value);
     partial void OnLoadRouteChanged();
     partial void OnUnloadSiteNameChanging(string value);
@@ -4350,22 +4350,22 @@ namespace SingerDispatch
 			}
 		}
 		
-		[Column(Storage="_LoadInstrucitons")]
-		public string LoadInstrucitons
+		[Column(Storage="_LoadInstructions")]
+		public string LoadInstructions
 		{
 			get
 			{
-				return this._LoadInstrucitons;
+				return this._LoadInstructions;
 			}
 			set
 			{
-				if ((this._LoadInstrucitons != value))
+				if ((this._LoadInstructions != value))
 				{
-					this.OnLoadInstrucitonsChanging(value);
+					this.OnLoadInstructionsChanging(value);
 					this.SendPropertyChanging();
-					this._LoadInstrucitons = value;
-					this.SendPropertyChanged("LoadInstrucitons");
-					this.OnLoadInstrucitonsChanged();
+					this._LoadInstructions = value;
+					this.SendPropertyChanged("LoadInstructions");
+					this.OnLoadInstructionsChanged();
 				}
 			}
 		}
@@ -4661,8 +4661,6 @@ namespace SingerDispatch
 		
 		private long _ID;
 		
-		private int _Number;
-		
 		private System.Nullable<long> _CompanyID;
 		
 		private System.Nullable<long> _QuoteID;
@@ -4671,13 +4669,15 @@ namespace SingerDispatch
 		
 		private System.Nullable<long> _QuotedByUserID;
 		
+		private System.Nullable<long> _StatusTypeID;
+		
+		private int _Number;
+		
 		private string _Description;
 		
 		private System.Nullable<System.DateTime> _StartDate;
 		
 		private System.Nullable<System.DateTime> _EndDate;
-		
-		private System.Nullable<long> _StatusTypeID;
 		
 		private EntitySet<JobCommodity> _JobCommodities;
 		
@@ -4705,8 +4705,6 @@ namespace SingerDispatch
     partial void OnCreated();
     partial void OnIDChanging(long value);
     partial void OnIDChanged();
-    partial void OnNumberChanging(int value);
-    partial void OnNumberChanged();
     partial void OnCompanyIDChanging(System.Nullable<long> value);
     partial void OnCompanyIDChanged();
     partial void OnQuoteIDChanging(System.Nullable<long> value);
@@ -4715,14 +4713,16 @@ namespace SingerDispatch
     partial void OnCareOfCompanyIDChanged();
     partial void OnQuotedByUserIDChanging(System.Nullable<long> value);
     partial void OnQuotedByUserIDChanged();
+    partial void OnStatusTypeIDChanging(System.Nullable<long> value);
+    partial void OnStatusTypeIDChanged();
+    partial void OnNumberChanging(int value);
+    partial void OnNumberChanged();
     partial void OnDescriptionChanging(string value);
     partial void OnDescriptionChanged();
     partial void OnStartDateChanging(System.Nullable<System.DateTime> value);
     partial void OnStartDateChanged();
     partial void OnEndDateChanging(System.Nullable<System.DateTime> value);
     partial void OnEndDateChanged();
-    partial void OnStatusTypeIDChanging(System.Nullable<long> value);
-    partial void OnStatusTypeIDChanged();
     #endregion
 		
 		public Job()
@@ -4756,26 +4756,6 @@ namespace SingerDispatch
 					this._ID = value;
 					this.SendPropertyChanged("ID");
 					this.OnIDChanged();
-				}
-			}
-		}
-		
-		[Column(Storage="_Number")]
-		public int Number
-		{
-			get
-			{
-				return this._Number;
-			}
-			set
-			{
-				if ((this._Number != value))
-				{
-					this.OnNumberChanging(value);
-					this.SendPropertyChanging();
-					this._Number = value;
-					this.SendPropertyChanged("Number");
-					this.OnNumberChanged();
 				}
 			}
 		}
@@ -4876,6 +4856,50 @@ namespace SingerDispatch
 			}
 		}
 		
+		[Column(Storage="_StatusTypeID")]
+		public System.Nullable<long> StatusTypeID
+		{
+			get
+			{
+				return this._StatusTypeID;
+			}
+			set
+			{
+				if ((this._StatusTypeID != value))
+				{
+					if (this._JobStatusType.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnStatusTypeIDChanging(value);
+					this.SendPropertyChanging();
+					this._StatusTypeID = value;
+					this.SendPropertyChanged("StatusTypeID");
+					this.OnStatusTypeIDChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_Number")]
+		public int Number
+		{
+			get
+			{
+				return this._Number;
+			}
+			set
+			{
+				if ((this._Number != value))
+				{
+					this.OnNumberChanging(value);
+					this.SendPropertyChanging();
+					this._Number = value;
+					this.SendPropertyChanged("Number");
+					this.OnNumberChanged();
+				}
+			}
+		}
+		
 		[Column(Storage="_Description")]
 		public string Description
 		{
@@ -4932,30 +4956,6 @@ namespace SingerDispatch
 					this._EndDate = value;
 					this.SendPropertyChanged("EndDate");
 					this.OnEndDateChanged();
-				}
-			}
-		}
-		
-		[Column(Storage="_StatusTypeID")]
-		public System.Nullable<long> StatusTypeID
-		{
-			get
-			{
-				return this._StatusTypeID;
-			}
-			set
-			{
-				if ((this._StatusTypeID != value))
-				{
-					if (this._JobStatusType.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnStatusTypeIDChanging(value);
-					this.SendPropertyChanging();
-					this._StatusTypeID = value;
-					this.SendPropertyChanged("StatusTypeID");
-					this.OnStatusTypeIDChanged();
 				}
 			}
 		}
@@ -5404,6 +5404,8 @@ namespace SingerDispatch
 		
 		private System.Nullable<long> _WheelTypeID;
 		
+		private System.Nullable<long> _SeasonID;
+		
 		private System.Nullable<long> _TrailerCombinationID;
 		
 		private string _Info;
@@ -5411,8 +5413,6 @@ namespace SingerDispatch
 		private System.Nullable<System.DateTime> _StartDate;
 		
 		private System.Nullable<System.DateTime> _EndDate;
-		
-		private System.Nullable<long> _SeasonID;
 		
 		private string _Ban;
 		
@@ -5484,6 +5484,8 @@ namespace SingerDispatch
     partial void OnEquipmentIDChanged();
     partial void OnWheelTypeIDChanging(System.Nullable<long> value);
     partial void OnWheelTypeIDChanged();
+    partial void OnSeasonIDChanging(System.Nullable<long> value);
+    partial void OnSeasonIDChanged();
     partial void OnTrailerCombinationIDChanging(System.Nullable<long> value);
     partial void OnTrailerCombinationIDChanged();
     partial void OnInfoChanging(string value);
@@ -5492,8 +5494,6 @@ namespace SingerDispatch
     partial void OnStartDateChanged();
     partial void OnEndDateChanging(System.Nullable<System.DateTime> value);
     partial void OnEndDateChanged();
-    partial void OnSeasonIDChanging(System.Nullable<long> value);
-    partial void OnSeasonIDChanged();
     partial void OnBanChanging(string value);
     partial void OnBanChanged();
     partial void OnServiceDescriptionChanging(string value);
@@ -5642,6 +5642,30 @@ namespace SingerDispatch
 			}
 		}
 		
+		[Column(Storage="_SeasonID")]
+		public System.Nullable<long> SeasonID
+		{
+			get
+			{
+				return this._SeasonID;
+			}
+			set
+			{
+				if ((this._SeasonID != value))
+				{
+					if (this._Season.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnSeasonIDChanging(value);
+					this.SendPropertyChanging();
+					this._SeasonID = value;
+					this.SendPropertyChanged("SeasonID");
+					this.OnSeasonIDChanged();
+				}
+			}
+		}
+		
 		[Column(Storage="_TrailerCombinationID")]
 		public System.Nullable<long> TrailerCombinationID
 		{
@@ -5722,30 +5746,6 @@ namespace SingerDispatch
 					this._EndDate = value;
 					this.SendPropertyChanged("EndDate");
 					this.OnEndDateChanged();
-				}
-			}
-		}
-		
-		[Column(Storage="_SeasonID")]
-		public System.Nullable<long> SeasonID
-		{
-			get
-			{
-				return this._SeasonID;
-			}
-			set
-			{
-				if ((this._SeasonID != value))
-				{
-					if (this._Season.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnSeasonIDChanging(value);
-					this.SendPropertyChanging();
-					this._SeasonID = value;
-					this.SendPropertyChanged("SeasonID");
-					this.OnSeasonIDChanged();
 				}
 			}
 		}
@@ -6809,9 +6809,9 @@ namespace SingerDispatch
 		
 		private long _ID;
 		
-		private string _Name;
+		private System.Nullable<long> _CountryID;
 		
-		private long _CountryID;
+		private string _Name;
 		
 		private EntitySet<Address> _Addresses;
 		
@@ -6823,10 +6823,10 @@ namespace SingerDispatch
     partial void OnCreated();
     partial void OnIDChanging(long value);
     partial void OnIDChanged();
+    partial void OnCountryIDChanging(System.Nullable<long> value);
+    partial void OnCountryIDChanged();
     partial void OnNameChanging(string value);
     partial void OnNameChanged();
-    partial void OnCountryIDChanging(long value);
-    partial void OnCountryIDChanged();
     #endregion
 		
 		public ProvincesAndState()
@@ -6856,28 +6856,8 @@ namespace SingerDispatch
 			}
 		}
 		
-		[Column(Storage="_Name", CanBeNull=false)]
-		public string Name
-		{
-			get
-			{
-				return this._Name;
-			}
-			set
-			{
-				if ((this._Name != value))
-				{
-					this.OnNameChanging(value);
-					this.SendPropertyChanging();
-					this._Name = value;
-					this.SendPropertyChanged("Name");
-					this.OnNameChanged();
-				}
-			}
-		}
-		
 		[Column(Storage="_CountryID")]
-		public long CountryID
+		public System.Nullable<long> CountryID
 		{
 			get
 			{
@@ -6896,6 +6876,26 @@ namespace SingerDispatch
 					this._CountryID = value;
 					this.SendPropertyChanged("CountryID");
 					this.OnCountryIDChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_Name")]
+		public string Name
+		{
+			get
+			{
+				return this._Name;
+			}
+			set
+			{
+				if ((this._Name != value))
+				{
+					this.OnNameChanging(value);
+					this.SendPropertyChanging();
+					this._Name = value;
+					this.SendPropertyChanged("Name");
+					this.OnNameChanged();
 				}
 			}
 		}
@@ -6940,7 +6940,7 @@ namespace SingerDispatch
 					}
 					else
 					{
-						this._CountryID = default(long);
+						this._CountryID = default(Nullable<long>);
 					}
 					this.SendPropertyChanged("Country");
 				}
@@ -7619,7 +7619,7 @@ namespace SingerDispatch
 		
 		private long _ID;
 		
-		private long _CompanyID;
+		private System.Nullable<long> _CompanyID;
 		
 		private int _Number;
 		
@@ -7661,7 +7661,7 @@ namespace SingerDispatch
     partial void OnCreated();
     partial void OnIDChanging(long value);
     partial void OnIDChanged();
-    partial void OnCompanyIDChanging(long value);
+    partial void OnCompanyIDChanging(System.Nullable<long> value);
     partial void OnCompanyIDChanged();
     partial void OnNumberChanging(int value);
     partial void OnNumberChanged();
@@ -7719,7 +7719,7 @@ namespace SingerDispatch
 		}
 		
 		[Column(Storage="_CompanyID")]
-		public long CompanyID
+		public System.Nullable<long> CompanyID
 		{
 			get
 			{
@@ -8036,7 +8036,7 @@ namespace SingerDispatch
 					}
 					else
 					{
-						this._CompanyID = default(long);
+						this._CompanyID = default(Nullable<long>);
 					}
 					this.SendPropertyChanged("Company");
 				}
@@ -8178,11 +8178,11 @@ namespace SingerDispatch
 		
 		private System.Nullable<long> _QuoteID;
 		
+		private System.Nullable<long> _BillingTypeID;
+		
 		private string _Name;
 		
 		private string _Details;
-		
-		private System.Nullable<long> _BillingTypeID;
 		
 		private System.Nullable<int> _Quantity;
 		
@@ -8200,12 +8200,12 @@ namespace SingerDispatch
     partial void OnIDChanged();
     partial void OnQuoteIDChanging(System.Nullable<long> value);
     partial void OnQuoteIDChanged();
+    partial void OnBillingTypeIDChanging(System.Nullable<long> value);
+    partial void OnBillingTypeIDChanged();
     partial void OnNameChanging(string value);
     partial void OnNameChanged();
     partial void OnDetailsChanging(string value);
     partial void OnDetailsChanged();
-    partial void OnBillingTypeIDChanging(System.Nullable<long> value);
-    partial void OnBillingTypeIDChanged();
     partial void OnQuantityChanging(System.Nullable<int> value);
     partial void OnQuantityChanged();
     partial void OnCostPerItemChanging(System.Nullable<decimal> value);
@@ -8263,6 +8263,30 @@ namespace SingerDispatch
 			}
 		}
 		
+		[Column(Storage="_BillingTypeID")]
+		public System.Nullable<long> BillingTypeID
+		{
+			get
+			{
+				return this._BillingTypeID;
+			}
+			set
+			{
+				if ((this._BillingTypeID != value))
+				{
+					if (this._BillingType.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnBillingTypeIDChanging(value);
+					this.SendPropertyChanging();
+					this._BillingTypeID = value;
+					this.SendPropertyChanged("BillingTypeID");
+					this.OnBillingTypeIDChanged();
+				}
+			}
+		}
+		
 		[Column(Storage="_Name")]
 		public string Name
 		{
@@ -8299,30 +8323,6 @@ namespace SingerDispatch
 					this._Details = value;
 					this.SendPropertyChanged("Details");
 					this.OnDetailsChanged();
-				}
-			}
-		}
-		
-		[Column(Storage="_BillingTypeID")]
-		public System.Nullable<long> BillingTypeID
-		{
-			get
-			{
-				return this._BillingTypeID;
-			}
-			set
-			{
-				if ((this._BillingTypeID != value))
-				{
-					if (this._BillingType.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnBillingTypeIDChanging(value);
-					this.SendPropertyChanging();
-					this._BillingTypeID = value;
-					this.SendPropertyChanged("BillingTypeID");
-					this.OnBillingTypeIDChanged();
 				}
 			}
 		}
@@ -9046,7 +9046,7 @@ namespace SingerDispatch
 		
 		private long _ID;
 		
-		private long _JobID;
+		private System.Nullable<long> _JobID;
 		
 		private System.Nullable<long> _LoadID;
 		
@@ -9082,7 +9082,7 @@ namespace SingerDispatch
     partial void OnCreated();
     partial void OnIDChanging(long value);
     partial void OnIDChanged();
-    partial void OnJobIDChanging(long value);
+    partial void OnJobIDChanging(System.Nullable<long> value);
     partial void OnJobIDChanged();
     partial void OnLoadIDChanging(System.Nullable<long> value);
     partial void OnLoadIDChanged();
@@ -9135,7 +9135,7 @@ namespace SingerDispatch
 		}
 		
 		[Column(Storage="_JobID")]
-		public long JobID
+		public System.Nullable<long> JobID
 		{
 			get
 			{
@@ -9449,7 +9449,7 @@ namespace SingerDispatch
 					}
 					else
 					{
-						this._JobID = default(long);
+						this._JobID = default(Nullable<long>);
 					}
 					this.SendPropertyChanged("Job");
 				}
@@ -9971,11 +9971,13 @@ namespace SingerDispatch
 		
 		private long _ID;
 		
+		private System.Nullable<long> _DefaultDriverID;
+		
+		private System.Nullable<long> _ClassID;
+		
 		private string _UnitNumber;
 		
 		private string _Serial;
-		
-		private System.Nullable<long> _DefaultDriverID;
 		
 		private string _Make;
 		
@@ -9992,8 +9994,6 @@ namespace SingerDispatch
 		private string _EngineType;
 		
 		private System.Nullable<bool> _IsDispatchable;
-		
-		private System.Nullable<long> _ClassID;
 		
 		private System.Nullable<decimal> _Tare;
 		
@@ -10031,12 +10031,14 @@ namespace SingerDispatch
     partial void OnCreated();
     partial void OnIDChanging(long value);
     partial void OnIDChanged();
+    partial void OnDefaultDriverIDChanging(System.Nullable<long> value);
+    partial void OnDefaultDriverIDChanged();
+    partial void OnClassIDChanging(System.Nullable<long> value);
+    partial void OnClassIDChanged();
     partial void OnUnitNumberChanging(string value);
     partial void OnUnitNumberChanged();
     partial void OnSerialChanging(string value);
     partial void OnSerialChanged();
-    partial void OnDefaultDriverIDChanging(System.Nullable<long> value);
-    partial void OnDefaultDriverIDChanged();
     partial void OnMakeChanging(string value);
     partial void OnMakeChanged();
     partial void OnModelChanging(string value);
@@ -10053,8 +10055,6 @@ namespace SingerDispatch
     partial void OnEngineTypeChanged();
     partial void OnIsDispatchableChanging(System.Nullable<bool> value);
     partial void OnIsDispatchableChanged();
-    partial void OnClassIDChanging(System.Nullable<long> value);
-    partial void OnClassIDChanged();
     partial void OnTareChanging(System.Nullable<decimal> value);
     partial void OnTareChanged();
     partial void OnHeightChanging(System.Nullable<decimal> value);
@@ -10108,6 +10108,54 @@ namespace SingerDispatch
 			}
 		}
 		
+		[Column(Storage="_DefaultDriverID")]
+		public System.Nullable<long> DefaultDriverID
+		{
+			get
+			{
+				return this._DefaultDriverID;
+			}
+			set
+			{
+				if ((this._DefaultDriverID != value))
+				{
+					if (this._Employee.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnDefaultDriverIDChanging(value);
+					this.SendPropertyChanging();
+					this._DefaultDriverID = value;
+					this.SendPropertyChanged("DefaultDriverID");
+					this.OnDefaultDriverIDChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_ClassID")]
+		public System.Nullable<long> ClassID
+		{
+			get
+			{
+				return this._ClassID;
+			}
+			set
+			{
+				if ((this._ClassID != value))
+				{
+					if (this._EquipmentClass.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnClassIDChanging(value);
+					this.SendPropertyChanging();
+					this._ClassID = value;
+					this.SendPropertyChanged("ClassID");
+					this.OnClassIDChanged();
+				}
+			}
+		}
+		
 		[Column(Storage="_UnitNumber")]
 		public string UnitNumber
 		{
@@ -10144,30 +10192,6 @@ namespace SingerDispatch
 					this._Serial = value;
 					this.SendPropertyChanged("Serial");
 					this.OnSerialChanged();
-				}
-			}
-		}
-		
-		[Column(Storage="_DefaultDriverID")]
-		public System.Nullable<long> DefaultDriverID
-		{
-			get
-			{
-				return this._DefaultDriverID;
-			}
-			set
-			{
-				if ((this._DefaultDriverID != value))
-				{
-					if (this._Employee.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnDefaultDriverIDChanging(value);
-					this.SendPropertyChanging();
-					this._DefaultDriverID = value;
-					this.SendPropertyChanged("DefaultDriverID");
-					this.OnDefaultDriverIDChanged();
 				}
 			}
 		}
@@ -10328,30 +10352,6 @@ namespace SingerDispatch
 					this._IsDispatchable = value;
 					this.SendPropertyChanged("IsDispatchable");
 					this.OnIsDispatchableChanged();
-				}
-			}
-		}
-		
-		[Column(Storage="_ClassID")]
-		public System.Nullable<long> ClassID
-		{
-			get
-			{
-				return this._ClassID;
-			}
-			set
-			{
-				if ((this._ClassID != value))
-				{
-					if (this._EquipmentClass.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnClassIDChanging(value);
-					this.SendPropertyChanging();
-					this._ClassID = value;
-					this.SendPropertyChanged("ClassID");
-					this.OnClassIDChanged();
 				}
 			}
 		}

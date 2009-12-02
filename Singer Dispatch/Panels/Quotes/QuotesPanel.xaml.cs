@@ -24,31 +24,16 @@ namespace SingerDispatch.Panels.Quotes
             base.SelectedCompanyChanged(newValue, oldValue);
 
             IsEnabled = newValue != null;
+            SelectedQuote = null;
+
+            Tabs.SelectedIndex = 0;
         }
 
         protected override void SelectedQuoteChanged(Quote newValue, Quote oldValue)
         {
             base.SelectedQuoteChanged(newValue, oldValue);
-        
-            if (newValue == null)
-            {
-                tabSupplements.IsEnabled = false;
-                ((UserControl)tabSupplements.Content).IsEnabled = false;
 
-                tabCommodities.IsEnabled = false;
-                ((UserControl)tabCommodities.Content).IsEnabled = false;
-            }
-            else
-            {
-                tabSupplements.IsEnabled = true;
-                ((UserControl)tabSupplements.Content).IsEnabled = true;
-
-                tabCommodities.IsEnabled = true;
-                ((UserControl)tabCommodities.Content).IsEnabled = true;
-
-                btnCommitChanges.IsEnabled = true;
-                btnDiscardChanges.IsEnabled = true;
-            }
+            Tabs.SelectedIndex = 0;
         }
       
         private void btnDiscardChanges_Click(object sender, RoutedEventArgs e)

@@ -27,7 +27,7 @@
                     <Label Content="{Binding Path=SelectedQuote.FriendlyName}" FontWeight="Bold" />
                 </StackPanel>                
                 
-                <Button Style="{StaticResource Horizontal}" Name="btnDiscardChanges" Grid.Column="2" Click="btnDiscardChanges_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=quotesPanel, Path=SelectedQuote}">Discard changes</Button>
+                <!-- <Button Style="{StaticResource Horizontal}" Name="btnDiscardChanges" Grid.Column="2" Click="btnDiscardChanges_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=quotesPanel, Path=SelectedQuote}">Discard changes</Button> -->
                 <Button Style="{StaticResource HorizontalEnd}" Name="btnCommitChanges" Grid.Column="3" Click="btnCommitChanges_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=quotesPanel, Path=SelectedQuote}">Save changes</Button>                
             </Grid>
         </Border>

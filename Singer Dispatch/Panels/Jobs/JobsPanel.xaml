@@ -27,26 +27,27 @@
                     <Label Content="{Binding Number}" FontWeight="Bold" />
                 </StackPanel>
                 
-                <Button Style="{StaticResource HorizontalEnd}" Name="btnCommitChanges" Grid.Column="3" Click="btnCommitChanges_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=jobsPanel, Path=SelectedJob}">Save changes</Button>            </Grid>
+                <Button Style="{StaticResource HorizontalEnd}" Name="btnCommitChanges" Grid.Column="3" Click="btnCommitChanges_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=jobsPanel, Path=SelectedJob}">Save changes</Button>
+            </Grid>
         </Border>
 
         <TabControl Name="Tabs" DataContext="{Binding ElementName=jobsPanel}">
             <TabItem Name="masterTab" Header="Jobs History">
                 <Jobs:JobHistoryControl Width="Auto" SelectedCompany="{Binding Path=SelectedCompany}" SelectedJob="{Binding Path=SelectedJob}" />
             </TabItem>
-            <TabItem Header="Loads" IsEnabled="False">
+            <TabItem Header="Loads" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=jobsPanel, Path=SelectedJob}">
                 <Jobs:LoadsControl Width="Auto" SelectedJob="{Binding Path=SelectedJob}" />
             </TabItem>
-            <TabItem Header="Commodities" IsEnabled="False">
+            <TabItem Header="Commodities" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=jobsPanel, Path=SelectedJob}">
                 <Jobs:JobCommoditiesControl Width="Auto" SelectedJob="{Binding Path=SelectedJob}" />
             </TabItem>
-            <TabItem Header="Third Party Services" IsEnabled="False">
+            <TabItem Header="Third Party Services" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=jobsPanel, Path=SelectedJob}">
                 <Jobs:ThirdPartyServicesControl Width="Auto" SelectedJob="{Binding Path=SelectedJob}" />
             </TabItem>
-            <TabItem Header="Permits" IsEnabled="False">
+            <TabItem Header="Permits" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=jobsPanel, Path=SelectedJob}">
                 <Jobs:PermitsControl Width="Auto" SelectedJob="{Binding Path=SelectedJob}" />
             </TabItem>
-            <TabItem Header="Dispatches" IsEnabled="False">
+            <TabItem Header="Dispatches" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=jobsPanel, Path=SelectedJob}">
                 <Jobs:DispatchesControl Width="Auto" SelectedJob="{Binding Path=SelectedJob}" />
             </TabItem>           
         </TabControl>

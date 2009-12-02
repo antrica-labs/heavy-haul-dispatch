@@ -19,21 +19,12 @@ namespace SingerDispatch.Panels.Jobs
             base.SelectedCompanyChanged(newValue, oldValue);
 
             IsEnabled = newValue != null;
+            SelectedJob = null;
         }
 
         protected override void SelectedJobChanged(Job newValue, Job oldValue)
         {
             base.SelectedJobChanged(newValue, oldValue);
-
-            bool enable = (newValue != null);
-
-            foreach (TabItem tab in Tabs.Items)
-            {
-                if (tab != masterTab)
-                {
-                    tab.IsEnabled = enable;
-                }
-            }
         }
 
         private void btnCommitChanges_Click(object sender, RoutedEventArgs e)

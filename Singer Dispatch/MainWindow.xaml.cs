@@ -199,6 +199,10 @@ namespace SingerDispatch
             cmbCompanies.SelectedItem = job.Company;            
                         
             ExpandSection(expanderJobs, typeof(JobsPanel));
+
+            ((JobsPanel)panelMainContent.Child).SelectedJob = null;
+            ((JobsPanel)panelMainContent.Child).SelectedCompany = null;             
+
             ((JobsPanel)panelMainContent.Child).SelectedCompany = job.Company;
             ((JobsPanel)panelMainContent.Child).SelectedJob = job;           
         }
@@ -213,7 +217,11 @@ namespace SingerDispatch
             cmbCompanies.SelectedItem = quote.Company;
 
             ExpandSection(expanderQuotes, typeof(QuotesPanel));
-            ((QuotesPanel)panelMainContent.Child).SelectedCompany = quote.Company;
+
+            ((QuotesPanel)panelMainContent.Child).SelectedQuote = null;
+            ((QuotesPanel)panelMainContent.Child).SelectedCompany = null;
+                
+            ((QuotesPanel)panelMainContent.Child).SelectedCompany = quote.Company;            
             ((QuotesPanel)panelMainContent.Child).SelectedQuote = quote;
         }
     }

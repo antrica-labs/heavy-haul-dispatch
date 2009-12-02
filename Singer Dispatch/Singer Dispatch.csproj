@@ -44,6 +44,7 @@
     </Reference>
     <Reference Include="System.DirectoryServices" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -59,6 +60,7 @@
       <DependentUpon>CreateCompanyWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Database\DatabaseBuilder.cs" />
+    <Compile Include="Database\EntityHelper.cs" />
     <Compile Include="DocumentViewer.xaml.cs">
       <DependentUpon>DocumentViewer.xaml</DependentUpon>
     </Compile>
@@ -289,6 +291,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Logo.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="CurrentBugs.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

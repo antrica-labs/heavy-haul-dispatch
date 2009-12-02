@@ -1,7 +1,14 @@
 namespace SingerDispatch
 {
-    partial class JobCommodity
+    partial class Company
     {
+        partial void OnCreated()
+        {
+            if (EquifaxComplete == null)
+            {
+                EquifaxComplete = false;
+            }
+        }
     }
 
     partial class Employee
@@ -236,5 +243,27 @@ namespace SingerDispatch
     partial class Rate
     {
         public double? Adjusted { get; set; }
+    }
+
+    partial class Load
+    {
+        partial void  OnCreated()
+        {
+ 	        if (WeightEstimated == null)
+            {
+                WeightEstimated = false;
+            }
+        }
+
+        public string FriendlyName
+        {
+            get
+            {
+                if (Equipment != null)
+                    return "Unit: " + Equipment.UnitNumber;
+                else
+                    return "Unit: (undefined)";
+            }
+        }
     }
 }

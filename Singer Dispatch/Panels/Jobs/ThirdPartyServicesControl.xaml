@@ -11,7 +11,7 @@
             </ResourceDictionary.MergedDictionaries>
 
             <DataTemplate x:Key="LoadNameTemplate">
-                <TextBlock Text="{Binding Unit.Name}" />
+                <TextBlock Text="{Binding FriendlyName}" />
             </DataTemplate>
         </ResourceDictionary>
     </UserControl.Resources>

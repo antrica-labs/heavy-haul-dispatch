@@ -1,0 +1,7 @@
+﻿Quotes -> Quote history -> Convert to job: 
+	If the Jobs section has been visited already, then the newly created job wont be selected properly in the list of jobs.
+
+Jobs -> Job history -> View quote:
+	If the Quotes section has been visited already, then the quote wont be highlighted properly.
+	
+	

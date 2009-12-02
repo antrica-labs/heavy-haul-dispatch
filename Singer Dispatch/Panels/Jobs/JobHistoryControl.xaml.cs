@@ -4,6 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Collections.ObjectModel;
+using SingerDispatch.Database;
 
 namespace SingerDispatch.Panels.Jobs
 {
@@ -26,7 +27,7 @@ namespace SingerDispatch.Panels.Jobs
 
         private void ControlLoaded(object sender, RoutedEventArgs e)
         {
-            cmbQuotes.ItemsSource = (from q in Database.Quotes where q.Company == SelectedCompany select q).ToList();
+            cmbQuotes.ItemsSource = from q in Database.Quotes where q.Company == SelectedCompany select q;         
         }
 
         protected override void SelectedCompanyChanged(Company newValue, Company oldValue)
@@ -36,13 +37,14 @@ namespace SingerDispatch.Panels.Jobs
             if (newValue != null)
             {
                 dgJobs.ItemsSource = new ObservableCollection<Job>((from j in Database.Jobs where j.CompanyID == newValue.ID orderby j.EndDate descending select j).ToList());
-                cmbQuotes.ItemsSource = (from q in Database.Quotes where q.Company == newValue select q).ToList();
-                cmbCareOfCompanies.ItemsSource = (from c in Database.Companies where c.ID != newValue.ID select c).ToList();
+                cmbQuotes.ItemsSource = from q in Database.Quotes where q.Company == newValue select q;
+                cmbCareOfCompanies.ItemsSource = from c in Database.Companies where c.ID != newValue.ID select c;
             }
             else
             {
-                ((ObservableCollection<Job>)dgJobs.ItemsSource).Clear();
-                ((List<Company>)cmbCareOfCompanies.ItemsSource).Clear();
+                dgJobs.ItemsSource = null;
+                cmbQuotes.ItemsSource = null;
+                cmbCareOfCompanies.ItemsSource = null;
             }
 
             UpdateContactList();
@@ -52,8 +54,8 @@ namespace SingerDispatch.Panels.Jobs
         {
             base.SelectedJobChanged(newValue, oldValue);
 
-            UpdateContactList();
             BubbleUpJob(newValue);
+            UpdateContactList();
         }
 
         private void BubbleUpJob(Job job)
@@ -102,7 +104,7 @@ namespace SingerDispatch.Panels.Jobs
         {
             var job = new Job { CompanyID = SelectedCompany.ID, Number = 0 };
 
-            ((ObservableCollection<Job>)dgJobs.ItemsSource).Insert(0, job);
+            ((ObservableCollection<Job>)dgJobs.ItemsSource).Insert(0, job);            
             dgJobs.SelectedItem = job;
             txtDescription.Focus();
         }
@@ -116,6 +118,25 @@ namespace SingerDispatch.Panels.Jobs
 
             var window = (MainWindow)Application.Current.MainWindow;
             window.ViewQuote(SelectedJob.Quote);
+        }
+
+        private void DeleteJob_Click(object sender, RoutedEventArgs e)
+        {
+            if (SelectedJob == null)
+            {
+                return;
+            }
+
+            var job = SelectedJob;
+
+            BubbleUpJob(null);
+
+            ((ObservableCollection<Job>)dgJobs.ItemsSource).Remove(job);
+            SelectedCompany.Jobs.Remove(job);
+
+            EntityHelper.PrepareEntityDelete(job, Database);
+
+            Database.SubmitChanges();
         }
     }
 }
