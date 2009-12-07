@@ -58,6 +58,8 @@ namespace SingerDispatch.Panels.Companies
         private void SaveDetails(object sender, RoutedEventArgs e)
         {
             Database.SubmitChanges();
+
+            dgCreditRates.ItemsSource = GetAdjustedRates(SelectedCompany.RateAdjustment);
         }
     }
 }

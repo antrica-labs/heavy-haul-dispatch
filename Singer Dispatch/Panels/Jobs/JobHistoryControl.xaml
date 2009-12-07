@@ -22,7 +22,7 @@
             <WPF:DataGrid.Columns>
                 <WPF:DataGridTextColumn Header="Number" Width="0.15*" Binding="{Binding Number}"/>
                 <WPF:DataGridTextColumn Header="Quote" Width="0.15*" Binding="{Binding Quote.FriendlyName}" />
-                <WPF:DataGridTextColumn Header="Status" Width="0.2*" Binding="{Binding Status}" />
+                <WPF:DataGridTextColumn Header="Status" Width="0.2*" Binding="{Binding Status.Name}" />
                 <WPF:DataGridTextColumn Header="Description" Binding="{Binding Description}" />
             </WPF:DataGrid.Columns>
         </WPF:DataGrid>

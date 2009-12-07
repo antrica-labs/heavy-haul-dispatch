@@ -30,9 +30,9 @@ namespace SingerDispatch
         private SingerDispatchDataContext Database { get; set; }
 
         public MainWindow()
-        {   
+        {
             InitializeComponent();
-
+           
             Panels = new Dictionary<System.Type, UserControl>();
             Database = SingerConstants.CommonDataContext;
             Companies = new ObservableCollection<Company>();

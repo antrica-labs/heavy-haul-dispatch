@@ -22,21 +22,25 @@ namespace SingerDispatch.Panels.Jobs
 
         private void ControlLoaded(object sender, RoutedEventArgs e)
         {
-            cmbLoads.ItemsSource = SelectedJob != null ? SelectedJob.Loads : null;
-            cmbUnits.ItemsSource = (from u in Database.Equipment select u).ToList();
+            cmbLoads.ItemsSource = null;
+            cmbUnits.ItemsSource = null;
+
+            if (SelectedJob != null)
+            {
+                cmbLoads.ItemsSource = SelectedJob.Loads;
+                cmbUnits.ItemsSource = from u in Database.Equipment select u;
+            }
         }
 
         protected override void SelectedJobChanged(Job newValue, Job oldValue)
         {
             base.SelectedJobChanged(newValue, oldValue);
 
+            dgDispatches.ItemsSource = null;
+
             if (newValue != null)
             {
                 dgDispatches.ItemsSource = new ObservableCollection<Dispatch>((from d in Database.Dispatches where d.Job == SelectedJob select d).ToList());
-            }
-            else
-            {
-                dgDispatches.ItemsSource = null;
             }
         }
 

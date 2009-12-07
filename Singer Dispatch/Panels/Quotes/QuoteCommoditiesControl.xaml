@@ -3,7 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:WPF="http://schemas.microsoft.com/wpf/2008/toolkit"
     xmlns:Panels="clr-namespace:SingerDispatch.Panels" 
-    Width="750">
+    Loaded="Control_Loaded" Width="750">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -12,7 +12,7 @@
         </ResourceDictionary>
     </UserControl.Resources>
     <StackPanel>
-        <WPF:DataGrid Name="dgQuoteCommodities" Style="{StaticResource ListDisplay}" SelectionChanged="dgQuoteCommodities_SelectionChanged" Height="200" >
+        <WPF:DataGrid Name="dgQuoteCommodities" Style="{StaticResource ListDisplay}" Height="200" >
             <WPF:DataGrid.Columns>
                 <WPF:DataGridTextColumn Header="Unit" Binding="{Binding Unit}" />
                 <WPF:DataGridTextColumn Header="Name" Binding="{Binding Name}" />

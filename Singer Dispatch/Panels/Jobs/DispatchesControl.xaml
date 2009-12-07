@@ -37,9 +37,9 @@
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
 
-            <Button Style="{StaticResource Horizontal}" Grid.Column="0" Click="NewDispatch_Click">New dispatch</Button>            
-            <Button Style="{StaticResource Horizontal}" Grid.Column="1" Click="RemoveDispatch_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgDispatches, Path=SelectedItem}">Remove dispatch</Button>
-            <Button Style="{StaticResource HorizontalEnd}" Grid.Column="3" Click="PrintDispatch_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgDispatches, Path=SelectedItem}">Print dispatch</Button>
+            <Button Style="{StaticResource Horizontal}" Grid.Column="0" Click="NewDispatch_Click">New dispatch</Button>
+            <Button Style="{StaticResource Horizontal}" Grid.Column="1" Click="PrintDispatch_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgDispatches, Path=SelectedItem}">Print dispatch</Button>
+            <Button Style="{StaticResource HorizontalEnd}" Grid.Column="3" Click="RemoveDispatch_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgDispatches, Path=SelectedItem}">Remove dispatch</Button>
         </Grid>
         
         <GroupBox Header="Dispatch Details" DataContext="{Binding ElementName=dgDispatches, Path=SelectedItem}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgDispatches, Path=SelectedItem}">

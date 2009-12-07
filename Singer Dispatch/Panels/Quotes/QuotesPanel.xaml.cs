@@ -77,9 +77,6 @@ namespace SingerDispatch.Panels.Quotes
             }
                  
             database.SubmitChanges();
-
-            panelQuoteHistory.SelectedQuote = null;
-            panelQuoteHistory.SelectedQuote = SelectedQuote;
         }
     }
 }
