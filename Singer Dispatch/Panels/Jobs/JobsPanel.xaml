@@ -36,19 +36,19 @@
                 <Jobs:JobHistoryControl Width="Auto" SelectedCompany="{Binding Path=SelectedCompany}" SelectedJob="{Binding Path=SelectedJob}" />
             </TabItem>
             <TabItem Header="Loads" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=jobsPanel, Path=SelectedJob}">
-                <Jobs:LoadsControl Width="Auto" SelectedJob="{Binding Path=SelectedJob}" />
+                <Jobs:LoadsControl Width="Auto" SelectedCompany="{Binding Path=SelectedCompany}" SelectedJob="{Binding Path=SelectedJob}" />
             </TabItem>
             <TabItem Header="Commodities" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=jobsPanel, Path=SelectedJob}">
-                <Jobs:JobCommoditiesControl Width="Auto" SelectedJob="{Binding Path=SelectedJob}" />
+                <Jobs:JobCommoditiesControl Width="Auto" SelectedCompany="{Binding Path=SelectedCompany}"  SelectedJob="{Binding Path=SelectedJob}" />
             </TabItem>
             <TabItem Header="Third Party Services" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=jobsPanel, Path=SelectedJob}">
-                <Jobs:ThirdPartyServicesControl Width="Auto" SelectedJob="{Binding Path=SelectedJob}" />
+                <Jobs:ThirdPartyServicesControl Width="Auto" SelectedCompany="{Binding Path=SelectedCompany}" SelectedJob="{Binding Path=SelectedJob}" />
             </TabItem>
             <TabItem Header="Permits" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=jobsPanel, Path=SelectedJob}">
-                <Jobs:PermitsControl Width="Auto" SelectedJob="{Binding Path=SelectedJob}" />
+                <Jobs:PermitsControl Width="Auto" SelectedCompany="{Binding Path=SelectedCompany}" SelectedJob="{Binding Path=SelectedJob}" />
             </TabItem>
             <TabItem Header="Dispatches" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=jobsPanel, Path=SelectedJob}">
-                <Jobs:DispatchesControl Width="Auto" SelectedJob="{Binding Path=SelectedJob}" />
+                <Jobs:DispatchesControl Width="Auto" SelectedCompany="{Binding Path=SelectedCompany}" SelectedJob="{Binding Path=SelectedJob}" />
             </TabItem>           
         </TabControl>
     </StackPanel>

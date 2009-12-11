@@ -37,10 +37,10 @@
                 <Quotes:QuoteHistoryControl x:Name="panelQuoteHistory" Width="Auto" Height="Auto" SelectedCompany="{Binding SelectedCompany}" SelectedQuote="{Binding SelectedQuote}" />
             </TabItem>
             <TabItem Name="tabCommodities" Header="Commodities" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=quotesPanel, Path=SelectedQuote}">
-                <Quotes:QuoteCommoditiesControl x:Name="panelQuoteCommodities" Width="Auto" Height="Auto" SelectedQuote="{Binding SelectedQuote}" />
+                <Quotes:QuoteCommoditiesControl x:Name="panelQuoteCommodities" Width="Auto" Height="Auto" SelectedCompany="{Binding Path=SelectedCompany}" SelectedQuote="{Binding SelectedQuote}" />
             </TabItem>
             <TabItem Name="tabSupplements" Header="Supplements" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=quotesPanel, Path=SelectedQuote}">
-                <Quotes:QuoteSupplements x:Name="panelQuoteSupplements" Width="Auto" Height="Auto" SelectedQuote="{Binding SelectedQuote}" />
+                <Quotes:QuoteSupplements x:Name="panelQuoteSupplements" Width="Auto" Height="Auto" SelectedCompany="{Binding Path=SelectedCompany}" SelectedQuote="{Binding SelectedQuote}" />
             </TabItem>
             <!--
             <TabItem Header="Storage" IsEnabled="False" />

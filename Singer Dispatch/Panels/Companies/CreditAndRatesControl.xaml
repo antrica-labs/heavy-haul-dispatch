@@ -22,8 +22,7 @@
         </Grid.ColumnDefinitions>
 
         <WPF:DataGrid Name="dgCreditRates" Height="400" IsReadOnly="True" Grid.Column="0" Margin="5" Style="{StaticResource ListDisplay}">
-            <WPF:DataGrid.Columns>
-                <WPF:DataGridCheckBoxColumn Header="Specialized" Binding="{Binding Path=IsSpecialized}" Width="70" />
+            <WPF:DataGrid.Columns>                
                 <WPF:DataGridTextColumn Header="Type" Binding="{Binding Name}" Width="2*" />
                 <WPF:DataGridTextColumn Header="Hourly" Binding="{Binding Path=Hourly, StringFormat=c}" />
                 <WPF:DataGridTextColumn Header="Adjusted" Binding="{Binding Path=Adjusted, StringFormat=c}" />

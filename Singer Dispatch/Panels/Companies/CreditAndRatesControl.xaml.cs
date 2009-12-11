@@ -26,40 +26,44 @@ namespace SingerDispatch.Panels.Companies
 
             if (SelectedCompany != null)
             {
-                dgCreditRates.ItemsSource = GetAdjustedRates(SelectedCompany.RateAdjustment);
+                dgCreditRates.ItemsSource = GetCompanyRates(SelectedCompany);
             }
         }
 
         protected override void SelectedCompanyChanged(Company newValue, Company oldValue)
         {
-            base.SelectedCompanyChanged(newValue, oldValue);
-        }
-
-        private List<Rate> GetAdjustedRates(double? discount)
-        {
-            var rates = from r in Database.Rates select r;
-
-            if (discount == null)
-            {
-                return rates.ToList();
-            }
-            
-            foreach (var rate in rates)
-            {
-                if (rate.Hourly != null)
-                {
-                    rate.Adjusted = rate.Hourly * (1 + (discount / 100));
-                }
-            }            
-
-            return rates.ToList();
+            base.SelectedCompanyChanged(newValue, oldValue);        
         }
 
         private void SaveDetails(object sender, RoutedEventArgs e)
         {
             Database.SubmitChanges();
 
-            dgCreditRates.ItemsSource = GetAdjustedRates(SelectedCompany.RateAdjustment);
+            dgCreditRates.ItemsSource = GetCompanyRates(SelectedCompany);
+        }
+
+
+        private List<Rate> GetCompanyRates(Company company)
+        {
+            var rates = from r in Database.Rates select r;
+            var discount = company.RateAdjustment != null ? company.RateAdjustment : 0.00;
+            var enterprise = company.Type == "M.E. Signer Enterprise";
+
+            foreach (var rate in rates)
+            {
+                if (enterprise && rate.HourlyEnterprise != null)
+                {
+                    rate.Hourly = rate.HourlySpecialized;
+                    rate.Adjusted = rate.Hourly * (1 + (discount / 100));
+                }
+                else if (!enterprise && rate.HourlySpecialized != null)
+                {
+                    rate.Hourly = rate.HourlyEnterprise;
+                    rate.Adjusted = rate.Hourly * (1 + (discount / 100));
+                }
+            }
+
+            return rates.ToList();
         }
     }
 }

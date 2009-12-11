@@ -132,7 +132,7 @@
     <Compile Include="Panels\Quotes\QuoteSupplements.xaml.cs">
       <DependentUpon>QuoteSupplements.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Panels\QuoteUserControl.cs" />
+    <Compile Include="Printing\QuoteUserControl.cs" />
     <Compile Include="Permissions\AuthenticationService.cs" />
     <Compile Include="Printing\DispatchRenderer.cs" />
     <Compile Include="Printing\QuoteRenderer.cs" />

@@ -10,7 +10,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/SingerDispatchDictionary.xaml" />
             </ResourceDictionary.MergedDictionaries>
-            
+                        
             <DataTemplate x:Key="EquipmentNameTemplate">
                 <TextBlock Text="{Binding UnitNumber}" />
             </DataTemplate>
@@ -23,7 +23,7 @@
                 <WPF:DataGridTextColumn Header="Wheel type" Width="0.2*" Binding="{Binding WheelType.Name}" />
                 <WPF:DataGridTextColumn Header="Trailer" Width="0.2*" Binding="{Binding TrailerCombination.Name}" />
                 <WPF:DataGridTextColumn Header="Description" Binding="{Binding ServiceDescription}" />
-            </WPF:DataGrid.Columns>   
+            </WPF:DataGrid.Columns>
         </WPF:DataGrid>
 
         <Grid Margin="0,0,0,5">
@@ -37,7 +37,17 @@
             <Button Style="{StaticResource Horizontal}" Name="btnNewLoad" Grid.Column="0" Click="NewLoad_Click">New load</Button>
             <Button Style="{StaticResource HorizontalEnd}" Name="btnRemoveLoad" Grid.Column="3" Click="RemoveLoad_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgLoads, Path=SelectedItem}">Remove load</Button>
         </Grid>
-        
+
+        <GroupBox Header="Instruction" DataContext="{Binding ElementName=dgLoads, Path=SelectedItem}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgLoads, Path=SelectedItem}">
+            <StackPanel>
+                <Label>Description of service:</Label>
+                <TextBox Text="{Binding ServiceDescription}"/>
+
+                <Label>Additional notes:</Label>
+                <TextBox Text="{Binding Notes}" Height="50" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" />
+            </StackPanel>
+        </GroupBox>
+
         <GroupBox Header="Vehicle" DataContext="{Binding ElementName=dgLoads, Path=SelectedItem}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgLoads, Path=SelectedItem}">
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -54,11 +64,11 @@
                 <Label Grid.Column="0" Grid.Row="0">Unit:</Label>
                 <ComboBox Name="cmbUnits" Grid.Column="0" Grid.Row="1" SelectedItem="{Binding Equipment}" ItemTemplate="{StaticResource EquipmentNameTemplate}"></ComboBox>
                 
-                <Label Grid.Column="1" Grid.Row="0">Wheel type:</Label>
-                <ComboBox Name="cmbWheelTypes" Grid.Column="1" Grid.Row="1" SelectedItem="{Binding WheelType}" ItemTemplate="{StaticResource SimpleNameTemplate}"></ComboBox>                
+                <Label Grid.Column="1" Grid.Row="0">Type:</Label>
+                <ComboBox Name="cmbRates" Grid.Column="1" Grid.Row="1" SelectedItem="{Binding Rate}" ItemTemplate="{StaticResource SimpleNameTemplate}"></ComboBox>                
                 
-                <Label Grid.Column="2" Grid.Row="0">Trailer combination:</Label>
-                <ComboBox Name="cmbTrailerCombinations" Grid.Column="2" Grid.Row="1" SelectedItem="{Binding TrailerCombination}" ItemTemplate="{StaticResource SimpleNameTemplate}"></ComboBox>
+                <Label Grid.Column="2" Grid.Row="0">Rate:</Label>
+                <TextBox Grid.Column="2" Grid.Row="1" Text="{Binding ElementName=cmbRates, Path=SelectedItem.Adjusted, StringFormat=c}" IsReadOnly="True" />                
                 
                 <Label Grid.Column="3" Grid.Row="0">Info:</Label>
                 <TextBox Grid.Column="3" Grid.Row="1" Text="{Binding Info}" />
@@ -92,15 +102,7 @@
             </Grid>
         </GroupBox>
         
-        <GroupBox Header="Instruction" DataContext="{Binding ElementName=dgLoads, Path=SelectedItem}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgLoads, Path=SelectedItem}">
-            <StackPanel>
-                <Label>Description of service:</Label>
-                <TextBox Text="{Binding ServiceDescription}"/>
-                
-                <Label>Additional notes:</Label>
-                <TextBox Text="{Binding Notes}" Height="50" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" />
-            </StackPanel>
-        </GroupBox>
+        
         
         <GroupBox Header="Dimentions" DataContext="{Binding ElementName=dgLoads, Path=SelectedItem}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgLoads, Path=SelectedItem}">
             <StackPanel>

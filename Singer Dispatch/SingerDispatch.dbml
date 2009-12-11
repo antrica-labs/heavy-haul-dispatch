@@ -1,13 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Database Name="SingerDispatch-Development" Class="SingerDispatchDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
   <Connection Mode="AppSettings" ConnectionString="Data Source=SIMON-B71DE53EA\SQLEXPRESS;Initial Catalog=SingerDispatch-Development;Integrated Security=True" SettingsObjectName="SingerDispatch.Properties.Settings" SettingsPropertyName="SingerDispatchDBConnectionString" Provider="System.Data.SqlClient" />
-  <Table Name="" Member="WheelTypes">
-    <Type Name="WheelType">
-      <Column Name="ID" Type="System.Int64" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Name" Type="System.String" CanBeNull="true" />
-      <Association Name="WheelType_Load" Member="Loads" ThisKey="ID" OtherKey="WheelTypeID" Type="Load" />
-    </Type>
-  </Table>
   <Table Name="" Member="Addresses">
     <Type Name="Address">
       <Column Name="ID" Type="System.Int64" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -236,7 +229,7 @@
       <Column Name="ID" Type="System.Int64" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="JobID" Type="System.Int64" CanBeNull="true" />
       <Column Name="EquipmentID" Type="System.Int64" CanBeNull="true" />
-      <Column Name="WheelTypeID" Type="System.Int64" CanBeNull="true" />
+      <Column Name="RateID" Type="System.Int64" CanBeNull="true" />
       <Column Name="SeasonID" Type="System.Int64" CanBeNull="true" />
       <Column Name="TrailerCombinationID" Type="System.Int64" CanBeNull="true" />
       <Column Name="Info" Type="System.String" CanBeNull="true" />
@@ -266,11 +259,11 @@
       <Association Name="Load_Permit" Member="Permits" ThisKey="ID" OtherKey="LoadID" Type="Permit" />
       <Association Name="Load_ThirdPartyService" Member="ThirdPartyServices" ThisKey="ID" OtherKey="LoadID" Type="ThirdPartyService" />
       <Association Name="Load_Dispatch" Member="Dispatches" ThisKey="ID" OtherKey="LoadID" Type="Dispatch" />
-      <Association Name="Job_Load" Member="Job" ThisKey="JobID" OtherKey="ID" Type="Job" IsForeignKey="true" />
-      <Association Name="WheelType_Load" Member="WheelType" ThisKey="WheelTypeID" OtherKey="ID" Type="WheelType" IsForeignKey="true" />
+      <Association Name="Job_Load" Member="Job" ThisKey="JobID" OtherKey="ID" Type="Job" IsForeignKey="true" />      
       <Association Name="Season_Load" Member="Season" ThisKey="SeasonID" OtherKey="ID" Type="Season" IsForeignKey="true" />
       <Association Name="TrailerCombination_Load" Member="TrailerCombination" ThisKey="TrailerCombinationID" OtherKey="ID" Type="TrailerCombination" IsForeignKey="true" />
       <Association Name="Equipment_Load" Member="Equipment" ThisKey="EquipmentID" OtherKey="ID" Type="Equipment" IsForeignKey="true" />
+      <Association Name="Rates_Load" Member="Rate" ThisKey="RateID" OtherKey="ID" Type="Rate" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="" Member="Permits">
@@ -366,8 +359,9 @@
     <Type Name="Rate">
       <Column Name="ID" Type="System.Int64" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Name" Type="System.String" CanBeNull="true" />
-      <Column Name="Hourly" Type="System.Double" CanBeNull="true" />
-      <Column Name="IsSpecialized" Type="System.Boolean" CanBeNull="false" />
+      <Column Name="HourlySpecialized" Type="System.Double" CanBeNull="true" />
+      <Column Name="HourlyEnterprise" Type="System.Double" CanBeNull="true" />
+      <Association Name="Rates_Load" Member="Loads" ThisKey="ID" OtherKey="RateID" Type="Load" />      
     </Type>
   </Table>
   <Table Name="" Member="Seasons">

@@ -21,16 +21,24 @@ namespace SingerDispatch.Panels.Jobs
 
         private void ControlLoaded(object sender, RoutedEventArgs e)
         {
-            cmbWheelTypes.ItemsSource = from wt in Database.WheelTypes select wt;
-            cmbUnits.ItemsSource = from u in Database.Equipment where u.EquipmentClass.Name == "Tractor" || u.EquipmentClass.Name == "Trailor" select u;
-            cmbSeasons.ItemsSource = from s in Database.Seasons select s;
-            cmbTrailerCombinations.ItemsSource = from tc in Database.TrailerCombinations select tc;
+            cmbRates.ItemsSource = null;
+            cmbUnits.ItemsSource = null;
+            cmbSeasons.ItemsSource = null;
+
+            if (SelectedJob != null)
+            {
+                cmbRates.ItemsSource = GetCompanyRates(SelectedCompany);
+                cmbUnits.ItemsSource = from u in Database.Equipment where u.EquipmentClass.Name == "Tractor" || u.EquipmentClass.Name == "Trailor" select u;
+                cmbSeasons.ItemsSource = from s in Database.Seasons select s;
+            }
+
+            //cmbTrailerCombinations.ItemsSource = from tc in Database.TrailerCombinations select tc;
         }
 
         protected override void SelectedJobChanged(Job newValue, Job oldValue)
         {
             base.SelectedJobChanged(newValue, oldValue);
-
+                        
             dgLoads.ItemsSource = new ObservableCollection<Load>((from l in Database.Loads where l.Job == newValue select l).ToList());
         }
 
@@ -77,6 +85,32 @@ namespace SingerDispatch.Panels.Jobs
             
         }
 
-        
+        private System.Collections.IEnumerable GetCompanyRates(Company company)
+        {
+            if (company == null)
+            {
+                return null;
+            }
+
+            var rates = from r in Database.Rates select r;
+            var discount = company.RateAdjustment != null ? company.RateAdjustment : 0.00;
+            var enterprise = company.Type == "M.E. Signer Enterprise";
+
+            foreach (var rate in rates)
+            {
+                if (enterprise && rate.HourlyEnterprise != null)
+                {
+                    rate.Hourly = rate.HourlySpecialized;
+                    rate.Adjusted = rate.Hourly * (1 + (discount / 100));
+                }
+                else if (!enterprise && rate.HourlySpecialized != null)
+                {
+                    rate.Hourly = rate.HourlyEnterprise;
+                    rate.Adjusted = rate.Hourly * (1 + (discount / 100));
+                }
+            }
+
+            return rates;
+        }
     }
 }

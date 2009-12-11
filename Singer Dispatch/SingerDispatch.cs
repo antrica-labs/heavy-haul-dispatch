@@ -242,6 +242,7 @@ namespace SingerDispatch
 
     partial class Rate
     {
+        public double? Hourly { get; set; }
         public double? Adjusted { get; set; }
     }
 

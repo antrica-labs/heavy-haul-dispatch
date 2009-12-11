@@ -30,9 +30,6 @@ namespace SingerDispatch
 		
     #region Extensibility Method Definitions
     partial void OnCreated();
-    partial void InsertWheelType(WheelType instance);
-    partial void UpdateWheelType(WheelType instance);
-    partial void DeleteWheelType(WheelType instance);
     partial void InsertAddress(Address instance);
     partial void UpdateAddress(Address instance);
     partial void DeleteAddress(Address instance);
@@ -159,14 +156,6 @@ namespace SingerDispatch
 				base(connection, mappingSource)
 		{
 			OnCreated();
-		}
-		
-		public System.Data.Linq.Table<WheelType> WheelTypes
-		{
-			get
-			{
-				return this.GetTable<WheelType>();
-			}
 		}
 		
 		public System.Data.Linq.Table<Address> Addresses
@@ -423,120 +412,6 @@ namespace SingerDispatch
 			{
 				return this.GetTable<Dispatch>();
 			}
-		}
-	}
-	
-	[Table(Name="")]
-	public partial class WheelType : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private long _ID;
-		
-		private string _Name;
-		
-		private EntitySet<Load> _Loads;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIDChanging(long value);
-    partial void OnIDChanged();
-    partial void OnNameChanging(string value);
-    partial void OnNameChanged();
-    #endregion
-		
-		public WheelType()
-		{
-			this._Loads = new EntitySet<Load>(new Action<Load>(this.attach_Loads), new Action<Load>(this.detach_Loads));
-			OnCreated();
-		}
-		
-		[Column(Storage="_ID", AutoSync=AutoSync.OnInsert, IsPrimaryKey=true, IsDbGenerated=true)]
-		public long ID
-		{
-			get
-			{
-				return this._ID;
-			}
-			set
-			{
-				if ((this._ID != value))
-				{
-					this.OnIDChanging(value);
-					this.SendPropertyChanging();
-					this._ID = value;
-					this.SendPropertyChanged("ID");
-					this.OnIDChanged();
-				}
-			}
-		}
-		
-		[Column(Storage="_Name")]
-		public string Name
-		{
-			get
-			{
-				return this._Name;
-			}
-			set
-			{
-				if ((this._Name != value))
-				{
-					this.OnNameChanging(value);
-					this.SendPropertyChanging();
-					this._Name = value;
-					this.SendPropertyChanged("Name");
-					this.OnNameChanged();
-				}
-			}
-		}
-		
-		[Association(Name="WheelType_Load", Storage="_Loads", ThisKey="ID", OtherKey="WheelTypeID")]
-		public EntitySet<Load> Loads
-		{
-			get
-			{
-				return this._Loads;
-			}
-			set
-			{
-				this._Loads.Assign(value);
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_Loads(Load entity)
-		{
-			this.SendPropertyChanging();
-			entity.WheelType = this;
-		}
-		
-		private void detach_Loads(Load entity)
-		{
-			this.SendPropertyChanging();
-			entity.WheelType = null;
 		}
 	}
 	
@@ -5402,7 +5277,7 @@ namespace SingerDispatch
 		
 		private System.Nullable<long> _EquipmentID;
 		
-		private System.Nullable<long> _WheelTypeID;
+		private System.Nullable<long> _RateID;
 		
 		private System.Nullable<long> _SeasonID;
 		
@@ -5464,13 +5339,13 @@ namespace SingerDispatch
 		
 		private EntityRef<Job> _Job;
 		
-		private EntityRef<WheelType> _WheelType;
-		
 		private EntityRef<Season> _Season;
 		
 		private EntityRef<TrailerCombination> _TrailerCombination;
 		
 		private EntityRef<Equipment> _Equipment;
+		
+		private EntityRef<Rate> _Rate;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -5482,8 +5357,8 @@ namespace SingerDispatch
     partial void OnJobIDChanged();
     partial void OnEquipmentIDChanging(System.Nullable<long> value);
     partial void OnEquipmentIDChanged();
-    partial void OnWheelTypeIDChanging(System.Nullable<long> value);
-    partial void OnWheelTypeIDChanged();
+    partial void OnRateIDChanging(System.Nullable<long> value);
+    partial void OnRateIDChanged();
     partial void OnSeasonIDChanging(System.Nullable<long> value);
     partial void OnSeasonIDChanged();
     partial void OnTrailerCombinationIDChanging(System.Nullable<long> value);
@@ -5543,10 +5418,10 @@ namespace SingerDispatch
 			this._ThirdPartyServices = new EntitySet<ThirdPartyService>(new Action<ThirdPartyService>(this.attach_ThirdPartyServices), new Action<ThirdPartyService>(this.detach_ThirdPartyServices));
 			this._Dispatches = new EntitySet<Dispatch>(new Action<Dispatch>(this.attach_Dispatches), new Action<Dispatch>(this.detach_Dispatches));
 			this._Job = default(EntityRef<Job>);
-			this._WheelType = default(EntityRef<WheelType>);
 			this._Season = default(EntityRef<Season>);
 			this._TrailerCombination = default(EntityRef<TrailerCombination>);
 			this._Equipment = default(EntityRef<Equipment>);
+			this._Rate = default(EntityRef<Rate>);
 			OnCreated();
 		}
 		
@@ -5618,26 +5493,26 @@ namespace SingerDispatch
 			}
 		}
 		
-		[Column(Storage="_WheelTypeID")]
-		public System.Nullable<long> WheelTypeID
+		[Column(Storage="_RateID")]
+		public System.Nullable<long> RateID
 		{
 			get
 			{
-				return this._WheelTypeID;
+				return this._RateID;
 			}
 			set
 			{
-				if ((this._WheelTypeID != value))
+				if ((this._RateID != value))
 				{
-					if (this._WheelType.HasLoadedOrAssignedValue)
+					if (this._Rate.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
-					this.OnWheelTypeIDChanging(value);
+					this.OnRateIDChanging(value);
 					this.SendPropertyChanging();
-					this._WheelTypeID = value;
-					this.SendPropertyChanged("WheelTypeID");
-					this.OnWheelTypeIDChanged();
+					this._RateID = value;
+					this.SendPropertyChanged("RateID");
+					this.OnRateIDChanged();
 				}
 			}
 		}
@@ -6236,40 +6111,6 @@ namespace SingerDispatch
 			}
 		}
 		
-		[Association(Name="WheelType_Load", Storage="_WheelType", ThisKey="WheelTypeID", OtherKey="ID", IsForeignKey=true)]
-		public WheelType WheelType
-		{
-			get
-			{
-				return this._WheelType.Entity;
-			}
-			set
-			{
-				WheelType previousValue = this._WheelType.Entity;
-				if (((previousValue != value) 
-							|| (this._WheelType.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._WheelType.Entity = null;
-						previousValue.Loads.Remove(this);
-					}
-					this._WheelType.Entity = value;
-					if ((value != null))
-					{
-						value.Loads.Add(this);
-						this._WheelTypeID = value.ID;
-					}
-					else
-					{
-						this._WheelTypeID = default(Nullable<long>);
-					}
-					this.SendPropertyChanged("WheelType");
-				}
-			}
-		}
-		
 		[Association(Name="Season_Load", Storage="_Season", ThisKey="SeasonID", OtherKey="ID", IsForeignKey=true)]
 		public Season Season
 		{
@@ -6368,6 +6209,40 @@ namespace SingerDispatch
 						this._EquipmentID = default(Nullable<long>);
 					}
 					this.SendPropertyChanged("Equipment");
+				}
+			}
+		}
+		
+		[Association(Name="Rate_Load", Storage="_Rate", ThisKey="RateID", OtherKey="ID", IsForeignKey=true)]
+		public Rate Rate
+		{
+			get
+			{
+				return this._Rate.Entity;
+			}
+			set
+			{
+				Rate previousValue = this._Rate.Entity;
+				if (((previousValue != value) 
+							|| (this._Rate.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Rate.Entity = null;
+						previousValue.Loads.Remove(this);
+					}
+					this._Rate.Entity = value;
+					if ((value != null))
+					{
+						value.Loads.Add(this);
+						this._RateID = value.ID;
+					}
+					else
+					{
+						this._RateID = default(Nullable<long>);
+					}
+					this.SendPropertyChanged("Rate");
 				}
 			}
 		}
@@ -8466,9 +8341,11 @@ namespace SingerDispatch
 		
 		private string _Name;
 		
-		private System.Nullable<double> _Hourly;
+		private System.Nullable<double> _HourlySpecialized;
 		
-		private bool _IsSpecialized;
+		private System.Nullable<double> _HourlyEnterprise;
+		
+		private EntitySet<Load> _Loads;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -8478,14 +8355,15 @@ namespace SingerDispatch
     partial void OnIDChanged();
     partial void OnNameChanging(string value);
     partial void OnNameChanged();
-    partial void OnHourlyChanging(System.Nullable<double> value);
-    partial void OnHourlyChanged();
-    partial void OnIsSpecializedChanging(bool value);
-    partial void OnIsSpecializedChanged();
+    partial void OnHourlySpecializedChanging(System.Nullable<double> value);
+    partial void OnHourlySpecializedChanged();
+    partial void OnHourlyEnterpriseChanging(System.Nullable<double> value);
+    partial void OnHourlyEnterpriseChanged();
     #endregion
 		
 		public Rate()
 		{
+			this._Loads = new EntitySet<Load>(new Action<Load>(this.attach_Loads), new Action<Load>(this.detach_Loads));
 			OnCreated();
 		}
 		
@@ -8529,43 +8407,56 @@ namespace SingerDispatch
 			}
 		}
 		
-		[Column(Storage="_Hourly")]
-		public System.Nullable<double> Hourly
+		[Column(Storage="_HourlySpecialized")]
+		public System.Nullable<double> HourlySpecialized
 		{
 			get
 			{
-				return this._Hourly;
+				return this._HourlySpecialized;
 			}
 			set
 			{
-				if ((this._Hourly != value))
+				if ((this._HourlySpecialized != value))
 				{
-					this.OnHourlyChanging(value);
+					this.OnHourlySpecializedChanging(value);
 					this.SendPropertyChanging();
-					this._Hourly = value;
-					this.SendPropertyChanged("Hourly");
-					this.OnHourlyChanged();
+					this._HourlySpecialized = value;
+					this.SendPropertyChanged("HourlySpecialized");
+					this.OnHourlySpecializedChanged();
 				}
 			}
 		}
 		
-		[Column(Storage="_IsSpecialized")]
-		public bool IsSpecialized
+		[Column(Storage="_HourlyEnterprise")]
+		public System.Nullable<double> HourlyEnterprise
 		{
 			get
 			{
-				return this._IsSpecialized;
+				return this._HourlyEnterprise;
 			}
 			set
 			{
-				if ((this._IsSpecialized != value))
+				if ((this._HourlyEnterprise != value))
 				{
-					this.OnIsSpecializedChanging(value);
+					this.OnHourlyEnterpriseChanging(value);
 					this.SendPropertyChanging();
-					this._IsSpecialized = value;
-					this.SendPropertyChanged("IsSpecialized");
-					this.OnIsSpecializedChanged();
+					this._HourlyEnterprise = value;
+					this.SendPropertyChanged("HourlyEnterprise");
+					this.OnHourlyEnterpriseChanged();
 				}
+			}
+		}
+		
+		[Association(Name="Rate_Load", Storage="_Loads", ThisKey="ID", OtherKey="RateID")]
+		public EntitySet<Load> Loads
+		{
+			get
+			{
+				return this._Loads;
+			}
+			set
+			{
+				this._Loads.Assign(value);
 			}
 		}
 		
@@ -8587,6 +8478,18 @@ namespace SingerDispatch
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
+		}
+		
+		private void attach_Loads(Load entity)
+		{
+			this.SendPropertyChanging();
+			entity.Rate = this;
+		}
+		
+		private void detach_Loads(Load entity)
+		{
+			this.SendPropertyChanging();
+			entity.Rate = null;
 		}
 	}
 	
