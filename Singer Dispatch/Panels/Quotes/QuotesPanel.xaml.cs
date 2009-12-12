@@ -42,8 +42,7 @@ namespace SingerDispatch.Panels.Quotes
 
             if (confirmation != MessageBoxResult.Yes) return;
             
-            SelectedQuote = null;
-            panelQuoteHistory.SelectedQuote = null;
+            SelectedQuote = null;            
             Tabs.SelectedIndex = 0;
         }
 

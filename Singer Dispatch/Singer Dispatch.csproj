@@ -45,9 +45,18 @@
     <Reference Include="System.DirectoryServices" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="WindowsBase" />
-    <Reference Include="PresentationCore" />
-    <Reference Include="PresentationFramework" />
+    <Reference Include="UIAutomationProvider">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="PresentationCore">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="PresentationFramework">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
     <Reference Include="WPFToolkit, Version=3.5.40128.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
   </ItemGroup>
   <ItemGroup>
@@ -75,6 +84,12 @@
     </Compile>
     <Compile Include="Panels\Admin\EquipmentControl.xaml.cs">
       <DependentUpon>EquipmentControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Panels\Admin\RatesControl.xaml.cs">
+      <DependentUpon>RatesControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Panels\Admin\TrailerCombinationsControl.xaml.cs">
+      <DependentUpon>TrailerCombinationsControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Panels\Companies\AddressesAndContactsControl.xaml.cs">
       <DependentUpon>AddressesAndContactsControl.xaml</DependentUpon>
@@ -129,8 +144,11 @@
     <Compile Include="Panels\Quotes\QuotesPanel.xaml.cs">
       <DependentUpon>QuotesPanel.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Panels\Quotes\QuoteSupplements.xaml.cs">
-      <DependentUpon>QuoteSupplements.xaml</DependentUpon>
+    <Compile Include="Panels\Quotes\QuoteSupplementsControl.xaml.cs">
+      <DependentUpon>QuoteSupplementsControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Panels\Quotes\StorageControl.xaml.cs">
+      <DependentUpon>StorageControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Printing\QuoteUserControl.cs" />
     <Compile Include="Permissions\AuthenticationService.cs" />
@@ -209,6 +227,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Panels\Admin\RatesControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Panels\Admin\TrailerCombinationsControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Panels\Companies\AddressesAndContactsControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -277,9 +303,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Panels\Quotes\QuoteSupplements.xaml">
+    <Page Include="Panels\Quotes\QuoteSupplementsControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Panels\Quotes\StorageControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="SingerDispatchDictionary.xaml">
       <Generator>MSBuild:Compile</Generator>

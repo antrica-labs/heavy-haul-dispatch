@@ -33,6 +33,7 @@
       <Column Name="ID" Type="System.Int64" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Name" Type="System.String" CanBeNull="true" />
       <Association Name="BillingType_QuoteSupplement" Member="QuoteSupplements" ThisKey="ID" OtherKey="BillingTypeID" Type="QuoteSupplement" />
+      <Association Name="BillingType_StorageItem" Member="StorageItem" ThisKey="ID" OtherKey="BillingTypeID" Type="StorageItem" />
     </Type>
   </Table>
   <Table Name="" Member="Commodities">
@@ -46,15 +47,16 @@
       <Column Name="Owner" Type="System.String" CanBeNull="true" />
       <Column Name="LastLocation" Type="System.String" CanBeNull="true" />
       <Column Name="LastAddress" Type="System.String" CanBeNull="true" />
-      <Column Name="Length" Type="System.Double" CanBeNull="true" />
-      <Column Name="Width" Type="System.Double" CanBeNull="true" />
-      <Column Name="Height" Type="System.Double" CanBeNull="true" />
-      <Column Name="Weight" Type="System.Double" CanBeNull="true" />
+      <Column Name="Length" Type="System.String" CanBeNull="true" />
+      <Column Name="Width" Type="System.String" CanBeNull="true" />
+      <Column Name="Height" Type="System.String" CanBeNull="true" />
+      <Column Name="Weight" Type="System.String" CanBeNull="true" />
       <Column Name="SizeEstimated" Type="System.Boolean" CanBeNull="true" />
       <Column Name="WeightEstimated" Type="System.Boolean" CanBeNull="true" />
       <Column Name="Notes" Type="System.String" CanBeNull="true" UpdateCheck="Never" />
       <Association Name="Commodity_JobCommodity" Member="JobCommodities" ThisKey="ID" OtherKey="OriginalCommodityID" Type="JobCommodity" />
-      <Association Name="Company_Commodity" Member="Company" ThisKey="CompanyID" OtherKey="ID" Type="Company" IsForeignKey="true" />
+      <Association Name="Commodity_StorageItem" Member="StorageItems" ThisKey="ID" OtherKey="CommodityID" Type="StorageItem" />
+      <Association Name="Company_Commodity" Member="Company" ThisKey="CompanyID" OtherKey="ID" Type="Company" IsForeignKey="true" />      
     </Type>
   </Table>
   <Table Name="" Member="Companies">
@@ -66,9 +68,9 @@
       <Column Name="Type" Type="System.String" CanBeNull="true" />
       <Column Name="AvailableCredit" Type="System.Int32" CanBeNull="true" />
       <Column Name="AccPacVendorCode" Type="System.String" CanBeNull="true" />
-      <Column Name="EquifaxComplete" Type="System.Boolean" CanBeNull="true" />      
+      <Column Name="EquifaxComplete" Type="System.Boolean" CanBeNull="true" />
       <Column Name="Notes" Type="System.String" CanBeNull="true" UpdateCheck="Never" />
-      <Column Member="RateAdjustment" Type="System.Double" CanBeNull="true" />
+      <Column Name="RateAdjustment" Type="System.Decimal" CanBeNull="true" />
       <Association Name="Company_Address" Member="Addresses" ThisKey="ID" OtherKey="CompanyID" Type="Address" />
       <Association Name="Company_Commodity" Member="Commodities" ThisKey="ID" OtherKey="CompanyID" Type="Commodity" />
       <Association Name="Company_CustomerNumber" Member="CustomerNumbers" ThisKey="ID" OtherKey="CompanyID" Type="CustomerNumber" />
@@ -160,20 +162,20 @@
       <Column Name="LoadID" Type="System.Int64" CanBeNull="true" />
       <Column Name="OriginalCommodityID" Type="System.Int64" CanBeNull="true" />
       <Column Name="Name" Type="System.String" CanBeNull="true" />
-      <Column Name="Value" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="Value" Type="System.Decimal" CanBeNull="true" />
       <Column Name="Serial" Type="System.String" CanBeNull="true" />
       <Column Name="Unit" Type="System.String" CanBeNull="true" />
       <Column Name="Owner" Type="System.String" CanBeNull="true" />
       <Column Name="LastLocation" Type="System.String" CanBeNull="true" />
       <Column Name="LastAddress" Type="System.String" CanBeNull="true" />
-      <Column Name="Length" Type="System.Double" CanBeNull="true" />
-      <Column Name="Width" Type="System.Double" CanBeNull="true" />
-      <Column Name="Height" Type="System.Double" CanBeNull="true" />
-      <Column Name="Weight" Type="System.Double" CanBeNull="true" />
+      <Column Name="Length" Type="System.String" CanBeNull="true" />
+      <Column Name="Width" Type="System.String" CanBeNull="true" />
+      <Column Name="Height" Type="System.String" CanBeNull="true" />
+      <Column Name="Weight" Type="System.String" CanBeNull="true" />
       <Column Name="SizeEstimated" Type="System.Boolean" CanBeNull="true" />
       <Column Name="WeightEstimated" Type="System.Boolean" CanBeNull="true" />
       <Column Name="Quantity" Type="System.Int32" CanBeNull="true" />
-      <Column Name="CostPerItem" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="CostPerItem" Type="System.Decimal" CanBeNull="true" />
       <Column Name="LoadSiteName" Type="System.String" CanBeNull="true" />
       <Column Name="LoadAddress" Type="System.String" CanBeNull="true" />
       <Column Name="LoadBy" Type="System.String" CanBeNull="true" />
@@ -201,10 +203,10 @@
       <Column Name="CareOfCompanyID" Type="System.Int64" CanBeNull="true" />
       <Column Name="QuotedByUserID" Type="System.Int64" CanBeNull="true" />
       <Column Name="StatusTypeID" Type="System.Int64" CanBeNull="true" />
-      <Column Name="Number" Type="System.Int32" CanBeNull="false" />      
+      <Column Name="Number" Type="System.Int32" CanBeNull="false" />
       <Column Name="Description" Type="System.String" CanBeNull="true" />
       <Column Name="StartDate" Type="System.DateTime" CanBeNull="true" />
-      <Column Name="EndDate" Type="System.DateTime" CanBeNull="true" />      
+      <Column Name="EndDate" Type="System.DateTime" CanBeNull="true" />
       <Association Name="Job_JobCommodity" Member="JobCommodities" ThisKey="ID" OtherKey="JobID" Type="JobCommodity" />
       <Association Name="Job_Load" Member="Loads" ThisKey="ID" OtherKey="JobID" Type="Load" />
       <Association Name="Job_Permit" Member="Permits" ThisKey="ID" OtherKey="JobID" Type="Permit" />
@@ -234,7 +236,7 @@
       <Column Name="TrailerCombinationID" Type="System.Int64" CanBeNull="true" />
       <Column Name="Info" Type="System.String" CanBeNull="true" />
       <Column Name="StartDate" Type="System.DateTime" CanBeNull="true" />
-      <Column Name="EndDate" Type="System.DateTime" CanBeNull="true" />      
+      <Column Name="EndDate" Type="System.DateTime" CanBeNull="true" />
       <Column Name="Ban" Type="System.String" CanBeNull="true" />
       <Column Name="ServiceDescription" Type="System.String" CanBeNull="true" />
       <Column Name="Notes" Type="System.String" CanBeNull="true" UpdateCheck="Never" />
@@ -259,11 +261,11 @@
       <Association Name="Load_Permit" Member="Permits" ThisKey="ID" OtherKey="LoadID" Type="Permit" />
       <Association Name="Load_ThirdPartyService" Member="ThirdPartyServices" ThisKey="ID" OtherKey="LoadID" Type="ThirdPartyService" />
       <Association Name="Load_Dispatch" Member="Dispatches" ThisKey="ID" OtherKey="LoadID" Type="Dispatch" />
-      <Association Name="Job_Load" Member="Job" ThisKey="JobID" OtherKey="ID" Type="Job" IsForeignKey="true" />      
+      <Association Name="Job_Load" Member="Job" ThisKey="JobID" OtherKey="ID" Type="Job" IsForeignKey="true" />
       <Association Name="Season_Load" Member="Season" ThisKey="SeasonID" OtherKey="ID" Type="Season" IsForeignKey="true" />
-      <Association Name="TrailerCombination_Load" Member="TrailerCombination" ThisKey="TrailerCombinationID" OtherKey="ID" Type="TrailerCombination" IsForeignKey="true" />
       <Association Name="Equipment_Load" Member="Equipment" ThisKey="EquipmentID" OtherKey="ID" Type="Equipment" IsForeignKey="true" />
-      <Association Name="Rates_Load" Member="Rate" ThisKey="RateID" OtherKey="ID" Type="Rate" IsForeignKey="true" />
+      <Association Name="Rate_Load" Member="Rate" ThisKey="RateID" OtherKey="ID" Type="Rate" IsForeignKey="true" />
+      <Association Name="TrailerCombination_Load" Member="TrailerCombination" ThisKey="TrailerCombinationID" OtherKey="ID" Type="TrailerCombination" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="" Member="Permits">
@@ -275,7 +277,7 @@
       <Column Name="PermitType" Type="System.String" CanBeNull="true" />
       <Column Name="Reference" Type="System.String" CanBeNull="true" />
       <Column Name="Conditions" Type="System.String" CanBeNull="true" />
-      <Column Name="Cost" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="Cost" Type="System.Decimal" CanBeNull="true" />
       <Column Name="PermitDate" Type="System.DateTime" CanBeNull="true" />
       <Column Name="PermitTime" Type="System.DateTime" CanBeNull="true" />
       <Association Name="Job_Permit" Member="Job" ThisKey="JobID" OtherKey="ID" Type="Job" IsForeignKey="true" />
@@ -286,7 +288,7 @@
     <Type Name="ProvincesAndState">
       <Column Name="ID" Type="System.Int64" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="CountryID" Type="System.Int64" CanBeNull="true" />
-      <Column Name="Name" Type="System.String" CanBeNull="true" />      
+      <Column Name="Name" Type="System.String" CanBeNull="true" />
       <Association Name="ProvincesAndState_Address" Member="Addresses" ThisKey="ID" OtherKey="ProvinceStateID" Type="Address" />
       <Association Name="Country_ProvincesAndState" Member="Country" ThisKey="CountryID" OtherKey="ID" Type="Country" IsForeignKey="true" />
     </Type>
@@ -301,20 +303,20 @@
       <Column Name="ArrivalSiteName" Type="System.String" CanBeNull="true" />
       <Column Name="ArrivalAddress" Type="System.String" CanBeNull="true" />
       <Column Name="Name" Type="System.String" CanBeNull="true" />
-      <Column Name="Value" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="Value" Type="System.Decimal" CanBeNull="true" />
       <Column Name="Serial" Type="System.String" CanBeNull="true" />
       <Column Name="Unit" Type="System.String" CanBeNull="true" />
       <Column Name="Owner" Type="System.String" CanBeNull="true" />
       <Column Name="LastLocation" Type="System.String" CanBeNull="true" />
       <Column Name="LastAddress" Type="System.String" CanBeNull="true" />
-      <Column Name="Length" Type="System.Double" CanBeNull="true" />
-      <Column Name="Width" Type="System.Double" CanBeNull="true" />
-      <Column Name="Height" Type="System.Double" CanBeNull="true" />
-      <Column Name="Weight" Type="System.Double" CanBeNull="true" />
+      <Column Name="Length" Type="System.String" CanBeNull="true" />
+      <Column Name="Width" Type="System.String" CanBeNull="true" />
+      <Column Name="Height" Type="System.String" CanBeNull="true" />
+      <Column Name="Weight" Type="System.String" CanBeNull="true" />
       <Column Name="SizeEstimated" Type="System.Boolean" CanBeNull="true" />
       <Column Name="WeightEstimated" Type="System.Boolean" CanBeNull="true" />
       <Column Name="Quantity" Type="System.Int32" CanBeNull="true" />
-      <Column Name="CostPerItem" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="CostPerItem" Type="System.Decimal" CanBeNull="true" />
       <Column Name="Notes" Type="System.String" CanBeNull="true" UpdateCheck="Never" />
       <Association Name="Quote_QuoteCommodity" Member="Quote" ThisKey="QuoteID" OtherKey="ID" Type="Quote" IsForeignKey="true" />
     </Type>
@@ -332,11 +334,12 @@
       <Column Name="StartDate" Type="System.DateTime" CanBeNull="true" />
       <Column Name="EndDate" Type="System.DateTime" CanBeNull="true" />
       <Column Name="QuotedByUserID" Type="System.Int64" CanBeNull="true" />
-      <Column Name="Price" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="Price" Type="System.Decimal" CanBeNull="true" />
       <Column Name="IsPrinted" Type="System.Boolean" CanBeNull="true" />
       <Association Name="Quote_Job" Member="Jobs" ThisKey="ID" OtherKey="QuoteID" Type="Job" />
       <Association Name="Quote_QuoteCommodity" Member="QuoteCommodities" ThisKey="ID" OtherKey="QuoteID" Type="QuoteCommodity" />
       <Association Name="Quote_QuoteSupplement" Member="QuoteSupplements" ThisKey="ID" OtherKey="QuoteID" Type="QuoteSupplement" />
+      <Association Name="Quote_StorageItem" Member="StorageItems" ThisKey="ID" OtherKey="QuoteID" Type="StorageItem" />
       <Association Name="Company_Quote" Member="Company" ThisKey="CompanyID" OtherKey="ID" Type="Company" IsForeignKey="true" />
       <Association Name="Company_Quote1" Member="Company1" ThisKey="CareOfCompanyID" OtherKey="ID" Type="Company" IsForeignKey="true" />
       <Association Name="User_Quote" Member="User" ThisKey="QuotedByUserID" OtherKey="ID" Type="User" IsForeignKey="true" />
@@ -348,20 +351,35 @@
       <Column Name="QuoteID" Type="System.Int64" CanBeNull="true" />
       <Column Name="BillingTypeID" Type="System.Int64" CanBeNull="true" />
       <Column Name="Name" Type="System.String" CanBeNull="true" />
-      <Column Name="Details" Type="System.String" CanBeNull="true" />      
+      <Column Name="Details" Type="System.String" CanBeNull="true" />
       <Column Name="Quantity" Type="System.Int32" CanBeNull="true" />
-      <Column Name="CostPerItem" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="CostPerItem" Type="System.Decimal" CanBeNull="true" />
       <Association Name="BillingType_QuoteSupplement" Member="BillingType" ThisKey="BillingTypeID" OtherKey="ID" Type="BillingType" IsForeignKey="true" />
       <Association Name="Quote_QuoteSupplement" Member="Quote" ThisKey="QuoteID" OtherKey="ID" Type="Quote" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="" Member="StorageItems">
+    <Type Name="StorageItem">
+      <Column Name="ID" Type="System.Int64" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="QuoteID" Type="System.Int64" CanBeNull="true" />
+      <Column Name="BillingTypeID" Type="System.Int64" CanBeNull="true" />
+      <Column Name="CommodityID" Type="System.Int64" CanBeNull="true" />
+      <Column Name="Details" Type="System.String" CanBeNull="true" />
+      <Column Name="Quantity" Type="System.Int32" CanBeNull="true" />
+      <Column Name="CostPerItem" Type="System.Decimal" CanBeNull="true" />
+      <Association Name="BillingType_StorageItem" Member="BillingType" ThisKey="BillingTypeID" OtherKey="ID" Type="BillingType" IsForeignKey="true" />
+      <Association Name="Quote_StorageItem" Member="Quote" ThisKey="QuoteID" OtherKey="ID" Type="Quote" IsForeignKey="true" />
+      <Association Name="Company_StorageItem" Member="Commodity" ThisKey="CommodityID" OtherKey="ID" Type="Commodity" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="" Member="Rates">
     <Type Name="Rate">
       <Column Name="ID" Type="System.Int64" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Name" Type="System.String" CanBeNull="true" />
-      <Column Name="HourlySpecialized" Type="System.Double" CanBeNull="true" />
-      <Column Name="HourlyEnterprise" Type="System.Double" CanBeNull="true" />
-      <Association Name="Rates_Load" Member="Loads" ThisKey="ID" OtherKey="RateID" Type="Load" />      
+      <Column Name="HourlySpecialized" Type="System.Decimal" CanBeNull="true" />
+      <Column Name="HourlyEnterprise" Type="System.Decimal" CanBeNull="true" />
+      <Association Name="Rate_Load" Member="Loads" ThisKey="ID" OtherKey="RateID" Type="Load" />
+      <Association Name="Rate_TrailerCombination" Member="TrailerCombinations" ThisKey="ID" OtherKey="RateID" Type="TrailerCombination" />
     </Type>
   </Table>
   <Table Name="" Member="Seasons">
@@ -415,13 +433,6 @@
       <Association Name="ThirdPartyServiceType_ThirdPartyService" Member="ThirdPartyServices" ThisKey="ID" OtherKey="ThirdPartyServiceTypeID" Type="ThirdPartyService" />
     </Type>
   </Table>
-  <Table Name="" Member="TrailerCombinations">
-    <Type Name="TrailerCombination">
-      <Column Name="ID" Type="System.Int64" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Name" Type="System.String" CanBeNull="true" />
-      <Association Name="TrailerCombination_Load" Member="Loads" ThisKey="ID" OtherKey="TrailerCombinationID" Type="Load" />
-    </Type>
-  </Table>
   <Table Name="" Member="Users">
     <Type Name="User">
       <Column Name="ID" Type="System.Int64" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -438,7 +449,7 @@
       <Column Name="DefaultDriverID" Type="System.Int64" CanBeNull="true" />
       <Column Name="ClassID" Type="System.Int64" CanBeNull="true" />
       <Column Name="UnitNumber" Type="System.String" CanBeNull="true" />
-      <Column Name="Serial" Type="System.String" CanBeNull="true" />      
+      <Column Name="Serial" Type="System.String" CanBeNull="true" />
       <Column Name="Make" Type="System.String" CanBeNull="true" />
       <Column Name="Model" Type="System.String" CanBeNull="true" />
       <Column Name="Year" Type="System.String" CanBeNull="true" />
@@ -446,9 +457,9 @@
       <Column Name="EngineMake" Type="System.String" CanBeNull="true" />
       <Column Name="EngineModel" Type="System.String" CanBeNull="true" />
       <Column Name="EngineType" Type="System.String" CanBeNull="true" />
-      <Column Name="IsDispatchable" Type="System.Boolean" CanBeNull="true" />      
-      <Column Name="Tare" Type="System.Decimal" DbType="Decimal(18,3)" CanBeNull="true" />
-      <Column Name="Height" Type="System.Decimal" DbType="Decimal(18,3)" CanBeNull="true" />
+      <Column Name="IsDispatchable" Type="System.Boolean" CanBeNull="true" />
+      <Column Name="Tare" Type="System.String" CanBeNull="true" />
+      <Column Name="Height" Type="System.String" CanBeNull="true" />
       <Column Name="AxleConfig" Type="System.String" CanBeNull="true" />
       <Column Name="HasWinch" Type="System.Boolean" CanBeNull="true" />
       <Column Name="SteerTireSize" Type="System.String" CanBeNull="true" />
@@ -484,6 +495,19 @@
       <Association Name="Job_Dispatch" Member="Job" ThisKey="JobID" OtherKey="ID" Type="Job" IsForeignKey="true" />
       <Association Name="Load_Dispatch" Member="Load" ThisKey="LoadID" OtherKey="ID" Type="Load" IsForeignKey="true" />
       <Association Name="ServiceType_Dispatch" Member="ServiceType" ThisKey="ServiceTypeID" OtherKey="ID" Type="ServiceType" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="" Member="TrailerCombinations">
+    <Type Name="TrailerCombination">
+      <Column Name="ID" Type="System.Int64" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="RateID" Type="System.Int64" CanBeNull="true" />
+      <Column Name="Combination" Type="System.String" CanBeNull="true" />
+      <Column Name="Length" Type="System.String" CanBeNull="true" />
+      <Column Name="Width" Type="System.String" CanBeNull="true" />
+      <Column Name="Height" Type="System.String" CanBeNull="true" />
+      <Column Name="Tare" Type="System.String" CanBeNull="true" />
+      <Association Name="TrailerCombination_Load" Member="Loads" ThisKey="ID" OtherKey="TrailerCombinationID" Type="Load" />
+      <Association Name="Rate_TrailerCombination" Member="Rate" ThisKey="RateID" OtherKey="ID" Type="Rate" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>

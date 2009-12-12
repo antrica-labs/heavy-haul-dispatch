@@ -1,0 +1,33 @@
+﻿<UserControl x:Class="SingerDispatch.Panels.Admin.RatesControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:WPF="http://schemas.microsoft.com/wpf/2008/toolkit"
+    Loaded="Control_Loaded" Width="780">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/SingerDispatchDictionary.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <StackPanel>
+        <WPF:DataGrid Name="dgRates" Style="{StaticResource ListDisplay}" Height="400" IsReadOnly="False" RowEditEnding="RowEditEnding">
+            <WPF:DataGrid.Columns>
+                <WPF:DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="2*" />
+                <WPF:DataGridTextColumn Header="Specialized rate" Binding="{Binding HourlySpecialized, StringFormat=c}" />
+                <WPF:DataGridTextColumn Header="Enterprise rate" Binding="{Binding HourlyEnterprise, StringFormat=c}" />
+            </WPF:DataGrid.Columns>
+        </WPF:DataGrid>  
+        
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            
+            <Button Style="{StaticResource Horizontal}" Grid.Column="0" Click="NewRate_Click">New rate</Button>
+            <Button Style="{StaticResource HorizontalEnd}" Grid.Column="2" Click="RemoveRate_Click">Remove rate</Button>
+        </Grid>
+    </StackPanel>
+</UserControl>

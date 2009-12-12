@@ -46,7 +46,7 @@ namespace SingerDispatch.Panels.Companies
         private List<Rate> GetCompanyRates(Company company)
         {
             var rates = from r in Database.Rates select r;
-            var discount = company.RateAdjustment != null ? company.RateAdjustment : 0.00;
+            var discount = company.RateAdjustment != null ? company.RateAdjustment : 0.00m;
             var enterprise = company.Type == "M.E. Signer Enterprise";
 
             foreach (var rate in rates)
@@ -59,7 +59,7 @@ namespace SingerDispatch.Panels.Companies
                 else if (!enterprise && rate.HourlySpecialized != null)
                 {
                     rate.Hourly = rate.HourlyEnterprise;
-                    rate.Adjusted = rate.Hourly * (1 + (discount / 100));
+                    rate.Adjusted = rate.Hourly * (1+ (discount / 100));
                 }
             }
 

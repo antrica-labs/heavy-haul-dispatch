@@ -70,7 +70,7 @@
                             <ComboBox Name="cmbQuotedBy" Grid.Row="1" Grid.Column="2" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectedItem="{Binding User}" TextSearch.TextPath="Name"></ComboBox>
                             
                             <Label Grid.Row="0" Grid.Column="3">Quote price:</Label>
-                            <TextBox Name="txtPrice" Grid.Row="2" Grid.Column="3" Text="{Binding Price}" />
+                            <TextBox Name="txtPrice" Grid.Row="2" Grid.Column="3" Text="{Binding Price, StringFormat=c}" />
                         </Grid>
                         
                         <Label>Care of:</Label>

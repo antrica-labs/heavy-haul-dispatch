@@ -17,6 +17,12 @@
             <TabItem Header="Equipment">
                 <Admin:EquipmentControl Width="Auto" />
             </TabItem>
+            <TabItem Header="Rates">
+                <Admin:RatesControl Width="Auto" />
+            </TabItem>
+            <TabItem Header="Trailer combinations">
+                <Admin:TrailerCombinationsControl Width="Auto" />
+            </TabItem>
         </TabControl>
     </Grid>
 </UserControl>

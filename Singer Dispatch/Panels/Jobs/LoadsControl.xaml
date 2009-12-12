@@ -14,6 +14,9 @@
             <DataTemplate x:Key="EquipmentNameTemplate">
                 <TextBlock Text="{Binding UnitNumber}" />
             </DataTemplate>
+            <DataTemplate x:Key="TrailerCombinationTemplate">
+                <TextBlock Text="{Binding Combination}" />
+            </DataTemplate>
         </ResourceDictionary>
     </UserControl.Resources>
     <StackPanel>
@@ -65,13 +68,13 @@
                 <ComboBox Name="cmbUnits" Grid.Column="0" Grid.Row="1" SelectedItem="{Binding Equipment}" ItemTemplate="{StaticResource EquipmentNameTemplate}"></ComboBox>
                 
                 <Label Grid.Column="1" Grid.Row="0">Type:</Label>
-                <ComboBox Name="cmbRates" Grid.Column="1" Grid.Row="1" SelectedItem="{Binding Rate}" ItemTemplate="{StaticResource SimpleNameTemplate}"></ComboBox>                
+                <ComboBox Name="cmbRates" Grid.Column="1" Grid.Row="1" SelectedItem="{Binding Rate}" SelectionChanged="cmbRates_SelectionChanged" ItemTemplate="{StaticResource SimpleNameTemplate}"></ComboBox>                
                 
                 <Label Grid.Column="2" Grid.Row="0">Rate:</Label>
                 <TextBox Grid.Column="2" Grid.Row="1" Text="{Binding ElementName=cmbRates, Path=SelectedItem.Adjusted, StringFormat=c}" IsReadOnly="True" />                
                 
-                <Label Grid.Column="3" Grid.Row="0">Info:</Label>
-                <TextBox Grid.Column="3" Grid.Row="1" Text="{Binding Info}" />
+                <Label Grid.Column="3" Grid.Row="0">Combination:</Label>
+                <ComboBox Name="cmbTrailerCombinations" Grid.Column="3" Grid.Row="1" SelectedItem="{Binding TrailerCombination}" ItemTemplate="{StaticResource TrailerCombinationTemplate}" />
             </Grid>    
         </GroupBox>
         

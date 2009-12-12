@@ -93,6 +93,9 @@ namespace SingerDispatch
     partial void InsertQuoteSupplement(QuoteSupplement instance);
     partial void UpdateQuoteSupplement(QuoteSupplement instance);
     partial void DeleteQuoteSupplement(QuoteSupplement instance);
+    partial void InsertStorageItem(StorageItem instance);
+    partial void UpdateStorageItem(StorageItem instance);
+    partial void DeleteStorageItem(StorageItem instance);
     partial void InsertRate(Rate instance);
     partial void UpdateRate(Rate instance);
     partial void DeleteRate(Rate instance);
@@ -111,9 +114,6 @@ namespace SingerDispatch
     partial void InsertThirdPartyServiceType(ThirdPartyServiceType instance);
     partial void UpdateThirdPartyServiceType(ThirdPartyServiceType instance);
     partial void DeleteThirdPartyServiceType(ThirdPartyServiceType instance);
-    partial void InsertTrailerCombination(TrailerCombination instance);
-    partial void UpdateTrailerCombination(TrailerCombination instance);
-    partial void DeleteTrailerCombination(TrailerCombination instance);
     partial void InsertUser(User instance);
     partial void UpdateUser(User instance);
     partial void DeleteUser(User instance);
@@ -126,6 +126,9 @@ namespace SingerDispatch
     partial void InsertDispatch(Dispatch instance);
     partial void UpdateDispatch(Dispatch instance);
     partial void DeleteDispatch(Dispatch instance);
+    partial void InsertTrailerCombination(TrailerCombination instance);
+    partial void UpdateTrailerCombination(TrailerCombination instance);
+    partial void DeleteTrailerCombination(TrailerCombination instance);
     #endregion
 		
 		public SingerDispatchDataContext() : 
@@ -326,6 +329,14 @@ namespace SingerDispatch
 			}
 		}
 		
+		public System.Data.Linq.Table<StorageItem> StorageItems
+		{
+			get
+			{
+				return this.GetTable<StorageItem>();
+			}
+		}
+		
 		public System.Data.Linq.Table<Rate> Rates
 		{
 			get
@@ -374,14 +385,6 @@ namespace SingerDispatch
 			}
 		}
 		
-		public System.Data.Linq.Table<TrailerCombination> TrailerCombinations
-		{
-			get
-			{
-				return this.GetTable<TrailerCombination>();
-			}
-		}
-		
 		public System.Data.Linq.Table<User> Users
 		{
 			get
@@ -411,6 +414,14 @@ namespace SingerDispatch
 			get
 			{
 				return this.GetTable<Dispatch>();
+			}
+		}
+		
+		public System.Data.Linq.Table<TrailerCombination> TrailerCombinations
+		{
+			get
+			{
+				return this.GetTable<TrailerCombination>();
 			}
 		}
 	}
@@ -1018,6 +1029,8 @@ namespace SingerDispatch
 		
 		private EntitySet<QuoteSupplement> _QuoteSupplements;
 		
+		private EntitySet<StorageItem> _StorageItem;
+		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -1031,6 +1044,7 @@ namespace SingerDispatch
 		public BillingType()
 		{
 			this._QuoteSupplements = new EntitySet<QuoteSupplement>(new Action<QuoteSupplement>(this.attach_QuoteSupplements), new Action<QuoteSupplement>(this.detach_QuoteSupplements));
+			this._StorageItem = new EntitySet<StorageItem>(new Action<StorageItem>(this.attach_StorageItem), new Action<StorageItem>(this.detach_StorageItem));
 			OnCreated();
 		}
 		
@@ -1087,6 +1101,19 @@ namespace SingerDispatch
 			}
 		}
 		
+		[Association(Name="BillingType_StorageItem", Storage="_StorageItem", ThisKey="ID", OtherKey="BillingTypeID")]
+		public EntitySet<StorageItem> StorageItem
+		{
+			get
+			{
+				return this._StorageItem;
+			}
+			set
+			{
+				this._StorageItem.Assign(value);
+			}
+		}
+		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -1118,6 +1145,18 @@ namespace SingerDispatch
 			this.SendPropertyChanging();
 			entity.BillingType = null;
 		}
+		
+		private void attach_StorageItem(StorageItem entity)
+		{
+			this.SendPropertyChanging();
+			entity.BillingType = this;
+		}
+		
+		private void detach_StorageItem(StorageItem entity)
+		{
+			this.SendPropertyChanging();
+			entity.BillingType = null;
+		}
 	}
 	
 	[Table(Name="")]
@@ -1144,13 +1183,13 @@ namespace SingerDispatch
 		
 		private string _LastAddress;
 		
-		private System.Nullable<double> _Length;
+		private string _Length;
 		
-		private System.Nullable<double> _Width;
+		private string _Width;
 		
-		private System.Nullable<double> _Height;
+		private string _Height;
 		
-		private System.Nullable<double> _Weight;
+		private string _Weight;
 		
 		private System.Nullable<bool> _SizeEstimated;
 		
@@ -1184,13 +1223,13 @@ namespace SingerDispatch
     partial void OnLastLocationChanged();
     partial void OnLastAddressChanging(string value);
     partial void OnLastAddressChanged();
-    partial void OnLengthChanging(System.Nullable<double> value);
+    partial void OnLengthChanging(string value);
     partial void OnLengthChanged();
-    partial void OnWidthChanging(System.Nullable<double> value);
+    partial void OnWidthChanging(string value);
     partial void OnWidthChanged();
-    partial void OnHeightChanging(System.Nullable<double> value);
+    partial void OnHeightChanging(string value);
     partial void OnHeightChanged();
-    partial void OnWeightChanging(System.Nullable<double> value);
+    partial void OnWeightChanging(string value);
     partial void OnWeightChanged();
     partial void OnSizeEstimatedChanging(System.Nullable<bool> value);
     partial void OnSizeEstimatedChanged();
@@ -1392,7 +1431,7 @@ namespace SingerDispatch
 		}
 		
 		[Column(Storage="_Length")]
-		public System.Nullable<double> Length
+		public string Length
 		{
 			get
 			{
@@ -1412,7 +1451,7 @@ namespace SingerDispatch
 		}
 		
 		[Column(Storage="_Width")]
-		public System.Nullable<double> Width
+		public string Width
 		{
 			get
 			{
@@ -1432,7 +1471,7 @@ namespace SingerDispatch
 		}
 		
 		[Column(Storage="_Height")]
-		public System.Nullable<double> Height
+		public string Height
 		{
 			get
 			{
@@ -1452,7 +1491,7 @@ namespace SingerDispatch
 		}
 		
 		[Column(Storage="_Weight")]
-		public System.Nullable<double> Weight
+		public string Weight
 		{
 			get
 			{
@@ -1635,7 +1674,7 @@ namespace SingerDispatch
 		
 		private string _Notes;
 		
-		private System.Nullable<double> _RateAdjustment;
+		private System.Nullable<decimal> _RateAdjustment;
 		
 		private EntitySet<Address> _Addresses;
 		
@@ -1679,7 +1718,7 @@ namespace SingerDispatch
     partial void OnEquifaxCompleteChanged();
     partial void OnNotesChanging(string value);
     partial void OnNotesChanged();
-    partial void OnRateAdjustmentChanging(System.Nullable<double> value);
+    partial void OnRateAdjustmentChanging(System.Nullable<decimal> value);
     partial void OnRateAdjustmentChanged();
     #endregion
 		
@@ -1883,7 +1922,7 @@ namespace SingerDispatch
 		}
 		
 		[Column(Storage="_RateAdjustment")]
-		public System.Nullable<double> RateAdjustment
+		public System.Nullable<decimal> RateAdjustment
 		{
 			get
 			{
@@ -3603,13 +3642,13 @@ namespace SingerDispatch
 		
 		private string _LastAddress;
 		
-		private System.Nullable<double> _Length;
+		private string _Length;
 		
-		private System.Nullable<double> _Width;
+		private string _Width;
 		
-		private System.Nullable<double> _Height;
+		private string _Height;
 		
-		private System.Nullable<double> _Weight;
+		private string _Weight;
 		
 		private System.Nullable<bool> _SizeEstimated;
 		
@@ -3679,13 +3718,13 @@ namespace SingerDispatch
     partial void OnLastLocationChanged();
     partial void OnLastAddressChanging(string value);
     partial void OnLastAddressChanged();
-    partial void OnLengthChanging(System.Nullable<double> value);
+    partial void OnLengthChanging(string value);
     partial void OnLengthChanged();
-    partial void OnWidthChanging(System.Nullable<double> value);
+    partial void OnWidthChanging(string value);
     partial void OnWidthChanged();
-    partial void OnHeightChanging(System.Nullable<double> value);
+    partial void OnHeightChanging(string value);
     partial void OnHeightChanged();
-    partial void OnWeightChanging(System.Nullable<double> value);
+    partial void OnWeightChanging(string value);
     partial void OnWeightChanged();
     partial void OnSizeEstimatedChanging(System.Nullable<bool> value);
     partial void OnSizeEstimatedChanged();
@@ -3845,7 +3884,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[Column(Storage="_Value", DbType="Decimal(18,2)")]
+		[Column(Storage="_Value")]
 		public System.Nullable<decimal> Value
 		{
 			get
@@ -3966,7 +4005,7 @@ namespace SingerDispatch
 		}
 		
 		[Column(Storage="_Length")]
-		public System.Nullable<double> Length
+		public string Length
 		{
 			get
 			{
@@ -3986,7 +4025,7 @@ namespace SingerDispatch
 		}
 		
 		[Column(Storage="_Width")]
-		public System.Nullable<double> Width
+		public string Width
 		{
 			get
 			{
@@ -4006,7 +4045,7 @@ namespace SingerDispatch
 		}
 		
 		[Column(Storage="_Height")]
-		public System.Nullable<double> Height
+		public string Height
 		{
 			get
 			{
@@ -4026,7 +4065,7 @@ namespace SingerDispatch
 		}
 		
 		[Column(Storage="_Weight")]
-		public System.Nullable<double> Weight
+		public string Weight
 		{
 			get
 			{
@@ -4105,7 +4144,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[Column(Storage="_CostPerItem", DbType="Decimal(18,2)")]
+		[Column(Storage="_CostPerItem")]
 		public System.Nullable<decimal> CostPerItem
 		{
 			get
@@ -5341,11 +5380,11 @@ namespace SingerDispatch
 		
 		private EntityRef<Season> _Season;
 		
-		private EntityRef<TrailerCombination> _TrailerCombination;
-		
 		private EntityRef<Equipment> _Equipment;
 		
 		private EntityRef<Rate> _Rate;
+		
+		private EntityRef<TrailerCombination> _TrailerCombination;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -5419,9 +5458,9 @@ namespace SingerDispatch
 			this._Dispatches = new EntitySet<Dispatch>(new Action<Dispatch>(this.attach_Dispatches), new Action<Dispatch>(this.detach_Dispatches));
 			this._Job = default(EntityRef<Job>);
 			this._Season = default(EntityRef<Season>);
-			this._TrailerCombination = default(EntityRef<TrailerCombination>);
 			this._Equipment = default(EntityRef<Equipment>);
 			this._Rate = default(EntityRef<Rate>);
+			this._TrailerCombination = default(EntityRef<TrailerCombination>);
 			OnCreated();
 		}
 		
@@ -6145,40 +6184,6 @@ namespace SingerDispatch
 			}
 		}
 		
-		[Association(Name="TrailerCombination_Load", Storage="_TrailerCombination", ThisKey="TrailerCombinationID", OtherKey="ID", IsForeignKey=true)]
-		public TrailerCombination TrailerCombination
-		{
-			get
-			{
-				return this._TrailerCombination.Entity;
-			}
-			set
-			{
-				TrailerCombination previousValue = this._TrailerCombination.Entity;
-				if (((previousValue != value) 
-							|| (this._TrailerCombination.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._TrailerCombination.Entity = null;
-						previousValue.Loads.Remove(this);
-					}
-					this._TrailerCombination.Entity = value;
-					if ((value != null))
-					{
-						value.Loads.Add(this);
-						this._TrailerCombinationID = value.ID;
-					}
-					else
-					{
-						this._TrailerCombinationID = default(Nullable<long>);
-					}
-					this.SendPropertyChanged("TrailerCombination");
-				}
-			}
-		}
-		
 		[Association(Name="Equipment_Load", Storage="_Equipment", ThisKey="EquipmentID", OtherKey="ID", IsForeignKey=true)]
 		public Equipment Equipment
 		{
@@ -6243,6 +6248,40 @@ namespace SingerDispatch
 						this._RateID = default(Nullable<long>);
 					}
 					this.SendPropertyChanged("Rate");
+				}
+			}
+		}
+		
+		[Association(Name="TrailerCombination_Load", Storage="_TrailerCombination", ThisKey="TrailerCombinationID", OtherKey="ID", IsForeignKey=true)]
+		public TrailerCombination TrailerCombination
+		{
+			get
+			{
+				return this._TrailerCombination.Entity;
+			}
+			set
+			{
+				TrailerCombination previousValue = this._TrailerCombination.Entity;
+				if (((previousValue != value) 
+							|| (this._TrailerCombination.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._TrailerCombination.Entity = null;
+						previousValue.Loads.Remove(this);
+					}
+					this._TrailerCombination.Entity = value;
+					if ((value != null))
+					{
+						value.Loads.Add(this);
+						this._TrailerCombinationID = value.ID;
+					}
+					else
+					{
+						this._TrailerCombinationID = default(Nullable<long>);
+					}
+					this.SendPropertyChanged("TrailerCombination");
 				}
 			}
 		}
@@ -6527,7 +6566,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[Column(Storage="_Cost", DbType="Decimal(18,2)")]
+		[Column(Storage="_Cost")]
 		public System.Nullable<decimal> Cost
 		{
 			get
@@ -6889,13 +6928,13 @@ namespace SingerDispatch
 		
 		private string _LastAddress;
 		
-		private System.Nullable<double> _Length;
+		private string _Length;
 		
-		private System.Nullable<double> _Width;
+		private string _Width;
 		
-		private System.Nullable<double> _Height;
+		private string _Height;
 		
-		private System.Nullable<double> _Weight;
+		private string _Weight;
 		
 		private System.Nullable<bool> _SizeEstimated;
 		
@@ -6941,13 +6980,13 @@ namespace SingerDispatch
     partial void OnLastLocationChanged();
     partial void OnLastAddressChanging(string value);
     partial void OnLastAddressChanged();
-    partial void OnLengthChanging(System.Nullable<double> value);
+    partial void OnLengthChanging(string value);
     partial void OnLengthChanged();
-    partial void OnWidthChanging(System.Nullable<double> value);
+    partial void OnWidthChanging(string value);
     partial void OnWidthChanged();
-    partial void OnHeightChanging(System.Nullable<double> value);
+    partial void OnHeightChanging(string value);
     partial void OnHeightChanged();
-    partial void OnWeightChanging(System.Nullable<double> value);
+    partial void OnWeightChanging(string value);
     partial void OnWeightChanged();
     partial void OnSizeEstimatedChanging(System.Nullable<bool> value);
     partial void OnSizeEstimatedChanged();
@@ -7131,7 +7170,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[Column(Storage="_Value", DbType="Decimal(18,2)")]
+		[Column(Storage="_Value")]
 		public System.Nullable<decimal> Value
 		{
 			get
@@ -7252,7 +7291,7 @@ namespace SingerDispatch
 		}
 		
 		[Column(Storage="_Length")]
-		public System.Nullable<double> Length
+		public string Length
 		{
 			get
 			{
@@ -7272,7 +7311,7 @@ namespace SingerDispatch
 		}
 		
 		[Column(Storage="_Width")]
-		public System.Nullable<double> Width
+		public string Width
 		{
 			get
 			{
@@ -7292,7 +7331,7 @@ namespace SingerDispatch
 		}
 		
 		[Column(Storage="_Height")]
-		public System.Nullable<double> Height
+		public string Height
 		{
 			get
 			{
@@ -7312,7 +7351,7 @@ namespace SingerDispatch
 		}
 		
 		[Column(Storage="_Weight")]
-		public System.Nullable<double> Weight
+		public string Weight
 		{
 			get
 			{
@@ -7391,7 +7430,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[Column(Storage="_CostPerItem", DbType="Decimal(18,2)")]
+		[Column(Storage="_CostPerItem")]
 		public System.Nullable<decimal> CostPerItem
 		{
 			get
@@ -7524,6 +7563,8 @@ namespace SingerDispatch
 		
 		private EntitySet<QuoteSupplement> _QuoteSupplements;
 		
+		private EntitySet<StorageItem> _StorageItems;
+		
 		private EntityRef<Company> _Company;
 		
 		private EntityRef<Company> _Company1;
@@ -7567,6 +7608,7 @@ namespace SingerDispatch
 			this._Jobs = new EntitySet<Job>(new Action<Job>(this.attach_Jobs), new Action<Job>(this.detach_Jobs));
 			this._QuoteCommodities = new EntitySet<QuoteCommodity>(new Action<QuoteCommodity>(this.attach_QuoteCommodities), new Action<QuoteCommodity>(this.detach_QuoteCommodities));
 			this._QuoteSupplements = new EntitySet<QuoteSupplement>(new Action<QuoteSupplement>(this.attach_QuoteSupplements), new Action<QuoteSupplement>(this.detach_QuoteSupplements));
+			this._StorageItems = new EntitySet<StorageItem>(new Action<StorageItem>(this.attach_StorageItems), new Action<StorageItem>(this.detach_StorageItems));
 			this._Company = default(EntityRef<Company>);
 			this._Company1 = default(EntityRef<Company>);
 			this._User = default(EntityRef<User>);
@@ -7805,7 +7847,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[Column(Storage="_Price", DbType="Decimal(18,2)")]
+		[Column(Storage="_Price")]
 		public System.Nullable<decimal> Price
 		{
 			get
@@ -7881,6 +7923,19 @@ namespace SingerDispatch
 			set
 			{
 				this._QuoteSupplements.Assign(value);
+			}
+		}
+		
+		[Association(Name="Quote_StorageItem", Storage="_StorageItems", ThisKey="ID", OtherKey="QuoteID")]
+		public EntitySet<StorageItem> StorageItems
+		{
+			get
+			{
+				return this._StorageItems;
+			}
+			set
+			{
+				this._StorageItems.Assign(value);
 			}
 		}
 		
@@ -8037,6 +8092,18 @@ namespace SingerDispatch
 		}
 		
 		private void detach_QuoteSupplements(QuoteSupplement entity)
+		{
+			this.SendPropertyChanging();
+			entity.Quote = null;
+		}
+		
+		private void attach_StorageItems(StorageItem entity)
+		{
+			this.SendPropertyChanging();
+			entity.Quote = this;
+		}
+		
+		private void detach_StorageItems(StorageItem entity)
 		{
 			this.SendPropertyChanging();
 			entity.Quote = null;
@@ -8222,7 +8289,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[Column(Storage="_CostPerItem", DbType="Decimal(18,2)")]
+		[Column(Storage="_CostPerItem")]
 		public System.Nullable<decimal> CostPerItem
 		{
 			get
@@ -8332,6 +8399,319 @@ namespace SingerDispatch
 	}
 	
 	[Table(Name="")]
+	public partial class StorageItem : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private long _ID;
+		
+		private System.Nullable<long> _QuoteID;
+		
+		private System.Nullable<long> _BillingTypeID;
+		
+		private System.Nullable<long> _CommodityID;
+		
+		private string _Details;
+		
+		private System.Nullable<int> _Quantity;
+		
+		private System.Nullable<decimal> _CostPerItem;
+		
+		private EntityRef<BillingType> _BillingType;
+		
+		private EntityRef<Quote> _Quote;
+		
+		private EntityRef<Commodity> _Commodity;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDChanging(long value);
+    partial void OnIDChanged();
+    partial void OnQuoteIDChanging(System.Nullable<long> value);
+    partial void OnQuoteIDChanged();
+    partial void OnBillingTypeIDChanging(System.Nullable<long> value);
+    partial void OnBillingTypeIDChanged();
+    partial void OnCommodityIDChanging(System.Nullable<long> value);
+    partial void OnCommodityIDChanged();
+    partial void OnDetailsChanging(string value);
+    partial void OnDetailsChanged();
+    partial void OnQuantityChanging(System.Nullable<int> value);
+    partial void OnQuantityChanged();
+    partial void OnCostPerItemChanging(System.Nullable<decimal> value);
+    partial void OnCostPerItemChanged();
+    #endregion
+		
+		public StorageItem()
+		{
+			this._BillingType = default(EntityRef<BillingType>);
+			this._Quote = default(EntityRef<Quote>);
+			this._Commodity = default(EntityRef<Commodity>);
+			OnCreated();
+		}
+		
+		[Column(Storage="_ID", AutoSync=AutoSync.OnInsert, IsPrimaryKey=true, IsDbGenerated=true)]
+		public long ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this.OnIDChanging(value);
+					this.SendPropertyChanging();
+					this._ID = value;
+					this.SendPropertyChanged("ID");
+					this.OnIDChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_QuoteID")]
+		public System.Nullable<long> QuoteID
+		{
+			get
+			{
+				return this._QuoteID;
+			}
+			set
+			{
+				if ((this._QuoteID != value))
+				{
+					if (this._Quote.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnQuoteIDChanging(value);
+					this.SendPropertyChanging();
+					this._QuoteID = value;
+					this.SendPropertyChanged("QuoteID");
+					this.OnQuoteIDChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_BillingTypeID")]
+		public System.Nullable<long> BillingTypeID
+		{
+			get
+			{
+				return this._BillingTypeID;
+			}
+			set
+			{
+				if ((this._BillingTypeID != value))
+				{
+					if (this._BillingType.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnBillingTypeIDChanging(value);
+					this.SendPropertyChanging();
+					this._BillingTypeID = value;
+					this.SendPropertyChanged("BillingTypeID");
+					this.OnBillingTypeIDChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_CommodityID")]
+		public System.Nullable<long> CommodityID
+		{
+			get
+			{
+				return this._CommodityID;
+			}
+			set
+			{
+				if ((this._CommodityID != value))
+				{
+					if (this._Commodity.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnCommodityIDChanging(value);
+					this.SendPropertyChanging();
+					this._CommodityID = value;
+					this.SendPropertyChanged("CommodityID");
+					this.OnCommodityIDChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_Details")]
+		public string Details
+		{
+			get
+			{
+				return this._Details;
+			}
+			set
+			{
+				if ((this._Details != value))
+				{
+					this.OnDetailsChanging(value);
+					this.SendPropertyChanging();
+					this._Details = value;
+					this.SendPropertyChanged("Details");
+					this.OnDetailsChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_Quantity")]
+		public System.Nullable<int> Quantity
+		{
+			get
+			{
+				return this._Quantity;
+			}
+			set
+			{
+				if ((this._Quantity != value))
+				{
+					this.OnQuantityChanging(value);
+					this.SendPropertyChanging();
+					this._Quantity = value;
+					this.SendPropertyChanged("Quantity");
+					this.OnQuantityChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_CostPerItem")]
+		public System.Nullable<decimal> CostPerItem
+		{
+			get
+			{
+				return this._CostPerItem;
+			}
+			set
+			{
+				if ((this._CostPerItem != value))
+				{
+					this.OnCostPerItemChanging(value);
+					this.SendPropertyChanging();
+					this._CostPerItem = value;
+					this.SendPropertyChanged("CostPerItem");
+					this.OnCostPerItemChanged();
+				}
+			}
+		}
+		
+		[Association(Name="BillingType_StorageItem", Storage="_BillingType", ThisKey="BillingTypeID", OtherKey="ID", IsForeignKey=true)]
+		public BillingType BillingType
+		{
+			get
+			{
+				return this._BillingType.Entity;
+			}
+			set
+			{
+				BillingType previousValue = this._BillingType.Entity;
+				if (((previousValue != value) 
+							|| (this._BillingType.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._BillingType.Entity = null;
+						previousValue.StorageItem.Remove(this);
+					}
+					this._BillingType.Entity = value;
+					if ((value != null))
+					{
+						value.StorageItem.Add(this);
+						this._BillingTypeID = value.ID;
+					}
+					else
+					{
+						this._BillingTypeID = default(Nullable<long>);
+					}
+					this.SendPropertyChanged("BillingType");
+				}
+			}
+		}
+		
+		[Association(Name="Quote_StorageItem", Storage="_Quote", ThisKey="QuoteID", OtherKey="ID", IsForeignKey=true)]
+		public Quote Quote
+		{
+			get
+			{
+				return this._Quote.Entity;
+			}
+			set
+			{
+				Quote previousValue = this._Quote.Entity;
+				if (((previousValue != value) 
+							|| (this._Quote.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Quote.Entity = null;
+						previousValue.StorageItems.Remove(this);
+					}
+					this._Quote.Entity = value;
+					if ((value != null))
+					{
+						value.StorageItems.Add(this);
+						this._QuoteID = value.ID;
+					}
+					else
+					{
+						this._QuoteID = default(Nullable<long>);
+					}
+					this.SendPropertyChanged("Quote");
+				}
+			}
+		}
+		
+		[Association(Name="Commodity_StorageItem", Storage="_Commodity", ThisKey="CommodityID", OtherKey="ID", IsForeignKey=true)]
+		public Commodity Commodity
+		{
+			get
+			{
+				return this._Commodity.Entity;
+			}
+			set
+			{
+				if ((this._Commodity.Entity != value))
+				{
+					this.SendPropertyChanging();
+					this._Commodity.Entity = value;
+					this.SendPropertyChanged("Commodity");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[Table(Name="")]
 	public partial class Rate : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
@@ -8341,11 +8721,13 @@ namespace SingerDispatch
 		
 		private string _Name;
 		
-		private System.Nullable<double> _HourlySpecialized;
+		private System.Nullable<decimal> _HourlySpecialized;
 		
-		private System.Nullable<double> _HourlyEnterprise;
+		private System.Nullable<decimal> _HourlyEnterprise;
 		
 		private EntitySet<Load> _Loads;
+		
+		private EntitySet<TrailerCombination> _TrailerCombinations;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -8355,15 +8737,16 @@ namespace SingerDispatch
     partial void OnIDChanged();
     partial void OnNameChanging(string value);
     partial void OnNameChanged();
-    partial void OnHourlySpecializedChanging(System.Nullable<double> value);
+    partial void OnHourlySpecializedChanging(System.Nullable<decimal> value);
     partial void OnHourlySpecializedChanged();
-    partial void OnHourlyEnterpriseChanging(System.Nullable<double> value);
+    partial void OnHourlyEnterpriseChanging(System.Nullable<decimal> value);
     partial void OnHourlyEnterpriseChanged();
     #endregion
 		
 		public Rate()
 		{
 			this._Loads = new EntitySet<Load>(new Action<Load>(this.attach_Loads), new Action<Load>(this.detach_Loads));
+			this._TrailerCombinations = new EntitySet<TrailerCombination>(new Action<TrailerCombination>(this.attach_TrailerCombinations), new Action<TrailerCombination>(this.detach_TrailerCombinations));
 			OnCreated();
 		}
 		
@@ -8408,7 +8791,7 @@ namespace SingerDispatch
 		}
 		
 		[Column(Storage="_HourlySpecialized")]
-		public System.Nullable<double> HourlySpecialized
+		public System.Nullable<decimal> HourlySpecialized
 		{
 			get
 			{
@@ -8428,7 +8811,7 @@ namespace SingerDispatch
 		}
 		
 		[Column(Storage="_HourlyEnterprise")]
-		public System.Nullable<double> HourlyEnterprise
+		public System.Nullable<decimal> HourlyEnterprise
 		{
 			get
 			{
@@ -8460,6 +8843,19 @@ namespace SingerDispatch
 			}
 		}
 		
+		[Association(Name="Rate_TrailerCombination", Storage="_TrailerCombinations", ThisKey="ID", OtherKey="RateID")]
+		public EntitySet<TrailerCombination> TrailerCombinations
+		{
+			get
+			{
+				return this._TrailerCombinations;
+			}
+			set
+			{
+				this._TrailerCombinations.Assign(value);
+			}
+		}
+		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -8487,6 +8883,18 @@ namespace SingerDispatch
 		}
 		
 		private void detach_Loads(Load entity)
+		{
+			this.SendPropertyChanging();
+			entity.Rate = null;
+		}
+		
+		private void attach_TrailerCombinations(TrailerCombination entity)
+		{
+			this.SendPropertyChanging();
+			entity.Rate = this;
+		}
+		
+		private void detach_TrailerCombinations(TrailerCombination entity)
 		{
 			this.SendPropertyChanging();
 			entity.Rate = null;
@@ -9563,120 +9971,6 @@ namespace SingerDispatch
 	}
 	
 	[Table(Name="")]
-	public partial class TrailerCombination : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private long _ID;
-		
-		private string _Name;
-		
-		private EntitySet<Load> _Loads;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIDChanging(long value);
-    partial void OnIDChanged();
-    partial void OnNameChanging(string value);
-    partial void OnNameChanged();
-    #endregion
-		
-		public TrailerCombination()
-		{
-			this._Loads = new EntitySet<Load>(new Action<Load>(this.attach_Loads), new Action<Load>(this.detach_Loads));
-			OnCreated();
-		}
-		
-		[Column(Storage="_ID", AutoSync=AutoSync.OnInsert, IsPrimaryKey=true, IsDbGenerated=true)]
-		public long ID
-		{
-			get
-			{
-				return this._ID;
-			}
-			set
-			{
-				if ((this._ID != value))
-				{
-					this.OnIDChanging(value);
-					this.SendPropertyChanging();
-					this._ID = value;
-					this.SendPropertyChanged("ID");
-					this.OnIDChanged();
-				}
-			}
-		}
-		
-		[Column(Storage="_Name")]
-		public string Name
-		{
-			get
-			{
-				return this._Name;
-			}
-			set
-			{
-				if ((this._Name != value))
-				{
-					this.OnNameChanging(value);
-					this.SendPropertyChanging();
-					this._Name = value;
-					this.SendPropertyChanged("Name");
-					this.OnNameChanged();
-				}
-			}
-		}
-		
-		[Association(Name="TrailerCombination_Load", Storage="_Loads", ThisKey="ID", OtherKey="TrailerCombinationID")]
-		public EntitySet<Load> Loads
-		{
-			get
-			{
-				return this._Loads;
-			}
-			set
-			{
-				this._Loads.Assign(value);
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_Loads(Load entity)
-		{
-			this.SendPropertyChanging();
-			entity.TrailerCombination = this;
-		}
-		
-		private void detach_Loads(Load entity)
-		{
-			this.SendPropertyChanging();
-			entity.TrailerCombination = null;
-		}
-	}
-	
-	[Table(Name="")]
 	public partial class User : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
@@ -9898,9 +10192,9 @@ namespace SingerDispatch
 		
 		private System.Nullable<bool> _IsDispatchable;
 		
-		private System.Nullable<decimal> _Tare;
+		private string _Tare;
 		
-		private System.Nullable<decimal> _Height;
+		private string _Height;
 		
 		private string _AxleConfig;
 		
@@ -9958,9 +10252,9 @@ namespace SingerDispatch
     partial void OnEngineTypeChanged();
     partial void OnIsDispatchableChanging(System.Nullable<bool> value);
     partial void OnIsDispatchableChanged();
-    partial void OnTareChanging(System.Nullable<decimal> value);
+    partial void OnTareChanging(string value);
     partial void OnTareChanged();
-    partial void OnHeightChanging(System.Nullable<decimal> value);
+    partial void OnHeightChanging(string value);
     partial void OnHeightChanged();
     partial void OnAxleConfigChanging(string value);
     partial void OnAxleConfigChanged();
@@ -10259,8 +10553,8 @@ namespace SingerDispatch
 			}
 		}
 		
-		[Column(Storage="_Tare", DbType="Decimal(18,3)")]
-		public System.Nullable<decimal> Tare
+		[Column(Storage="_Tare")]
+		public string Tare
 		{
 			get
 			{
@@ -10279,8 +10573,8 @@ namespace SingerDispatch
 			}
 		}
 		
-		[Column(Storage="_Height", DbType="Decimal(18,3)")]
-		public System.Nullable<decimal> Height
+		[Column(Storage="_Height")]
+		public string Height
 		{
 			get
 			{
@@ -11099,6 +11393,281 @@ namespace SingerDispatch
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
+		}
+	}
+	
+	[Table(Name="")]
+	public partial class TrailerCombination : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private long _ID;
+		
+		private System.Nullable<long> _RateID;
+		
+		private string _Combination;
+		
+		private string _Length;
+		
+		private string _Width;
+		
+		private string _Height;
+		
+		private string _Tare;
+		
+		private EntitySet<Load> _Loads;
+		
+		private EntityRef<Rate> _Rate;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDChanging(long value);
+    partial void OnIDChanged();
+    partial void OnRateIDChanging(System.Nullable<long> value);
+    partial void OnRateIDChanged();
+    partial void OnCombinationChanging(string value);
+    partial void OnCombinationChanged();
+    partial void OnLengthChanging(string value);
+    partial void OnLengthChanged();
+    partial void OnWidthChanging(string value);
+    partial void OnWidthChanged();
+    partial void OnHeightChanging(string value);
+    partial void OnHeightChanged();
+    partial void OnTareChanging(string value);
+    partial void OnTareChanged();
+    #endregion
+		
+		public TrailerCombination()
+		{
+			this._Loads = new EntitySet<Load>(new Action<Load>(this.attach_Loads), new Action<Load>(this.detach_Loads));
+			this._Rate = default(EntityRef<Rate>);
+			OnCreated();
+		}
+		
+		[Column(Storage="_ID", AutoSync=AutoSync.OnInsert, IsPrimaryKey=true, IsDbGenerated=true)]
+		public long ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this.OnIDChanging(value);
+					this.SendPropertyChanging();
+					this._ID = value;
+					this.SendPropertyChanged("ID");
+					this.OnIDChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_RateID")]
+		public System.Nullable<long> RateID
+		{
+			get
+			{
+				return this._RateID;
+			}
+			set
+			{
+				if ((this._RateID != value))
+				{
+					if (this._Rate.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnRateIDChanging(value);
+					this.SendPropertyChanging();
+					this._RateID = value;
+					this.SendPropertyChanged("RateID");
+					this.OnRateIDChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_Combination")]
+		public string Combination
+		{
+			get
+			{
+				return this._Combination;
+			}
+			set
+			{
+				if ((this._Combination != value))
+				{
+					this.OnCombinationChanging(value);
+					this.SendPropertyChanging();
+					this._Combination = value;
+					this.SendPropertyChanged("Combination");
+					this.OnCombinationChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_Length")]
+		public string Length
+		{
+			get
+			{
+				return this._Length;
+			}
+			set
+			{
+				if ((this._Length != value))
+				{
+					this.OnLengthChanging(value);
+					this.SendPropertyChanging();
+					this._Length = value;
+					this.SendPropertyChanged("Length");
+					this.OnLengthChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_Width")]
+		public string Width
+		{
+			get
+			{
+				return this._Width;
+			}
+			set
+			{
+				if ((this._Width != value))
+				{
+					this.OnWidthChanging(value);
+					this.SendPropertyChanging();
+					this._Width = value;
+					this.SendPropertyChanged("Width");
+					this.OnWidthChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_Height")]
+		public string Height
+		{
+			get
+			{
+				return this._Height;
+			}
+			set
+			{
+				if ((this._Height != value))
+				{
+					this.OnHeightChanging(value);
+					this.SendPropertyChanging();
+					this._Height = value;
+					this.SendPropertyChanged("Height");
+					this.OnHeightChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_Tare")]
+		public string Tare
+		{
+			get
+			{
+				return this._Tare;
+			}
+			set
+			{
+				if ((this._Tare != value))
+				{
+					this.OnTareChanging(value);
+					this.SendPropertyChanging();
+					this._Tare = value;
+					this.SendPropertyChanged("Tare");
+					this.OnTareChanged();
+				}
+			}
+		}
+		
+		[Association(Name="TrailerCombination_Load", Storage="_Loads", ThisKey="ID", OtherKey="TrailerCombinationID")]
+		public EntitySet<Load> Loads
+		{
+			get
+			{
+				return this._Loads;
+			}
+			set
+			{
+				this._Loads.Assign(value);
+			}
+		}
+		
+		[Association(Name="Rate_TrailerCombination", Storage="_Rate", ThisKey="RateID", OtherKey="ID", IsForeignKey=true)]
+		public Rate Rate
+		{
+			get
+			{
+				return this._Rate.Entity;
+			}
+			set
+			{
+				Rate previousValue = this._Rate.Entity;
+				if (((previousValue != value) 
+							|| (this._Rate.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Rate.Entity = null;
+						previousValue.TrailerCombinations.Remove(this);
+					}
+					this._Rate.Entity = value;
+					if ((value != null))
+					{
+						value.TrailerCombinations.Add(this);
+						this._RateID = value.ID;
+					}
+					else
+					{
+						this._RateID = default(Nullable<long>);
+					}
+					this.SendPropertyChanged("Rate");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_Loads(Load entity)
+		{
+			this.SendPropertyChanging();
+			entity.TrailerCombination = this;
+		}
+		
+		private void detach_Loads(Load entity)
+		{
+			this.SendPropertyChanging();
+			entity.TrailerCombination = null;
 		}
 	}
 }

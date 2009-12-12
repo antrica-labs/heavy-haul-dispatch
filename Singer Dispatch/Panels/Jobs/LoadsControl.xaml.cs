@@ -31,8 +31,6 @@ namespace SingerDispatch.Panels.Jobs
                 cmbUnits.ItemsSource = from u in Database.Equipment where u.EquipmentClass.Name == "Tractor" || u.EquipmentClass.Name == "Trailor" select u;
                 cmbSeasons.ItemsSource = from s in Database.Seasons select s;
             }
-
-            //cmbTrailerCombinations.ItemsSource = from tc in Database.TrailerCombinations select tc;
         }
 
         protected override void SelectedJobChanged(Job newValue, Job oldValue)
@@ -93,7 +91,7 @@ namespace SingerDispatch.Panels.Jobs
             }
 
             var rates = from r in Database.Rates select r;
-            var discount = company.RateAdjustment != null ? company.RateAdjustment : 0.00;
+            var discount = company.RateAdjustment != null ? company.RateAdjustment : 0.00m;
             var enterprise = company.Type == "M.E. Signer Enterprise";
 
             foreach (var rate in rates)
@@ -111,6 +109,11 @@ namespace SingerDispatch.Panels.Jobs
             }
 
             return rates;
+        }
+
+        private void cmbRates_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            cmbTrailerCombinations.ItemsSource = from tc in Database.TrailerCombinations where tc.Rate == cmbRates.SelectedItem select tc;
         }
     }
 }

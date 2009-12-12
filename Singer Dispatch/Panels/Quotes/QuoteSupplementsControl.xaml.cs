@@ -8,33 +8,32 @@ namespace SingerDispatch.Panels.Quotes
     /// <summary>
     /// Interaction logic for QuoteSupplements.xaml
     /// </summary>
-    public partial class QuoteSupplements : QuoteUserControl
+    public partial class QuoteSupplementsControl : QuoteUserControl
     {
         public SingerDispatchDataContext Database { get; set; }
 
-        public QuoteSupplements()
+        public QuoteSupplementsControl()
         {
             InitializeComponent();
 
             Database = SingerConstants.CommonDataContext;
+
+            cmbBillingType.ItemsSource = from bt in Database.BillingTypes select bt;
         }
 
         private void QuoteUserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            cmbBillingType.ItemsSource = (from bt in Database.BillingTypes select bt).ToList();
         }
 
         protected override void SelectedQuoteChanged(Quote newValue, Quote oldValue)
         {
             base.SelectedQuoteChanged(newValue, oldValue);
-
+            
+            dgSupplements.ItemsSource = null;
+            
             if (newValue != null)
             {
                 dgSupplements.ItemsSource = new ObservableCollection<QuoteSupplement>(newValue.QuoteSupplements);                
-            }
-            else
-            {
-                dgSupplements.ItemsSource = new ObservableCollection<QuoteSupplement>();
             }
         }
 
@@ -84,7 +83,6 @@ namespace SingerDispatch.Panels.Quotes
                 txtQuantity.IsEnabled = true;
                 txtCostPerItem.IsEnabled = true;
             }
-
         }
     }
 }

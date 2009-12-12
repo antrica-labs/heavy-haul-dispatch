@@ -65,7 +65,7 @@ namespace SingerDispatch
 
         public object Clone()
         {
-            Quote copy = new Quote();
+            var copy = new Quote();
 
             copy.CompanyID = CompanyID;
             copy.Company = Company;
@@ -80,14 +80,19 @@ namespace SingerDispatch
             copy.User = User;
             copy.Price = Price;
 
-            foreach (QuoteCommodity commodity in QuoteCommodities)
+            foreach (var commodity in QuoteCommodities)
             {
                 copy.QuoteCommodities.Add((QuoteCommodity)commodity.Clone());
             }
 
-            foreach (QuoteSupplement supplement in QuoteSupplements)
+            foreach (var supplement in QuoteSupplements)
             {
                 copy.QuoteSupplements.Add((QuoteSupplement)supplement.Clone());
+            }
+
+            foreach (var item in StorageItems)
+            {
+                copy.StorageItems.Add((StorageItem)item.Clone());
             }
 
             return copy;
@@ -95,7 +100,7 @@ namespace SingerDispatch
 
         public Job ToJob()
         {
-            Job job = new Job();
+            var job = new Job();
 
             // Fill the job properties with as many of the applicable quote properties as possible
             job.Quote = this;
@@ -149,7 +154,7 @@ namespace SingerDispatch
 
         public object Clone()
         {
-            QuoteCommodity copy = new QuoteCommodity();
+            var copy = new QuoteCommodity();
 
             copy.QuoteID = QuoteID;
             copy.OriginalCommodityID = OriginalCommodityID;
@@ -227,7 +232,7 @@ namespace SingerDispatch
     {
         public object Clone()
         {
-            QuoteSupplement copy = new QuoteSupplement();
+            var copy = new QuoteSupplement();
 
             copy.QuoteID = QuoteID;
             copy.Name = Name;
@@ -240,10 +245,27 @@ namespace SingerDispatch
         }
     }
 
+    partial class StorageItem : System.ICloneable
+    {
+        public object Clone()
+        {
+            var copy = new StorageItem();
+
+            copy.QuoteID = QuoteID;
+            copy.Details = Details;
+            copy.CommodityID = CommodityID;
+            copy.BillingTypeID = BillingTypeID;
+            copy.Quantity = Quantity;
+            copy.CostPerItem = CostPerItem;
+
+            return copy;
+        }
+    }
+
     partial class Rate
     {
-        public double? Hourly { get; set; }
-        public double? Adjusted { get; set; }
+        public decimal? Hourly { get; set; }
+        public decimal? Adjusted { get; set; }
     }
 
     partial class Load
