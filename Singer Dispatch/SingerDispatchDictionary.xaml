@@ -10,7 +10,15 @@
     <DataTemplate x:Key="SimpleNameTemplate">
         <TextBlock Text="{Binding Name}" />
     </DataTemplate>
-    
+
+    <DataTemplate x:Key="QuoteNameTemplate">
+        <TextBlock Text="{Binding FriendlyName}" />
+    </DataTemplate>
+
+    <DataTemplate x:Key="LoadNameTemplate">
+        <TextBlock Text="{Binding FriendlyName}" />
+    </DataTemplate>
+
     <Controls:IsEnabledNullConverter x:Key="IsEnabledNullConverter" />
     
     <Style TargetType="Menu">        

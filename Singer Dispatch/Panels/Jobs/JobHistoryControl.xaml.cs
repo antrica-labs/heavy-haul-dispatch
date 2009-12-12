@@ -21,8 +21,8 @@ namespace SingerDispatch.Panels.Jobs
 
             Database = SingerConstants.CommonDataContext;
 
-            cmbCreatedBy.ItemsSource = (from u in Database.Users select u).ToList();
-            cmbStausTypes.ItemsSource = (from s in Database.JobStatusTypes select s).ToList();
+            cmbCreatedBy.ItemsSource = from u in Database.Users select u;
+            cmbStausTypes.ItemsSource = from s in Database.JobStatusTypes select s;
         }
 
         private void ControlLoaded(object sender, RoutedEventArgs e)

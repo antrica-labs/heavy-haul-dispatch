@@ -16,7 +16,15 @@ namespace SingerDispatch.Panels.Pricing
             InitializeComponent();
 
             Database = SingerConstants.CommonDataContext;
-            dgCustomerDetails.ItemsSource = new ObservableCollection<CustomerNumber>();
+
+            cmbCreatedBy.ItemsSource = from u in Database.Users select u;
+            cmbStausTypes.ItemsSource = from s in Database.JobStatusTypes select s;
+            dgCustomerDetails.ItemsSource = new ObservableCollection<CustomerNumber>();            
+        }
+
+        private void ControlLoaded(object sender, RoutedEventArgs e)
+        {
+            cmbQuotes.ItemsSource = from q in Database.Quotes where q.Company == SelectedCompany select q;
         }
 
         protected override void SelectedCompanyChanged(Company newValue, Company oldValue)

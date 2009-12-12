@@ -48,7 +48,7 @@ namespace SingerDispatch.Panels.Jobs
             ((ObservableCollection<Load>)dgLoads.ItemsSource).Insert(0, load);
             dgLoads.SelectedItem = load;
 
-            cmbUnits.Focus();
+            txtServiceDescription.Focus();
         }
 
         private void AxleWeightChanged(object sender, TextChangedEventArgs e)

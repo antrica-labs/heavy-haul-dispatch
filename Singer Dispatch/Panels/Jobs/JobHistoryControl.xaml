@@ -10,10 +10,6 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/SingerDispatchDictionary.xaml" />
             </ResourceDictionary.MergedDictionaries>
-
-            <DataTemplate x:Key="QuoteNameTemplate">                
-                <TextBlock Text="{Binding FriendlyName}" />
-            </DataTemplate>
         </ResourceDictionary>
         
     </UserControl.Resources>
@@ -22,7 +18,7 @@
             <WPF:DataGrid.Columns>
                 <WPF:DataGridTextColumn Header="Number" Width="0.15*" Binding="{Binding Number}"/>
                 <WPF:DataGridTextColumn Header="Quote" Width="0.15*" Binding="{Binding Quote.FriendlyName}" />
-                <WPF:DataGridTextColumn Header="Status" Width="0.2*" Binding="{Binding Status.Name}" />
+                <WPF:DataGridTextColumn Header="Status" Width="0.2*" Binding="{Binding JobStatusType.Name}" />
                 <WPF:DataGridTextColumn Header="Description" Binding="{Binding Description}" />
             </WPF:DataGrid.Columns>
         </WPF:DataGrid>
@@ -100,7 +96,7 @@
                     <WPF:DatePicker Name="dpEndDate" Grid.Row="1" Grid.Column="1" Margin="2" SelectedDate="{Binding EndDate}" />
                     
                     <Label Grid.Row="0" Grid.Column="2">Status</Label>
-                    <ComboBox Name="cmbStausTypes" Grid.Row="1" Grid.Column="2" SelectedItem="{Binding StatusType}" ItemTemplate="{StaticResource SimpleNameTemplate}" />
+                    <ComboBox Name="cmbStausTypes" Grid.Row="1" Grid.Column="2" SelectedItem="{Binding JobStatusType}" ItemTemplate="{StaticResource SimpleNameTemplate}" />
                 </Grid>
             </GroupBox>
 

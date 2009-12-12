@@ -8,11 +8,7 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/SingerDispatchDictionary.xaml" />
-            </ResourceDictionary.MergedDictionaries>
-            
-            <DataTemplate x:Key="LoadNameTemplate">
-                <TextBlock Text="{Binding Unit.Name}" />
-            </DataTemplate>            
+            </ResourceDictionary.MergedDictionaries>          
         </ResourceDictionary>
     </UserControl.Resources>
     <StackPanel>
@@ -68,7 +64,7 @@
                 <Label Grid.Row="4" Grid.Column="0">Conditions:</Label>
                 <TextBox Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Conditions}" />
 
-                <GroupBox Grid.Column="2" Grid.Row="0" Grid.RowSpan="4" Header="Departure">
+                <GroupBox Grid.Column="2" Grid.Row="0" Grid.RowSpan="4" Header="Departure" Margin="5,0,0,0">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="60" />
@@ -87,7 +83,7 @@
                         <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding PermitTime}" />
                         
                         <Label Grid.Row="2" Grid.Column="0">Cost:</Label>
-                        <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Cost}" />
+                        <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Cost, StringFormat=c}" />
                     </Grid>
                 </GroupBox>
             </Grid>

@@ -23,8 +23,8 @@
         <WPF:DataGrid Name="dgLoads" Style="{StaticResource ListDisplay}" Height="180">
             <WPF:DataGrid.Columns>
                 <WPF:DataGridTextColumn Header="Unit" Width="0.15*" Binding="{Binding Equipment.UnitNumber}"/>
-                <WPF:DataGridTextColumn Header="Wheel type" Width="0.2*" Binding="{Binding WheelType.Name}" />
-                <WPF:DataGridTextColumn Header="Trailer" Width="0.2*" Binding="{Binding TrailerCombination.Name}" />
+                <WPF:DataGridTextColumn Header="Wheel type" Width="0.2*" Binding="{Binding Rate.Name}" />
+                <WPF:DataGridTextColumn Header="Trailer" Width="0.2*" Binding="{Binding TrailerCombination.Combination}" />
                 <WPF:DataGridTextColumn Header="Description" Binding="{Binding ServiceDescription}" />
             </WPF:DataGrid.Columns>
         </WPF:DataGrid>
@@ -38,13 +38,13 @@
             </Grid.ColumnDefinitions>
 
             <Button Style="{StaticResource Horizontal}" Name="btnNewLoad" Grid.Column="0" Click="NewLoad_Click">New load</Button>
-            <Button Style="{StaticResource HorizontalEnd}" Name="btnRemoveLoad" Grid.Column="3" Click="RemoveLoad_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgLoads, Path=SelectedItem}">Remove load</Button>
+            <Button Style="{StaticResource HorizontalEnd}" Name="btnRemoveLoad" Grid.Column="3" Click="RemoveLoad_Click" IsEnabled="False">Remove load</Button>
         </Grid>
 
         <GroupBox Header="Instruction" DataContext="{Binding ElementName=dgLoads, Path=SelectedItem}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgLoads, Path=SelectedItem}">
             <StackPanel>
                 <Label>Description of service:</Label>
-                <TextBox Text="{Binding ServiceDescription}"/>
+                <TextBox Name="txtServiceDescription" Text="{Binding ServiceDescription}"/>
 
                 <Label>Additional notes:</Label>
                 <TextBox Text="{Binding Notes}" Height="50" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" />

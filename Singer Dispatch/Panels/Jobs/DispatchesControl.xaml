@@ -14,9 +14,6 @@
             <DataTemplate x:Key="EquipmentNameTemplate">
                 <TextBlock Text="{Binding UnitNumber}" />
             </DataTemplate>
-            <DataTemplate x:Key="LoadNameTemplate">
-                <TextBlock Text="{Binding Unit.Name}" />
-            </DataTemplate>
         </ResourceDictionary>
     </UserControl.Resources>
     <StackPanel>
@@ -81,7 +78,7 @@
                 <TextBox Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Notes}" />
                 
                 
-                <GroupBox Grid.Column="2" Grid.Row="0" Grid.RowSpan="4" Header="Departure" DataContext="{Binding ElementName=dgDispatches, Path=SelectedItem}">
+                <GroupBox Grid.Column="2" Grid.Row="0" Grid.RowSpan="4" Header="Departure" DataContext="{Binding ElementName=dgDispatches, Path=SelectedItem}" Margin="5,0,0,0">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="60"/>

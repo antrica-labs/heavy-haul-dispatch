@@ -3,7 +3,8 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:WPF="http://schemas.microsoft.com/wpf/2008/toolkit"
     xmlns:Panels="clr-namespace:SingerDispatch.Panels"
-    Width="750">
+    x:Name="jobPriceControl"
+    Loaded="ControlLoaded" Width="750">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -12,7 +13,7 @@
         </ResourceDictionary>
     </UserControl.Resources>
     <StackPanel>
-        <WPF:DataGrid Name="dgJobs" Style="{StaticResource ListDisplay}" Height="180">
+        <WPF:DataGrid Name="dgJobs" Style="{StaticResource ListDisplay}" Height="180" SelectedItem="{Binding ElementName=jobPriceControl, Path=SelectedJob}">
             <WPF:DataGrid.Columns>
                 <WPF:DataGridTextColumn Header="Number" Width="60" Binding="{Binding Number}"/>
                 <WPF:DataGridTextColumn Header="Quote" Width="60" Binding="{Binding Quote.Number}" />
@@ -45,7 +46,7 @@
                             <TextBox Grid.Row="1" Grid.Column="0" IsReadOnly="True" Text="{Binding Number}" />
 
                             <Label Grid.Row="0" Grid.Column="1">Quote #:</Label>
-                            <TextBox Grid.Row="1" Grid.Column="1" IsReadOnly="True" Text="{Binding Revision}" />
+                            <ComboBox Name="cmbQuotes" Grid.Row="1" Grid.Column="1" SelectedItem="{Binding Quote}" ItemTemplate="{StaticResource QuoteNameTemplate}" />
 
                             <Label Grid.Row="0" Grid.Column="2">Author:</Label>
                             <ComboBox Name="cmbCreatedBy" Grid.Row="1" Grid.Column="2" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectedItem="{Binding User}" TextSearch.TextPath="Name"></ComboBox>
@@ -78,14 +79,12 @@
                         <WPF:DatePicker Name="dpEndDate" Grid.Row="1" Grid.Column="1" SelectedDate="{Binding ExpirationDate}" />
 
                         <Label Grid.Row="0" Grid.Column="2">Status</Label>
-                        <ComboBox Grid.Row="1" Grid.Column="2" SelectedItem="{Binding Status}">
-                            <ComboBoxItem>Complete</ComboBoxItem>
-                        </ComboBox>
+                        <ComboBox Name="cmbStausTypes" Grid.Row="1" Grid.Column="2" SelectedItem="{Binding StatusType}" ItemTemplate="{StaticResource SimpleNameTemplate}" />
                     </Grid>
                 </GroupBox>
                 
                 <GroupBox Header="Job Billing" DataContext="{Binding ElementName=dgJobs, Path=SelectedItem}">
-                    <StackPanel>
+                    <StackPanel IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgJobs, Path=SelectedItem}">
                         <Label>Comment:</Label>
                         <TextBox></TextBox>
                         

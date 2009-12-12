@@ -33,8 +33,11 @@
 
         <TabControl Name="Tabs" DataContext="{Binding ElementName=jobPricingPanel}">
             <TabItem Header="Job History">
-              <Pricing:JobPriceControl Width="Auto" />    
-            </TabItem>            
+                <Pricing:JobPriceControl Width="Auto" SelectedCompany="{Binding Path=SelectedCompany}" SelectedJob="{Binding Path=SelectedJob}" />    
+            </TabItem>
+            <TabItem Header="Loads" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=jobPricingPanel, Path=SelectedJob}">
+                <Pricing:LoadPriceControl Width="Auto" SelectedCompany="{Binding Path=SelectedCompany}" SelectedJob="{Binding Path=SelectedJob}" />
+            </TabItem>
         </TabControl>
     </StackPanel>
 </Panels:JobUserControl>
