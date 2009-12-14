@@ -24,9 +24,9 @@ namespace SingerDispatch.Panels.Companies
         private void Control_Loaded(object sender, RoutedEventArgs e)
         {
             cmbContactPreferedContactMethod.ItemsSource = SingerConstants.ContactMethods;
-            cmbProvinceOrState.ItemsSource = (from p in Database.ProvincesAndStates orderby p.CountryID, p.Name select p).ToList();
-            cmbContactType.ItemsSource = (from ct in Database.ContactTypes select ct).ToList();
-            cmbAddressType.ItemsSource = (from at in Database.AddressTypes select at).ToList();
+            cmbProvinceOrState.ItemsSource = from p in Database.ProvincesAndStates orderby p.CountryID, p.Name select p;
+            cmbContactType.ItemsSource = from ct in Database.ContactTypes select ct;
+            cmbAddressType.ItemsSource = from at in Database.AddressTypes select at;
         }
 
 
