@@ -11,9 +11,7 @@ using SingerDispatch.Panels.Companies;
 using SingerDispatch.Panels.Jobs;
 using SingerDispatch.Panels.Pricing;
 using SingerDispatch.Database;
-using System.Windows.Documents;
 using System.Collections.Generic;
-using System.Collections;
 using System;
 using System.Reflection;
 using SingerDispatch.Panels.Admin;
@@ -57,16 +55,16 @@ namespace SingerDispatch
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             Companies = new ObservableCollection<Company>(
-                (from c in Database.Companies orderby c.Name select c).ToList()
+                from c in Database.Companies where c.IsVisible == true orderby c.Name select c
             );
 
             cmbCompanies.ItemsSource = Companies;
             cmbOperators.ItemsSource = Companies;
 
             expanderCompanies.IsExpanded = true; 
-        }                
+        }
 
-        private void menuCreateCompany_Click(object sender, RoutedEventArgs e)
+        private void CreateCompanyMenuItem_Click(object sender, RoutedEventArgs e)
         {
             var window = new CreateCompanyWindow(Database, Companies) { Owner = this };
             Company newCompany = window.CreateCompany();
@@ -233,6 +231,21 @@ namespace SingerDispatch
                 
             ((QuotesPanel)panelMainContent.Child).SelectedCompany = quote.Company;            
             ((QuotesPanel)panelMainContent.Child).SelectedQuote = quote;
+        }
+
+        private void EditCompaniesMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            var window = new EditCompaniesWindow() { Owner = this };
+            window.ShowDialog();
+
+            cmbCompanies.SelectedItem = null;
+
+            Companies = new ObservableCollection<Company>(
+                from c in Database.Companies where c.IsVisible == true orderby c.Name select c
+            );
+
+            cmbCompanies.ItemsSource = Companies;
+            cmbOperators.ItemsSource = Companies;
         }
 
     }

@@ -17,7 +17,7 @@ namespace SingerDispatch.Panels.Pricing
 
             Database = SingerConstants.CommonDataContext;
 
-            cmbCreatedBy.ItemsSource = from u in Database.Users select u;
+            cmbCreatedBy.ItemsSource = from e in Database.Employees select e;
             cmbStausTypes.ItemsSource = from s in Database.JobStatusTypes select s;
             dgCustomerDetails.ItemsSource = new ObservableCollection<CustomerNumber>();            
         }

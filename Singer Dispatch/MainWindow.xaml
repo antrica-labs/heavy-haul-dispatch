@@ -23,8 +23,9 @@
                 <MenuItem Header="_File" >                    
                     <MenuItem Header="_Exit" Click="Terminate" />
                 </MenuItem>
-                <MenuItem Header="_Create">
-                    <MenuItem Name="menuCreateCompany" Header="_New Company" Click="menuCreateCompany_Click" />                    
+                <MenuItem Header="_Companies">
+                    <MenuItem Header="_Create Company" Click="CreateCompanyMenuItem_Click" />                    
+                    <MenuItem Header="_Edit Companies" Click="EditCompaniesMenuItem_Click" />
                 </MenuItem>
             </Menu>
 

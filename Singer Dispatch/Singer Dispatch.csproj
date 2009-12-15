@@ -73,6 +73,9 @@
     <Compile Include="DocumentViewer.xaml.cs">
       <DependentUpon>DocumentViewer.xaml</DependentUpon>
     </Compile>
+    <Compile Include="EditCompaniesWindow.xaml.cs">
+      <DependentUpon>EditCompaniesWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ErrorNoticeWindow.xaml.cs">
       <DependentUpon>ErrorNoticeWindow.xaml</DependentUpon>
     </Compile>
@@ -216,6 +219,10 @@
     <Page Include="DocumentViewer.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="EditCompaniesWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ErrorNoticeWindow.xaml">
       <SubType>Designer</SubType>

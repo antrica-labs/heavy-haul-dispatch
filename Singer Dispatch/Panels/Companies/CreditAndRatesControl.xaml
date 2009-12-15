@@ -46,7 +46,7 @@
                             <RowDefinition />
                         </Grid.RowDefinitions>
 
-                        <Label Grid.Column="0" Grid.Row="0">Rate Discount (%):</Label>
+                        <Label Grid.Column="0" Grid.Row="0">Rate Adjustment (%):</Label>
                         <TextBox Name="txtCreditRateHourly" Grid.Column="1" Grid.Row="0" Text="{Binding RateAdjustment}" />
 
                         <Label Grid.Row="1" Grid.Column="0">Customer type</Label>

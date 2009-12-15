@@ -118,7 +118,7 @@ namespace SingerDispatch.Panels.Companies
             ((ObservableCollection<Address>)dgAddresses.ItemsSource).Add(address);
             dgAddresses.SelectedItem = address;
 
-            txtAddress1.Focus();            
+            txtAddress1.Focus();
         }
 
         private void NewContact_Click(object sender, RoutedEventArgs e)

@@ -34,15 +34,6 @@ namespace SingerDispatch.Panels.Jobs
                 return;
             }
             
-            /*
-            MessageBoxResult confirm = MessageBox.Show("Are you sure you wish to commit the changes to this job and all of its properties?", "Save confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
-
-            if (confirm == MessageBoxResult.No)
-            {
-                return;
-            }
-            */
-                  
             if (SelectedJob.ID == 0)
             {
                 try

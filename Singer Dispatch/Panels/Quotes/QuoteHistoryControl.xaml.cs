@@ -19,7 +19,9 @@ namespace SingerDispatch.Panels.Quotes
         {
             InitializeComponent();
 
-            Database = SingerConstants.CommonDataContext;            
+            Database = SingerConstants.CommonDataContext;
+
+            cmbQuotedBy.ItemsSource = from e in Database.Employees select e;
         }
 
         protected override void SelectedCompanyChanged(Company newValue, Company oldValue)

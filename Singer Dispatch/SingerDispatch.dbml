@@ -9,7 +9,7 @@
       <Column Name="Line1" Type="System.String" CanBeNull="true" />
       <Column Name="Line2" Type="System.String" CanBeNull="true" />
       <Column Name="City" Type="System.String" CanBeNull="true" />
-      <Column Name="ProvinceStateID" Type="System.Int64" CanBeNull="false" />
+      <Column Name="ProvinceStateID" Type="System.Int64" CanBeNull="true" />
       <Column Name="PostalZip" Type="System.String" CanBeNull="true" />
       <Column Name="PrimaryPhone" Type="System.String" CanBeNull="true" />
       <Column Name="SecondaryPhone" Type="System.String" CanBeNull="true" />
@@ -71,6 +71,7 @@
       <Column Name="EquifaxComplete" Type="System.Boolean" CanBeNull="true" />
       <Column Name="Notes" Type="System.String" CanBeNull="true" UpdateCheck="Never" />
       <Column Name="RateAdjustment" Type="System.Decimal" CanBeNull="true" />
+      <Column Name="IsVisible" Type="System.Boolean" CanBeNull="true" />
       <Association Name="Company_Address" Member="Addresses" ThisKey="ID" OtherKey="CompanyID" Type="Address" />
       <Association Name="Company_Commodity" Member="Commodities" ThisKey="ID" OtherKey="CompanyID" Type="Commodity" />
       <Association Name="Company_CustomerNumber" Member="CustomerNumbers" ThisKey="ID" OtherKey="CompanyID" Type="CustomerNumber" />

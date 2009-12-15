@@ -4,8 +4,13 @@ namespace SingerDispatch
     {
         partial void OnCreated()
         {
-            if (EquifaxComplete == null)
+            if (IsVisible == null)
             {
+                IsVisible = true;
+            }
+
+            if (EquifaxComplete == null)
+            {                
                 EquifaxComplete = false;
             }
         }
