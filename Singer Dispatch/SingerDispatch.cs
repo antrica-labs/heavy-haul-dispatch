@@ -9,6 +9,14 @@ namespace SingerDispatch
                 EquifaxComplete = false;
             }
         }
+
+        public string Alias
+        {
+            get
+            {
+                return OperatingAs != null ? OperatingAs : Name;
+            }
+        }
     }
 
     partial class Employee

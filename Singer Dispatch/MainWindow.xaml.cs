@@ -32,16 +32,26 @@ namespace SingerDispatch
         public MainWindow()
         {
             InitializeComponent();
-           
-            Panels = new Dictionary<System.Type, UserControl>();
-            Database = SingerConstants.CommonDataContext;
-            Companies = new ObservableCollection<Company>();
 
-            if (Database.DatabaseExists()) return;
+            try
+            {
+                Panels = new Dictionary<System.Type, UserControl>();
+                Database = SingerConstants.CommonDataContext;
+                Companies = new ObservableCollection<Company>();
 
-            var builder = new DatabaseBuilder(SingerConstants.CommonDataContext);
+                if (Database.DatabaseExists()) return;
 
-            builder.CreateNewDatabase();
+                var builder = new DatabaseBuilder(SingerConstants.CommonDataContext);
+
+                builder.CreateNewDatabase();
+            }
+            catch (Exception e)
+            {
+                var box = new ErrorNoticeWindow("Database Error", e.Message);
+                box.ShowDialog();
+
+                Application.Current.Shutdown();
+            }
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -224,5 +234,6 @@ namespace SingerDispatch
             ((QuotesPanel)panelMainContent.Child).SelectedCompany = quote.Company;            
             ((QuotesPanel)panelMainContent.Child).SelectedQuote = quote;
         }
+
     }
 }

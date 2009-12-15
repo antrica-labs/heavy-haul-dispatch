@@ -35,14 +35,17 @@ namespace SingerDispatch.Panels.Companies
             base.SelectedCompanyChanged(newValue, oldValue);
 
             if (newValue != null)
-            {       
-                dgAddresses.ItemsSource = new ObservableCollection<Address>(
-                    (from a in Database.Addresses where a.CompanyID == newValue.ID select a).ToList()
-                );
+            {
+                var addressQuery = from a in Database.Addresses where a.Company == newValue select a;
+                var contactQuery = from c in Database.Contacts where addressQuery.Contains(c.Address) select c;
+
+                dgAddresses.ItemsSource = new ObservableCollection<Address>(addressQuery);
+                dgContacts.ItemsSource = contactQuery.ToList();
             }
             else
             {
                 dgAddresses.ItemsSource = null;
+                dgContacts.ItemsSource = null;
             }                                                   
         }
 
@@ -52,9 +55,9 @@ namespace SingerDispatch.Panels.Companies
             var address = (Address)control.SelectedItem;
 
             if (address != null)
-            {
+            {                
                 dgContacts.ItemsSource = new ObservableCollection<Contact>(
-                    (from c in Database.Contacts where c.AddressID == address.ID orderby c.LastName select c).ToList()
+                    from c in Database.Contacts where c.AddressID == address.ID orderby c.LastName select c
                 );
             }
             else

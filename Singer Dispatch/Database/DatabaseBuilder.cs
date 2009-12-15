@@ -23,14 +23,9 @@ namespace SingerDispatch.Database
                 throw new Exception("Database already exists!");
             }
 
-            try
-            {
-                database.CreateDatabase();
-            }
-            catch (Exception e)
-            {
-                var message = e.Message;
-            }
+           
+            database.CreateDatabase();
+           
       
             // Populate countries and provinces
 
@@ -148,6 +143,23 @@ namespace SingerDispatch.Database
             database.AddressTypes.InsertAllOnSubmit(addresstypes);
 
 
+            // Contact types
+            var contacttypes = new List<ContactType>();
+
+            contacttypes.Add(new ContactType() { Name = "Billing" });
+            contacttypes.Add(new ContactType() { Name = "Issuer" });
+            contacttypes.Add(new ContactType() { Name = "Job" });
+            contacttypes.Add(new ContactType() { Name = "Load Site" });
+            contacttypes.Add(new ContactType() { Name = "Loading" });
+            contacttypes.Add(new ContactType() { Name = "Office" });
+            contacttypes.Add(new ContactType() { Name = "Permit" });
+            contacttypes.Add(new ContactType() { Name = "Quote" });
+            contacttypes.Add(new ContactType() { Name = "Quote" });
+            contacttypes.Add(new ContactType() { Name = "Service" });
+            contacttypes.Add(new ContactType() { Name = "Unload Site" });
+            contacttypes.Add(new ContactType() { Name = "Unloading" });
+
+            database.ContactTypes.InsertAllOnSubmit(contacttypes);
 
             
             // Populate priority levels            
@@ -162,8 +174,19 @@ namespace SingerDispatch.Database
             database.CompanyPriorityLevels.InsertAllOnSubmit(levels);
 
 
+            // Populate seasons
+            var seasons = new List<Season>();
+                        
+            seasons.Add(new Season() { Name = "Fall Weight Restriction" });
+            seasons.Add(new Season() { Name = "Post Weight Restriction" });
+            seasons.Add(new Season() { Name = "Spring Weight Restriction" });
+            seasons.Add(new Season() { Name = "Summer Weight Restriction" });
+            seasons.Add(new Season() { Name = "Winter Weight Restriction" });
 
-            // Poputlate billing types            
+            database.Seasons.InsertAllOnSubmit(seasons);
+
+
+            // Populate billing types            
 
             var billingtypes = new List<BillingType>();
 
