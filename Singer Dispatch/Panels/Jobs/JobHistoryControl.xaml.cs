@@ -14,6 +14,7 @@ namespace SingerDispatch.Panels.Jobs
     public partial class JobHistoryControl : JobUserControl
     {
         public SingerDispatchDataContext Database { get; set; }
+        public JobStatusType DefaultJobStatus { get; set; }
 
         public JobHistoryControl()
         {
@@ -23,6 +24,14 @@ namespace SingerDispatch.Panels.Jobs
 
             cmbCreatedBy.ItemsSource = from e in Database.Employees select e;
             cmbStausTypes.ItemsSource = from s in Database.JobStatusTypes select s;
+
+            foreach (var item in cmbStausTypes.ItemsSource)
+            {
+                if (((JobStatusType)item).Name == "Pending")
+                {
+                    DefaultJobStatus = (JobStatusType)item;
+                }
+            }
         }
 
         private void ControlLoaded(object sender, RoutedEventArgs e)
@@ -102,10 +111,11 @@ namespace SingerDispatch.Panels.Jobs
 
         private void NewJob_Click(object sender, RoutedEventArgs e)
         {
-            var job = new Job { CompanyID = SelectedCompany.ID, Number = 0 };
+            var job = new Job { CompanyID = SelectedCompany.ID, Number = 0, JobStatusType = DefaultJobStatus };
 
             ((ObservableCollection<Job>)dgJobs.ItemsSource).Insert(0, job);            
             dgJobs.SelectedItem = job;
+
             txtDescription.Focus();
         }
                
