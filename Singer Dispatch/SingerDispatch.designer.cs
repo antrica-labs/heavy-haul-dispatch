@@ -99,6 +99,9 @@ namespace SingerDispatch
     partial void InsertRate(Rate instance);
     partial void UpdateRate(Rate instance);
     partial void DeleteRate(Rate instance);
+    partial void InsertRateType(RateType instance);
+    partial void UpdateRateType(RateType instance);
+    partial void DeleteRateType(RateType instance);
     partial void InsertSeason(Season instance);
     partial void UpdateSeason(Season instance);
     partial void DeleteSeason(Season instance);
@@ -342,6 +345,14 @@ namespace SingerDispatch
 			get
 			{
 				return this.GetTable<Rate>();
+			}
+		}
+		
+		public System.Data.Linq.Table<RateType> RateTypes
+		{
+			get
+			{
+				return this.GetTable<RateType>();
 			}
 		}
 		
@@ -3184,6 +3195,8 @@ namespace SingerDispatch
 		
 		private EntitySet<Equipment> _Equipments;
 		
+		private EntitySet<Dispatch> _Dispatches;
+		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -3219,6 +3232,7 @@ namespace SingerDispatch
 		public Employee()
 		{
 			this._Equipments = new EntitySet<Equipment>(new Action<Equipment>(this.attach_Equipments), new Action<Equipment>(this.detach_Equipments));
+			this._Dispatches = new EntitySet<Dispatch>(new Action<Dispatch>(this.attach_Dispatches), new Action<Dispatch>(this.detach_Dispatches));
 			OnCreated();
 		}
 		
@@ -3495,6 +3509,19 @@ namespace SingerDispatch
 			}
 		}
 		
+		[Association(Name="Employee_Dispatch", Storage="_Dispatches", ThisKey="ID", OtherKey="EmployeeID")]
+		public EntitySet<Dispatch> Dispatches
+		{
+			get
+			{
+				return this._Dispatches;
+			}
+			set
+			{
+				this._Dispatches.Assign(value);
+			}
+		}
+		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -3522,6 +3549,18 @@ namespace SingerDispatch
 		}
 		
 		private void detach_Equipments(Equipment entity)
+		{
+			this.SendPropertyChanging();
+			entity.Employee = null;
+		}
+		
+		private void attach_Dispatches(Dispatch entity)
+		{
+			this.SendPropertyChanging();
+			entity.Employee = this;
+		}
+		
+		private void detach_Dispatches(Dispatch entity)
 		{
 			this.SendPropertyChanging();
 			entity.Employee = null;
@@ -8743,6 +8782,8 @@ namespace SingerDispatch
 		
 		private long _ID;
 		
+		private System.Nullable<long> _RateTypeID;
+		
 		private string _Name;
 		
 		private System.Nullable<decimal> _HourlySpecialized;
@@ -8751,7 +8792,11 @@ namespace SingerDispatch
 		
 		private EntitySet<Load> _Loads;
 		
+		private EntitySet<Dispatch> _Dispatches;
+		
 		private EntitySet<TrailerCombination> _TrailerCombinations;
+		
+		private EntityRef<RateType> _RateType;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -8759,6 +8804,8 @@ namespace SingerDispatch
     partial void OnCreated();
     partial void OnIDChanging(long value);
     partial void OnIDChanged();
+    partial void OnRateTypeIDChanging(System.Nullable<long> value);
+    partial void OnRateTypeIDChanged();
     partial void OnNameChanging(string value);
     partial void OnNameChanged();
     partial void OnHourlySpecializedChanging(System.Nullable<decimal> value);
@@ -8770,7 +8817,9 @@ namespace SingerDispatch
 		public Rate()
 		{
 			this._Loads = new EntitySet<Load>(new Action<Load>(this.attach_Loads), new Action<Load>(this.detach_Loads));
+			this._Dispatches = new EntitySet<Dispatch>(new Action<Dispatch>(this.attach_Dispatches), new Action<Dispatch>(this.detach_Dispatches));
 			this._TrailerCombinations = new EntitySet<TrailerCombination>(new Action<TrailerCombination>(this.attach_TrailerCombinations), new Action<TrailerCombination>(this.detach_TrailerCombinations));
+			this._RateType = default(EntityRef<RateType>);
 			OnCreated();
 		}
 		
@@ -8790,6 +8839,30 @@ namespace SingerDispatch
 					this._ID = value;
 					this.SendPropertyChanged("ID");
 					this.OnIDChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_RateTypeID")]
+		public System.Nullable<long> RateTypeID
+		{
+			get
+			{
+				return this._RateTypeID;
+			}
+			set
+			{
+				if ((this._RateTypeID != value))
+				{
+					if (this._RateType.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnRateTypeIDChanging(value);
+					this.SendPropertyChanging();
+					this._RateTypeID = value;
+					this.SendPropertyChanged("RateTypeID");
+					this.OnRateTypeIDChanged();
 				}
 			}
 		}
@@ -8867,6 +8940,19 @@ namespace SingerDispatch
 			}
 		}
 		
+		[Association(Name="Rate_Dispatch", Storage="_Dispatches", ThisKey="ID", OtherKey="RateID")]
+		public EntitySet<Dispatch> Dispatches
+		{
+			get
+			{
+				return this._Dispatches;
+			}
+			set
+			{
+				this._Dispatches.Assign(value);
+			}
+		}
+		
 		[Association(Name="Rate_TrailerCombination", Storage="_TrailerCombinations", ThisKey="ID", OtherKey="RateID")]
 		public EntitySet<TrailerCombination> TrailerCombinations
 		{
@@ -8877,6 +8963,40 @@ namespace SingerDispatch
 			set
 			{
 				this._TrailerCombinations.Assign(value);
+			}
+		}
+		
+		[Association(Name="RateType_Rate", Storage="_RateType", ThisKey="RateTypeID", OtherKey="ID", IsForeignKey=true)]
+		public RateType RateType
+		{
+			get
+			{
+				return this._RateType.Entity;
+			}
+			set
+			{
+				RateType previousValue = this._RateType.Entity;
+				if (((previousValue != value) 
+							|| (this._RateType.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._RateType.Entity = null;
+						previousValue.Rates.Remove(this);
+					}
+					this._RateType.Entity = value;
+					if ((value != null))
+					{
+						value.Rates.Add(this);
+						this._RateTypeID = value.ID;
+					}
+					else
+					{
+						this._RateTypeID = default(Nullable<long>);
+					}
+					this.SendPropertyChanged("RateType");
+				}
 			}
 		}
 		
@@ -8912,6 +9032,18 @@ namespace SingerDispatch
 			entity.Rate = null;
 		}
 		
+		private void attach_Dispatches(Dispatch entity)
+		{
+			this.SendPropertyChanging();
+			entity.Rate = this;
+		}
+		
+		private void detach_Dispatches(Dispatch entity)
+		{
+			this.SendPropertyChanging();
+			entity.Rate = null;
+		}
+		
 		private void attach_TrailerCombinations(TrailerCombination entity)
 		{
 			this.SendPropertyChanging();
@@ -8922,6 +9054,120 @@ namespace SingerDispatch
 		{
 			this.SendPropertyChanging();
 			entity.Rate = null;
+		}
+	}
+	
+	[Table(Name="")]
+	public partial class RateType : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private long _ID;
+		
+		private string _Name;
+		
+		private EntitySet<Rate> _Rates;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDChanging(long value);
+    partial void OnIDChanged();
+    partial void OnNameChanging(string value);
+    partial void OnNameChanged();
+    #endregion
+		
+		public RateType()
+		{
+			this._Rates = new EntitySet<Rate>(new Action<Rate>(this.attach_Rates), new Action<Rate>(this.detach_Rates));
+			OnCreated();
+		}
+		
+		[Column(Storage="_ID", AutoSync=AutoSync.OnInsert, IsPrimaryKey=true, IsDbGenerated=true)]
+		public long ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this.OnIDChanging(value);
+					this.SendPropertyChanging();
+					this._ID = value;
+					this.SendPropertyChanged("ID");
+					this.OnIDChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_Name")]
+		public string Name
+		{
+			get
+			{
+				return this._Name;
+			}
+			set
+			{
+				if ((this._Name != value))
+				{
+					this.OnNameChanging(value);
+					this.SendPropertyChanging();
+					this._Name = value;
+					this.SendPropertyChanged("Name");
+					this.OnNameChanged();
+				}
+			}
+		}
+		
+		[Association(Name="RateType_Rate", Storage="_Rates", ThisKey="ID", OtherKey="RateTypeID")]
+		public EntitySet<Rate> Rates
+		{
+			get
+			{
+				return this._Rates;
+			}
+			set
+			{
+				this._Rates.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_Rates(Rate entity)
+		{
+			this.SendPropertyChanging();
+			entity.RateType = this;
+		}
+		
+		private void detach_Rates(Rate entity)
+		{
+			this.SendPropertyChanging();
+			entity.RateType = null;
 		}
 	}
 	
@@ -9243,8 +9489,6 @@ namespace SingerDispatch
 		
 		private EntitySet<Service> _Services;
 		
-		private EntitySet<Dispatch> _Dispatches;
-		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -9258,7 +9502,6 @@ namespace SingerDispatch
 		public ServiceType()
 		{
 			this._Services = new EntitySet<Service>(new Action<Service>(this.attach_Services), new Action<Service>(this.detach_Services));
-			this._Dispatches = new EntitySet<Dispatch>(new Action<Dispatch>(this.attach_Dispatches), new Action<Dispatch>(this.detach_Dispatches));
 			OnCreated();
 		}
 		
@@ -9315,19 +9558,6 @@ namespace SingerDispatch
 			}
 		}
 		
-		[Association(Name="ServiceType_Dispatch", Storage="_Dispatches", ThisKey="ID", OtherKey="ServiceTypeID")]
-		public EntitySet<Dispatch> Dispatches
-		{
-			get
-			{
-				return this._Dispatches;
-			}
-			set
-			{
-				this._Dispatches.Assign(value);
-			}
-		}
-		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -9355,18 +9585,6 @@ namespace SingerDispatch
 		}
 		
 		private void detach_Services(Service entity)
-		{
-			this.SendPropertyChanging();
-			entity.ServiceType = null;
-		}
-		
-		private void attach_Dispatches(Dispatch entity)
-		{
-			this.SendPropertyChanging();
-			entity.ServiceType = this;
-		}
-		
-		private void detach_Dispatches(Dispatch entity)
 		{
 			this.SendPropertyChanging();
 			entity.ServiceType = null;
@@ -11062,13 +11280,15 @@ namespace SingerDispatch
 		
 		private System.Nullable<long> _LoadID;
 		
+		private System.Nullable<long> _EmployeeID;
+		
 		private System.Nullable<long> _EquipmentID;
 		
 		private string _Description;
 		
 		private string _Notes;
 		
-		private System.Nullable<long> _ServiceTypeID;
+		private System.Nullable<long> _RateID;
 		
 		private EntityRef<Equipment> _Equipment;
 		
@@ -11076,7 +11296,9 @@ namespace SingerDispatch
 		
 		private EntityRef<Load> _Load;
 		
-		private EntityRef<ServiceType> _ServiceType;
+		private EntityRef<Rate> _Rate;
+		
+		private EntityRef<Employee> _Employee;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -11088,14 +11310,16 @@ namespace SingerDispatch
     partial void OnJobIDChanged();
     partial void OnLoadIDChanging(System.Nullable<long> value);
     partial void OnLoadIDChanged();
+    partial void OnEmployeeIDChanging(System.Nullable<long> value);
+    partial void OnEmployeeIDChanged();
     partial void OnEquipmentIDChanging(System.Nullable<long> value);
     partial void OnEquipmentIDChanged();
     partial void OnDescriptionChanging(string value);
     partial void OnDescriptionChanged();
     partial void OnNotesChanging(string value);
     partial void OnNotesChanged();
-    partial void OnServiceTypeIDChanging(System.Nullable<long> value);
-    partial void OnServiceTypeIDChanged();
+    partial void OnRateIDChanging(System.Nullable<long> value);
+    partial void OnRateIDChanged();
     #endregion
 		
 		public Dispatch()
@@ -11103,7 +11327,8 @@ namespace SingerDispatch
 			this._Equipment = default(EntityRef<Equipment>);
 			this._Job = default(EntityRef<Job>);
 			this._Load = default(EntityRef<Load>);
-			this._ServiceType = default(EntityRef<ServiceType>);
+			this._Rate = default(EntityRef<Rate>);
+			this._Employee = default(EntityRef<Employee>);
 			OnCreated();
 		}
 		
@@ -11175,6 +11400,30 @@ namespace SingerDispatch
 			}
 		}
 		
+		[Column(Storage="_EmployeeID")]
+		public System.Nullable<long> EmployeeID
+		{
+			get
+			{
+				return this._EmployeeID;
+			}
+			set
+			{
+				if ((this._EmployeeID != value))
+				{
+					if (this._Employee.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnEmployeeIDChanging(value);
+					this.SendPropertyChanging();
+					this._EmployeeID = value;
+					this.SendPropertyChanged("EmployeeID");
+					this.OnEmployeeIDChanged();
+				}
+			}
+		}
+		
 		[Column(Storage="_EquipmentID")]
 		public System.Nullable<long> EquipmentID
 		{
@@ -11239,26 +11488,26 @@ namespace SingerDispatch
 			}
 		}
 		
-		[Column(Storage="_ServiceTypeID")]
-		public System.Nullable<long> ServiceTypeID
+		[Column(Storage="_RateID")]
+		public System.Nullable<long> RateID
 		{
 			get
 			{
-				return this._ServiceTypeID;
+				return this._RateID;
 			}
 			set
 			{
-				if ((this._ServiceTypeID != value))
+				if ((this._RateID != value))
 				{
-					if (this._ServiceType.HasLoadedOrAssignedValue)
+					if (this._Rate.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
-					this.OnServiceTypeIDChanging(value);
+					this.OnRateIDChanging(value);
 					this.SendPropertyChanging();
-					this._ServiceTypeID = value;
-					this.SendPropertyChanged("ServiceTypeID");
-					this.OnServiceTypeIDChanged();
+					this._RateID = value;
+					this.SendPropertyChanged("RateID");
+					this.OnRateIDChanged();
 				}
 			}
 		}
@@ -11365,36 +11614,70 @@ namespace SingerDispatch
 			}
 		}
 		
-		[Association(Name="ServiceType_Dispatch", Storage="_ServiceType", ThisKey="ServiceTypeID", OtherKey="ID", IsForeignKey=true)]
-		public ServiceType ServiceType
+		[Association(Name="Rate_Dispatch", Storage="_Rate", ThisKey="RateID", OtherKey="ID", IsForeignKey=true)]
+		public Rate Rate
 		{
 			get
 			{
-				return this._ServiceType.Entity;
+				return this._Rate.Entity;
 			}
 			set
 			{
-				ServiceType previousValue = this._ServiceType.Entity;
+				Rate previousValue = this._Rate.Entity;
 				if (((previousValue != value) 
-							|| (this._ServiceType.HasLoadedOrAssignedValue == false)))
+							|| (this._Rate.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._ServiceType.Entity = null;
+						this._Rate.Entity = null;
 						previousValue.Dispatches.Remove(this);
 					}
-					this._ServiceType.Entity = value;
+					this._Rate.Entity = value;
 					if ((value != null))
 					{
 						value.Dispatches.Add(this);
-						this._ServiceTypeID = value.ID;
+						this._RateID = value.ID;
 					}
 					else
 					{
-						this._ServiceTypeID = default(Nullable<long>);
+						this._RateID = default(Nullable<long>);
 					}
-					this.SendPropertyChanged("ServiceType");
+					this.SendPropertyChanged("Rate");
+				}
+			}
+		}
+		
+		[Association(Name="Employee_Dispatch", Storage="_Employee", ThisKey="EmployeeID", OtherKey="ID", IsForeignKey=true)]
+		public Employee Employee
+		{
+			get
+			{
+				return this._Employee.Entity;
+			}
+			set
+			{
+				Employee previousValue = this._Employee.Entity;
+				if (((previousValue != value) 
+							|| (this._Employee.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Employee.Entity = null;
+						previousValue.Dispatches.Remove(this);
+					}
+					this._Employee.Entity = value;
+					if ((value != null))
+					{
+						value.Dispatches.Add(this);
+						this._EmployeeID = value.ID;
+					}
+					else
+					{
+						this._EmployeeID = default(Nullable<long>);
+					}
+					this.SendPropertyChanged("Employee");
 				}
 			}
 		}

@@ -18,10 +18,11 @@
     </UserControl.Resources>
     <StackPanel>
         <WPF:DataGrid Name="dgDispatches" Style="{StaticResource ListDisplay}" Height="180">
-            <WPF:DataGrid.Columns>                
-                <WPF:DataGridTextColumn Header="Unit" Binding="{Binding Equipment.UnitNumber}" Width="0.2*" />
-                <WPF:DataGridTextColumn Header="Driver" Binding="{Binding Employee}" Width="0.3*" />
-                <WPF:DataGridTextColumn Header="Service Type" Binding="{Binding ServiceType.Name}" Width="0.3*" />
+            <WPF:DataGrid.Columns>
+                <WPF:DataGridTextColumn Header="Load" Binding="{Binding Load.FriendlyName}" Width="0.2*" />
+                <WPF:DataGridTextColumn Header="Driver" Binding="{Binding Employee.Name}" Width="0.3*" />
+                <WPF:DataGridTextColumn Header="Unit" Binding="{Binding Equipment.UnitNumber}" Width="0.2*" />                
+                <WPF:DataGridTextColumn Header="Service Type" Binding="{Binding Rate.Name}" Width="0.3*" />
                 <WPF:DataGridTextColumn Header="Description" Binding="{Binding Description}" />                
             </WPF:DataGrid.Columns>
         </WPF:DataGrid>
@@ -60,13 +61,13 @@
                 <ComboBox Name="cmbLoads" Grid.Row="0" Grid.Column="1" SelectedItem="{Binding Load}" ItemTemplate="{StaticResource LoadNameTemplate}" ></ComboBox>
                 
                 <Label Grid.Row="1" Grid.Column="0">Service type:</Label>
-                <ComboBox Name="cmbServiceTypes" Grid.Row="1" Grid.Column="1" SelectedItem="{Binding ServiceType}" ItemTemplate="{StaticResource SimpleNameTemplate}" />
+                <ComboBox Name="cmbServiceTypes" Grid.Row="1" Grid.Column="1" SelectedItem="{Binding Rate}" ItemTemplate="{StaticResource SimpleNameTemplate}" />
                 
-                <Label Grid.Row="2" Grid.Column="0">Unit:</Label>
-                <ComboBox Name="cmbUnits" Grid.Row="2" Grid.Column="1" SelectedItem="{Binding Equipment}" ItemTemplate="{StaticResource EquipmentNameTemplate}" />
+                <Label Grid.Row="2" Grid.Column="0">Employee:</Label>
+                <ComboBox Name="cmbEmployees" Grid.Row="2" Grid.Column="1" SelectedItem="{Binding Employee}" ItemTemplate="{StaticResource SimpleNameTemplate}" />
                 
-                <Label Grid.Row="3" Grid.Column="0">Employee:</Label>
-                <ComboBox Name="cmbEmployees" Grid.Row="3" Grid.Column="1" SelectedItem="{Binding Employee}"/>
+                <Label Grid.Row="3" Grid.Column="0">Unit:</Label>
+                <ComboBox Name="cmbUnits" Grid.Row="3" Grid.Column="1" SelectedItem="{Binding Equipment}" ItemTemplate="{StaticResource EquipmentNameTemplate}" />
                 
                 <Label Grid.Row="4" Grid.Column="0">Description:</Label>
                 <TextBox Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Description}"/>

@@ -25,13 +25,7 @@ namespace SingerDispatch.Panels.Jobs
             cmbCreatedBy.ItemsSource = from e in Database.Employees select e;
             cmbStausTypes.ItemsSource = from s in Database.JobStatusTypes select s;
 
-            foreach (var item in cmbStausTypes.ItemsSource)
-            {
-                if (((JobStatusType)item).Name == "Pending")
-                {
-                    DefaultJobStatus = (JobStatusType)item;
-                }
-            }
+            DefaultJobStatus = (JobStatusType)(from s in Database.JobStatusTypes where s.Name == "Pending" select s).First();
         }
 
         private void ControlLoaded(object sender, RoutedEventArgs e)

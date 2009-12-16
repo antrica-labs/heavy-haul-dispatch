@@ -90,7 +90,7 @@ namespace SingerDispatch.Panels.Jobs
                 return null;
             }
 
-            var rates = from r in Database.Rates select r;
+            var rates = from r in Database.Rates where r.RateType.Name == "Trailer" select r;
             var discount = company.RateAdjustment != null ? company.RateAdjustment : 0.00m;
             var enterprise = company.Type == "M.E. Signer Enterprise";
 

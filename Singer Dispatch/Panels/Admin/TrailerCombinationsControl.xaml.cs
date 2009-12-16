@@ -80,6 +80,5 @@ namespace SingerDispatch.Panels.Admin
 
     public class RatesDropList : ObservableCollection<Rate>
     {
-
     }
 }

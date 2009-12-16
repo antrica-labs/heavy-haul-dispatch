@@ -2,12 +2,15 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:WPF="http://schemas.microsoft.com/wpf/2008/toolkit"
+    xmlns:Local="clr-namespace:SingerDispatch.Panels.Admin"
     Loaded="Control_Loaded" Width="780">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/SingerDispatchDictionary.xaml" />
             </ResourceDictionary.MergedDictionaries>
+            
+            <ObjectDataProvider ObjectType="{x:Type Local:RateTypesDropList}" x:Key="RateTypesDropList" />
         </ResourceDictionary>
     </UserControl.Resources>
     <StackPanel>
@@ -16,6 +19,7 @@
                 <WPF:DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="2*" />
                 <WPF:DataGridTextColumn Header="Specialized rate" Binding="{Binding HourlySpecialized, StringFormat=c}" />
                 <WPF:DataGridTextColumn Header="Enterprise rate" Binding="{Binding HourlyEnterprise, StringFormat=c}" />
+                <WPF:DataGridComboBoxColumn Header="Rate type" DisplayMemberPath="Name" ItemsSource="{Binding Source={StaticResource RateTypesDropList}}" SelectedItemBinding="{Binding RateType}" />
             </WPF:DataGrid.Columns>
         </WPF:DataGrid>  
         

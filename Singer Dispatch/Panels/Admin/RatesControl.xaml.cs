@@ -28,6 +28,21 @@ namespace SingerDispatch.Panels.Admin
             InitializeComponent();
 
             Database = SingerConstants.CommonDataContext;
+
+            var provider = (ObjectDataProvider)FindResource("RateTypesDropList");
+
+            if (provider != null)
+            {
+                var types = from rt in Database.RateTypes select rt;
+                var list = (RateTypesDropList)provider.Data;
+
+                list.Clear();
+
+                foreach (var type in types)
+                {
+                    list.Add(type);
+                }
+            }
         }
 
         private void Control_Loaded(object sender, RoutedEventArgs e)
@@ -64,5 +79,9 @@ namespace SingerDispatch.Panels.Admin
 
             Database.SubmitChanges();            
         }        
+    }
+
+    public class RateTypesDropList : ObservableCollection<RateType>
+    {
     }
 }

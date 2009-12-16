@@ -16,19 +16,22 @@ namespace SingerDispatch.Panels.Jobs
         {
             InitializeComponent();
 
-            Database = SingerConstants.CommonDataContext;
-            cmbServiceTypes.ItemsSource = from t in Database.ServiceTypes select t;
+            Database = SingerConstants.CommonDataContext;            
         }
 
         private void ControlLoaded(object sender, RoutedEventArgs e)
         {
             cmbLoads.ItemsSource = null;
             cmbUnits.ItemsSource = null;
+            cmbServiceTypes.ItemsSource = null;
+            cmbEmployees.ItemsSource = null;
 
             if (SelectedJob != null)
             {
                 cmbLoads.ItemsSource = SelectedJob.Loads;
                 cmbUnits.ItemsSource = from u in Database.Equipment select u;
+                cmbServiceTypes.ItemsSource = from r in Database.Rates where r.RateType.Name == "Service" select r;
+                cmbEmployees.ItemsSource = from emp in Database.Employees select emp;
             }
         }
 

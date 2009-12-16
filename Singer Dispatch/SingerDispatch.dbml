@@ -147,6 +147,7 @@
       <Column Name="Notes" Type="System.String" CanBeNull="true" UpdateCheck="Never" />
       <Column Name="Email" Type="System.String" CanBeNull="true" />
       <Association Name="Employee_Equipment" Member="Equipments" ThisKey="ID" OtherKey="DefaultDriverID" Type="Equipment" />
+      <Association Name="Employee_Dispatch" Member="Dispatches" ThisKey="ID" OtherKey="EmployeeID" Type="Dispatch" />
     </Type>
   </Table>
   <Table Name="" Member="EquipmentTypes">
@@ -376,11 +377,21 @@
   <Table Name="" Member="Rates">
     <Type Name="Rate">
       <Column Name="ID" Type="System.Int64" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="RateTypeID" Type="System.Int64" CanBeNull="true" />
       <Column Name="Name" Type="System.String" CanBeNull="true" />
       <Column Name="HourlySpecialized" Type="System.Decimal" CanBeNull="true" />
       <Column Name="HourlyEnterprise" Type="System.Decimal" CanBeNull="true" />
+      <Association Name="RateType_Rate" Member="RateType" ThisKey="RateTypeID" OtherKey="ID" Type="RateType" IsForeignKey="true" />      
       <Association Name="Rate_Load" Member="Loads" ThisKey="ID" OtherKey="RateID" Type="Load" />
+      <Association Name="Rate_Dispatch" Member="Dispatches" ThisKey="ID" OtherKey="RateID" Type="Dispatch" />
       <Association Name="Rate_TrailerCombination" Member="TrailerCombinations" ThisKey="ID" OtherKey="RateID" Type="TrailerCombination" />
+    </Type>
+  </Table>
+  <Table Name="" Member="RateTypes">
+    <Type Name="RateType">
+      <Column Name="ID" Type="System.Int64" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" CanBeNull="true" />
+      <Association Name="RateType_Rate" Member="Rates" ThisKey="ID" OtherKey="RateTypeID" Type="Rate" />
     </Type>
   </Table>
   <Table Name="" Member="Seasons">
@@ -403,8 +414,7 @@
     <Type Name="ServiceType">
       <Column Name="ID" Type="System.Int64" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Name" Type="System.String" CanBeNull="true" />
-      <Association Name="ServiceType_Service" Member="Services" ThisKey="ID" OtherKey="ServiceTypeID" Type="Service" />
-      <Association Name="ServiceType_Dispatch" Member="Dispatches" ThisKey="ID" OtherKey="ServiceTypeID" Type="Dispatch" />
+      <Association Name="ServiceType_Service" Member="Services" ThisKey="ID" OtherKey="ServiceTypeID" Type="Service" />      
     </Type>
   </Table>
   <Table Name="" Member="ThirdPartyServices">
@@ -488,14 +498,16 @@
       <Column Name="ID" Type="System.Int64" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="JobID" Type="System.Int64" CanBeNull="true" />
       <Column Name="LoadID" Type="System.Int64" CanBeNull="true" />
+      <Column Name="EmployeeID" Type="System.Int64" CanBeNull="true" />
       <Column Name="EquipmentID" Type="System.Int64" CanBeNull="true" />
       <Column Name="Description" Type="System.String" CanBeNull="true" />
       <Column Name="Notes" Type="System.String" CanBeNull="true" UpdateCheck="Never" />
-      <Column Name="ServiceTypeID" Type="System.Int64" CanBeNull="true" />
+      <Column Name="RateID" Type="System.Int64" CanBeNull="true" />
       <Association Name="Equipment_Dispatch" Member="Equipment" ThisKey="EquipmentID" OtherKey="ID" Type="Equipment" IsForeignKey="true" />
       <Association Name="Job_Dispatch" Member="Job" ThisKey="JobID" OtherKey="ID" Type="Job" IsForeignKey="true" />
       <Association Name="Load_Dispatch" Member="Load" ThisKey="LoadID" OtherKey="ID" Type="Load" IsForeignKey="true" />
-      <Association Name="ServiceType_Dispatch" Member="ServiceType" ThisKey="ServiceTypeID" OtherKey="ID" Type="ServiceType" IsForeignKey="true" />
+      <Association Name="Rate_Dispatch" Member="Rate" ThisKey="RateID" OtherKey="ID" Type="Rate" IsForeignKey="true" />
+      <Association Name="Employee_Dispatch" Member="Employee" ThisKey="EmployeeID" OtherKey="ID" Type="Employee" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="" Member="TrailerCombinations">
