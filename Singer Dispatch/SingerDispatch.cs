@@ -35,18 +35,7 @@ namespace SingerDispatch
         }
 
     }
-
-    partial class User
-    {
-        public string Name
-        {
-            get
-            {
-                return FirstName + " " + LastName;
-            }
-        }
-    }
-
+        
     partial class Contact
     {
         public string Name
@@ -85,12 +74,12 @@ namespace SingerDispatch
             copy.Number = Number;
             copy.Revision = Revision;
             copy.CareOfCompanyID = CareOfCompanyID;
-            copy.Company1 = Company1;
+            copy.CareOfCompany = CareOfCompany;
             copy.Description = Description;
             copy.CreationDate = CreationDate;
             copy.ExpirationDate = ExpirationDate;
-            copy.QuotedByUserID = QuotedByUserID;
-            copy.User = User;
+            copy.EmployeeID = EmployeeID;
+            copy.Employee = Employee;
             copy.Price = Price;
 
             foreach (var commodity in QuoteCommodities)
@@ -120,7 +109,7 @@ namespace SingerDispatch
             job.CompanyID = CompanyID;
             job.Company = Company;
             job.CareOfCompanyID = CareOfCompanyID;
-            job.Company1 = Company1;
+            job.CareOfCompany = CareOfCompany;
             job.StartDate = StartDate;
             job.EndDate = EndDate;
             job.Description = Description;

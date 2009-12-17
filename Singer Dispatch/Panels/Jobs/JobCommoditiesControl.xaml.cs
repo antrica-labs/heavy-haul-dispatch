@@ -22,7 +22,7 @@ namespace SingerDispatch.Panels.Jobs
         private void ControlLoaded(object sender, RoutedEventArgs e)
         {   
             cmbLoads.ItemsSource = (SelectedJob == null) ? null : SelectedJob.Loads.ToList();
-            cmbCommodityName.ItemsSource = (SelectedJob == null) ? null : from c in Database.Commodities where c.Company == SelectedJob.Company || c.Company == SelectedJob.Company1 select c;
+            cmbCommodityName.ItemsSource = (SelectedJob == null) ? null : from c in Database.Commodities where c.Company == SelectedJob.Company || c.Company == SelectedJob.CareOfCompany select c;
    
             cmbLoads.Items.Refresh();
         }

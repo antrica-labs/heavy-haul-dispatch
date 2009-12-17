@@ -66,11 +66,11 @@
                         <ComboBox Name="cmbQuotes" Grid.Row="1" Grid.Column="1" SelectedItem="{Binding Quote}" ItemTemplate="{StaticResource QuoteNameTemplate}" />
 
                         <Label Grid.Row="0" Grid.Column="2">Author:</Label>
-                        <ComboBox Name="cmbCreatedBy" Grid.Row="1" Grid.Column="2" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectedItem="{Binding User}" TextSearch.TextPath="Name"></ComboBox>                       
+                        <ComboBox Name="cmbCreatedBy" Grid.Row="1" Grid.Column="2" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectedItem="{Binding Employee}" TextSearch.TextPath="Name"></ComboBox>                       
                     </Grid>
 
                     <Label>Care of:</Label>
-                    <ComboBox Name="cmbCareOfCompanies" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectedItem="{Binding Company1}" TextSearch.TextPath="Name" IsEditable="True" SelectionChanged="cmbCareOfCompanies_SelectionChanged" />
+                    <ComboBox Name="cmbCareOfCompanies" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectedItem="{Binding CareOfCompany}" TextSearch.TextPath="Name" IsEditable="True" SelectionChanged="cmbCareOfCompanies_SelectionChanged" />
 
                     <Label>Project description</Label>
                     <TextBox Name="txtDescription" Height="40" Style="{StaticResource MultiLine}" VerticalScrollBarVisibility="Disabled" Text="{Binding Description}"/>

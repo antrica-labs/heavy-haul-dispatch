@@ -76,9 +76,9 @@
       <Association Name="Company_Commodity" Member="Commodities" ThisKey="ID" OtherKey="CompanyID" Type="Commodity" />
       <Association Name="Company_CustomerNumber" Member="CustomerNumbers" ThisKey="ID" OtherKey="CompanyID" Type="CustomerNumber" />
       <Association Name="Company_Job" Member="Jobs" ThisKey="ID" OtherKey="CompanyID" Type="Job" />
-      <Association Name="Company_Job1" Member="Jobs1" ThisKey="ID" OtherKey="CareOfCompanyID" Type="Job" />
+      <Association Name="CareOfCompany_Job" Member="CareOfJobs" ThisKey="ID" OtherKey="CareOfCompanyID" Type="Job" />
       <Association Name="Company_Quote" Member="Quotes" ThisKey="ID" OtherKey="CompanyID" Type="Quote" />
-      <Association Name="Company_Quote1" Member="Quotes1" ThisKey="ID" OtherKey="CareOfCompanyID" Type="Quote" />
+      <Association Name="CareOfCompany_Quote" Member="CareOfQuotes" ThisKey="ID" OtherKey="CareOfCompanyID" Type="Quote" />
       <Association Name="Company_Service" Member="Services" ThisKey="ID" OtherKey="CompanyID" Type="Service" />
       <Association Name="Company_ThirdPartyService" Member="ThirdPartyServices" ThisKey="ID" OtherKey="CompanyID" Type="ThirdPartyService" />
       <Association Name="CompanyPriorityLevel_Company" Member="CompanyPriorityLevel" ThisKey="PriorityLevelID" OtherKey="ID" Type="CompanyPriorityLevel" IsForeignKey="true" />
@@ -148,6 +148,8 @@
       <Column Name="Email" Type="System.String" CanBeNull="true" />
       <Association Name="Employee_Equipment" Member="Equipments" ThisKey="ID" OtherKey="DefaultDriverID" Type="Equipment" />
       <Association Name="Employee_Dispatch" Member="Dispatches" ThisKey="ID" OtherKey="EmployeeID" Type="Dispatch" />
+      <Association Name="Employee_Job" Member="Jobs" ThisKey="ID" OtherKey="EmployeeID" Type="Job" />
+      <Association Name="Employee_Quote" Member="Quotes" ThisKey="ID" OtherKey="EmployeeID" Type="Quote" />
     </Type>
   </Table>
   <Table Name="" Member="EquipmentTypes">
@@ -202,8 +204,8 @@
       <Column Name="ID" Type="System.Int64" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="CompanyID" Type="System.Int64" CanBeNull="true" />
       <Column Name="QuoteID" Type="System.Int64" CanBeNull="true" />
-      <Column Name="CareOfCompanyID" Type="System.Int64" CanBeNull="true" />
-      <Column Name="QuotedByUserID" Type="System.Int64" CanBeNull="true" />
+      <Column Name="EmployeeID" Type="System.Int64" CanBeNull="true" />
+      <Column Name="CareOfCompanyID" Type="System.Int64" CanBeNull="true" />      
       <Column Name="StatusTypeID" Type="System.Int64" CanBeNull="true" />
       <Column Name="Number" Type="System.Int32" CanBeNull="false" />
       <Column Name="Description" Type="System.String" CanBeNull="true" />
@@ -214,11 +216,11 @@
       <Association Name="Job_Permit" Member="Permits" ThisKey="ID" OtherKey="JobID" Type="Permit" />
       <Association Name="Job_ThirdPartyService" Member="ThirdPartyServices" ThisKey="ID" OtherKey="JobID" Type="ThirdPartyService" />
       <Association Name="Job_Dispatch" Member="Dispatches" ThisKey="ID" OtherKey="JobID" Type="Dispatch" />
+      <Association Name="Employee_Job" Member="Employee" ThisKey="EmployeeID" OtherKey="ID" Type="Employee" IsForeignKey="true" />
       <Association Name="Company_Job" Member="Company" ThisKey="CompanyID" OtherKey="ID" Type="Company" IsForeignKey="true" />
-      <Association Name="Company_Job1" Member="Company1" ThisKey="CareOfCompanyID" OtherKey="ID" Type="Company" IsForeignKey="true" />
+      <Association Name="CareOfCompany_Job" Member="CareOfCompany" ThisKey="CareOfCompanyID" OtherKey="ID" Type="Company" IsForeignKey="true" />
       <Association Name="JobStatusType_Job" Member="JobStatusType" ThisKey="StatusTypeID" OtherKey="ID" Type="JobStatusType" IsForeignKey="true" />
-      <Association Name="Quote_Job" Member="Quote" ThisKey="QuoteID" OtherKey="ID" Type="Quote" IsForeignKey="true" />
-      <Association Name="User_Job" Member="User" ThisKey="QuotedByUserID" OtherKey="ID" Type="User" IsForeignKey="true" />
+      <Association Name="Quote_Job" Member="Quote" ThisKey="QuoteID" OtherKey="ID" Type="Quote" IsForeignKey="true" />      
     </Type>
   </Table>
   <Table Name="" Member="JobStatusTypes">
@@ -329,22 +331,22 @@
       <Column Name="CompanyID" Type="System.Int64" CanBeNull="true" />
       <Column Name="Number" Type="System.Int32" CanBeNull="false" />
       <Column Name="Revision" Type="System.Int32" CanBeNull="true" />
+      <Column Name="EmployeeID" Type="System.Int64" CanBeNull="true" />
       <Column Name="CareOfCompanyID" Type="System.Int64" CanBeNull="true" />
       <Column Name="Description" Type="System.String" CanBeNull="true" />
       <Column Name="CreationDate" Type="System.DateTime" CanBeNull="true" />
       <Column Name="ExpirationDate" Type="System.DateTime" CanBeNull="true" />
       <Column Name="StartDate" Type="System.DateTime" CanBeNull="true" />
-      <Column Name="EndDate" Type="System.DateTime" CanBeNull="true" />
-      <Column Name="QuotedByUserID" Type="System.Int64" CanBeNull="true" />
+      <Column Name="EndDate" Type="System.DateTime" CanBeNull="true" />      
       <Column Name="Price" Type="System.Decimal" CanBeNull="true" />
       <Column Name="IsPrinted" Type="System.Boolean" CanBeNull="true" />
       <Association Name="Quote_Job" Member="Jobs" ThisKey="ID" OtherKey="QuoteID" Type="Job" />
       <Association Name="Quote_QuoteCommodity" Member="QuoteCommodities" ThisKey="ID" OtherKey="QuoteID" Type="QuoteCommodity" />
       <Association Name="Quote_QuoteSupplement" Member="QuoteSupplements" ThisKey="ID" OtherKey="QuoteID" Type="QuoteSupplement" />
       <Association Name="Quote_StorageItem" Member="StorageItems" ThisKey="ID" OtherKey="QuoteID" Type="StorageItem" />
+      <Association Name="Employee_Quote" Member="Employee" ThisKey="EmployeeID" OtherKey="ID" Type="Employee" IsForeignKey="true" />
       <Association Name="Company_Quote" Member="Company" ThisKey="CompanyID" OtherKey="ID" Type="Company" IsForeignKey="true" />
-      <Association Name="Company_Quote1" Member="Company1" ThisKey="CareOfCompanyID" OtherKey="ID" Type="Company" IsForeignKey="true" />
-      <Association Name="User_Quote" Member="User" ThisKey="QuotedByUserID" OtherKey="ID" Type="User" IsForeignKey="true" />
+      <Association Name="CareOfCompany_Quote" Member="CareOfCompany" ThisKey="CareOfCompanyID" OtherKey="ID" Type="Company" IsForeignKey="true" />      
     </Type>
   </Table>
   <Table Name="" Member="QuoteSupplements">
@@ -414,7 +416,8 @@
     <Type Name="ServiceType">
       <Column Name="ID" Type="System.Int64" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Name" Type="System.String" CanBeNull="true" />
-      <Association Name="ServiceType_Service" Member="Services" ThisKey="ID" OtherKey="ServiceTypeID" Type="Service" />      
+      <Association Name="ServiceType_Service" Member="Services" ThisKey="ID" OtherKey="ServiceTypeID" Type="Service" />
+      <Association Name="ServiceType_ThirdPartyService" Member="ThirdPartyServices" ThisKey="ID" OtherKey="ServiceTypeID" Type="ThirdPartyService" />
     </Type>
   </Table>
   <Table Name="" Member="ThirdPartyServices">
@@ -423,7 +426,7 @@
       <Column Name="JobID" Type="System.Int64" CanBeNull="true" />
       <Column Name="LoadID" Type="System.Int64" CanBeNull="true" />
       <Column Name="CompanyID" Type="System.Int64" CanBeNull="true" />
-      <Column Name="ThirdPartyServiceTypeID" Type="System.Int64" CanBeNull="true" />
+      <Column Name="ServiceTypeID" Type="System.Int64" CanBeNull="true" />
       <Column Name="ContactID" Type="System.Int64" CanBeNull="true" />
       <Column Name="ServiceDate" Type="System.DateTime" CanBeNull="true" />
       <Column Name="ServiceTime" Type="System.String" CanBeNull="true" />
@@ -434,24 +437,7 @@
       <Association Name="Contact_ThirdPartyService" Member="Contact" ThisKey="ContactID" OtherKey="ID" Type="Contact" IsForeignKey="true" />
       <Association Name="Job_ThirdPartyService" Member="Job" ThisKey="JobID" OtherKey="ID" Type="Job" IsForeignKey="true" />
       <Association Name="Load_ThirdPartyService" Member="Load" ThisKey="LoadID" OtherKey="ID" Type="Load" IsForeignKey="true" />
-      <Association Name="ThirdPartyServiceType_ThirdPartyService" Member="ThirdPartyServiceType" ThisKey="ThirdPartyServiceTypeID" OtherKey="ID" Type="ThirdPartyServiceType" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="" Member="ThirdPartyServiceTypes">
-    <Type Name="ThirdPartyServiceType">
-      <Column Name="ID" Type="System.Int64" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Name" Type="System.String" CanBeNull="true" />
-      <Association Name="ThirdPartyServiceType_ThirdPartyService" Member="ThirdPartyServices" ThisKey="ID" OtherKey="ThirdPartyServiceTypeID" Type="ThirdPartyService" />
-    </Type>
-  </Table>
-  <Table Name="" Member="Users">
-    <Type Name="User">
-      <Column Name="ID" Type="System.Int64" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="FirstName" Type="System.String" CanBeNull="true" />
-      <Column Name="LastName" Type="System.String" CanBeNull="true" />
-      <Column Name="Email" Type="System.String" CanBeNull="true" />
-      <Association Name="User_Job" Member="Jobs" ThisKey="ID" OtherKey="QuotedByUserID" Type="Job" />
-      <Association Name="User_Quote" Member="Quotes" ThisKey="ID" OtherKey="QuotedByUserID" Type="Quote" />
+      <Association Name="ServiceType_ThirdPartyService" Member="ServiceType" ThisKey="ServiceTypeID" OtherKey="ID" Type="ServiceType" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="" Member="Equipment">

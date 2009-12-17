@@ -126,7 +126,7 @@
                     <WPF:DataGrid Name="dgCustomerDetails" Style="{StaticResource ListDisplay}" Height="100">
                         <WPF:DataGrid.Columns>
                             <WPF:DataGridTextColumn Header="Field" Binding="{Binding Field}" />
-                            <WPF:DataGridTextColumn Header="Value" Binding="{Binding Value}" />
+                            <WPF:DataGridTextColumn Header="Number" Binding="{Binding Value}" />
                         </WPF:DataGrid.Columns>
                     </WPF:DataGrid>
 

@@ -18,8 +18,6 @@ namespace SingerDispatch.Panels.Jobs
             InitializeComponent();
 
             Database = SingerConstants.CommonDataContext;
-
-            cmbServiceTypes.ItemsSource = from t in Database.ThirdPartyServiceTypes select t;
         }
 
         private void ControlLoaded(object sender, RoutedEventArgs e)
@@ -35,9 +33,22 @@ namespace SingerDispatch.Panels.Jobs
             dgServices.ItemsSource = (newValue == null) ? null : new ObservableCollection<ThirdPartyService>(newValue.ThirdPartyServices);
         }
 
-        private void SelectedCompany_Changed(object sender, SelectionChangedEventArgs e)
+        private void ServiceCompany_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-                   
+            if (e.AddedItems.Count > 0)
+            {
+                var company = (Company)e.AddedItems[0];
+
+                cmbServiceTypes.ItemsSource = from st in Database.Services where st.Company == company select st.ServiceType;
+
+                var addressQuery = from a in Database.Addresses where a.Company == company select a;                
+                cmbContacts.ItemsSource = from c in Database.Contacts where addressQuery.Contains(c.Address) select c;
+            }
+            else
+            {
+                cmbServiceTypes.ItemsSource = null;
+                cmbContacts.ItemsSource = null;
+            }            
         }
 
         private void NewService_Click(object sender, RoutedEventArgs e)

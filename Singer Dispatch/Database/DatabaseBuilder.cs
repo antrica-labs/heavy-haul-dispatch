@@ -272,18 +272,6 @@ namespace SingerDispatch.Database
             database.Rates.InsertAllOnSubmit(rates);
 
 
-
-            // Third party service types
-            var thirdpartytypes = new List<ThirdPartyServiceType>();
-
-            thirdpartytypes.Add(new ThirdPartyServiceType() { Name = "Crane" });
-            thirdpartytypes.Add(new ThirdPartyServiceType() { Name = "Pilot Car" });
-            thirdpartytypes.Add(new ThirdPartyServiceType() { Name = "Swamper" });
-            thirdpartytypes.Add(new ThirdPartyServiceType() { Name = "Tractor" });
-
-            database.ThirdPartyServiceTypes.InsertAllOnSubmit(thirdpartytypes);
-
-
             // Job status types
 
             var jobstatustypes = new List<JobStatusType>();
