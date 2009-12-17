@@ -19,20 +19,15 @@ namespace SingerDispatch.Panels.Jobs
         }
 
         private void ControlLoaded(object sender, RoutedEventArgs e)
-        {
-            cmbLoads.ItemsSource = null;
-
-            if (SelectedJob != null)
-            {
-                cmbLoads.ItemsSource = SelectedJob.Loads;
-            }
+        {            
+            cmbLoads.ItemsSource = (SelectedJob == null) ? null : SelectedJob.Loads.ToList();            
         }
 
         protected override void SelectedJobChanged(Job newValue, Job oldValue)
         {
             base.SelectedJobChanged(newValue, oldValue);
 
-            dgPermits.ItemsSource = new ObservableCollection<Permit>((from p in Database.Permits where p.Job == SelectedJob select p).ToList());
+            dgPermits.ItemsSource = (newValue == null) ? null : new ObservableCollection<Permit>(newValue.Permits);
         }
 
         private void NewPermit_Click(object sender, RoutedEventArgs e)

@@ -20,24 +20,17 @@ namespace SingerDispatch.Panels.Jobs
         }
 
         private void ControlLoaded(object sender, RoutedEventArgs e)
-        {
-            cmbRates.ItemsSource = null;
-            cmbUnits.ItemsSource = null;
-            cmbSeasons.ItemsSource = null;
-
-            if (SelectedJob != null)
-            {
-                cmbRates.ItemsSource = GetCompanyRates(SelectedCompany);
-                cmbUnits.ItemsSource = from u in Database.Equipment where u.EquipmentClass.Name == "Tractor" || u.EquipmentClass.Name == "Trailor" select u;
-                cmbSeasons.ItemsSource = from s in Database.Seasons select s;
-            }
+        {            
+            cmbSeasons.ItemsSource = from s in Database.Seasons select s;
+            cmbRates.ItemsSource = GetCompanyRates(SelectedCompany);
+            cmbUnits.ItemsSource = (SelectedJob == null) ? null : from u in Database.Equipment where u.EquipmentClass.Name == "Tractor" || u.EquipmentClass.Name == "Trailor" select u;            
         }
 
         protected override void SelectedJobChanged(Job newValue, Job oldValue)
         {
             base.SelectedJobChanged(newValue, oldValue);
-                        
-            dgLoads.ItemsSource = new ObservableCollection<Load>((from l in Database.Loads where l.Job == newValue select l).ToList());
+
+            dgLoads.ItemsSource = (newValue == null) ? null : new ObservableCollection<Load>(newValue.Loads);
         }
 
         private void NewLoad_Click(object sender, RoutedEventArgs e)

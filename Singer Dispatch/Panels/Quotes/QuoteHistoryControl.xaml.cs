@@ -20,20 +20,23 @@ namespace SingerDispatch.Panels.Quotes
             InitializeComponent();
 
             Database = SingerConstants.CommonDataContext;
-
-            cmbQuotedBy.ItemsSource = from e in Database.Employees select e;
         }
 
         private void Control_Loaded(object sender, RoutedEventArgs e)
         {
-            // refresh the quotes and company lists in case it has been modified elsewhere.
-            dgQuotes.ItemsSource = (SelectedCompany == null) ? null : new ObservableCollection<Quote>(from quote in Database.Quotes where quote.Company == SelectedCompany orderby quote.Number descending, quote.Revision descending select quote);
-            cmbCareOfCompanies.ItemsSource = from c in Database.Companies where c != SelectedCompany select c;
+            // refresh database lists in case they have been modified elsewhere.
+            cmbQuotedBy.ItemsSource = from emp in Database.Employees select emp;
+
+            cmbCareOfCompanies.ItemsSource = (SelectedCompany == null) ? null : from c in Database.Companies where c != SelectedCompany select c;
+            dgQuotes.ItemsSource = (SelectedCompany == null) ? null : new ObservableCollection<Quote>(from quote in Database.Quotes where quote.Company == SelectedCompany orderby quote.Number descending, quote.Revision descending select quote);            
         }
 
         protected override void SelectedCompanyChanged(Company newValue, Company oldValue)
         {
             base.SelectedCompanyChanged(newValue, oldValue);
+
+            cmbCareOfCompanies.ItemsSource = (SelectedCompany == null) ? null : from c in Database.Companies where c != SelectedCompany select c;
+            dgQuotes.ItemsSource = (SelectedCompany == null) ? null : new ObservableCollection<Quote>(from quote in Database.Quotes where quote.Company == SelectedCompany orderby quote.Number descending, quote.Revision descending select quote);            
         }
 
         protected override void SelectedQuoteChanged(Quote newValue, Quote oldValue)
@@ -75,7 +78,7 @@ namespace SingerDispatch.Panels.Quotes
                
         private void NewQuote_Click(object sender, RoutedEventArgs e)
         {
-            var quote = new Quote { CompanyID = SelectedCompany.ID, Number = 0, Revision = 0, CreationDate = DateTime.Today, ExpirationDate = DateTime.Today.AddDays(1) };
+            var quote = new Quote { Company = SelectedCompany, Number = 0, Revision = 0, CreationDate = DateTime.Today, ExpirationDate = DateTime.Today.AddDays(30) };
                                     
             ((ObservableCollection<Quote>)dgQuotes.ItemsSource).Insert(0, quote);                        
             dgQuotes.SelectedItem = quote;

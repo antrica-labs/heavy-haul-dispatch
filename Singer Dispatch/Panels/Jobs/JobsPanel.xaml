@@ -13,7 +13,7 @@
         </ResourceDictionary>
     </UserControl.Resources>
     <StackPanel>
-        <Border Background="LightGoldenrodYellow" BorderBrush="LightGray" BorderThickness="1" Margin="0,0,0,5" DataContext="{Binding ElementName=jobsPanel, Path=SelectedJob}">
+        <Border Background="LightGoldenrodYellow" BorderBrush="LightGray" BorderThickness="1" Margin="0,0,0,5" DataContext="{Binding SelectedJob}">
             <Grid Margin="5,3">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />

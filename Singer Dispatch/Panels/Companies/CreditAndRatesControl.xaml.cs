@@ -17,17 +17,15 @@ namespace SingerDispatch.Panels.Companies
             InitializeComponent();
 
             Database = SingerConstants.CommonDataContext;
+
+            cmbCreditCustomerType.ItemsSource = SingerConstants.CustomerTypes;
         }
 
         private void Control_Loaded(object sender, RoutedEventArgs e)
-        {
-            cmbCreditCustomerType.ItemsSource = SingerConstants.CustomerTypes;
-            cmbCreditPriority.ItemsSource = (from l in Database.CompanyPriorityLevels orderby l.Name select l).ToList();
+        {   
+            cmbCreditPriority.ItemsSource = from l in Database.CompanyPriorityLevels orderby l.Name select l;
 
-            if (SelectedCompany != null)
-            {
-                dgCreditRates.ItemsSource = GetCompanyRates(SelectedCompany);
-            }
+            dgCreditRates.ItemsSource = GetCompanyRates(SelectedCompany);
         }
 
         protected override void SelectedCompanyChanged(Company newValue, Company oldValue)
@@ -45,6 +43,9 @@ namespace SingerDispatch.Panels.Companies
 
         private List<Rate> GetCompanyRates(Company company)
         {
+            if (company == null)
+                return null;
+
             var rates = from r in Database.Rates select r;
             var discount = company.RateAdjustment != null ? company.RateAdjustment : 0.00m;
             var enterprise = company.Type == "M.E. Signer Enterprise";

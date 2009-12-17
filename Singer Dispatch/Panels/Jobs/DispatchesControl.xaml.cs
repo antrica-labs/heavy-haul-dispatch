@@ -21,30 +21,17 @@ namespace SingerDispatch.Panels.Jobs
 
         private void ControlLoaded(object sender, RoutedEventArgs e)
         {
-            cmbLoads.ItemsSource = null;
-            cmbUnits.ItemsSource = null;
-            cmbServiceTypes.ItemsSource = null;
-            cmbEmployees.ItemsSource = null;
-
-            if (SelectedJob != null)
-            {
-                cmbLoads.ItemsSource = SelectedJob.Loads;
-                cmbUnits.ItemsSource = from u in Database.Equipment select u;
-                cmbServiceTypes.ItemsSource = from r in Database.Rates where r.RateType.Name == "Service" select r;
-                cmbEmployees.ItemsSource = from emp in Database.Employees select emp;
-            }
+            cmbLoads.ItemsSource = (SelectedJob == null) ? null : SelectedJob.Loads.ToList();
+            cmbUnits.ItemsSource = (SelectedJob == null) ? null : from u in Database.Equipment select u;
+            cmbServiceTypes.ItemsSource = (SelectedJob == null) ? null : from r in Database.Rates where r.RateType.Name == "Service" select r;
+            cmbEmployees.ItemsSource = (SelectedJob == null) ? null : from emp in Database.Employees select emp;            
         }
 
         protected override void SelectedJobChanged(Job newValue, Job oldValue)
         {
             base.SelectedJobChanged(newValue, oldValue);
 
-            dgDispatches.ItemsSource = null;
-
-            if (newValue != null)
-            {
-                dgDispatches.ItemsSource = new ObservableCollection<Dispatch>((from d in Database.Dispatches where d.Job == SelectedJob select d).ToList());
-            }
+            dgDispatches.ItemsSource = (newValue == null) ? null : new ObservableCollection<Dispatch>(newValue.Dispatches);
         }
 
         private void NewDispatch_Click(object sender, RoutedEventArgs e)

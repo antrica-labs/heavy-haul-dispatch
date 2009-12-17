@@ -16,14 +16,15 @@ namespace SingerDispatch.Panels.Companies
         public AddressesAndContactsControl()
         {
             InitializeComponent();
-            this.Width = double.NaN;
 
-            Database = SingerConstants.CommonDataContext;            
+            Database = SingerConstants.CommonDataContext;
+
+            cmbContactPreferedContactMethod.ItemsSource = SingerConstants.ContactMethods;
         }
 
         private void Control_Loaded(object sender, RoutedEventArgs e)
         {
-            cmbContactPreferedContactMethod.ItemsSource = SingerConstants.ContactMethods;
+            
             cmbProvinceOrState.ItemsSource = from p in Database.ProvincesAndStates orderby p.CountryID, p.Name select p;
             cmbContactType.ItemsSource = from ct in Database.ContactTypes select ct;
             cmbAddressType.ItemsSource = from at in Database.AddressTypes select at;
@@ -54,16 +55,7 @@ namespace SingerDispatch.Panels.Companies
             var control = (DataGrid)sender;
             var address = (Address)control.SelectedItem;
 
-            if (address != null)
-            {                
-                dgContacts.ItemsSource = new ObservableCollection<Contact>(
-                    from c in Database.Contacts where c.AddressID == address.ID orderby c.LastName select c
-                );
-            }
-            else
-            {
-                dgContacts.ItemsSource = null;
-            }
+            dgContacts.ItemsSource = (address == null) ? null : new ObservableCollection<Contact>(from c in Database.Contacts where c.AddressID == address.ID orderby c.LastName select c);
         }
      
         private void RemoveAddress_Click(object sender, RoutedEventArgs e)

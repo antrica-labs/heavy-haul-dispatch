@@ -14,13 +14,13 @@
     <StackPanel>
         <WPF:DataGrid Name="dgCommodities" Style="{StaticResource ListDisplay}" Height="180" >
             <WPF:DataGrid.Columns>
+                <WPF:DataGridTextColumn Header="Assigned load" Binding="{Binding Load.FriendlyName}" />
                 <WPF:DataGridTextColumn Header="Unit" Binding="{Binding Unit}" />
                 <WPF:DataGridTextColumn Header="Name" Binding="{Binding Name}" />
                 <WPF:DataGridTextColumn Header="Length" Binding="{Binding Length}" />
                 <WPF:DataGridTextColumn Header="Width" Binding="{Binding Width}" />
                 <WPF:DataGridTextColumn Header="Height" Binding="{Binding Height}" />
                 <WPF:DataGridTextColumn Header="Weight" Binding="{Binding Weight}" />
-                <WPF:DataGridTextColumn Header="Value" Binding="{Binding Value, StringFormat=c}" />
             </WPF:DataGrid.Columns>
         </WPF:DataGrid>
 

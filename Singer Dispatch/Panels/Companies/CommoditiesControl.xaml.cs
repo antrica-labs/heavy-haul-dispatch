@@ -21,17 +21,8 @@ namespace SingerDispatch.Panels.Companies
         protected override void SelectedCompanyChanged(Company newValue, Company oldValue)
         {
             base.SelectedCompanyChanged(newValue, oldValue);
-
-            if (newValue != null)
-            {
-                dgCommodities.ItemsSource = new ObservableCollection<Commodity>(
-                    (from c in Database.Commodities where c.CompanyID == newValue.ID select c).ToList()
-                );
-            }
-            else
-            {
-                dgCommodities.ItemsSource = null;
-            }
+                        
+            dgCommodities.ItemsSource = (newValue == null) ? null : new ObservableCollection<Commodity>(from c in Database.Commodities where c.CompanyID == newValue.ID select c);            
         }
 
         private void NewCommodity_Click(object sender, RoutedEventArgs e)

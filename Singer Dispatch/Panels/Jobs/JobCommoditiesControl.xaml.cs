@@ -20,22 +20,18 @@ namespace SingerDispatch.Panels.Jobs
         }
 
         private void ControlLoaded(object sender, RoutedEventArgs e)
-        {
-            cmbLoads.ItemsSource = null;
-            cmbCommodityName.ItemsSource = null;
-
-            if (SelectedJob != null)
-            {
-                cmbLoads.ItemsSource = SelectedJob.Loads;
-                cmbCommodityName.ItemsSource = from c in Database.Commodities where c.Company == SelectedJob.Company || c.Company == SelectedJob.Company1 select c;
-            }
+        {   
+            cmbLoads.ItemsSource = (SelectedJob == null) ? null : SelectedJob.Loads.ToList();
+            cmbCommodityName.ItemsSource = (SelectedJob == null) ? null : from c in Database.Commodities where c.Company == SelectedJob.Company || c.Company == SelectedJob.Company1 select c;
+   
+            cmbLoads.Items.Refresh();
         }
 
         protected override void SelectedJobChanged(Job newValue, Job oldValue)
         {
             base.SelectedJobChanged(newValue, oldValue);
 
-            dgCommodities.ItemsSource = new ObservableCollection<JobCommodity>((from jc in Database.JobCommodities where jc.Job == SelectedJob select jc).ToList());
+            dgCommodities.ItemsSource = (newValue == null) ? null : new ObservableCollection<JobCommodity>(newValue.JobCommodities);
         }
 
         private void NewCommodity_Click(object sender, RoutedEventArgs e)
@@ -75,10 +71,9 @@ namespace SingerDispatch.Panels.Jobs
             var original = (Commodity)cmbCommodityName.SelectedItem;
             var commodity = (JobCommodity)dgCommodities.SelectedItem;
 
-            if (commodity != null)
-            {
+            if (commodity == null)            
                 return;
-            }
+            
 
             if (original != null)
             {

@@ -22,35 +22,26 @@ namespace SingerDispatch.Panels.Jobs
 
             Database = SingerConstants.CommonDataContext;
 
-            cmbCreatedBy.ItemsSource = from e in Database.Employees select e;
-            cmbStausTypes.ItemsSource = from s in Database.JobStatusTypes select s;
-
             DefaultJobStatus = (JobStatusType)(from s in Database.JobStatusTypes where s.Name == "Pending" select s).First();
         }
 
         private void ControlLoaded(object sender, RoutedEventArgs e)
         {
-            cmbQuotes.ItemsSource = from q in Database.Quotes where q.Company == SelectedCompany select q;         
+            cmbCreatedBy.ItemsSource = from emp in Database.Employees select emp;
+            cmbStausTypes.ItemsSource = from s in Database.JobStatusTypes select s;
+
+            cmbQuotes.ItemsSource = (SelectedCompany == null) ? null : from q in Database.Quotes where q.Company == SelectedCompany select q;
+            cmbCareOfCompanies.ItemsSource = (SelectedCompany == null) ? null : from c in Database.Companies where c != SelectedCompany select c;
+            dgJobs.ItemsSource = (SelectedCompany == null) ? null : new ObservableCollection<Job>(from j in Database.Jobs where j.Company == SelectedCompany orderby j.EndDate descending select j);
         }
 
         protected override void SelectedCompanyChanged(Company newValue, Company oldValue)
         {
             base.SelectedCompanyChanged(newValue, oldValue);
 
-            if (newValue != null)
-            {
-                dgJobs.ItemsSource = new ObservableCollection<Job>((from j in Database.Jobs where j.CompanyID == newValue.ID orderby j.EndDate descending select j).ToList());
-                cmbQuotes.ItemsSource = from q in Database.Quotes where q.Company == newValue select q;
-                cmbCareOfCompanies.ItemsSource = from c in Database.Companies where c.ID != newValue.ID select c;
-            }
-            else
-            {
-                dgJobs.ItemsSource = null;
-                cmbQuotes.ItemsSource = null;
-                cmbCareOfCompanies.ItemsSource = null;
-            }
-
-            UpdateContactList();
+            cmbQuotes.ItemsSource = (SelectedCompany == null) ? null : from q in Database.Quotes where q.Company == SelectedCompany select q;
+            cmbCareOfCompanies.ItemsSource = (SelectedCompany == null) ? null : from c in Database.Companies where c != SelectedCompany select c;
+            dgJobs.ItemsSource = (SelectedCompany == null) ? null : new ObservableCollection<Job>(from j in Database.Jobs where j.Company == SelectedCompany orderby j.EndDate descending select j);
         }
 
         protected override void SelectedJobChanged(Job newValue, Job oldValue)
@@ -105,7 +96,7 @@ namespace SingerDispatch.Panels.Jobs
 
         private void NewJob_Click(object sender, RoutedEventArgs e)
         {
-            var job = new Job { CompanyID = SelectedCompany.ID, Number = 0, JobStatusType = DefaultJobStatus };
+            var job = new Job { Company = SelectedCompany, Number = 0, JobStatusType = DefaultJobStatus };
 
             ((ObservableCollection<Job>)dgJobs.ItemsSource).Insert(0, job);            
             dgJobs.SelectedItem = job;

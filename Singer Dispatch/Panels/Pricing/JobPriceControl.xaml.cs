@@ -17,13 +17,13 @@ namespace SingerDispatch.Panels.Pricing
 
             Database = SingerConstants.CommonDataContext;
 
-            cmbCreatedBy.ItemsSource = from e in Database.Employees select e;
-            cmbStausTypes.ItemsSource = from s in Database.JobStatusTypes select s;
             dgCustomerDetails.ItemsSource = new ObservableCollection<CustomerNumber>();            
         }
 
         private void ControlLoaded(object sender, RoutedEventArgs e)
         {
+            cmbCreatedBy.ItemsSource = from emp in Database.Employees select emp;
+            cmbStausTypes.ItemsSource = from s in Database.JobStatusTypes select s;
             cmbQuotes.ItemsSource = from q in Database.Quotes where q.Company == SelectedCompany select q;
         }
 
@@ -38,9 +38,9 @@ namespace SingerDispatch.Panels.Pricing
             }
             else
             {
-                dgJobs.ItemsSource = new ObservableCollection<Job>((from j in Database.Jobs where j.CompanyID == newValue.ID orderby j.EndDate descending select j).ToList());
+                dgJobs.ItemsSource = new ObservableCollection<Job>(from j in Database.Jobs where j.CompanyID == newValue.ID orderby j.EndDate descending select j);
                 dgCustomerDetails.ItemsSource = new ObservableCollection<CustomerNumber>(newValue.CustomerNumbers);
-                cmbCareOfCompanies.ItemsSource = (from c in Database.Companies where c.ID != newValue.ID select c).ToList();
+                cmbCareOfCompanies.ItemsSource = from c in Database.Companies where c.ID != newValue.ID select c;
             }
         }
 

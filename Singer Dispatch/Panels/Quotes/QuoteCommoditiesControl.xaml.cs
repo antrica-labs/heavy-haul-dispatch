@@ -21,7 +21,7 @@ namespace SingerDispatch.Panels.Quotes
 
         private void Control_Loaded(object sender, RoutedEventArgs e)
         {
-            cmbCommodityName.ItemsSource = (SelectedQuote == null) ? null : from c in Database.Commodities where c.Company == SelectedQuote.Company select c;
+            cmbCommodityName.ItemsSource = (SelectedQuote == null) ? null : from c in Database.Commodities where c.Company == SelectedQuote.Company || c.Company == SelectedQuote.Company1 select c;
         }
 
         protected override void SelectedQuoteChanged(Quote newValue, Quote oldValue)
@@ -37,10 +37,8 @@ namespace SingerDispatch.Panels.Quotes
             var commodity = (QuoteCommodity)dgQuoteCommodities.SelectedItem;
 
             if (commodity == null)
-            {
                 return;
-            }
-
+            
             if (original != null)
             {
                 commodity.OriginalCommodityID = original.ID;

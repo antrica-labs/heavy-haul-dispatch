@@ -19,43 +19,25 @@ namespace SingerDispatch.Panels.Jobs
 
             Database = SingerConstants.CommonDataContext;
 
-            cmbServiceTypes.ItemsSource = (from t in Database.ThirdPartyServiceTypes select t).ToList();
+            cmbServiceTypes.ItemsSource = from t in Database.ThirdPartyServiceTypes select t;
         }
 
         private void ControlLoaded(object sender, RoutedEventArgs e)
         {
-            cmbLoads.ItemsSource = null;
-            cmbCompanies.ItemsSource = null;
-
-            if (SelectedJob != null)
-            {
-                cmbLoads.ItemsSource = SelectedJob.Loads;
-                cmbCompanies.ItemsSource = from c in Database.Companies orderby c.Name select c;
-            }
+            cmbLoads.ItemsSource = (SelectedJob == null) ? null : SelectedJob.Loads.ToList();
+            cmbCompanies.ItemsSource = (SelectedJob == null) ? null : from c in Database.Companies orderby c.Name select c;
         }
 
         protected override void SelectedJobChanged(Job newValue, Job oldValue)
         {
             base.SelectedJobChanged(newValue, oldValue);
 
-            dgServices.ItemsSource = new ObservableCollection<ThirdPartyService>((from s in Database.ThirdPartyServices where s.Job == newValue select s).ToList());
+            dgServices.ItemsSource = (newValue == null) ? null : new ObservableCollection<ThirdPartyService>(newValue.ThirdPartyServices);
         }
 
         private void SelectedCompany_Changed(object sender, SelectionChangedEventArgs e)
         {
-            cmbContacts.ItemsSource = new List<Contact>(0);
-
-            if (cmbCompanies.SelectedItem != null)
-            {
-                var company = (Company)cmbCompanies.SelectedItem;
-
-                foreach (Address address in company.Addresses)
-                {
-                    var contacts = address.Contacts.ToList<Contact>();
-
-                    ((List<Contact>)cmbContacts.ItemsSource).AddRange(contacts);
-                }
-            }       
+                   
         }
 
         private void NewService_Click(object sender, RoutedEventArgs e)

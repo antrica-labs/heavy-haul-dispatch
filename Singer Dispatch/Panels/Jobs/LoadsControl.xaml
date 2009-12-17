@@ -21,7 +21,7 @@
     </UserControl.Resources>
     <StackPanel>
         <WPF:DataGrid Name="dgLoads" Style="{StaticResource ListDisplay}" Height="180">
-            <WPF:DataGrid.Columns>
+            <WPF:DataGrid.Columns>                
                 <WPF:DataGridTextColumn Header="Unit" Width="0.15*" Binding="{Binding Equipment.UnitNumber}"/>
                 <WPF:DataGridTextColumn Header="Wheel type" Width="0.2*" Binding="{Binding Rate.Name}" />
                 <WPF:DataGridTextColumn Header="Trailer" Width="0.2*" Binding="{Binding TrailerCombination.Combination}" />

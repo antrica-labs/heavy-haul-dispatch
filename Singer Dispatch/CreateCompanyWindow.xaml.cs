@@ -39,8 +39,8 @@ namespace SingerDispatch
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            cmbProvinceOrState.ItemsSource = (from ps in Database.ProvincesAndStates orderby ps.CountryID, ps.Name select ps).ToList();
-            cmbAddressType.ItemsSource = (from at in Database.AddressTypes select at).ToList();
+            cmbProvinceOrState.ItemsSource = from ps in Database.ProvincesAndStates orderby ps.CountryID, ps.Name select ps;
+            cmbAddressType.ItemsSource = from at in Database.AddressTypes select at;
         }
 
         private void bttnCreateCompany_Click(object sender, RoutedEventArgs e)
