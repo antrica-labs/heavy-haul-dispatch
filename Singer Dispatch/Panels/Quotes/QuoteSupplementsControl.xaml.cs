@@ -28,13 +28,8 @@ namespace SingerDispatch.Panels.Quotes
         protected override void SelectedQuoteChanged(Quote newValue, Quote oldValue)
         {
             base.SelectedQuoteChanged(newValue, oldValue);
-            
-            dgSupplements.ItemsSource = null;
-            
-            if (newValue != null)
-            {
-                dgSupplements.ItemsSource = new ObservableCollection<QuoteSupplement>(newValue.QuoteSupplements);                
-            }
+
+            dgSupplements.ItemsSource = (newValue == null) ? null : new ObservableCollection<QuoteSupplement>(newValue.QuoteSupplements);
         }
 
         private void NewSupplement_Click(object sender, RoutedEventArgs e)

@@ -3,9 +3,8 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:WPF="http://schemas.microsoft.com/wpf/2008/toolkit"
     xmlns:Panels="clr-namespace:SingerDispatch.Panels"
-    xmlns:Company="clr-namespace:SingerDispatch.Panels.Companies"
-    x:Name="panelQuoteHistory"
-    Width="750">
+    xmlns:Company="clr-namespace:SingerDispatch.Panels.Companies"    
+    Loaded="Control_Loaded" Width="750">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -14,7 +13,7 @@
         </ResourceDictionary>
     </UserControl.Resources>
     <StackPanel>
-        <WPF:DataGrid Name="dgQuotes" Style="{StaticResource ListDisplay}" Height="200" SelectedItem="{Binding ElementName=panelQuoteHistory, Path=SelectedQuote}">
+        <WPF:DataGrid Name="dgQuotes" Style="{StaticResource ListDisplay}" Height="200" SelectedItem="{Binding SelectedQuote}">
             <WPF:DataGrid.Columns>
                 <WPF:DataGridTextColumn Header="Quote #" Width="0.3*" Binding="{Binding Number}"/>
                 <WPF:DataGridTextColumn Header="Revision" Width="0.3*" Binding="{Binding Revision}"/>

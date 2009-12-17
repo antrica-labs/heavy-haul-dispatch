@@ -24,24 +24,16 @@ namespace SingerDispatch.Panels.Quotes
             cmbQuotedBy.ItemsSource = from e in Database.Employees select e;
         }
 
+        private void Control_Loaded(object sender, RoutedEventArgs e)
+        {
+            // refresh the quotes and company lists in case it has been modified elsewhere.
+            dgQuotes.ItemsSource = (SelectedCompany == null) ? null : new ObservableCollection<Quote>(from quote in Database.Quotes where quote.Company == SelectedCompany orderby quote.Number descending, quote.Revision descending select quote);
+            cmbCareOfCompanies.ItemsSource = from c in Database.Companies where c != SelectedCompany select c;
+        }
+
         protected override void SelectedCompanyChanged(Company newValue, Company oldValue)
         {
             base.SelectedCompanyChanged(newValue, oldValue);
-
-            var list = new ObservableCollection<Quote>();
-
-            if (newValue != null)
-            {
-                dgQuotes.ItemsSource = new ObservableCollection<Quote>((from q in Database.Quotes where q.CompanyID == newValue.ID orderby q.Number descending, q.Revision descending select q).ToList());
-                cmbCareOfCompanies.ItemsSource = (from c in Database.Companies where c.ID != newValue.ID select c).ToList();
-            }
-            else
-            {
-                ((ObservableCollection<Quote>)dgQuotes.ItemsSource).Clear();
-                ((List<Company>)cmbCareOfCompanies.ItemsSource).Clear();
-            }
-
-            UpdateContactList();
         }
 
         protected override void SelectedQuoteChanged(Quote newValue, Quote oldValue)

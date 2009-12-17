@@ -18,7 +18,7 @@
                 <WPF:DataGridTextColumn Header="Details" Binding="{Binding Details}" />
                 <WPF:DataGridTextColumn Header="Billing type" Binding="{Binding BillingType.Name}" IsReadOnly="True" />
                 <WPF:DataGridTextColumn Header="Quantity" Binding="{Binding Quantity}" />
-                <WPF:DataGridTextColumn Header="Cost" Binding="{Binding CostPerItem}" />
+                <WPF:DataGridTextColumn Header="Cost" Binding="{Binding CostPerItem, StringFormat=c}" />
             </WPF:DataGrid.Columns>            
         </WPF:DataGrid>
 
@@ -61,7 +61,7 @@
                 <TextBox Name="txtQuantity" Grid.Row="1" Grid.Column="3" Text="{Binding Quantity}" />
                 
                 <Label Grid.Row="2" Grid.Column="2">Cost:</Label>
-                <TextBox Name="txtCostPerItem" Grid.Row="2" Grid.Column="3" Text="{Binding CostPerItem}" />                
+                <TextBox Name="txtCostPerItem" Grid.Row="2" Grid.Column="3" Text="{Binding CostPerItem, StringFormat=c}" />                
             </Grid>
         </GroupBox>
     </StackPanel>

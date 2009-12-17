@@ -21,21 +21,14 @@ namespace SingerDispatch.Panels.Quotes
 
         private void Control_Loaded(object sender, RoutedEventArgs e)
         {
-            cmbCommodityName.ItemsSource = null;
-
-            if (SelectedQuote != null)
-            {
-                cmbCommodityName.ItemsSource = from c in Database.Commodities where c.Company == SelectedQuote.Company select c;
-            }                                           
+            cmbCommodityName.ItemsSource = (SelectedQuote == null) ? null : from c in Database.Commodities where c.Company == SelectedQuote.Company select c;
         }
 
         protected override void SelectedQuoteChanged(Quote newValue, Quote oldValue)
         {
             base.SelectedQuoteChanged(newValue, oldValue);
 
-            if (newValue == null) return;
-                                            
-            dgQuoteCommodities.ItemsSource = new ObservableCollection<QuoteCommodity>(newValue.QuoteCommodities);
+            dgQuoteCommodities.ItemsSource = (newValue == null) ? null : new ObservableCollection<QuoteCommodity>(newValue.QuoteCommodities);
         }
 
         private void CommodityName_SelectionChanged(object sender, SelectionChangedEventArgs e)

@@ -23,24 +23,15 @@ namespace SingerDispatch.Panels.Quotes
 
         private void Control_Loaded(object sender, RoutedEventArgs e)
         {
-            cmbCommodities.ItemsSource = null;
-
-            if (SelectedCompany != null)
-            {
-                cmbCommodities.ItemsSource = from c in Database.Commodities where c.Company == SelectedCompany select c;
-            }
+            // refresh the commodity list
+            cmbCommodities.ItemsSource = (SelectedQuote == null) ? null : from c in Database.Commodities where c.Company == SelectedQuote.Company select c;
         }
 
         protected override void SelectedQuoteChanged(Quote newValue, Quote oldValue)
         {
             base.SelectedQuoteChanged(newValue, oldValue);
 
-            dgStorageList.ItemsSource = null;
-
-            if (newValue != null)
-            {
-                dgStorageList.ItemsSource = new ObservableCollection<StorageItem>(newValue.StorageItems);
-            }
+            dgStorageList.ItemsSource = (newValue == null) ? null : new ObservableCollection<StorageItem>(newValue.StorageItems);
         }
 
         private void NewStorageItem_Click(object sender, RoutedEventArgs e)

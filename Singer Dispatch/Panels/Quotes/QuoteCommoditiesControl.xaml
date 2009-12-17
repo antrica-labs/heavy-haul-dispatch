@@ -60,7 +60,7 @@
                 <ComboBox Name="cmbCommodityName" Text="{Binding Name}" Grid.Row="0" Grid.Column="1" IsEditable="True" ItemTemplate="{StaticResource SimpleNameTemplate}" TextSearch.TextPath="Name" SelectionChanged="CommodityName_SelectionChanged" />
 
                 <Label Grid.Row="1" Grid.Column="0">Value:</Label>
-                <TextBox Name="txtCommodityValue" Grid.Row="1" Grid.Column="1" Text="{Binding Value}" />
+                <TextBox Name="txtCommodityValue" Grid.Row="1" Grid.Column="1" Text="{Binding Value, StringFormat=c}" />
 
                 <Label Grid.Row="2" Grid.Column="0">Serial number:</Label>
                 <TextBox Name="txtCommoditySerial" Grid.Row="2" Grid.Column="1" Text="{Binding Serial}" />
