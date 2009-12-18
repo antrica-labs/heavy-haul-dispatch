@@ -660,6 +660,31 @@ namespace SingerDispatch.Database
             database.Equipment.InsertAllOnSubmit(equipment);
                   
             
+            
+            // Add Load and Unload methods
+            var methods = new List<LoadUnloadMethod>();
+
+            methods.Add(new LoadUnloadMethod() { Name = "Bed Truck" });
+            methods.Add(new LoadUnloadMethod() { Name = "Bobcat" });
+            methods.Add(new LoadUnloadMethod() { Name = "Bull Moose" });
+            methods.Add(new LoadUnloadMethod() { Name = "Cradle Trailer" });
+            methods.Add(new LoadUnloadMethod() { Name = "Crane" });
+            methods.Add(new LoadUnloadMethod() { Name = "Cranes" });
+            methods.Add(new LoadUnloadMethod() { Name = "Drive off" });
+            methods.Add(new LoadUnloadMethod() { Name = "Drive on" });
+            methods.Add(new LoadUnloadMethod() { Name = "Forklift" });
+            methods.Add(new LoadUnloadMethod() { Name = "Jack & Roll" });
+            methods.Add(new LoadUnloadMethod() { Name = "Overhead Crane" });
+            methods.Add(new LoadUnloadMethod() { Name = "Picker" });
+            methods.Add(new LoadUnloadMethod() { Name = "Pickers" });
+            methods.Add(new LoadUnloadMethod() { Name = "RT Crane" });
+            methods.Add(new LoadUnloadMethod() { Name = "Scheuerle Trailer" });
+            methods.Add(new LoadUnloadMethod() { Name = "Tower Crane" });
+            methods.Add(new LoadUnloadMethod() { Name = "Winch" });
+
+            database.LoadUnloadMethods.InsertAllOnSubmit(methods);
+
+
             database.SubmitChanges();
 
 

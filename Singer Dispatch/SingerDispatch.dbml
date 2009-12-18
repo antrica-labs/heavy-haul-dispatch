@@ -183,13 +183,14 @@
       <Column Name="LoadSiteName" Type="System.String" CanBeNull="true" />
       <Column Name="LoadAddress" Type="System.String" CanBeNull="true" />
       <Column Name="LoadBy" Type="System.String" CanBeNull="true" />
-      <Column Name="LoadMethod" Type="System.String" CanBeNull="true" />
+      <Column Name="LoadMethodID" Type="System.Int64" CanBeNull="true" />
       <Column Name="LoadDate" Type="System.DateTime" CanBeNull="true" />
       <Column Name="LoadInstructions" Type="System.String" CanBeNull="true" />
       <Column Name="LoadRoute" Type="System.String" CanBeNull="true" />
       <Column Name="UnloadSiteName" Type="System.String" CanBeNull="true" />
       <Column Name="UnloadAddress" Type="System.String" CanBeNull="true" />
       <Column Name="UnloadBy" Type="System.String" CanBeNull="true" />
+      <Column Name="UnloadMethodID" Type="System.Int64" CanBeNull="true" />
       <Column Name="UnloadDate" Type="System.DateTime" CanBeNull="true" />
       <Column Name="UnloadInstructions" Type="System.String" CanBeNull="true" />
       <Column Name="UnloadRoute" Type="System.String" CanBeNull="true" />
@@ -197,6 +198,8 @@
       <Association Name="Commodity_JobCommodity" Member="Commodity" ThisKey="OriginalCommodityID" OtherKey="ID" Type="Commodity" IsForeignKey="true" />
       <Association Name="Job_JobCommodity" Member="Job" ThisKey="JobID" OtherKey="ID" Type="Job" IsForeignKey="true" />
       <Association Name="Load_JobCommodity" Member="Load" ThisKey="LoadID" OtherKey="ID" Type="Load" IsForeignKey="true" />
+      <Association Name="LoadMethod_JobCommodity" Member="LoadMethod" ThisKey="LoadMethodID" OtherKey="ID" Type="LoadUnloadMethod" IsForeignKey="true" />
+      <Association Name="UnloadMethod_JobCommodity" Member="UnloadMethod" ThisKey="UnloadMethodID" OtherKey="ID" Type="LoadUnloadMethod" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="" Member="Jobs">
@@ -507,6 +510,14 @@
       <Column Name="Tare" Type="System.String" CanBeNull="true" />
       <Association Name="TrailerCombination_Load" Member="Loads" ThisKey="ID" OtherKey="TrailerCombinationID" Type="Load" />
       <Association Name="Rate_TrailerCombination" Member="Rate" ThisKey="RateID" OtherKey="ID" Type="Rate" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="" Member="LoadUnloadMethods">
+    <Type Name="LoadUnloadMethod">
+      <Column Name="ID" Type="System.Int64" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" CanBeNull="true" />
+      <Association Name="LoadMethod_JobCommodity" Member="LoadedJobCommodities" ThisKey="ID" OtherKey="LoadMethodID" Type="JobCommodity" />
+      <Association Name="UnloadMethod_JobCommodity" Member="UnloadedJobCommodities" ThisKey="ID" OtherKey="UnloadMethodID" Type="JobCommodity" />
     </Type>
   </Table>
 </Database>

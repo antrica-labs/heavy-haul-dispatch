@@ -61,7 +61,8 @@ namespace SingerDispatch
             cmbCompanies.ItemsSource = Companies;
             cmbOperators.ItemsSource = Companies;
 
-            expanderCompanies.IsExpanded = true; 
+            expanderCompanies.IsExpanded = true;
+            cmbCompanies.Focus();
         }
 
         private void CreateCompanyMenuItem_Click(object sender, RoutedEventArgs e)

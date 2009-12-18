@@ -154,7 +154,7 @@
                     <TextBox Grid.Column="1" Grid.Row="3" Text="{Binding LoadBy}"/>
                     
                     <Label Grid.Column="0" Grid.Row="4">Load method:</Label>
-                    <ComboBox Grid.Column="1" Grid.Row="4" Text="{Binding LoadMethod}"/>
+                    <ComboBox Name="cmbLoadMethods" Grid.Column="1" Grid.Row="4" SelectedItem="{Binding LoadMethod}" ItemTemplate="{StaticResource SimpleNameTemplate}" />
                     
                     <Label Grid.Column="0" Grid.Row="5">Loading date:</Label>
                     <WPF:DatePicker Grid.Column="1" Grid.Row="5" SelectedDate="{Binding LoadDate}" />
@@ -196,7 +196,7 @@
                     <TextBox Grid.Column="1" Grid.Row="3" Text="{Binding UnloadBy}" />
 
                     <Label Grid.Column="0" Grid.Row="4">Unload method:</Label>
-                    <ComboBox Grid.Column="1" Grid.Row="4" Text="{Binding UnloadMethod}" />
+                    <ComboBox Name="cmbUnloadMethods" Grid.Column="1" Grid.Row="4" SelectedItem="{Binding UnloadMethod}" ItemTemplate="{StaticResource SimpleNameTemplate}" />
 
                     <Label Grid.Column="0" Grid.Row="5">Unloading date:</Label>
                     <WPF:DatePicker Grid.Column="1" Grid.Row="5" SelectedDate="{Binding UnloadDate}"  />

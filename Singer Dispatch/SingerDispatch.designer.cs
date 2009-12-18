@@ -126,6 +126,9 @@ namespace SingerDispatch
     partial void InsertTrailerCombination(TrailerCombination instance);
     partial void UpdateTrailerCombination(TrailerCombination instance);
     partial void DeleteTrailerCombination(TrailerCombination instance);
+    partial void InsertLoadUnloadMethod(LoadUnloadMethod instance);
+    partial void UpdateLoadUnloadMethod(LoadUnloadMethod instance);
+    partial void DeleteLoadUnloadMethod(LoadUnloadMethod instance);
     #endregion
 		
 		public SingerDispatchDataContext() : 
@@ -411,6 +414,14 @@ namespace SingerDispatch
 			get
 			{
 				return this.GetTable<TrailerCombination>();
+			}
+		}
+		
+		public System.Data.Linq.Table<LoadUnloadMethod> LoadUnloadMethods
+		{
+			get
+			{
+				return this.GetTable<LoadUnloadMethod>();
 			}
 		}
 	}
@@ -3761,7 +3772,7 @@ namespace SingerDispatch
 		
 		private string _LoadBy;
 		
-		private string _LoadMethod;
+		private System.Nullable<long> _LoadMethodID;
 		
 		private System.Nullable<System.DateTime> _LoadDate;
 		
@@ -3774,6 +3785,8 @@ namespace SingerDispatch
 		private string _UnloadAddress;
 		
 		private string _UnloadBy;
+		
+		private System.Nullable<long> _UnloadMethodID;
 		
 		private System.Nullable<System.DateTime> _UnloadDate;
 		
@@ -3788,6 +3801,10 @@ namespace SingerDispatch
 		private EntityRef<Job> _Job;
 		
 		private EntityRef<Load> _Load;
+		
+		private EntityRef<LoadUnloadMethod> _LoadMethod;
+		
+		private EntityRef<LoadUnloadMethod> _UnloadMethod;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -3837,8 +3854,8 @@ namespace SingerDispatch
     partial void OnLoadAddressChanged();
     partial void OnLoadByChanging(string value);
     partial void OnLoadByChanged();
-    partial void OnLoadMethodChanging(string value);
-    partial void OnLoadMethodChanged();
+    partial void OnLoadMethodIDChanging(System.Nullable<long> value);
+    partial void OnLoadMethodIDChanged();
     partial void OnLoadDateChanging(System.Nullable<System.DateTime> value);
     partial void OnLoadDateChanged();
     partial void OnLoadInstructionsChanging(string value);
@@ -3851,6 +3868,8 @@ namespace SingerDispatch
     partial void OnUnloadAddressChanged();
     partial void OnUnloadByChanging(string value);
     partial void OnUnloadByChanged();
+    partial void OnUnloadMethodIDChanging(System.Nullable<long> value);
+    partial void OnUnloadMethodIDChanged();
     partial void OnUnloadDateChanging(System.Nullable<System.DateTime> value);
     partial void OnUnloadDateChanged();
     partial void OnUnloadInstructionsChanging(string value);
@@ -3866,6 +3885,8 @@ namespace SingerDispatch
 			this._Commodity = default(EntityRef<Commodity>);
 			this._Job = default(EntityRef<Job>);
 			this._Load = default(EntityRef<Load>);
+			this._LoadMethod = default(EntityRef<LoadUnloadMethod>);
+			this._UnloadMethod = default(EntityRef<LoadUnloadMethod>);
 			OnCreated();
 		}
 		
@@ -4321,22 +4342,26 @@ namespace SingerDispatch
 			}
 		}
 		
-		[Column(Storage="_LoadMethod")]
-		public string LoadMethod
+		[Column(Storage="_LoadMethodID")]
+		public System.Nullable<long> LoadMethodID
 		{
 			get
 			{
-				return this._LoadMethod;
+				return this._LoadMethodID;
 			}
 			set
 			{
-				if ((this._LoadMethod != value))
+				if ((this._LoadMethodID != value))
 				{
-					this.OnLoadMethodChanging(value);
+					if (this._LoadMethod.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnLoadMethodIDChanging(value);
 					this.SendPropertyChanging();
-					this._LoadMethod = value;
-					this.SendPropertyChanged("LoadMethod");
-					this.OnLoadMethodChanged();
+					this._LoadMethodID = value;
+					this.SendPropertyChanged("LoadMethodID");
+					this.OnLoadMethodIDChanged();
 				}
 			}
 		}
@@ -4457,6 +4482,30 @@ namespace SingerDispatch
 					this._UnloadBy = value;
 					this.SendPropertyChanged("UnloadBy");
 					this.OnUnloadByChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_UnloadMethodID")]
+		public System.Nullable<long> UnloadMethodID
+		{
+			get
+			{
+				return this._UnloadMethodID;
+			}
+			set
+			{
+				if ((this._UnloadMethodID != value))
+				{
+					if (this._UnloadMethod.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnUnloadMethodIDChanging(value);
+					this.SendPropertyChanging();
+					this._UnloadMethodID = value;
+					this.SendPropertyChanged("UnloadMethodID");
+					this.OnUnloadMethodIDChanged();
 				}
 			}
 		}
@@ -4639,6 +4688,74 @@ namespace SingerDispatch
 						this._LoadID = default(Nullable<long>);
 					}
 					this.SendPropertyChanged("Load");
+				}
+			}
+		}
+		
+		[Association(Name="LoadUnloadMethod_JobCommodity", Storage="_LoadMethod", ThisKey="LoadMethodID", OtherKey="ID", IsForeignKey=true)]
+		public LoadUnloadMethod LoadMethod
+		{
+			get
+			{
+				return this._LoadMethod.Entity;
+			}
+			set
+			{
+				LoadUnloadMethod previousValue = this._LoadMethod.Entity;
+				if (((previousValue != value) 
+							|| (this._LoadMethod.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._LoadMethod.Entity = null;
+						previousValue.LoadedJobCommodities.Remove(this);
+					}
+					this._LoadMethod.Entity = value;
+					if ((value != null))
+					{
+						value.LoadedJobCommodities.Add(this);
+						this._LoadMethodID = value.ID;
+					}
+					else
+					{
+						this._LoadMethodID = default(Nullable<long>);
+					}
+					this.SendPropertyChanged("LoadMethod");
+				}
+			}
+		}
+		
+		[Association(Name="LoadUnloadMethod_JobCommodity1", Storage="_UnloadMethod", ThisKey="UnloadMethodID", OtherKey="ID", IsForeignKey=true)]
+		public LoadUnloadMethod UnloadMethod
+		{
+			get
+			{
+				return this._UnloadMethod.Entity;
+			}
+			set
+			{
+				LoadUnloadMethod previousValue = this._UnloadMethod.Entity;
+				if (((previousValue != value) 
+							|| (this._UnloadMethod.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._UnloadMethod.Entity = null;
+						previousValue.UnloadedJobCommodities.Remove(this);
+					}
+					this._UnloadMethod.Entity = value;
+					if ((value != null))
+					{
+						value.UnloadedJobCommodities.Add(this);
+						this._UnloadMethodID = value.ID;
+					}
+					else
+					{
+						this._UnloadMethodID = default(Nullable<long>);
+					}
+					this.SendPropertyChanged("UnloadMethod");
 				}
 			}
 		}
@@ -11733,6 +11850,148 @@ namespace SingerDispatch
 		{
 			this.SendPropertyChanging();
 			entity.TrailerCombination = null;
+		}
+	}
+	
+	[Table(Name="")]
+	public partial class LoadUnloadMethod : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private long _ID;
+		
+		private string _Name;
+		
+		private EntitySet<JobCommodity> _LoadedJobCommodities;
+		
+		private EntitySet<JobCommodity> _UnloadedJobCommodities;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDChanging(long value);
+    partial void OnIDChanged();
+    partial void OnNameChanging(string value);
+    partial void OnNameChanged();
+    #endregion
+		
+		public LoadUnloadMethod()
+		{
+			this._LoadedJobCommodities = new EntitySet<JobCommodity>(new Action<JobCommodity>(this.attach_LoadedJobCommodities), new Action<JobCommodity>(this.detach_LoadedJobCommodities));
+			this._UnloadedJobCommodities = new EntitySet<JobCommodity>(new Action<JobCommodity>(this.attach_UnloadedJobCommodities), new Action<JobCommodity>(this.detach_UnloadedJobCommodities));
+			OnCreated();
+		}
+		
+		[Column(Storage="_ID", AutoSync=AutoSync.OnInsert, IsPrimaryKey=true, IsDbGenerated=true)]
+		public long ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this.OnIDChanging(value);
+					this.SendPropertyChanging();
+					this._ID = value;
+					this.SendPropertyChanged("ID");
+					this.OnIDChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_Name")]
+		public string Name
+		{
+			get
+			{
+				return this._Name;
+			}
+			set
+			{
+				if ((this._Name != value))
+				{
+					this.OnNameChanging(value);
+					this.SendPropertyChanging();
+					this._Name = value;
+					this.SendPropertyChanged("Name");
+					this.OnNameChanged();
+				}
+			}
+		}
+		
+		[Association(Name="LoadUnloadMethod_JobCommodity", Storage="_LoadedJobCommodities", ThisKey="ID", OtherKey="LoadMethodID")]
+		public EntitySet<JobCommodity> LoadedJobCommodities
+		{
+			get
+			{
+				return this._LoadedJobCommodities;
+			}
+			set
+			{
+				this._LoadedJobCommodities.Assign(value);
+			}
+		}
+		
+		[Association(Name="LoadUnloadMethod_JobCommodity1", Storage="_UnloadedJobCommodities", ThisKey="ID", OtherKey="UnloadMethodID")]
+		public EntitySet<JobCommodity> UnloadedJobCommodities
+		{
+			get
+			{
+				return this._UnloadedJobCommodities;
+			}
+			set
+			{
+				this._UnloadedJobCommodities.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_LoadedJobCommodities(JobCommodity entity)
+		{
+			this.SendPropertyChanging();
+			entity.LoadMethod = this;
+		}
+		
+		private void detach_LoadedJobCommodities(JobCommodity entity)
+		{
+			this.SendPropertyChanging();
+			entity.LoadMethod = null;
+		}
+		
+		private void attach_UnloadedJobCommodities(JobCommodity entity)
+		{
+			this.SendPropertyChanging();
+			entity.UnloadMethod = this;
+		}
+		
+		private void detach_UnloadedJobCommodities(JobCommodity entity)
+		{
+			this.SendPropertyChanging();
+			entity.UnloadMethod = null;
 		}
 	}
 }

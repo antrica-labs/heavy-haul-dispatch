@@ -20,11 +20,14 @@ namespace SingerDispatch.Panels.Jobs
         }
 
         private void ControlLoaded(object sender, RoutedEventArgs e)
-        {   
+        {
             cmbLoads.ItemsSource = (SelectedJob == null) ? null : SelectedJob.Loads.ToList();
             cmbCommodityName.ItemsSource = (SelectedJob == null) ? null : from c in Database.Commodities where c.Company == SelectedJob.Company || c.Company == SelectedJob.CareOfCompany select c;
-   
-            cmbLoads.Items.Refresh();
+
+            var methods = (SelectedJob == null) ? null : (from m in Database.LoadUnloadMethods select m).ToList();
+
+            cmbLoadMethods.ItemsSource = methods;
+            cmbUnloadMethods.ItemsSource = methods;
         }
 
         protected override void SelectedJobChanged(Job newValue, Job oldValue)
@@ -38,7 +41,7 @@ namespace SingerDispatch.Panels.Jobs
         {
             var commodity = new JobCommodity { JobID = SelectedJob.ID };
             var list = (ObservableCollection<JobCommodity>)dgCommodities.ItemsSource;
-                
+            
             list.Insert(0, commodity);
             SelectedJob.JobCommodities.Add(commodity);
             dgCommodities.SelectedItem = commodity;
