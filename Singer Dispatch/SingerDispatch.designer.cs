@@ -3762,9 +3762,7 @@ namespace SingerDispatch
 		
 		private System.Nullable<bool> _WeightEstimated;
 		
-		private System.Nullable<int> _Quantity;
-		
-		private System.Nullable<decimal> _CostPerItem;
+		private System.Nullable<decimal> _Cost;
 		
 		private string _LoadSiteName;
 		
@@ -3844,10 +3842,8 @@ namespace SingerDispatch
     partial void OnSizeEstimatedChanged();
     partial void OnWeightEstimatedChanging(System.Nullable<bool> value);
     partial void OnWeightEstimatedChanged();
-    partial void OnQuantityChanging(System.Nullable<int> value);
-    partial void OnQuantityChanged();
-    partial void OnCostPerItemChanging(System.Nullable<decimal> value);
-    partial void OnCostPerItemChanged();
+    partial void OnCostChanging(System.Nullable<decimal> value);
+    partial void OnCostChanged();
     partial void OnLoadSiteNameChanging(string value);
     partial void OnLoadSiteNameChanged();
     partial void OnLoadAddressChanging(string value);
@@ -4242,42 +4238,22 @@ namespace SingerDispatch
 			}
 		}
 		
-		[Column(Storage="_Quantity")]
-		public System.Nullable<int> Quantity
+		[Column(Storage="_Cost")]
+		public System.Nullable<decimal> Cost
 		{
 			get
 			{
-				return this._Quantity;
+				return this._Cost;
 			}
 			set
 			{
-				if ((this._Quantity != value))
+				if ((this._Cost != value))
 				{
-					this.OnQuantityChanging(value);
+					this.OnCostChanging(value);
 					this.SendPropertyChanging();
-					this._Quantity = value;
-					this.SendPropertyChanged("Quantity");
-					this.OnQuantityChanged();
-				}
-			}
-		}
-		
-		[Column(Storage="_CostPerItem")]
-		public System.Nullable<decimal> CostPerItem
-		{
-			get
-			{
-				return this._CostPerItem;
-			}
-			set
-			{
-				if ((this._CostPerItem != value))
-				{
-					this.OnCostPerItemChanging(value);
-					this.SendPropertyChanging();
-					this._CostPerItem = value;
-					this.SendPropertyChanged("CostPerItem");
-					this.OnCostPerItemChanged();
+					this._Cost = value;
+					this.SendPropertyChanged("Cost");
+					this.OnCostChanged();
 				}
 			}
 		}
@@ -7154,9 +7130,7 @@ namespace SingerDispatch
 		
 		private System.Nullable<bool> _WeightEstimated;
 		
-		private System.Nullable<int> _Quantity;
-		
-		private System.Nullable<decimal> _CostPerItem;
+		private System.Nullable<decimal> _Cost;
 		
 		private string _Notes;
 		
@@ -7206,10 +7180,8 @@ namespace SingerDispatch
     partial void OnSizeEstimatedChanged();
     partial void OnWeightEstimatedChanging(System.Nullable<bool> value);
     partial void OnWeightEstimatedChanged();
-    partial void OnQuantityChanging(System.Nullable<int> value);
-    partial void OnQuantityChanged();
-    partial void OnCostPerItemChanging(System.Nullable<decimal> value);
-    partial void OnCostPerItemChanged();
+    partial void OnCostChanging(System.Nullable<decimal> value);
+    partial void OnCostChanged();
     partial void OnNotesChanging(string value);
     partial void OnNotesChanged();
     #endregion
@@ -7624,42 +7596,22 @@ namespace SingerDispatch
 			}
 		}
 		
-		[Column(Storage="_Quantity")]
-		public System.Nullable<int> Quantity
+		[Column(Storage="_Cost")]
+		public System.Nullable<decimal> Cost
 		{
 			get
 			{
-				return this._Quantity;
+				return this._Cost;
 			}
 			set
 			{
-				if ((this._Quantity != value))
+				if ((this._Cost != value))
 				{
-					this.OnQuantityChanging(value);
+					this.OnCostChanging(value);
 					this.SendPropertyChanging();
-					this._Quantity = value;
-					this.SendPropertyChanged("Quantity");
-					this.OnQuantityChanged();
-				}
-			}
-		}
-		
-		[Column(Storage="_CostPerItem")]
-		public System.Nullable<decimal> CostPerItem
-		{
-			get
-			{
-				return this._CostPerItem;
-			}
-			set
-			{
-				if ((this._CostPerItem != value))
-				{
-					this.OnCostPerItemChanging(value);
-					this.SendPropertyChanging();
-					this._CostPerItem = value;
-					this.SendPropertyChanged("CostPerItem");
-					this.OnCostPerItemChanged();
+					this._Cost = value;
+					this.SendPropertyChanged("Cost");
+					this.OnCostChanged();
 				}
 			}
 		}

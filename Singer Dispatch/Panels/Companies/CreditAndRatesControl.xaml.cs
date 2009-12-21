@@ -55,12 +55,12 @@ namespace SingerDispatch.Panels.Companies
                 if (enterprise && rate.HourlyEnterprise != null)
                 {
                     rate.Hourly = rate.HourlySpecialized;
-                    rate.Adjusted = rate.Hourly * (1 + (discount / 100));
+                    rate.Adjusted = rate.Hourly + discount;
                 }
                 else if (!enterprise && rate.HourlySpecialized != null)
                 {
                     rate.Hourly = rate.HourlyEnterprise;
-                    rate.Adjusted = rate.Hourly * (1+ (discount / 100));
+                    rate.Adjusted = rate.Hourly + discount;
                 }
             }
 

@@ -11,7 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace SingerDispatch
+namespace SingerDispatch.Windows
 {
     /// <summary>
     /// Interaction logic for EditCompanies.xaml

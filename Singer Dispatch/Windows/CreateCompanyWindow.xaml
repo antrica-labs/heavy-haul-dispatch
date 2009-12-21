@@ -1,4 +1,4 @@
-﻿<Window x:Class="SingerDispatch.CreateCompanyWindow"
+﻿<Window x:Class="SingerDispatch.Windows.CreateCompanyWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     Title="Create Company" WindowStartupLocation="CenterOwner" SizeToContent="Height" Width="450"

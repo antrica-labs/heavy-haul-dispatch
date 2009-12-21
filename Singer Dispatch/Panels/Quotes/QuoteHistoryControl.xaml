@@ -49,8 +49,7 @@
                     <StackPanel>
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="0.5*" />
-                                <ColumnDefinition Width="0.5*" />
+                                <ColumnDefinition />                                
                                 <ColumnDefinition />
                                 <ColumnDefinition />
                             </Grid.ColumnDefinitions>
@@ -60,16 +59,13 @@
                             </Grid.RowDefinitions>                            
                             
                             <Label Grid.Row="0" Grid.Column="0">Quote #:</Label>
-                            <TextBox Grid.Row="1" Grid.Column="0" IsReadOnly="True" Text="{Binding Number}" />
+                            <TextBox Grid.Row="1" Grid.Column="0" IsReadOnly="True" Text="{Binding Converter={StaticResource QuoteFriendlyNameConverter}, ElementName=dgQuotes, Path=SelectedItem}"/>
                             
-                            <Label Grid.Row="0" Grid.Column="1">Rev #:</Label>
-                            <TextBox Grid.Row="1" Grid.Column="1" IsReadOnly="True" Text="{Binding Revision}" />
+                            <Label Grid.Row="0" Grid.Column="1">Author:</Label>
+                            <ComboBox Name="cmbQuotedBy" Grid.Row="1" Grid.Column="1" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectedItem="{Binding Employee}" TextSearch.TextPath="Name"></ComboBox>
                             
-                            <Label Grid.Row="0" Grid.Column="2">Author:</Label>
-                            <ComboBox Name="cmbQuotedBy" Grid.Row="1" Grid.Column="2" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectedItem="{Binding Employee}" TextSearch.TextPath="Name"></ComboBox>
-                            
-                            <Label Grid.Row="0" Grid.Column="3">Quote price:</Label>
-                            <TextBox Name="txtPrice" Grid.Row="2" Grid.Column="3" Text="{Binding Price, StringFormat=c}" />
+                            <Label Grid.Row="0" Grid.Column="2">Quote price:</Label>
+                            <TextBox Name="txtPrice" Grid.Row="2" Grid.Column="2" Text="{Binding Price, StringFormat=c}" />
                         </Grid>
                         
                         <Label>Care of:</Label>

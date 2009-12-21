@@ -64,19 +64,20 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\IsEnabledNullConverter.cs" />
+    <Compile Include="Controls\QuoteFriendlyNameConverter.cs" />
     <Compile Include="Controls\TabIndexHyperlink.cs" />
-    <Compile Include="CreateCompanyWindow.xaml.cs">
+    <Compile Include="Windows\CreateCompanyWindow.xaml.cs">
       <DependentUpon>CreateCompanyWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Database\DatabaseBuilder.cs" />
     <Compile Include="Database\EntityHelper.cs" />
-    <Compile Include="DocumentViewer.xaml.cs">
+    <Compile Include="Windows\DocumentViewer.xaml.cs">
       <DependentUpon>DocumentViewer.xaml</DependentUpon>
     </Compile>
-    <Compile Include="EditCompaniesWindow.xaml.cs">
+    <Compile Include="Windows\EditCompaniesWindow.xaml.cs">
       <DependentUpon>EditCompaniesWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ErrorNoticeWindow.xaml.cs">
+    <Compile Include="Windows\ErrorNoticeWindow.xaml.cs">
       <DependentUpon>ErrorNoticeWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainWindow.xaml.cs">
@@ -212,19 +213,19 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="CreateCompanyWindow.xaml">
+    <Page Include="Windows\CreateCompanyWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="DocumentViewer.xaml">
+    <Page Include="Windows\DocumentViewer.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="EditCompaniesWindow.xaml">
+    <Page Include="Windows\EditCompaniesWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ErrorNoticeWindow.xaml">
+    <Page Include="Windows\ErrorNoticeWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

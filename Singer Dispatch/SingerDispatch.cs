@@ -53,7 +53,7 @@ namespace SingerDispatch
         {
             get
             {
-                return string.Format("#{0} rev {1}", Number, Revision);
+                return string.Format("{0} rev {1}", Number, Revision);
             }
         }
 
@@ -177,8 +177,7 @@ namespace SingerDispatch
             copy.Weight = Weight;
             copy.SizeEstimated = SizeEstimated;
             copy.WeightEstimated = WeightEstimated;
-            copy.Quantity = Quantity;
-            copy.CostPerItem = CostPerItem;
+            copy.Cost = Cost;
             copy.Notes = Notes;
 
             return copy;
@@ -202,8 +201,7 @@ namespace SingerDispatch
             jc.Weight = Weight;
             jc.SizeEstimated = SizeEstimated;
             jc.WeightEstimated = WeightEstimated;
-            jc.Quantity = Quantity;
-            jc.CostPerItem = CostPerItem;
+            jc.Cost = Cost;
             jc.Notes = Notes;
             jc.LoadAddress = DepartureAddress;
             jc.LoadSiteName = DepartureSiteName;

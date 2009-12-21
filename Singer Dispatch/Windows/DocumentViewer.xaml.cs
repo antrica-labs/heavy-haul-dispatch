@@ -3,7 +3,7 @@ using SingerDispatch.Printing;
 //using mshtml;
 //using Microsoft.Win32;
 
-namespace SingerDispatch
+namespace SingerDispatch.Windows
 {
     /// <summary>
     /// Interaction logic for DocumentViewer.xaml

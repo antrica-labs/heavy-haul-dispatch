@@ -151,7 +151,7 @@ namespace SingerDispatch.Panels.Quotes
         {
             if (SelectedQuote == null) return;
 
-            var viewer = new DocumentViewer();
+            var viewer = new SingerDispatch.Windows.DocumentViewer();
             viewer.DisplayQuotePrintout(SelectedQuote);
         }
 

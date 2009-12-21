@@ -4,7 +4,7 @@ using System.Linq;
 using System.Windows;
 
 
-namespace SingerDispatch
+namespace SingerDispatch.Windows
 {
     /// <summary>
     /// Interaction logic for CreateCompany.xaml

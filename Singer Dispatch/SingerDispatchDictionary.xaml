@@ -20,6 +20,7 @@
     </DataTemplate>
 
     <Controls:IsEnabledNullConverter x:Key="IsEnabledNullConverter" />
+    <Controls:QuoteFriendlyNameConverter x:Key="QuoteFriendlyNameConverter" />
     
     <Style TargetType="Menu">        
         <Setter Property="BorderBrush" Value="LightGray" />
