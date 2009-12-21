@@ -2,16 +2,16 @@
 using System.Windows;
 using System.Collections.ObjectModel;
 
-namespace SingerDispatch.Panels.Pricing
+namespace SingerDispatch.Panels.Invoicing
 {
     /// <summary>
-    /// Interaction logic for JobPriceControl.xaml
+    /// Interaction logic for JobInvoicingControl.xaml
     /// </summary>
-    public partial class JobPriceControl : JobUserControl
+    public partial class JobInvoicingControl : JobUserControl
     {
         public SingerDispatchDataContext Database { get; set; }
 
-        public JobPriceControl()
+        public JobInvoicingControl()
         {
             InitializeComponent();
 

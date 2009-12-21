@@ -1,13 +1,13 @@
 ﻿using System.Windows;
 
-namespace SingerDispatch.Panels.Pricing
+namespace SingerDispatch.Panels.Invoicing
 {
     /// <summary>
-    /// Interaction logic for JobPricingPanel.xaml
+    /// Interaction logic for JobInvoicingPanel.xaml
     /// </summary>
-    public partial class JobPricingPanel : JobUserControl
+    public partial class JobInvoicingPanel : JobUserControl
     {
-        public JobPricingPanel()
+        public JobInvoicingPanel()
         {
             InitializeComponent();
         }

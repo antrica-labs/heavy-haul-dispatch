@@ -9,11 +9,12 @@ using SingerDispatch.Panels;
 using SingerDispatch.Panels.Quotes;
 using SingerDispatch.Panels.Companies;
 using SingerDispatch.Panels.Jobs;
-using SingerDispatch.Panels.Pricing;
+using SingerDispatch.Panels.Invoicing;
 using SingerDispatch.Database;
 using System.Collections.Generic;
 using System;
 using System.Reflection;
+using SingerDispatch.Windows;
 using SingerDispatch.Panels.Admin;
 
 namespace SingerDispatch
@@ -188,9 +189,9 @@ namespace SingerDispatch
             ExpandSection(expanderJobs, typeof(JobsPanel));
         }
 
-        private void ExpandPricing(object sender, RoutedEventArgs e)
+        private void ExpandInvoicing(object sender, RoutedEventArgs e)
         {
-            ExpandSection(expanderPricing, typeof(JobPricingPanel));
+            ExpandSection(expanderInvoicing, typeof(JobInvoicingPanel));
         }
 
         private void ExpandAdmin(object sender, RoutedEventArgs e)

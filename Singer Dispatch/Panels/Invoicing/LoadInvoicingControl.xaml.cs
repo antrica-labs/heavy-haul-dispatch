@@ -13,16 +13,16 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Collections.ObjectModel;
 
-namespace SingerDispatch.Panels.Pricing
+namespace SingerDispatch.Panels.Invoicing
 {
     /// <summary>
-    /// Interaction logic for LoadPriceControl.xaml
+    /// Interaction logic for LoadInvoicingControl.xaml
     /// </summary>
-    public partial class LoadPriceControl : JobUserControl
+    public partial class LoadInvoicingControl : JobUserControl
     {
         public SingerDispatchDataContext Database { get; set; }
 
-        public LoadPriceControl()
+        public LoadInvoicingControl()
         {
             InitializeComponent();
 

@@ -1,4 +1,4 @@
-﻿<Panels:JobUserControl x:Class="SingerDispatch.Panels.Pricing.JobPriceControl"
+﻿<Panels:JobUserControl x:Class="SingerDispatch.Panels.Invoicing.JobInvoicingControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:WPF="http://schemas.microsoft.com/wpf/2008/toolkit"

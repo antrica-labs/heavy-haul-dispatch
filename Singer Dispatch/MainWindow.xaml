@@ -27,6 +27,17 @@
                     <MenuItem Header="_Create Company" Click="CreateCompanyMenuItem_Click" />                    
                     <MenuItem Header="_Edit Companies" Click="EditCompaniesMenuItem_Click" />
                 </MenuItem>
+                <MenuItem Header="Quotes">
+                    <MenuItem Header="_Find quote" />
+                </MenuItem>
+                <MenuItem Header="Jobs">
+                    <MenuItem Header="_Find job" />
+                    <MenuItem Header="_Find load" />
+                </MenuItem>
+                <MenuItem Header="Invoicing">
+                    <MenuItem Header="_Find job" />
+                    <MenuItem Header="_Find load" />
+                </MenuItem>
             </Menu>
 
             <Border Style="{StaticResource MainNavigation}">
@@ -41,7 +52,7 @@
                     <Expander Name="expanderJobs" Header="Jobs" Style="{StaticResource SectionExpander}" Expanded="ExpandJobs">
                         <StackPanel Name="linksJobs" Style="{StaticResource SectionExpanderContent}" VerticalAlignment="Top"></StackPanel>
                     </Expander>
-                    <Expander Name="expanderPricing" Header="Job Pricing" Style="{StaticResource SectionExpander}" Expanded="ExpandPricing">
+                    <Expander Name="expanderInvoicing" Header="Invoicing" Style="{StaticResource SectionExpander}" Expanded="ExpandInvoicing">
                         <StackPanel Name="linksPricing" Style="{StaticResource SectionExpanderContent}" VerticalAlignment="Top"></StackPanel>
                     </Expander>
                     <Expander Name="expanderAdmin" Header="Admin" Style="{StaticResource SectionExpander}" Expanded="ExpandAdmin">
