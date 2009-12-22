@@ -25,9 +25,9 @@ namespace SingerDispatch.Panels.Quotes
         private void Control_Loaded(object sender, RoutedEventArgs e)
         {
             // refresh database lists in case they have been modified elsewhere.
-            cmbQuotedBy.ItemsSource = from emp in Database.Employees select emp;
+            cmbQuotedBy.ItemsSource = from emp in Database.Employees orderby emp.FirstName select emp;
 
-            cmbCareOfCompanies.ItemsSource = (SelectedCompany == null) ? null : from c in Database.Companies where c != SelectedCompany select c;
+            cmbCareOfCompanies.ItemsSource = (SelectedCompany == null) ? null : from c in Database.Companies where c != SelectedCompany && c.IsVisible == true select c;
             dgQuotes.ItemsSource = (SelectedCompany == null) ? null : new ObservableCollection<Quote>(from quote in Database.Quotes where quote.Company == SelectedCompany orderby quote.Number descending, quote.Revision descending select quote);            
         }
 

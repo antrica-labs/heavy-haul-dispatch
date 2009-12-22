@@ -23,7 +23,7 @@ namespace SingerDispatch.Panels.Jobs
         private void ControlLoaded(object sender, RoutedEventArgs e)
         {
             cmbLoads.ItemsSource = (SelectedJob == null) ? null : SelectedJob.Loads.ToList();
-            cmbCompanies.ItemsSource = (SelectedJob == null) ? null : from c in Database.Companies orderby c.Name select c;
+            cmbCompanies.ItemsSource = (SelectedJob == null) ? null : from c in Database.Companies  where c.IsVisible == true orderby c.Name select c;
         }
 
         protected override void SelectedJobChanged(Job newValue, Job oldValue)

@@ -40,7 +40,7 @@ namespace SingerDispatch.Panels.Invoicing
             {
                 dgJobs.ItemsSource = new ObservableCollection<Job>(from j in Database.Jobs where j.CompanyID == newValue.ID orderby j.EndDate descending select j);
                 dgCustomerDetails.ItemsSource = new ObservableCollection<CustomerNumber>(newValue.CustomerNumbers);
-                cmbCareOfCompanies.ItemsSource = from c in Database.Companies where c.ID != newValue.ID select c;
+                cmbCareOfCompanies.ItemsSource = from c in Database.Companies where c.ID != newValue.ID && c.IsVisible == true select c;
             }
         }
 
