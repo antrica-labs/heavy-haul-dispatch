@@ -47,7 +47,23 @@ namespace SingerDispatch
         }
     }
 
-    partial class Quote : System.ICloneable
+    partial class Commodity
+    {
+        partial void OnCreated()
+        {
+            if (WeightEstimated == null)
+            {
+                WeightEstimated = false;
+            }
+
+            if (SizeEstimated == null)
+            {
+                SizeEstimated = false;
+            }
+        }
+    }
+
+    partial class Quote
     {
         public string FriendlyName
         {
@@ -65,7 +81,7 @@ namespace SingerDispatch
             }
         }
 
-        public object Clone()
+        public Quote Duplicate()
         {
             var copy = new Quote();
 
@@ -84,17 +100,17 @@ namespace SingerDispatch
 
             foreach (var commodity in QuoteCommodities)
             {
-                copy.QuoteCommodities.Add((QuoteCommodity)commodity.Clone());
+                copy.QuoteCommodities.Add((QuoteCommodity)commodity.Duplicate());
             }
 
             foreach (var supplement in QuoteSupplements)
             {
-                copy.QuoteSupplements.Add((QuoteSupplement)supplement.Clone());
+                copy.QuoteSupplements.Add((QuoteSupplement)supplement.Duplicate());
             }
 
             foreach (var item in StorageItems)
             {
-                copy.StorageItems.Add((StorageItem)item.Clone());
+                copy.StorageItems.Add((StorageItem)item.Duplicate());
             }
 
             return copy;
@@ -123,23 +139,7 @@ namespace SingerDispatch
         }
     }
 
-    partial class Commodity
-    {
-        partial void OnCreated()
-        {
-            if (WeightEstimated == null)
-            {
-                WeightEstimated = false;
-            }
-
-            if (SizeEstimated == null)
-            {
-                SizeEstimated = false;
-            }
-        }
-    }
-
-    partial class QuoteCommodity : System.ICloneable
+    partial class QuoteCommodity
     {
         partial void OnCreated()
         {
@@ -154,7 +154,7 @@ namespace SingerDispatch
             }
         }
 
-        public object Clone()
+        public QuoteCommodity Duplicate()
         {
             var copy = new QuoteCommodity();
 
@@ -212,25 +212,9 @@ namespace SingerDispatch
         }
     }
 
-    partial class JobCommodity
+    partial class QuoteSupplement
     {
-        partial void OnCreated()
-        {
-            if (WeightEstimated == null)
-            {
-                WeightEstimated = false;
-            }
-
-            if (SizeEstimated == null)
-            {
-                SizeEstimated = false;
-            }
-        }
-    }
-
-    partial class QuoteSupplement : System.ICloneable
-    {
-        public object Clone()
+        public QuoteSupplement Duplicate()
         {
             var copy = new QuoteSupplement();
 
@@ -245,9 +229,9 @@ namespace SingerDispatch
         }
     }
 
-    partial class StorageItem : System.ICloneable
+    partial class StorageItem 
     {
-        public object Clone()
+        public StorageItem Duplicate()
         {
             var copy = new StorageItem();
 
@@ -268,14 +252,183 @@ namespace SingerDispatch
         public decimal? Adjusted { get; set; }
     }
 
+    partial class Job
+    {
+        public Job Duplicate()
+        {
+            var cp = new Job();
+
+            cp.CareOfCompanyID = CareOfCompanyID;
+            cp.CompanyID = CompanyID;
+            cp.Description = Description;
+            cp.EmployeeID = EmployeeID;
+            cp.EndDate = cp.EndDate;
+            cp.QuoteID = QuoteID;
+            cp.StartDate = StartDate;
+            cp.StatusTypeID = StatusTypeID;
+
+            return null;
+        }
+    }
+
+    partial class JobCommodity
+    {
+        partial void OnCreated()
+        {
+            if (WeightEstimated == null)
+            {
+                WeightEstimated = false;
+            }
+
+            if (SizeEstimated == null)
+            {
+                SizeEstimated = false;
+            }
+        }
+
+        public JobCommodity Duplicate()
+        {
+            var copy = new JobCommodity();
+
+            copy.JobID = JobID;
+            copy.LoadID = LoadID;
+            copy.OriginalCommodityID = OriginalCommodityID;
+            copy.Name = Name;
+            copy.Value = Value;
+            copy.Serial = Serial;
+            copy.Unit = Unit;
+            copy.Owner = Owner;
+            copy.LastLocation = LastLocation;
+            copy.LastAddress = LastAddress;
+            copy.Length = Length;
+            copy.Width = Width;
+            copy.Height = Height;
+            copy.Weight = Weight;
+            copy.SizeEstimated = SizeEstimated;
+            copy.WeightEstimated = WeightEstimated;
+            copy.Cost = Cost;
+            copy.LoadSiteName = LoadSiteName;
+            copy.LoadAddress = LoadAddress;
+            copy.LoadBy = LoadBy;
+            copy.LoadMethodID = LoadMethodID;
+            copy.LoadDate = LoadDate;
+            copy.LoadInstructions = LoadInstructions;
+            copy.LoadRoute = LoadRoute;
+            copy.UnloadSiteName = UnloadSiteName;
+            copy.UnloadAddress = UnloadAddress;
+            copy.UnloadBy = UnloadBy;
+            copy.UnloadMethodID = UnloadMethodID;
+            copy.UnloadDate = UnloadDate;
+            copy.UnloadInstructions = UnloadInstructions;
+            copy.UnloadRoute = UnloadRoute;
+            copy.Notes = Notes;
+
+            return copy;
+        }
+    }
+
+    partial class ThirdPartyService
+    {
+        public ThirdPartyService Duplicate()
+        {
+            var copy = new ThirdPartyService();
+
+            copy.JobID = JobID;
+            copy.LoadID = LoadID;
+            copy.CompanyID = CompanyID;
+            copy.ServiceTypeID = ServiceTypeID;
+            copy.ContactID = ContactID;
+            copy.ServiceDate = ServiceDate;
+            copy.ServiceTime = ServiceTime;
+            copy.Location = Location;
+            copy.Reference = Reference;
+            copy.Notes = Notes;
+
+            return copy;
+        }
+    }
+
+    partial class Permit
+    {
+        public Permit Duplicate()
+        {
+            var cp = new Permit();
+            
+            cp.JobID = JobID;
+            cp.LoadID = LoadID;
+            cp.Issuer = Issuer;
+            cp.PermitType = PermitType;            
+            cp.Conditions = Conditions;
+            cp.Cost = Cost;
+            cp.PermitDate = PermitDate;
+            cp.PermitTime = PermitTime;
+
+            return cp;
+        }
+    }
+
+    partial class Dispatch
+    {
+        public Dispatch Duplicate()
+        {
+            var cp = new Dispatch();
+
+            cp.JobID = JobID;
+            cp.LoadID = LoadID;
+            cp.EmployeeID = EmployeeID;
+            cp.EquipmentID = EquipmentID;
+            cp.Description = Description;
+            cp.Notes = Notes;
+            cp.RateID = RateID;
+
+            return cp;
+        }
+    }
+
     partial class Load
     {
-        partial void  OnCreated()
+        partial void OnCreated()
         {
  	        if (WeightEstimated == null)
             {
                 WeightEstimated = false;
             }
+        }
+
+        public Load Duplicate()
+        {
+            var cp = new Load();
+            
+            cp.JobID = JobID;
+            cp.EquipmentID = EquipmentID;
+            cp.RateID = RateID;
+            cp.SeasonID = SeasonID;
+            cp.TrailerCombinationID = TrailerCombinationID;
+            cp.Info = Info;
+            cp.StartDate = StartDate;
+            cp.EndDate = EndDate;
+            cp.Ban = Ban;
+            cp.ServiceDescription = ServiceDescription;
+            cp.Notes = Notes;
+            cp.WeightSteer = WeightSteer;
+            cp.WeightDrive = WeightDrive;
+            cp.WeightGroup1 = WeightGroup1;
+            cp.WeightGroup2 = WeightGroup2;
+            cp.WeightGroup3 = WeightGroup3;
+            cp.WeightGroup4 = WeightGroup4;
+            cp.WeightGroup5 = WeightGroup5;
+            cp.WeightGroup6 = WeightGroup6;
+            cp.WeightGroup7 = WeightGroup7;
+            cp.WeightGroup8 = WeightGroup8;
+            cp.WeightGroup9 = WeightGroup9;
+            cp.WeightGroup10 = WeightGroup10;
+            cp.WeightEstimated = WeightEstimated;
+            cp.GrossWeight = GrossWeight;
+            cp.LoadedLength = LoadedLength;
+            cp.LoadedWidth = LoadedWidth;
+            cp.LoadedHeight = LoadedHeight;
+
+            return cp;
         }
 
         public string FriendlyName

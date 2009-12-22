@@ -138,7 +138,7 @@ namespace SingerDispatch.Panels.Quotes
         {
             if (SelectedQuote == null) return;
 
-            var quote = (Quote)SelectedQuote.Clone();
+            var quote = SelectedQuote.Duplicate();
             var quotes = (ObservableCollection<Quote>)dgQuotes.ItemsSource;
 
             quote.Revision = (from q in Database.Quotes where q.Number == SelectedQuote.Number select q.Revision).Max() + 1;
