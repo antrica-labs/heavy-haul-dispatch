@@ -85,16 +85,15 @@ namespace SingerDispatch
         {
             var copy = new Quote();
 
-            copy.CompanyID = CompanyID;
+            copy.Company = Company;            
             copy.Company = Company;
             copy.Number = Number;
             copy.Revision = Revision;
-            copy.CareOfCompanyID = CareOfCompanyID;
+            copy.CareOfCompany = CareOfCompany;            
             copy.CareOfCompany = CareOfCompany;
             copy.Description = Description;
             copy.CreationDate = CreationDate;
-            copy.ExpirationDate = ExpirationDate;
-            copy.EmployeeID = EmployeeID;
+            copy.ExpirationDate = ExpirationDate;            
             copy.Employee = Employee;
             copy.Price = Price;
 
@@ -122,9 +121,9 @@ namespace SingerDispatch
 
             // Fill the job properties with as many of the applicable quote properties as possible
             job.Quote = this;
-            job.CompanyID = CompanyID;
             job.Company = Company;
-            job.CareOfCompanyID = CareOfCompanyID;
+            job.Company = Company;
+            job.CareOfCompany = CareOfCompany;
             job.CareOfCompany = CareOfCompany;
             job.StartDate = StartDate;
             job.EndDate = EndDate;
@@ -157,9 +156,8 @@ namespace SingerDispatch
         public QuoteCommodity Duplicate()
         {
             var copy = new QuoteCommodity();
-
-            copy.QuoteID = QuoteID;
-            copy.OriginalCommodityID = OriginalCommodityID;
+                        
+            copy.OriginalCommodity = OriginalCommodity;
             copy.DepartureSiteName = DepartureSiteName;
             copy.DepartureAddress = DepartureAddress;
             copy.ArrivalSiteName = ArrivalSiteName;
@@ -186,8 +184,8 @@ namespace SingerDispatch
         public JobCommodity ToJobCommodity()
         {
             var jc = new JobCommodity();
-
-            jc.OriginalCommodityID = OriginalCommodityID;
+                        
+            jc.OriginalCommodity = OriginalCommodity;
             jc.Name = Name;
             jc.Value = Value;
             jc.Serial = Serial;
@@ -217,11 +215,10 @@ namespace SingerDispatch
         public QuoteSupplement Duplicate()
         {
             var copy = new QuoteSupplement();
-
-            copy.QuoteID = QuoteID;
+                        
             copy.Name = Name;
             copy.Details = Details;
-            copy.BillingTypeID = BillingTypeID;
+            copy.BillingType = BillingType;
             copy.Quantity = Quantity;
             copy.CostPerItem = CostPerItem;
 
@@ -234,11 +231,10 @@ namespace SingerDispatch
         public StorageItem Duplicate()
         {
             var copy = new StorageItem();
-
-            copy.QuoteID = QuoteID;
+                        
             copy.Details = Details;
-            copy.CommodityID = CommodityID;
-            copy.BillingTypeID = BillingTypeID;
+            copy.Commodity = Commodity;
+            copy.BillingType = BillingType;
             copy.Quantity = Quantity;
             copy.CostPerItem = CostPerItem;
 
@@ -258,14 +254,14 @@ namespace SingerDispatch
         {
             var cp = new Job();
 
-            cp.CareOfCompanyID = CareOfCompanyID;
-            cp.CompanyID = CompanyID;
+            cp.CareOfCompany = CareOfCompany;
+            cp.Company = Company;
             cp.Description = Description;
-            cp.EmployeeID = EmployeeID;
+            cp.Employee = Employee;
             cp.EndDate = cp.EndDate;
-            cp.QuoteID = QuoteID;
+            cp.Quote = Quote;
             cp.StartDate = StartDate;
-            cp.StatusTypeID = StatusTypeID;
+            cp.JobStatusType = JobStatusType;
 
             return null;
         }
@@ -289,10 +285,9 @@ namespace SingerDispatch
         public JobCommodity Duplicate()
         {
             var copy = new JobCommodity();
-
-            copy.JobID = JobID;
-            copy.LoadID = LoadID;
-            copy.OriginalCommodityID = OriginalCommodityID;
+                        
+            copy.Load = Load;
+            copy.OriginalCommodity = OriginalCommodity;            
             copy.Name = Name;
             copy.Value = Value;
             copy.Serial = Serial;
@@ -310,14 +305,14 @@ namespace SingerDispatch
             copy.LoadSiteName = LoadSiteName;
             copy.LoadAddress = LoadAddress;
             copy.LoadBy = LoadBy;
-            copy.LoadMethodID = LoadMethodID;
+            copy.LoadMethod = LoadMethod;            
             copy.LoadDate = LoadDate;
             copy.LoadInstructions = LoadInstructions;
             copy.LoadRoute = LoadRoute;
             copy.UnloadSiteName = UnloadSiteName;
             copy.UnloadAddress = UnloadAddress;
             copy.UnloadBy = UnloadBy;
-            copy.UnloadMethodID = UnloadMethodID;
+            copy.UnloadMethod = UnloadMethod;            
             copy.UnloadDate = UnloadDate;
             copy.UnloadInstructions = UnloadInstructions;
             copy.UnloadRoute = UnloadRoute;
@@ -333,11 +328,10 @@ namespace SingerDispatch
         {
             var copy = new ThirdPartyService();
 
-            copy.JobID = JobID;
-            copy.LoadID = LoadID;
-            copy.CompanyID = CompanyID;
-            copy.ServiceTypeID = ServiceTypeID;
-            copy.ContactID = ContactID;
+            copy.Load = Load;
+            copy.Company = Company;            
+            copy.ServiceType = ServiceType;            
+            copy.Contact = Contact;
             copy.ServiceDate = ServiceDate;
             copy.ServiceTime = ServiceTime;
             copy.Location = Location;
@@ -353,9 +347,8 @@ namespace SingerDispatch
         public Permit Duplicate()
         {
             var cp = new Permit();
-            
-            cp.JobID = JobID;
-            cp.LoadID = LoadID;
+                        
+            cp.Load = Load;
             cp.Issuer = Issuer;
             cp.PermitType = PermitType;            
             cp.Conditions = Conditions;
@@ -373,13 +366,12 @@ namespace SingerDispatch
         {
             var cp = new Dispatch();
 
-            cp.JobID = JobID;
-            cp.LoadID = LoadID;
-            cp.EmployeeID = EmployeeID;
-            cp.EquipmentID = EquipmentID;
+            cp.Load = Load;
+            cp.Employee = Employee;
+            cp.Equipment = Equipment;            
             cp.Description = Description;
             cp.Notes = Notes;
-            cp.RateID = RateID;
+            cp.Rate = Rate;            
 
             return cp;
         }
@@ -398,12 +390,11 @@ namespace SingerDispatch
         public Load Duplicate()
         {
             var cp = new Load();
-            
-            cp.JobID = JobID;
-            cp.EquipmentID = EquipmentID;
-            cp.RateID = RateID;
-            cp.SeasonID = SeasonID;
-            cp.TrailerCombinationID = TrailerCombinationID;
+
+            cp.Equipment = Equipment;
+            cp.Rate = Rate;
+            cp.Season = Season;            
+            cp.TrailerCombination = TrailerCombination;
             cp.Info = Info;
             cp.StartDate = StartDate;
             cp.EndDate = EndDate;

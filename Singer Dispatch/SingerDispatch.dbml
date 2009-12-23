@@ -54,6 +54,7 @@
       <Column Name="SizeEstimated" Type="System.Boolean" CanBeNull="true" />
       <Column Name="WeightEstimated" Type="System.Boolean" CanBeNull="true" />
       <Column Name="Notes" Type="System.String" CanBeNull="true" UpdateCheck="Never" />
+      <Association Name="Commodity_QuoteCommodity" Member="QuoteCommodities" ThisKey="ID" OtherKey="OriginalCommodityID" Type="QuoteCommodity" />
       <Association Name="Commodity_JobCommodity" Member="JobCommodities" ThisKey="ID" OtherKey="OriginalCommodityID" Type="JobCommodity" />
       <Association Name="Company_Commodity" Member="Company" ThisKey="CompanyID" OtherKey="ID" Type="Company" IsForeignKey="true" />
     </Type>
@@ -193,7 +194,7 @@
       <Column Name="UnloadInstructions" Type="System.String" CanBeNull="true" />
       <Column Name="UnloadRoute" Type="System.String" CanBeNull="true" />
       <Column Name="Notes" Type="System.String" CanBeNull="true" UpdateCheck="Never" />
-      <Association Name="Commodity_JobCommodity" Member="Commodity" ThisKey="OriginalCommodityID" OtherKey="ID" Type="Commodity" IsForeignKey="true" />
+      <Association Name="Commodity_JobCommodity" Member="OriginalCommodity" ThisKey="OriginalCommodityID" OtherKey="ID" Type="Commodity" IsForeignKey="true" />
       <Association Name="Job_JobCommodity" Member="Job" ThisKey="JobID" OtherKey="ID" Type="Job" IsForeignKey="true" />
       <Association Name="Load_JobCommodity" Member="Load" ThisKey="LoadID" OtherKey="ID" Type="Load" IsForeignKey="true" />
       <Association Name="LoadUnloadMethod_JobCommodity" Member="LoadMethod" ThisKey="LoadMethodID" OtherKey="ID" Type="LoadUnloadMethod" IsForeignKey="true" />
@@ -323,6 +324,7 @@
       <Column Name="Cost" Type="System.Decimal" CanBeNull="true" />
       <Column Name="Notes" Type="System.String" CanBeNull="true" UpdateCheck="Never" />
       <Association Name="Quote_QuoteCommodity" Member="Quote" ThisKey="QuoteID" OtherKey="ID" Type="Quote" IsForeignKey="true" />
+      <Association Name="Commodity_QuoteCommodity" Member="OriginalCommodity" ThisKey="OriginalCommodityID" OtherKey="ID" Type="Commodity" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="" Member="Quotes">

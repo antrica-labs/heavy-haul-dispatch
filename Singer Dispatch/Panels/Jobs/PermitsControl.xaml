@@ -29,7 +29,7 @@
             </Grid.ColumnDefinitions>
 
             <Button Style="{StaticResource Horizontal}" Grid.Column="0" Click="NewPermit_Click">New permit</Button>
-            <Button Style="{StaticResource Horizontal}" Grid.Column="0" Click="DuplicatePermit_Click">Duplicate permit</Button>
+            <Button Style="{StaticResource Horizontal}" Grid.Column="1" Click="DuplicatePermit_Click">Duplicate permit</Button>
             <Button Style="{StaticResource HorizontalEnd}" Grid.Column="3" Click="RemovePermit_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgPermits, Path=SelectedItem}">Remove permit</Button>
         </Grid>
  

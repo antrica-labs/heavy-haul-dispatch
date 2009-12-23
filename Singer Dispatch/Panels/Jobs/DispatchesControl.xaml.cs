@@ -45,6 +45,19 @@ namespace SingerDispatch.Panels.Jobs
             cmbLoads.Focus();
         }
 
+        private void DuplicateDispatch_Click(object sender, RoutedEventArgs e)
+        {
+            var dispatch = (Dispatch)dgDispatches.SelectedItem;
+
+            if (dispatch == null)
+                return;
+
+            dispatch = dispatch.Duplicate();
+
+            SelectedJob.Dispatches.Add(dispatch);
+            ((ObservableCollection<Dispatch>)dgDispatches.ItemsSource).Insert(0, dispatch);
+        }
+
         private void PrintDispatch_Click(object sender, RoutedEventArgs e)
         {
             if (dgDispatches.SelectedItem == null)
