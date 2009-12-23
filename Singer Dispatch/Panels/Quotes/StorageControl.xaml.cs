@@ -45,6 +45,19 @@ namespace SingerDispatch.Panels.Quotes
             cmbCommodities.Focus();
         }
 
+        private void DuplicateStorageItem_Click(object sender, RoutedEventArgs e)
+        {
+            var item = (StorageItem)dgStorageList.SelectedItem;
+
+            if (item == null)
+                return;
+
+            item = item.Duplicate();
+
+            SelectedQuote.StorageItems.Add(item);
+            ((ObservableCollection<StorageItem>)dgStorageList.ItemsSource).Insert(0, item);
+        }
+
         private void RemoveStorageItem_Click(object sender, RoutedEventArgs e)
         {
             var item = (StorageItem)dgStorageList.SelectedItem;

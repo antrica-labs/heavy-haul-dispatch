@@ -44,6 +44,19 @@ namespace SingerDispatch.Panels.Quotes
             txtName.Focus();
         }
 
+        private void DuplicateSupplement_Click(object sender, RoutedEventArgs e)
+        {
+            var supplement = (QuoteSupplement)dgSupplements.SelectedItem;
+
+            if (supplement == null)
+                return;
+
+            supplement = supplement.Duplicate();
+
+            SelectedQuote.QuoteSupplements.Add(supplement);
+            ((ObservableCollection<QuoteSupplement>)dgSupplements.ItemsSource).Insert(0, supplement);
+        }
+
         private void RemoveSupplement_Click(object sender, RoutedEventArgs e)
         {
             var supplement = (QuoteSupplement)dgSupplements.SelectedItem;

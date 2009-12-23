@@ -56,10 +56,23 @@ namespace SingerDispatch.Panels.Jobs
             var service = new ThirdPartyService() { JobID = SelectedJob.ID };
 
             SelectedJob.ThirdPartyServices.Add(service);
-            ((ObservableCollection<ThirdPartyService>)dgServices.ItemsSource).Add(service);
+            ((ObservableCollection<ThirdPartyService>)dgServices.ItemsSource).Insert(0, service);
             dgServices.SelectedItem = service;
 
             cmbLoads.Focus();
+        }
+
+        private void DuplicateService_Click(object sender, RoutedEventArgs e)
+        {
+            var service = (ThirdPartyService)dgServices.SelectedItem;
+
+            if (service == null)
+                return;
+
+            service = service.Duplicate();
+
+            SelectedJob.ThirdPartyServices.Add(service);
+            ((ObservableCollection<ThirdPartyService>)dgServices.ItemsSource).Insert(0, service);
         }
 
         private void RemoveService_Click(object sender, RoutedEventArgs e)

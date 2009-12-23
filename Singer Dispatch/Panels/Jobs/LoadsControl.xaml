@@ -37,8 +37,9 @@
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
 
-            <Button Style="{StaticResource Horizontal}" Name="btnNewLoad" Grid.Column="0" Click="NewLoad_Click">New load</Button>
-            <Button Style="{StaticResource HorizontalEnd}" Name="btnRemoveLoad" Grid.Column="3" Click="RemoveLoad_Click" IsEnabled="False">Remove load</Button>
+            <Button Style="{StaticResource Horizontal}" Grid.Column="0" Click="NewLoad_Click">New load</Button>
+            <Button Style="{StaticResource Horizontal}" Grid.Column="1" Click="DuplicateLoad_Click">Duplicate load</Button>
+            <Button Style="{StaticResource HorizontalEnd}" Grid.Column="3" Click="RemoveLoad_Click" IsEnabled="False">Remove load</Button>
         </Grid>
 
         <GroupBox Header="Instruction" DataContext="{Binding ElementName=dgLoads, Path=SelectedItem}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgLoads, Path=SelectedItem}">

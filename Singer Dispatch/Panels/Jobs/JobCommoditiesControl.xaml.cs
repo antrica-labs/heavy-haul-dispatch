@@ -43,10 +43,23 @@ namespace SingerDispatch.Panels.Jobs
             var list = (ObservableCollection<JobCommodity>)dgCommodities.ItemsSource;
             
             list.Insert(0, commodity);
-            SelectedJob.JobCommodities.Add(commodity);
+            SelectedJob.JobCommodities.Insert(0, commodity);
             dgCommodities.SelectedItem = commodity;
 
             cmbCommodityName.Focus();
+        }
+
+        private void DuplicateCommodity_Click(object sender, RoutedEventArgs e)
+        {
+            var commodity = (JobCommodity)dgCommodities.SelectedItem;
+
+            if (commodity == null)
+                return;
+
+            commodity = commodity.Duplicate();
+
+            SelectedJob.JobCommodities.Add(commodity);
+            ((ObservableCollection<JobCommodity>)dgCommodities.ItemsSource).Insert(0, commodity);
         }
 
         private void RemoveCommodity_Click(object sender, RoutedEventArgs e)

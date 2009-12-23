@@ -81,7 +81,7 @@ namespace SingerDispatch.Panels.Quotes
             }
         }
 
-        private void btnNewCommodity_Click(object sender, RoutedEventArgs e)
+        private void NewCommodity_Click(object sender, RoutedEventArgs e)
         {
             var list = (ObservableCollection<QuoteCommodity>)dgQuoteCommodities.ItemsSource;
             var commodity = new QuoteCommodity { QuoteID = SelectedQuote.ID };
@@ -93,7 +93,20 @@ namespace SingerDispatch.Panels.Quotes
             cmbCommodityName.Focus();
         }
 
-        private void btnRemoveCommodity_Click(object sender, RoutedEventArgs e)
+        private void DuplicateCommodity_Click(object sender, RoutedEventArgs e)
+        {
+            var commodity = (QuoteCommodity)dgQuoteCommodities.SelectedItem;
+
+            if (commodity == null)
+                return;
+
+            commodity = commodity.Duplicate();
+
+            SelectedQuote.QuoteCommodities.Add(commodity);
+            ((ObservableCollection<QuoteCommodity>)dgQuoteCommodities.ItemsSource).Insert(0, commodity);
+        }
+
+        private void RemoveCommodity_Click(object sender, RoutedEventArgs e)
         {
             var commodity = (QuoteCommodity)dgQuoteCommodities.SelectedItem;
 

@@ -35,10 +35,23 @@ namespace SingerDispatch.Panels.Jobs
             var permit = new Permit() { JobID = SelectedJob.ID };
 
             SelectedJob.Permits.Add(permit);
-            ((ObservableCollection<Permit>)dgPermits.ItemsSource).Add(permit);
+            ((ObservableCollection<Permit>)dgPermits.ItemsSource).Insert(0, permit);
             dgPermits.SelectedItem = permit;
 
             cmbLoads.Focus();
+        }
+
+        private void DuplicatePermit_Click(object sender, RoutedEventArgs e)
+        {
+            var permit = (Permit)dgPermits.SelectedItem;
+
+            if (permit == null)
+                return;
+
+            permit = permit.Duplicate();
+
+            SelectedJob.Permits.Add(permit);
+            ((ObservableCollection<Permit>)dgPermits.ItemsSource).Insert(0, permit);
         }
 
         private void RemovePermit_Click(object sender, RoutedEventArgs e)

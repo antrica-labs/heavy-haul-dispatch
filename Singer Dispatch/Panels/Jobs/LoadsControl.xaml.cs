@@ -44,6 +44,19 @@ namespace SingerDispatch.Panels.Jobs
             txtServiceDescription.Focus();
         }
 
+        private void DuplicateLoad_Click(object sender, RoutedEventArgs e)
+        {
+            var load = (Load)dgLoads.SelectedItem;
+
+            if (load == null)
+                return;
+
+            load = load.Duplicate();
+
+            SelectedJob.Loads.Add(load);
+            ((ObservableCollection<Load>)dgLoads.ItemsSource).Insert(0, load);
+        }
+
         private void AxleWeightChanged(object sender, TextChangedEventArgs e)
         {
             var load = (Load)dgLoads.SelectedItem;
