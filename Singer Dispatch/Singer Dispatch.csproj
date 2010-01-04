@@ -64,6 +64,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\CustomCommands.cs" />
     <Compile Include="Controls\IsEnabledNullConverter.cs" />
     <Compile Include="Controls\QuoteFriendlyNameConverter.cs" />
     <Compile Include="Controls\TabIndexHyperlink.cs" />

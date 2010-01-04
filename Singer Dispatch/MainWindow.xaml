@@ -1,6 +1,7 @@
 ﻿<Window x:Class="SingerDispatch.MainWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:custom="clr-namespace:SingerDispatch.Controls"
     Title="Singer Dispatch" MinWidth="780" SizeToContent="Height"
     Loaded="Window_Loaded"
     x:Name="mainWindow">
@@ -21,21 +22,21 @@
         <DockPanel>
             <Menu DockPanel.Dock="Top">
                 <MenuItem Header="_File">                    
-                    <MenuItem Header="_Save Changes" Click="SaveChanges_Click" InputGestureText="Ctrl+S" />
+                    <MenuItem Header="_Save Changes" Click="SaveChanges_Click" InputGestureText="Ctrl+Shift+S" />
                     <MenuItem Header="_Exit" Click="Terminate_Click" />
                 </MenuItem>
                 <MenuItem Header="_Companies">
-                    <MenuItem Header="_Create Company" Click="CreateCompanyMenuItem_Click" InputGestureText="Ctrl+N" />                    
-                    <MenuItem Header="_Edit Companies" Click="EditCompaniesMenuItem_Click" InputGestureText="Ctrl+E" />
+                    <MenuItem Header="_Create Company" Click="CreateCompanyMenuItem_Click" InputGestureText="Ctrl+Shift+N" />                    
+                    <MenuItem Header="_Edit Companies" Click="EditCompaniesMenuItem_Click" InputGestureText="Ctrl+Shift+E" />
                 </MenuItem>
                 <MenuItem Header="Quotes">
-                    <MenuItem Header="_Find quote" Click="FindQuote_Click" InputGestureText="Ctrl+Q" />
+                    <MenuItem Header="_Find quote" Click="FindQuote_Click" InputGestureText="Ctrl+Shift+Q" />
                 </MenuItem>
                 <MenuItem Header="Jobs">
-                    <MenuItem Header="_Find job" Click="FindJob_Click" InputGestureText="Ctrl+J" />                    
+                    <MenuItem Header="_Find job" Click="FindJob_Click" InputGestureText="Ctrl+Shift+J" />                    
                 </MenuItem>
                 <MenuItem Header="Invoicing">
-                    <MenuItem Header="_Find job" Click="FindJobForInvoice_Click" InputGestureText="Ctrl+I" />
+                    <MenuItem Header="_Find job" Click="FindJobForInvoice_Click" InputGestureText="Ctrl+Shift+I" />
                 </MenuItem>
             </Menu>
 
