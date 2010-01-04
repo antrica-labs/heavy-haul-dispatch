@@ -84,7 +84,7 @@ namespace SingerDispatch.Database
             }
             catch
             {
-                quote.Number = 1;
+                quote.Number = 10001;
             }
 
             context.SubmitChanges();
@@ -98,7 +98,7 @@ namespace SingerDispatch.Database
             }
             catch
             {
-                job.Number = 1;
+                job.Number = 10001;
             }
 
             context.SubmitChanges();

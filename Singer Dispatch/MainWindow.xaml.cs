@@ -32,9 +32,7 @@ namespace SingerDispatch
         public MainWindow()
         {
             InitializeComponent();
-
-            //MyCommand.InputGestures.Add(new KeyGesture(Key.S, ModifierKeys.Control));
-
+            
             try
             {
                 Panels = new Dictionary<System.Type, UserControl>();
@@ -90,7 +88,7 @@ namespace SingerDispatch
             cmbCompanies.SelectedItem = cmbOperators.SelectedItem;
         }
 
-        private void Terminate(object sender, RoutedEventArgs e)
+        private void Terminate_Click(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
         }
@@ -303,7 +301,21 @@ namespace SingerDispatch
                 ViewInvoice(job);
             }
         }
-      
+
+        private void SaveChanges_Click(object sender, RoutedEventArgs e)
+        {
+            //Database.SubmitChanges();
+        }
+
+        private void SaveCommandBinding_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {            
+            e.CanExecute = true;            
+        }
+
+        private void SaveCommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            //Database.SubmitChanges();
+        }
 
     }
 }

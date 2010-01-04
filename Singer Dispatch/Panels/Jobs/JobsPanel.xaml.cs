@@ -25,11 +25,14 @@ namespace SingerDispatch.Panels.Jobs
 
             IsEnabled = newValue != null;
             SelectedJob = null;
+            Tabs.SelectedIndex = 0;
         }
 
         protected override void SelectedJobChanged(Job newValue, Job oldValue)
         {
             base.SelectedJobChanged(newValue, oldValue);
+
+            Tabs.SelectedIndex = 0;
         }
 
         private void CommitJobChanges_Click(object sender, RoutedEventArgs e)

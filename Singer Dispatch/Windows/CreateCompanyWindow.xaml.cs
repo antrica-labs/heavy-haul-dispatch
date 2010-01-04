@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
+using System.Windows.Input;
 
 
 namespace SingerDispatch.Windows
@@ -43,7 +44,7 @@ namespace SingerDispatch.Windows
             cmbAddressType.ItemsSource = from at in Database.AddressTypes select at;
         }
 
-        private void bttnCreateCompany_Click(object sender, RoutedEventArgs e)
+        private void CreateCompanyHandler()
         {
             if (cmbProvinceOrState.SelectedItem != null)
             {
@@ -51,7 +52,7 @@ namespace SingerDispatch.Windows
             }
 
             Database.Companies.InsertOnSubmit(Company);
-         
+
             try
             {
                 Database.SubmitChanges();
@@ -62,6 +63,23 @@ namespace SingerDispatch.Windows
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void CreateCompany_Click(object sender, RoutedEventArgs e)
+        {
+            CreateCompanyHandler();
+        }        
+
+        private void Window_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if (e.Key == Key.Escape)
+            {
+                Close();
+            }
+            else if (e.Key == Key.Enter)
+            {
+                CreateCompanyHandler();
             }
         }        
     }

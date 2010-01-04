@@ -16,16 +16,17 @@
                 <TextBlock Text="{Binding Path=Alias}" />
             </DataTemplate>
         </ResourceDictionary>        
-    </Window.Resources>   
+    </Window.Resources>
     <Border>
         <DockPanel>
             <Menu DockPanel.Dock="Top">
-                <MenuItem Header="_File" >                    
-                    <MenuItem Header="_Exit" Click="Terminate" />
+                <MenuItem Header="_File">                    
+                    <MenuItem Header="_Save Changes" Click="SaveChanges_Click" InputGestureText="Ctrl+S" />
+                    <MenuItem Header="_Exit" Click="Terminate_Click" />
                 </MenuItem>
                 <MenuItem Header="_Companies">
-                    <MenuItem Header="_Create Company" Click="CreateCompanyMenuItem_Click" />                    
-                    <MenuItem Header="_Edit Companies" Click="EditCompaniesMenuItem_Click" />
+                    <MenuItem Header="_Create Company" Click="CreateCompanyMenuItem_Click" InputGestureText="Ctrl+N" />                    
+                    <MenuItem Header="_Edit Companies" Click="EditCompaniesMenuItem_Click" InputGestureText="Ctrl+E" />
                 </MenuItem>
                 <MenuItem Header="Quotes">
                     <MenuItem Header="_Find quote" Click="FindQuote_Click" InputGestureText="Ctrl+Q" />
@@ -34,7 +35,7 @@
                     <MenuItem Header="_Find job" Click="FindJob_Click" InputGestureText="Ctrl+J" />                    
                 </MenuItem>
                 <MenuItem Header="Invoicing">
-                    <MenuItem Header="_Find job" Click="FindJobForInvoice" InputGestureText="Ctrl+I" />
+                    <MenuItem Header="_Find job" Click="FindJobForInvoice_Click" InputGestureText="Ctrl+I" />
                 </MenuItem>
             </Menu>
 
@@ -55,7 +56,7 @@
                     </Expander>
                     <Expander Name="expanderAdmin" Header="Admin" Style="{StaticResource SectionExpander}" Expanded="ExpandAdmin">
                         <StackPanel Name="linksAdmin" Style="{StaticResource SectionExpanderContent}" VerticalAlignment="Top"></StackPanel>
-                    </Expander>                    
+                    </Expander>
                 </StackPanel>
             </Border>
             
