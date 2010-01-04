@@ -16,6 +16,7 @@ using System;
 using System.Reflection;
 using SingerDispatch.Windows;
 using SingerDispatch.Panels.Admin;
+using System.Windows.Input;
 
 namespace SingerDispatch
 {
@@ -31,6 +32,8 @@ namespace SingerDispatch
         public MainWindow()
         {
             InitializeComponent();
+
+            //MyCommand.InputGestures.Add(new KeyGesture(Key.S, ModifierKeys.Control));
 
             try
             {
@@ -199,6 +202,24 @@ namespace SingerDispatch
             ExpandSection(expanderAdmin, typeof(AdminPanel));
         }
 
+        public void ViewInvoice(Job job)
+        {
+            if (job.Company == null)
+            {
+                return;
+            }
+
+            cmbCompanies.SelectedItem = job.Company;
+
+            ExpandSection(expanderInvoicing, typeof(JobInvoicingPanel));
+
+            ((JobInvoicingPanel)panelMainContent.Child).SelectedJob = null;
+            ((JobInvoicingPanel)panelMainContent.Child).SelectedCompany = null;
+
+            ((JobInvoicingPanel)panelMainContent.Child).SelectedCompany = job.Company;
+            ((JobInvoicingPanel)panelMainContent.Child).SelectedJob = job;
+        }
+
         public void ViewJob(Job job)
         {
             if (job.Company == null)
@@ -249,6 +270,40 @@ namespace SingerDispatch
             cmbCompanies.ItemsSource = Companies;
             cmbOperators.ItemsSource = Companies;
         }
+
+        private void FindQuote_Click(object sender, RoutedEventArgs e)
+        {
+            var window = new QuoteLocatorWindow() { Owner = this };
+            var quote = window.GetQuote();
+
+            if (quote != null)
+            {                
+                ViewQuote(quote);
+            }
+        }
+
+        private void FindJob_Click(object sender, RoutedEventArgs e)
+        {
+            var window = new JobLocatorWindow() { Owner = this };
+            var job = window.GetJob();
+
+            if (job != null)
+            {
+                ViewJob(job);
+            }
+        }
+
+        private void FindJobForInvoice_Click(object sender, RoutedEventArgs e)
+        {
+            var window = new JobLocatorWindow() { Owner = this };
+            var job = window.GetJob();
+
+            if (job != null)
+            {
+                ViewInvoice(job);
+            }
+        }
+      
 
     }
 }

@@ -16,7 +16,7 @@
                 <TextBlock Text="{Binding Path=Alias}" />
             </DataTemplate>
         </ResourceDictionary>        
-    </Window.Resources>
+    </Window.Resources>   
     <Border>
         <DockPanel>
             <Menu DockPanel.Dock="Top">
@@ -28,15 +28,13 @@
                     <MenuItem Header="_Edit Companies" Click="EditCompaniesMenuItem_Click" />
                 </MenuItem>
                 <MenuItem Header="Quotes">
-                    <MenuItem Header="_Find quote" />
+                    <MenuItem Header="_Find quote" Click="FindQuote_Click" InputGestureText="Ctrl+Q" />
                 </MenuItem>
                 <MenuItem Header="Jobs">
-                    <MenuItem Header="_Find job" />
-                    <MenuItem Header="_Find load" />
+                    <MenuItem Header="_Find job" Click="FindJob_Click" InputGestureText="Ctrl+J" />                    
                 </MenuItem>
                 <MenuItem Header="Invoicing">
-                    <MenuItem Header="_Find job" />
-                    <MenuItem Header="_Find load" />
+                    <MenuItem Header="_Find job" Click="FindJobForInvoice" InputGestureText="Ctrl+I" />
                 </MenuItem>
             </Menu>
 

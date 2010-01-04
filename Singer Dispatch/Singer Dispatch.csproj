@@ -44,6 +44,7 @@
     </Reference>
     <Reference Include="System.DirectoryServices" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Xml" />
     <Reference Include="UIAutomationProvider">
       <RequiredTargetFramework>3.0</RequiredTargetFramework>
@@ -186,6 +187,12 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>SingerDispatch.dbml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\JobLocatorWindow.xaml.cs">
+      <DependentUpon>JobLocatorWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\QuoteLocatorWindow.xaml.cs">
+      <DependentUpon>QuoteLocatorWindow.xaml</DependentUpon>
     </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -336,6 +343,14 @@
     <Page Include="SingerDispatchDictionary.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Windows\JobLocatorWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\QuoteLocatorWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>

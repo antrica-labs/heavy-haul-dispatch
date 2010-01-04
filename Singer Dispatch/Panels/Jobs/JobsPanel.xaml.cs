@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using SingerDispatch.Database;
 
 namespace SingerDispatch.Panels.Jobs
 {
@@ -9,9 +10,13 @@ namespace SingerDispatch.Panels.Jobs
     /// </summary>
     public partial class JobsPanel : JobUserControl
     {
+        public SingerDispatchDataContext Database { get; set; }
+
         public JobsPanel()
         {
             InitializeComponent();
+
+            Database = SingerConstants.CommonDataContext;
         }
 
         protected override void SelectedCompanyChanged(Company newValue, Company oldValue)
@@ -27,28 +32,18 @@ namespace SingerDispatch.Panels.Jobs
             base.SelectedJobChanged(newValue, oldValue);
         }
 
-        private void btnCommitChanges_Click(object sender, RoutedEventArgs e)
+        private void CommitJobChanges_Click(object sender, RoutedEventArgs e)
         {
-            if (SelectedJob == null)
-            {
-                return;
-            }
-            
+            if (SelectedJob == null) return;
+
             if (SelectedJob.ID == 0)
             {
-                try
-                {
-                    SelectedJob.Number = (from j in SingerConstants.CommonDataContext.Jobs select j.Number).Max() + 1;
-                }
-                catch
-                {
-                    SelectedJob.Number = 1;
-                }
-
-                SingerConstants.CommonDataContext.Jobs.InsertOnSubmit(SelectedJob);
+                EntityHelper.SaveAsNewJob(SelectedJob, Database);
             }
-
-            SingerConstants.CommonDataContext.SubmitChanges();
+            else
+            {
+                Database.SubmitChanges();
+            }
         }
     }
 }

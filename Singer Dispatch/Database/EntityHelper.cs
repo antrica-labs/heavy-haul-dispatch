@@ -71,9 +71,37 @@ namespace SingerDispatch.Database
                 {
                     context.Permits.DeleteOnSubmit(p);
                 }
+            }         
+        }
+
+        public static void SaveAsNewQuote(Quote quote, SingerDispatchDataContext context)
+        {
+            quote.Revision = 0;
+
+            try
+            {
+                quote.Number = (from q in context.Quotes select q.Number).Max() + 1;
+            }
+            catch
+            {
+                quote.Number = 1;
             }
 
-            
+            context.SubmitChanges();
+        }
+
+        public static void SaveAsNewJob(Job job, SingerDispatchDataContext context)
+        {
+            try
+            {
+                job.Number = (from j in context.Jobs select j.Number).Max() + 1;
+            }
+            catch
+            {
+                job.Number = 1;
+            }
+
+            context.SubmitChanges();
         }
     }
 }

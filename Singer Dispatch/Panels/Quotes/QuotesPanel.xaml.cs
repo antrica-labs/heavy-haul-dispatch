@@ -1,7 +1,9 @@
 ﻿using System.Windows.Controls;
 using System.Linq;
+using System.Transactions;
 using System.Windows;
 using System.ComponentModel;
+using SingerDispatch.Database;
 
 namespace SingerDispatch.Panels.Quotes
 {
@@ -10,13 +12,13 @@ namespace SingerDispatch.Panels.Quotes
     /// </summary>
     public partial class QuotesPanel : QuoteUserControl
     {
-        private SingerDispatchDataContext database;
+        private SingerDispatchDataContext Database { get; set; }
 
         public QuotesPanel()
         {
             InitializeComponent();
 
-            database = SingerConstants.CommonDataContext;
+            Database = SingerConstants.CommonDataContext;
         }
 
         protected override void SelectedCompanyChanged(Company newValue, Company oldValue)
@@ -36,7 +38,7 @@ namespace SingerDispatch.Panels.Quotes
             Tabs.SelectedIndex = 0;
         }
       
-        private void btnDiscardChanges_Click(object sender, RoutedEventArgs e)
+        private void DiscardQuoteChanges_Click(object sender, RoutedEventArgs e)
         {
             MessageBoxResult confirmation = MessageBox.Show("Are you sure you want to discard all changes made to this quote?", "Discard confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
@@ -46,36 +48,19 @@ namespace SingerDispatch.Panels.Quotes
             Tabs.SelectedIndex = 0;
         }
 
-        private void btnCommitChanges_Click(object sender, RoutedEventArgs e)
+        private void CommitQuoteChanges_Click(object sender, RoutedEventArgs e)
         {
             if (SelectedQuote == null) return;
-
-            // If this is a brand new quote, generate a quote number for it
-            if (SelectedQuote.Number == 0)
-            {
-                try
-                {
-                    SelectedQuote.Number = (from q in database.Quotes select q.Number).Max() + 1;
-                }
-                catch
-                {
-                    SelectedQuote.Number = 1;
-                }
-
-                SelectedQuote.Revision = 0;
-            }
-
+            
+            // Check if this quote is new and not yet in the database
             if (SelectedQuote.ID == 0)
             {
-                if (SelectedQuote.Revision > 0)
-                {
-                    SelectedQuote.Revision = (from q in database.Quotes where q.Number == SelectedQuote.Number select q.Revision).Max() + 1;
-                }
-
-                database.Quotes.InsertOnSubmit(SelectedQuote);
+                EntityHelper.SaveAsNewQuote(SelectedQuote, Database);
             }
-                 
-            database.SubmitChanges();
+            else
+            {
+                Database.SubmitChanges();
+            }
         }
     }
 }
