@@ -250,6 +250,14 @@ namespace SingerDispatch
 
     partial class Job
     {
+        partial void OnCreated()
+        {
+            if (GSTExempt == null)
+            {
+                GSTExempt = false;
+            }
+        }
+
         public Job Duplicate()
         {
             var cp = new Job();

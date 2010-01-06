@@ -79,7 +79,7 @@ namespace SingerDispatch.Panels.Quotes
         private void NewQuote_Click(object sender, RoutedEventArgs e)
         {
             var quote = new Quote { Company = SelectedCompany, Number = 0, Revision = 0, CreationDate = DateTime.Today, ExpirationDate = DateTime.Today.AddDays(30) };
-                                    
+
             ((ObservableCollection<Quote>)dgQuotes.ItemsSource).Insert(0, quote);                        
             dgQuotes.SelectedItem = quote;
 

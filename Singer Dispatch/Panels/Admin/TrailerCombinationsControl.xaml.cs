@@ -12,6 +12,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Collections.ObjectModel;
+using SingerDispatch.Controls;
 
 namespace SingerDispatch.Panels.Admin
 {
@@ -57,6 +58,8 @@ namespace SingerDispatch.Panels.Admin
             Database.TrailerCombinations.InsertOnSubmit(tc);
             ((ObservableCollection<TrailerCombination>)dgCombinations.ItemsSource).Insert(0, tc);
             dgCombinations.SelectedItem = tc;
+
+            DataGridHelper.GetCell(dgCombinations, dgCombinations.SelectedIndex, 0).Focus();
         }
 
         private void RemoveCombination_Click(object sender, RoutedEventArgs e)

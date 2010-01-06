@@ -23,7 +23,7 @@
                 </Grid.ColumnDefinitions>
                 
                 <StackPanel Grid.Column="0" Orientation="Horizontal">
-                    <Label>Selected job:</Label>
+                    <Label>Selected job #:</Label>
                     <Label Content="{Binding Number}" FontWeight="Bold" />
                 </StackPanel>
                 

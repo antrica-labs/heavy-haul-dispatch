@@ -13,7 +13,7 @@
         </ResourceDictionary>
     </UserControl.Resources>
     <StackPanel>
-        <Border Background="LightGoldenrodYellow" BorderBrush="LightGray" BorderThickness="1" Margin="0,0,0,5">
+        <Border Background="LightGoldenrodYellow" BorderBrush="LightGray" BorderThickness="1" Margin="0,0,0,5" DataContext="{Binding SelectedJob}">
             <Grid Margin="5,3">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
@@ -23,11 +23,11 @@
                 </Grid.ColumnDefinitions>
 
                 <StackPanel Grid.Column="0" Orientation="Horizontal">
-                    <Label>Selected job:</Label>
+                    <Label>Selected job #:</Label>
                     <Label Content="{Binding Number}" FontWeight="Bold" />
                 </StackPanel>
 
-                <Button Style="{StaticResource HorizontalEnd}" Name="btnCommitJobChanges" Grid.Column="3" Click="btnCommitJobChanges_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=jobPricingPanel, Path=SelectedJob}">Save changes</Button>
+                <Button Style="{StaticResource HorizontalEnd}" Grid.Column="3" Click="CommitJobChanges_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=jobsPanel, Path=SelectedJob}">Save changes</Button>
             </Grid>
         </Border>
 

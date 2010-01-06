@@ -4811,6 +4811,14 @@ namespace SingerDispatch
 		
 		private System.Nullable<System.DateTime> _EndDate;
 		
+		private string _InvoiceComment;
+		
+		private System.Nullable<int> _Hours;
+		
+		private System.Nullable<decimal> _HourlyPrice;
+		
+		private System.Nullable<bool> _GSTExempt;
+		
 		private EntitySet<JobCommodity> _JobCommodities;
 		
 		private EntitySet<Load> _Loads;
@@ -4855,6 +4863,14 @@ namespace SingerDispatch
     partial void OnStartDateChanged();
     partial void OnEndDateChanging(System.Nullable<System.DateTime> value);
     partial void OnEndDateChanged();
+    partial void OnInvoiceCommentChanging(string value);
+    partial void OnInvoiceCommentChanged();
+    partial void OnHoursChanging(System.Nullable<int> value);
+    partial void OnHoursChanged();
+    partial void OnHourlyPriceChanging(System.Nullable<decimal> value);
+    partial void OnHourlyPriceChanged();
+    partial void OnGSTExemptChanging(System.Nullable<bool> value);
+    partial void OnGSTExemptChanged();
     #endregion
 		
 		public Job()
@@ -5088,6 +5104,86 @@ namespace SingerDispatch
 					this._EndDate = value;
 					this.SendPropertyChanged("EndDate");
 					this.OnEndDateChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_InvoiceComment")]
+		public string InvoiceComment
+		{
+			get
+			{
+				return this._InvoiceComment;
+			}
+			set
+			{
+				if ((this._InvoiceComment != value))
+				{
+					this.OnInvoiceCommentChanging(value);
+					this.SendPropertyChanging();
+					this._InvoiceComment = value;
+					this.SendPropertyChanged("InvoiceComment");
+					this.OnInvoiceCommentChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_Hours")]
+		public System.Nullable<int> Hours
+		{
+			get
+			{
+				return this._Hours;
+			}
+			set
+			{
+				if ((this._Hours != value))
+				{
+					this.OnHoursChanging(value);
+					this.SendPropertyChanging();
+					this._Hours = value;
+					this.SendPropertyChanged("Hours");
+					this.OnHoursChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_HourlyPrice")]
+		public System.Nullable<decimal> HourlyPrice
+		{
+			get
+			{
+				return this._HourlyPrice;
+			}
+			set
+			{
+				if ((this._HourlyPrice != value))
+				{
+					this.OnHourlyPriceChanging(value);
+					this.SendPropertyChanging();
+					this._HourlyPrice = value;
+					this.SendPropertyChanged("HourlyPrice");
+					this.OnHourlyPriceChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_GSTExempt")]
+		public System.Nullable<bool> GSTExempt
+		{
+			get
+			{
+				return this._GSTExempt;
+			}
+			set
+			{
+				if ((this._GSTExempt != value))
+				{
+					this.OnGSTExemptChanging(value);
+					this.SendPropertyChanging();
+					this._GSTExempt = value;
+					this.SendPropertyChanged("GSTExempt");
+					this.OnGSTExemptChanged();
 				}
 			}
 		}

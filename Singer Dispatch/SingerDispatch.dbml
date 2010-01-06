@@ -213,6 +213,10 @@
       <Column Name="Description" Type="System.String" CanBeNull="true" />
       <Column Name="StartDate" Type="System.DateTime" CanBeNull="true" />
       <Column Name="EndDate" Type="System.DateTime" CanBeNull="true" />
+      <Column Name="InvoiceComment" Type="System.String" CanBeNull="true" />
+      <Column Name="Hours" Type="System.Int32" CanBeNull="true" />
+      <Column Name="HourlyPrice" Type="System.Decimal" CanBeNull="true" />
+      <Column Name="GSTExempt" Type="System.Boolean" CanBeNull="true" />
       <Association Name="Job_JobCommodity" Member="JobCommodities" ThisKey="ID" OtherKey="JobID" Type="JobCommodity" />
       <Association Name="Job_Load" Member="Loads" ThisKey="ID" OtherKey="JobID" Type="Load" />
       <Association Name="Job_Permit" Member="Permits" ThisKey="ID" OtherKey="JobID" Type="Permit" />
@@ -231,7 +235,7 @@
       <Column Name="Name" Type="System.String" CanBeNull="true" />
       <Association Name="JobStatusType_Job" Member="Jobs" ThisKey="ID" OtherKey="StatusTypeID" Type="Job" />
     </Type>
-  </Table>
+  </Table>  
   <Table Name="" Member="Loads">
     <Type Name="Load">
       <Column Name="ID" Type="System.Int64" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />

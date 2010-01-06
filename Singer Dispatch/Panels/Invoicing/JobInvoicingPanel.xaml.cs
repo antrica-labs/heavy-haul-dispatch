@@ -17,6 +17,7 @@ namespace SingerDispatch.Panels.Invoicing
             base.SelectedCompanyChanged(newValue, oldValue);
 
             Tabs.SelectedIndex = 0;
+            SelectedJob = null;
             IsEnabled = newValue != null;
         }
 
@@ -27,7 +28,7 @@ namespace SingerDispatch.Panels.Invoicing
             Tabs.SelectedIndex = 0;
         }
 
-        private void btnCommitJobChanges_Click(object sender, RoutedEventArgs e)
+        private void CommitJobChanges_Click(object sender, RoutedEventArgs e)
         {
             SingerConstants.CommonDataContext.SubmitChanges();
         }

@@ -13,11 +13,11 @@
         </ResourceDictionary>
     </UserControl.Resources>
     <StackPanel>
-        <WPF:DataGrid Name="dgJobs" Style="{StaticResource ListDisplay}" Height="180" SelectedItem="{Binding ElementName=jobPriceControl, Path=SelectedJob}">
+        <WPF:DataGrid Name="dgJobs" Style="{StaticResource ListDisplay}" Height="180" SelectedItem="{Binding SelectedJob}">
             <WPF:DataGrid.Columns>
-                <WPF:DataGridTextColumn Header="Number" Width="60" Binding="{Binding Number}"/>
-                <WPF:DataGridTextColumn Header="Quote" Width="60" Binding="{Binding Quote.Number}" />
-                <WPF:DataGridTextColumn Header="Revision" Width="60" Binding="{Binding Quote.Revision}" />
+                <WPF:DataGridTextColumn Header="Number" Width="0.15*" Binding="{Binding Number}"/>
+                <WPF:DataGridTextColumn Header="Quote" Width="0.15*" Binding="{Binding Quote.FriendlyName}" />
+                <WPF:DataGridTextColumn Header="Status" Width="0.2*" Binding="{Binding JobStatusType.Name}" />
                 <WPF:DataGridTextColumn Header="Description" Binding="{Binding Description}" />
             </WPF:DataGrid.Columns>
         </WPF:DataGrid>
@@ -46,17 +46,17 @@
                             <TextBox Grid.Row="1" Grid.Column="0" IsReadOnly="True" Text="{Binding Number}" />
 
                             <Label Grid.Row="0" Grid.Column="1">Quote #:</Label>
-                            <ComboBox Name="cmbQuotes" Grid.Row="1" Grid.Column="1" SelectedItem="{Binding Quote}" ItemTemplate="{StaticResource QuoteNameTemplate}" />
+                            <TextBox Grid.Row="1" Grid.Column="1" IsReadOnly="True" Text="{Binding Quote.FriendlyNumber}" />                            
 
                             <Label Grid.Row="0" Grid.Column="2">Author:</Label>
-                            <ComboBox Name="cmbCreatedBy" Grid.Row="1" Grid.Column="2" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectedItem="{Binding User}" TextSearch.TextPath="Name"></ComboBox>
+                            <TextBox Grid.Row="1" Grid.Column="2" IsReadOnly="True" Text="{Binding Employee.FirstName}" />                            
                         </Grid>
 
                         <Label>Care of:</Label>
-                        <ComboBox Name="cmbCareOfCompanies" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectedItem="{Binding CareOfCompany}" TextSearch.TextPath="Name" IsEditable="True" />
+                        <TextBox IsReadOnly="True" Text="{Binding CareOfCompany.Name}" />
 
                         <Label>Project description</Label>
-                        <TextBox Height="40" Style="{StaticResource MultiLine}" VerticalScrollBarVisibility="Disabled" Text="{Binding Description}"/>
+                        <TextBox Height="40" Style="{StaticResource MultiLine}" VerticalScrollBarVisibility="Disabled" IsReadOnly="True" Text="{Binding Description}"/>
                     </StackPanel>
                 </GroupBox>
                 
@@ -73,13 +73,13 @@
                         </Grid.RowDefinitions>
 
                         <Label Grid.Row="0" Grid.Column="0">Start date:</Label>
-                        <WPF:DatePicker Name="dpStartDate" Grid.Row="1" Grid.Column="0" SelectedDate="{Binding CreationDate}" />
-
+                        <TextBox Grid.Row="1" Grid.Column="0" IsReadOnly="True" Text="{Binding StartDate}" />
+                        
                         <Label Grid.Row="0" Grid.Column="1">End date:</Label>
-                        <WPF:DatePicker Name="dpEndDate" Grid.Row="1" Grid.Column="1" SelectedDate="{Binding ExpirationDate}" />
+                        <TextBox Grid.Row="1" Grid.Column="1" IsReadOnly="True" Text="{Binding EndDate}" />                        
 
                         <Label Grid.Row="0" Grid.Column="2">Status</Label>
-                        <ComboBox Name="cmbStausTypes" Grid.Row="1" Grid.Column="2" SelectedItem="{Binding StatusType}" ItemTemplate="{StaticResource SimpleNameTemplate}" />
+                        <TextBox Grid.Row="1" Grid.Column="2" IsReadOnly="True" Text="{Binding JobStatusType.Name}" />                        
                     </Grid>
                 </GroupBox>
                 
@@ -101,15 +101,15 @@
                             </Grid.RowDefinitions>
                             
                             <Label Grid.Column="0" Grid.Row="0">Hours:</Label>
-                            <TextBox Grid.Column="0" Grid.Row="1"></TextBox>
+                            <TextBox Grid.Column="0" Grid.Row="1" Text="{Binding Hours}"  />
                             
                             <Label Grid.Column="1" Grid.Row="0">Hourly price:</Label>
-                            <TextBox Grid.Column="1" Grid.Row="1"></TextBox>
+                            <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding HourlyPrice}" />
                             
                             <Label Grid.Column="2" Grid.Row="0">Load load price:</Label>
-                            <TextBox Grid.Column="2" Grid.Row="1"></TextBox>
+                            <TextBox Grid.Column="2" Grid.Row="1" />
                             
-                            <CheckBox Grid.Column="3" Grid.Row="1">GST exempt</CheckBox>
+                            <CheckBox Grid.Column="3" Grid.Row="1" IsChecked="{Binding GSTExempt}">GST exempt</CheckBox>
                         </Grid>
 
                         <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
@@ -125,7 +125,7 @@
             <StackPanel Grid.Column="1" Margin="2" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgJobs, Path=SelectedItem}">
                 <GroupBox Header="Customer Details" DataContext="{Binding ElementName=dgJobs, Path=SelectedItem}" Margin="0,0,0,5">
                     <StackPanel>
-                        <WPF:DataGrid Name="dgCustomerDetails" Style="{StaticResource ListDisplay}" Height="100">
+                        <WPF:DataGrid Name="dgCustomerDetails" Style="{StaticResource ListDisplay}" IsReadOnly="False" Height="100" RowEditEnding="dgCustomerDetails_RowEditEnding">
                             <WPF:DataGrid.Columns>
                                 <WPF:DataGridTextColumn Header="Field" Binding="{Binding Field}" />
                                 <WPF:DataGridTextColumn Header="Number" Binding="{Binding Value}" />
@@ -137,9 +137,9 @@
                                 <ColumnDefinition />
                                 <ColumnDefinition />
                             </Grid.ColumnDefinitions>
-                            
-                            <Button Style="{StaticResource Horizontal}" Name="btnNewCustomerDetail" Grid.Column="0" Click="btnNewCustomerDetail_Click">Add</Button>
-                            <Button Style="{StaticResource HorizontalEnd}" Name="btnRemoveCustomerDetail" Grid.Column="1" Click="btnRemoveCustomerDetail_Click">Remove</Button>
+                                     
+                            <Button Style="{StaticResource Horizontal}" Grid.Column="0" Click="NewCustomerDetail_Click">Add</Button>
+                            <Button Style="{StaticResource HorizontalEnd}" Grid.Column="1" Click="RemoveCustomerDetail_Click">Remove</Button>
                         </Grid>
                     </StackPanel>
                 </GroupBox>                

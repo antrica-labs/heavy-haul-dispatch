@@ -13,6 +13,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Collections.ObjectModel;
 using Microsoft.Windows.Controls;
+using SingerDispatch.Controls;
 
 namespace SingerDispatch.Panels.Admin
 {
@@ -57,6 +58,8 @@ namespace SingerDispatch.Panels.Admin
             Database.Rates.InsertOnSubmit(rate);
             ((ObservableCollection<Rate>)dgRates.ItemsSource).Insert(0, rate);
             dgRates.SelectedItem = rate;
+
+            DataGridHelper.GetCell(dgRates, dgRates.SelectedIndex, 0);
         }
 
         private void RemoveRate_Click(object sender, RoutedEventArgs e)
