@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{99EACA99-A03B-470C-982E-0F96D7547361}</ProjectGuid>
+    <ProjectGuid>{3312EABC-7BD9-4C66-B926-63B2C288B3CA}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>SingerDispatch</RootNamespace>
@@ -14,10 +14,11 @@
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
-    <ApplicationIcon>Logo.ico</ApplicationIcon>
     <ApplicationManifest>app.manifest</ApplicationManifest>
+    <ApplicationIcon>Logo.ico</ApplicationIcon>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -26,7 +27,8 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -36,56 +38,31 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="System.Core">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="System.Data.Linq">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="System.DirectoryServices" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Transactions" />
+    <Reference Include="System.Data.Linq" />
+    <Reference Include="System.DirectoryServices" />
     <Reference Include="System.Xml" />
-    <Reference Include="UIAutomationProvider">
-      <RequiredTargetFramework>3.0</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="WindowsBase">
-      <RequiredTargetFramework>3.0</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="PresentationCore">
-      <RequiredTargetFramework>3.0</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="PresentationFramework">
-      <RequiredTargetFramework>3.0</RequiredTargetFramework>
-    </Reference>
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="WPFToolkit, Version=3.5.40128.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App.xaml.cs">
-      <DependentUpon>App.xaml</DependentUpon>
-    </Compile>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
     <Compile Include="Controls\CustomCommands.cs" />
     <Compile Include="Controls\DataGridHelper.cs" />
     <Compile Include="Controls\IsEnabledNullConverter.cs" />
     <Compile Include="Controls\QuoteFriendlyNameConverter.cs" />
     <Compile Include="Controls\TabIndexHyperlink.cs" />
-    <Compile Include="Windows\CreateCompanyWindow.xaml.cs">
-      <DependentUpon>CreateCompanyWindow.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Database\DatabaseBuilder.cs" />
     <Compile Include="Database\EntityHelper.cs" />
-    <Compile Include="Windows\DocumentViewer.xaml.cs">
-      <DependentUpon>DocumentViewer.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Windows\EditCompaniesWindow.xaml.cs">
-      <DependentUpon>EditCompaniesWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Windows\ErrorNoticeWindow.xaml.cs">
-      <DependentUpon>ErrorNoticeWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Panels\Admin\AdminPanel.xaml.cs">
       <DependentUpon>AdminPanel.xaml</DependentUpon>
     </Compile>
@@ -117,6 +94,15 @@
       <DependentUpon>ServicesControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Panels\CompanyUserControl.cs" />
+    <Compile Include="Panels\Invoicing\JobInvoicingControl.xaml.cs">
+      <DependentUpon>JobInvoicingControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Panels\Invoicing\JobInvoicingPanel.xaml.cs">
+      <DependentUpon>JobInvoicingPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Panels\Invoicing\LoadInvoicingControl.xaml.cs">
+      <DependentUpon>LoadInvoicingControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Panels\Jobs\DispatchesControl.xaml.cs">
       <DependentUpon>DispatchesControl.xaml</DependentUpon>
     </Compile>
@@ -139,15 +125,6 @@
       <DependentUpon>ThirdPartyServicesControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Panels\JobUserControl.cs" />
-    <Compile Include="Panels\Invoicing\JobInvoicingControl.xaml.cs">
-      <DependentUpon>JobInvoicingControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Panels\Invoicing\JobInvoicingPanel.xaml.cs">
-      <DependentUpon>JobInvoicingPanel.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Panels\Invoicing\LoadInvoicingControl.xaml.cs">
-      <DependentUpon>LoadInvoicingControl.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Panels\Quotes\QuoteCommoditiesControl.xaml.cs">
       <DependentUpon>QuoteCommoditiesControl.xaml</DependentUpon>
     </Compile>
@@ -163,23 +140,9 @@
     <Compile Include="Panels\Quotes\StorageControl.xaml.cs">
       <DependentUpon>StorageControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Printing\QuoteUserControl.cs" />
-    <Compile Include="Permissions\AuthenticationService.cs" />
+    <Compile Include="Panels\QuoteUserControl.cs" />
     <Compile Include="Printing\DispatchRenderer.cs" />
     <Compile Include="Printing\QuoteRenderer.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-    </Compile>
     <Compile Include="Security\AuthenticationService.cs" />
     <Compile Include="SingerConstants.cs" />
     <Compile Include="SingerDispatch.cs">
@@ -190,58 +153,36 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>SingerDispatch.dbml</DependentUpon>
     </Compile>
+    <Compile Include="Windows\CreateCompanyWindow.xaml.cs">
+      <DependentUpon>CreateCompanyWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\DocumentViewer.xaml.cs">
+      <DependentUpon>DocumentViewer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\EditCompaniesWindow.xaml.cs">
+      <DependentUpon>EditCompaniesWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\ErrorNoticeWindow.xaml.cs">
+      <DependentUpon>ErrorNoticeWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\JobLocatorWindow.xaml.cs">
       <DependentUpon>JobLocatorWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\QuoteLocatorWindow.xaml.cs">
       <DependentUpon>QuoteLocatorWindow.xaml</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <None Include="app.config" />
-    <None Include="app.manifest" />
-    <None Include="app.sample.config" />
-    <None Include="SingerDispatch.dbml.layout">
-      <DependentUpon>SingerDispatch.dbml</DependentUpon>
-    </None>
-    <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
-    <None Include="SingerDispatch.dbml">
-      <Generator>MSLinqToSQLGenerator</Generator>
-      <LastGenOutput>SingerDispatch.designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </None>
-    <AppDesigner Include="Properties\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ApplicationDefinition Include="App.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </ApplicationDefinition>
-    <Page Include="Windows\CreateCompanyWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Windows\DocumentViewer.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Windows\EditCompaniesWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Windows\ErrorNoticeWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
     <Page Include="Panels\Admin\AdminPanel.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -264,96 +205,127 @@
     </Page>
     <Page Include="Panels\Companies\AddressesAndContactsControl.xaml">
       <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
     <Page Include="Panels\Companies\CommoditiesControl.xaml">
       <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
     <Page Include="Panels\Companies\CompaniesPanel.xaml">
       <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
     <Page Include="Panels\Companies\CreditAndRatesControl.xaml">
       <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
     <Page Include="Panels\Companies\ServicesControl.xaml">
       <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Panels\Jobs\DispatchesControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Panels\Jobs\JobCommoditiesControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Panels\Jobs\JobHistoryControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Panels\Jobs\JobsPanel.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Panels\Jobs\LoadsControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Panels\Jobs\PermitsControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Panels\Jobs\ThirdPartyServicesControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
     <Page Include="Panels\Invoicing\JobInvoicingControl.xaml">
       <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
     <Page Include="Panels\Invoicing\JobInvoicingPanel.xaml">
       <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
     <Page Include="Panels\Invoicing\LoadInvoicingControl.xaml">
-      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Panels\Jobs\DispatchesControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Panels\Jobs\JobCommoditiesControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Panels\Jobs\JobHistoryControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Panels\Jobs\JobsPanel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Panels\Jobs\LoadsControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Panels\Jobs\PermitsControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Panels\Jobs\ThirdPartyServicesControl.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Panels\Quotes\QuoteCommoditiesControl.xaml">
       <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
     <Page Include="Panels\Quotes\QuoteHistoryControl.xaml">
       <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
     <Page Include="Panels\Quotes\QuotesPanel.xaml">
       <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
     <Page Include="Panels\Quotes\QuoteSupplementsControl.xaml">
       <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
     <Page Include="Panels\Quotes\StorageControl.xaml">
-      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="SingerDispatchDictionary.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Windows\JobLocatorWindow.xaml">
-      <SubType>Designer</SubType>
+    <Page Include="Windows\CreateCompanyWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Windows\DocumentViewer.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Windows\EditCompaniesWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Windows\ErrorNoticeWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Windows\JobLocatorWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Windows\QuoteLocatorWindow.xaml">
-      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="app.config" />
+    <None Include="app.manifest" />
+    <None Include="app.sample.config" />
+    <None Include="SingerDispatch.dbml.layout">
+      <DependentUpon>SingerDispatch.dbml</DependentUpon>
+    </None>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <AppDesigner Include="Properties\" />
+    <None Include="SingerDispatch.dbml">
+      <Generator>MSLinqToSQLGenerator</Generator>
+      <LastGenOutput>SingerDispatch.designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />

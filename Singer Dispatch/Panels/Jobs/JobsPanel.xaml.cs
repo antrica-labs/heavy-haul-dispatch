@@ -1,6 +1,4 @@
-﻿using System.Linq;
-using System.Windows;
-using System.Windows.Controls;
+﻿using System.Windows;
 using SingerDispatch.Database;
 
 namespace SingerDispatch.Panels.Jobs

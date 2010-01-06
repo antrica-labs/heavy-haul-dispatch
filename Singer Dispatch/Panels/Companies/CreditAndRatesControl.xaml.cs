@@ -1,6 +1,5 @@
 ﻿using System.Windows;
 using System.Linq;
-using System.Collections.ObjectModel;
 using System.Collections.Generic;
 
 namespace SingerDispatch.Panels.Companies

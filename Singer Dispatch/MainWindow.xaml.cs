@@ -116,7 +116,7 @@ namespace SingerDispatch
         }
 
         private void Terminate_Click(object sender, RoutedEventArgs e)
-        {
+        {            
             Application.Current.Shutdown();
         }
 

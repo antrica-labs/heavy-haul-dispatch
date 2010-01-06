@@ -1,5 +1,14 @@
 namespace SingerDispatch
 {
+    partial class SingerDispatchDataContext
+    {
+        public SingerDispatchDataContext() :
+            base(System.Configuration.ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString)
+        {
+            OnCreated();
+        }
+    }
+
     partial class Company
     {
         partial void OnCreated()
@@ -10,7 +19,7 @@ namespace SingerDispatch
             }
 
             if (EquifaxComplete == null)
-            {                
+            {
                 EquifaxComplete = false;
             }
         }
@@ -35,7 +44,7 @@ namespace SingerDispatch
         }
 
     }
-        
+
     partial class Contact
     {
         public string Name
@@ -85,15 +94,15 @@ namespace SingerDispatch
         {
             var copy = new Quote();
 
-            copy.Company = Company;            
+            copy.Company = Company;
             copy.Company = Company;
             copy.Number = Number;
             copy.Revision = Revision;
-            copy.CareOfCompany = CareOfCompany;            
+            copy.CareOfCompany = CareOfCompany;
             copy.CareOfCompany = CareOfCompany;
             copy.Description = Description;
             copy.CreationDate = CreationDate;
-            copy.ExpirationDate = ExpirationDate;            
+            copy.ExpirationDate = ExpirationDate;
             copy.Employee = Employee;
             copy.Price = Price;
 
@@ -156,7 +165,7 @@ namespace SingerDispatch
         public QuoteCommodity Duplicate()
         {
             var copy = new QuoteCommodity();
-                        
+
             copy.OriginalCommodity = OriginalCommodity;
             copy.DepartureSiteName = DepartureSiteName;
             copy.DepartureAddress = DepartureAddress;
@@ -184,7 +193,7 @@ namespace SingerDispatch
         public JobCommodity ToJobCommodity()
         {
             var jc = new JobCommodity();
-                        
+
             jc.OriginalCommodity = OriginalCommodity;
             jc.Name = Name;
             jc.Value = Value;
@@ -215,7 +224,7 @@ namespace SingerDispatch
         public QuoteSupplement Duplicate()
         {
             var copy = new QuoteSupplement();
-                        
+
             copy.Name = Name;
             copy.Details = Details;
             copy.BillingType = BillingType;
@@ -226,12 +235,12 @@ namespace SingerDispatch
         }
     }
 
-    partial class StorageItem 
+    partial class StorageItem
     {
         public StorageItem Duplicate()
         {
             var copy = new StorageItem();
-                        
+
             copy.Details = Details;
             copy.Commodity = Commodity;
             copy.BillingType = BillingType;
@@ -293,9 +302,9 @@ namespace SingerDispatch
         public JobCommodity Duplicate()
         {
             var copy = new JobCommodity();
-                        
+
             copy.Load = Load;
-            copy.OriginalCommodity = OriginalCommodity;            
+            copy.OriginalCommodity = OriginalCommodity;
             copy.Name = Name;
             copy.Value = Value;
             copy.Serial = Serial;
@@ -313,14 +322,14 @@ namespace SingerDispatch
             copy.LoadSiteName = LoadSiteName;
             copy.LoadAddress = LoadAddress;
             copy.LoadBy = LoadBy;
-            copy.LoadMethod = LoadMethod;            
+            copy.LoadMethod = LoadMethod;
             copy.LoadDate = LoadDate;
             copy.LoadInstructions = LoadInstructions;
             copy.LoadRoute = LoadRoute;
             copy.UnloadSiteName = UnloadSiteName;
             copy.UnloadAddress = UnloadAddress;
             copy.UnloadBy = UnloadBy;
-            copy.UnloadMethod = UnloadMethod;            
+            copy.UnloadMethod = UnloadMethod;
             copy.UnloadDate = UnloadDate;
             copy.UnloadInstructions = UnloadInstructions;
             copy.UnloadRoute = UnloadRoute;
@@ -337,8 +346,8 @@ namespace SingerDispatch
             var copy = new ThirdPartyService();
 
             copy.Load = Load;
-            copy.Company = Company;            
-            copy.ServiceType = ServiceType;            
+            copy.Company = Company;
+            copy.ServiceType = ServiceType;
             copy.Contact = Contact;
             copy.ServiceDate = ServiceDate;
             copy.ServiceTime = ServiceTime;
@@ -355,10 +364,10 @@ namespace SingerDispatch
         public Permit Duplicate()
         {
             var cp = new Permit();
-                        
+
             cp.Load = Load;
             cp.Issuer = Issuer;
-            cp.PermitType = PermitType;            
+            cp.PermitType = PermitType;
             cp.Conditions = Conditions;
             cp.Cost = Cost;
             cp.PermitDate = PermitDate;
@@ -376,10 +385,10 @@ namespace SingerDispatch
 
             cp.Load = Load;
             cp.Employee = Employee;
-            cp.Equipment = Equipment;            
+            cp.Equipment = Equipment;
             cp.Description = Description;
             cp.Notes = Notes;
-            cp.Rate = Rate;            
+            cp.Rate = Rate;
 
             return cp;
         }
@@ -389,7 +398,7 @@ namespace SingerDispatch
     {
         partial void OnCreated()
         {
- 	        if (WeightEstimated == null)
+            if (WeightEstimated == null)
             {
                 WeightEstimated = false;
             }
@@ -401,7 +410,7 @@ namespace SingerDispatch
 
             cp.Equipment = Equipment;
             cp.Rate = Rate;
-            cp.Season = Season;            
+            cp.Season = Season;
             cp.TrailerCombination = TrailerCombination;
             cp.Info = Info;
             cp.StartDate = StartDate;

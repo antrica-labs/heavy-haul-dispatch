@@ -1,8 +1,4 @@
-﻿using System.Windows.Controls;
-using System.Linq;
-using System.Transactions;
-using System.Windows;
-using System.ComponentModel;
+﻿using System.Windows;
 using SingerDispatch.Database;
 
 namespace SingerDispatch.Panels.Quotes

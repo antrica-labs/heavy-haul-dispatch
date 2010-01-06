@@ -1,5 +1,4 @@
-﻿
-namespace SingerDispatch.Panels.Companies
+﻿namespace SingerDispatch.Panels.Companies
 {
     /// <summary>
     /// Interaction logic for CompaniesPanel.xaml
