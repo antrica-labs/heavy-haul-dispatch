@@ -22,7 +22,7 @@
                     
                 </StackPanel>
 
-                <Button Style="{StaticResource Bottom}" Name="btnUpdateServices" Click="btnUpdateServices_Click">Save services</Button>
+                <Button Style="{StaticResource Bottom}" Click="UpdateServices_Click">Save services</Button>
             </StackPanel>
         </GroupBox>
     </StackPanel>

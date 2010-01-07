@@ -58,7 +58,7 @@ namespace SingerDispatch.Panels.Companies
             }
         }
 
-        private void btnUpdateServices_Click(object sender, RoutedEventArgs e)
+        private void UpdateServices_Click(object sender, RoutedEventArgs e)
         {
             if (SelectedCompany == null)
             {

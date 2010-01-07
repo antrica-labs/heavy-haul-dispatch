@@ -522,4 +522,10 @@
       <Association Name="LoadUnloadMethod_JobCommodity1" Member="UnloadedJobCommodities" ThisKey="ID" OtherKey="UnloadMethodID" Type="JobCommodity" />
     </Type>
   </Table>
+  <Table Name="" Member="Conditions">
+    <Type Name="Condition">
+      <Column Name="ID" Type="System.Int64" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Line" Type="System.String" CanBeNull="true" />
+    </Type>
+  </Table>
 </Database>

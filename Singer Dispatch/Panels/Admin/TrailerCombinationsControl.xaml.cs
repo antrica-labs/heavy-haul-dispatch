@@ -5,6 +5,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Collections.ObjectModel;
 using SingerDispatch.Controls;
+using Microsoft.Windows.Controls;
 
 namespace SingerDispatch.Panels.Admin
 {
@@ -45,38 +46,40 @@ namespace SingerDispatch.Panels.Admin
 
         private void NewCombination_Click(object sender, RoutedEventArgs e)
         {
-            var tc = new TrailerCombination();
+            var list = (ObservableCollection<TrailerCombination>)dgCombinations.ItemsSource;
+            var combination = new TrailerCombination();
 
             try
             {
-                tc.Rate = (from r in Database.Rates select r).First();
+                combination.Rate = (from r in Database.Rates select r).First();
             }
             catch
             {}
 
-            Database.TrailerCombinations.InsertOnSubmit(tc);
-            ((ObservableCollection<TrailerCombination>)dgCombinations.ItemsSource).Insert(0, tc);
-            dgCombinations.SelectedItem = tc;
+            Database.TrailerCombinations.InsertOnSubmit(combination);
+            list.Add(combination);
+            dgCombinations.SelectedItem = combination;
 
             DataGridHelper.GetCell(dgCombinations, dgCombinations.SelectedIndex, 0).Focus();
         }
 
         private void RemoveCombination_Click(object sender, RoutedEventArgs e)
         {
-            var tc = (TrailerCombination)dgCombinations.SelectedItem;
+            var list = (ObservableCollection<TrailerCombination>)dgCombinations.ItemsSource;
+            var combination = (TrailerCombination)dgCombinations.SelectedItem;
 
-            if (tc == null)
-                return;
+            if (combination == null) return;
 
-            Database.TrailerCombinations.DeleteOnSubmit(tc);
-            ((ObservableCollection<TrailerCombination>)dgCombinations.ItemsSource).Remove(tc);
+            Database.TrailerCombinations.DeleteOnSubmit(combination);
+            list.Remove(combination);
 
             Database.SubmitChanges();
         }
 
         private void RowEditEnding(object sender, Microsoft.Windows.Controls.DataGridRowEditEndingEventArgs e)
         {
-            Database.SubmitChanges();
+            if (e.EditAction == DataGridEditAction.Commit)
+                Database.SubmitChanges();  
         }        
     }
 

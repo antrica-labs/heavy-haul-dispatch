@@ -450,4 +450,12 @@ namespace SingerDispatch
             }
         }
     }
+
+    partial class Condition
+    {
+        public override string ToString()
+        {
+            return Line;
+        }
+    }
 }

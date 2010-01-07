@@ -66,6 +66,9 @@
     <Compile Include="Panels\Admin\AdminPanel.xaml.cs">
       <DependentUpon>AdminPanel.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Panels\Admin\ConditionsControl.xaml.cs">
+      <DependentUpon>ConditionsControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Panels\Admin\EmployeesControl.xaml.cs">
       <DependentUpon>EmployeesControl.xaml</DependentUpon>
     </Compile>
@@ -128,6 +131,9 @@
     <Compile Include="Panels\Quotes\QuoteCommoditiesControl.xaml.cs">
       <DependentUpon>QuoteCommoditiesControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Panels\Quotes\QuoteConditionsControl.xaml.cs">
+      <DependentUpon>QuoteConditionsControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Panels\Quotes\QuoteHistoryControl.xaml.cs">
       <DependentUpon>QuoteHistoryControl.xaml</DependentUpon>
     </Compile>
@@ -186,6 +192,10 @@
     <Page Include="Panels\Admin\AdminPanel.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Panels\Admin\ConditionsControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Panels\Admin\EmployeesControl.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -249,6 +259,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Panels\Quotes\QuoteCommoditiesControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Panels\Quotes\QuoteConditionsControl.xaml">
+      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Panels\Quotes\QuoteHistoryControl.xaml">

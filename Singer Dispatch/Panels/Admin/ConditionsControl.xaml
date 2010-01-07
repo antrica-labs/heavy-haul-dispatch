@@ -1,0 +1,34 @@
+﻿<UserControl x:Class="SingerDispatch.Panels.Admin.ConditionsControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:WPF="http://schemas.microsoft.com/wpf/2008/toolkit"
+             mc:Ignorable="d" d:DesignWidth="780"
+             Loaded="UserControl_Loaded">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/SingerDispatchDictionary.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <StackPanel>
+        <WPF:DataGrid Name="TheGrid" Style="{StaticResource ListDisplay}" Height="400" IsReadOnly="False" RowEditEnding="RowEditEnding">
+            <WPF:DataGrid.Columns>
+                <WPF:DataGridTextColumn Header="Condition" Binding="{Binding Line}" />
+            </WPF:DataGrid.Columns>
+        </WPF:DataGrid>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <Button Style="{StaticResource Horizontal}" Grid.Column="0" Click="NewCondition_Click">New condition</Button>
+            <Button Style="{StaticResource HorizontalEnd}" Grid.Column="2" Click="RemoveCondition_Click">Remove condition</Button>
+        </Grid>
+    </StackPanel>
+</UserControl>

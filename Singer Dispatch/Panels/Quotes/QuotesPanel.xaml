@@ -35,16 +35,19 @@
         
         <TabControl Name="Tabs">
             <TabItem Header="Quotes">
-                <Quotes:QuoteHistoryControl Width="Auto" Height="Auto" SelectedCompany="{Binding SelectedCompany}" SelectedQuote="{Binding SelectedQuote}" />
+                <Quotes:QuoteHistoryControl SelectedCompany="{Binding SelectedCompany}" SelectedQuote="{Binding SelectedQuote}" />
             </TabItem>
-            <TabItem Header="Commodities" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=quotesPanel, Path=SelectedQuote}">
-                <Quotes:QuoteCommoditiesControl Width="Auto" Height="Auto" SelectedCompany="{Binding SelectedCompany}" SelectedQuote="{Binding SelectedQuote}" />
+            <TabItem Header="Commodities" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, Path=SelectedQuote}">
+                <Quotes:QuoteCommoditiesControl SelectedCompany="{Binding SelectedCompany}" SelectedQuote="{Binding SelectedQuote}" />
             </TabItem>
-            <TabItem Header="Supplements" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=quotesPanel, Path=SelectedQuote}">
-                <Quotes:QuoteSupplementsControl Width="Auto" Height="Auto" SelectedCompany="{Binding SelectedCompany}" SelectedQuote="{Binding SelectedQuote}" />
+            <TabItem Header="Supplements" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, Path=SelectedQuote}">
+                <Quotes:QuoteSupplementsControl SelectedCompany="{Binding SelectedCompany}" SelectedQuote="{Binding SelectedQuote}" />
+            </TabItem>            
+            <TabItem Header="Storage Items" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, Path=SelectedQuote}">
+                <Quotes:StorageControl SelectedCompany="{Binding SelectedCompany}" SelectedQuote="{Binding SelectedQuote}" />
             </TabItem>
-            <TabItem Header="Storage Items" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=quotesPanel, Path=SelectedQuote}">
-                <Quotes:StorageControl Width="Auto" Height="Auto" SelectedCompany="{Binding SelectedCompany}" SelectedQuote="{Binding SelectedQuote}" />
+            <TabItem Header="Conditions" IsEnabled="True">
+                <Quotes:QuoteConditionsControl SelectedCompany="{Binding SelectedCompany}" SelectedQuote="{Binding SelectedQuote}" />                
             </TabItem>
         </TabControl>
     </StackPanel>

@@ -15,13 +15,16 @@
     <Grid>
         <TabControl Name="Tabs">
             <TabItem Header="Employees">
-                <Admin:EmployeesControl Width="Auto" />    
+                <Admin:EmployeesControl />    
             </TabItem>
             <TabItem Header="Equipment">
-                <Admin:EquipmentControl Width="Auto" />
+                <Admin:EquipmentControl />
+            </TabItem>
+            <TabItem Header="Conditions">
+                <Admin:ConditionsControl />
             </TabItem>
             <TabItem Header="Rates">
-                <Admin:RatesControl Width="Auto" />
+                <Admin:RatesControl />
             </TabItem>
             <TabItem Header="Trailer combinations">
                 <Admin:TrailerCombinationsControl Width="Auto" />

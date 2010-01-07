@@ -44,10 +44,11 @@ namespace SingerDispatch.Panels.Admin
 
         private void NewRate_Click(object sender, RoutedEventArgs e)
         {
+            var list = (ObservableCollection<Rate>)dgRates.ItemsSource;
             var rate = new Rate();
 
             Database.Rates.InsertOnSubmit(rate);
-            ((ObservableCollection<Rate>)dgRates.ItemsSource).Insert(0, rate);
+            list.Add(rate);
             dgRates.SelectedItem = rate;
 
             DataGridHelper.GetCell(dgRates, dgRates.SelectedIndex, 0);
@@ -55,23 +56,21 @@ namespace SingerDispatch.Panels.Admin
 
         private void RemoveRate_Click(object sender, RoutedEventArgs e)
         {
+            var list = (ObservableCollection<Rate>)dgRates.ItemsSource;
             var rate = (Rate)dgRates.SelectedItem;
 
-            if (rate == null)
-                return;
+            if (rate == null) return;
 
             Database.Rates.DeleteOnSubmit(rate);
-            ((ObservableCollection<Rate>)dgRates.ItemsSource).Remove(rate);
+            list.Remove(rate);
 
             Database.SubmitChanges();
         }
 
         private void RowEditEnding(object sender, Microsoft.Windows.Controls.DataGridRowEditEndingEventArgs e)
         {
-            if (e.EditAction != DataGridEditAction.Commit)
-                return;
-
-            Database.SubmitChanges();            
+            if (e.EditAction == DataGridEditAction.Commit)
+                Database.SubmitChanges();            
         }        
     }
 

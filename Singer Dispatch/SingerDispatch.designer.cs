@@ -128,6 +128,9 @@ namespace SingerDispatch
     partial void InsertLoadUnloadMethod(LoadUnloadMethod instance);
     partial void UpdateLoadUnloadMethod(LoadUnloadMethod instance);
     partial void DeleteLoadUnloadMethod(LoadUnloadMethod instance);
+    partial void InsertCondition(Condition instance);
+    partial void UpdateCondition(Condition instance);
+    partial void DeleteCondition(Condition instance);
     #endregion
 		
 		public SingerDispatchDataContext(string connection) : 
@@ -415,6 +418,14 @@ namespace SingerDispatch
 			get
 			{
 				return this.GetTable<LoadUnloadMethod>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Condition> Conditions
+		{
+			get
+			{
+				return this.GetTable<Condition>();
 			}
 		}
 	}
@@ -12102,6 +12113,92 @@ namespace SingerDispatch
 		{
 			this.SendPropertyChanging();
 			entity.UnloadMethod = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="")]
+	public partial class Condition : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private long _ID;
+		
+		private string _Line;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDChanging(long value);
+    partial void OnIDChanged();
+    partial void OnLineChanging(string value);
+    partial void OnLineChanged();
+    #endregion
+		
+		public Condition()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, IsPrimaryKey=true, IsDbGenerated=true)]
+		public long ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this.OnIDChanging(value);
+					this.SendPropertyChanging();
+					this._ID = value;
+					this.SendPropertyChanged("ID");
+					this.OnIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Line")]
+		public string Line
+		{
+			get
+			{
+				return this._Line;
+			}
+			set
+			{
+				if ((this._Line != value))
+				{
+					this.OnLineChanging(value);
+					this.SendPropertyChanging();
+					this._Line = value;
+					this.SendPropertyChanged("Line");
+					this.OnLineChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
 		}
 	}
 }
