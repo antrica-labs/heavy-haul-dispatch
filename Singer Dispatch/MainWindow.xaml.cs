@@ -34,14 +34,6 @@ namespace SingerDispatch
             InitializeComponent();
 
             SetupKeyBindings();
-            /*
-            InputBinding ib = new InputBinding(CustomCommands.MyCommand, new KeyGesture(Key.Y, ModifierKeys.Control));
-            this.InputBindings.Add(ib);
-
-            CommandBinding cb = new CommandBinding(CustomCommands.MyCommand);
-            cb.Executed += new ExecutedRoutedEventHandler(HandlerThatDoesSomething);
-            this.CommandBindings.Add(cb);
-            */
 
             try
             {
@@ -57,8 +49,7 @@ namespace SingerDispatch
             }
             catch (Exception e)
             {
-                var box = new ErrorNoticeWindow("Database Error", e.Message);
-                box.ShowDialog();
+                ErrorNoticeWindow.ShowError("Database Error", e.Message);                
 
                 Application.Current.Shutdown();
             }

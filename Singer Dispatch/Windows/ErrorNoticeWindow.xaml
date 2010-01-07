@@ -27,7 +27,7 @@
     <StackPanel DataContext="{Binding ElementName=ErrorNotice}">
         <Border Style="{StaticResource Content}">
             <StackPanel>
-                <Label Style="{StaticResource Title}" Content="{Binding Title}" />
+                <Label Style="{StaticResource Title}" Content="{Binding Heading}" />
                 
                 <Label Style="{StaticResource Message}">
                     <TextBlock Text="{Binding Message}" TextWrapping="Wrap" />

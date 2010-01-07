@@ -64,13 +64,29 @@ namespace SingerDispatch.Panels.Admin
             Database.Rates.DeleteOnSubmit(rate);
             list.Remove(rate);
 
-            Database.SubmitChanges();
+            try
+            {
+                Database.SubmitChanges();
+            }
+            catch (System.Exception ex)
+            {
+                SingerDispatch.Windows.ErrorNoticeWindow.ShowError("Error while attempting write changes to database", ex.Message);
+            }
         }
 
         private void RowEditEnding(object sender, Microsoft.Windows.Controls.DataGridRowEditEndingEventArgs e)
         {
             if (e.EditAction == DataGridEditAction.Commit)
-                Database.SubmitChanges();            
+            {
+                try
+                {
+                    Database.SubmitChanges();
+                }
+                catch (System.Exception ex)
+                {
+                    SingerDispatch.Windows.ErrorNoticeWindow.ShowError("Error while attempting write changes to database", ex.Message);
+                }
+            }
         }        
     }
 

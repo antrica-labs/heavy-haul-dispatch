@@ -30,7 +30,14 @@ namespace SingerDispatch.Panels.Invoicing
 
         private void CommitJobChanges_Click(object sender, RoutedEventArgs e)
         {
-            SingerConstants.CommonDataContext.SubmitChanges();
+            try
+            {
+                SingerConstants.CommonDataContext.SubmitChanges();
+            }
+            catch (System.Exception ex)
+            {
+                SingerDispatch.Windows.ErrorNoticeWindow.ShowError("Error while attempting write changes to database", ex.Message);
+            }
         }
     }
 }

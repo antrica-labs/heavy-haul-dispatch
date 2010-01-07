@@ -5,6 +5,7 @@ using System.Windows.Controls;
 using System.Collections.ObjectModel;
 using System.Collections.Generic;
 using SingerDispatch.Database;
+using SingerDispatch.Windows;
 
 namespace SingerDispatch.Panels.Quotes
 {
@@ -78,12 +79,28 @@ namespace SingerDispatch.Panels.Quotes
                
         private void NewQuote_Click(object sender, RoutedEventArgs e)
         {
-            var quote = new Quote { Company = SelectedCompany, Number = 0, Revision = 0, CreationDate = DateTime.Today, ExpirationDate = DateTime.Today.AddDays(30) };
+            var list = (ObservableCollection<Quote>)dgQuotes.ItemsSource;
+            var quote = new Quote { CreationDate = DateTime.Today, ExpirationDate = DateTime.Today.AddDays(30) };
 
-            ((ObservableCollection<Quote>)dgQuotes.ItemsSource).Insert(0, quote);                        
+            SelectedCompany.Quotes.Add(quote);
+            list.Add(quote);
             dgQuotes.SelectedItem = quote;
+            dgQuotes.ScrollIntoView(quote);
 
             txtPrice.Focus();
+        }
+
+        private void CreateRevision_Click(object sender, RoutedEventArgs e)
+        {
+            if (SelectedQuote == null) return;
+
+            var quote = SelectedQuote.Duplicate();
+            var quotes = (ObservableCollection<Quote>)dgQuotes.ItemsSource;
+
+            SelectedCompany.Quotes.Add(quote);
+            quotes.Add(quote);
+            dgQuotes.SelectedItem = quote;
+            dgQuotes.ScrollIntoView(quote);
         }
 
         private void CareOfCompanies_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -109,9 +126,17 @@ namespace SingerDispatch.Panels.Quotes
 
             SelectedCompany.Jobs.Add(job);
             Database.Jobs.InsertOnSubmit(job);
-            Database.SubmitChanges();
 
-            window.ViewJob(job);
+            try
+            {
+                Database.SubmitChanges();
+
+                window.ViewJob(job);
+            }
+            catch (System.Exception ex)
+            {
+                SingerDispatch.Windows.ErrorNoticeWindow.ShowError("Error while attempting write changes to database", ex.Message);
+            }
         }
 
         private void UpdateContactList()
@@ -134,19 +159,6 @@ namespace SingerDispatch.Panels.Quotes
             dgQuoteContacts.ItemsSource = contacts;
         }
 
-        private void CreateRevision_Click(object sender, RoutedEventArgs e)
-        {
-            if (SelectedQuote == null) return;
-
-            var quote = SelectedQuote.Duplicate();
-            var quotes = (ObservableCollection<Quote>)dgQuotes.ItemsSource;
-
-            quote.Revision = (from q in Database.Quotes where q.Number == SelectedQuote.Number select q.Revision).Max() + 1;
-
-            quotes.Insert(0, quote);
-            dgQuotes.SelectedItem = quote;
-        }
-
         private void PrintQuote_Click(object sender, RoutedEventArgs e)
         {
             if (SelectedQuote == null) return;
@@ -164,14 +176,21 @@ namespace SingerDispatch.Panels.Quotes
 
             var quote = SelectedQuote;
 
-            BubbleUpQuote(null);
+            try
+            {
+                EntityHelper.PrepareEntityDelete(quote, Database);
 
-            ((ObservableCollection<Quote>)dgQuotes.ItemsSource).Remove(quote);
-            SelectedCompany.Quotes.Remove(quote);
+                ((ObservableCollection<Quote>)dgQuotes.ItemsSource).Remove(quote);
+                SelectedCompany.Quotes.Remove(quote);
 
-            EntityHelper.PrepareEntityDelete(quote, Database);            
-            
-            Database.SubmitChanges();
+                BubbleUpQuote(null);
+
+                Database.SubmitChanges();
+            }
+            catch (System.Exception ex)
+            {
+                SingerDispatch.Windows.ErrorNoticeWindow.ShowError("Error while attempting write changes to database", ex.Message);
+            }
         }
     }
 }

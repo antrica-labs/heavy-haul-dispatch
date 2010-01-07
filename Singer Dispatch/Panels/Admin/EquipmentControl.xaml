@@ -125,8 +125,8 @@
                         <Label Grid.Row="5" Grid.Column="0">Has winch:</Label>
                         <CheckBox Grid.Row="5" Grid.Column="1" IsChecked="{Binding HasWinch}" />
                                                 
-                        <Label Grid.Row="6" Grid.Column="0">Is prorrated:</Label>
-                        <CheckBox Grid.Row="6" Grid.Column="1" IsChecked="{Binding IsProrrated}" />
+                        <Label Grid.Row="6" Grid.Column="0">Is prorated:</Label>
+                        <CheckBox Grid.Row="6" Grid.Column="1" IsChecked="{Binding IsProrated}" />
                         
                         <Label Grid.Row="7" Grid.Column="0">Only for Scheuerle:</Label>
                         <CheckBox Grid.Row="7" Grid.Column="1" IsChecked="{Binding IsOnlyForScheuerle}" />

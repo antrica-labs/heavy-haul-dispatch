@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System;
 
 namespace SingerDispatch.Database
 {
@@ -6,6 +7,9 @@ namespace SingerDispatch.Database
     {
         public static void PrepareEntityDelete(Quote quote, SingerDispatchDataContext context)
         {
+            if (quote.Jobs.Count > 0)
+                throw new Exception("One or more jobs rely on this quote, so it cannot be deleted.");
+
             foreach (var c in quote.QuoteCommodities)
             {
                 if (c.ID != 0)
@@ -22,10 +26,27 @@ namespace SingerDispatch.Database
                 }
             }
 
+            foreach (var item in quote.StorageItems)
+            {
+                if (item.ID != 0)
+                {
+                    context.StorageItems.DeleteOnSubmit(item);
+                }
+            }
+
+            foreach (var item in quote.QuoteConditions)
+            {
+                if (item.ID != 0)
+                {
+                    context.QuoteConditions.DeleteOnSubmit(item);
+                }
+            }
+
             if (quote.ID != 0)
             {
                 context.Quotes.DeleteOnSubmit(quote);
             }
+            
         }
 
         public static void PrepareEntityDelete(Job job, SingerDispatchDataContext context)
@@ -68,35 +89,37 @@ namespace SingerDispatch.Database
                 {
                     context.Permits.DeleteOnSubmit(p);
                 }
-            }         
+            }
+
+            if (job.ID != 0)
+                context.Jobs.DeleteOnSubmit(job);
+            
+        }
+
+        public static void SaveAsQuoteRevision(Quote quote, SingerDispatchDataContext context)
+        {
+            var revision = (from q in context.Quotes where q.Number == quote.Number select q.Revision).Max() + 1;
+
+            quote.Revision = (revision != null) ? revision : 0;
+
+            context.SubmitChanges();
         }
 
         public static void SaveAsNewQuote(Quote quote, SingerDispatchDataContext context)
         {
-            quote.Revision = 0;
+            var number = (from q in context.Quotes select q.Number).Max() + 1;
 
-            try
-            {
-                quote.Number = (from q in context.Quotes select q.Number).Max() + 1;
-            }
-            catch
-            {
-                quote.Number = 10001;
-            }
+            quote.Revision = 0;
+            quote.Number = (number != null) ? number : 10001;
 
             context.SubmitChanges();
         }
 
         public static void SaveAsNewJob(Job job, SingerDispatchDataContext context)
         {
-            try
-            {
-                job.Number = (from j in context.Jobs select j.Number).Max() + 1;
-            }
-            catch
-            {
-                job.Number = 10001;
-            }
+            var number = (from j in context.Jobs select j.Number).Max() + 1;
+
+            job.Number = (number != null) ? number : 10001;
 
             context.SubmitChanges();
         }

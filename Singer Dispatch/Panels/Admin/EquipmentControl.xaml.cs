@@ -57,13 +57,29 @@ namespace SingerDispatch.Panels.Admin
             ((ObservableCollection<Equipment>)dgEquipment.ItemsSource).Remove(unit);
             Database.Equipment.DeleteOnSubmit(unit);
             dgEquipment.SelectedItem = null;
-            Database.SubmitChanges();
+
+            try
+            {
+                Database.SubmitChanges();
+            }
+            catch (System.Exception ex)
+            {
+                SingerDispatch.Windows.ErrorNoticeWindow.ShowError("Error while attempting to remove equipment", ex.Message);
+            }
+
         }
 
 
         private void SaveEquipment_Click(object sender, RoutedEventArgs e)
         {
-            Database.SubmitChanges();
+            try
+            {
+                Database.SubmitChanges();
+            }
+            catch (System.Exception ex)
+            {
+                SingerDispatch.Windows.ErrorNoticeWindow.ShowError("Error while attempting to save equipment", ex.Message);
+            }
         }
 
         private void EquipmentClass_SelectionChanged(object sender, SelectionChangedEventArgs e)

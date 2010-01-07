@@ -77,7 +77,14 @@ namespace SingerDispatch.Panels.Companies
             SelectedCompany.Addresses.Remove(selected);
             ((ObservableCollection<Address>)dgAddresses.ItemsSource).Remove(selected);
 
-            Database.SubmitChanges();            
+            try
+            {
+                Database.SubmitChanges();
+            }
+            catch (System.Exception ex)
+            {
+                SingerDispatch.Windows.ErrorNoticeWindow.ShowError("Error while attempting write changes to database", ex.Message);
+            }
         }
 
         private void RemoveContact_Click(object sender, RoutedEventArgs e)
@@ -99,7 +106,14 @@ namespace SingerDispatch.Panels.Companies
             selected.Address.Contacts.Remove(selected);
             ((ObservableCollection<Contact>)dgContacts.ItemsSource).Remove(selected);
 
-            Database.SubmitChanges();
+            try
+            {
+                Database.SubmitChanges();
+            }
+            catch (System.Exception ex)
+            {
+                SingerDispatch.Windows.ErrorNoticeWindow.ShowError("Error while attempting write changes to database", ex.Message);
+            }
         }
 
         private void NewAddress_Click(object sender, RoutedEventArgs e)
@@ -133,8 +147,15 @@ namespace SingerDispatch.Panels.Companies
         }
 
         private void Save_Click(object sender, RoutedEventArgs e)
-        {               
-            Database.SubmitChanges();
+        {
+            try
+            {
+                Database.SubmitChanges();
+            }
+            catch (System.Exception ex)
+            {
+                SingerDispatch.Windows.ErrorNoticeWindow.ShowError("Error while attempting write changes to database", ex.Message);
+            }
         }
     }
 }

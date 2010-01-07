@@ -96,8 +96,7 @@ namespace SingerDispatch
 
             copy.Company = Company;
             copy.Company = Company;
-            copy.Number = Number;
-            copy.Revision = Revision;
+            copy.Number = Number;            
             copy.CareOfCompany = CareOfCompany;
             copy.CareOfCompany = CareOfCompany;
             copy.Description = Description;
@@ -108,17 +107,22 @@ namespace SingerDispatch
 
             foreach (var commodity in QuoteCommodities)
             {
-                copy.QuoteCommodities.Add((QuoteCommodity)commodity.Duplicate());
+                copy.QuoteCommodities.Add(commodity.Duplicate());
             }
 
             foreach (var supplement in QuoteSupplements)
             {
-                copy.QuoteSupplements.Add((QuoteSupplement)supplement.Duplicate());
+                copy.QuoteSupplements.Add(supplement.Duplicate());
             }
 
             foreach (var item in StorageItems)
             {
-                copy.StorageItems.Add((StorageItem)item.Duplicate());
+                copy.StorageItems.Add(item.Duplicate());
+            }
+
+            foreach (var item in QuoteConditions)
+            {
+                copy.QuoteConditions.Add(item.Duplicate());
             }
 
             return copy;
@@ -216,6 +220,18 @@ namespace SingerDispatch
             jc.UnloadSiteName = ArrivalSiteName;
 
             return jc;
+        }
+    }
+
+    partial class QuoteCondition
+    {
+        public QuoteCondition Duplicate()
+        {
+            var copy = new QuoteCondition();
+
+            copy.Condition = Condition;
+
+            return copy;
         }
     }
 

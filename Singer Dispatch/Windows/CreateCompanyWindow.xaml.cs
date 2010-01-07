@@ -60,9 +60,9 @@ namespace SingerDispatch.Windows
 
                 Close();
             }
-            catch (Exception ex)
+            catch (System.Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                SingerDispatch.Windows.ErrorNoticeWindow.ShowError("Error while building the database", ex.Message);
             }
         }
 

@@ -47,16 +47,28 @@ namespace SingerDispatch.Panels.Quotes
         private void CommitQuoteChanges_Click(object sender, RoutedEventArgs e)
         {
             if (SelectedQuote == null) return;
-            
-            // Check if this quote is new and not yet in the database
-            if (SelectedQuote.ID == 0)
+
+
+            try
             {
-                EntityHelper.SaveAsNewQuote(SelectedQuote, Database);
+                // Check if this quote is new and not yet in the database
+                if (SelectedQuote.ID == 0)
+                {
+                    if (SelectedQuote.Number != null)
+                        EntityHelper.SaveAsQuoteRevision(SelectedQuote, Database);
+                    else
+                        EntityHelper.SaveAsNewQuote(SelectedQuote, Database);
+                }
+                else
+                {
+                    Database.SubmitChanges();
+                }
             }
-            else
+            catch (System.Exception ex)
             {
-                Database.SubmitChanges();
+                SingerDispatch.Windows.ErrorNoticeWindow.ShowError("Error while attempting write changes to database", ex.Message);
             }
+
         }
     }
 }

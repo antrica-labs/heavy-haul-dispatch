@@ -52,13 +52,27 @@ namespace SingerDispatch.Panels.Companies
                 SelectedCompany.Commodities.Remove(selected);
                 ((ObservableCollection<Commodity>)dgCommodities.ItemsSource).Remove(selected);
 
-                Database.SubmitChanges();
+                try
+                {
+                    Database.SubmitChanges();
+                }
+                catch (System.Exception ex)
+                {
+                    SingerDispatch.Windows.ErrorNoticeWindow.ShowError("Error while attempting write changes to database", ex.Message);
+                }
             }
         }
 
         private void SaveCommodity_Click(object sender, RoutedEventArgs e)
         {
-            Database.SubmitChanges();           
+            try
+            {
+                Database.SubmitChanges();
+            }
+            catch (System.Exception ex)
+            {
+                SingerDispatch.Windows.ErrorNoticeWindow.ShowError("Error while attempting write changes to database", ex.Message);
+            }
         }
 
         private void CreateNewCommodity(Company company)
@@ -73,7 +87,14 @@ namespace SingerDispatch.Panels.Companies
 
         private void DataGridCommit(object sender, Microsoft.Windows.Controls.DataGridRowEditEndingEventArgs e)
         {
-            Database.SubmitChanges();
+            try
+            {
+                Database.SubmitChanges();
+            }
+            catch (System.Exception ex)
+            {
+                SingerDispatch.Windows.ErrorNoticeWindow.ShowError("Error while attempting write changes to database", ex.Message);
+            }
         }
     }
 }

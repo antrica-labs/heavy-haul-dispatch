@@ -96,10 +96,13 @@ namespace SingerDispatch.Panels.Jobs
 
         private void NewJob_Click(object sender, RoutedEventArgs e)
         {
-            var job = new Job { Company = SelectedCompany, Number = 0, JobStatusType = DefaultJobStatus };
+            var list = (ObservableCollection<Job>)dgJobs.ItemsSource;
+            var job = new Job { JobStatusType = DefaultJobStatus };
 
-            ((ObservableCollection<Job>)dgJobs.ItemsSource).Insert(0, job);            
+            SelectedCompany.Jobs.Add(job);
+            list.Add(job);
             dgJobs.SelectedItem = job;
+            dgJobs.ScrollIntoView(job);
 
             txtDescription.Focus();
         }
@@ -129,9 +132,16 @@ namespace SingerDispatch.Panels.Jobs
             ((ObservableCollection<Job>)dgJobs.ItemsSource).Remove(job);
             SelectedCompany.Jobs.Remove(job);
 
-            EntityHelper.PrepareEntityDelete(job, Database);
+            try
+            {
+                EntityHelper.PrepareEntityDelete(job, Database);
 
-            Database.SubmitChanges();
+                Database.SubmitChanges();
+            }
+            catch (System.Exception ex)
+            {
+                SingerDispatch.Windows.ErrorNoticeWindow.ShowError("Error while attempting write changes to database", ex.Message);
+            }
         }
     }
 }

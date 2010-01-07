@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Database Class="SingerDispatchDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">  
+<Database Class="SingerDispatchDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
   <Table Name="" Member="Addresses">
     <Type Name="Address">
       <Column Name="ID" Type="System.Int64" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -54,7 +54,7 @@
       <Column Name="WeightEstimated" Type="System.Boolean" CanBeNull="true" />
       <Column Name="Notes" Type="System.String" CanBeNull="true" UpdateCheck="Never" />
       <Association Name="Commodity_JobCommodity" Member="JobCommodities" ThisKey="ID" OtherKey="OriginalCommodityID" Type="JobCommodity" />
-      <Association Name="Commodity_QuoteCommodity" Member="QuoteCommodities" ThisKey="ID" OtherKey="OriginalCommodityID" Type="QuoteCommodity" />
+      <Association Name="Commodity_QuoteCommodity" Member="QuoteCommodities" ThisKey="ID" OtherKey="OriginalCommodityID" Type="QuoteCommodity" />      
       <Association Name="Company_Commodity" Member="Company" ThisKey="CompanyID" OtherKey="ID" Type="Company" IsForeignKey="true" />
     </Type>
   </Table>
@@ -78,7 +78,7 @@
       <Association Name="Company_Job1" Member="CareOfJobs" ThisKey="ID" OtherKey="CareOfCompanyID" Type="Job" />
       <Association Name="Company_Quote" Member="Quotes" ThisKey="ID" OtherKey="CompanyID" Type="Quote" />
       <Association Name="Company_Quote1" Member="CareOfQuotes" ThisKey="ID" OtherKey="CareOfCompanyID" Type="Quote" />
-      <Association Name="Company_Service" Member="Services" ThisKey="ID" OtherKey="CompanyID" Type="Service" />
+      <Association Name="Company_Service" Member="Services" ThisKey="ID" OtherKey="CompanyID" Type="Service" />      
       <Association Name="Company_ThirdPartyService" Member="ThirdPartyServices" ThisKey="ID" OtherKey="CompanyID" Type="ThirdPartyService" />
       <Association Name="CompanyPriorityLevel_Company" Member="CompanyPriorityLevel" ThisKey="PriorityLevelID" OtherKey="ID" Type="CompanyPriorityLevel" IsForeignKey="true" />
     </Type>
@@ -208,7 +208,7 @@
       <Column Name="EmployeeID" Type="System.Int64" CanBeNull="true" />
       <Column Name="CareOfCompanyID" Type="System.Int64" CanBeNull="true" />
       <Column Name="StatusTypeID" Type="System.Int64" CanBeNull="true" />
-      <Column Name="Number" Type="System.Int32" CanBeNull="false" />
+      <Column Name="Number" Type="System.Int32" CanBeNull="true" />
       <Column Name="Description" Type="System.String" CanBeNull="true" />
       <Column Name="StartDate" Type="System.DateTime" CanBeNull="true" />
       <Column Name="EndDate" Type="System.DateTime" CanBeNull="true" />
@@ -334,7 +334,7 @@
     <Type Name="Quote">
       <Column Name="ID" Type="System.Int64" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="CompanyID" Type="System.Int64" CanBeNull="true" />
-      <Column Name="Number" Type="System.Int32" CanBeNull="false" />
+      <Column Name="Number" Type="System.Int32" CanBeNull="true" />
       <Column Name="Revision" Type="System.Int32" CanBeNull="true" />
       <Column Name="EmployeeID" Type="System.Int64" CanBeNull="true" />
       <Column Name="CareOfCompanyID" Type="System.Int64" CanBeNull="true" />
@@ -347,6 +347,7 @@
       <Column Name="IsPrinted" Type="System.Boolean" CanBeNull="true" />
       <Association Name="Quote_Job" Member="Jobs" ThisKey="ID" OtherKey="QuoteID" Type="Job" />
       <Association Name="Quote_QuoteCommodity" Member="QuoteCommodities" ThisKey="ID" OtherKey="QuoteID" Type="QuoteCommodity" />
+      <Association Name="Quote_QuoteCondition" Member="QuoteConditions" ThisKey="ID" OtherKey="QuoteID" Type="QuoteCondition" />
       <Association Name="Quote_QuoteSupplement" Member="QuoteSupplements" ThisKey="ID" OtherKey="QuoteID" Type="QuoteSupplement" />
       <Association Name="Quote_StorageItem" Member="StorageItems" ThisKey="ID" OtherKey="QuoteID" Type="StorageItem" />
       <Association Name="Employee_Quote" Member="Employee" ThisKey="EmployeeID" OtherKey="ID" Type="Employee" IsForeignKey="true" />
@@ -526,6 +527,16 @@
     <Type Name="Condition">
       <Column Name="ID" Type="System.Int64" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Line" Type="System.String" CanBeNull="true" />
+      <Association Name="Condition_QuoteCondition" Member="QuoteConditions" ThisKey="ID" OtherKey="ConditionID" Type="QuoteCondition" />
     </Type>
   </Table>
+  <Table Name="" Member="QuoteConditions">
+    <Type Name="QuoteCondition">
+      <Column Name="ID" Type="System.Int64" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="QuoteID" Type="System.Int64" CanBeNull="true" />
+      <Column Name="ConditionID" Type="System.Int64" CanBeNull="true" />      
+      <Association Name="Quote_QuoteCondition" Member="Quote" ThisKey="QuoteID" OtherKey="ID" Type="Quote" IsForeignKey="true" />
+      <Association Name="Condition_QuoteCondition" Member="Condition" ThisKey="ConditionID" OtherKey="ID" Type="Condition" IsForeignKey="true" />
+    </Type>
+  </Table>  
 </Database>

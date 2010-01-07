@@ -37,13 +37,20 @@ namespace SingerDispatch.Panels.Jobs
         {
             if (SelectedJob == null) return;
 
-            if (SelectedJob.ID == 0)
+            try
             {
-                EntityHelper.SaveAsNewJob(SelectedJob, Database);
+                if (SelectedJob.ID == 0)
+                {
+                    EntityHelper.SaveAsNewJob(SelectedJob, Database);
+                }
+                else
+                {
+                    Database.SubmitChanges();
+                }
             }
-            else
+            catch (System.Exception ex)
             {
-                Database.SubmitChanges();
+                SingerDispatch.Windows.ErrorNoticeWindow.ShowError("Error while attempting write changes to database", ex.Message);
             }
         }
     }
