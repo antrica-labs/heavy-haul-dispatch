@@ -71,12 +71,12 @@ namespace SingerDispatch.Panels.Quotes
 
             if (SelectedQuote == null || condition == null) return;
 
-            var list = (from c in SelectedQuote.QuoteConditions where c.ConditionID == condition.ID select c).ToList();
+            var list = (from c in SelectedQuote.QuoteConditions where c.Condition == condition select c).ToList();
 
             foreach (var item in list)
             {
                 SelectedQuote.QuoteConditions.Remove(item);
             }
-        }        
+        }
     }
 }

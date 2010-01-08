@@ -177,7 +177,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="Windows\Security\AuthenticationService.cs" />
+    <Compile Include="Security\AuthenticationService.cs" />
     <Compile Include="SingerConstants.cs" />
     <Compile Include="SingerDispatch.cs">
       <DependentUpon>SingerDispatch.dbml</DependentUpon>

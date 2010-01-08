@@ -24,8 +24,11 @@ namespace SingerDispatch.Panels.Companies
         private void ControlLoaded(object sender, RoutedEventArgs e)
         {
             var list = (ObservableCollection<CheckBox>)TheList.ItemsSource;
+
+            if (SelectedCompany == null) return;
+
             var types = from t in Database.ServiceTypes select t;
-            var selected = from s in Database.Services where s.Company == SelectedCompany select s.ServiceType;
+            var selected = from s in SelectedCompany.Services select s.ServiceType;            
 
             list.Clear();
 
@@ -33,35 +36,42 @@ namespace SingerDispatch.Panels.Companies
             {
                 var cb = new CheckBox { Content = type.Name, DataContext = type, IsChecked = selected.Contains(type) };
 
+                cb.Checked += new RoutedEventHandler(CheckBox_Checked);
+                cb.Unchecked += new RoutedEventHandler(CheckBox_Unchecked);
+
                 list.Add(cb);
             }
         }
 
-        protected override void SelectedCompanyChanged(Company newValue, Company oldValue)
+        private void CheckBox_Checked(object sender, RoutedEventArgs e)
         {
-            base.SelectedCompanyChanged(newValue, oldValue);           
+            var cb = (CheckBox)sender;
+            var serviceType = (ServiceType)cb.DataContext;
+
+            if (SelectedCompany == null || serviceType == null) return;
+
+            var service = new Service { Company = SelectedCompany, ServiceType = serviceType };
+
+            SelectedCompany.Services.Add(service);
+        }
+
+        private void CheckBox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            var cb = (CheckBox)sender;
+            var serviceType = (ServiceType)cb.DataContext;
+
+            if (SelectedCompany == null || serviceType == null) return;
+
+            var list = (from s in SelectedCompany.Services where s.ServiceType == serviceType select s).ToList();
+
+            foreach (var item in list)
+            {
+                SelectedCompany.Services.Remove(item);
+            }
         }
 
         private void UpdateServices_Click(object sender, RoutedEventArgs e)
         {
-            var list = (ObservableCollection<CheckBox>)TheList.ItemsSource;
-
-            if (SelectedCompany == null) return;
-                        
-            Database.Services.DeleteAllOnSubmit(SelectedCompany.Services);             
-
-            foreach (CheckBox cb in list)
-            {
-                if (cb.IsChecked != true)
-                {
-                    continue;
-                }
-
-                var service = new Service { ServiceTypeID = ((ServiceType)cb.DataContext).ID };
-                          
-                SelectedCompany.Services.Add(service);
-            }
-
             try
             {
                 Database.SubmitChanges();
