@@ -3,7 +3,7 @@ using System;
 
 namespace SingerDispatch.Database
 {
-    class EntityHelper
+    public class EntityHelper
     {
         public static void PrepareEntityDelete(Quote quote, SingerDispatchDataContext context)
         {

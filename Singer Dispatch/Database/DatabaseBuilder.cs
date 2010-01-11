@@ -4,7 +4,7 @@ using System.Globalization;
 
 namespace SingerDispatch.Database
 {
-    class DatabaseBuilder
+    public class DatabaseBuilder
     {
         private SingerDispatchDataContext database;
 
@@ -153,8 +153,7 @@ namespace SingerDispatch.Database
             contacttypes.Add(new ContactType() { Name = "Loading" });
             contacttypes.Add(new ContactType() { Name = "Office" });
             contacttypes.Add(new ContactType() { Name = "Permit" });
-            contacttypes.Add(new ContactType() { Name = "Quote" });
-            contacttypes.Add(new ContactType() { Name = "Quote" });
+            contacttypes.Add(new ContactType() { Name = "Quote" });            
             contacttypes.Add(new ContactType() { Name = "Service" });
             contacttypes.Add(new ContactType() { Name = "Unload Site" });
             contacttypes.Add(new ContactType() { Name = "Unloading" });
@@ -170,6 +169,7 @@ namespace SingerDispatch.Database
             levels.Add(new CompanyPriorityLevel() { Name = "3. Premier" });
             levels.Add(new CompanyPriorityLevel() { Name = "4. Regular" });
             levels.Add(new CompanyPriorityLevel() { Name = "5. Cash on Delivery" });
+            levels.Add(new CompanyPriorityLevel() { Name = "6. Do not haul" });
 
             database.CompanyPriorityLevels.InsertAllOnSubmit(levels);
 
@@ -742,11 +742,9 @@ namespace SingerDispatch.Database
             database.Conditions.InsertAllOnSubmit(conditions);
 
             database.SubmitChanges();
-
-            AddTestData();
         }
 
-        private void AddTestData()
+        public void AddTestData()
         {
             var database = SingerConstants.CommonDataContext;
 

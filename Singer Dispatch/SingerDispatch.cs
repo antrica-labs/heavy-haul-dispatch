@@ -3,7 +3,7 @@ namespace SingerDispatch
     partial class SingerDispatchDataContext
     {
         public SingerDispatchDataContext() :
-            base(System.Configuration.ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString)
+            base(System.Configuration.ConfigurationManager.ConnectionStrings["ConnectionParameters"].ConnectionString)
         {
             OnCreated();
         }
@@ -11,6 +11,8 @@ namespace SingerDispatch
 
     partial class Company
     {
+        public int? ArchiveID { get; set; }
+
         partial void OnCreated()
         {
             if (IsVisible == null)
@@ -33,6 +35,24 @@ namespace SingerDispatch
         }
     }
 
+    partial class Address
+    {
+        public int? ArchiveID { get; set; }
+    }
+
+    partial class Contact
+    {
+        public int? ArchiveID { get; set; }
+
+        public string Name
+        {
+            get
+            {
+                return FirstName + " " + LastName;
+            }
+        }
+    }
+
     partial class Employee
     {
         public string Name
@@ -45,16 +65,7 @@ namespace SingerDispatch
 
     }
 
-    partial class Contact
-    {
-        public string Name
-        {
-            get
-            {
-                return FirstName + " " + LastName;
-            }
-        }
-    }
+    
 
     partial class Commodity
     {

@@ -46,6 +46,7 @@ namespace SingerDispatch
                 var builder = new DatabaseBuilder(SingerConstants.CommonDataContext);
 
                 builder.CreateNewDatabase();
+                builder.AddTestData();                
             }
             catch (Exception e)
             {

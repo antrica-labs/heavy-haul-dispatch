@@ -1709,7 +1709,7 @@ namespace SingerDispatch
 		
 		private string _Type;
 		
-		private System.Nullable<int> _AvailableCredit;
+		private System.Nullable<decimal> _AvailableCredit;
 		
 		private string _AccPacVendorCode;
 		
@@ -1755,7 +1755,7 @@ namespace SingerDispatch
     partial void OnOperatingAsChanged();
     partial void OnTypeChanging(string value);
     partial void OnTypeChanged();
-    partial void OnAvailableCreditChanging(System.Nullable<int> value);
+    partial void OnAvailableCreditChanging(System.Nullable<decimal> value);
     partial void OnAvailableCreditChanged();
     partial void OnAccPacVendorCodeChanging(string value);
     partial void OnAccPacVendorCodeChanged();
@@ -1889,7 +1889,7 @@ namespace SingerDispatch
 		}
 		
 		[Column(Storage="_AvailableCredit")]
-		public System.Nullable<int> AvailableCredit
+		public System.Nullable<decimal> AvailableCredit
 		{
 			get
 			{
@@ -2424,6 +2424,8 @@ namespace SingerDispatch
 		
 		private string _SecondaryPhone;
 		
+		private string _Fax;
+		
 		private string _PreferedContactMethod;
 		
 		private string _Notes;
@@ -2454,6 +2456,8 @@ namespace SingerDispatch
     partial void OnPrimaryPhoneChanged();
     partial void OnSecondaryPhoneChanging(string value);
     partial void OnSecondaryPhoneChanged();
+    partial void OnFaxChanging(string value);
+    partial void OnFaxChanged();
     partial void OnPreferedContactMethodChanging(string value);
     partial void OnPreferedContactMethodChanged();
     partial void OnNotesChanging(string value);
@@ -2632,6 +2636,26 @@ namespace SingerDispatch
 					this._SecondaryPhone = value;
 					this.SendPropertyChanged("SecondaryPhone");
 					this.OnSecondaryPhoneChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_Fax")]
+		public string Fax
+		{
+			get
+			{
+				return this._Fax;
+			}
+			set
+			{
+				if ((this._Fax != value))
+				{
+					this.OnFaxChanging(value);
+					this.SendPropertyChanging();
+					this._Fax = value;
+					this.SendPropertyChanged("Fax");
+					this.OnFaxChanged();
 				}
 			}
 		}

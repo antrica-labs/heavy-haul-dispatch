@@ -28,7 +28,7 @@
         <StackPanel Grid.Column="0" Grid.Row="0" Margin="0,0,3,3">
             <Label>Company Addresses:</Label>
             
-            <WPF:DataGrid Name="dgAddresses" Style="{StaticResource ListDisplay}" Grid.Column="0" Grid.Row="0" MinHeight="125" SelectionChanged="dgAddresses_SelectionChanged">
+            <WPF:DataGrid Name="dgAddresses" Style="{StaticResource ListDisplay}" Grid.Column="0" Grid.Row="0" Height="130" SelectionChanged="dgAddresses_SelectionChanged">
                 <WPF:DataGrid.Columns>
                     <WPF:DataGridTextColumn Header="Type" Binding="{Binding AddressType.Name}" IsReadOnly="True" />
                     <WPF:DataGridTextColumn Header="Address" Width="1.5*" Binding="{Binding Line1}" />
@@ -112,10 +112,10 @@
         <StackPanel Grid.Column="1" Grid.Row="0" Margin="3,0,3,0">
             <Label>Address Contacts:</Label>
             
-            <WPF:DataGrid Name="dgContacts" Style="{StaticResource ListDisplay}" Grid.Column="0" Grid.Row="0" ItemsSource="{Binding ElementName=dgAddresses, Path=SelectedItem.Contacts}" MinHeight="125">               
+            <WPF:DataGrid Name="dgContacts" Style="{StaticResource ListDisplay}" Grid.Column="0" Grid.Row="0" ItemsSource="{Binding ElementName=dgAddresses, Path=SelectedItem.Contacts}" Height="130">               
                 <WPF:DataGrid.Columns>
-                    <WPF:DataGridTextColumn Header="Last name" Binding="{Binding LastName}" />
                     <WPF:DataGridTextColumn Header="First name" Binding="{Binding FirstName}" />
+                    <WPF:DataGridTextColumn Header="Last name" Binding="{Binding LastName}" />
                     <WPF:DataGridTextColumn Header="Phone" Binding="{Binding PrimaryPhone}" />
                     <WPF:DataGridTextColumn Header="Email" Binding="{Binding Email}" />                    
                 </WPF:DataGrid.Columns>
