@@ -41,12 +41,8 @@ namespace SingerDispatch
                 Database = SingerConstants.CommonDataContext;
                 Companies = new ObservableCollection<Company>();
 
-                if (Database.DatabaseExists()) return;
-
-                var builder = new DatabaseBuilder(SingerConstants.CommonDataContext);
-
-                builder.CreateNewDatabase();
-                builder.AddTestData();                
+                if (Database.DatabaseExists()) 
+                    throw new Exception("Unable to connect to the required database!");
             }
             catch (Exception e)
             {

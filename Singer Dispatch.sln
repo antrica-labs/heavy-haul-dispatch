@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Singer Dispatch", "Singer Dispatch\Singer Dispatch.csproj", "{C894195B-431C-493C-9809-5C500B149651}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data Importer", "Data Importer\Data Importer.csproj", "{383E23CF-696A-41D1-A06F-CF24ECE9B7EB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Singer Data Importer", "Singer Data Importer\Singer Data Importer.csproj", "{383E23CF-696A-41D1-A06F-CF24ECE9B7EB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using SingerDispatch;
 
-namespace SingerDispatch.Database
+namespace SingerDispatch.Importer
 {
     public class DatabaseBuilder
     {
@@ -22,8 +23,7 @@ namespace SingerDispatch.Database
             {
                 throw new Exception("Database already exists!");
             }
-
-           
+                       
             database.CreateDatabase();
            
       

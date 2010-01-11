@@ -2,7 +2,7 @@
 
 namespace SingerDispatch
 {
-    class SingerConstants
+    public class SingerConstants
     {
         private static List<string> contactMethods = new List<string>();
         private static List<string> customerTypes = new List<string>();

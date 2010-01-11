@@ -4,11 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Data.OleDb;
 using SingerDispatch;
-using SingerDispatch.Database;
 using System.Data.SqlClient;
 using System.Configuration;
 
-namespace Data_Importer
+namespace SingerDispatch.Importer
 {
     class Program
     {
