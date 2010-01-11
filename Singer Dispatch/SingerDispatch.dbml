@@ -46,10 +46,10 @@
       <Column Name="Owner" Type="System.String" CanBeNull="true" />
       <Column Name="LastLocation" Type="System.String" CanBeNull="true" />
       <Column Name="LastAddress" Type="System.String" CanBeNull="true" />
-      <Column Name="Length" Type="System.String" CanBeNull="true" />
-      <Column Name="Width" Type="System.String" CanBeNull="true" />
-      <Column Name="Height" Type="System.String" CanBeNull="true" />
-      <Column Name="Weight" Type="System.String" CanBeNull="true" />
+      <Column Name="Length" Type="System.Double" CanBeNull="true" />
+      <Column Name="Width" Type="System.Double" CanBeNull="true" />
+      <Column Name="Height" Type="System.Double" CanBeNull="true" />
+      <Column Name="Weight" Type="System.Double" CanBeNull="true" />
       <Column Name="SizeEstimated" Type="System.Boolean" CanBeNull="true" />
       <Column Name="WeightEstimated" Type="System.Boolean" CanBeNull="true" />
       <Column Name="Notes" Type="System.String" CanBeNull="true" UpdateCheck="Never" />
@@ -172,10 +172,10 @@
       <Column Name="Owner" Type="System.String" CanBeNull="true" />
       <Column Name="LastLocation" Type="System.String" CanBeNull="true" />
       <Column Name="LastAddress" Type="System.String" CanBeNull="true" />
-      <Column Name="Length" Type="System.String" CanBeNull="true" />
-      <Column Name="Width" Type="System.String" CanBeNull="true" />
-      <Column Name="Height" Type="System.String" CanBeNull="true" />
-      <Column Name="Weight" Type="System.String" CanBeNull="true" />
+      <Column Name="Length" Type="System.Double" CanBeNull="true" />
+      <Column Name="Width" Type="System.Double" CanBeNull="true" />
+      <Column Name="Height" Type="System.Double" CanBeNull="true" />
+      <Column Name="Weight" Type="System.Double" CanBeNull="true" />
       <Column Name="SizeEstimated" Type="System.Boolean" CanBeNull="true" />
       <Column Name="WeightEstimated" Type="System.Boolean" CanBeNull="true" />
       <Column Name="Cost" Type="System.Decimal" CanBeNull="true" />
@@ -250,23 +250,23 @@
       <Column Name="Ban" Type="System.String" CanBeNull="true" />
       <Column Name="ServiceDescription" Type="System.String" CanBeNull="true" />
       <Column Name="Notes" Type="System.String" CanBeNull="true" UpdateCheck="Never" />
-      <Column Name="WeightSteer" Type="System.Int32" CanBeNull="true" />
-      <Column Name="WeightDrive" Type="System.Int32" CanBeNull="true" />
-      <Column Name="WeightGroup1" Type="System.Int32" CanBeNull="true" />
-      <Column Name="WeightGroup2" Type="System.Int32" CanBeNull="true" />
-      <Column Name="WeightGroup3" Type="System.Int32" CanBeNull="true" />
-      <Column Name="WeightGroup4" Type="System.Int32" CanBeNull="true" />
-      <Column Name="WeightGroup5" Type="System.Int32" CanBeNull="true" />
-      <Column Name="WeightGroup6" Type="System.Int32" CanBeNull="true" />
-      <Column Name="WeightGroup7" Type="System.Int32" CanBeNull="true" />
-      <Column Name="WeightGroup8" Type="System.Int32" CanBeNull="true" />
-      <Column Name="WeightGroup9" Type="System.Int32" CanBeNull="true" />
-      <Column Name="WeightGroup10" Type="System.Int32" CanBeNull="true" />
+      <Column Name="WeightSteer" Type="System.Double" CanBeNull="true" />
+      <Column Name="WeightDrive" Type="System.Double" CanBeNull="true" />
+      <Column Name="WeightGroup1" Type="System.Double" CanBeNull="true" />
+      <Column Name="WeightGroup2" Type="System.Double" CanBeNull="true" />
+      <Column Name="WeightGroup3" Type="System.Double" CanBeNull="true" />
+      <Column Name="WeightGroup4" Type="System.Double" CanBeNull="true" />
+      <Column Name="WeightGroup5" Type="System.Double" CanBeNull="true" />
+      <Column Name="WeightGroup6" Type="System.Double" CanBeNull="true" />
+      <Column Name="WeightGroup7" Type="System.Double" CanBeNull="true" />
+      <Column Name="WeightGroup8" Type="System.Double" CanBeNull="true" />
+      <Column Name="WeightGroup9" Type="System.Double" CanBeNull="true" />
+      <Column Name="WeightGroup10" Type="System.Double" CanBeNull="true" />
       <Column Name="WeightEstimated" Type="System.Boolean" CanBeNull="true" />
-      <Column Name="GrossWeight" Type="System.Int32" CanBeNull="true" />
-      <Column Name="LoadedLength" Type="System.Int32" CanBeNull="true" />
-      <Column Name="LoadedWidth" Type="System.Int32" CanBeNull="true" />
-      <Column Name="LoadedHeight" Type="System.Int32" CanBeNull="true" />
+      <Column Name="GrossWeight" Type="System.Double" CanBeNull="true" />
+      <Column Name="LoadedLength" Type="System.Double" CanBeNull="true" />
+      <Column Name="LoadedWidth" Type="System.Double" CanBeNull="true" />
+      <Column Name="LoadedHeight" Type="System.Double" CanBeNull="true" />
       <Association Name="Load_JobCommodity" Member="JobCommodities" ThisKey="ID" OtherKey="LoadID" Type="JobCommodity" />
       <Association Name="Load_Permit" Member="Permits" ThisKey="ID" OtherKey="LoadID" Type="Permit" />
       <Association Name="Load_ThirdPartyService" Member="ThirdPartyServices" ThisKey="ID" OtherKey="LoadID" Type="ThirdPartyService" />
@@ -319,10 +319,10 @@
       <Column Name="Owner" Type="System.String" CanBeNull="true" />
       <Column Name="LastLocation" Type="System.String" CanBeNull="true" />
       <Column Name="LastAddress" Type="System.String" CanBeNull="true" />
-      <Column Name="Length" Type="System.String" CanBeNull="true" />
-      <Column Name="Width" Type="System.String" CanBeNull="true" />
-      <Column Name="Height" Type="System.String" CanBeNull="true" />
-      <Column Name="Weight" Type="System.String" CanBeNull="true" />
+      <Column Name="Length" Type="System.Double" CanBeNull="true" />
+      <Column Name="Width" Type="System.Double" CanBeNull="true" />
+      <Column Name="Height" Type="System.Double" CanBeNull="true" />
+      <Column Name="Weight" Type="System.Double" CanBeNull="true" />
       <Column Name="SizeEstimated" Type="System.Boolean" CanBeNull="true" />
       <Column Name="WeightEstimated" Type="System.Boolean" CanBeNull="true" />
       <Column Name="Cost" Type="System.Decimal" CanBeNull="true" />
@@ -463,7 +463,7 @@
       <Column Name="EngineType" Type="System.String" CanBeNull="true" />
       <Column Name="IsDispatchable" Type="System.Boolean" CanBeNull="true" />
       <Column Name="Tare" Type="System.String" CanBeNull="true" />
-      <Column Name="Height" Type="System.String" CanBeNull="true" />
+      <Column Name="Height" Type="System.Double" CanBeNull="true" />
       <Column Name="AxleConfig" Type="System.String" CanBeNull="true" />
       <Column Name="HasWinch" Type="System.Boolean" CanBeNull="true" />
       <Column Name="SteerTireSize" Type="System.String" CanBeNull="true" />
@@ -508,10 +508,10 @@
       <Column Name="ID" Type="System.Int64" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="RateID" Type="System.Int64" CanBeNull="true" />
       <Column Name="Combination" Type="System.String" CanBeNull="true" />
-      <Column Name="Length" Type="System.String" CanBeNull="true" />
-      <Column Name="Width" Type="System.String" CanBeNull="true" />
-      <Column Name="Height" Type="System.String" CanBeNull="true" />
-      <Column Name="Tare" Type="System.String" CanBeNull="true" />
+      <Column Name="Length" Type="System.Double" CanBeNull="true" />
+      <Column Name="Width" Type="System.Double" CanBeNull="true" />
+      <Column Name="Height" Type="System.Double" CanBeNull="true" />
+      <Column Name="Tare" Type="System.Double" CanBeNull="true" />
       <Association Name="TrailerCombination_Load" Member="Loads" ThisKey="ID" OtherKey="TrailerCombinationID" Type="Load" />
       <Association Name="Rate_TrailerCombination" Member="Rate" ThisKey="RateID" OtherKey="ID" Type="Rate" IsForeignKey="true" />
     </Type>

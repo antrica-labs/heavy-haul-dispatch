@@ -1198,13 +1198,13 @@ namespace SingerDispatch
 		
 		private string _LastAddress;
 		
-		private string _Length;
+		private System.Nullable<double> _Length;
 		
-		private string _Width;
+		private System.Nullable<double> _Width;
 		
-		private string _Height;
+		private System.Nullable<double> _Height;
 		
-		private string _Weight;
+		private System.Nullable<double> _Weight;
 		
 		private System.Nullable<bool> _SizeEstimated;
 		
@@ -1240,13 +1240,13 @@ namespace SingerDispatch
     partial void OnLastLocationChanged();
     partial void OnLastAddressChanging(string value);
     partial void OnLastAddressChanged();
-    partial void OnLengthChanging(string value);
+    partial void OnLengthChanging(System.Nullable<double> value);
     partial void OnLengthChanged();
-    partial void OnWidthChanging(string value);
+    partial void OnWidthChanging(System.Nullable<double> value);
     partial void OnWidthChanged();
-    partial void OnHeightChanging(string value);
+    partial void OnHeightChanging(System.Nullable<double> value);
     partial void OnHeightChanged();
-    partial void OnWeightChanging(string value);
+    partial void OnWeightChanging(System.Nullable<double> value);
     partial void OnWeightChanged();
     partial void OnSizeEstimatedChanging(System.Nullable<bool> value);
     partial void OnSizeEstimatedChanged();
@@ -1449,7 +1449,7 @@ namespace SingerDispatch
 		}
 		
 		[Column(Storage="_Length")]
-		public string Length
+		public System.Nullable<double> Length
 		{
 			get
 			{
@@ -1469,7 +1469,7 @@ namespace SingerDispatch
 		}
 		
 		[Column(Storage="_Width")]
-		public string Width
+		public System.Nullable<double> Width
 		{
 			get
 			{
@@ -1489,7 +1489,7 @@ namespace SingerDispatch
 		}
 		
 		[Column(Storage="_Height")]
-		public string Height
+		public System.Nullable<double> Height
 		{
 			get
 			{
@@ -1509,7 +1509,7 @@ namespace SingerDispatch
 		}
 		
 		[Column(Storage="_Weight")]
-		public string Weight
+		public System.Nullable<double> Weight
 		{
 			get
 			{
@@ -3817,13 +3817,13 @@ namespace SingerDispatch
 		
 		private string _LastAddress;
 		
-		private string _Length;
+		private System.Nullable<double> _Length;
 		
-		private string _Width;
+		private System.Nullable<double> _Width;
 		
-		private string _Height;
+		private System.Nullable<double> _Height;
 		
-		private string _Weight;
+		private System.Nullable<double> _Weight;
 		
 		private System.Nullable<bool> _SizeEstimated;
 		
@@ -3897,13 +3897,13 @@ namespace SingerDispatch
     partial void OnLastLocationChanged();
     partial void OnLastAddressChanging(string value);
     partial void OnLastAddressChanged();
-    partial void OnLengthChanging(string value);
+    partial void OnLengthChanging(System.Nullable<double> value);
     partial void OnLengthChanged();
-    partial void OnWidthChanging(string value);
+    partial void OnWidthChanging(System.Nullable<double> value);
     partial void OnWidthChanged();
-    partial void OnHeightChanging(string value);
+    partial void OnHeightChanging(System.Nullable<double> value);
     partial void OnHeightChanged();
-    partial void OnWeightChanging(string value);
+    partial void OnWeightChanging(System.Nullable<double> value);
     partial void OnWeightChanged();
     partial void OnSizeEstimatedChanging(System.Nullable<bool> value);
     partial void OnSizeEstimatedChanged();
@@ -4186,7 +4186,7 @@ namespace SingerDispatch
 		}
 		
 		[Column(Storage="_Length")]
-		public string Length
+		public System.Nullable<double> Length
 		{
 			get
 			{
@@ -4206,7 +4206,7 @@ namespace SingerDispatch
 		}
 		
 		[Column(Storage="_Width")]
-		public string Width
+		public System.Nullable<double> Width
 		{
 			get
 			{
@@ -4226,7 +4226,7 @@ namespace SingerDispatch
 		}
 		
 		[Column(Storage="_Height")]
-		public string Height
+		public System.Nullable<double> Height
 		{
 			get
 			{
@@ -4246,7 +4246,7 @@ namespace SingerDispatch
 		}
 		
 		[Column(Storage="_Weight")]
-		public string Weight
+		public System.Nullable<double> Weight
 		{
 			get
 			{
@@ -5687,39 +5687,39 @@ namespace SingerDispatch
 		
 		private string _Notes;
 		
-		private System.Nullable<int> _WeightSteer;
+		private System.Nullable<double> _WeightSteer;
 		
-		private System.Nullable<int> _WeightDrive;
+		private System.Nullable<double> _WeightDrive;
 		
-		private System.Nullable<int> _WeightGroup1;
+		private System.Nullable<double> _WeightGroup1;
 		
-		private System.Nullable<int> _WeightGroup2;
+		private System.Nullable<double> _WeightGroup2;
 		
-		private System.Nullable<int> _WeightGroup3;
+		private System.Nullable<double> _WeightGroup3;
 		
-		private System.Nullable<int> _WeightGroup4;
+		private System.Nullable<double> _WeightGroup4;
 		
-		private System.Nullable<int> _WeightGroup5;
+		private System.Nullable<double> _WeightGroup5;
 		
-		private System.Nullable<int> _WeightGroup6;
+		private System.Nullable<double> _WeightGroup6;
 		
-		private System.Nullable<int> _WeightGroup7;
+		private System.Nullable<double> _WeightGroup7;
 		
-		private System.Nullable<int> _WeightGroup8;
+		private System.Nullable<double> _WeightGroup8;
 		
-		private System.Nullable<int> _WeightGroup9;
+		private System.Nullable<double> _WeightGroup9;
 		
-		private System.Nullable<int> _WeightGroup10;
+		private System.Nullable<double> _WeightGroup10;
 		
 		private System.Nullable<bool> _WeightEstimated;
 		
-		private System.Nullable<int> _GrossWeight;
+		private System.Nullable<double> _GrossWeight;
 		
-		private System.Nullable<int> _LoadedLength;
+		private System.Nullable<double> _LoadedLength;
 		
-		private System.Nullable<int> _LoadedWidth;
+		private System.Nullable<double> _LoadedWidth;
 		
-		private System.Nullable<int> _LoadedHeight;
+		private System.Nullable<double> _LoadedHeight;
 		
 		private EntitySet<JobCommodity> _JobCommodities;
 		
@@ -5767,39 +5767,39 @@ namespace SingerDispatch
     partial void OnServiceDescriptionChanged();
     partial void OnNotesChanging(string value);
     partial void OnNotesChanged();
-    partial void OnWeightSteerChanging(System.Nullable<int> value);
+    partial void OnWeightSteerChanging(System.Nullable<double> value);
     partial void OnWeightSteerChanged();
-    partial void OnWeightDriveChanging(System.Nullable<int> value);
+    partial void OnWeightDriveChanging(System.Nullable<double> value);
     partial void OnWeightDriveChanged();
-    partial void OnWeightGroup1Changing(System.Nullable<int> value);
+    partial void OnWeightGroup1Changing(System.Nullable<double> value);
     partial void OnWeightGroup1Changed();
-    partial void OnWeightGroup2Changing(System.Nullable<int> value);
+    partial void OnWeightGroup2Changing(System.Nullable<double> value);
     partial void OnWeightGroup2Changed();
-    partial void OnWeightGroup3Changing(System.Nullable<int> value);
+    partial void OnWeightGroup3Changing(System.Nullable<double> value);
     partial void OnWeightGroup3Changed();
-    partial void OnWeightGroup4Changing(System.Nullable<int> value);
+    partial void OnWeightGroup4Changing(System.Nullable<double> value);
     partial void OnWeightGroup4Changed();
-    partial void OnWeightGroup5Changing(System.Nullable<int> value);
+    partial void OnWeightGroup5Changing(System.Nullable<double> value);
     partial void OnWeightGroup5Changed();
-    partial void OnWeightGroup6Changing(System.Nullable<int> value);
+    partial void OnWeightGroup6Changing(System.Nullable<double> value);
     partial void OnWeightGroup6Changed();
-    partial void OnWeightGroup7Changing(System.Nullable<int> value);
+    partial void OnWeightGroup7Changing(System.Nullable<double> value);
     partial void OnWeightGroup7Changed();
-    partial void OnWeightGroup8Changing(System.Nullable<int> value);
+    partial void OnWeightGroup8Changing(System.Nullable<double> value);
     partial void OnWeightGroup8Changed();
-    partial void OnWeightGroup9Changing(System.Nullable<int> value);
+    partial void OnWeightGroup9Changing(System.Nullable<double> value);
     partial void OnWeightGroup9Changed();
-    partial void OnWeightGroup10Changing(System.Nullable<int> value);
+    partial void OnWeightGroup10Changing(System.Nullable<double> value);
     partial void OnWeightGroup10Changed();
     partial void OnWeightEstimatedChanging(System.Nullable<bool> value);
     partial void OnWeightEstimatedChanged();
-    partial void OnGrossWeightChanging(System.Nullable<int> value);
+    partial void OnGrossWeightChanging(System.Nullable<double> value);
     partial void OnGrossWeightChanged();
-    partial void OnLoadedLengthChanging(System.Nullable<int> value);
+    partial void OnLoadedLengthChanging(System.Nullable<double> value);
     partial void OnLoadedLengthChanged();
-    partial void OnLoadedWidthChanging(System.Nullable<int> value);
+    partial void OnLoadedWidthChanging(System.Nullable<double> value);
     partial void OnLoadedWidthChanged();
-    partial void OnLoadedHeightChanging(System.Nullable<int> value);
+    partial void OnLoadedHeightChanging(System.Nullable<double> value);
     partial void OnLoadedHeightChanged();
     #endregion
 		
@@ -6078,7 +6078,7 @@ namespace SingerDispatch
 		}
 		
 		[Column(Storage="_WeightSteer")]
-		public System.Nullable<int> WeightSteer
+		public System.Nullable<double> WeightSteer
 		{
 			get
 			{
@@ -6098,7 +6098,7 @@ namespace SingerDispatch
 		}
 		
 		[Column(Storage="_WeightDrive")]
-		public System.Nullable<int> WeightDrive
+		public System.Nullable<double> WeightDrive
 		{
 			get
 			{
@@ -6118,7 +6118,7 @@ namespace SingerDispatch
 		}
 		
 		[Column(Storage="_WeightGroup1")]
-		public System.Nullable<int> WeightGroup1
+		public System.Nullable<double> WeightGroup1
 		{
 			get
 			{
@@ -6138,7 +6138,7 @@ namespace SingerDispatch
 		}
 		
 		[Column(Storage="_WeightGroup2")]
-		public System.Nullable<int> WeightGroup2
+		public System.Nullable<double> WeightGroup2
 		{
 			get
 			{
@@ -6158,7 +6158,7 @@ namespace SingerDispatch
 		}
 		
 		[Column(Storage="_WeightGroup3")]
-		public System.Nullable<int> WeightGroup3
+		public System.Nullable<double> WeightGroup3
 		{
 			get
 			{
@@ -6178,7 +6178,7 @@ namespace SingerDispatch
 		}
 		
 		[Column(Storage="_WeightGroup4")]
-		public System.Nullable<int> WeightGroup4
+		public System.Nullable<double> WeightGroup4
 		{
 			get
 			{
@@ -6198,7 +6198,7 @@ namespace SingerDispatch
 		}
 		
 		[Column(Storage="_WeightGroup5")]
-		public System.Nullable<int> WeightGroup5
+		public System.Nullable<double> WeightGroup5
 		{
 			get
 			{
@@ -6218,7 +6218,7 @@ namespace SingerDispatch
 		}
 		
 		[Column(Storage="_WeightGroup6")]
-		public System.Nullable<int> WeightGroup6
+		public System.Nullable<double> WeightGroup6
 		{
 			get
 			{
@@ -6238,7 +6238,7 @@ namespace SingerDispatch
 		}
 		
 		[Column(Storage="_WeightGroup7")]
-		public System.Nullable<int> WeightGroup7
+		public System.Nullable<double> WeightGroup7
 		{
 			get
 			{
@@ -6258,7 +6258,7 @@ namespace SingerDispatch
 		}
 		
 		[Column(Storage="_WeightGroup8")]
-		public System.Nullable<int> WeightGroup8
+		public System.Nullable<double> WeightGroup8
 		{
 			get
 			{
@@ -6278,7 +6278,7 @@ namespace SingerDispatch
 		}
 		
 		[Column(Storage="_WeightGroup9")]
-		public System.Nullable<int> WeightGroup9
+		public System.Nullable<double> WeightGroup9
 		{
 			get
 			{
@@ -6298,7 +6298,7 @@ namespace SingerDispatch
 		}
 		
 		[Column(Storage="_WeightGroup10")]
-		public System.Nullable<int> WeightGroup10
+		public System.Nullable<double> WeightGroup10
 		{
 			get
 			{
@@ -6338,7 +6338,7 @@ namespace SingerDispatch
 		}
 		
 		[Column(Storage="_GrossWeight")]
-		public System.Nullable<int> GrossWeight
+		public System.Nullable<double> GrossWeight
 		{
 			get
 			{
@@ -6358,7 +6358,7 @@ namespace SingerDispatch
 		}
 		
 		[Column(Storage="_LoadedLength")]
-		public System.Nullable<int> LoadedLength
+		public System.Nullable<double> LoadedLength
 		{
 			get
 			{
@@ -6378,7 +6378,7 @@ namespace SingerDispatch
 		}
 		
 		[Column(Storage="_LoadedWidth")]
-		public System.Nullable<int> LoadedWidth
+		public System.Nullable<double> LoadedWidth
 		{
 			get
 			{
@@ -6398,7 +6398,7 @@ namespace SingerDispatch
 		}
 		
 		[Column(Storage="_LoadedHeight")]
-		public System.Nullable<int> LoadedHeight
+		public System.Nullable<double> LoadedHeight
 		{
 			get
 			{
@@ -7281,13 +7281,13 @@ namespace SingerDispatch
 		
 		private string _LastAddress;
 		
-		private string _Length;
+		private System.Nullable<double> _Length;
 		
-		private string _Width;
+		private System.Nullable<double> _Width;
 		
-		private string _Height;
+		private System.Nullable<double> _Height;
 		
-		private string _Weight;
+		private System.Nullable<double> _Weight;
 		
 		private System.Nullable<bool> _SizeEstimated;
 		
@@ -7333,13 +7333,13 @@ namespace SingerDispatch
     partial void OnLastLocationChanged();
     partial void OnLastAddressChanging(string value);
     partial void OnLastAddressChanged();
-    partial void OnLengthChanging(string value);
+    partial void OnLengthChanging(System.Nullable<double> value);
     partial void OnLengthChanged();
-    partial void OnWidthChanging(string value);
+    partial void OnWidthChanging(System.Nullable<double> value);
     partial void OnWidthChanged();
-    partial void OnHeightChanging(string value);
+    partial void OnHeightChanging(System.Nullable<double> value);
     partial void OnHeightChanged();
-    partial void OnWeightChanging(string value);
+    partial void OnWeightChanging(System.Nullable<double> value);
     partial void OnWeightChanged();
     partial void OnSizeEstimatedChanging(System.Nullable<bool> value);
     partial void OnSizeEstimatedChanged();
@@ -7647,7 +7647,7 @@ namespace SingerDispatch
 		}
 		
 		[Column(Storage="_Length")]
-		public string Length
+		public System.Nullable<double> Length
 		{
 			get
 			{
@@ -7667,7 +7667,7 @@ namespace SingerDispatch
 		}
 		
 		[Column(Storage="_Width")]
-		public string Width
+		public System.Nullable<double> Width
 		{
 			get
 			{
@@ -7687,7 +7687,7 @@ namespace SingerDispatch
 		}
 		
 		[Column(Storage="_Height")]
-		public string Height
+		public System.Nullable<double> Height
 		{
 			get
 			{
@@ -7707,7 +7707,7 @@ namespace SingerDispatch
 		}
 		
 		[Column(Storage="_Weight")]
-		public string Weight
+		public System.Nullable<double> Weight
 		{
 			get
 			{
@@ -10495,7 +10495,7 @@ namespace SingerDispatch
 		
 		private string _Tare;
 		
-		private string _Height;
+		private System.Nullable<double> _Height;
 		
 		private string _AxleConfig;
 		
@@ -10555,7 +10555,7 @@ namespace SingerDispatch
     partial void OnIsDispatchableChanged();
     partial void OnTareChanging(string value);
     partial void OnTareChanged();
-    partial void OnHeightChanging(string value);
+    partial void OnHeightChanging(System.Nullable<double> value);
     partial void OnHeightChanged();
     partial void OnAxleConfigChanging(string value);
     partial void OnAxleConfigChanged();
@@ -10875,7 +10875,7 @@ namespace SingerDispatch
 		}
 		
 		[Column(Storage="_Height")]
-		public string Height
+		public System.Nullable<double> Height
 		{
 			get
 			{
@@ -11774,13 +11774,13 @@ namespace SingerDispatch
 		
 		private string _Combination;
 		
-		private string _Length;
+		private System.Nullable<double> _Length;
 		
-		private string _Width;
+		private System.Nullable<double> _Width;
 		
-		private string _Height;
+		private System.Nullable<double> _Height;
 		
-		private string _Tare;
+		private System.Nullable<double> _Tare;
 		
 		private EntitySet<Load> _Loads;
 		
@@ -11796,13 +11796,13 @@ namespace SingerDispatch
     partial void OnRateIDChanged();
     partial void OnCombinationChanging(string value);
     partial void OnCombinationChanged();
-    partial void OnLengthChanging(string value);
+    partial void OnLengthChanging(System.Nullable<double> value);
     partial void OnLengthChanged();
-    partial void OnWidthChanging(string value);
+    partial void OnWidthChanging(System.Nullable<double> value);
     partial void OnWidthChanged();
-    partial void OnHeightChanging(string value);
+    partial void OnHeightChanging(System.Nullable<double> value);
     partial void OnHeightChanged();
-    partial void OnTareChanging(string value);
+    partial void OnTareChanging(System.Nullable<double> value);
     partial void OnTareChanged();
     #endregion
 		
@@ -11878,7 +11878,7 @@ namespace SingerDispatch
 		}
 		
 		[Column(Storage="_Length")]
-		public string Length
+		public System.Nullable<double> Length
 		{
 			get
 			{
@@ -11898,7 +11898,7 @@ namespace SingerDispatch
 		}
 		
 		[Column(Storage="_Width")]
-		public string Width
+		public System.Nullable<double> Width
 		{
 			get
 			{
@@ -11918,7 +11918,7 @@ namespace SingerDispatch
 		}
 		
 		[Column(Storage="_Height")]
-		public string Height
+		public System.Nullable<double> Height
 		{
 			get
 			{
@@ -11938,7 +11938,7 @@ namespace SingerDispatch
 		}
 		
 		[Column(Storage="_Tare")]
-		public string Tare
+		public System.Nullable<double> Tare
 		{
 			get
 			{

@@ -232,7 +232,19 @@ namespace SingerDispatch.Importer
 
             // Add all recorded commodities for this company
             sql = String.Format("SELECT * FROM tbl_Commodity WHERE companyId = {0}", company.ArchiveID);
+            using (var command = new OleDbCommand(sql, connection))
+            {
+                using (var innerReader = command.ExecuteReader())
+                {
+                    while (innerReader.Read())
+                    {
+                        var commodity = CreateCommodityFromRow(connection, innerReader);
 
+                        if (commodity != null)
+                            company.Commodities.Add(commodity);
+                    }
+                }
+            }
 
             return company;
         }
@@ -339,6 +351,47 @@ namespace SingerDispatch.Importer
                 contact.Fax += " ext. " + fext;            
 
             return contact;
+        }
+
+        private Commodity CreateCommodityFromRow(OleDbConnection connection, OleDbDataReader reader)
+        {
+            if (reader["commodityName"] == DBNull.Value)
+                return null;
+                         
+            var commodity = new Commodity();
+
+            commodity.Name = (string)reader["commodityName"];
+            commodity.Value = reader["commodityValue"] == DBNull.Value ? null : (decimal?)reader["commodityValue"];
+            commodity.Serial = reader["commoditySerialNum"] == DBNull.Value ? null : (string)reader["commoditySerialNum"];
+            commodity.Unit = reader["commodityUnitNum"] == DBNull.Value ? null : (string)reader["commodityUnitNum"];
+            commodity.Owner = reader["commodityOwner"] == DBNull.Value ? null : (string)reader["commodityOwner"];
+            commodity.LastLocation = reader["commodityLastKnownLocation"] == DBNull.Value ? null : (string)reader["commodityLastKnownLocation"];
+            commodity.LastAddress = reader["commodityLastKnownSiteName"] == DBNull.Value ? null : (string)reader["commodityLastKnownSiteName"];
+
+            if (commodity.LastAddress == null)
+            {
+                commodity.LastAddress = reader["commodityLastKnownLSD"] == DBNull.Value ? null : (string)reader["commodityLastKnownLSD"];
+            }
+
+            double? length = reader["commodityActualLength"] == DBNull.Value ? null : (double?)reader["commodityActualLength"];
+            double? width = reader["commodityActualWidth"] == DBNull.Value ? null : (double?)reader["commodityActualWidth"]; ;
+            double? height = reader["commodityActualHeight"] == DBNull.Value ? null : (double?)reader["commodityActualHeight"]; ;
+            double? weight = reader["commodityActualWeight"] == DBNull.Value ? null : (double?)reader["commodityActualWeight"]; ;
+            
+            double? elength = reader["commodityEstimatedLength"] == DBNull.Value ? null : (double?)reader["commodityEstimatedLength"];
+            double? ewidth = reader["commodityEstimatedWidth"] == DBNull.Value ? null : (double?)reader["commodityEstimatedWidth"]; ;
+            double? eheight = reader["commodityEstimatedHeight"] == DBNull.Value ? null : (double?)reader["commodityEstimatedHeight"]; ;
+            double? eweight = reader["commodityEstimatedWeight"] == DBNull.Value ? null : (double?)reader["commodityEstimatedWeight"]; ;
+
+            commodity.Length = (length != null) ? length : elength;
+            commodity.Width = (width != null) ? width : ewidth;
+            commodity.Height = (height != null) ? height : eheight;
+            commodity.Weight = (weight != null) ? weight : eweight;
+
+            commodity.SizeEstimated = (length == null) || (width == null) || (height == null);
+            commodity.WeightEstimated = (weight == null);
+            
+            return commodity;
         }
 
         private void InsertCompanies(List<Company> companies)

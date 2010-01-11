@@ -66,7 +66,7 @@ namespace SingerDispatch.Panels.Jobs
                 return;
             }
             
-            int? gross = 0;
+            double? gross = 0;
 
             gross += load.WeightSteer;
             gross += load.WeightDrive;
