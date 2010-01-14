@@ -508,6 +508,7 @@
       <Column Name="ID" Type="System.Int64" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="RateID" Type="System.Int64" CanBeNull="true" />
       <Column Name="Combination" Type="System.String" CanBeNull="true" />
+      <Column Name="LicencePlate" Type="System.String" CanBeNull="true" />
       <Column Name="Length" Type="System.Double" CanBeNull="true" />
       <Column Name="Width" Type="System.Double" CanBeNull="true" />
       <Column Name="Height" Type="System.Double" CanBeNull="true" />
@@ -538,6 +539,45 @@
       <Column Name="ConditionID" Type="System.Int64" CanBeNull="true" />
       <Association Name="Quote_QuoteCondition" Member="Quote" ThisKey="QuoteID" OtherKey="ID" Type="Quote" IsForeignKey="true" />
       <Association Name="Condition_QuoteCondition" Member="Condition" ThisKey="ConditionID" OtherKey="ID" Type="Condition" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="" Member="Invoices">
+    <Type Name="Invoice">
+      <Column Name="ID" Type="System.Int64" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="JobID" Type="System.Int64" CanBeNull="true" />
+      <Column Name="Number" Type="System.Int32" />
+      <Column Name="Revision" Type="System.Int32" />
+      <Association Name="Job_Invoice" Member="Job" ThisKey="JobID" OtherKey="ID" Type="Job" IsForeignKey="true" />
+      <Association Name="Invoice_InvoiceLineItem" Member="InvoiceLineItems" ThisKey="ID" OtherKey="InvoiceID" Type="InvoiceLineItem" />
+      <Association Name="Invoice_InvoiceExtra" Member="InvoiceExtras" ThisKey="ID" OtherKey="InvoiceID" Type="InvoiceExtra" />
+    </Type>
+  </Table>
+  <Table Name="" Member="InvoiceLineItems">
+    <Type Name="InvoiceLineItem">
+      <Column Name="ID" Type="System.Int64" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="InvoiceID" Type="System.Int64" CanBeNull="true" />
+      <Column Name="Description" Type="System.String" CanBeNull="true" />
+      <Column Name="StartDate" Type="System.DateTime" CanBeNull="true" />
+      <Column Name="EndDate" Type="System.DateTime" CanBeNull="true" />
+      <Column Name="Departure" Type="System.String" CanBeNull="true" />
+      <Column Name="Destination" Type="System.String" CanBeNull="true" />
+      <Column Name="Hours" Type="System.Double" CanBeNull="true" />
+      <Column Name="Cost" Type="System.Decimal" CanBeNull="true" />
+      <Association Name="Invoice_InvoiceLineItem" Member="Invoice" ThisKey="InvoiceID" OtherKey="ID" Type="Invoice" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="" Member="InvoiceExtras">
+    <Type Name="InvoiceExtra">
+      <Column Name="ID" Type="System.Int64" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="InvoiceID" Type="System.Int64" CanBeNull="true" />
+      <Column Name="Description" Type="System.String" CanBeNull="true" />
+      <Column Name="StartDate" Type="System.DateTime" CanBeNull="true" />
+      <Column Name="EndDate" Type="System.DateTime" CanBeNull="true" />
+      <Column Name="Departure" Type="System.String" CanBeNull="true" />
+      <Column Name="Destination" Type="System.String" CanBeNull="true" />
+      <Column Name="Hours" Type="System.Double" CanBeNull="true" />
+      <Column Name="Cost" Type="System.Decimal" CanBeNull="true" />
+      <Association Name="Invoice_InvoiceExtra" Member="Invoice" ThisKey="InvoiceID" OtherKey="ID" Type="Invoice" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>

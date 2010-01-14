@@ -21,6 +21,7 @@
             <WPF:DataGrid.Columns>
                 <WPF:DataGridComboBoxColumn Header="Wheel type" ItemsSource="{Binding Source={StaticResource RatesDropList}}" DisplayMemberPath="Name" SelectedItemBinding="{Binding Rate}" />
                 <WPF:DataGridTextColumn Header="Combination" Binding="{Binding Combination}" Width="2*" />
+                <WPF:DataGridTextColumn Header="Licence" Binding="{Binding LicencePlate}" />
                 <WPF:DataGridTextColumn Header="Length" Binding="{Binding Length}" Width="0.5*" />
                 <WPF:DataGridTextColumn Header="Width" Binding="{Binding Width}" Width="0.5*" />
                 <WPF:DataGridTextColumn Header="Height" Binding="{Binding Height}" Width="0.5*" />

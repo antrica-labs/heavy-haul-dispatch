@@ -9,10 +9,8 @@ using System.Configuration;
 
 namespace SingerDispatch.Importer
 {
-    class Program
-    {
-        private const string AccessConnectionString = @"Provider=Microsoft.Jet.OLEDB.4.0;Data Source=""C:\Users\Simon Twogood\Documents\Work\Singer\SingerPrototypeDB08262005_1100.mdb""";
-        
+    public class Program
+    {   
         private Dictionary<string, CompanyPriorityLevel> PriorityLevels;
         private Dictionary<bool?, string> CompanyTypes;
         private Dictionary<string, ProvincesAndState> ProvincesAndStates;
@@ -39,14 +37,14 @@ namespace SingerDispatch.Importer
         {
             Console.WriteLine("Initializing database...");
 
-            using (var connection = new SqlConnection(ConfigurationManager.ConnectionStrings["ConnectionParameters"].ConnectionString))
+            using (var connection = new SqlConnection(ConfigurationManager.ConnectionStrings["NewDBConnectionParameters"].ConnectionString))
             {
-                connection.Open();
-                                
-                SqlConnection.ClearPool(connection);
-
                 var sql = String.Format("DROP DATABASE [{0}]", connection.Database);
+
+                connection.Open();
                 connection.ChangeDatabase("master");
+                
+                SqlConnection.ClearPool(connection);
 
                 using (var command = new SqlCommand(sql, connection))
                 {
@@ -54,7 +52,7 @@ namespace SingerDispatch.Importer
                 }
             }
 
-            var linq = new SingerDispatchDataContext(ConfigurationManager.ConnectionStrings["ConnectionParameters"].ConnectionString);
+            var linq = new SingerDispatchDataContext(ConfigurationManager.ConnectionStrings["NewDBConnectionParameters"].ConnectionString);
 
             var builder = new DatabaseBuilder(linq);
             builder.CreateNewDatabase();
@@ -64,7 +62,7 @@ namespace SingerDispatch.Importer
         {
             Console.WriteLine("Setting up import lookups...");
 
-            var linq = new SingerDispatchDataContext(ConfigurationManager.ConnectionStrings["ConnectionParameters"].ConnectionString);
+            var linq = new SingerDispatchDataContext(ConfigurationManager.ConnectionStrings["NewDBConnectionParameters"].ConnectionString);
 
             PriorityLevels = new Dictionary<string, CompanyPriorityLevel>();
             foreach (var level in (from l in linq.CompanyPriorityLevels select l).ToList())
@@ -122,8 +120,12 @@ namespace SingerDispatch.Importer
         public void Run()
         {
             var companies = new List<Company>();
-            
-            using (var connection = new OleDbConnection(AccessConnectionString))
+
+            var datasource = ConfigurationManager.ConnectionStrings["OldDBConnectionParameters"].ConnectionString;
+            var provider = ConfigurationManager.ConnectionStrings["OldDBConnectionParameters"].ProviderName;
+            var connectionString = String.Format("Provider={0};{1}", provider, datasource);
+
+            using (var connection = new OleDbConnection(connectionString))
             {
                 connection.Open();
 
@@ -396,7 +398,7 @@ namespace SingerDispatch.Importer
 
         private void InsertCompanies(List<Company> companies)
         {
-            var context = new SingerDispatchDataContext(ConfigurationManager.ConnectionStrings["ConnectionParameters"].ConnectionString);
+            var context = new SingerDispatchDataContext(ConfigurationManager.ConnectionStrings["NewDBConnectionParameters"].ConnectionString);
 
             context.Companies.InsertAllOnSubmit(companies);
             context.SubmitChanges();

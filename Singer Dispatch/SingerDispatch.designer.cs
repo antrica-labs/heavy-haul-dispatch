@@ -134,6 +134,15 @@ namespace SingerDispatch
     partial void InsertQuoteCondition(QuoteCondition instance);
     partial void UpdateQuoteCondition(QuoteCondition instance);
     partial void DeleteQuoteCondition(QuoteCondition instance);
+    partial void InsertInvoice(Invoice instance);
+    partial void UpdateInvoice(Invoice instance);
+    partial void DeleteInvoice(Invoice instance);
+    partial void InsertInvoiceLineItem(InvoiceLineItem instance);
+    partial void UpdateInvoiceLineItem(InvoiceLineItem instance);
+    partial void DeleteInvoiceLineItem(InvoiceLineItem instance);
+    partial void InsertInvoiceExtra(InvoiceExtra instance);
+    partial void UpdateInvoiceExtra(InvoiceExtra instance);
+    partial void DeleteInvoiceExtra(InvoiceExtra instance);
     #endregion
 		
 		public SingerDispatchDataContext(string connection) : 
@@ -437,6 +446,30 @@ namespace SingerDispatch
 			get
 			{
 				return this.GetTable<QuoteCondition>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Invoice> Invoices
+		{
+			get
+			{
+				return this.GetTable<Invoice>();
+			}
+		}
+		
+		public System.Data.Linq.Table<InvoiceLineItem> InvoiceLineItems
+		{
+			get
+			{
+				return this.GetTable<InvoiceLineItem>();
+			}
+		}
+		
+		public System.Data.Linq.Table<InvoiceExtra> InvoiceExtras
+		{
+			get
+			{
+				return this.GetTable<InvoiceExtra>();
 			}
 		}
 	}
@@ -11774,6 +11807,8 @@ namespace SingerDispatch
 		
 		private string _Combination;
 		
+		private string _LicencePlate;
+		
 		private System.Nullable<double> _Length;
 		
 		private System.Nullable<double> _Width;
@@ -11796,6 +11831,8 @@ namespace SingerDispatch
     partial void OnRateIDChanged();
     partial void OnCombinationChanging(string value);
     partial void OnCombinationChanged();
+    partial void OnLicencePlateChanging(string value);
+    partial void OnLicencePlateChanged();
     partial void OnLengthChanging(System.Nullable<double> value);
     partial void OnLengthChanged();
     partial void OnWidthChanging(System.Nullable<double> value);
@@ -11873,6 +11910,26 @@ namespace SingerDispatch
 					this._Combination = value;
 					this.SendPropertyChanged("Combination");
 					this.OnCombinationChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_LicencePlate")]
+		public string LicencePlate
+		{
+			get
+			{
+				return this._LicencePlate;
+			}
+			set
+			{
+				if ((this._LicencePlate != value))
+				{
+					this.OnLicencePlateChanging(value);
+					this.SendPropertyChanging();
+					this._LicencePlate = value;
+					this.SendPropertyChanged("LicencePlate");
+					this.OnLicencePlateChanged();
 				}
 			}
 		}
@@ -12460,6 +12517,811 @@ namespace SingerDispatch
 						this._ConditionID = default(Nullable<long>);
 					}
 					this.SendPropertyChanged("Condition");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[Table(Name="")]
+	public partial class Invoice : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private long _ID;
+		
+		private System.Nullable<long> _JobID;
+		
+		private int _Number;
+		
+		private int _Revision;
+		
+		private EntitySet<InvoiceLineItem> _InvoiceLineItems;
+		
+		private EntitySet<InvoiceExtra> _InvoiceExtras;
+		
+		private EntityRef<Job> _Job;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDChanging(long value);
+    partial void OnIDChanged();
+    partial void OnJobIDChanging(System.Nullable<long> value);
+    partial void OnJobIDChanged();
+    partial void OnNumberChanging(int value);
+    partial void OnNumberChanged();
+    partial void OnRevisionChanging(int value);
+    partial void OnRevisionChanged();
+    #endregion
+		
+		public Invoice()
+		{
+			this._InvoiceLineItems = new EntitySet<InvoiceLineItem>(new Action<InvoiceLineItem>(this.attach_InvoiceLineItems), new Action<InvoiceLineItem>(this.detach_InvoiceLineItems));
+			this._InvoiceExtras = new EntitySet<InvoiceExtra>(new Action<InvoiceExtra>(this.attach_InvoiceExtras), new Action<InvoiceExtra>(this.detach_InvoiceExtras));
+			this._Job = default(EntityRef<Job>);
+			OnCreated();
+		}
+		
+		[Column(Storage="_ID", AutoSync=AutoSync.OnInsert, IsPrimaryKey=true, IsDbGenerated=true)]
+		public long ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this.OnIDChanging(value);
+					this.SendPropertyChanging();
+					this._ID = value;
+					this.SendPropertyChanged("ID");
+					this.OnIDChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_JobID")]
+		public System.Nullable<long> JobID
+		{
+			get
+			{
+				return this._JobID;
+			}
+			set
+			{
+				if ((this._JobID != value))
+				{
+					if (this._Job.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnJobIDChanging(value);
+					this.SendPropertyChanging();
+					this._JobID = value;
+					this.SendPropertyChanged("JobID");
+					this.OnJobIDChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_Number")]
+		public int Number
+		{
+			get
+			{
+				return this._Number;
+			}
+			set
+			{
+				if ((this._Number != value))
+				{
+					this.OnNumberChanging(value);
+					this.SendPropertyChanging();
+					this._Number = value;
+					this.SendPropertyChanged("Number");
+					this.OnNumberChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_Revision")]
+		public int Revision
+		{
+			get
+			{
+				return this._Revision;
+			}
+			set
+			{
+				if ((this._Revision != value))
+				{
+					this.OnRevisionChanging(value);
+					this.SendPropertyChanging();
+					this._Revision = value;
+					this.SendPropertyChanged("Revision");
+					this.OnRevisionChanged();
+				}
+			}
+		}
+		
+		[Association(Name="Invoice_InvoiceLineItem", Storage="_InvoiceLineItems", ThisKey="ID", OtherKey="InvoiceID")]
+		public EntitySet<InvoiceLineItem> InvoiceLineItems
+		{
+			get
+			{
+				return this._InvoiceLineItems;
+			}
+			set
+			{
+				this._InvoiceLineItems.Assign(value);
+			}
+		}
+		
+		[Association(Name="Invoice_InvoiceExtra", Storage="_InvoiceExtras", ThisKey="ID", OtherKey="InvoiceID")]
+		public EntitySet<InvoiceExtra> InvoiceExtras
+		{
+			get
+			{
+				return this._InvoiceExtras;
+			}
+			set
+			{
+				this._InvoiceExtras.Assign(value);
+			}
+		}
+		
+		[Association(Name="Job_Invoice", Storage="_Job", ThisKey="JobID", OtherKey="ID", IsForeignKey=true)]
+		public Job Job
+		{
+			get
+			{
+				return this._Job.Entity;
+			}
+			set
+			{
+				if ((this._Job.Entity != value))
+				{
+					this.SendPropertyChanging();
+					this._Job.Entity = value;
+					this.SendPropertyChanged("Job");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_InvoiceLineItems(InvoiceLineItem entity)
+		{
+			this.SendPropertyChanging();
+			entity.Invoice = this;
+		}
+		
+		private void detach_InvoiceLineItems(InvoiceLineItem entity)
+		{
+			this.SendPropertyChanging();
+			entity.Invoice = null;
+		}
+		
+		private void attach_InvoiceExtras(InvoiceExtra entity)
+		{
+			this.SendPropertyChanging();
+			entity.Invoice = this;
+		}
+		
+		private void detach_InvoiceExtras(InvoiceExtra entity)
+		{
+			this.SendPropertyChanging();
+			entity.Invoice = null;
+		}
+	}
+	
+	[Table(Name="")]
+	public partial class InvoiceLineItem : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private long _ID;
+		
+		private System.Nullable<long> _InvoiceID;
+		
+		private string _Description;
+		
+		private System.Nullable<System.DateTime> _StartDate;
+		
+		private System.Nullable<System.DateTime> _EndDate;
+		
+		private string _Departure;
+		
+		private string _Destination;
+		
+		private System.Nullable<double> _Hours;
+		
+		private System.Nullable<decimal> _Cost;
+		
+		private EntityRef<Invoice> _Invoice;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDChanging(long value);
+    partial void OnIDChanged();
+    partial void OnInvoiceIDChanging(System.Nullable<long> value);
+    partial void OnInvoiceIDChanged();
+    partial void OnDescriptionChanging(string value);
+    partial void OnDescriptionChanged();
+    partial void OnStartDateChanging(System.Nullable<System.DateTime> value);
+    partial void OnStartDateChanged();
+    partial void OnEndDateChanging(System.Nullable<System.DateTime> value);
+    partial void OnEndDateChanged();
+    partial void OnDepartureChanging(string value);
+    partial void OnDepartureChanged();
+    partial void OnDestinationChanging(string value);
+    partial void OnDestinationChanged();
+    partial void OnHoursChanging(System.Nullable<double> value);
+    partial void OnHoursChanged();
+    partial void OnCostChanging(System.Nullable<decimal> value);
+    partial void OnCostChanged();
+    #endregion
+		
+		public InvoiceLineItem()
+		{
+			this._Invoice = default(EntityRef<Invoice>);
+			OnCreated();
+		}
+		
+		[Column(Storage="_ID", AutoSync=AutoSync.OnInsert, IsPrimaryKey=true, IsDbGenerated=true)]
+		public long ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this.OnIDChanging(value);
+					this.SendPropertyChanging();
+					this._ID = value;
+					this.SendPropertyChanged("ID");
+					this.OnIDChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_InvoiceID")]
+		public System.Nullable<long> InvoiceID
+		{
+			get
+			{
+				return this._InvoiceID;
+			}
+			set
+			{
+				if ((this._InvoiceID != value))
+				{
+					if (this._Invoice.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnInvoiceIDChanging(value);
+					this.SendPropertyChanging();
+					this._InvoiceID = value;
+					this.SendPropertyChanged("InvoiceID");
+					this.OnInvoiceIDChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_Description")]
+		public string Description
+		{
+			get
+			{
+				return this._Description;
+			}
+			set
+			{
+				if ((this._Description != value))
+				{
+					this.OnDescriptionChanging(value);
+					this.SendPropertyChanging();
+					this._Description = value;
+					this.SendPropertyChanged("Description");
+					this.OnDescriptionChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_StartDate")]
+		public System.Nullable<System.DateTime> StartDate
+		{
+			get
+			{
+				return this._StartDate;
+			}
+			set
+			{
+				if ((this._StartDate != value))
+				{
+					this.OnStartDateChanging(value);
+					this.SendPropertyChanging();
+					this._StartDate = value;
+					this.SendPropertyChanged("StartDate");
+					this.OnStartDateChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_EndDate")]
+		public System.Nullable<System.DateTime> EndDate
+		{
+			get
+			{
+				return this._EndDate;
+			}
+			set
+			{
+				if ((this._EndDate != value))
+				{
+					this.OnEndDateChanging(value);
+					this.SendPropertyChanging();
+					this._EndDate = value;
+					this.SendPropertyChanged("EndDate");
+					this.OnEndDateChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_Departure")]
+		public string Departure
+		{
+			get
+			{
+				return this._Departure;
+			}
+			set
+			{
+				if ((this._Departure != value))
+				{
+					this.OnDepartureChanging(value);
+					this.SendPropertyChanging();
+					this._Departure = value;
+					this.SendPropertyChanged("Departure");
+					this.OnDepartureChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_Destination")]
+		public string Destination
+		{
+			get
+			{
+				return this._Destination;
+			}
+			set
+			{
+				if ((this._Destination != value))
+				{
+					this.OnDestinationChanging(value);
+					this.SendPropertyChanging();
+					this._Destination = value;
+					this.SendPropertyChanged("Destination");
+					this.OnDestinationChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_Hours")]
+		public System.Nullable<double> Hours
+		{
+			get
+			{
+				return this._Hours;
+			}
+			set
+			{
+				if ((this._Hours != value))
+				{
+					this.OnHoursChanging(value);
+					this.SendPropertyChanging();
+					this._Hours = value;
+					this.SendPropertyChanged("Hours");
+					this.OnHoursChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_Cost")]
+		public System.Nullable<decimal> Cost
+		{
+			get
+			{
+				return this._Cost;
+			}
+			set
+			{
+				if ((this._Cost != value))
+				{
+					this.OnCostChanging(value);
+					this.SendPropertyChanging();
+					this._Cost = value;
+					this.SendPropertyChanged("Cost");
+					this.OnCostChanged();
+				}
+			}
+		}
+		
+		[Association(Name="Invoice_InvoiceLineItem", Storage="_Invoice", ThisKey="InvoiceID", OtherKey="ID", IsForeignKey=true)]
+		public Invoice Invoice
+		{
+			get
+			{
+				return this._Invoice.Entity;
+			}
+			set
+			{
+				Invoice previousValue = this._Invoice.Entity;
+				if (((previousValue != value) 
+							|| (this._Invoice.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Invoice.Entity = null;
+						previousValue.InvoiceLineItems.Remove(this);
+					}
+					this._Invoice.Entity = value;
+					if ((value != null))
+					{
+						value.InvoiceLineItems.Add(this);
+						this._InvoiceID = value.ID;
+					}
+					else
+					{
+						this._InvoiceID = default(Nullable<long>);
+					}
+					this.SendPropertyChanged("Invoice");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[Table(Name="")]
+	public partial class InvoiceExtra : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private long _ID;
+		
+		private System.Nullable<long> _InvoiceID;
+		
+		private string _Description;
+		
+		private System.Nullable<System.DateTime> _StartDate;
+		
+		private System.Nullable<System.DateTime> _EndDate;
+		
+		private string _Departure;
+		
+		private string _Destination;
+		
+		private System.Nullable<double> _Hours;
+		
+		private System.Nullable<decimal> _Cost;
+		
+		private EntityRef<Invoice> _Invoice;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDChanging(long value);
+    partial void OnIDChanged();
+    partial void OnInvoiceIDChanging(System.Nullable<long> value);
+    partial void OnInvoiceIDChanged();
+    partial void OnDescriptionChanging(string value);
+    partial void OnDescriptionChanged();
+    partial void OnStartDateChanging(System.Nullable<System.DateTime> value);
+    partial void OnStartDateChanged();
+    partial void OnEndDateChanging(System.Nullable<System.DateTime> value);
+    partial void OnEndDateChanged();
+    partial void OnDepartureChanging(string value);
+    partial void OnDepartureChanged();
+    partial void OnDestinationChanging(string value);
+    partial void OnDestinationChanged();
+    partial void OnHoursChanging(System.Nullable<double> value);
+    partial void OnHoursChanged();
+    partial void OnCostChanging(System.Nullable<decimal> value);
+    partial void OnCostChanged();
+    #endregion
+		
+		public InvoiceExtra()
+		{
+			this._Invoice = default(EntityRef<Invoice>);
+			OnCreated();
+		}
+		
+		[Column(Storage="_ID", AutoSync=AutoSync.OnInsert, IsPrimaryKey=true, IsDbGenerated=true)]
+		public long ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this.OnIDChanging(value);
+					this.SendPropertyChanging();
+					this._ID = value;
+					this.SendPropertyChanged("ID");
+					this.OnIDChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_InvoiceID")]
+		public System.Nullable<long> InvoiceID
+		{
+			get
+			{
+				return this._InvoiceID;
+			}
+			set
+			{
+				if ((this._InvoiceID != value))
+				{
+					if (this._Invoice.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnInvoiceIDChanging(value);
+					this.SendPropertyChanging();
+					this._InvoiceID = value;
+					this.SendPropertyChanged("InvoiceID");
+					this.OnInvoiceIDChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_Description")]
+		public string Description
+		{
+			get
+			{
+				return this._Description;
+			}
+			set
+			{
+				if ((this._Description != value))
+				{
+					this.OnDescriptionChanging(value);
+					this.SendPropertyChanging();
+					this._Description = value;
+					this.SendPropertyChanged("Description");
+					this.OnDescriptionChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_StartDate")]
+		public System.Nullable<System.DateTime> StartDate
+		{
+			get
+			{
+				return this._StartDate;
+			}
+			set
+			{
+				if ((this._StartDate != value))
+				{
+					this.OnStartDateChanging(value);
+					this.SendPropertyChanging();
+					this._StartDate = value;
+					this.SendPropertyChanged("StartDate");
+					this.OnStartDateChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_EndDate")]
+		public System.Nullable<System.DateTime> EndDate
+		{
+			get
+			{
+				return this._EndDate;
+			}
+			set
+			{
+				if ((this._EndDate != value))
+				{
+					this.OnEndDateChanging(value);
+					this.SendPropertyChanging();
+					this._EndDate = value;
+					this.SendPropertyChanged("EndDate");
+					this.OnEndDateChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_Departure")]
+		public string Departure
+		{
+			get
+			{
+				return this._Departure;
+			}
+			set
+			{
+				if ((this._Departure != value))
+				{
+					this.OnDepartureChanging(value);
+					this.SendPropertyChanging();
+					this._Departure = value;
+					this.SendPropertyChanged("Departure");
+					this.OnDepartureChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_Destination")]
+		public string Destination
+		{
+			get
+			{
+				return this._Destination;
+			}
+			set
+			{
+				if ((this._Destination != value))
+				{
+					this.OnDestinationChanging(value);
+					this.SendPropertyChanging();
+					this._Destination = value;
+					this.SendPropertyChanged("Destination");
+					this.OnDestinationChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_Hours")]
+		public System.Nullable<double> Hours
+		{
+			get
+			{
+				return this._Hours;
+			}
+			set
+			{
+				if ((this._Hours != value))
+				{
+					this.OnHoursChanging(value);
+					this.SendPropertyChanging();
+					this._Hours = value;
+					this.SendPropertyChanged("Hours");
+					this.OnHoursChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_Cost")]
+		public System.Nullable<decimal> Cost
+		{
+			get
+			{
+				return this._Cost;
+			}
+			set
+			{
+				if ((this._Cost != value))
+				{
+					this.OnCostChanging(value);
+					this.SendPropertyChanging();
+					this._Cost = value;
+					this.SendPropertyChanged("Cost");
+					this.OnCostChanged();
+				}
+			}
+		}
+		
+		[Association(Name="Invoice_InvoiceExtra", Storage="_Invoice", ThisKey="InvoiceID", OtherKey="ID", IsForeignKey=true)]
+		public Invoice Invoice
+		{
+			get
+			{
+				return this._Invoice.Entity;
+			}
+			set
+			{
+				Invoice previousValue = this._Invoice.Entity;
+				if (((previousValue != value) 
+							|| (this._Invoice.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Invoice.Entity = null;
+						previousValue.InvoiceExtras.Remove(this);
+					}
+					this._Invoice.Entity = value;
+					if ((value != null))
+					{
+						value.InvoiceExtras.Add(this);
+						this._InvoiceID = value.ID;
+					}
+					else
+					{
+						this._InvoiceID = default(Nullable<long>);
+					}
+					this.SendPropertyChanged("Invoice");
 				}
 			}
 		}

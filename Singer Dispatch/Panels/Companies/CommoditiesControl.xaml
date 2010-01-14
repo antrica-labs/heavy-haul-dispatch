@@ -16,8 +16,8 @@
     <StackPanel>
         <WPF:DataGrid Name="dgCommodities" Style="{StaticResource ListDisplay}" Height="200">
             <WPF:DataGrid.Columns>
-                <WPF:DataGridTextColumn Header="Unit" Binding="{Binding Unit}" />
                 <WPF:DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="2*" />
+                <WPF:DataGridTextColumn Header="Unit" Binding="{Binding Unit}" />                
                 <WPF:DataGridTextColumn Header="Length" Binding="{Binding Length}" />
                 <WPF:DataGridTextColumn Header="Width" Binding="{Binding Width}" />
                 <WPF:DataGridTextColumn Header="Height" Binding="{Binding Height}" />
