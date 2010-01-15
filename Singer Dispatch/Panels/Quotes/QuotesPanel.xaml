@@ -5,7 +5,7 @@
                          xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                          xmlns:Quotes="clr-namespace:SingerDispatch.Panels.Quotes"
                          xmlns:Panels="clr-namespace:SingerDispatch.Panels"
-                         x:Name="quotesPanel"
+                         x:Name="quotesPanel" Loaded="Control_Loaded"
                          mc:Ignorable="d" IsEnabled="False">
     <UserControl.Resources>
         <ResourceDictionary>
@@ -26,10 +26,18 @@
 
                 <StackPanel Grid.Column="0" Orientation="Horizontal">
                     <Label>Selected quote #:</Label>
-                    <Label Content="{Binding Converter={StaticResource QuoteFriendlyNameConverter}, Path=SelectedQuote}" FontWeight="Bold" />
+                    <Label>
+                        <Label.Content>
+                            <MultiBinding Converter="{StaticResource QuoteFriendlyNameConverter}">
+                                <Binding ElementName="quotesPanel" Path="SelectedQuote.Number" />                                
+                                <Binding ElementName="quotesPanel" Path="SelectedQuote.Revision" />
+                            </MultiBinding>
+                        </Label.Content>
+                    </Label>
+                    <!-- <Label Content="{Binding Converter={StaticResource QuoteFriendlyNameConverter}, Path=SelectedQuote}" FontWeight="Bold" /> -->
                 </StackPanel>                
                                 
-                <Button Style="{StaticResource HorizontalEnd}" Grid.Column="3" Click="CommitQuoteChanges_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=quotesPanel, Path=SelectedQuote}">Save changes</Button>                
+                <Button Style="{StaticResource HorizontalEnd}" Name="CommitChangesButton" Grid.Column="3" Click="CommitQuoteChanges_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=quotesPanel, Path=SelectedQuote}">Save changes</Button>                
             </Grid>
         </Border>
         
@@ -44,7 +52,7 @@
                 <Quotes:QuoteSupplementsControl SelectedCompany="{Binding SelectedCompany}" SelectedQuote="{Binding SelectedQuote}" />
             </TabItem>            
             <TabItem Header="Storage Items" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, Path=SelectedQuote}">
-                <Quotes:StorageControl SelectedCompany="{Binding SelectedCompany}" SelectedQuote="{Binding SelectedQuote}" />
+                <Quotes:QuoteStorageControl SelectedCompany="{Binding SelectedCompany}" SelectedQuote="{Binding SelectedQuote}" />
             </TabItem>
             <TabItem Header="Conditions" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, Path=SelectedQuote}">
                 <Quotes:QuoteConditionsControl SelectedCompany="{Binding SelectedCompany}" SelectedQuote="{Binding SelectedQuote}" />                

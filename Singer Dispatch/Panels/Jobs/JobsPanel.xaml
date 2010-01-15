@@ -5,7 +5,7 @@
                        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                        xmlns:Panels="clr-namespace:SingerDispatch.Panels"
                        xmlns:Jobs="clr-namespace:SingerDispatch.Panels.Jobs"
-                       x:Name="jobsPanel"                       
+                       x:Name="jobsPanel" Loaded="Control_Loaded"
                        mc:Ignorable="d" IsEnabled="False">
     <UserControl.Resources>
         <ResourceDictionary>
@@ -29,7 +29,7 @@
                     <Label Content="{Binding Number}" FontWeight="Bold" />
                 </StackPanel>
                 
-                <Button Style="{StaticResource HorizontalEnd}" Grid.Column="3" Click="CommitJobChanges_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=jobsPanel, Path=SelectedJob}">Save changes</Button>
+                <Button Style="{StaticResource HorizontalEnd}" Name="CommitChangesButton" Grid.Column="3" Click="CommitJobChanges_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=jobsPanel, Path=SelectedJob}">Save changes</Button>
             </Grid>
         </Border>
 

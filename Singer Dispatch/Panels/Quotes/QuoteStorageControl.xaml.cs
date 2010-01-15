@@ -6,13 +6,13 @@ using System.Collections.ObjectModel;
 namespace SingerDispatch.Panels.Quotes
 {
     /// <summary>
-    /// Interaction logic for StorageControl.xaml
+    /// Interaction logic for StoragQuoteStorageControleControl.xaml
     /// </summary>
-    public partial class StorageControl : QuoteUserControl
+    public partial class QuoteStorageControl : QuoteUserControl
     {
         public SingerDispatchDataContext Database { get; set; }
 
-        public StorageControl()
+        public QuoteStorageControl()
         {
             InitializeComponent();
 
@@ -31,15 +31,15 @@ namespace SingerDispatch.Panels.Quotes
         {
             base.SelectedQuoteChanged(newValue, oldValue);
 
-            dgStorageList.ItemsSource = (newValue == null) ? null : new ObservableCollection<StorageItem>(newValue.StorageItems);
+            dgStorageList.ItemsSource = (newValue == null) ? null : new ObservableCollection<QuoteStorageItem>(newValue.QuoteStorageItems);
         }
 
         private void NewStorageItem_Click(object sender, RoutedEventArgs e)
         {
-            var item = new StorageItem() { QuoteID = SelectedQuote.ID };
+            var item = new QuoteStorageItem() { QuoteID = SelectedQuote.ID };
 
-            SelectedQuote.StorageItems.Add(item);
-            ((ObservableCollection<StorageItem>)dgStorageList.ItemsSource).Insert(0, item);            
+            SelectedQuote.QuoteStorageItems.Add(item);
+            ((ObservableCollection<QuoteStorageItem>)dgStorageList.ItemsSource).Insert(0, item);
             dgStorageList.SelectedItem = item;
 
             cmbCommodities.Focus();
@@ -47,20 +47,20 @@ namespace SingerDispatch.Panels.Quotes
 
         private void DuplicateStorageItem_Click(object sender, RoutedEventArgs e)
         {
-            var item = (StorageItem)dgStorageList.SelectedItem;
+            var item = (QuoteStorageItem)dgStorageList.SelectedItem;
 
             if (item == null)
                 return;
 
             item = item.Duplicate();
 
-            SelectedQuote.StorageItems.Add(item);
-            ((ObservableCollection<StorageItem>)dgStorageList.ItemsSource).Insert(0, item);
+            SelectedQuote.QuoteStorageItems.Add(item);
+            ((ObservableCollection<QuoteStorageItem>)dgStorageList.ItemsSource).Insert(0, item);
         }
 
         private void RemoveStorageItem_Click(object sender, RoutedEventArgs e)
         {
-            var item = (StorageItem)dgStorageList.SelectedItem;
+            var item = (QuoteStorageItem)dgStorageList.SelectedItem;
 
             if (item == null)
                 return;
@@ -69,8 +69,8 @@ namespace SingerDispatch.Panels.Quotes
 
             if (confirmation == MessageBoxResult.Yes)
             {
-                ((ObservableCollection<StorageItem>)dgStorageList.ItemsSource).Remove(item);
-                SelectedQuote.StorageItems.Remove(item);
+                ((ObservableCollection<QuoteStorageItem>)dgStorageList.ItemsSource).Remove(item);
+                SelectedQuote.QuoteStorageItems.Remove(item);
             }
         }
 

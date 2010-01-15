@@ -99,7 +99,6 @@ namespace SingerDispatch.Panels.Jobs
             var list = (ObservableCollection<Job>)dgJobs.ItemsSource;
             var job = new Job { JobStatusType = DefaultJobStatus };
 
-            SelectedCompany.Jobs.Add(job);
             list.Add(job);
             dgJobs.SelectedItem = job;
             dgJobs.ScrollIntoView(job);

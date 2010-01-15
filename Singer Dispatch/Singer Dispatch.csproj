@@ -157,8 +157,8 @@
     <Compile Include="Panels\Quotes\QuoteSupplementsControl.xaml.cs">
       <DependentUpon>QuoteSupplementsControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Panels\Quotes\StorageControl.xaml.cs">
-      <DependentUpon>StorageControl.xaml</DependentUpon>
+    <Compile Include="Panels\Quotes\QuoteStorageControl.xaml.cs">
+      <DependentUpon>QuoteStorageControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Panels\QuoteUserControl.cs" />
     <Compile Include="Printing\DispatchRenderer.cs" />
@@ -337,7 +337,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Panels\Quotes\StorageControl.xaml">
+    <Page Include="Panels\Quotes\QuoteStorageControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

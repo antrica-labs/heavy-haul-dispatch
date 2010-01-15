@@ -30,7 +30,7 @@
             <StackPanel>
                 <ListBox Name="TheList" MaxHeight="450" Padding="10,10,10,0" Margin="5"/>
                                 
-                <Button Style="{StaticResource Bottom}" Click="UpdateServices_Click">Save services</Button>
+                <Button Style="{StaticResource Bottom}" Name="CommitChangesButton" Click="UpdateServices_Click">Save services</Button>
             </StackPanel>
         </GroupBox>
     </StackPanel>

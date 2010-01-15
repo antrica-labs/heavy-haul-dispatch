@@ -14,9 +14,9 @@
             </ResourceDictionary.MergedDictionaries>
             <DataTemplate x:Key="nameTemplate">
                 <TextBlock Text="{Binding Path=Name}" />
-            </DataTemplate>
-        </ResourceDictionary>
-    </UserControl.Resources>
+            </DataTemplate>           
+        </ResourceDictionary>        
+    </UserControl.Resources>    
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1.4*" />
@@ -74,7 +74,7 @@
                 </StackPanel>
             </GroupBox>
             
-            <Button Style="{StaticResource Bottom}" Name="btnSaveDetails" Click="SaveDetails">Save adjustments</Button>
+            <Button Style="{StaticResource Bottom}" Name="CommitChangesButton" Click="SaveDetails_Click">Save adjustments</Button>
         </StackPanel>
     </Grid>
 </Panels:CompanyUserControl>

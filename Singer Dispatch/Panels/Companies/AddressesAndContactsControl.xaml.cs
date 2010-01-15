@@ -3,6 +3,8 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using Microsoft.Windows.Controls;
+using SingerDispatch.Controls;
+using System.Windows.Input;
 
 namespace SingerDispatch.Panels.Companies
 {
@@ -11,6 +13,8 @@ namespace SingerDispatch.Panels.Companies
     /// </summary>
     public partial class AddressesAndContactsControl : CompanyUserControl
     {
+        private CommandBinding SaveCommand { get; set; }
+
         public SingerDispatchDataContext Database { get; set; }
 
         public AddressesAndContactsControl()
@@ -19,12 +23,16 @@ namespace SingerDispatch.Panels.Companies
 
             Database = SingerConstants.CommonDataContext;
 
+            SaveCommand = new CommandBinding(CustomCommands.GenericSaveCommand);
+            CommandBindings.Add(SaveCommand);
+
             cmbContactPreferedContactMethod.ItemsSource = SingerConstants.ContactMethods;
         }
 
         private void Control_Loaded(object sender, RoutedEventArgs e)
-        {
-            
+        {            
+            SaveCommand.Executed += new ExecutedRoutedEventHandler(CommitChanges_Executed);
+
             cmbProvinceOrState.ItemsSource = from p in Database.ProvincesAndStates orderby p.CountryID, p.Name select p;
             cmbContactType.ItemsSource = from ct in Database.ContactTypes select ct;
             cmbAddressType.ItemsSource = from at in Database.AddressTypes select at;
@@ -147,6 +155,18 @@ namespace SingerDispatch.Panels.Companies
         }
 
         private void Save_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Database.SubmitChanges();
+            }
+            catch (System.Exception ex)
+            {
+                SingerDispatch.Windows.ErrorNoticeWindow.ShowError("Error while attempting write changes to database", ex.Message);
+            }
+        }
+
+        private void CommitChanges_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             try
             {

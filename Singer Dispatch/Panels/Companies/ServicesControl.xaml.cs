@@ -3,6 +3,8 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Collections.ObjectModel;
+using System.Windows.Input;
+using SingerDispatch.Controls;
 
 namespace SingerDispatch.Panels.Companies
 {
@@ -11,18 +13,26 @@ namespace SingerDispatch.Panels.Companies
     /// </summary>
     public partial class ServicesControl : CompanyUserControl
     {
+        private CommandBinding SaveCommand { get; set; }
+
         public SingerDispatchDataContext Database { get; set; }
 
         public ServicesControl()
         {
             InitializeComponent();
 
-            Database = SingerConstants.CommonDataContext;            
+            Database = SingerConstants.CommonDataContext;
+            
+            SaveCommand = new CommandBinding(CustomCommands.GenericSaveCommand);
+            CommandBindings.Add(SaveCommand);
+
             TheList.ItemsSource = new ObservableCollection<CheckBox>();
         }
 
         private void ControlLoaded(object sender, RoutedEventArgs e)
         {
+            SaveCommand.Executed += new ExecutedRoutedEventHandler(CommitChanges_Executed);
+
             var list = (ObservableCollection<CheckBox>)TheList.ItemsSource;
 
             if (SelectedCompany == null) return;
@@ -70,6 +80,12 @@ namespace SingerDispatch.Panels.Companies
             }
         }
 
+        private void CommitChanges_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            CommitChangesButton.Focus();
+            CommitChangesButton.RaiseEvent(new System.Windows.RoutedEventArgs(System.Windows.Controls.Button.ClickEvent, CommitChangesButton));
+        }
+
         private void UpdateServices_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -81,6 +97,5 @@ namespace SingerDispatch.Panels.Companies
                 SingerDispatch.Windows.ErrorNoticeWindow.ShowError("Error while attempting write changes to database", ex.Message);
             }
         }
-
     }
 }

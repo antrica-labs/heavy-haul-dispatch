@@ -126,9 +126,9 @@ namespace SingerDispatch
                 copy.QuoteSupplements.Add(supplement.Duplicate());
             }
 
-            foreach (var item in StorageItems)
+            foreach (var item in QuoteStorageItems)
             {
-                copy.StorageItems.Add(item.Duplicate());
+                copy.QuoteStorageItems.Add(item.Duplicate());
             }
 
             foreach (var item in QuoteConditions)
@@ -262,11 +262,11 @@ namespace SingerDispatch
         }
     }
 
-    partial class StorageItem
+    partial class QuoteStorageItem
     {
-        public StorageItem Duplicate()
+        public QuoteStorageItem Duplicate()
         {
-            var copy = new StorageItem();
+            var copy = new QuoteStorageItem();
 
             copy.Details = Details;
             copy.Commodity = Commodity;

@@ -92,9 +92,9 @@ namespace SingerDispatch
     partial void InsertQuoteSupplement(QuoteSupplement instance);
     partial void UpdateQuoteSupplement(QuoteSupplement instance);
     partial void DeleteQuoteSupplement(QuoteSupplement instance);
-    partial void InsertStorageItem(StorageItem instance);
-    partial void UpdateStorageItem(StorageItem instance);
-    partial void DeleteStorageItem(StorageItem instance);
+    partial void InsertQuoteStorageItem(QuoteStorageItem instance);
+    partial void UpdateQuoteStorageItem(QuoteStorageItem instance);
+    partial void DeleteQuoteStorageItem(QuoteStorageItem instance);
     partial void InsertRate(Rate instance);
     partial void UpdateRate(Rate instance);
     partial void DeleteRate(Rate instance);
@@ -337,11 +337,11 @@ namespace SingerDispatch
 			}
 		}
 		
-		public System.Data.Linq.Table<StorageItem> StorageItems
+		public System.Data.Linq.Table<QuoteStorageItem> QuoteStorageItems
 		{
 			get
 			{
-				return this.GetTable<StorageItem>();
+				return this.GetTable<QuoteStorageItem>();
 			}
 		}
 		
@@ -1077,7 +1077,7 @@ namespace SingerDispatch
 		
 		private EntitySet<QuoteSupplement> _QuoteSupplements;
 		
-		private EntitySet<StorageItem> _StorageItem;
+		private EntitySet<QuoteStorageItem> _QuoteStorageItem;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -1092,7 +1092,7 @@ namespace SingerDispatch
 		public BillingType()
 		{
 			this._QuoteSupplements = new EntitySet<QuoteSupplement>(new Action<QuoteSupplement>(this.attach_QuoteSupplements), new Action<QuoteSupplement>(this.detach_QuoteSupplements));
-			this._StorageItem = new EntitySet<StorageItem>(new Action<StorageItem>(this.attach_StorageItem), new Action<StorageItem>(this.detach_StorageItem));
+			this._QuoteStorageItem = new EntitySet<QuoteStorageItem>(new Action<QuoteStorageItem>(this.attach_QuoteStorageItem), new Action<QuoteStorageItem>(this.detach_QuoteStorageItem));
 			OnCreated();
 		}
 		
@@ -1149,16 +1149,16 @@ namespace SingerDispatch
 			}
 		}
 		
-		[Association(Name="BillingType_StorageItem", Storage="_StorageItem", ThisKey="ID", OtherKey="BillingTypeID")]
-		public EntitySet<StorageItem> StorageItem
+		[Association(Name="BillingType_QuoteStorageItem", Storage="_QuoteStorageItem", ThisKey="ID", OtherKey="BillingTypeID")]
+		public EntitySet<QuoteStorageItem> QuoteStorageItem
 		{
 			get
 			{
-				return this._StorageItem;
+				return this._QuoteStorageItem;
 			}
 			set
 			{
-				this._StorageItem.Assign(value);
+				this._QuoteStorageItem.Assign(value);
 			}
 		}
 		
@@ -1194,13 +1194,13 @@ namespace SingerDispatch
 			entity.BillingType = null;
 		}
 		
-		private void attach_StorageItem(StorageItem entity)
+		private void attach_QuoteStorageItem(QuoteStorageItem entity)
 		{
 			this.SendPropertyChanging();
 			entity.BillingType = this;
 		}
 		
-		private void detach_StorageItem(StorageItem entity)
+		private void detach_QuoteStorageItem(QuoteStorageItem entity)
 		{
 			this.SendPropertyChanging();
 			entity.BillingType = null;
@@ -7966,7 +7966,7 @@ namespace SingerDispatch
 		
 		private EntitySet<QuoteSupplement> _QuoteSupplements;
 		
-		private EntitySet<StorageItem> _StorageItems;
+		private EntitySet<QuoteStorageItem> _QuoteStorageItems;
 		
 		private EntitySet<QuoteCondition> _QuoteConditions;
 		
@@ -8013,7 +8013,7 @@ namespace SingerDispatch
 			this._Jobs = new EntitySet<Job>(new Action<Job>(this.attach_Jobs), new Action<Job>(this.detach_Jobs));
 			this._QuoteCommodities = new EntitySet<QuoteCommodity>(new Action<QuoteCommodity>(this.attach_QuoteCommodities), new Action<QuoteCommodity>(this.detach_QuoteCommodities));
 			this._QuoteSupplements = new EntitySet<QuoteSupplement>(new Action<QuoteSupplement>(this.attach_QuoteSupplements), new Action<QuoteSupplement>(this.detach_QuoteSupplements));
-			this._StorageItems = new EntitySet<StorageItem>(new Action<StorageItem>(this.attach_StorageItems), new Action<StorageItem>(this.detach_StorageItems));
+			this._QuoteStorageItems = new EntitySet<QuoteStorageItem>(new Action<QuoteStorageItem>(this.attach_QuoteStorageItems), new Action<QuoteStorageItem>(this.detach_QuoteStorageItems));
 			this._QuoteConditions = new EntitySet<QuoteCondition>(new Action<QuoteCondition>(this.attach_QuoteConditions), new Action<QuoteCondition>(this.detach_QuoteConditions));
 			this._Employee = default(EntityRef<Employee>);
 			this._Company = default(EntityRef<Company>);
@@ -8332,16 +8332,16 @@ namespace SingerDispatch
 			}
 		}
 		
-		[Association(Name="Quote_StorageItem", Storage="_StorageItems", ThisKey="ID", OtherKey="QuoteID")]
-		public EntitySet<StorageItem> StorageItems
+		[Association(Name="Quote_QuoteStorageItem", Storage="_QuoteStorageItems", ThisKey="ID", OtherKey="QuoteID")]
+		public EntitySet<QuoteStorageItem> QuoteStorageItems
 		{
 			get
 			{
-				return this._StorageItems;
+				return this._QuoteStorageItems;
 			}
 			set
 			{
-				this._StorageItems.Assign(value);
+				this._QuoteStorageItems.Assign(value);
 			}
 		}
 		
@@ -8516,13 +8516,13 @@ namespace SingerDispatch
 			entity.Quote = null;
 		}
 		
-		private void attach_StorageItems(StorageItem entity)
+		private void attach_QuoteStorageItems(QuoteStorageItem entity)
 		{
 			this.SendPropertyChanging();
 			entity.Quote = this;
 		}
 		
-		private void detach_StorageItems(StorageItem entity)
+		private void detach_QuoteStorageItems(QuoteStorageItem entity)
 		{
 			this.SendPropertyChanging();
 			entity.Quote = null;
@@ -8830,7 +8830,7 @@ namespace SingerDispatch
 	}
 	
 	[Table(Name="")]
-	public partial class StorageItem : INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class QuoteStorageItem : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -8875,7 +8875,7 @@ namespace SingerDispatch
     partial void OnCostPerItemChanged();
     #endregion
 		
-		public StorageItem()
+		public QuoteStorageItem()
 		{
 			this._BillingType = default(EntityRef<BillingType>);
 			this._Quote = default(EntityRef<Quote>);
@@ -9035,7 +9035,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[Association(Name="BillingType_StorageItem", Storage="_BillingType", ThisKey="BillingTypeID", OtherKey="ID", IsForeignKey=true)]
+		[Association(Name="BillingType_QuoteStorageItem", Storage="_BillingType", ThisKey="BillingTypeID", OtherKey="ID", IsForeignKey=true)]
 		public BillingType BillingType
 		{
 			get
@@ -9052,12 +9052,12 @@ namespace SingerDispatch
 					if ((previousValue != null))
 					{
 						this._BillingType.Entity = null;
-						previousValue.StorageItem.Remove(this);
+						previousValue.QuoteStorageItem.Remove(this);
 					}
 					this._BillingType.Entity = value;
 					if ((value != null))
 					{
-						value.StorageItem.Add(this);
+						value.QuoteStorageItem.Add(this);
 						this._BillingTypeID = value.ID;
 					}
 					else
@@ -9069,7 +9069,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[Association(Name="Quote_StorageItem", Storage="_Quote", ThisKey="QuoteID", OtherKey="ID", IsForeignKey=true)]
+		[Association(Name="Quote_QuoteStorageItem", Storage="_Quote", ThisKey="QuoteID", OtherKey="ID", IsForeignKey=true)]
 		public Quote Quote
 		{
 			get
@@ -9086,12 +9086,12 @@ namespace SingerDispatch
 					if ((previousValue != null))
 					{
 						this._Quote.Entity = null;
-						previousValue.StorageItems.Remove(this);
+						previousValue.QuoteStorageItems.Remove(this);
 					}
 					this._Quote.Entity = value;
 					if ((value != null))
 					{
-						value.StorageItems.Add(this);
+						value.QuoteStorageItems.Add(this);
 						this._QuoteID = value.ID;
 					}
 					else
@@ -9103,7 +9103,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[Association(Name="Commodity_StorageItem", Storage="_Commodity", ThisKey="CommodityID", OtherKey="ID", IsForeignKey=true)]
+		[Association(Name="Commodity_QuoteStorageItem", Storage="_Commodity", ThisKey="CommodityID", OtherKey="ID", IsForeignKey=true)]
 		public Commodity Commodity
 		{
 			get

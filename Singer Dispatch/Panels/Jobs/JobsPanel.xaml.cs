@@ -1,5 +1,7 @@
 ﻿using System.Windows;
 using SingerDispatch.Database;
+using SingerDispatch.Controls;
+using System.Windows.Input;
 
 namespace SingerDispatch.Panels.Jobs
 {
@@ -8,13 +10,23 @@ namespace SingerDispatch.Panels.Jobs
     /// </summary>
     public partial class JobsPanel : JobUserControl
     {
-        public SingerDispatchDataContext Database { get; set; }
+        private CommandBinding SaveCommand { get; set; }
 
+        public SingerDispatchDataContext Database { get; set; }
+        
         public JobsPanel()
         {
             InitializeComponent();
 
             Database = SingerConstants.CommonDataContext;
+
+            SaveCommand = new CommandBinding(CustomCommands.GenericSaveCommand);
+            CommandBindings.Add(SaveCommand);
+        }
+
+        private void Control_Loaded(object sender, RoutedEventArgs e)
+        {            
+            SaveCommand.Executed += new ExecutedRoutedEventHandler(CommitJobChanges_Executed);            
         }
 
         protected override void SelectedCompanyChanged(Company newValue, Company oldValue)
@@ -41,6 +53,7 @@ namespace SingerDispatch.Panels.Jobs
             {
                 if (SelectedJob.ID == 0)
                 {
+                    SelectedCompany.Jobs.Add(SelectedJob);
                     EntityHelper.SaveAsNewJob(SelectedJob, Database);
                 }
                 else
@@ -52,6 +65,12 @@ namespace SingerDispatch.Panels.Jobs
             {
                 SingerDispatch.Windows.ErrorNoticeWindow.ShowError("Error while attempting write changes to database", ex.Message);
             }
+        }
+
+        private void CommitJobChanges_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            CommitChangesButton.Focus();
+            CommitChangesButton.RaiseEvent(new System.Windows.RoutedEventArgs(System.Windows.Controls.Button.ClickEvent, CommitChangesButton));
         }
     }
 }

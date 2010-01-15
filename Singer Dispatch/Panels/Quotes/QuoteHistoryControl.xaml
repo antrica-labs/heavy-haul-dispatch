@@ -61,8 +61,15 @@
                             </Grid.RowDefinitions>                            
                             
                             <Label Grid.Row="0" Grid.Column="0">Quote #:</Label>
-                            <TextBox Grid.Row="1" Grid.Column="0" IsReadOnly="True" Text="{Binding Converter={StaticResource QuoteFriendlyNameConverter}, ElementName=dgQuotes, Path=SelectedItem}"/>
-                            
+                            <TextBox Grid.Row="1" Grid.Column="0" IsReadOnly="True">
+                                <TextBox.Text>
+                                    <MultiBinding Converter="{StaticResource QuoteFriendlyNameConverter}">
+                                        <Binding ElementName="quotesPanel" Path="SelectedQuote.Number" />
+                                        <Binding ElementName="quotesPanel" Path="SelectedQuote.Revision" />
+                                    </MultiBinding>
+                                </TextBox.Text>
+                            </TextBox>
+
                             <Label Grid.Row="0" Grid.Column="1">Author:</Label>
                             <ComboBox Name="cmbQuotedBy" Grid.Row="1" Grid.Column="1" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectedItem="{Binding Employee}" TextSearch.TextPath="Name"></ComboBox>
                             
@@ -133,11 +140,7 @@
                         <Label Grid.Column="1" Grid.Row="0" Content="{Binding Name}" />
 
                         <Label Grid.Column="0" Grid.Row="1">Email:</Label>
-                        <Label Grid.Column="1" Grid.Row="1">
-                            <Hyperlink NavigateUri="{Binding Email, StringFormat=mailto:\{0\}}">
-                                <TextBlock Text="{Binding Email}" />
-                        </Hyperlink>
-                        </Label>
+                        <Label Grid.Column="1" Grid.Row="1" Content="{Binding Email}" />
 
                         <Label Grid.Column="0" Grid.Row="2">Company:</Label>
                         <Label Grid.Column="1" Grid.Row="2" Content="{Binding Address.Company.Name}" />

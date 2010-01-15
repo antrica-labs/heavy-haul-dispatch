@@ -75,7 +75,7 @@
                     <ComboBox Name="cmbCareOfCompanies" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectedItem="{Binding CareOfCompany}" TextSearch.TextPath="Name" IsEditable="True" SelectionChanged="cmbCareOfCompanies_SelectionChanged" />
 
                     <Label>Project description</Label>
-                    <TextBox Name="txtDescription" Height="40" Style="{StaticResource MultiLine}" VerticalScrollBarVisibility="Disabled" Text="{Binding Description}"/>
+                    <TextBox Name="txtDescription" Height="40" Style="{StaticResource MultiLine}" VerticalScrollBarVisibility="Disabled" Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}"/>
                 </StackPanel>
             </GroupBox>
 
@@ -130,12 +130,8 @@
                         <Label Grid.Column="1" Grid.Row="0" Content="{Binding Name}" />
 
                         <Label Grid.Column="0" Grid.Row="1">Email:</Label>
-                        <Label Grid.Column="1" Grid.Row="1">
-                            <Hyperlink NavigateUri="{Binding Email, StringFormat=mailto:\{0\}}" >
-                                <TextBlock Text="{Binding Email}" />
-                            </Hyperlink>
-                        </Label>
-
+                        <Label Grid.Column="1" Grid.Row="1" Content="{Binding Email}" />
+                            
                         <Label Grid.Column="0" Grid.Row="2">Company:</Label>
                         <Label Grid.Column="1" Grid.Row="2" Content="{Binding Address.Company.Name}" />
 

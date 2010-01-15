@@ -5,6 +5,7 @@
                            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                            xmlns:WPF="http://schemas.microsoft.com/wpf/2008/toolkit"
                            xmlns:Panels="clr-namespace:SingerDispatch.Panels"
+                           Loaded="Control_Loaded"
                            mc:Ignorable="d" d:DesignWidth="780">
     <UserControl.Resources>
         <ResourceDictionary>
@@ -121,7 +122,7 @@
             </Grid>
         </GroupBox>
         
-        <Button Style="{StaticResource Horizontal}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgCommodities, Path=SelectedItem}">Save commodity</Button>
+        <Button Style="{StaticResource Horizontal}" Name="CommitChangesButton" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgCommodities, Path=SelectedItem}">Save commodity</Button>
     </StackPanel>
     <!--
     <Grid>

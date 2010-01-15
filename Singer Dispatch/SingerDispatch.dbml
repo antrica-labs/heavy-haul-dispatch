@@ -32,7 +32,7 @@
       <Column Name="ID" Type="System.Int64" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Name" Type="System.String" CanBeNull="true" />
       <Association Name="BillingType_QuoteSupplement" Member="QuoteSupplements" ThisKey="ID" OtherKey="BillingTypeID" Type="QuoteSupplement" />
-      <Association Name="BillingType_StorageItem" Member="StorageItem" ThisKey="ID" OtherKey="BillingTypeID" Type="StorageItem" />
+      <Association Name="BillingType_QuoteStorageItem" Member="QuoteStorageItem" ThisKey="ID" OtherKey="BillingTypeID" Type="QuoteStorageItem" />
     </Type>
   </Table>
   <Table Name="" Member="Commodities">
@@ -349,7 +349,7 @@
       <Association Name="Quote_Job" Member="Jobs" ThisKey="ID" OtherKey="QuoteID" Type="Job" />
       <Association Name="Quote_QuoteCommodity" Member="QuoteCommodities" ThisKey="ID" OtherKey="QuoteID" Type="QuoteCommodity" />
       <Association Name="Quote_QuoteSupplement" Member="QuoteSupplements" ThisKey="ID" OtherKey="QuoteID" Type="QuoteSupplement" />
-      <Association Name="Quote_StorageItem" Member="StorageItems" ThisKey="ID" OtherKey="QuoteID" Type="StorageItem" />
+      <Association Name="Quote_QuoteStorageItem" Member="QuoteStorageItems" ThisKey="ID" OtherKey="QuoteID" Type="QuoteStorageItem" />
       <Association Name="Quote_QuoteCondition" Member="QuoteConditions" ThisKey="ID" OtherKey="QuoteID" Type="QuoteCondition" />
       <Association Name="Employee_Quote" Member="Employee" ThisKey="EmployeeID" OtherKey="ID" Type="Employee" IsForeignKey="true" />
       <Association Name="Company_Quote" Member="Company" ThisKey="CompanyID" OtherKey="ID" Type="Company" IsForeignKey="true" />
@@ -369,8 +369,8 @@
       <Association Name="Quote_QuoteSupplement" Member="Quote" ThisKey="QuoteID" OtherKey="ID" Type="Quote" IsForeignKey="true" />
     </Type>
   </Table>
-  <Table Name="" Member="StorageItems">
-    <Type Name="StorageItem">
+  <Table Name="" Member="QuoteStorageItems">
+    <Type Name="QuoteStorageItem">
       <Column Name="ID" Type="System.Int64" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="QuoteID" Type="System.Int64" CanBeNull="true" />
       <Column Name="BillingTypeID" Type="System.Int64" CanBeNull="true" />
@@ -378,9 +378,9 @@
       <Column Name="Details" Type="System.String" CanBeNull="true" />
       <Column Name="Quantity" Type="System.Int32" CanBeNull="true" />
       <Column Name="CostPerItem" Type="System.Decimal" CanBeNull="true" />
-      <Association Name="BillingType_StorageItem" Member="BillingType" ThisKey="BillingTypeID" OtherKey="ID" Type="BillingType" IsForeignKey="true" />
-      <Association Name="Quote_StorageItem" Member="Quote" ThisKey="QuoteID" OtherKey="ID" Type="Quote" IsForeignKey="true" />
-      <Association Name="Commodity_StorageItem" Member="Commodity" ThisKey="CommodityID" OtherKey="ID" Type="Commodity" IsForeignKey="true" />
+      <Association Name="BillingType_QuoteStorageItem" Member="BillingType" ThisKey="BillingTypeID" OtherKey="ID" Type="BillingType" IsForeignKey="true" />
+      <Association Name="Quote_QuoteStorageItem" Member="Quote" ThisKey="QuoteID" OtherKey="ID" Type="Quote" IsForeignKey="true" />
+      <Association Name="Commodity_QuoteStorageItem" Member="Commodity" ThisKey="CommodityID" OtherKey="ID" Type="Commodity" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="" Member="Rates">

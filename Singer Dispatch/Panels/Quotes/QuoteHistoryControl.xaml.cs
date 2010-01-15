@@ -81,8 +81,7 @@ namespace SingerDispatch.Panels.Quotes
         {
             var list = (ObservableCollection<Quote>)dgQuotes.ItemsSource;
             var quote = new Quote { CreationDate = DateTime.Today, ExpirationDate = DateTime.Today.AddDays(30) };
-
-            SelectedCompany.Quotes.Add(quote);
+                        
             list.Add(quote);
             dgQuotes.SelectedItem = quote;
             dgQuotes.ScrollIntoView(quote);

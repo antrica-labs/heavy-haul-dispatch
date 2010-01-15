@@ -26,11 +26,11 @@ namespace SingerDispatch.Database
                 }
             }
 
-            foreach (var item in quote.StorageItems)
+            foreach (var item in quote.QuoteStorageItems)
             {
                 if (item.ID != 0)
                 {
-                    context.StorageItems.DeleteOnSubmit(item);
+                    context.QuoteStorageItems.DeleteOnSubmit(item);
                 }
             }
 
