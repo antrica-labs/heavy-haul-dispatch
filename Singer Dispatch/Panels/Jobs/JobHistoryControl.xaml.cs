@@ -32,7 +32,19 @@ namespace SingerDispatch.Panels.Jobs
 
             cmbQuotes.ItemsSource = (SelectedCompany == null) ? null : from q in Database.Quotes where q.Company == SelectedCompany select q;
             cmbCareOfCompanies.ItemsSource = (SelectedCompany == null) ? null : from c in Database.Companies where c != SelectedCompany && c.IsVisible == true select c;
-            dgJobs.ItemsSource = (SelectedCompany == null) ? null : new ObservableCollection<Job>(from j in Database.Jobs where j.Company == SelectedCompany orderby j.Number descending select j);
+
+            if (SelectedCompany != null)
+            {
+                var jobs = new ObservableCollection<Job>(from j in Database.Jobs where j.Company == SelectedCompany orderby j.Number descending select j);
+
+                if (SelectedJob != null && SelectedJob.ID == 0)
+                    jobs.Insert(0, SelectedJob);
+
+                dgJobs.ItemsSource = jobs;
+            }
+            else
+                dgJobs.ItemsSource = null;
+
         }
 
         protected override void SelectedCompanyChanged(Company newValue, Company oldValue)
@@ -99,7 +111,7 @@ namespace SingerDispatch.Panels.Jobs
             var list = (ObservableCollection<Job>)dgJobs.ItemsSource;
             var job = new Job { JobStatusType = DefaultJobStatus };
 
-            list.Add(job);
+            list.Insert(0, job);
             dgJobs.SelectedItem = job;
             dgJobs.ScrollIntoView(job);
 

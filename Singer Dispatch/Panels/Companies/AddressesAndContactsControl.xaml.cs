@@ -49,18 +49,18 @@ namespace SingerDispatch.Panels.Companies
                 var contactQuery = from c in Database.Contacts where addressQuery.Contains(c.Address) select c;
 
                 dgAddresses.ItemsSource = new ObservableCollection<Address>(addressQuery);
-                dgContacts.ItemsSource = contactQuery.ToList();
+                dgContacts.ItemsSource = new ObservableCollection<Contact>(contactQuery);
             }
             else
             {
                 dgAddresses.ItemsSource = null;
                 dgContacts.ItemsSource = null;
-            }                                                   
+            }            
         }
 
         private void dgAddresses_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var control = (DataGrid)sender;
+            var control = (Microsoft.Windows.Controls.DataGrid)sender;
             var address = (Address)control.SelectedItem;
 
             dgContacts.ItemsSource = (address == null) ? null : new ObservableCollection<Contact>(from c in Database.Contacts where c.AddressID == address.ID orderby c.LastName select c);
@@ -129,8 +129,9 @@ namespace SingerDispatch.Panels.Companies
             var address = new Address();
             
             SelectedCompany.Addresses.Add(address);
-            ((ObservableCollection<Address>)dgAddresses.ItemsSource).Add(address);
+            ((ObservableCollection<Address>)dgAddresses.ItemsSource).Insert(0, address);
             dgAddresses.SelectedItem = address;
+            dgAddresses.ScrollIntoView(address);
 
             txtAddress1.Focus();
         }
@@ -148,8 +149,9 @@ namespace SingerDispatch.Panels.Companies
             var contact = new Contact();
 
             address.Contacts.Add(contact);
-            ((ObservableCollection<Contact>)dgContacts.ItemsSource).Add(contact);
+            ((ObservableCollection<Contact>)dgContacts.ItemsSource).Insert(0, contact);
             dgContacts.SelectedItem = contact;
+            dgContacts.ScrollIntoView(contact);
 
             txtContactFirstName.Focus();
         }

@@ -24,7 +24,7 @@ namespace SingerDispatch.Panels.Jobs
             cmbLoads.ItemsSource = (SelectedJob == null) ? null : SelectedJob.Loads.ToList();
             cmbUnits.ItemsSource = (SelectedJob == null) ? null : from u in Database.Equipment select u;
             cmbServiceTypes.ItemsSource = (SelectedJob == null) ? null : from r in Database.Rates where r.RateType.Name == "Service" select r;
-            cmbEmployees.ItemsSource = (SelectedJob == null) ? null : from emp in Database.Employees select emp;            
+            cmbEmployees.ItemsSource = (SelectedJob == null) ? null : from emp in Database.Employees select emp;
         }
 
         protected override void SelectedJobChanged(Job newValue, Job oldValue)
@@ -36,11 +36,13 @@ namespace SingerDispatch.Panels.Jobs
 
         private void NewDispatch_Click(object sender, RoutedEventArgs e)
         {
+            var list = (ObservableCollection<Dispatch>)dgDispatches.ItemsSource;
             var dispatch = new Dispatch { JobID = SelectedJob.ID };
 
             SelectedJob.Dispatches.Add(dispatch);
-            ((ObservableCollection<Dispatch>)dgDispatches.ItemsSource).Insert(0, dispatch);
+            list.Add(dispatch);
             dgDispatches.SelectedItem = dispatch;
+            dgDispatches.ScrollIntoView(dispatch);
 
             cmbLoads.Focus();
         }

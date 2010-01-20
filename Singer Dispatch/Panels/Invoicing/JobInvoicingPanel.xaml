@@ -1,45 +1,107 @@
-﻿<Panels:JobUserControl x:Class="SingerDispatch.Panels.Invoicing.JobInvoicingPanel"
-                       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-                       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-                       xmlns:Panels="clr-namespace:SingerDispatch.Panels"
-                       xmlns:Invoicing="clr-namespace:SingerDispatch.Panels.Invoicing"
-                       x:Name="jobPricingPanel"
-                       IsEnabled="False" mc:Ignorable="d">
+﻿<Panels:InvoiceUserControl x:Class="SingerDispatch.Panels.Invoicing.JobInvoicingPanel"
+                           xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                           xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                           xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+                           xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                           xmlns:Panels="clr-namespace:SingerDispatch.Panels"
+                           xmlns:Invoicing="clr-namespace:SingerDispatch.Panels.Invoicing"                       
+                           x:Name="jobPricingPanel" d:DesignWidth="780" mc:Ignorable="d"
+                           Loaded="Panel_Loaded">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/SingerDispatchDictionary.xaml" />
             </ResourceDictionary.MergedDictionaries>
+
+            <DataTemplate x:Key="JobNameTemplate">
+                <TextBlock Text="{Binding Number}" />                    
+            </DataTemplate>
         </ResourceDictionary>
     </UserControl.Resources>
     <StackPanel>
-        <Border Background="LightGoldenrodYellow" BorderBrush="LightGray" BorderThickness="1" Margin="0,0,0,5" DataContext="{Binding SelectedJob}">
-            <Grid Margin="5,3">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition />
-                    <ColumnDefinition />
-                    <ColumnDefinition />
-                    <ColumnDefinition />
-                </Grid.ColumnDefinitions>
+        <Border Style="{StaticResource JobInvoicesHeader}" DataContext="{Binding ElementName=jobPricingPanel, Path=SelectedJob}">            
+            <StackPanel>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.5*" />
+                        <ColumnDefinition Width="0.5*" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
 
-                <StackPanel Grid.Column="0" Orientation="Horizontal">
-                    <Label>Selected job #:</Label>
-                    <Label Content="{Binding Number}" FontWeight="Bold" />
-                </StackPanel>
+                    <Label Grid.Row="0" Grid.Column="0">Job #:</Label>
+                    <ComboBox Grid.Row="1" Grid.Column="0" Name="cmbJobList" MinWidth="150" TextSearch.TextPath="Number" IsEditable="True" ItemTemplate="{StaticResource JobNameTemplate}" SelectedItem="{Binding ElementName=jobPricingPanel, Path=SelectedJob}" SelectionChanged="cmbJobList_SelectionChanged" />
 
-                <Button Style="{StaticResource HorizontalEnd}" Grid.Column="3" Click="CommitJobChanges_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=jobsPanel, Path=SelectedJob}">Save changes</Button>
-            </Grid>
+                    <Label Grid.Row="0" Grid.Column="1">Quote #:</Label>
+                    <TextBox Grid.Row="1" Grid.Column="1" IsReadOnly="True">
+                        <TextBox.Text>
+                            <MultiBinding StringFormat="{}{0} rev. (1}">
+                                <Binding Path="Quote.Number" />
+                                <Binding Path="Quote.Revision" />
+                            </MultiBinding>
+                        </TextBox.Text>
+                    </TextBox>
+
+                    <Label Grid.Row="0" Grid.Column="2">Author:</Label>
+                    <TextBox Grid.Row="1" Grid.Column="2" IsReadOnly="True" Text="{Binding Employee.FirstName}" />
+                </Grid>
+
+                <Label>Care of:</Label>
+                <TextBox IsReadOnly="True" Text="{Binding CareOfCompany.Name}" />
+
+                <Label>Project description</Label>
+                <TextBox Height="40" Style="{StaticResource MultiLine}" VerticalScrollBarVisibility="Disabled" IsReadOnly="True" Text="{Binding Description}"/>
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+
+                    <Label Grid.Row="0" Grid.Column="0">Start date:</Label>
+                    <TextBox Grid.Row="1" Grid.Column="0" IsReadOnly="True" Text="{Binding StartDate}" />
+
+                    <Label Grid.Row="0" Grid.Column="1">End date:</Label>
+                    <TextBox Grid.Row="1" Grid.Column="1" IsReadOnly="True" Text="{Binding EndDate}" />
+
+                    <Label Grid.Row="0" Grid.Column="2">Status</Label>
+                    <TextBox Grid.Row="1" Grid.Column="2" IsReadOnly="True" Text="{Binding JobStatusType.Name}" />
+                </Grid>                
+            </StackPanel>
         </Border>
+        
+        <StackPanel Visibility="Hidden">
+            <Border Background="LightGoldenrodYellow" BorderBrush="LightGray" BorderThickness="1" Margin="0,0,0,5">
+                <Grid Margin="5,3">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
 
-        <TabControl Name="Tabs" DataContext="{Binding ElementName=jobPricingPanel}">
-            <TabItem Header="Job History">
-                <Invoicing:JobInvoicingControl Width="Auto" SelectedCompany="{Binding Path=SelectedCompany}" SelectedJob="{Binding Path=SelectedJob}" />    
-            </TabItem>
-            <TabItem Header="Loads" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=jobPricingPanel, Path=SelectedJob}">
-                <Invoicing:LoadInvoicingControl Width="Auto" SelectedCompany="{Binding Path=SelectedCompany}" SelectedJob="{Binding Path=SelectedJob}" />
-            </TabItem>
-        </TabControl>
+                    <StackPanel Grid.Column="0" Orientation="Horizontal">
+                        <Label>Selected invoice:</Label>
+                        <Label Content="{Binding Number}" FontWeight="Bold" />
+                    </StackPanel>
+
+                    <Button Style="{StaticResource HorizontalEnd}" Grid.Column="3">Save changes</Button>
+                </Grid>
+            </Border>        
+            
+            <TabControl Name="Tabs">
+                <TabItem Header="Invoice History"></TabItem>
+                <TabItem Header="Line Items"></TabItem>
+                <TabItem Header="Extras"></TabItem>
+            </TabControl>
+        </StackPanel>
     </StackPanel>
-</Panels:JobUserControl>
+</Panels:InvoiceUserControl>

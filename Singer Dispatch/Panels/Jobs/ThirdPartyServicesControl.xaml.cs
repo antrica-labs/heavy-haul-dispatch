@@ -47,16 +47,18 @@ namespace SingerDispatch.Panels.Jobs
             {
                 cmbServiceTypes.ItemsSource = null;
                 cmbContacts.ItemsSource = null;
-            }            
+            }
         }
 
         private void NewService_Click(object sender, RoutedEventArgs e)
         {
+            var list = (ObservableCollection<ThirdPartyService>)dgServices.ItemsSource;
             var service = new ThirdPartyService() { JobID = SelectedJob.ID };
 
             SelectedJob.ThirdPartyServices.Add(service);
-            ((ObservableCollection<ThirdPartyService>)dgServices.ItemsSource).Insert(0, service);
+            list.Add(service);
             dgServices.SelectedItem = service;
+            dgServices.ScrollIntoView(service);
 
             cmbLoads.Focus();
         }

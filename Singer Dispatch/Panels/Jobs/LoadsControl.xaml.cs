@@ -23,7 +23,7 @@ namespace SingerDispatch.Panels.Jobs
         {            
             cmbSeasons.ItemsSource = from s in Database.Seasons select s;
             cmbRates.ItemsSource = GetCompanyRates(SelectedCompany);
-            cmbUnits.ItemsSource = (SelectedJob == null) ? null : from u in Database.Equipment where u.EquipmentClass.Name == "Tractor" || u.EquipmentClass.Name == "Trailor" select u;            
+            cmbUnits.ItemsSource = (SelectedJob == null) ? null : from u in Database.Equipment where u.EquipmentClass.Name == "Tractor" || u.EquipmentClass.Name == "Trailor" select u;
         }
 
         protected override void SelectedJobChanged(Job newValue, Job oldValue)
@@ -35,11 +35,13 @@ namespace SingerDispatch.Panels.Jobs
 
         private void NewLoad_Click(object sender, RoutedEventArgs e)
         {
+            var list = (ObservableCollection<Load>)dgLoads.ItemsSource;
             var load = new Load { JobID = SelectedJob.ID };
 
             SelectedJob.Loads.Add(load);
-            ((ObservableCollection<Load>)dgLoads.ItemsSource).Insert(0, load);
+            list.Add(load);
             dgLoads.SelectedItem = load;
+            dgLoads.ScrollIntoView(load);
 
             txtServiceDescription.Focus();
         }

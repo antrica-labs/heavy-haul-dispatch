@@ -114,7 +114,7 @@
             
             <GroupBox Header="Contact List" Grid.Column="1" Margin="0,0,5,5" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgQuotes, Path=SelectedItem}">
                 <StackPanel>
-                    <WPF:DataGrid Name="dgQuoteContacts" Style="{StaticResource ListDisplay}"  MinHeight="150" Margin="5">
+                    <WPF:DataGrid Name="dgQuoteContacts" Style="{StaticResource ListDisplay}" Height="150" Margin="5">
                         <WPF:DataGrid.Columns>
                             <WPF:DataGridTextColumn Header="First" Binding="{Binding FirstName}" IsReadOnly="True" />
                             <WPF:DataGridTextColumn Header="Last" Binding="{Binding LastName}" IsReadOnly="True" />

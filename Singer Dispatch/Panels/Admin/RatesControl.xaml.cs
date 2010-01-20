@@ -3,7 +3,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Collections.ObjectModel;
-using Microsoft.Windows.Controls;
 using SingerDispatch.Controls;
 
 namespace SingerDispatch.Panels.Admin
@@ -39,7 +38,7 @@ namespace SingerDispatch.Panels.Admin
 
         private void Control_Loaded(object sender, RoutedEventArgs e)
         {
-            dgRates.ItemsSource = new ObservableCollection<Rate>(from r in Database.Rates select r);
+            dgRates.ItemsSource = new ObservableCollection<Rate>(from r in Database.Rates select r);            
         }
 
         private void NewRate_Click(object sender, RoutedEventArgs e)
@@ -48,8 +47,9 @@ namespace SingerDispatch.Panels.Admin
             var rate = new Rate();
 
             Database.Rates.InsertOnSubmit(rate);
-            list.Add(rate);
+            list.Insert(0, rate);            
             dgRates.SelectedItem = rate;
+            dgRates.ScrollIntoView(rate);
 
             DataGridHelper.GetCell(dgRates, dgRates.SelectedIndex, 0);
         }
@@ -76,7 +76,7 @@ namespace SingerDispatch.Panels.Admin
 
         private void RowEditEnding(object sender, Microsoft.Windows.Controls.DataGridRowEditEndingEventArgs e)
         {
-            if (e.EditAction == DataGridEditAction.Commit)
+            if (e.EditAction == Microsoft.Windows.Controls.DataGridEditAction.Commit)
             {
                 try
                 {

@@ -33,7 +33,7 @@ namespace SingerDispatch.Panels.Companies
         {
             base.SelectedCompanyChanged(newValue, oldValue);
                         
-            dgCommodities.ItemsSource = (newValue == null) ? null : new ObservableCollection<Commodity>(from c in Database.Commodities where c.CompanyID == newValue.ID select c);            
+            dgCommodities.ItemsSource = (newValue == null) ? null : new ObservableCollection<Commodity>(from c in Database.Commodities where c.CompanyID == newValue.ID select c);
         }
 
         private void NewCommodity_Click(object sender, RoutedEventArgs e)
@@ -41,8 +41,9 @@ namespace SingerDispatch.Panels.Companies
             var commodity = new Commodity();
 
             SelectedCompany.Commodities.Add(commodity);
-            ((ObservableCollection<Commodity>)dgCommodities.ItemsSource).Add(commodity);
+            ((ObservableCollection<Commodity>)dgCommodities.ItemsSource).Insert(0, commodity);
             dgCommodities.SelectedItem = commodity;
+            dgCommodities.ScrollIntoView(commodity);
 
             txtCommodityName.Focus();            
         }

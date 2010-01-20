@@ -42,9 +42,10 @@ namespace SingerDispatch.Panels.Jobs
             var commodity = new JobCommodity { JobID = SelectedJob.ID };
             var list = (ObservableCollection<JobCommodity>)dgCommodities.ItemsSource;
             
-            list.Insert(0, commodity);
             SelectedJob.JobCommodities.Insert(0, commodity);
+            list.Add(commodity);
             dgCommodities.SelectedItem = commodity;
+            dgCommodities.ScrollIntoView(commodity);
 
             cmbCommodityName.Focus();
         }

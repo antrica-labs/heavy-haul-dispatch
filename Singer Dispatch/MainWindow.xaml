@@ -61,7 +61,7 @@
             </Border>
             
             <StackPanel DockPanel.Dock="Left" VerticalAlignment="Stretch">
-                <Border Style="{StaticResource CompanySelection}" Background="WhiteSmoke">
+                <Border Style="{StaticResource CompanySelection}">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition />
@@ -71,15 +71,13 @@
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
+                            <RowDefinition />                            
                         </Grid.RowDefinitions>
 
-                        <Label Grid.Column="0" Grid.Row="0">Company Name:</Label>
-                        <Label Grid.Column="1" Grid.Row="0">Operating As:</Label>                        
-                        <Label Grid.Column="2" Grid.Row="0">Available Credit:</Label>
-                        <Label Grid.Column="3" Grid.Row="0">Priority Level:</Label>
+                        <Label Grid.Column="0" Grid.Row="0">Company name:</Label>
+                        <Label Grid.Column="1" Grid.Row="0">Operating as:</Label>                        
+                        <Label Grid.Column="2" Grid.Row="0">Available credit:</Label>
+                        <Label Grid.Column="3" Grid.Row="0">Priority level:</Label>
 
                         <ComboBox Name="cmbCompanies" Grid.Column="0" Grid.Row="1" ItemTemplate="{StaticResource nameTemplate}" TextSearch.TextPath="Name" IsEditable="True" SelectionChanged="cmbCompanies_SelectionChanged" />
                         <ComboBox Name="cmbOperators" Grid.Column="1" Grid.Row="1" ItemTemplate="{StaticResource operatingAsTemplate}" TextSearch.TextPath="Alias" IsEditable="True" SelectionChanged="cmbOperators_SelectionChanged" />

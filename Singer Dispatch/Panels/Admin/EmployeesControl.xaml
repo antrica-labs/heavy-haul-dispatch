@@ -100,6 +100,6 @@
             <Button Style="{StaticResource HorizontalEnd}" Grid.Column="1" Click="RemoveEmployee_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgEmployees, Path=SelectedItem}">Remove employee</Button>
         </Grid>
         
-        <Button Style="{StaticResource HorizontalEnd}" Grid.Column="1" Grid.Row="1" Click="SaveEmployee_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgEmployees, Path=SelectedItem}">Save employee</Button>
+        <Button Style="{StaticResource HorizontalEnd}" Name="CommitChangesButton" Grid.Column="1" Grid.Row="1" Click="SaveEmployee_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgEmployees, Path=SelectedItem}">Save employee</Button>
     </Grid>
 </UserControl>

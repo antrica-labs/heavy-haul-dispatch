@@ -20,7 +20,7 @@ namespace SingerDispatch.Panels.Jobs
 
         private void ControlLoaded(object sender, RoutedEventArgs e)
         {            
-            cmbLoads.ItemsSource = (SelectedJob == null) ? null : SelectedJob.Loads.ToList();            
+            cmbLoads.ItemsSource = (SelectedJob == null) ? null : SelectedJob.Loads.ToList();
         }
 
         protected override void SelectedJobChanged(Job newValue, Job oldValue)
@@ -32,11 +32,13 @@ namespace SingerDispatch.Panels.Jobs
 
         private void NewPermit_Click(object sender, RoutedEventArgs e)
         {
+            var list = (ObservableCollection<Permit>)dgPermits.ItemsSource;
             var permit = new Permit() { JobID = SelectedJob.ID };
 
             SelectedJob.Permits.Add(permit);
-            ((ObservableCollection<Permit>)dgPermits.ItemsSource).Insert(0, permit);
+            list.Add(permit);
             dgPermits.SelectedItem = permit;
+            dgPermits.ScrollIntoView(permit);                
 
             cmbLoads.Focus();
         }

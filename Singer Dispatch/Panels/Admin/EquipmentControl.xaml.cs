@@ -2,6 +2,8 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Collections.ObjectModel;
+using System.Windows.Input;
+using SingerDispatch.Controls;
 
 namespace SingerDispatch.Panels.Admin
 {
@@ -10,6 +12,8 @@ namespace SingerDispatch.Panels.Admin
     /// </summary>
     public partial class EquipmentControl : UserControl
     {
+        private CommandBinding SaveCommand { get; set; }
+
         public SingerDispatchDataContext Database { get; set; }
 
         public EquipmentControl()
@@ -17,15 +21,18 @@ namespace SingerDispatch.Panels.Admin
             InitializeComponent();
 
             Database = SingerConstants.CommonDataContext;
+            SaveCommand = new CommandBinding(CustomCommands.GenericSaveCommand);
 
             cmbEquipmentClasses.ItemsSource = from ec in Database.EquipmentClasses select ec;
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
+            SaveCommand.Executed += new ExecutedRoutedEventHandler(CommitChanges_Executed);
+
             cmbEmployees.ItemsSource = from emp in Database.Employees orderby emp.FirstName select emp;
             dgEquipment.MaxHeight = gbDetails.ActualHeight;
-            dgEquipment.ItemsSource = new ObservableCollection<Equipment>(from equip in Database.Equipment select equip);
+            dgEquipment.ItemsSource = new ObservableCollection<Equipment>(from equip in Database.Equipment select equip);            
         }
 
         private void NewEquipment_Click(object sender, RoutedEventArgs e)
@@ -35,6 +42,8 @@ namespace SingerDispatch.Panels.Admin
             ((ObservableCollection<Equipment>)dgEquipment.ItemsSource).Insert(0, unit);
             Database.Equipment.InsertOnSubmit(unit);
             dgEquipment.SelectedItem = unit;
+            dgEquipment.ScrollIntoView(unit);
+
             txtUnitNumber.Focus();
         }
 
@@ -96,6 +105,11 @@ namespace SingerDispatch.Panels.Admin
             }
         }
 
+        private void CommitChanges_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            CommitChangesButton.Focus();
+            CommitChangesButton.RaiseEvent(new System.Windows.RoutedEventArgs(System.Windows.Controls.Button.ClickEvent, CommitChangesButton));
+        }
         
     }
 }

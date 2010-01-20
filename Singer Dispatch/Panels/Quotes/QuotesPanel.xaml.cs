@@ -77,15 +77,12 @@ namespace SingerDispatch.Panels.Quotes
                 // Check if this quote is new and not yet in the database
                 if (SelectedQuote.ID == 0)
                 {
+                    SelectedCompany.Quotes.Add(SelectedQuote);
+
                     if (SelectedQuote.Number != null)
-                    {
-                        SelectedCompany.Quotes.Add(SelectedQuote);
                         EntityHelper.SaveAsQuoteRevision(SelectedQuote, Database);
-                    }
                     else
-                    {
                         EntityHelper.SaveAsNewQuote(SelectedQuote, Database);
-                    }
                 }
                 else
                 {

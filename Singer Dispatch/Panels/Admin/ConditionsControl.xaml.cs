@@ -13,7 +13,6 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Collections.ObjectModel;
 using SingerDispatch.Controls;
-using Microsoft.Windows.Controls;
 
 namespace SingerDispatch.Panels.Admin
 {
@@ -33,12 +32,12 @@ namespace SingerDispatch.Panels.Admin
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            TheGrid.ItemsSource = new ObservableCollection<Condition>(from c in Database.Conditions orderby c.ID select c);
+            TheGrid.ItemsSource = new ObservableCollection<Condition>(from c in Database.Conditions orderby c.ID select c);            
         }
 
         private void RowEditEnding(object sender, Microsoft.Windows.Controls.DataGridRowEditEndingEventArgs e)
         {
-            if (e.EditAction == DataGridEditAction.Commit)
+            if (e.EditAction == Microsoft.Windows.Controls.DataGridEditAction.Commit)
             {
                 try
                 {
@@ -57,8 +56,9 @@ namespace SingerDispatch.Panels.Admin
             var condition = new Condition();
 
             Database.Conditions.InsertOnSubmit(condition);
-            list.Add(condition);            
-            TheGrid.SelectedItem = condition;            
+            list.Add(condition);
+            TheGrid.SelectedItem = condition;
+            TheGrid.ScrollIntoView(condition);
 
             DataGridHelper.GetCell(TheGrid, TheGrid.SelectedIndex, 0).Focus();
         }

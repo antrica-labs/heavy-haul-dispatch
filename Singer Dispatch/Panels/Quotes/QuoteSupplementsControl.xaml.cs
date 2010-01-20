@@ -36,10 +36,11 @@ namespace SingerDispatch.Panels.Quotes
         {
             var list = (ObservableCollection<QuoteSupplement>)dgSupplements.ItemsSource;
             var supplement = new QuoteSupplement { QuoteID = SelectedQuote.ID };
-            
-            list.Insert(0, supplement);
+                        
             SelectedQuote.QuoteSupplements.Add(supplement);
+            list.Add(supplement);
             dgSupplements.SelectedItem = supplement;
+            dgSupplements.ScrollIntoView(supplement);
             
             txtName.Focus();
         }

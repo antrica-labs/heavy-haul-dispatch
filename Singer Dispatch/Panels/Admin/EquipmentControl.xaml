@@ -148,6 +148,6 @@
             <Button Style="{StaticResource HorizontalEnd}" Grid.Column="1" Click="RemoveEquipment_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgEquipment, Path=SelectedItem}">Remove equipment</Button>
         </Grid>
 
-        <Button Style="{StaticResource HorizontalEnd}" Grid.Column="1" Grid.Row="1" Click="SaveEquipment_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgEquipment, Path=SelectedItem}">Save equipment</Button>
+        <Button Style="{StaticResource HorizontalEnd}" Name="CommitChangesButton" Grid.Column="1" Grid.Row="1" Click="SaveEquipment_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgEquipment, Path=SelectedItem}">Save equipment</Button>
     </Grid>
 </UserControl>

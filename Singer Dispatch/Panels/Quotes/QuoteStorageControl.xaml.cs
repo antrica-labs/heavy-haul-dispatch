@@ -36,11 +36,13 @@ namespace SingerDispatch.Panels.Quotes
 
         private void NewStorageItem_Click(object sender, RoutedEventArgs e)
         {
+            var list = (ObservableCollection<QuoteStorageItem>)dgStorageList.ItemsSource;
             var item = new QuoteStorageItem() { QuoteID = SelectedQuote.ID };
 
             SelectedQuote.QuoteStorageItems.Add(item);
-            ((ObservableCollection<QuoteStorageItem>)dgStorageList.ItemsSource).Insert(0, item);
+            list.Add(item);
             dgStorageList.SelectedItem = item;
+            dgStorageList.ScrollIntoView(item);
 
             cmbCommodities.Focus();
         }

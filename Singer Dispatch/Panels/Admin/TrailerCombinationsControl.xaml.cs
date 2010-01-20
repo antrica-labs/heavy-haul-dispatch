@@ -5,7 +5,6 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Collections.ObjectModel;
 using SingerDispatch.Controls;
-using Microsoft.Windows.Controls;
 
 namespace SingerDispatch.Panels.Admin
 {
@@ -41,7 +40,7 @@ namespace SingerDispatch.Panels.Admin
                 }            
             }
 
-            dgCombinations.ItemsSource = new ObservableCollection<TrailerCombination>(from tc in Database.TrailerCombinations select tc);
+            dgCombinations.ItemsSource = new ObservableCollection<TrailerCombination>(from tc in Database.TrailerCombinations select tc);         
         }
 
         private void NewCombination_Click(object sender, RoutedEventArgs e)
@@ -57,8 +56,9 @@ namespace SingerDispatch.Panels.Admin
             {}
 
             Database.TrailerCombinations.InsertOnSubmit(combination);
-            list.Add(combination);
+            list.Insert(0, combination);
             dgCombinations.SelectedItem = combination;
+            dgCombinations.ScrollIntoView(combination);
 
             DataGridHelper.GetCell(dgCombinations, dgCombinations.SelectedIndex, 0).Focus();
         }
@@ -85,7 +85,7 @@ namespace SingerDispatch.Panels.Admin
 
         private void RowEditEnding(object sender, Microsoft.Windows.Controls.DataGridRowEditEndingEventArgs e)
         {
-            if (e.EditAction == DataGridEditAction.Commit)
+            if (e.EditAction == Microsoft.Windows.Controls.DataGridEditAction.Commit)
             {
                 try
                 {

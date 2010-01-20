@@ -89,7 +89,7 @@ namespace SingerDispatch
         {
             get
             {
-                return string.Format("{0} rev {1}", Number, Revision);
+                return string.Format("{0} rev. {1}", Number, Revision);
             }
         }
 

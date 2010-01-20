@@ -51,9 +51,10 @@ namespace SingerDispatch.Panels.Jobs
 
             try
             {
-                if (SelectedJob.ID == 0)
+                if (SelectedJob.ID == 0 || SelectedJob.Number == null)
                 {
                     SelectedCompany.Jobs.Add(SelectedJob);
+                    SelectedJob.CompanyID = SelectedCompany.ID;
                     EntityHelper.SaveAsNewJob(SelectedJob, Database);
                 }
                 else

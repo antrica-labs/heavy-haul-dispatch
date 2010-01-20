@@ -27,9 +27,21 @@ namespace SingerDispatch.Panels.Quotes
         {
             // refresh database lists in case they have been modified elsewhere.
             cmbQuotedBy.ItemsSource = from emp in Database.Employees orderby emp.FirstName select emp;
+            cmbCareOfCompanies.ItemsSource = (SelectedCompany == null) ? null : from c in Database.Companies where c != SelectedCompany && c.IsVisible == true select c;            
 
-            cmbCareOfCompanies.ItemsSource = (SelectedCompany == null) ? null : from c in Database.Companies where c != SelectedCompany && c.IsVisible == true select c;
-            dgQuotes.ItemsSource = (SelectedCompany == null) ? null : new ObservableCollection<Quote>(from quote in Database.Quotes where quote.Company == SelectedCompany orderby quote.Number descending, quote.Revision descending select quote);            
+            if (SelectedCompany != null)
+            {
+                var quotes = new ObservableCollection<Quote>(from quote in Database.Quotes where quote.Company == SelectedCompany orderby quote.Number descending, quote.Revision descending select quote);
+
+                if (SelectedQuote != null && SelectedQuote.ID == 0)
+                    quotes.Insert(0, SelectedQuote);
+
+                dgQuotes.ItemsSource = quotes;
+            }
+            else
+            {
+                dgQuotes.ItemsSource = null;
+            }
         }
 
         protected override void SelectedCompanyChanged(Company newValue, Company oldValue)
@@ -37,7 +49,7 @@ namespace SingerDispatch.Panels.Quotes
             base.SelectedCompanyChanged(newValue, oldValue);
 
             cmbCareOfCompanies.ItemsSource = (SelectedCompany == null) ? null : from c in Database.Companies where c != SelectedCompany select c;
-            dgQuotes.ItemsSource = (SelectedCompany == null) ? null : new ObservableCollection<Quote>(from quote in Database.Quotes where quote.Company == SelectedCompany orderby quote.Number descending, quote.Revision descending select quote);            
+            dgQuotes.ItemsSource = (SelectedCompany == null) ? null : new ObservableCollection<Quote>(from quote in Database.Quotes where quote.Company == SelectedCompany orderby quote.Number descending, quote.Revision descending select quote);
         }
 
         protected override void SelectedQuoteChanged(Quote newValue, Quote oldValue)
@@ -80,9 +92,9 @@ namespace SingerDispatch.Panels.Quotes
         private void NewQuote_Click(object sender, RoutedEventArgs e)
         {
             var list = (ObservableCollection<Quote>)dgQuotes.ItemsSource;
-            var quote = new Quote { CreationDate = DateTime.Today, ExpirationDate = DateTime.Today.AddDays(30) };
-                        
-            list.Add(quote);
+            var quote = new Quote { CreationDate = DateTime.Today, ExpirationDate = DateTime.Today.AddDays(30) };               
+
+            list.Insert(0, quote);
             dgQuotes.SelectedItem = quote;
             dgQuotes.ScrollIntoView(quote);
 
@@ -122,6 +134,12 @@ namespace SingerDispatch.Panels.Quotes
             
             var window = (MainWindow)Application.Current.MainWindow;
             var job = quote.ToJob();
+
+            try
+            {
+                job.JobStatusType = (JobStatusType)(from s in Database.JobStatusTypes where s.Name == "Pending" select s).First();
+            }
+            catch { }
 
             SelectedCompany.Jobs.Add(job);
             Database.Jobs.InsertOnSubmit(job);

@@ -215,7 +215,7 @@ namespace SingerDispatch
             ExpandSection(expanderAdmin, typeof(AdminPanel));
         }
 
-        public void ViewInvoice(Job job)
+        public void ViewInvoices(Job job)
         {
             if (job.Company == null)
             {
@@ -286,7 +286,7 @@ namespace SingerDispatch
 
         private void FindJobForInvoice_Click(object sender, RoutedEventArgs e)
         {
-            FindInvoice();
+            FindInvoices();
         }
 
 
@@ -302,7 +302,7 @@ namespace SingerDispatch
 
         private void InvoiceLookupCommandHandler(object sender, ExecutedRoutedEventArgs e)
         {
-            FindInvoice();
+            FindInvoices();
         }
 
         private void CreateCompanyCommandHandler(object sender, ExecutedRoutedEventArgs e)
@@ -342,14 +342,14 @@ namespace SingerDispatch
             }
         }
 
-        private void FindInvoice()
+        private void FindInvoices()
         {
             var window = new JobLocatorWindow() { Owner = this };
             var job = window.GetJob();
 
             if (job != null)
             {
-                ViewInvoice(job);
+                ViewInvoices(job);
             }
         }
 

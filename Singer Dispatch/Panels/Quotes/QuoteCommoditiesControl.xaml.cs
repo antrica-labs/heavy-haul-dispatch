@@ -87,8 +87,9 @@ namespace SingerDispatch.Panels.Quotes
             var commodity = new QuoteCommodity { QuoteID = SelectedQuote.ID };
 
             SelectedQuote.QuoteCommodities.Add(commodity);
-            list.Insert(0, commodity);
+            list.Add(commodity);            
             dgQuoteCommodities.SelectedItem = commodity;
+            dgQuoteCommodities.ScrollIntoView(commodity);                
 
             cmbCommodityName.Focus();
         }
