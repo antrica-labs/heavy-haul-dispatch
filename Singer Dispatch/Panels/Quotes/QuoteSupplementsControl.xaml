@@ -21,7 +21,7 @@
                 <WPF:DataGridTextColumn Header="Billing type" Binding="{Binding BillingType.Name}" IsReadOnly="True" />
                 <WPF:DataGridTextColumn Header="Quantity" Binding="{Binding Quantity}" />
                 <WPF:DataGridTextColumn Header="Cost" Binding="{Binding CostPerItem, StringFormat=c}" />
-            </WPF:DataGrid.Columns>            
+            </WPF:DataGrid.Columns>
         </WPF:DataGrid>
 
         <Grid Margin="0,0,0,10">

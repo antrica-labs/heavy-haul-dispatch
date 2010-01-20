@@ -19,67 +19,64 @@
         </ResourceDictionary>
     </UserControl.Resources>
     <StackPanel>
-        <Border Style="{StaticResource JobInvoicesHeader}" DataContext="{Binding ElementName=jobPricingPanel, Path=SelectedJob}">            
+        <Border Style="{StaticResource JobInvoicesHeader}">
             <StackPanel>
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="0.5*" />
-                        <ColumnDefinition Width="0.5*" />
-                        <ColumnDefinition />
+                        <ColumnDefinition Width="80" />
+                        <ColumnDefinition Width="*" />                        
                     </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition />
-                        <RowDefinition />
-                    </Grid.RowDefinitions>
-
-                    <Label Grid.Row="0" Grid.Column="0">Job #:</Label>
-                    <ComboBox Grid.Row="1" Grid.Column="0" Name="cmbJobList" MinWidth="150" TextSearch.TextPath="Number" IsEditable="True" ItemTemplate="{StaticResource JobNameTemplate}" SelectedItem="{Binding ElementName=jobPricingPanel, Path=SelectedJob}" SelectionChanged="cmbJobList_SelectionChanged" />
-
-                    <Label Grid.Row="0" Grid.Column="1">Quote #:</Label>
-                    <TextBox Grid.Row="1" Grid.Column="1" IsReadOnly="True">
-                        <TextBox.Text>
-                            <MultiBinding StringFormat="{}{0} rev. (1}">
-                                <Binding Path="Quote.Number" />
-                                <Binding Path="Quote.Revision" />
-                            </MultiBinding>
-                        </TextBox.Text>
-                    </TextBox>
-
-                    <Label Grid.Row="0" Grid.Column="2">Author:</Label>
-                    <TextBox Grid.Row="1" Grid.Column="2" IsReadOnly="True" Text="{Binding Employee.FirstName}" />
-                </Grid>
-
-                <Label>Care of:</Label>
-                <TextBox IsReadOnly="True" Text="{Binding CareOfCompany.Name}" />
-
-                <Label>Project description</Label>
-                <TextBox Height="40" Style="{StaticResource MultiLine}" VerticalScrollBarVisibility="Disabled" IsReadOnly="True" Text="{Binding Description}"/>
-
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition />
-                        <ColumnDefinition />
-                        <ColumnDefinition />
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition />
-                        <RowDefinition />
-                    </Grid.RowDefinitions>
-
-                    <Label Grid.Row="0" Grid.Column="0">Start date:</Label>
-                    <TextBox Grid.Row="1" Grid.Column="0" IsReadOnly="True" Text="{Binding StartDate}" />
-
-                    <Label Grid.Row="0" Grid.Column="1">End date:</Label>
-                    <TextBox Grid.Row="1" Grid.Column="1" IsReadOnly="True" Text="{Binding EndDate}" />
-
-                    <Label Grid.Row="0" Grid.Column="2">Status</Label>
-                    <TextBox Grid.Row="1" Grid.Column="2" IsReadOnly="True" Text="{Binding JobStatusType.Name}" />
+                    
+                    <Label Grid.Column="0">Job number:</Label>
+                    <ComboBox Grid.Column="1" Name="cmbJobList" MinWidth="150" TextSearch.TextPath="Number" IsEditable="True" ItemTemplate="{StaticResource JobNameTemplate}" SelectedItem="{Binding ElementName=jobPricingPanel, Path=SelectedJob}" SelectionChanged="cmbJobList_SelectionChanged" />
                 </Grid>                
+
+                <Expander DataContext="{Binding ElementName=jobPricingPanel, Path=SelectedJob}" Margin="5" Padding="5" BorderBrush="DarkGray" BorderThickness="1">
+                    <Expander.Header>
+                        <TextBlock FontWeight="Bold">Job Details</TextBlock>
+                    </Expander.Header>                    
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+
+                        <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3">Project description</Label>
+                        <TextBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Height="40" Style="{StaticResource MultiLine}" VerticalScrollBarVisibility="Disabled" IsReadOnly="True" Text="{Binding Description}"/>
+                        
+                        <Label Grid.Row="2" Grid.Column="0">Quote #:</Label>
+                        <TextBox Grid.Row="3" Grid.Column="0" IsReadOnly="True" Text="{Binding Quote.Number}" />
+
+                        <Label Grid.Row="2" Grid.Column="1">Author:</Label>
+                        <TextBox Grid.Row="3" Grid.Column="1" IsReadOnly="True" Text="{Binding Employee.FirstName}" />
+                        
+                        <Label Grid.Row="2" Grid.Column="2">Care of:</Label>
+                        <TextBox Grid.Row="3" Grid.Column="2" IsReadOnly="True" Text="{Binding CareOfCompany.Name}" />
+
+                        <Label Grid.Row="4" Grid.Column="0">Start date:</Label>
+                        <TextBox Grid.Row="5" Grid.Column="0" IsReadOnly="True" Text="{Binding StartDate}" />
+
+                        <Label Grid.Row="4" Grid.Column="1">End date:</Label>
+                        <TextBox Grid.Row="5" Grid.Column="1" IsReadOnly="True" Text="{Binding EndDate}" />
+
+                        <Label Grid.Row="4" Grid.Column="2">Status</Label>
+                        <TextBox Grid.Row="5" Grid.Column="2" IsReadOnly="True" Text="{Binding JobStatusType.Name}" />
+                    </Grid>
+                </Expander>
             </StackPanel>
         </Border>
         
-        <StackPanel Visibility="Hidden">
-            <Border Background="LightGoldenrodYellow" BorderBrush="LightGray" BorderThickness="1" Margin="0,0,0,5">
+        <StackPanel>
+            <Border Background="LightGoldenrodYellow" BorderBrush="LightGray" BorderThickness="1" Margin="0,5,0,5" DataContext="{Binding ElementName=jobPricingPanel, Path=SelectedInvoice}">
                 <Grid Margin="5,3">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition />
@@ -98,9 +95,15 @@
             </Border>        
             
             <TabControl Name="Tabs">
-                <TabItem Header="Invoice History"></TabItem>
-                <TabItem Header="Line Items"></TabItem>
-                <TabItem Header="Extras"></TabItem>
+                <TabItem Header="Invoice History">
+                    <Invoicing:JobInvoiceHistoryControl SelectedJob="{Binding SelectedJob}" SelectedInvoice="{Binding SelectedInvoice}" />
+                </TabItem>
+                <TabItem Header="Line Items">
+                    <Invoicing:InvoiceLineItemsControl SelectedInvoice="{Binding SelectedInvoice}" />
+                </TabItem>
+                <TabItem Header="Extras">
+                    <Invoicing:InvoiceExtrasControl SelectedInvoice="{Binding SelectedInvoice}" />
+                </TabItem>
             </TabControl>
         </StackPanel>
     </StackPanel>

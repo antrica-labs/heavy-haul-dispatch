@@ -35,7 +35,7 @@
                     <MenuItem Header="_Find job" Click="FindJob_Click" InputGestureText="Ctrl+Shift+J" />                    
                 </MenuItem>
                 <MenuItem Header="Invoicing">
-                    <MenuItem Header="_Find job" Click="FindJobForInvoice_Click" InputGestureText="Ctrl+Shift+I" />
+                    <MenuItem Header="_View job invoices" Click="FindJobForInvoice_Click" InputGestureText="Ctrl+Shift+I" />
                 </MenuItem>
             </Menu>
 
