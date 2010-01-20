@@ -40,15 +40,21 @@
             <Button Style="{StaticResource HorizontalEnd}" Grid.Column="4" Click="DeleteQuote_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgQuotes, Path=SelectedItem}">Delete quote</Button>
         </Grid>
         
-        <Grid Name="panelQuoteDetails" DataContext="{Binding ElementName=dgQuotes, Path=SelectedItem}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgQuotes, Path=SelectedItem}">
+        <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
                 <ColumnDefinition />                
             </Grid.ColumnDefinitions>
             
             <StackPanel Grid.Column="0">
-                <GroupBox Header="Quote Details" Name="gbQuoteDetails" Margin="0,0,5,0">
+                <GroupBox Header="Quote Details" Margin="0,0,5,0" DataContext="{Binding ElementName=dgQuotes, Path=SelectedItem}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgQuotes, Path=SelectedItem}">
                     <StackPanel>
+                        <Label>Project description</Label>
+                        <TextBox Name="txtDescription" Style="{StaticResource MultiLine}" VerticalScrollBarVisibility="Hidden" Text="{Binding Description}"/>
+                        
+                        <Label>Care of:</Label>
+                        <ComboBox Name="cmbCareOfCompanies" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectionChanged="CareOfCompanies_SelectionChanged" SelectedItem="{Binding CareOfCompany}" TextSearch.TextPath="Name" IsEditable="True" />
+                        
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition />                                
@@ -74,14 +80,8 @@
                             <ComboBox Name="cmbQuotedBy" Grid.Row="1" Grid.Column="1" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectedItem="{Binding Employee}" TextSearch.TextPath="Name"></ComboBox>
                             
                             <Label Grid.Row="0" Grid.Column="2">Quote price:</Label>
-                            <TextBox Name="txtPrice" Grid.Row="2" Grid.Column="2" Text="{Binding Price, StringFormat=c}" />
+                            <TextBox Name="txtPrice" Grid.Row="2" Grid.Column="2" Text="{Binding Price, StringFormat=c}" />                            
                         </Grid>
-                        
-                        <Label>Care of:</Label>
-                        <ComboBox Name="cmbCareOfCompanies" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectionChanged="CareOfCompanies_SelectionChanged" SelectedItem="{Binding CareOfCompany}" TextSearch.TextPath="Name" IsEditable="True" />
-                        
-                        <Label>Project description</Label>
-                        <TextBox Height="40" Style="{StaticResource MultiLine}" VerticalScrollBarVisibility="Disabled" Text="{Binding Description}"/>
 
                         <Grid>
                             <Grid.ColumnDefinitions>
@@ -112,7 +112,7 @@
             </StackPanel>
 
             
-            <GroupBox Header="Contact List" Grid.Column="1" Margin="0,0,5,5" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgQuotes, Path=SelectedItem}">
+            <GroupBox Header="Contact List" Grid.Column="1" Margin="0,0,5,0" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgQuotes, Path=SelectedItem}">
                 <StackPanel>
                     <WPF:DataGrid Name="dgQuoteContacts" Style="{StaticResource ListDisplay}" Height="150" Margin="5">
                         <WPF:DataGrid.Columns>

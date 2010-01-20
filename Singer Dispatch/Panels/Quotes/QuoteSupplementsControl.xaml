@@ -55,7 +55,7 @@
                 <TextBox Name="txtName" Grid.Row="0" Grid.Column="1" Text="{Binding Name}" />
                 
                 <Label Grid.Row="1" Grid.Column="0">Details:</Label>
-                <TextBox Name="txtDetails" Grid.Row="1" Grid.Column="1" Text="{Binding Details}" />
+                <TextBox Name="txtDetails" Grid.Row="1" Grid.Column="1" Grid.RowSpan="2" Text="{Binding Details}" Style="{StaticResource MultiLine}" VerticalScrollBarVisibility="Hidden" />
                         
                 <Label Grid.Row="0" Grid.Column="2">Billing type:</Label>
                 <ComboBox Name="cmbBillingType" Grid.Row="0" Grid.Column="3" SelectedItem="{Binding BillingType}" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectionChanged="BillingType_SelectionChanged" />

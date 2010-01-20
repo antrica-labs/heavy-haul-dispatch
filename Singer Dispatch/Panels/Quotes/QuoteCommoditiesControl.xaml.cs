@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Collections.ObjectModel;
+using System;
 
 namespace SingerDispatch.Panels.Quotes
 {
@@ -21,7 +22,7 @@ namespace SingerDispatch.Panels.Quotes
 
         private void Control_Loaded(object sender, RoutedEventArgs e)
         {
-            cmbCommodityName.ItemsSource = (SelectedQuote == null) ? null : from c in Database.Commodities where c.Company == SelectedQuote.Company || c.Company == SelectedQuote.CareOfCompany select c;
+            cmbCommodityName.ItemsSource = (SelectedQuote == null) ? null : from c in Database.Commodities where c.Company == SelectedCompany || c.Company == SelectedQuote.CareOfCompany select c;            
         }
 
         protected override void SelectedQuoteChanged(Quote newValue, Quote oldValue)

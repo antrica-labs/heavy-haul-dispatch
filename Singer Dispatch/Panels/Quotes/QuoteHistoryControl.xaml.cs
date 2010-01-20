@@ -98,7 +98,7 @@ namespace SingerDispatch.Panels.Quotes
             dgQuotes.SelectedItem = quote;
             dgQuotes.ScrollIntoView(quote);
 
-            txtPrice.Focus();
+            txtDescription.Focus();
         }
 
         private void CreateRevision_Click(object sender, RoutedEventArgs e)

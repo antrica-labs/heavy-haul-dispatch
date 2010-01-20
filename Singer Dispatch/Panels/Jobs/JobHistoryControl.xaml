@@ -19,7 +19,14 @@
         <WPF:DataGrid Name="dgJobs" Style="{StaticResource ListDisplay}" Height="180" SelectedItem="{Binding SelectedJob}">
             <WPF:DataGrid.Columns>
                 <WPF:DataGridTextColumn Header="Number" Width="0.15*" Binding="{Binding Number}"/>
-                <WPF:DataGridTextColumn Header="Quote" Width="0.15*" Binding="{Binding Quote.FriendlyName}" />
+                <WPF:DataGridTextColumn Header="Quote" Width="0.15*">
+                    <WPF:DataGridTextColumn.Binding>
+                        <MultiBinding Converter="{StaticResource QuoteFriendlyNameConverter}">
+                            <Binding Path="Quote.Number" />
+                            <Binding Path="Quote.Revision" />
+                        </MultiBinding>
+                    </WPF:DataGridTextColumn.Binding>
+                </WPF:DataGridTextColumn>
                 <WPF:DataGridTextColumn Header="Status" Width="0.2*" Binding="{Binding JobStatusType.Name}" />
                 <WPF:DataGridTextColumn Header="Description" Binding="{Binding Description}" />
             </WPF:DataGrid.Columns>
@@ -50,6 +57,12 @@
 
             <GroupBox Header="Job Details" Name="gbJobDetails" Grid.Column="0" Grid.Row="0" Margin="0,0,5,0" DataContext="{Binding ElementName=dgJobs, Path=SelectedItem}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgJobs, Path=SelectedItem}">
                 <StackPanel>
+                    <Label>Project description</Label>
+                    <TextBox Name="txtDescription" Style="{StaticResource MultiLine}" VerticalScrollBarVisibility="Hidden" Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}"/>
+                    
+                    <Label>Care of:</Label>
+                    <ComboBox Name="cmbCareOfCompanies" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectedItem="{Binding CareOfCompany}" TextSearch.TextPath="Name" IsEditable="True" SelectionChanged="cmbCareOfCompanies_SelectionChanged" />
+                    
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="0.5*" />
@@ -70,16 +83,10 @@
                         <Label Grid.Row="0" Grid.Column="2">Author:</Label>
                         <ComboBox Name="cmbCreatedBy" Grid.Row="1" Grid.Column="2" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectedItem="{Binding Employee}" TextSearch.TextPath="Name"></ComboBox>                       
                     </Grid>
-
-                    <Label>Care of:</Label>
-                    <ComboBox Name="cmbCareOfCompanies" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectedItem="{Binding CareOfCompany}" TextSearch.TextPath="Name" IsEditable="True" SelectionChanged="cmbCareOfCompanies_SelectionChanged" />
-
-                    <Label>Project description</Label>
-                    <TextBox Name="txtDescription" Height="40" Style="{StaticResource MultiLine}" VerticalScrollBarVisibility="Disabled" Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}"/>
                 </StackPanel>
             </GroupBox>
 
-            <GroupBox Header="Job Timeline" Name="gbJobTimeline" Grid.Column="0" Grid.Row="1" Margin="0,5,5,5" DataContext="{Binding ElementName=dgJobs, Path=SelectedItem}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgJobs, Path=SelectedItem}">
+            <GroupBox Header="Job Timeline" Name="gbJobTimeline" Grid.Column="0" Grid.Row="1" Margin="0,5,5,0" DataContext="{Binding ElementName=dgJobs, Path=SelectedItem}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgJobs, Path=SelectedItem}">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition />
@@ -102,7 +109,7 @@
                 </Grid>
             </GroupBox>
 
-            <GroupBox Header="Contact List" Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" Margin="0,0,5,5" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgJobs, Path=SelectedItem}">
+            <GroupBox Header="Contact List" Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" Margin="0,0,5,0" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgJobs, Path=SelectedItem}">
                 <StackPanel>
                     <WPF:DataGrid Name="dgJobContacts" Style="{StaticResource ListDisplay}" Height="100" Margin="0,0,0,5">
                         <WPF:DataGrid.Columns>

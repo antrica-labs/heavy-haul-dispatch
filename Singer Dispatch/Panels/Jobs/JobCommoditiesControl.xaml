@@ -169,10 +169,10 @@
                     <WPF:DatePicker Grid.Column="1" Grid.Row="5" SelectedDate="{Binding LoadDate}" />
                                         
                     <Label Grid.Column="2" Grid.Row="0">Load instructions</Label>
-                    <TextBox Grid.Column="2" Style="{StaticResource MultiLine}" Grid.Row="1" Grid.RowSpan="2" Text="{Binding LoadInstructions}" />
+                    <TextBox Grid.Column="2" Style="{StaticResource MultiLine}" VerticalScrollBarVisibility="Hidden" Grid.Row="1" Grid.RowSpan="2" Text="{Binding LoadInstructions}" />
                     
                     <Label Grid.Column="2" Grid.Row="3">Load route:</Label>
-                    <TextBox Grid.Column="2" Grid.Row="4" Grid.RowSpan="2" Style="{StaticResource MultiLine}" Text="{Binding LoadRoute}"/>                    
+                    <TextBox Grid.Column="2" Grid.Row="4" Grid.RowSpan="2" Style="{StaticResource MultiLine}" VerticalScrollBarVisibility="Hidden" Text="{Binding LoadRoute}"/>                    
                 </Grid>                
             </TabItem>           
             
@@ -211,10 +211,10 @@
                     <WPF:DatePicker Grid.Column="1" Grid.Row="5" SelectedDate="{Binding UnloadDate}"  />
                     
                     <Label Grid.Column="2" Grid.Row="0">Unload instructions</Label>
-                    <TextBox  Grid.Column="2" Grid.Row="1" Grid.RowSpan="2" Style="{StaticResource MultiLine}" Text="{Binding UnloadInstructions}" />
+                    <TextBox  Grid.Column="2" Grid.Row="1" Grid.RowSpan="2" Style="{StaticResource MultiLine}" VerticalScrollBarVisibility="Hidden" Text="{Binding UnloadInstructions}" />
 
                     <Label Grid.Column="2" Grid.Row="3">Unload route:</Label>
-                    <TextBox Grid.Column="2" Grid.Row="4" Grid.RowSpan="2" Style="{StaticResource MultiLine}" Text="{Binding UnloadRoute}" />
+                    <TextBox Grid.Column="2" Grid.Row="4" Grid.RowSpan="2" Style="{StaticResource MultiLine}" VerticalScrollBarVisibility="Hidden" Text="{Binding UnloadRoute}" />
                 </Grid>
             </TabItem>
         </TabControl>
