@@ -5,7 +5,7 @@
                        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                        xmlns:Panels="clr-namespace:SingerDispatch.Panels"
                        xmlns:Jobs="clr-namespace:SingerDispatch.Panels.Jobs"
-                       x:Name="jobsPanel" Loaded="Control_Loaded"
+                       x:Name="ThePanel" Loaded="Control_Loaded"
                        mc:Ignorable="d" IsEnabled="False">
     <UserControl.Resources>
         <ResourceDictionary>
@@ -15,7 +15,7 @@
         </ResourceDictionary>
     </UserControl.Resources>
     <StackPanel>
-        <Border Background="LightGoldenrodYellow" BorderBrush="LightGray" BorderThickness="1" Margin="0,0,0,5" DataContext="{Binding SelectedJob}">
+        <Border Background="LightGoldenrodYellow" BorderBrush="LightGray" BorderThickness="1" Margin="0,0,0,5" DataContext="{Binding ElementName=ThePanel}">
             <Grid Margin="5,3">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
@@ -26,14 +26,14 @@
                 
                 <StackPanel Grid.Column="0" Orientation="Horizontal">
                     <Label>Selected job #:</Label>
-                    <Label Content="{Binding Number}" FontWeight="Bold" />
+                    <Label Content="{Binding SelectedJob.Number}" FontWeight="Bold" />
                 </StackPanel>
                 
-                <Button Style="{StaticResource HorizontalEnd}" Name="CommitChangesButton" Grid.Column="3" Click="CommitJobChanges_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=jobsPanel, Path=SelectedJob}">Save changes</Button>
+                <Button Style="{StaticResource HorizontalEnd}" Name="CommitChangesButton" Grid.Column="3" Click="CommitJobChanges_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, Path=SelectedJob}">Save changes</Button>
             </Grid>
         </Border>
 
-        <TabControl Name="Tabs" DataContext="{Binding ElementName=jobsPanel}">
+        <TabControl Name="Tabs" DataContext="{Binding ElementName=ThePanel}">
             <TabItem Name="masterTab" Header="Jobs History">
                 <Jobs:JobHistoryControl SelectedCompany="{Binding SelectedCompany}" SelectedJob="{Binding SelectedJob}" />
             </TabItem>

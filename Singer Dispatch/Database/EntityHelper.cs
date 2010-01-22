@@ -96,6 +96,11 @@ namespace SingerDispatch.Database
             
         }
 
+        public static void PrepareEntityDelete(Invoice invoice, SingerDispatchDataContext context)
+        {
+
+        }
+
         public static void SaveAsQuoteRevision(Quote quote, SingerDispatchDataContext context)
         {
             var revision = (from q in context.Quotes where q.Number == quote.Number select q.Revision).Max() + 1;
@@ -120,6 +125,25 @@ namespace SingerDispatch.Database
             var number = (from j in context.Jobs select j.Number).Max() + 1;
 
             job.Number = (number != null) ? number : 10001;
+
+            context.SubmitChanges();
+        }
+
+        public static void SaveAsNewInvoice(Invoice invoice, SingerDispatchDataContext context)
+        {
+            var number = (from i in context.Invoices select i.Number).Max() + 1;
+
+            invoice.Revision = 0;
+            invoice.Number = (number != null) ? number : 10001;
+
+            context.SubmitChanges();
+        }
+
+        public static void SaveAsInvoiceRevision(Invoice invoice, SingerDispatchDataContext context)
+        {
+            var revision = (from i in context.Invoices where i.Number == invoice.Number select i.Revision).Max() + 1;
+
+            invoice.Revision = (revision != null) ? revision : 0;
 
             context.SubmitChanges();
         }

@@ -70,8 +70,8 @@
                             <TextBox Grid.Row="1" Grid.Column="0" IsReadOnly="True">
                                 <TextBox.Text>
                                     <MultiBinding Converter="{StaticResource QuoteFriendlyNameConverter}">
-                                        <Binding ElementName="quotesPanel" Path="SelectedQuote.Number" />
-                                        <Binding ElementName="quotesPanel" Path="SelectedQuote.Revision" />
+                                        <Binding Path="Number" />
+                                        <Binding Path="Revision" />
                                     </MultiBinding>
                                 </TextBox.Text>
                             </TextBox>

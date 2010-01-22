@@ -2465,6 +2465,8 @@ namespace SingerDispatch
 		
 		private EntitySet<ThirdPartyService> _ThirdPartyServices;
 		
+		private EntitySet<Invoice> _Invoices;
+		
 		private EntityRef<Address> _Address;
 		
 		private EntityRef<ContactType> _ContactType;
@@ -2500,6 +2502,7 @@ namespace SingerDispatch
 		public Contact()
 		{
 			this._ThirdPartyServices = new EntitySet<ThirdPartyService>(new Action<ThirdPartyService>(this.attach_ThirdPartyServices), new Action<ThirdPartyService>(this.detach_ThirdPartyServices));
+			this._Invoices = new EntitySet<Invoice>(new Action<Invoice>(this.attach_Invoices), new Action<Invoice>(this.detach_Invoices));
 			this._Address = default(EntityRef<Address>);
 			this._ContactType = default(EntityRef<ContactType>);
 			OnCreated();
@@ -2746,6 +2749,19 @@ namespace SingerDispatch
 			}
 		}
 		
+		[Association(Name="Contact_Invoice", Storage="_Invoices", ThisKey="ID", OtherKey="ContactID")]
+		public EntitySet<Invoice> Invoices
+		{
+			get
+			{
+				return this._Invoices;
+			}
+			set
+			{
+				this._Invoices.Assign(value);
+			}
+		}
+		
 		[Association(Name="Address_Contact", Storage="_Address", ThisKey="AddressID", OtherKey="ID", IsForeignKey=true)]
 		public Address Address
 		{
@@ -2841,6 +2857,18 @@ namespace SingerDispatch
 		}
 		
 		private void detach_ThirdPartyServices(ThirdPartyService entity)
+		{
+			this.SendPropertyChanging();
+			entity.Contact = null;
+		}
+		
+		private void attach_Invoices(Invoice entity)
+		{
+			this.SendPropertyChanging();
+			entity.Contact = this;
+		}
+		
+		private void detach_Invoices(Invoice entity)
 		{
 			this.SendPropertyChanging();
 			entity.Contact = null;
@@ -4893,6 +4921,8 @@ namespace SingerDispatch
 		
 		private EntitySet<Dispatch> _Dispatches;
 		
+		private EntitySet<Invoice> _Invoices;
+		
 		private EntityRef<Employee> _Employee;
 		
 		private EntityRef<Company> _Company;
@@ -4936,6 +4966,7 @@ namespace SingerDispatch
 			this._Permits = new EntitySet<Permit>(new Action<Permit>(this.attach_Permits), new Action<Permit>(this.detach_Permits));
 			this._ThirdPartyServices = new EntitySet<ThirdPartyService>(new Action<ThirdPartyService>(this.attach_ThirdPartyServices), new Action<ThirdPartyService>(this.detach_ThirdPartyServices));
 			this._Dispatches = new EntitySet<Dispatch>(new Action<Dispatch>(this.attach_Dispatches), new Action<Dispatch>(this.detach_Dispatches));
+			this._Invoices = new EntitySet<Invoice>(new Action<Invoice>(this.attach_Invoices), new Action<Invoice>(this.detach_Invoices));
 			this._Employee = default(EntityRef<Employee>);
 			this._Company = default(EntityRef<Company>);
 			this._CareOfCompany = default(EntityRef<Company>);
@@ -5229,6 +5260,19 @@ namespace SingerDispatch
 			}
 		}
 		
+		[Association(Name="Job_Invoice", Storage="_Invoices", ThisKey="ID", OtherKey="JobID")]
+		public EntitySet<Invoice> Invoices
+		{
+			get
+			{
+				return this._Invoices;
+			}
+			set
+			{
+				this._Invoices.Assign(value);
+			}
+		}
+		
 		[Association(Name="Employee_Job", Storage="_Employee", ThisKey="EmployeeID", OtherKey="ID", IsForeignKey=true)]
 		public Employee Employee
 		{
@@ -5474,6 +5518,18 @@ namespace SingerDispatch
 		}
 		
 		private void detach_Dispatches(Dispatch entity)
+		{
+			this.SendPropertyChanging();
+			entity.Job = null;
+		}
+		
+		private void attach_Invoices(Invoice entity)
+		{
+			this.SendPropertyChanging();
+			entity.Job = this;
+		}
+		
+		private void detach_Invoices(Invoice entity)
 		{
 			this.SendPropertyChanging();
 			entity.Job = null;
@@ -12456,9 +12512,11 @@ namespace SingerDispatch
 		
 		private System.Nullable<long> _JobID;
 		
-		private int _Number;
+		private System.Nullable<long> _ContactID;
 		
-		private int _Revision;
+		private System.Nullable<int> _Number;
+		
+		private System.Nullable<int> _Revision;
 		
 		private string _Comment;
 		
@@ -12472,6 +12530,8 @@ namespace SingerDispatch
 		
 		private EntitySet<InvoiceExtra> _InvoiceExtras;
 		
+		private EntityRef<Contact> _Contact;
+		
 		private EntityRef<Job> _Job;
 		
     #region Extensibility Method Definitions
@@ -12482,9 +12542,11 @@ namespace SingerDispatch
     partial void OnIDChanged();
     partial void OnJobIDChanging(System.Nullable<long> value);
     partial void OnJobIDChanged();
-    partial void OnNumberChanging(int value);
+    partial void OnContactIDChanging(System.Nullable<long> value);
+    partial void OnContactIDChanged();
+    partial void OnNumberChanging(System.Nullable<int> value);
     partial void OnNumberChanged();
-    partial void OnRevisionChanging(int value);
+    partial void OnRevisionChanging(System.Nullable<int> value);
     partial void OnRevisionChanged();
     partial void OnCommentChanging(string value);
     partial void OnCommentChanged();
@@ -12500,6 +12562,7 @@ namespace SingerDispatch
 		{
 			this._InvoiceLineItems = new EntitySet<InvoiceLineItem>(new Action<InvoiceLineItem>(this.attach_InvoiceLineItems), new Action<InvoiceLineItem>(this.detach_InvoiceLineItems));
 			this._InvoiceExtras = new EntitySet<InvoiceExtra>(new Action<InvoiceExtra>(this.attach_InvoiceExtras), new Action<InvoiceExtra>(this.detach_InvoiceExtras));
+			this._Contact = default(EntityRef<Contact>);
 			this._Job = default(EntityRef<Job>);
 			OnCreated();
 		}
@@ -12548,8 +12611,32 @@ namespace SingerDispatch
 			}
 		}
 		
+		[Column(Storage="_ContactID")]
+		public System.Nullable<long> ContactID
+		{
+			get
+			{
+				return this._ContactID;
+			}
+			set
+			{
+				if ((this._ContactID != value))
+				{
+					if (this._Contact.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnContactIDChanging(value);
+					this.SendPropertyChanging();
+					this._ContactID = value;
+					this.SendPropertyChanged("ContactID");
+					this.OnContactIDChanged();
+				}
+			}
+		}
+		
 		[Column(Storage="_Number")]
-		public int Number
+		public System.Nullable<int> Number
 		{
 			get
 			{
@@ -12569,7 +12656,7 @@ namespace SingerDispatch
 		}
 		
 		[Column(Storage="_Revision")]
-		public int Revision
+		public System.Nullable<int> Revision
 		{
 			get
 			{
@@ -12694,6 +12781,40 @@ namespace SingerDispatch
 			}
 		}
 		
+		[Association(Name="Contact_Invoice", Storage="_Contact", ThisKey="ContactID", OtherKey="ID", IsForeignKey=true)]
+		public Contact Contact
+		{
+			get
+			{
+				return this._Contact.Entity;
+			}
+			set
+			{
+				Contact previousValue = this._Contact.Entity;
+				if (((previousValue != value) 
+							|| (this._Contact.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Contact.Entity = null;
+						previousValue.Invoices.Remove(this);
+					}
+					this._Contact.Entity = value;
+					if ((value != null))
+					{
+						value.Invoices.Add(this);
+						this._ContactID = value.ID;
+					}
+					else
+					{
+						this._ContactID = default(Nullable<long>);
+					}
+					this.SendPropertyChanged("Contact");
+				}
+			}
+		}
+		
 		[Association(Name="Job_Invoice", Storage="_Job", ThisKey="JobID", OtherKey="ID", IsForeignKey=true)]
 		public Job Job
 		{
@@ -12703,10 +12824,26 @@ namespace SingerDispatch
 			}
 			set
 			{
-				if ((this._Job.Entity != value))
+				Job previousValue = this._Job.Entity;
+				if (((previousValue != value) 
+							|| (this._Job.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Job.Entity = null;
+						previousValue.Invoices.Remove(this);
+					}
 					this._Job.Entity = value;
+					if ((value != null))
+					{
+						value.Invoices.Add(this);
+						this._JobID = value.ID;
+					}
+					else
+					{
+						this._JobID = default(Nullable<long>);
+					}
 					this.SendPropertyChanged("Job");
 				}
 			}

@@ -5,7 +5,7 @@
                            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                            xmlns:Panels="clr-namespace:SingerDispatch.Panels"
                            xmlns:Invoicing="clr-namespace:SingerDispatch.Panels.Invoicing"                       
-                           x:Name="jobPricingPanel" d:DesignWidth="780" mc:Ignorable="d"
+                           x:Name="ThePanel" d:DesignWidth="780" mc:Ignorable="d"
                            Loaded="Panel_Loaded">
     <UserControl.Resources>
         <ResourceDictionary>
@@ -24,16 +24,18 @@
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="80" />
-                        <ColumnDefinition Width="*" />                        
+                        <ColumnDefinition Width="175" />
+                        <ColumnDefinition Width="120" />
+                        <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
                     
                     <Label Grid.Column="0">Job number:</Label>
-                    <ComboBox Grid.Column="1" Name="cmbJobList" MinWidth="150" TextSearch.TextPath="Number" IsEditable="True" ItemTemplate="{StaticResource JobNameTemplate}" SelectedItem="{Binding ElementName=jobPricingPanel, Path=SelectedJob}" SelectionChanged="cmbJobList_SelectionChanged" />
+                    <ComboBox Grid.Column="1" Name="cmbJobList" MinWidth="150" TextSearch.TextPath="Number" IsEditable="True" ItemTemplate="{StaticResource JobNameTemplate}" SelectedItem="{Binding ElementName=ThePanel, Path=SelectedJob}" SelectionChanged="cmbJobList_SelectionChanged" />                    
                 </Grid>                
 
-                <Expander DataContext="{Binding ElementName=jobPricingPanel, Path=SelectedJob}" Margin="5" Padding="5" BorderBrush="DarkGray" BorderThickness="1">
+                <Expander DataContext="{Binding ElementName=ThePanel, Path=SelectedJob}" Margin="5" Padding="5" BorderBrush="DarkGray" BorderThickness="1">
                     <Expander.Header>
-                        <TextBlock FontWeight="Bold">Job Details</TextBlock>
+                        <TextBlock>Job Details</TextBlock>
                     </Expander.Header>                    
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -49,12 +51,19 @@
                             <RowDefinition />
                             <RowDefinition />
                         </Grid.RowDefinitions>
+                        
+                        <Label Grid.Row="2" Grid.Column="0">Quote #:</Label>
+                        <TextBox Grid.Row="3" Grid.Column="0" IsReadOnly="True">
+                            <TextBox.Text>
+                                <MultiBinding Converter="{StaticResource QuoteFriendlyNameConverter}">
+                                    <Binding Path="Quote.Number" />
+                                    <Binding Path="Quote.Revision" />
+                                </MultiBinding>
+                            </TextBox.Text>
+                        </TextBox>
 
                         <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3">Project description</Label>
                         <TextBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Height="40" Style="{StaticResource MultiLine}" VerticalScrollBarVisibility="Disabled" IsReadOnly="True" Text="{Binding Description}"/>
-                        
-                        <Label Grid.Row="2" Grid.Column="0">Quote #:</Label>
-                        <TextBox Grid.Row="3" Grid.Column="0" IsReadOnly="True" Text="{Binding Quote.Number}" />
 
                         <Label Grid.Row="2" Grid.Column="1">Author:</Label>
                         <TextBox Grid.Row="3" Grid.Column="1" IsReadOnly="True" Text="{Binding Employee.FirstName}" />
@@ -76,7 +85,7 @@
         </Border>
         
         <StackPanel>
-            <Border Background="LightGoldenrodYellow" BorderBrush="LightGray" BorderThickness="1" Margin="0,5,0,5" DataContext="{Binding ElementName=jobPricingPanel, Path=SelectedInvoice}">
+            <Border Background="LightGoldenrodYellow" BorderBrush="LightGray" BorderThickness="1" Margin="0,5,0,5" DataContext="{Binding ElementName=ThePanel}">
                 <Grid Margin="5,3">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition />
@@ -87,21 +96,28 @@
 
                     <StackPanel Grid.Column="0" Orientation="Horizontal">
                         <Label>Selected invoice:</Label>
-                        <Label Content="{Binding Number}" FontWeight="Bold" />
+                        <Label FontWeight="Bold">
+                            <Label.Content>
+                                <MultiBinding Converter="{StaticResource InvoiceFriendlyNameConverter}">
+                                    <Binding Path="SelectedInvoice.Number" />
+                                    <Binding Path="SelectedInvoice.Revision" />
+                                </MultiBinding>
+                            </Label.Content>
+                        </Label>
                     </StackPanel>
 
-                    <Button Style="{StaticResource HorizontalEnd}" Grid.Column="3">Save changes</Button>
+                    <Button Style="{StaticResource HorizontalEnd}" Grid.Column="3" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, Path=SelectedInvoice}" Click="CommitInvoiceChanges_Click">Save changes</Button>
                 </Grid>
             </Border>        
             
-            <TabControl Name="Tabs">
+            <TabControl Name="Tabs" DataContext="{Binding ElementName=ThePanel}">
                 <TabItem Header="Invoice History">
                     <Invoicing:JobInvoiceHistoryControl SelectedJob="{Binding SelectedJob}" SelectedInvoice="{Binding SelectedInvoice}" />
                 </TabItem>
-                <TabItem Header="Line Items">
+                <TabItem Header="Line Items" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, Path=SelectedInvoice}">
                     <Invoicing:InvoiceLineItemsControl SelectedInvoice="{Binding SelectedInvoice}" />
                 </TabItem>
-                <TabItem Header="Extras">
+                <TabItem Header="Extras" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, Path=SelectedInvoice}">
                     <Invoicing:InvoiceExtrasControl SelectedInvoice="{Binding SelectedInvoice}" />
                 </TabItem>
             </TabControl>

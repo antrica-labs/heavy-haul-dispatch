@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Linq;
+using SingerDispatch.Database;
 
 namespace SingerDispatch.Panels.Invoicing
 {
@@ -43,7 +44,33 @@ namespace SingerDispatch.Panels.Invoicing
 
         private void cmbJobList_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
-            //SelectedJob = (Job)cmbJobList.SelectedItem;
+            
+        }
+
+        private void CommitInvoiceChanges_Click(object sender, RoutedEventArgs e)
+        {
+            if (SelectedInvoice == null) return;
+
+            try
+            {
+                if (SelectedInvoice.ID == 0)
+                {
+                    SelectedJob.Invoices.Add(SelectedInvoice);
+
+                    if (SelectedInvoice.Number != null)
+                        EntityHelper.SaveAsInvoiceRevision(SelectedInvoice, Database);
+                    else
+                        EntityHelper.SaveAsNewInvoice(SelectedInvoice, Database);
+                }
+                else
+                {
+                    Database.SubmitChanges();
+                }
+            }
+            catch (System.Exception ex)
+            {
+                SingerDispatch.Windows.ErrorNoticeWindow.ShowError("Error while attempting write changes to database", ex.Message);
+            }
         }
     }
 }

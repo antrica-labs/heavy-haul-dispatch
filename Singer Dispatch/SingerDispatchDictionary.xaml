@@ -22,6 +22,7 @@
     
     <Controls:IsEnabledNullConverter x:Key="IsEnabledNullConverter" />
     <Controls:QuoteFriendlyNameConverter x:Key="QuoteFriendlyNameConverter" />
+    <Controls:InvoiceFriendlyNameConverter x:Key="InvoiceFriendlyNameConverter" />
     
     <Style TargetType="{x:Type Controls:TabIndexHyperlink}">
         <Setter Property="TextDecorations" Value="None" />

@@ -79,6 +79,7 @@
   <ItemGroup>
     <Compile Include="Controls\CustomCommands.cs" />
     <Compile Include="Controls\DataGridHelper.cs" />
+    <Compile Include="Controls\InvoiceFriendlyNameConverter.cs" />
     <Compile Include="Controls\IsEnabledNullConverter.cs" />
     <Compile Include="Controls\QuoteFriendlyNameConverter.cs" />
     <Compile Include="Controls\TabIndexHyperlink.cs" />

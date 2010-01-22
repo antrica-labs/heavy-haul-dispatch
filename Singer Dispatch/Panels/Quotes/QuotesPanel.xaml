@@ -5,7 +5,7 @@
                          xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                          xmlns:Quotes="clr-namespace:SingerDispatch.Panels.Quotes"
                          xmlns:Panels="clr-namespace:SingerDispatch.Panels"
-                         x:Name="quotesPanel" Loaded="Control_Loaded"
+                         x:Name="ThePanel" Loaded="Control_Loaded"
                          mc:Ignorable="d" IsEnabled="False">
     <UserControl.Resources>
         <ResourceDictionary>
@@ -14,8 +14,8 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <StackPanel DataContext="{Binding ElementName=quotesPanel}">
-        <Border Background="LightGoldenrodYellow" BorderBrush="LightGray" BorderThickness="1" Margin="0,0,0,5">
+    <StackPanel>
+        <Border Background="LightGoldenrodYellow" BorderBrush="LightGray" BorderThickness="1" Margin="0,0,0,5" DataContext="{Binding ElementName=ThePanel}">
             <Grid Margin="5,3">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
@@ -29,19 +29,18 @@
                     <Label>
                         <Label.Content>
                             <MultiBinding Converter="{StaticResource QuoteFriendlyNameConverter}">
-                                <Binding ElementName="quotesPanel" Path="SelectedQuote.Number" />                                
-                                <Binding ElementName="quotesPanel" Path="SelectedQuote.Revision" />
+                                <Binding Path="SelectedQuote.Number" />                                
+                                <Binding Path="SelectedQuote.Revision" />
                             </MultiBinding>
                         </Label.Content>
                     </Label>
-                    <!-- <Label Content="{Binding Converter={StaticResource QuoteFriendlyNameConverter}, Path=SelectedQuote}" FontWeight="Bold" /> -->
                 </StackPanel>                
                                 
-                <Button Style="{StaticResource HorizontalEnd}" Name="CommitChangesButton" Grid.Column="3" Click="CommitQuoteChanges_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=quotesPanel, Path=SelectedQuote}">Save changes</Button>                
+                <Button Style="{StaticResource HorizontalEnd}" Name="CommitChangesButton" Grid.Column="3" Click="CommitQuoteChanges_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, Path=SelectedQuote}">Save changes</Button>                
             </Grid>
         </Border>
         
-        <TabControl Name="Tabs">
+        <TabControl Name="Tabs" DataContext="{Binding ElementName=ThePanel}">
             <TabItem Header="Quotes">
                 <Quotes:QuoteHistoryControl SelectedCompany="{Binding SelectedCompany}" SelectedQuote="{Binding SelectedQuote}" />
             </TabItem>

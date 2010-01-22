@@ -106,6 +106,7 @@
       <Association Name="Contact_ThirdPartyService" Member="ThirdPartyServices" ThisKey="ID" OtherKey="ContactID" Type="ThirdPartyService" />
       <Association Name="Address_Contact" Member="Address" ThisKey="AddressID" OtherKey="ID" Type="Address" IsForeignKey="true" />
       <Association Name="ContactType_Contact" Member="ContactType" ThisKey="TypeID" OtherKey="ID" Type="ContactType" IsForeignKey="true" />
+      <Association Name="Contact_Invoice" Member="Invoices" ThisKey="ID" OtherKey="ContactID" Type="Invoice" />      
     </Type>
   </Table>
   <Table Name="" Member="ContactTypes">
@@ -223,6 +224,7 @@
       <Association Name="Company_Job1" Member="CareOfCompany" ThisKey="CareOfCompanyID" OtherKey="ID" Type="Company" IsForeignKey="true" />
       <Association Name="JobStatusType_Job" Member="JobStatusType" ThisKey="StatusTypeID" OtherKey="ID" Type="JobStatusType" IsForeignKey="true" />
       <Association Name="Quote_Job" Member="Quote" ThisKey="QuoteID" OtherKey="ID" Type="Quote" IsForeignKey="true" />
+      <Association Name="Job_Invoice" Member="Invoices" ThisKey="ID" OtherKey="JobID" Type="Invoice" />
     </Type>
   </Table>
   <Table Name="" Member="JobStatusTypes">
@@ -541,12 +543,14 @@
     <Type Name="Invoice">
       <Column Name="ID" Type="System.Int64" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="JobID" Type="System.Int64" CanBeNull="true" />
-      <Column Name="Number" Type="System.Int32" CanBeNull="false" />
-      <Column Name="Revision" Type="System.Int32" CanBeNull="false" />
+      <Column Name="ContactID" Type="System.Int64" CanBeNull="true" />
+      <Column Name="Number" Type="System.Int32" CanBeNull="true" />
+      <Column Name="Revision" Type="System.Int32" CanBeNull="true" />
       <Column Name="Comment" Type="System.String" CanBeNull="true" />
       <Column Name="Hours" Type="System.Int32" CanBeNull="true" />
       <Column Name="HourlyRate" Type="System.Decimal" CanBeNull="true" />
       <Column Name="GSTExempt" Type="System.Boolean" CanBeNull="true" />
+      <Association Name="Contact_Invoice" Member="Contact" ThisKey="ContactID" OtherKey="ID" Type="Contact" IsForeignKey="true" />
       <Association Name="Invoice_InvoiceLineItem" Member="InvoiceLineItems" ThisKey="ID" OtherKey="InvoiceID" Type="InvoiceLineItem" />
       <Association Name="Invoice_InvoiceExtra" Member="InvoiceExtras" ThisKey="ID" OtherKey="InvoiceID" Type="InvoiceExtra" />
       <Association Name="Job_Invoice" Member="Job" ThisKey="JobID" OtherKey="ID" Type="Job" IsForeignKey="true" />

@@ -1,9 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Windows.Data;
 
 namespace SingerDispatch.Controls
 {
-    class QuoteFriendlyNameConverter : IMultiValueConverter
+    class InvoiceFriendlyNameConverter : IMultiValueConverter
     {
         public object Convert(object[] values, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
@@ -24,7 +27,5 @@ namespace SingerDispatch.Controls
         {
             throw new NotImplementedException();
         }
-
-        
     }
 }

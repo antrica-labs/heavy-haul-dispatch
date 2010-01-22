@@ -59,27 +59,10 @@ namespace SingerDispatch.Panels.Jobs
         protected override void SelectedJobChanged(Job newValue, Job oldValue)
         {
             base.SelectedJobChanged(newValue, oldValue);
-
-            BubbleUpJob(newValue);
+                     
             UpdateContactList();
         }
-
-        private void BubbleUpJob(Job job)
-        {
-            // Updated the selected job of any parent controls that may have a dependency property
-            var parent = (FrameworkElement)Parent;
-
-            while (parent != null && !(parent is JobsPanel))
-            {
-                parent = (FrameworkElement)parent.Parent;
-            }
-
-            if (parent != null)
-            {
-                var panel = (JobsPanel)parent;
-                panel.SelectedJob = job;
-            }
-        }
+     
 
         private void cmbCareOfCompanies_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {           
@@ -137,15 +120,13 @@ namespace SingerDispatch.Panels.Jobs
             }
 
             var job = SelectedJob;
-
-            BubbleUpJob(null);
-
-            ((ObservableCollection<Job>)dgJobs.ItemsSource).Remove(job);
-            SelectedCompany.Jobs.Remove(job);
-
+                        
             try
             {
                 EntityHelper.PrepareEntityDelete(job, Database);
+
+                ((ObservableCollection<Job>)dgJobs.ItemsSource).Remove(job);
+                SelectedCompany.Jobs.Remove(job);
 
                 Database.SubmitChanges();
             }

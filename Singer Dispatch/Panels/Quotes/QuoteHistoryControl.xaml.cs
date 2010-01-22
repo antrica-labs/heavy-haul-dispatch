@@ -56,24 +56,7 @@ namespace SingerDispatch.Panels.Quotes
         {
             base.SelectedQuoteChanged(newValue, oldValue);         
 
-            BubbleUpQuote(newValue);
             UpdateContactList();
-        }
-
-        private void BubbleUpQuote(Quote quote)
-        {
-            // Updated the Selected Quote of any parent controls that may have the dependency property
-            var parent = (FrameworkElement)Parent;
-
-            while (parent != null && !(parent is QuotesPanel))
-            {
-                parent = (FrameworkElement)parent.Parent;
-            }
-
-            if (parent == null) return;
-
-            var panel = (QuotesPanel)parent;
-            panel.SelectedQuote = quote;
         }
 
         private void DiscardUnsavedQuotes()
@@ -91,8 +74,8 @@ namespace SingerDispatch.Panels.Quotes
                
         private void NewQuote_Click(object sender, RoutedEventArgs e)
         {
-            var list = (ObservableCollection<Quote>)dgQuotes.ItemsSource;
-            var quote = new Quote { CreationDate = DateTime.Today, ExpirationDate = DateTime.Today.AddDays(30) };               
+            var list = (ObservableCollection<Quote>)dgQuotes.ItemsSource;            
+            var quote = new Quote { CreationDate = DateTime.Today, ExpirationDate = DateTime.Today.AddDays(30) };
 
             list.Insert(0, quote);
             dgQuotes.SelectedItem = quote;
@@ -107,8 +90,7 @@ namespace SingerDispatch.Panels.Quotes
 
             var quote = SelectedQuote.Duplicate();
             var quotes = (ObservableCollection<Quote>)dgQuotes.ItemsSource;
-
-            SelectedCompany.Quotes.Add(quote);
+                        
             quotes.Add(quote);
             dgQuotes.SelectedItem = quote;
             dgQuotes.ScrollIntoView(quote);
@@ -186,21 +168,14 @@ namespace SingerDispatch.Panels.Quotes
 
         private void DeleteQuote_Click(object sender, RoutedEventArgs e)
         {
-            if (SelectedQuote == null)
-            {
-                return;
-            }
-
-            var quote = SelectedQuote;
+            if (SelectedQuote == null) return;
 
             try
             {
-                EntityHelper.PrepareEntityDelete(quote, Database);
+                EntityHelper.PrepareEntityDelete(SelectedQuote, Database);
 
-                ((ObservableCollection<Quote>)dgQuotes.ItemsSource).Remove(quote);
-                SelectedCompany.Quotes.Remove(quote);
-
-                BubbleUpQuote(null);
+                ((ObservableCollection<Quote>)dgQuotes.ItemsSource).Remove(SelectedQuote);
+                SelectedCompany.Quotes.Remove(SelectedQuote);
 
                 Database.SubmitChanges();
             }
