@@ -8,6 +8,11 @@
         <!-- <ResourceDictionary Source="/PresentationFramework.Luna, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, ProcessorArchitecture=MSIL;component/themes/luna.normalcolor.xaml" /> -->
     </ResourceDictionary.MergedDictionaries>
     
+    <Controls:IsEnabledNullConverter x:Key="IsEnabledNullConverter" />
+    <Controls:QuoteFriendlyNameConverter x:Key="QuoteFriendlyNameConverter" />
+    <Controls:InvoiceFriendlyNameConverter x:Key="InvoiceFriendlyNameConverter" />
+    <Controls:EmployeeFriendlyNameConverter x:Key="EmployeeFriendlyNameConverter" />
+    
     <DataTemplate x:Key="SimpleNameTemplate">
         <TextBlock Text="{Binding Name}" />
     </DataTemplate>
@@ -18,11 +23,7 @@
 
     <DataTemplate x:Key="LoadNameTemplate">
         <TextBlock Text="{Binding FriendlyName}" />
-    </DataTemplate>
-    
-    <Controls:IsEnabledNullConverter x:Key="IsEnabledNullConverter" />
-    <Controls:QuoteFriendlyNameConverter x:Key="QuoteFriendlyNameConverter" />
-    <Controls:InvoiceFriendlyNameConverter x:Key="InvoiceFriendlyNameConverter" />
+    </DataTemplate>    
     
     <Style TargetType="{x:Type Controls:TabIndexHyperlink}">
         <Setter Property="TextDecorations" Value="None" />

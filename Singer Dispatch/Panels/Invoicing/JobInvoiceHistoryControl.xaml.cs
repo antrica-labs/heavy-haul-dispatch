@@ -31,7 +31,18 @@ namespace SingerDispatch.Panels.Invoicing
         }
 
         private void Control_Loaded(object sender, RoutedEventArgs e)
-        {  }
+        {
+            //cmbContacts.ItemsSource = (SelectedJob == null) ? null : from c in Database.Con
+            if (SelectedJob != null)
+            {
+                var addressQuery = from a in Database.Addresses where a.Company == SelectedJob.Company || a.Company == SelectedJob.CareOfCompany select a;
+                cmbContacts.ItemsSource = from c in Database.Contacts where addressQuery.Contains(c.Address) select c;
+            }
+            else
+            {
+                cmbContacts.ItemsSource = null;
+            }
+        }
 
         protected override void SelectedJobChanged(Job newValue, Job oldValue)
         {

@@ -55,7 +55,7 @@ namespace SingerDispatch.Panels.Companies
             {
                 dgAddresses.ItemsSource = null;
                 dgContacts.ItemsSource = null;
-            }            
+            }
         }
 
         private void dgAddresses_SelectionChanged(object sender, SelectionChangedEventArgs e)

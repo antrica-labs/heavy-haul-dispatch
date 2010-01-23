@@ -12520,6 +12520,8 @@ namespace SingerDispatch
 		
 		private string _Comment;
 		
+		private System.Nullable<System.DateTime> _InvoiceDate;
+		
 		private System.Nullable<int> _Hours;
 		
 		private System.Nullable<decimal> _HourlyRate;
@@ -12550,6 +12552,8 @@ namespace SingerDispatch
     partial void OnRevisionChanged();
     partial void OnCommentChanging(string value);
     partial void OnCommentChanged();
+    partial void OnInvoiceDateChanging(System.Nullable<System.DateTime> value);
+    partial void OnInvoiceDateChanged();
     partial void OnHoursChanging(System.Nullable<int> value);
     partial void OnHoursChanged();
     partial void OnHourlyRateChanging(System.Nullable<decimal> value);
@@ -12691,6 +12695,26 @@ namespace SingerDispatch
 					this._Comment = value;
 					this.SendPropertyChanged("Comment");
 					this.OnCommentChanged();
+				}
+			}
+		}
+		
+		[Column(Storage="_InvoiceDate")]
+		public System.Nullable<System.DateTime> InvoiceDate
+		{
+			get
+			{
+				return this._InvoiceDate;
+			}
+			set
+			{
+				if ((this._InvoiceDate != value))
+				{
+					this.OnInvoiceDateChanging(value);
+					this.SendPropertyChanging();
+					this._InvoiceDate = value;
+					this.SendPropertyChanged("InvoiceDate");
+					this.OnInvoiceDateChanged();
 				}
 			}
 		}

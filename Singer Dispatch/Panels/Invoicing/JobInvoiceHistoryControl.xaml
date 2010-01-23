@@ -84,7 +84,7 @@
 
             <GroupBox Header="Billing Contact" Grid.Column="1" DataContext="{Binding SelectedInvoice}">
                     <StackPanel>
-                        <Grid Margin="0,0,0,10">
+                        <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="75" />
                                 <ColumnDefinition />
@@ -94,7 +94,7 @@
                             <ComboBox Grid.Column="1" Name="cmbContacts" SelectedItem="{Binding Contact}" />
                         </Grid>
 
-                        <Grid DataContext="{Binding Contact}">
+                        <Grid DataContext="{Binding Contact}" Margin="20,10,20,0">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="65"/>
                                 <ColumnDefinition Width="2*"/>

@@ -192,6 +192,7 @@ namespace SingerDispatch.Importer
 
             billingtypes.Add(new BillingType() { Name = "Per Item" });
             billingtypes.Add(new BillingType() { Name = "Per Hour" });
+            billingtypes.Add(new BillingType() { Name = "Per Month" });
             billingtypes.Add(new BillingType() { Name = "Cost Included" });
 
             database.BillingTypes.InsertAllOnSubmit(billingtypes);

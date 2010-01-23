@@ -66,8 +66,8 @@
                         <TextBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Height="40" Style="{StaticResource MultiLine}" VerticalScrollBarVisibility="Disabled" IsReadOnly="True" Text="{Binding Description}"/>
 
                         <Label Grid.Row="2" Grid.Column="1">Author:</Label>
-                        <TextBox Grid.Row="3" Grid.Column="1" IsReadOnly="True" Text="{Binding Employee.FirstName}" />
-                        
+                        <TextBox Grid.Row="3" Grid.Column="1" IsReadOnly="True" Text="{Binding Converter={StaticResource EmployeeFriendlyNameConverter}, Path=Employee}" />
+
                         <Label Grid.Row="2" Grid.Column="2">Care of:</Label>
                         <TextBox Grid.Row="3" Grid.Column="2" IsReadOnly="True" Text="{Binding CareOfCompany.Name}" />
 
