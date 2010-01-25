@@ -37,6 +37,10 @@
     <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AvalonControlsLibrary, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Libraries\AvalonControlsLibrary.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core">
@@ -66,7 +70,10 @@
     <Reference Include="PresentationFramework">
       <RequiredTargetFramework>3.0</RequiredTargetFramework>
     </Reference>
-    <Reference Include="WPFToolkit, Version=3.5.40128.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="WPFToolkit, Version=3.5.40128.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Libraries\WPFToolkit.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -157,6 +164,9 @@
     </Compile>
     <Compile Include="Panels\Jobs\ThirdPartyServicesControl.xaml.cs">
       <DependentUpon>ThirdPartyServicesControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Panels\Jobs\WireLifeControl.xaml.cs">
+      <DependentUpon>WireLifeControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Panels\JobUserControl.cs" />
     <Compile Include="Panels\Quotes\QuoteCommoditiesControl.xaml.cs">
@@ -337,6 +347,10 @@
     <Page Include="Panels\Jobs\ThirdPartyServicesControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Panels\Jobs\WireLifeControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Panels\Quotes\QuoteCommoditiesControl.xaml">
       <Generator>MSBuild:Compile</Generator>
