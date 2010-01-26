@@ -56,7 +56,7 @@
                 </Grid.RowDefinitions>
 
                 <Label Grid.Column="0" Grid.Row="0">Company:</Label>
-                <ComboBox Grid.Column="0" Grid.Row="1" Name="cmbCompanies" ItemTemplate="{StaticResource SimpleNameTemplate}" Text="{Binding CompanyName}" TextSearch.TextPath="Name" IsEditable="True" />                
+                <ComboBox Grid.Column="0" Grid.Row="1" Name="cmbCompanies" ItemTemplate="{StaticResource SimpleNameTemplate}" Text="{Binding CompanyName}" TextSearch.TextPath="Name" IsEditable="True" SelectionChanged="cmbCompanies_SelectionChanged" />
                 
                 <Label Grid.Column="1" Grid.Row="0">Location:</Label>
                 <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding Location}" />
@@ -65,10 +65,10 @@
                 <Avalon:DateTimePicker Name="ThePicker" Grid.Column="2" Grid.Row="1" DateTimeSelected="{Binding LiftDateTime}" SelectedDateTimeChanged="ThePicker_SelectedDateTimeChanged" Margin="3" />                
                                                 
                 <Label Grid.Column="0" Grid.Row="2">Contact:</Label>
-                <TextBox Grid.Column="0" Grid.Row="3" Text="{Binding ContactName}" />
+                <ComboBox Grid.Column="0" Grid.Row="3" Name="cmbContacts" Text="{Binding ContactName}" ItemTemplate="{StaticResource SimpleNameTemplate}" TextSearch.TextPath="Name" IsEditable="True" SelectionChanged="cmbContacts_SelectionChanged" />                
                 
                 <Label Grid.Column="1" Grid.Row="2">Phone:</Label>
-                <TextBox Grid.Column="1" Grid.Row="3" Text="{Binding ContactPhone}" />
+                <TextBox Grid.Column="1" Grid.Row="3" Name="txtContactPhone" Text="{Binding ContactPhone}" />
                 
                 <Label Grid.Column="2" Grid.Row="2">Confirmation #:</Label>
                 <TextBox Grid.Column="2" Grid.Row="3" Text="{Binding ConfirmationNumber}" />

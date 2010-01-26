@@ -27,7 +27,7 @@ namespace SingerDispatch.Panels.Jobs
 
         private void Control_Loaded(object sender, RoutedEventArgs e)
         {
-            cmbCompanies.ItemsSource = from c in Database.Companies select c;            
+            cmbCompanies.ItemsSource = (from c in Database.Companies select c).ToList();
         }
 
         private void NewWireLift_Click(object sender, RoutedEventArgs e)
@@ -63,6 +63,28 @@ namespace SingerDispatch.Panels.Jobs
             if (item == null) return;
 
             item.LiftDateTime = e.NewDate;
+        }
+
+        private void cmbCompanies_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            var company = (Company)cmbCompanies.SelectedItem;
+
+            if (company != null)
+            {
+                var addressQuery = from a in Database.Addresses where a.Company == company select a;
+                cmbContacts.ItemsSource = (from c in Database.Contacts where addressQuery.Contains(c.Address) select c).ToList();
+            }
+            else
+                cmbContacts.ItemsSource = null;
+        }
+
+        private void cmbContacts_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            var contact = (Contact)cmbContacts.SelectedItem;
+
+            if (contact == null) return;
+
+            txtContactPhone.Text = contact.PrimaryPhone;
         }
     }
 }
