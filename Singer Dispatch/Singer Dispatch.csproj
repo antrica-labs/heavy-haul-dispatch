@@ -165,8 +165,8 @@
     <Compile Include="Panels\Jobs\ThirdPartyServicesControl.xaml.cs">
       <DependentUpon>ThirdPartyServicesControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Panels\Jobs\WireLifeControl.xaml.cs">
-      <DependentUpon>WireLifeControl.xaml</DependentUpon>
+    <Compile Include="Panels\Jobs\WireLiftControl.xaml.cs">
+      <DependentUpon>WireLiftControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Panels\JobUserControl.cs" />
     <Compile Include="Panels\Quotes\QuoteCommoditiesControl.xaml.cs">
@@ -348,7 +348,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Panels\Jobs\WireLifeControl.xaml">
+    <Page Include="Panels\Jobs\WireLiftControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

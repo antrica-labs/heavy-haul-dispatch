@@ -301,7 +301,7 @@
       <Column Name="CompanyName" Type="System.String" CanBeNull="true" />
       <Column Name="Location" Type="System.String" CanBeNull="true" />
       <Column Name="ContactName" Type="System.String" CanBeNull="true" />
-      <Column Name="Phone" Type="System.String" CanBeNull="true" />
+      <Column Name="ContactPhone" Type="System.String" CanBeNull="true" />
       <Column Name="ConfirmationNumber" Type="System.String" CanBeNull="true" />
       <Column Name="Notes" Type="System.String" CanBeNull="true" />
       <Association Name="Company_WireLift" Member="Job" ThisKey="JobID" OtherKey="ID" Type="Job" IsForeignKey="true" />

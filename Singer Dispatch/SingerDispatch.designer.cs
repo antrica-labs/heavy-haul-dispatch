@@ -7118,7 +7118,7 @@ namespace SingerDispatch
 		
 		private string _ContactName;
 		
-		private string _Phone;
+		private string _ContactPhone;
 		
 		private string _ConfirmationNumber;
 		
@@ -7142,8 +7142,8 @@ namespace SingerDispatch
     partial void OnLocationChanged();
     partial void OnContactNameChanging(string value);
     partial void OnContactNameChanged();
-    partial void OnPhoneChanging(string value);
-    partial void OnPhoneChanged();
+    partial void OnContactPhoneChanging(string value);
+    partial void OnContactPhoneChanged();
     partial void OnConfirmationNumberChanging(string value);
     partial void OnConfirmationNumberChanged();
     partial void OnNotesChanging(string value);
@@ -7280,22 +7280,22 @@ namespace SingerDispatch
 			}
 		}
 		
-		[Column(Storage="_Phone")]
-		public string Phone
+		[Column(Storage="_ContactPhone")]
+		public string ContactPhone
 		{
 			get
 			{
-				return this._Phone;
+				return this._ContactPhone;
 			}
 			set
 			{
-				if ((this._Phone != value))
+				if ((this._ContactPhone != value))
 				{
-					this.OnPhoneChanging(value);
+					this.OnContactPhoneChanging(value);
 					this.SendPropertyChanging();
-					this._Phone = value;
-					this.SendPropertyChanged("Phone");
-					this.OnPhoneChanged();
+					this._ContactPhone = value;
+					this.SendPropertyChanged("ContactPhone");
+					this.OnContactPhoneChanged();
 				}
 			}
 		}
