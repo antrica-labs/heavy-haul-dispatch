@@ -1,0 +1,90 @@
+﻿<Panels:JobUserControl x:Class="SingerDispatch.Panels.Jobs.WireLifeControl"
+                       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+                       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                       xmlns:WPF="http://schemas.microsoft.com/wpf/2008/toolkit"
+                       xmlns:Avalon="http://schemas.AvalonControls/AvalonControlsLibrary/Controls"
+                       xmlns:Panels="clr-namespace:SingerDispatch.Panels"
+                       x:Name="ThePanel" Loaded="Control_Loaded"
+                       mc:Ignorable="d" d:DesignWidth="780">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/SingerDispatchDictionary.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <StackPanel>
+        <WPF:DataGrid Name="dgWireLifts" Style="{StaticResource ListDisplay}" Height="180">
+            <WPF:DataGrid.Columns>
+                <WPF:DataGridTextColumn Header="Company" Binding="{Binding Company.Name}" />
+                <WPF:DataGridTextColumn Header="Date" Binding="{Binding LiftTime}" />
+                <WPF:DataGridTextColumn Header="Location" Binding="{Binding Location}" />
+                <WPF:DataGridTextColumn Header="Contact" Binding="{Binding ContactName}" />
+                <WPF:DataGridTextColumn Header="Phone" Binding="{Binding ContactPhone}" />
+                <WPF:DataGridTextColumn Header="Confirmation" Binding="{Binding ConfirmationNumber}" />                
+            </WPF:DataGrid.Columns>
+        </WPF:DataGrid>
+        
+        <Grid Margin="0,0,0,5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            
+            <Button Style="{StaticResource Horizontal}" Grid.Column="0" Click="NewWireLift_Click">New wire lift</Button>
+            <Button Style="{StaticResource HorizontalEnd}" Grid.Column="3" Click="RemoveWireLift_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, Path=SelectedJob}">Remove wire lift</Button>
+        </Grid>
+        
+        <GroupBox Header="Wire Lift Details" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, Path=SelectedJob}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+
+                <Label Grid.Column="0" Grid.Row="0">Company:</Label>
+                <ComboBox Grid.Column="0" Grid.Row="1" Name="cmbCompanies" ItemTemplate="{StaticResource SimpleNameTemplate}" Text="{Binding CompanyName}" TextSearch.TextPath="Name" IsEditable="True" />                
+                
+                <Label Grid.Column="1" Grid.Row="0">Location:</Label>
+                <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding Location}" />
+                
+                <Label Grid.Column="2" Grid.Row="0">Date:</Label>
+                
+                <Grid Grid.Column="2" Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    
+                    <WPF:DatePicker Grid.Column="0" SelectedDate="{Binding LiftDate}" />
+                    <Avalon:TimePicker Name="TheTimePicker" Grid.Column="1" SelectedTime="{Binding LiftTime}" SelectedHour="12" />                    
+                </Grid>
+                                                
+                <Label Grid.Column="0" Grid.Row="2">Contact:</Label>
+                <TextBox Grid.Column="0" Grid.Row="3" Text="{Binding ContactName}" />
+                
+                <Label Grid.Column="1" Grid.Row="2">Phone:</Label>
+                <TextBox Grid.Column="1" Grid.Row="3" Text="{Binding PhoneNumber}" />
+                
+                <Label Grid.Column="2" Grid.Row="2">Confirmation #:</Label>
+                <TextBox Grid.Column="2" Grid.Row="3" Text="{Binding ConfirmationNumber}" />
+                
+                <Label Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="3">Notes:</Label>
+                <TextBox Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="3" Style="{StaticResource MultiLine}" VerticalScrollBarVisibility="Hidden" Text="{Binding Notes}" />
+            </Grid>
+        </GroupBox>
+    </StackPanel>
+</Panels:JobUserControl>
