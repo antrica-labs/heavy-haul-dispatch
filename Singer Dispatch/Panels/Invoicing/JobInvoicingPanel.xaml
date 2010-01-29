@@ -23,14 +23,12 @@
             <StackPanel>
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="80" />
-                        <ColumnDefinition Width="175" />
-                        <ColumnDefinition Width="120" />
+                        <ColumnDefinition Width="80" />                        
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
                     
                     <Label Grid.Column="0">Job number:</Label>
-                    <ComboBox Grid.Column="1" Name="cmbJobList" MinWidth="150" TextSearch.TextPath="Number" IsEditable="True" ItemTemplate="{StaticResource JobNameTemplate}" SelectedItem="{Binding ElementName=ThePanel, Path=SelectedJob}" SelectionChanged="cmbJobList_SelectionChanged" />                    
+                    <ComboBox Grid.Column="1" Name="cmbJobList" TextSearch.TextPath="Number" IsEditable="True" ItemTemplate="{StaticResource JobNameTemplate}" SelectedItem="{Binding ElementName=ThePanel, Path=SelectedJob}" SelectionChanged="cmbJobList_SelectionChanged" />                    
                 </Grid>                
 
                 <Expander DataContext="{Binding ElementName=ThePanel, Path=SelectedJob}" Margin="5" Padding="5" BorderBrush="DarkGray" BorderThickness="1">
@@ -106,7 +104,7 @@
                         </Label>
                     </StackPanel>
 
-                    <Button Style="{StaticResource HorizontalEnd}" Grid.Column="3" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, Path=SelectedInvoice}" Click="CommitInvoiceChanges_Click">Save changes</Button>
+                    <Button Name="CommitChangesButton" Style="{StaticResource HorizontalEnd}" Grid.Column="3" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, Path=SelectedInvoice}" Click="CommitInvoiceChanges_Click">Save changes</Button>
                 </Grid>
             </Border>        
             

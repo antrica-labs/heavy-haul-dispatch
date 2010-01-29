@@ -104,11 +104,9 @@ namespace SingerDispatch
         public Quote Duplicate()
         {
             var copy = new Quote();
-
+                        
             copy.Company = Company;
-            copy.Company = Company;
-            copy.Number = Number;            
-            copy.CareOfCompany = CareOfCompany;
+            copy.Number = Number;
             copy.CareOfCompany = CareOfCompany;
             copy.Description = Description;
             copy.CreationDate = CreationDate;
@@ -146,8 +144,6 @@ namespace SingerDispatch
             // Fill the job properties with as many of the applicable quote properties as possible
             job.Quote = this;
             job.Company = Company;
-            job.Company = Company;
-            job.CareOfCompany = CareOfCompany;
             job.CareOfCompany = CareOfCompany;
             job.StartDate = StartDate;
             job.EndDate = EndDate;
@@ -487,5 +483,61 @@ namespace SingerDispatch
                 GSTExempt = false;
             }
         }
-    }    
+
+        public Invoice Duplicate()
+        {
+            var copy = new Invoice();
+
+            copy.Number = Number;
+            copy.Comment = Comment;
+            copy.Contact = Contact;
+            copy.HourlyRate = HourlyRate;
+            copy.Hours = Hours;
+            copy.GSTExempt = GSTExempt;
+            copy.InvoiceDate = InvoiceDate;
+
+            foreach (var item in InvoiceLineItems)
+                copy.InvoiceLineItems.Add(item.Duplicate());
+
+            foreach (var item in InvoiceExtras)
+                copy.InvoiceExtras.Add(item.Duplicate());
+
+            return copy;
+        }
+    }
+    partial class InvoiceLineItem
+    {
+        public InvoiceLineItem Duplicate()
+        {
+            var copy = new InvoiceLineItem();
+
+            copy.Description = Description;
+            copy.StartDate = StartDate;
+            copy.EndDate = EndDate;
+            copy.Departure = Departure;
+            copy.Destination = Destination;
+            copy.Hours = Hours;
+            copy.Cost = Cost;
+
+            return copy;
+        }        
+    }
+
+    partial class InvoiceExtra
+    {
+        public InvoiceExtra Duplicate()
+        {
+            var copy = new InvoiceExtra();
+
+            copy.Description = Description;
+            copy.StartDate = StartDate;
+            copy.EndDate = EndDate;
+            copy.Departure = Departure;
+            copy.Destination = Destination;
+            copy.Hours = Hours;
+            copy.Cost = Cost;
+
+            return copy;
+        }
+    }
 }

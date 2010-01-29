@@ -20,7 +20,7 @@
                 <WPF:DataGridTextColumn Header="Number" Binding="{Binding Number}" />
                 <WPF:DataGridTextColumn Header="Revision" Binding="{Binding Revision}" />
                 <WPF:DataGridTextColumn Header="Hours" Binding="{Binding Hours}" />
-                <WPF:DataGridTextColumn Header="Rate" Binding="{Binding HourlyRate}" />
+                <WPF:DataGridTextColumn Header="Rate" Binding="{Binding HourlyRate, StringFormat=c}" />
             </WPF:DataGrid.Columns>
         </WPF:DataGrid>
         
@@ -46,7 +46,7 @@
 
             <GroupBox Header="Invoice Details" Grid.Column="0" DataContext="{Binding SelectedInvoice}" Margin="0,0,5,0">
                 <StackPanel>
-                    <Label>Comment:</Label>
+                    <Label Content="Comments:"/>
                     <TextBox Name="txtComment" Style="{StaticResource MultiLine}" VerticalScrollBarVisibility="Hidden" Text="{Binding Comment}" />
 
                     <Grid>
@@ -75,7 +75,7 @@
                         <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Hours}" />
 
                         <Label Grid.Row="0" Grid.Column="2">Rate:</Label>
-                        <TextBox Grid.Row="1" Grid.Column="2" Text="{Binding HourlyRate}" />
+                        <TextBox Grid.Row="1" Grid.Column="2" Text="{Binding Path=HourlyRate, StringFormat=c}" />
 
                         <CheckBox Grid.Row="1" Grid.Column="3">GST Exempt</CheckBox>
                     </Grid>
@@ -91,7 +91,7 @@
                             </Grid.ColumnDefinitions>
 
                             <Label Grid.Column="0">Name:</Label>
-                            <ComboBox Grid.Column="1" Name="cmbContacts" SelectedItem="{Binding Contact}" />
+                            <ComboBox Grid.Column="1" Name="cmbContacts" SelectedItem="{Binding Contact}" ItemTemplate="{StaticResource SimpleNameTemplate}" />
                         </Grid>
 
                         <Grid DataContext="{Binding Contact}" Margin="20,10,20,0">

@@ -1,6 +1,8 @@
 ﻿using System.Windows;
 using System.Linq;
 using SingerDispatch.Database;
+using System.Windows.Input;
+using SingerDispatch.Controls;
 
 namespace SingerDispatch.Panels.Invoicing
 {
@@ -9,6 +11,8 @@ namespace SingerDispatch.Panels.Invoicing
     /// </summary>
     public partial class JobInvoicingPanel : InvoiceUserControl
     {
+        private CommandBinding SaveCommand { get; set; }
+
         public SingerDispatchDataContext Database { get; set; }
 
         public JobInvoicingPanel()
@@ -16,11 +20,17 @@ namespace SingerDispatch.Panels.Invoicing
             InitializeComponent();
 
             Database = SingerConstants.CommonDataContext;
+
+            SaveCommand = new CommandBinding(CustomCommands.GenericSaveCommand);
+            CommandBindings.Add(SaveCommand);
+
             cmbJobList.Focus();
         }
 
         private void Panel_Loaded(object sender, RoutedEventArgs e)
         {
+            SaveCommand.Executed += new ExecutedRoutedEventHandler(CommitJobChanges_Executed);
+
             RefreshJobList();
         }
 
@@ -71,6 +81,12 @@ namespace SingerDispatch.Panels.Invoicing
             {
                 SingerDispatch.Windows.ErrorNoticeWindow.ShowError("Error while attempting write changes to database", ex.Message);
             }
+        }
+
+        private void CommitJobChanges_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            CommitChangesButton.Focus();
+            CommitChangesButton.RaiseEvent(new System.Windows.RoutedEventArgs(System.Windows.Controls.Button.ClickEvent, CommitChangesButton));
         }
     }
 }

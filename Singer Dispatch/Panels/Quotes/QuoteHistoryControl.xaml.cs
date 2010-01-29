@@ -58,19 +58,6 @@ namespace SingerDispatch.Panels.Quotes
 
             UpdateContactList();
         }
-
-        private void DiscardUnsavedQuotes()
-        {
-            var quotes = (ObservableCollection<Quote>)dgQuotes.ItemsSource;
-
-            foreach (Quote q in quotes)
-            {
-                if (q.ID == 0)
-                {
-                    quotes.Remove(q);
-                }
-            }
-        }
                
         private void NewQuote_Click(object sender, RoutedEventArgs e)
         {

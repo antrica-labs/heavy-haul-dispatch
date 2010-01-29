@@ -11,6 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Collections.ObjectModel;
 
 namespace SingerDispatch.Panels.Invoicing
 {
@@ -19,9 +20,57 @@ namespace SingerDispatch.Panels.Invoicing
     /// </summary>
     public partial class InvoiceLineItemsControl : InvoiceUserControl
     {
+        public SingerDispatchDataContext Database { get; set; }
+
         public InvoiceLineItemsControl()
         {
             InitializeComponent();
+
+            Database = SingerConstants.CommonDataContext;
         }
+
+        private void Control_Loaded(object sender, RoutedEventArgs e)
+        {
+            
+        }
+
+        protected override void SelectedInvoiceChanged(Invoice newValue, Invoice oldValue)
+        {
+            base.SelectedInvoiceChanged(newValue, oldValue);
+
+            dgLineItems.ItemsSource = (newValue == null) ? null : new ObservableCollection<InvoiceLineItem>(newValue.InvoiceLineItems);
+        }
+
+        private void NewLineItem_Click(object sender, RoutedEventArgs e)
+        {
+            var list = (ObservableCollection<InvoiceLineItem>)dgLineItems.ItemsSource;
+            var item = new InvoiceLineItem();
+
+            SelectedInvoice.InvoiceLineItems.Add(item);
+            list.Add(item);
+            dgLineItems.SelectedItem = item;
+            dgLineItems.ScrollIntoView(item);
+
+            txtDescription.Focus();
+        }
+
+        private void AutoGenerate_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void RemoveLineItem_Click(object sender, RoutedEventArgs e)
+        {
+            var list = (ObservableCollection<InvoiceLineItem>)dgLineItems.ItemsSource;
+            var item = (InvoiceLineItem)dgLineItems.SelectedItem;
+
+            if (item == null) return;
+
+            list.Remove(item);
+            SelectedInvoice.InvoiceLineItems.Remove(item);
+        }
+
+       
+
     }
 }

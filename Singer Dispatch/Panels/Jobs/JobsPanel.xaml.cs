@@ -26,7 +26,7 @@ namespace SingerDispatch.Panels.Jobs
 
         private void Control_Loaded(object sender, RoutedEventArgs e)
         {            
-            SaveCommand.Executed += new ExecutedRoutedEventHandler(CommitJobChanges_Executed);            
+            SaveCommand.Executed += new ExecutedRoutedEventHandler(CommitJobChanges_Executed);
         }
 
         protected override void SelectedCompanyChanged(Company newValue, Company oldValue)

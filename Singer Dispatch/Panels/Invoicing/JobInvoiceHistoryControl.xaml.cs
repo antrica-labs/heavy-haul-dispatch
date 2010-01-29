@@ -66,7 +66,19 @@ namespace SingerDispatch.Panels.Invoicing
         }
 
         private void CreateRevision_Click(object sender, RoutedEventArgs e)
-        {  }
+        {
+            if (SelectedInvoice == null) return;
+
+            var list = (ObservableCollection<Invoice>)dgInvoices.ItemsSource;
+            var invoice = (Invoice)dgInvoices.SelectedItem;
+
+            invoice = invoice.Duplicate();
+
+            SelectedJob.Invoices.Add(invoice);
+            list.Insert(0, invoice);
+            dgInvoices.SelectedItem = invoice;
+            dgInvoices.ScrollIntoView(invoice);
+        }
 
         private void PrintInvoice_Click(object sender, RoutedEventArgs e)
         {  }
