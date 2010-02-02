@@ -4,10 +4,14 @@ using System.Data.Linq;
 
 namespace SingerDispatch.Printing
 {
-    class QuoteRenderer
+    class QuoteRenderer : Renderer
     {
+        public string GenerateHTML(object quote)
+        {
+            return GenerateHTML((Quote)quote);
+        }
 
-        public string GeneratePrintout(Quote quote)
+        public string GenerateHTML(Quote quote)
         {
             var content = new StringBuilder();
 

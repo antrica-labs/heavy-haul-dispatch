@@ -15,20 +15,20 @@ namespace SingerDispatch.Windows
             InitializeComponent();
         }
 
-        public void DisplayQuotePrintout(Quote quote)
+        public void DisplayPrintout(object obj)
         {
-            var renderer = new QuoteRenderer();
+            Renderer renderer;
 
-            TheBrowser.NavigateToString(renderer.GeneratePrintout(quote));
+            if (obj is Quote)
+                renderer = new QuoteRenderer();
+            else if (obj is Invoice)
+                renderer = new InvoiceRenderer();
+            else if (obj is Dispatch)
+                renderer = new DispatchRenderer();
+            else
+                return;
 
-            ShowDialog();
-        }
-
-        public void DisplayDispatchPrintout()
-        {
-            var renderer = new DispatchRenderer();
-
-            TheBrowser.NavigateToString(renderer.GeneratePrintout());
+            TheBrowser.NavigateToString(renderer.GenerateHTML(obj));
 
             ShowDialog();
         }

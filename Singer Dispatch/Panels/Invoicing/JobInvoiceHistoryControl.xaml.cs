@@ -56,7 +56,7 @@ namespace SingerDispatch.Panels.Invoicing
             if (SelectedJob == null) return;
 
             var list = (ObservableCollection<Invoice>)dgInvoices.ItemsSource;
-            var invoice = new Invoice();
+            var invoice = new Invoice { Job = SelectedJob };
 
             list.Insert(0, invoice);
             dgInvoices.SelectedItem = invoice;
@@ -80,8 +80,13 @@ namespace SingerDispatch.Panels.Invoicing
             dgInvoices.ScrollIntoView(invoice);
         }
 
-        private void PrintInvoice_Click(object sender, RoutedEventArgs e)
-        {  }
+        private void ViewInvoice_Click(object sender, RoutedEventArgs e)
+        {
+            if (SelectedInvoice == null) return;
+
+            var viewer = new SingerDispatch.Windows.DocumentViewer();
+            viewer.DisplayPrintout(SelectedInvoice);
+        }
 
         private void DeleteInvoice_Click(object sender, RoutedEventArgs e)
         {

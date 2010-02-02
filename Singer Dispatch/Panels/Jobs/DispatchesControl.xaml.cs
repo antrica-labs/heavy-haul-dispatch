@@ -60,15 +60,12 @@ namespace SingerDispatch.Panels.Jobs
             ((ObservableCollection<Dispatch>)dgDispatches.ItemsSource).Insert(0, dispatch);
         }
 
-        private void PrintDispatch_Click(object sender, RoutedEventArgs e)
+        private void ViewDispatch_Click(object sender, RoutedEventArgs e)
         {
-            if (dgDispatches.SelectedItem == null)
-            {
-                return;
-            }
+            if (dgDispatches.SelectedItem == null) return;
 
-            var window = new DispatchRenderer();
-            window.GeneratePrintout();
+            var viewer = new SingerDispatch.Windows.DocumentViewer();
+            viewer.DisplayPrintout(dgDispatches.SelectedItem);
         }
 
         private void RemoveDispatch_Click(object sender, RoutedEventArgs e)

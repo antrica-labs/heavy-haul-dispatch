@@ -2,10 +2,15 @@
 
 namespace SingerDispatch.Printing
 {
-    class DispatchRenderer
+    class DispatchRenderer : Renderer
     {
-        public string GeneratePrintout()
+        public string GenerateHTML(object dispatch)
         {
+            return GenerateHTML((Dispatch)dispatch);
+        }
+
+        public string GenerateHTML(Dispatch dispatch)
+        {            
             var content = new StringBuilder();
 
             content.Append(@"<!DOCTYPE HTML PUBLIC ""-//W3C//DTD HTML 4.01//EN"" ""http://www.w3.org/TR/html4/strict.dtd""><html>");

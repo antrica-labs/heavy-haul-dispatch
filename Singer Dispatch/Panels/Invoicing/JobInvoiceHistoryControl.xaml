@@ -34,7 +34,7 @@
             
             <Button Grid.Column="0" Style="{StaticResource Horizontal}" Click="NewInvoice_Click">New invoice</Button>
             <Button Grid.Column="1" Style="{StaticResource Horizontal}" Click="CreateRevision_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, Path=SelectedInvoice}">Create revision</Button>
-            <Button Grid.Column="2" Style="{StaticResource Horizontal}" Click="PrintInvoice_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, Path=SelectedInvoice}">Print invoice</Button>
+            <Button Grid.Column="2" Style="{StaticResource Horizontal}" Click="ViewInvoice_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, Path=SelectedInvoice}">View invoice</Button>
             <Button Grid.Column="3" Style="{StaticResource HorizontalEnd}" Click="DeleteInvoice_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, Path=SelectedInvoice}">Delete invoice</Button>
         </Grid>
         

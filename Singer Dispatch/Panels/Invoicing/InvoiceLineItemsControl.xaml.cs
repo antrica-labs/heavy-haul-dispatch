@@ -56,7 +56,25 @@ namespace SingerDispatch.Panels.Invoicing
 
         private void AutoGenerate_Click(object sender, RoutedEventArgs e)
         {
+            MessageBoxResult confirmation = MessageBox.Show("Are you sure you want to add everything from the job to this invoice?", "Generate confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
+            if (confirmation != MessageBoxResult.Yes) return;
+
+
+            foreach (var lift in SelectedInvoice.Job.WireLifts)
+            {
+                var line = new InvoiceLineItem
+                {
+                    Description = lift.Notes,
+                    Departure = lift.Location,
+                    StartDate = lift.LiftDateTime,
+                    EndDate = lift.LiftDateTime
+                };
+
+                SelectedInvoice.InvoiceLineItems.Add(line);
+            }
+
+            dgLineItems.ItemsSource = new ObservableCollection<InvoiceLineItem>(SelectedInvoice.InvoiceLineItems);
         }
 
         private void RemoveLineItem_Click(object sender, RoutedEventArgs e)
@@ -69,8 +87,5 @@ namespace SingerDispatch.Panels.Invoicing
             list.Remove(item);
             SelectedInvoice.InvoiceLineItems.Remove(item);
         }
-
-       
-
     }
 }

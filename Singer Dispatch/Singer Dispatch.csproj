@@ -189,7 +189,9 @@
     </Compile>
     <Compile Include="Panels\QuoteUserControl.cs" />
     <Compile Include="Printing\DispatchRenderer.cs" />
+    <Compile Include="Printing\InvoiceRenderer.cs" />
     <Compile Include="Printing\QuoteRenderer.cs" />
+    <Compile Include="Printing\Renderer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

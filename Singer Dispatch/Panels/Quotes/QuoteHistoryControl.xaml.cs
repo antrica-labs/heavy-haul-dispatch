@@ -145,12 +145,12 @@ namespace SingerDispatch.Panels.Quotes
             dgQuoteContacts.ItemsSource = contacts;
         }
 
-        private void PrintQuote_Click(object sender, RoutedEventArgs e)
+        private void ViewQuote_Click(object sender, RoutedEventArgs e)
         {
             if (SelectedQuote == null) return;
 
             var viewer = new SingerDispatch.Windows.DocumentViewer();
-            viewer.DisplayQuotePrintout(SelectedQuote);
+            viewer.DisplayPrintout(SelectedQuote);
         }
 
         private void DeleteQuote_Click(object sender, RoutedEventArgs e)
