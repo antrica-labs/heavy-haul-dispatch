@@ -60,6 +60,10 @@ namespace SingerDispatch.Panels.Invoicing
 
             if (confirmation != MessageBoxResult.Yes) return;
 
+            foreach (var item in SelectedInvoice.Job.JobCommodities)
+            {
+                
+            }
 
             foreach (var lift in SelectedInvoice.Job.WireLifts)
             {

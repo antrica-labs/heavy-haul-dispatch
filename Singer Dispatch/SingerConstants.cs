@@ -59,5 +59,8 @@ namespace SingerDispatch
                 return "MMMM d, yyyy";
             }
         }
+
+        public static readonly decimal GST = 0.05m;
+        public static readonly decimal FuelTax = 0.00m;
     }
 }

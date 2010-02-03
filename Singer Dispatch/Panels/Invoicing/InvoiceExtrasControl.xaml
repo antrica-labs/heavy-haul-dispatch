@@ -18,7 +18,7 @@
             <WPF:DataGrid.Columns>
                 <WPF:DataGridTextColumn Header="Start" Binding="{Binding StartDate, StringFormat={}{0:MM/dd/yyyy}}" Width="0.5*" />
                 <WPF:DataGridTextColumn Header="End" Binding="{Binding EndDate, StringFormat={}{0:MM/dd/yyyy}}" Width="0.5*" />
-                <WPF:DataGridTextColumn Header="Description" Binding="{Binding Description}" />                
+                <WPF:DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="2*"/>                
                 <WPF:DataGridTextColumn Header="Hours" Binding="{Binding Hours}" Width="0.5*" />
                 <WPF:DataGridTextColumn Header="Cost" Binding="{Binding Cost, StringFormat=c}" Width="0.5*" />
             </WPF:DataGrid.Columns>

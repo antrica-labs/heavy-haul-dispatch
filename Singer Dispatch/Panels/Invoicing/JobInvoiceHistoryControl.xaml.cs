@@ -56,7 +56,7 @@ namespace SingerDispatch.Panels.Invoicing
             if (SelectedJob == null) return;
 
             var list = (ObservableCollection<Invoice>)dgInvoices.ItemsSource;
-            var invoice = new Invoice { Job = SelectedJob };
+            var invoice = new Invoice { Job = SelectedJob, InvoiceDate = DateTime.Now };
 
             list.Insert(0, invoice);
             dgInvoices.SelectedItem = invoice;
