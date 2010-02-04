@@ -39,7 +39,7 @@
             </Grid.ColumnDefinitions>
 
             <Button Style="{StaticResource Horizontal}" Grid.Column="0" Click="NewLoad_Click">New load</Button>
-            <Button Style="{StaticResource Horizontal}" Grid.Column="1" Click="DuplicateLoad_Click">Duplicate load</Button>
+            <Button Style="{StaticResource Horizontal}" Grid.Column="1" Click="DuplicateLoad_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgLoads, Path=SelectedItem}">Duplicate load</Button>
             <Button Style="{StaticResource HorizontalEnd}" Grid.Column="3" Click="RemoveLoad_Click" IsEnabled="False">Remove load</Button>
         </Grid>
 

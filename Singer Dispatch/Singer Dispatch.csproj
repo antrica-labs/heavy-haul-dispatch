@@ -236,6 +236,7 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <None Include="SingerDispatch.dbml.layout">
       <DependentUpon>SingerDispatch.dbml</DependentUpon>
@@ -409,6 +410,9 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
+  </ItemGroup>
+  <ItemGroup>
+    <SplashScreen Include="Splash.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

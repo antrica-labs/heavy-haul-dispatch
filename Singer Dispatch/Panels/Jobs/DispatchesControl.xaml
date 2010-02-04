@@ -37,7 +37,7 @@
             </Grid.ColumnDefinitions>
 
             <Button Style="{StaticResource Horizontal}" Grid.Column="0" Click="NewDispatch_Click">New dispatch</Button>
-            <Button Style="{StaticResource Horizontal}" Grid.Column="1" Click="DuplicateDispatch_Click">Duplicate dispatch</Button>
+            <Button Style="{StaticResource Horizontal}" Grid.Column="1" Click="DuplicateDispatch_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgDispatches, Path=SelectedItem}">Duplicate dispatch</Button>
             <Button Style="{StaticResource Horizontal}" Grid.Column="2" Click="ViewDispatch_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgDispatches, Path=SelectedItem}">View dispatch</Button>
             <Button Style="{StaticResource HorizontalEnd}" Grid.Column="3" Click="RemoveDispatch_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgDispatches, Path=SelectedItem}">Remove dispatch</Button>
         </Grid>

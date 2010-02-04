@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Text;
-using System.Data.Linq;
+using System.Linq;
+using System.Collections.Generic;
 
 namespace SingerDispatch.Printing
 {
@@ -25,10 +26,10 @@ namespace SingerDispatch.Printing
             content.Append(GetHeader(quote.NumberAndRev));
             content.Append(GetRecipient());
             content.Append(GetDescription("Some guy", "Transportation Quote", quote.CreationDate, quote.ExpirationDate));
-            content.Append(GetCommodities(quote.QuoteCommodities));
-            content.Append(GetSuppluments(quote.QuoteSupplements));
-            content.Append(GetConditions());
-            content.Append(GetSignoff());
+            content.Append(GetCommodities(quote.QuoteCommodities.ToList()));
+            content.Append(GetSuppluments(quote.QuoteSupplements.ToList()));
+            content.Append(GetConditions(quote));
+            content.Append(GetSignoff(quote));
             content.Append("</body>");
             content.Append("</html>");
 
@@ -386,11 +387,9 @@ namespace SingerDispatch.Printing
             return content;
         }
         
-        private string GetCommodities(EntitySet<QuoteCommodity> commodities)
+        private string GetCommodities(List<QuoteCommodity> commodities)
         {
-            string content;
-
-            content = @"
+            var content = @"
                 <div id=""commodities"">
                     <table class=""itemized"">
                         <thead>
@@ -412,10 +411,10 @@ namespace SingerDispatch.Printing
                 <p class=""fine_print""><em>*</em> Dimensions or weights estimated. Actual values may impacted quoted price.</p>
             ";
 
-            StringBuilder rows = new StringBuilder();
+            var rows = new StringBuilder();
             int count = 0;
 
-            foreach (QuoteCommodity commodity in commodities)
+            foreach (var commodity in commodities)
             {
                 rows.Append("<tr>");
                 rows.Append("<td>");
@@ -457,7 +456,7 @@ namespace SingerDispatch.Printing
             return content;
         }
 
-        private string GetSuppluments(EntitySet<QuoteSupplement> supplements)
+        private string GetSuppluments(List<QuoteSupplement> supplements)
         {
             string content;
 
@@ -494,7 +493,10 @@ namespace SingerDispatch.Printing
                 rows.Append(supplement.Name);
                 rows.Append("</td>");
                 rows.Append("<td>");
-                rows.Append(supplement.BillingType.Name);
+
+                if (supplement.BillingType != null)
+                    rows.Append(supplement.BillingType.Name);
+
                 rows.Append("</td>");                
                 rows.Append("<td>");
                 rows.Append(supplement.Quantity);                
@@ -528,39 +530,41 @@ namespace SingerDispatch.Printing
             return content;
         }
 
-        private string GetConditions()
+        private string GetConditions(Quote quote)
         {
-            string content;
-
-            content = @"
+            var builder = new StringBuilder();
+    
+            var header = @"
                 <div id=""conditions"">
                     <p>The quoted price includes Transportation Equipment, Permits.</p>
 
                     <p>This quotation is subject to the following conditions:</p>
 
                     <ol class=""conditions"">
-                        <li>Subject to Alberta infrastructure regulations of today's date.</li>
-                        <li>Weights &amp; dimensions being as stated.</li>
-                        <li>Availability of transport equipment at time of firm order.</li>
-                        <li>Loading provided by others.</li>
-                        <li>Unloading provided by others.</li>
-                        <li>Wire lifting, utility services, rail crossing charges, police escorts, sign crews, bridge surveys or Engineering, if required, will be invoiced at cost plus 10%.</li>
-                        <li>Allow 2 hours for loading each piece.</li>
-                        <li>Allow 4 hours for unloading each piece.</li>
-                        <li>Subject to fall weight restriction.</li>
-                        <li>A different seasonal weight restriction may result in a recalculation of the quoted price.</li>
-                        <li>Suitable access to and on site as well as ground conditions on site and in all work areas to be provided by others. If additional towing or pushing of our equipment is required because of off highway or site conditions, any cost incurred will be extra. Any damages incurred to property or equipment (including our equipment) as a result of towing or pushing will be charged as an extra.</li>
-                        <li>Delays due to any reason beyond our direct control including inclement weather may result in extra charges for labor and equipment.</li>
-                        <li>Our standard land transport cargo insurance coverage to a maximum $2,000,000.00 Canadian is included covering cargo that is in our direct care, custody and control. If no declared value is stated on the bill of lading, coverage is limited to $2.00/lb. Additional insurance if required, will be extra.</li>
-                        <li>Sites in remote areas camps supplied by others.</li>
-                    </ol>
+            ";
+            var line = "<li>%CONDITION%</li>";
+            var footer = @"
+                     </ol>
                 </div>
             ";
 
-            return content;
+
+            builder.Append(header);
+
+            var conditions = from qc in quote.QuoteConditions select qc.Condition;            
+
+            foreach (var condition in conditions)
+            {
+                builder.Append(line.Replace("%CONDITION%", condition.Line));
+            }
+
+            builder.Append(footer);
+
+
+            return builder.ToString();
         }
 
-        private string GetSignoff()
+        private string GetSignoff(Quote quote)
         {
             string content;
 
@@ -571,11 +575,15 @@ namespace SingerDispatch.Printing
                     <p>Sincerely,</p>
 
                     <p class=""author"">
-                        Dan Klassen<br>
-                        Operations Manager
+                        %AUTHOR%
                     </p>
                 </div>
             ";
+
+            if (quote.Employee != null)
+                content = content.Replace("%AUTHOR%", quote.Employee.Name);
+            else
+                content = content.Replace("%AUTHOR%", "Dan Klassen");
 
             return content;
         }

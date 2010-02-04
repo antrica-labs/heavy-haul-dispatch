@@ -64,6 +64,12 @@ namespace SingerDispatch.Panels.Quotes
             var list = (ObservableCollection<Quote>)dgQuotes.ItemsSource;            
             var quote = new Quote { CreationDate = DateTime.Today, ExpirationDate = DateTime.Today.AddDays(30) };
 
+            try
+            {
+                quote.Employee = (from emp in Database.Employees where emp.FirstName == "Dan" && emp.LastName == "Klassen" select emp).First();
+            }
+            catch { }
+
             list.Insert(0, quote);
             dgQuotes.SelectedItem = quote;
             dgQuotes.ScrollIntoView(quote);
