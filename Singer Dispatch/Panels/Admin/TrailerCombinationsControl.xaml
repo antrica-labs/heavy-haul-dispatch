@@ -16,8 +16,19 @@
             <ObjectDataProvider ObjectType="{x:Type Local:RatesDropList}" x:Key="RatesDropList" />
         </ResourceDictionary>
     </UserControl.Resources>
-    <StackPanel>
-        <WPF:DataGrid Name="dgCombinations" Style="{StaticResource ListDisplay}" Height="400" IsReadOnly="False" RowEditEnding="RowEditEnding">
+    <DockPanel>
+		<Grid DockPanel.Dock="Bottom">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            
+            <Button Style="{StaticResource Horizontal}" Grid.Column="0" Click="NewCombination_Click">New combination</Button>
+            <Button Style="{StaticResource HorizontalEnd}" Grid.Column="2" Click="RemoveCombination_Click">Remove combination</Button>
+        </Grid>
+	
+        <WPF:DataGrid Name="dgCombinations" Style="{StaticResource ListDisplay}" MinHeight="100" IsReadOnly="False" RowEditEnding="RowEditEnding">
             <WPF:DataGrid.Columns>
                 <WPF:DataGridComboBoxColumn Header="Wheel type" ItemsSource="{Binding Source={StaticResource RatesDropList}}" DisplayMemberPath="Name" SelectedItemBinding="{Binding Rate}" />
                 <WPF:DataGridTextColumn Header="Combination" Binding="{Binding Combination}" Width="2*" />
@@ -28,16 +39,5 @@
                 <WPF:DataGridTextColumn Header="Tare" Binding="{Binding Tare}" Width="0.5*" />
             </WPF:DataGrid.Columns>
         </WPF:DataGrid>
-        
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition />
-                <ColumnDefinition />
-                <ColumnDefinition />
-            </Grid.ColumnDefinitions>
-            
-            <Button Style="{StaticResource Horizontal}" Grid.Column="0" Click="NewCombination_Click">New combination</Button>
-            <Button Style="{StaticResource HorizontalEnd}" Grid.Column="2" Click="RemoveCombination_Click">Remove combination</Button>
-        </Grid>
-    </StackPanel>
+    </DockPanel>
 </UserControl>

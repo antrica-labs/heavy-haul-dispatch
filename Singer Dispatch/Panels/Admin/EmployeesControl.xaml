@@ -12,17 +12,82 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1.75*"/>
-            <ColumnDefinition />
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition />
-            <RowDefinition />
-        </Grid.RowDefinitions>
+    <DockPanel>
+		<Grid DockPanel.Dock="Bottom">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+				<ColumnDefinition />
+				<ColumnDefinition Width="285" />
+            </Grid.ColumnDefinitions>
+            
+            <Button Style="{StaticResource Horizontal}" Grid.Column="0" Click="NewEmployee_Click">New employee</Button>
+            <Button Style="{StaticResource Horizontal}" Grid.Column="2" Click="RemoveEmployee_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgEmployees, Path=SelectedItem}">Remove employee</Button>
+			<Button Style="{StaticResource HorizontalEnd}" Grid.Column="3" Name="CommitChangesButton" Click="SaveEmployee_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgEmployees, Path=SelectedItem}">Save employee</Button>
+        </Grid>
+	
+		<StackPanel DockPanel.Dock="Right" Width="285" Margin="3,0,0,0">
+	        <GroupBox Header="Employee details" DataContext="{Binding ElementName=dgEmployees, Path=SelectedItem}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgEmployees, Path=SelectedItem}">
+	            <Grid>
+	                <Grid.ColumnDefinitions>
+	                    <ColumnDefinition />
+	                    <ColumnDefinition Width="2*"/>
+	                </Grid.ColumnDefinitions>
+	                <Grid.RowDefinitions>
+	                    <RowDefinition />
+	                    <RowDefinition />
+	                    <RowDefinition />
+	                    <RowDefinition />
+	                    <RowDefinition />
+	                    <RowDefinition />
+	                    <RowDefinition />
+	                    <RowDefinition />
+	                    <RowDefinition />
+	                    <RowDefinition />
+	                    <RowDefinition />
+	                    <RowDefinition />
+	                </Grid.RowDefinitions>
+	                
+	                <Label Grid.Row="0" Grid.Column="0">First name:</Label>
+	                <TextBox Name="txtFirstName" Grid.Row="0" Grid.Column="1" Text="{Binding FirstName}" />
+	                
+	                <Label Grid.Row="1" Grid.Column="0">Last name:</Label>
+	                <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding LastName}" />
+	                
+	                <Label Grid.Row="2" Grid.Column="0">Email:</Label>
+	                <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Email}" />
+	                
+	                <Label Grid.Row="3" Grid.Column="0">Phone:</Label>
+	                <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Phone}" />
+	                
+	                <Label Grid.Row="4" Grid.Column="0">Mobile:</Label>
+	                <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Mobile}" />
+	                
+	                <Label Grid.Row="5" Grid.Column="0">Available:</Label>
+	                <CheckBox Grid.Row="5" Grid.Column="1" IsChecked="{Binding IsAvailable}" />                
+	                
+	                <Label Grid.Row="6" Grid.Column="0">Supervisor:</Label>
+	                <CheckBox Grid.Row="6" Grid.Column="1" IsChecked="{Binding IsSupervisor}" />
+	                
+	                <Label Grid.Row="7" Grid.Column="0">Singer staff:</Label>
+	                <CheckBox Grid.Row="7" Grid.Column="1" IsChecked="{Binding IsSingerStaff}" />
+	                
+	                <Label Grid.Row="8" Grid.Column="0">Start date:</Label>
+	                <WPF:DatePicker Grid.Row="8" Grid.Column="1" SelectedDate="{Binding StartDate}" />
+	                
+	                <Label Grid.Row="9" Grid.Column="0">End date:</Label>
+	                <WPF:DatePicker Grid.Row="9" Grid.Column="1" SelectedDate="{Binding EndDate}" />
+	                
+	                <Label Grid.Row="10" Grid.Column="0">Responsibility:</Label>
+	                <TextBox Grid.Row="10" Grid.Column="1" Text="{Binding Responsibilities}" />
+	                
+	                <Label Grid.Row="11" Grid.Column="0">Notes:</Label>
+	                <TextBox Grid.Row="11" Grid.Column="1" Height="60" Style="{StaticResource MultiLine}" Text="{Binding Notes}" />
+	            </Grid>
+	        </GroupBox>
+		</StackPanel>
         
-        <WPF:DataGrid Name="dgEmployees" Grid.Column="0" Grid.Row="0" Style="{StaticResource ListDisplay}" Margin="0,0,3,3">
+        <WPF:DataGrid Name="dgEmployees" Style="{StaticResource ListDisplay}">
             <WPF:DataGrid.Columns>
                 <WPF:DataGridTextColumn Header="First name" Binding="{Binding FirstName}" />
                 <WPF:DataGridTextColumn Header="Last name" Binding="{Binding LastName}" />
@@ -30,76 +95,5 @@
                 <WPF:DataGridTextColumn Header="Phone" Binding="{Binding Phone}" />
             </WPF:DataGrid.Columns>
         </WPF:DataGrid>
-        
-        <GroupBox Header="Employee details" Name="dgDetails" Grid.Column="1" Grid.Row="0" DataContext="{Binding ElementName=dgEmployees, Path=SelectedItem}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgEmployees, Path=SelectedItem}">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition />
-                    <ColumnDefinition Width="2*"/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition />
-                    <RowDefinition />
-                    <RowDefinition />
-                    <RowDefinition />
-                    <RowDefinition />
-                    <RowDefinition />
-                    <RowDefinition />
-                    <RowDefinition />
-                    <RowDefinition />
-                    <RowDefinition />
-                    <RowDefinition />
-                    <RowDefinition />
-                </Grid.RowDefinitions>
-                
-                <Label Grid.Row="0" Grid.Column="0">First name:</Label>
-                <TextBox Name="txtFirstName" Grid.Row="0" Grid.Column="1" Text="{Binding FirstName}" />
-                
-                <Label Grid.Row="1" Grid.Column="0">Last name:</Label>
-                <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding LastName}" />
-                
-                <Label Grid.Row="2" Grid.Column="0">Email:</Label>
-                <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Email}" />
-                
-                <Label Grid.Row="3" Grid.Column="0">Phone:</Label>
-                <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Phone}" />
-                
-                <Label Grid.Row="4" Grid.Column="0">Mobile:</Label>
-                <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Mobile}" />
-                
-                <Label Grid.Row="5" Grid.Column="0">Available:</Label>
-                <CheckBox Grid.Row="5" Grid.Column="1" IsChecked="{Binding IsAvailable}" />                
-                
-                <Label Grid.Row="6" Grid.Column="0">Supervisor:</Label>
-                <CheckBox Grid.Row="6" Grid.Column="1" IsChecked="{Binding IsSupervisor}" />
-                
-                <Label Grid.Row="7" Grid.Column="0">Singer staff:</Label>
-                <CheckBox Grid.Row="7" Grid.Column="1" IsChecked="{Binding IsSingerStaff}" />
-                
-                <Label Grid.Row="8" Grid.Column="0">Start date:</Label>
-                <WPF:DatePicker Grid.Row="8" Grid.Column="1" SelectedDate="{Binding StartDate}" />
-                
-                <Label Grid.Row="9" Grid.Column="0">End date:</Label>
-                <WPF:DatePicker Grid.Row="9" Grid.Column="1" SelectedDate="{Binding EndDate}" />
-                
-                <Label Grid.Row="10" Grid.Column="0">Responsibility:</Label>
-                <TextBox Grid.Row="10" Grid.Column="1" Text="{Binding Responsibilities}" />
-                
-                <Label Grid.Row="11" Grid.Column="0">Notes:</Label>
-                <TextBox Grid.Row="11" Grid.Column="1" Height="60" Style="{StaticResource MultiLine}" Text="{Binding Notes}" />
-            </Grid>
-        </GroupBox>
-        
-        <Grid Grid.Column="0" Grid.Row="1" Margin="0,0,3,0">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition />
-                <ColumnDefinition />
-            </Grid.ColumnDefinitions>
-            
-            <Button Style="{StaticResource Horizontal}" Grid.Column="0" Click="NewEmployee_Click">New employee</Button>
-            <Button Style="{StaticResource HorizontalEnd}" Grid.Column="1" Click="RemoveEmployee_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgEmployees, Path=SelectedItem}">Remove employee</Button>
-        </Grid>
-        
-        <Button Style="{StaticResource HorizontalEnd}" Name="CommitChangesButton" Grid.Column="1" Grid.Row="1" Click="SaveEmployee_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgEmployees, Path=SelectedItem}">Save employee</Button>
-    </Grid>
+    </DockPanel>
 </UserControl>

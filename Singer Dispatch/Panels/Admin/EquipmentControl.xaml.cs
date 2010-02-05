@@ -30,8 +30,7 @@ namespace SingerDispatch.Panels.Admin
         {
             SaveCommand.Executed += new ExecutedRoutedEventHandler(CommitChanges_Executed);
 
-            cmbEmployees.ItemsSource = from emp in Database.Employees orderby emp.FirstName select emp;
-            dgEquipment.MaxHeight = gbDetails.ActualHeight;
+            cmbEmployees.ItemsSource = from emp in Database.Employees orderby emp.FirstName select emp;            
             dgEquipment.ItemsSource = new ObservableCollection<Equipment>(from equip in Database.Equipment select equip);            
         }
 

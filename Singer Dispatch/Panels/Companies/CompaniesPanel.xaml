@@ -14,7 +14,7 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <StackPanel DataContext="{Binding ElementName=companiesPanel}">        
+    <Grid DataContext="{Binding ElementName=companiesPanel}">
         <TabControl Name="Tabs">
             <TabItem Header="Addresses &amp; Contacts">
                 <Companies:AddressesAndContactsControl SelectedCompany="{Binding Path=SelectedCompany}" />
@@ -29,5 +29,5 @@
                 <Companies:CreditAndRatesControl SelectedCompany="{Binding Path=SelectedCompany}" />
             </TabItem>
         </TabControl>
-    </StackPanel>
+    </Grid>
 </Panels:CompanyUserControl>

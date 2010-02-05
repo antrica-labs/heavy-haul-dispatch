@@ -14,32 +14,10 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <StackPanel>
-        <WPF:DataGrid Name="dgCommodities" Style="{StaticResource ListDisplay}" Height="200">
-            <WPF:DataGrid.Columns>
-                <WPF:DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="2*" />
-                <WPF:DataGridTextColumn Header="Unit" Binding="{Binding Unit}" />                
-                <WPF:DataGridTextColumn Header="Length" Binding="{Binding Length}" />
-                <WPF:DataGridTextColumn Header="Width" Binding="{Binding Width}" />
-                <WPF:DataGridTextColumn Header="Height" Binding="{Binding Height}" />
-                <WPF:DataGridTextColumn Header="Weight" Binding="{Binding Weight}" />
-                <WPF:DataGridTextColumn Header="Value" Binding="{Binding Value, StringFormat=c}" />
-            </WPF:DataGrid.Columns>
-        </WPF:DataGrid>
-
-        <Grid Margin="0,0,0,10">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition />
-                <ColumnDefinition />
-                <ColumnDefinition />
-                <ColumnDefinition />
-            </Grid.ColumnDefinitions>
-            
-            <Button Style="{StaticResource Horizontal}" Grid.Column="0" Click="NewCommodity_Click">New commodity</Button>
-            <Button Style="{StaticResource HorizontalEnd}" Grid.Column="3" Click="DeleteCommodity_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgCommodities, Path=SelectedItem}">Remove commodity</Button>
-        </Grid>
-        
-        <GroupBox Header="Commodity Details" Margin="0,0,0,5" DataContext="{Binding ElementName=dgCommodities, Path=SelectedItem}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgCommodities, Path=SelectedItem}">
+    <DockPanel>
+		<Button DockPanel.Dock="Bottom" Style="{StaticResource Bottom}" Name="CommitChangesButton" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgCommodities, Path=SelectedItem}">Save commodity</Button>
+		
+		<GroupBox DockPanel.Dock="Bottom" Header="Commodity Details" DataContext="{Binding ElementName=dgCommodities, Path=SelectedItem}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgCommodities, Path=SelectedItem}">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="110"/>
@@ -81,7 +59,7 @@
                 <TextBox Name="txtCommodityLastAddress" Grid.Row="6" Grid.Column="1" Text="{Binding LastAddress}" />
 
                 <Label Grid.Row="7" Grid.Column="0">Notes:</Label>
-                <TextBox Name="txtCommodityNotes" Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="2" Height="60" Style="{StaticResource MultiLine}" Text="{Binding Notes}" />
+                <TextBox Name="txtCommodityNotes" Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="2" Height="40" Style="{StaticResource MultiLine}" Text="{Binding Notes}" />
 
                 <GroupBox Header="Dimentions (m/kg)" Grid.Row="0" Grid.Column="2" Grid.RowSpan="7" Margin="5,0,0,0">
                     <StackPanel>
@@ -121,121 +99,29 @@
                 </GroupBox>
             </Grid>
         </GroupBox>
-        
-        <Button Style="{StaticResource Horizontal}" Name="CommitChangesButton" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgCommodities, Path=SelectedItem}">Save commodity</Button>
-    </StackPanel>
-    <!--
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="375" />
-            <ColumnDefinition />
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition />
-            <RowDefinition />
-        </Grid.RowDefinitions>
-
-        <WPF:DataGrid Name="dgCommodities" Grid.Column="0" Grid.Row="0" Style="{StaticResource ListDisplay}" Margin="0,0,3,0">
-            <WPF:DataGrid.Columns>
-                <WPF:DataGridTextColumn Header="Unit" Binding="{Binding Unit}" />
-                <WPF:DataGridTextColumn Header="Name" Width="2*" Binding="{Binding Name}" />                
-                <WPF:DataGridTextColumn Header="Serial" Binding="{Binding Serial}" />
-                <WPF:DataGridTextColumn Header="Value" Binding="{Binding Value, StringFormat=C}" />
-            </WPF:DataGrid.Columns>
-        </WPF:DataGrid>
-
-        <Grid Grid.Column="0" Grid.Row="1" Margin="0,0,3,0">
+		
+		<Grid DockPanel.Dock="Bottom">
             <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
                 <ColumnDefinition />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
             
-            <Button Style="{StaticResource Horizontal}" Name="btnNewCommodity" Grid.Column="0" Click="NewCommodity_Click">New commodity</Button>
-            <Button Style="{StaticResource HorizontalEnd}" Name="btnDeleteCommodity" Grid.Column="1" Click="DeleteCommodity_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgCommodities, Path=SelectedItem}">Delete commodity</Button>            
-        </Grid>        
-
-        <GroupBox Name="panelCommodityDetails" Header="Commodity Details" Margin="3,0,0,0"  Grid.Column="1" Grid.Row="0" DataContext="{Binding ElementName=dgCommodities, Path=SelectedItem}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgCommodities, Path=SelectedItem}">            
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="110"/>
-                    <ColumnDefinition />
-                    <ColumnDefinition />
-                </Grid.ColumnDefinitions>
-
-                <Grid.RowDefinitions>
-                    <RowDefinition />
-                    <RowDefinition />
-                    <RowDefinition />
-                    <RowDefinition />
-                    <RowDefinition />
-                    <RowDefinition />
-                    <RowDefinition />
-                    <RowDefinition />
-                    <RowDefinition />
-                </Grid.RowDefinitions>
-
-                <Label Grid.Row="0" Grid.Column="0">Commodity name:</Label>
-                <TextBox Name="txtCommodityName" Grid.Row="0" Grid.Column="1" Text="{Binding Name}"/>
-
-                <Label Grid.Row="1" Grid.Column="0">Value:</Label>
-                <TextBox Name="txtCommodityValue" Grid.Row="1" Grid.Column="1" Text="{Binding Value, StringFormat=c}" />
-
-                <Label Grid.Row="2" Grid.Column="0">Serial number:</Label>
-                <TextBox Name="txtCommoditySerial" Grid.Row="2" Grid.Column="1" Text="{Binding Serial}" />
-
-                <Label Grid.Row="3" Grid.Column="0">Unit number:</Label>
-                <TextBox Name="txtCommodityUnitNumber" Grid.Row="3" Grid.Column="1" Text="{Binding Unit}" />
-
-                <Label Grid.Row="4" Grid.Column="0">Owner:</Label>
-                <TextBox Name="txtCommodityOwner" Grid.Row="4" Grid.Column="1" Text="{Binding Owner}" />
-
-                <Label Grid.Row="5" Grid.Column="0">Last location:</Label>
-                <TextBox Name="txtCommodityLastLocation" Grid.Row="5" Grid.Column="1" Text="{Binding LastLocation}" />
-
-                <Label Grid.Row="6" Grid.Column="0">Last address:</Label>
-                <TextBox Name="txtCommodityLastAddress" Grid.Row="6" Grid.Column="1" Text="{Binding LastAddress}" />
-
-                <Label Grid.Row="7" Grid.Column="0">Notes:</Label>
-                <TextBox Name="txtCommodityNotes" Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="2" Height="60" Style="{StaticResource MultiLine}" Text="{Binding Notes}" />
-                                    
-                <GroupBox Header="Dimentions (m/kg)" Grid.Row="0" Grid.Column="2" Grid.RowSpan="7" Margin="5,0,0,0">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="65"/>
-                            <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>                            
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                        </Grid.RowDefinitions>
-
-                        <Label Grid.Row="0" Grid.Column="0">Length:</Label>
-                        <TextBox Name="txtCommodityLength" Grid.Row="0" Grid.Column="1" Text="{Binding Length}"/>
-
-                        <Label Grid.Row="1" Grid.Column="0">Width:</Label>
-                        <TextBox Name="txtCommodityWidth" Grid.Row="1" Grid.Column="1" Text="{Binding Width}" Height="22.96" Margin="3,0,3,3" VerticalAlignment="Bottom" />
-
-                        <Label Grid.Row="2" Grid.Column="0">Height:</Label>
-                        <TextBox Name="txtCommodityHeight" Grid.Row="2" Grid.Column="1" Text="{Binding Height}" />
-
-                        <Label Grid.Row="3" Grid.Column="0">Estimated:</Label>
-                        <CheckBox Name="chbCommoditySizeEstimated" Grid.Row="3" Grid.Column="1" IsChecked="{Binding SizeEstimated}" />
-
-                        <Label Grid.Row="4" Grid.Column="0">Weight:</Label>
-                        <TextBox Name="txtCommodityWeight" Grid.Row="4" Grid.Column="1" Text="{Binding Weight}" />
-
-                        <Label Grid.Row="5" Grid.Column="0">Estimated:</Label>
-                        <CheckBox Name="chbCommodityWeightEstimated" Grid.Row="5" Grid.Column="1" IsChecked="{Binding WeightEstimated}"/>
-                    </Grid>
-                </GroupBox>
-            </Grid>
-        </GroupBox>
-        
-        <Button Style="{StaticResource HorizontalEnd}" Name="btnSaveCommodity" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="3" Click="SaveCommodity_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgCommodities, Path=SelectedItem}">Save commodity</Button>
-    </Grid>
-    -->
+            <Button Style="{StaticResource Horizontal}" Grid.Column="0" Click="NewCommodity_Click">New commodity</Button>
+            <Button Style="{StaticResource HorizontalEnd}" Grid.Column="3" Click="DeleteCommodity_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgCommodities, Path=SelectedItem}">Remove commodity</Button>
+        </Grid>
+		
+        <WPF:DataGrid Name="dgCommodities" Style="{StaticResource ListDisplay}" MinHeight="100">
+            <WPF:DataGrid.Columns>
+                <WPF:DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="2*" />
+                <WPF:DataGridTextColumn Header="Unit" Binding="{Binding Unit}" />                
+                <WPF:DataGridTextColumn Header="Length" Binding="{Binding Length}" />
+                <WPF:DataGridTextColumn Header="Width" Binding="{Binding Width}" />
+                <WPF:DataGridTextColumn Header="Height" Binding="{Binding Height}" />
+                <WPF:DataGridTextColumn Header="Weight" Binding="{Binding Weight}" />
+                <WPF:DataGridTextColumn Header="Value" Binding="{Binding Value, StringFormat=c}" />
+            </WPF:DataGrid.Columns>
+        </WPF:DataGrid>
+    </DockPanel>
 </Panels:CompanyUserControl>

@@ -15,17 +15,8 @@
             <ObjectDataProvider ObjectType="{x:Type Local:RateTypesDropList}" x:Key="RateTypesDropList" />
         </ResourceDictionary>
     </UserControl.Resources>
-    <StackPanel>
-        <WPF:DataGrid Name="dgRates" Style="{StaticResource ListDisplay}" Height="400" IsReadOnly="False" RowEditEnding="RowEditEnding">
-            <WPF:DataGrid.Columns>
-                <WPF:DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="2*" />
-                <WPF:DataGridTextColumn Header="Specialized rate" Binding="{Binding HourlySpecialized, StringFormat=c}" />
-                <WPF:DataGridTextColumn Header="Enterprise rate" Binding="{Binding HourlyEnterprise, StringFormat=c}" />
-                <WPF:DataGridComboBoxColumn Header="Rate type" DisplayMemberPath="Name" ItemsSource="{Binding Source={StaticResource RateTypesDropList}}" SelectedItemBinding="{Binding RateType}" />
-            </WPF:DataGrid.Columns>
-        </WPF:DataGrid>  
-        
-        <Grid>
+    <DockPanel>
+		<Grid DockPanel.Dock="Bottom">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
                 <ColumnDefinition />
@@ -35,5 +26,14 @@
             <Button Style="{StaticResource Horizontal}" Grid.Column="0" Click="NewRate_Click">New rate</Button>
             <Button Style="{StaticResource HorizontalEnd}" Grid.Column="2" Click="RemoveRate_Click">Remove rate</Button>
         </Grid>
-    </StackPanel>
+	
+        <WPF:DataGrid Name="dgRates" MinHeight="100" VerticalContentAlignment="Stretch" Style="{StaticResource ListDisplay}" IsReadOnly="False" RowEditEnding="RowEditEnding">
+            <WPF:DataGrid.Columns>
+                <WPF:DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="2*" />
+                <WPF:DataGridTextColumn Header="Specialized rate" Binding="{Binding HourlySpecialized, StringFormat=c}" />
+                <WPF:DataGridTextColumn Header="Enterprise rate" Binding="{Binding HourlyEnterprise, StringFormat=c}" />
+                <WPF:DataGridComboBoxColumn Header="Rate type" DisplayMemberPath="Name" ItemsSource="{Binding Source={StaticResource RateTypesDropList}}" SelectedItemBinding="{Binding RateType}" />
+            </WPF:DataGrid.Columns>
+        </WPF:DataGrid>        
+    </DockPanel>
 </UserControl>

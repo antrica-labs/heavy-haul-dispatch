@@ -27,8 +27,7 @@ namespace SingerDispatch.Panels.Admin
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             SaveCommand.Executed += new ExecutedRoutedEventHandler(CommitChanges_Executed);
-
-            dgEmployees.MaxHeight = dgDetails.ActualHeight;                        
+            
             dgEmployees.ItemsSource = new ObservableCollection<Employee>(from emp in Database.Employees select emp);            
         }
 

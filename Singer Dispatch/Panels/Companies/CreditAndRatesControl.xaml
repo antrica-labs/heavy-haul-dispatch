@@ -17,21 +17,8 @@
             </DataTemplate>           
         </ResourceDictionary>        
     </UserControl.Resources>    
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1.4*" />
-            <ColumnDefinition />
-        </Grid.ColumnDefinitions>
-
-        <WPF:DataGrid Name="dgCreditRates" Height="400" IsReadOnly="True" Grid.Column="0" Margin="5" Style="{StaticResource ListDisplay}">
-            <WPF:DataGrid.Columns>                
-                <WPF:DataGridTextColumn Header="Type" Binding="{Binding Name}" Width="2*" />
-                <WPF:DataGridTextColumn Header="Hourly" Binding="{Binding Path=Hourly, StringFormat=c}" />
-                <WPF:DataGridTextColumn Header="Adjusted" Binding="{Binding Path=Adjusted, StringFormat=c}" />
-            </WPF:DataGrid.Columns>
-        </WPF:DataGrid>
-
-        <StackPanel VerticalAlignment="Top" Grid.Column="1">
+    <DockPanel>
+		<StackPanel DockPanel.Dock="Right" Width="350" Margin="5,0,0,0">
             <GroupBox Header="Administration" DataContext="{Binding ElementName=creditAndRatesControl, Path=SelectedCompany}">
                 <StackPanel VerticalAlignment="Top">
                     <Grid>
@@ -76,5 +63,13 @@
             
             <Button Style="{StaticResource Bottom}" Name="CommitChangesButton" Click="SaveDetails_Click">Save adjustments</Button>
         </StackPanel>
-    </Grid>
+
+        <WPF:DataGrid Name="dgCreditRates" Style="{StaticResource ListDisplay}">
+            <WPF:DataGrid.Columns>                
+                <WPF:DataGridTextColumn Header="Type" Binding="{Binding Name}" Width="2*" />
+                <WPF:DataGridTextColumn Header="Hourly" Binding="{Binding Path=Hourly, StringFormat=c}" />
+                <WPF:DataGridTextColumn Header="Adjusted" Binding="{Binding Path=Adjusted, StringFormat=c}" />
+            </WPF:DataGrid.Columns>
+        </WPF:DataGrid>
+	</DockPanel>
 </Panels:CompanyUserControl>

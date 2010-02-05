@@ -25,13 +25,11 @@
             </Style>
         </ResourceDictionary>
     </UserControl.Resources>
-    <StackPanel>
-        <GroupBox Header="Provided Services">
-            <StackPanel>
-                <ListBox Name="TheList" MaxHeight="450" Padding="10,10,10,0" Margin="5"/>
-                                
-                <Button Style="{StaticResource Bottom}" Name="CommitChangesButton" Click="UpdateServices_Click">Save services</Button>
-            </StackPanel>
-        </GroupBox>
-    </StackPanel>
+    <DockPanel>		
+		<Button DockPanel.Dock="Bottom" Style="{StaticResource Bottom}" Name="CommitChangesButton" Click="UpdateServices_Click">Save services</Button>
+        
+		<GroupBox Header="Provided Services">
+        	<ListBox Name="TheList" Padding="10,10,10,0" Margin="5"/>
+		</GroupBox>		
+    </DockPanel>
 </Panels:CompanyUserControl>

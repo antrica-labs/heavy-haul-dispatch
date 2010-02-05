@@ -13,14 +13,8 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <StackPanel>
-        <WPF:DataGrid Name="TheGrid" Style="{StaticResource ListDisplay}" Height="400" IsReadOnly="False" RowEditEnding="RowEditEnding">
-            <WPF:DataGrid.Columns>
-                <WPF:DataGridTextColumn Header="Condition" Binding="{Binding Line}" />
-            </WPF:DataGrid.Columns>
-        </WPF:DataGrid>
-
-        <Grid>
+    <DockPanel>
+		<Grid DockPanel.Dock="Bottom">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
                 <ColumnDefinition />
@@ -30,5 +24,11 @@
             <Button Style="{StaticResource Horizontal}" Grid.Column="0" Click="NewCondition_Click">New condition</Button>
             <Button Style="{StaticResource HorizontalEnd}" Grid.Column="2" Click="RemoveCondition_Click">Remove condition</Button>
         </Grid>
-    </StackPanel>
+	
+        <WPF:DataGrid Name="TheGrid" Style="{StaticResource ListDisplay}" MinHeight="100" IsReadOnly="False" RowEditEnding="RowEditEnding">
+            <WPF:DataGrid.Columns>
+                <WPF:DataGridTextColumn Header="Condition" Binding="{Binding Line}" />
+            </WPF:DataGrid.Columns>
+        </WPF:DataGrid>
+    </DockPanel>
 </UserControl>
