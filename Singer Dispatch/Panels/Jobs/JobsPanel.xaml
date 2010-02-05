@@ -49,9 +49,6 @@
             <TabItem Header="Permits" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, Path=SelectedJob}">
                 <Jobs:PermitsControl SelectedCompany="{Binding SelectedCompany}" SelectedJob="{Binding SelectedJob}" />
             </TabItem>
-            <TabItem Header="Wire Lifts" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, Path=SelectedJob}">
-                <Jobs:WireLiftControl SelectedCompany="{Binding SelectedCompany}" SelectedJob="{Binding SelectedJob}" />
-            </TabItem>
             <TabItem Header="Dispatches" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, Path=SelectedJob}">
                 <Jobs:DispatchesControl SelectedCompany="{Binding SelectedCompany}" SelectedJob="{Binding SelectedJob}" />
             </TabItem>           

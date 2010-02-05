@@ -217,8 +217,7 @@
       <Association Name="Job_JobCommodity" Member="JobCommodities" ThisKey="ID" OtherKey="JobID" Type="JobCommodity" />
       <Association Name="Job_Load" Member="Loads" ThisKey="ID" OtherKey="JobID" Type="Load" />
       <Association Name="Job_Permit" Member="Permits" ThisKey="ID" OtherKey="JobID" Type="Permit" />
-      <Association Name="Job_ThirdPartyService" Member="ThirdPartyServices" ThisKey="ID" OtherKey="JobID" Type="ThirdPartyService" />
-      <Association Name="Company_WireLift" Member="WireLifts" ThisKey="ID" OtherKey="JobID" Type="WireLift" />
+      <Association Name="Job_ThirdPartyService" Member="ThirdPartyServices" ThisKey="ID" OtherKey="JobID" Type="ThirdPartyService" />      
       <Association Name="Job_Dispatch" Member="Dispatches" ThisKey="ID" OtherKey="JobID" Type="Dispatch" />
       <Association Name="Employee_Job" Member="Employee" ThisKey="EmployeeID" OtherKey="ID" Type="Employee" IsForeignKey="true" />
       <Association Name="Company_Job" Member="Company" ThisKey="CompanyID" OtherKey="ID" Type="Company" IsForeignKey="true" />
@@ -292,21 +291,7 @@
       <Association Name="Job_Permit" Member="Job" ThisKey="JobID" OtherKey="ID" Type="Job" IsForeignKey="true" />
       <Association Name="Load_Permit" Member="Load" ThisKey="LoadID" OtherKey="ID" Type="Load" IsForeignKey="true" />
     </Type>
-  </Table>
-  <Table Name="" Member="WireLifts">
-    <Type Name="WireLift">
-      <Column Name="ID" Type="System.Int64" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="JobID" Type="System.Int64" CanBeNull="true" />
-      <Column Name="LiftDateTime" Type="System.DateTime" CanBeNull="true" />
-      <Column Name="CompanyName" Type="System.String" CanBeNull="true" />
-      <Column Name="Location" Type="System.String" CanBeNull="true" />
-      <Column Name="ContactName" Type="System.String" CanBeNull="true" />
-      <Column Name="ContactPhone" Type="System.String" CanBeNull="true" />
-      <Column Name="ConfirmationNumber" Type="System.String" CanBeNull="true" />
-      <Column Name="Notes" Type="System.String" CanBeNull="true" />
-      <Association Name="Company_WireLift" Member="Job" ThisKey="JobID" OtherKey="ID" Type="Job" IsForeignKey="true" />
-    </Type>
-  </Table>
+  </Table>  
   <Table Name="" Member="ProvincesAndStates">
     <Type Name="ProvincesAndState">
       <Column Name="ID" Type="System.Int64" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />

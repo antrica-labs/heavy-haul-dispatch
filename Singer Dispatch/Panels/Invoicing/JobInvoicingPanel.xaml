@@ -31,6 +31,7 @@
                     <ComboBox Grid.Column="1" Name="cmbJobList" TextSearch.TextPath="Number" IsEditable="True" ItemTemplate="{StaticResource JobNameTemplate}" SelectedItem="{Binding ElementName=ThePanel, Path=SelectedJob}" SelectionChanged="cmbJobList_SelectionChanged" />                    
                 </Grid>                
 
+                <!--
                 <Expander DataContext="{Binding ElementName=ThePanel, Path=SelectedJob}" Margin="5" Padding="5" BorderBrush="DarkGray" BorderThickness="1">
                     <Expander.Header>
                         <TextBlock>Job Details</TextBlock>
@@ -79,6 +80,7 @@
                         <TextBox Grid.Row="5" Grid.Column="2" IsReadOnly="True" Text="{Binding JobStatusType.Name}" />
                     </Grid>
                 </Expander>
+                -->
             </StackPanel>
         </Border>
         

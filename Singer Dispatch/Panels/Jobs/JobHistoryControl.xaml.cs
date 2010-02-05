@@ -92,7 +92,7 @@ namespace SingerDispatch.Panels.Jobs
         private void NewJob_Click(object sender, RoutedEventArgs e)
         {
             var list = (ObservableCollection<Job>)dgJobs.ItemsSource;
-            var job = new Job { JobStatusType = DefaultJobStatus };
+            var job = new Job { JobStatusType = DefaultJobStatus, Company = SelectedCompany };
 
             list.Insert(0, job);
             dgJobs.SelectedItem = job;

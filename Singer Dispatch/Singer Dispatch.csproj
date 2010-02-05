@@ -16,6 +16,7 @@
     <WarningLevel>4</WarningLevel>
     <ApplicationIcon>Logo.ico</ApplicationIcon>
     <ApplicationManifest>app.manifest</ApplicationManifest>
+    <ExpressionBlendVersion>3.0.1927.0</ExpressionBlendVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -164,9 +165,6 @@
     </Compile>
     <Compile Include="Panels\Jobs\ThirdPartyServicesControl.xaml.cs">
       <DependentUpon>ThirdPartyServicesControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Panels\Jobs\WireLiftControl.xaml.cs">
-      <DependentUpon>WireLiftControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Panels\JobUserControl.cs" />
     <Compile Include="Panels\Quotes\QuoteCommoditiesControl.xaml.cs">
@@ -351,10 +349,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Panels\Jobs\WireLiftControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Panels\Quotes\QuoteCommoditiesControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -407,9 +401,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
   </ItemGroup>
   <ItemGroup>
     <SplashScreen Include="Splash.png" />

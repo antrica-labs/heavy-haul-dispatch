@@ -80,9 +80,6 @@ namespace SingerDispatch
     partial void InsertPermit(Permit instance);
     partial void UpdatePermit(Permit instance);
     partial void DeletePermit(Permit instance);
-    partial void InsertWireLift(WireLift instance);
-    partial void UpdateWireLift(WireLift instance);
-    partial void DeleteWireLift(WireLift instance);
     partial void InsertProvincesAndState(ProvincesAndState instance);
     partial void UpdateProvincesAndState(ProvincesAndState instance);
     partial void DeleteProvincesAndState(ProvincesAndState instance);
@@ -305,14 +302,6 @@ namespace SingerDispatch
 			get
 			{
 				return this.GetTable<Permit>();
-			}
-		}
-		
-		public System.Data.Linq.Table<WireLift> WireLifts
-		{
-			get
-			{
-				return this.GetTable<WireLift>();
 			}
 		}
 		
@@ -4928,8 +4917,6 @@ namespace SingerDispatch
 		
 		private EntitySet<Permit> _Permits;
 		
-		private EntitySet<WireLift> _WireLifts;
-		
 		private EntitySet<ThirdPartyService> _ThirdPartyServices;
 		
 		private EntitySet<Dispatch> _Dispatches;
@@ -4977,7 +4964,6 @@ namespace SingerDispatch
 			this._JobCommodities = new EntitySet<JobCommodity>(new Action<JobCommodity>(this.attach_JobCommodities), new Action<JobCommodity>(this.detach_JobCommodities));
 			this._Loads = new EntitySet<Load>(new Action<Load>(this.attach_Loads), new Action<Load>(this.detach_Loads));
 			this._Permits = new EntitySet<Permit>(new Action<Permit>(this.attach_Permits), new Action<Permit>(this.detach_Permits));
-			this._WireLifts = new EntitySet<WireLift>(new Action<WireLift>(this.attach_WireLifts), new Action<WireLift>(this.detach_WireLifts));
 			this._ThirdPartyServices = new EntitySet<ThirdPartyService>(new Action<ThirdPartyService>(this.attach_ThirdPartyServices), new Action<ThirdPartyService>(this.detach_ThirdPartyServices));
 			this._Dispatches = new EntitySet<Dispatch>(new Action<Dispatch>(this.attach_Dispatches), new Action<Dispatch>(this.detach_Dispatches));
 			this._Invoices = new EntitySet<Invoice>(new Action<Invoice>(this.attach_Invoices), new Action<Invoice>(this.detach_Invoices));
@@ -5248,19 +5234,6 @@ namespace SingerDispatch
 			}
 		}
 		
-		[Association(Name="Job_WireLift", Storage="_WireLifts", ThisKey="ID", OtherKey="JobID")]
-		public EntitySet<WireLift> WireLifts
-		{
-			get
-			{
-				return this._WireLifts;
-			}
-			set
-			{
-				this._WireLifts.Assign(value);
-			}
-		}
-		
 		[Association(Name="Job_ThirdPartyService", Storage="_ThirdPartyServices", ThisKey="ID", OtherKey="JobID")]
 		public EntitySet<ThirdPartyService> ThirdPartyServices
 		{
@@ -5521,18 +5494,6 @@ namespace SingerDispatch
 		}
 		
 		private void detach_Permits(Permit entity)
-		{
-			this.SendPropertyChanging();
-			entity.Job = null;
-		}
-		
-		private void attach_WireLifts(WireLift entity)
-		{
-			this.SendPropertyChanging();
-			entity.Job = this;
-		}
-		
-		private void detach_WireLifts(WireLift entity)
 		{
 			this.SendPropertyChanging();
 			entity.Job = null;
@@ -7075,301 +7036,6 @@ namespace SingerDispatch
 						this._LoadID = default(Nullable<long>);
 					}
 					this.SendPropertyChanged("Load");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
-	[Table(Name="")]
-	public partial class WireLift : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private long _ID;
-		
-		private System.Nullable<long> _JobID;
-		
-		private System.Nullable<System.DateTime> _LiftDateTime;
-		
-		private string _CompanyName;
-		
-		private string _Location;
-		
-		private string _ContactName;
-		
-		private string _ContactPhone;
-		
-		private string _ConfirmationNumber;
-		
-		private string _Notes;
-		
-		private EntityRef<Job> _Job;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIDChanging(long value);
-    partial void OnIDChanged();
-    partial void OnJobIDChanging(System.Nullable<long> value);
-    partial void OnJobIDChanged();
-    partial void OnLiftDateTimeChanging(System.Nullable<System.DateTime> value);
-    partial void OnLiftDateTimeChanged();
-    partial void OnCompanyNameChanging(string value);
-    partial void OnCompanyNameChanged();
-    partial void OnLocationChanging(string value);
-    partial void OnLocationChanged();
-    partial void OnContactNameChanging(string value);
-    partial void OnContactNameChanged();
-    partial void OnContactPhoneChanging(string value);
-    partial void OnContactPhoneChanged();
-    partial void OnConfirmationNumberChanging(string value);
-    partial void OnConfirmationNumberChanged();
-    partial void OnNotesChanging(string value);
-    partial void OnNotesChanged();
-    #endregion
-		
-		public WireLift()
-		{
-			this._Job = default(EntityRef<Job>);
-			OnCreated();
-		}
-		
-		[Column(Storage="_ID", AutoSync=AutoSync.OnInsert, IsPrimaryKey=true, IsDbGenerated=true)]
-		public long ID
-		{
-			get
-			{
-				return this._ID;
-			}
-			set
-			{
-				if ((this._ID != value))
-				{
-					this.OnIDChanging(value);
-					this.SendPropertyChanging();
-					this._ID = value;
-					this.SendPropertyChanged("ID");
-					this.OnIDChanged();
-				}
-			}
-		}
-		
-		[Column(Storage="_JobID")]
-		public System.Nullable<long> JobID
-		{
-			get
-			{
-				return this._JobID;
-			}
-			set
-			{
-				if ((this._JobID != value))
-				{
-					if (this._Job.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnJobIDChanging(value);
-					this.SendPropertyChanging();
-					this._JobID = value;
-					this.SendPropertyChanged("JobID");
-					this.OnJobIDChanged();
-				}
-			}
-		}
-		
-		[Column(Storage="_LiftDateTime")]
-		public System.Nullable<System.DateTime> LiftDateTime
-		{
-			get
-			{
-				return this._LiftDateTime;
-			}
-			set
-			{
-				if ((this._LiftDateTime != value))
-				{
-					this.OnLiftDateTimeChanging(value);
-					this.SendPropertyChanging();
-					this._LiftDateTime = value;
-					this.SendPropertyChanged("LiftDateTime");
-					this.OnLiftDateTimeChanged();
-				}
-			}
-		}
-		
-		[Column(Storage="_CompanyName")]
-		public string CompanyName
-		{
-			get
-			{
-				return this._CompanyName;
-			}
-			set
-			{
-				if ((this._CompanyName != value))
-				{
-					this.OnCompanyNameChanging(value);
-					this.SendPropertyChanging();
-					this._CompanyName = value;
-					this.SendPropertyChanged("CompanyName");
-					this.OnCompanyNameChanged();
-				}
-			}
-		}
-		
-		[Column(Storage="_Location")]
-		public string Location
-		{
-			get
-			{
-				return this._Location;
-			}
-			set
-			{
-				if ((this._Location != value))
-				{
-					this.OnLocationChanging(value);
-					this.SendPropertyChanging();
-					this._Location = value;
-					this.SendPropertyChanged("Location");
-					this.OnLocationChanged();
-				}
-			}
-		}
-		
-		[Column(Storage="_ContactName")]
-		public string ContactName
-		{
-			get
-			{
-				return this._ContactName;
-			}
-			set
-			{
-				if ((this._ContactName != value))
-				{
-					this.OnContactNameChanging(value);
-					this.SendPropertyChanging();
-					this._ContactName = value;
-					this.SendPropertyChanged("ContactName");
-					this.OnContactNameChanged();
-				}
-			}
-		}
-		
-		[Column(Storage="_ContactPhone")]
-		public string ContactPhone
-		{
-			get
-			{
-				return this._ContactPhone;
-			}
-			set
-			{
-				if ((this._ContactPhone != value))
-				{
-					this.OnContactPhoneChanging(value);
-					this.SendPropertyChanging();
-					this._ContactPhone = value;
-					this.SendPropertyChanged("ContactPhone");
-					this.OnContactPhoneChanged();
-				}
-			}
-		}
-		
-		[Column(Storage="_ConfirmationNumber")]
-		public string ConfirmationNumber
-		{
-			get
-			{
-				return this._ConfirmationNumber;
-			}
-			set
-			{
-				if ((this._ConfirmationNumber != value))
-				{
-					this.OnConfirmationNumberChanging(value);
-					this.SendPropertyChanging();
-					this._ConfirmationNumber = value;
-					this.SendPropertyChanged("ConfirmationNumber");
-					this.OnConfirmationNumberChanged();
-				}
-			}
-		}
-		
-		[Column(Storage="_Notes")]
-		public string Notes
-		{
-			get
-			{
-				return this._Notes;
-			}
-			set
-			{
-				if ((this._Notes != value))
-				{
-					this.OnNotesChanging(value);
-					this.SendPropertyChanging();
-					this._Notes = value;
-					this.SendPropertyChanged("Notes");
-					this.OnNotesChanged();
-				}
-			}
-		}
-		
-		[Association(Name="Job_WireLift", Storage="_Job", ThisKey="JobID", OtherKey="ID", IsForeignKey=true)]
-		public Job Job
-		{
-			get
-			{
-				return this._Job.Entity;
-			}
-			set
-			{
-				Job previousValue = this._Job.Entity;
-				if (((previousValue != value) 
-							|| (this._Job.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Job.Entity = null;
-						previousValue.WireLifts.Remove(this);
-					}
-					this._Job.Entity = value;
-					if ((value != null))
-					{
-						value.WireLifts.Add(this);
-						this._JobID = value.ID;
-					}
-					else
-					{
-						this._JobID = default(Nullable<long>);
-					}
-					this.SendPropertyChanged("Job");
 				}
 			}
 		}

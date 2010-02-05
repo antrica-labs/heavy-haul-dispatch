@@ -60,24 +60,6 @@ namespace SingerDispatch.Panels.Invoicing
 
             if (confirmation != MessageBoxResult.Yes) return;
 
-            foreach (var item in SelectedInvoice.Job.JobCommodities)
-            {
-                
-            }
-
-            foreach (var lift in SelectedInvoice.Job.WireLifts)
-            {
-                var line = new InvoiceLineItem
-                {
-                    Description = lift.Notes,
-                    Departure = lift.Location,
-                    StartDate = lift.LiftDateTime,
-                    EndDate = lift.LiftDateTime
-                };
-
-                SelectedInvoice.InvoiceLineItems.Add(line);
-            }
-
             dgLineItems.ItemsSource = new ObservableCollection<InvoiceLineItem>(SelectedInvoice.InvoiceLineItems);
         }
 
