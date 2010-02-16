@@ -14,8 +14,8 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <StackPanel>
-        <Border Background="LightGoldenrodYellow" BorderBrush="LightGray" BorderThickness="1" Margin="0,0,0,5" DataContext="{Binding ElementName=ThePanel}">
+    <DockPanel>
+        <Border DockPanel.Dock="Top"  Background="LightGoldenrodYellow" BorderBrush="LightGray" BorderThickness="1" Margin="0,0,0,5" DataContext="{Binding ElementName=ThePanel}">
             <Grid Margin="5,3">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
@@ -57,5 +57,5 @@
                 <Quotes:QuoteConditionsControl SelectedCompany="{Binding SelectedCompany}" SelectedQuote="{Binding SelectedQuote}" />                
             </TabItem>
         </TabControl>
-    </StackPanel>
+    </DockPanel>
 </Panels:QuoteUserControl>
