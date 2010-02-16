@@ -16,6 +16,7 @@
                     <ColumnDefinition />
                     <ColumnDefinition />                    
                 </Grid.ColumnDefinitions>
+                
                 <Button Grid.Column="3" Name="btnPrint" Click="Print_Click">Print</Button>
             </Grid>
         </Border>

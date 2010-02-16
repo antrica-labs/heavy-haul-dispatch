@@ -13,8 +13,54 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <StackPanel>
-        <WPF:DataGrid Name="dgSupplements" Style="{StaticResource ListDisplay}" MinHeight="200">
+    <DockPanel>
+        <StackPanel DockPanel.Dock="Bottom">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+
+                <Button Style="{StaticResource Horizontal}" Grid.Column="0" Click="NewSupplement_Click">New supplement</Button>
+                <Button Style="{StaticResource Horizontal}" Grid.Column="1" Click="DuplicateSupplement_Click">Duplicate supplement</Button>
+                <Button Style="{StaticResource HorizontalEnd}" Grid.Column="3" Click="RemoveSupplement_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgSupplements, Path=SelectedItem}">Remove supplement</Button>
+            </Grid>
+            
+            <GroupBox Name="grpSupplementDetails" Header="Supplement Details" DataContext="{Binding ElementName=dgSupplements, Path=SelectedItem}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgSupplements, Path=SelectedItem}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="75" />
+                        <ColumnDefinition Width="1.5*"/>
+                        <ColumnDefinition Width="75" />
+                        <ColumnDefinition Width="0.5*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+
+                    <Label Grid.Row="0" Grid.Column="0">Name:</Label>
+                    <TextBox Name="txtName" Grid.Row="0" Grid.Column="1" Text="{Binding Name}" />
+
+                    <Label Grid.Row="1" Grid.Column="0">Details:</Label>
+                    <TextBox Name="txtDetails" Grid.Row="1" Grid.Column="1" Grid.RowSpan="2" Text="{Binding Details}" Style="{StaticResource MultiLine}" VerticalScrollBarVisibility="Hidden" />
+
+                    <Label Grid.Row="0" Grid.Column="2">Billing type:</Label>
+                    <ComboBox Name="cmbBillingType" Grid.Row="0" Grid.Column="3" SelectedItem="{Binding BillingType}" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectionChanged="BillingType_SelectionChanged" />
+
+                    <Label Grid.Row="1" Grid.Column="2">Quantity:</Label>
+                    <TextBox Name="txtQuantity" Grid.Row="1" Grid.Column="3" Text="{Binding Quantity}" />
+
+                    <Label Grid.Row="2" Grid.Column="2">Cost:</Label>
+                    <TextBox Name="txtCostPerItem" Grid.Row="2" Grid.Column="3" Text="{Binding CostPerItem, StringFormat=c}" />
+                </Grid>
+            </GroupBox>
+        </StackPanel>
+
+        <WPF:DataGrid Name="dgSupplements" Style="{StaticResource ListDisplay}" MinHeight="100">
             <WPF:DataGrid.Columns>
                 <WPF:DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
                 <WPF:DataGridTextColumn Header="Details" Binding="{Binding Details}" />
@@ -23,49 +69,5 @@
                 <WPF:DataGridTextColumn Header="Cost" Binding="{Binding CostPerItem, StringFormat=c}" />
             </WPF:DataGrid.Columns>
         </WPF:DataGrid>
-
-        <Grid Margin="0,0,0,10">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition />
-                <ColumnDefinition />
-                <ColumnDefinition />
-                <ColumnDefinition />
-            </Grid.ColumnDefinitions>
-
-            <Button Style="{StaticResource Horizontal}" Grid.Column="0" Click="NewSupplement_Click">New supplement</Button>
-            <Button Style="{StaticResource Horizontal}" Grid.Column="1" Click="DuplicateSupplement_Click">Duplicate supplement</Button>
-            <Button Style="{StaticResource HorizontalEnd}" Grid.Column="3" Click="RemoveSupplement_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgSupplements, Path=SelectedItem}">Remove supplement</Button>
-        </Grid>
-        
-        <GroupBox Name="grpSupplementDetails" Header="Supplement Details" Margin="0,0,0,10" DataContext="{Binding ElementName=dgSupplements, Path=SelectedItem}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgSupplements, Path=SelectedItem}">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="75" />
-                    <ColumnDefinition Width="1.5*"/>
-                    <ColumnDefinition Width="75" />
-                    <ColumnDefinition Width="0.5*"/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition />
-                    <RowDefinition />
-                    <RowDefinition />                    
-                </Grid.RowDefinitions>
-                                
-                <Label Grid.Row="0" Grid.Column="0">Name:</Label>
-                <TextBox Name="txtName" Grid.Row="0" Grid.Column="1" Text="{Binding Name}" />
-                
-                <Label Grid.Row="1" Grid.Column="0">Details:</Label>
-                <TextBox Name="txtDetails" Grid.Row="1" Grid.Column="1" Grid.RowSpan="2" Text="{Binding Details}" Style="{StaticResource MultiLine}" VerticalScrollBarVisibility="Hidden" />
-                        
-                <Label Grid.Row="0" Grid.Column="2">Billing type:</Label>
-                <ComboBox Name="cmbBillingType" Grid.Row="0" Grid.Column="3" SelectedItem="{Binding BillingType}" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectionChanged="BillingType_SelectionChanged" />
-                
-                <Label Grid.Row="1" Grid.Column="2">Quantity:</Label>
-                <TextBox Name="txtQuantity" Grid.Row="1" Grid.Column="3" Text="{Binding Quantity}" />
-                
-                <Label Grid.Row="2" Grid.Column="2">Cost:</Label>
-                <TextBox Name="txtCostPerItem" Grid.Row="2" Grid.Column="3" Text="{Binding CostPerItem, StringFormat=c}" />                
-            </Grid>
-        </GroupBox>
-    </StackPanel>
+    </DockPanel>
 </Panels:QuoteUserControl>

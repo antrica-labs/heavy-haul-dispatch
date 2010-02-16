@@ -17,93 +17,95 @@
             </DataTemplate>
         </ResourceDictionary>
     </UserControl.Resources>
-    <StackPanel>
-        <WPF:DataGrid Name="dgDispatches" Style="{StaticResource ListDisplay}" Height="180">
-            <WPF:DataGrid.Columns>
-                <WPF:DataGridTextColumn Header="Load" Binding="{Binding Load.FriendlyName}" Width="0.2*" />
-                <WPF:DataGridTextColumn Header="Driver" Binding="{Binding Employee.Name}" Width="0.3*" />
-                <WPF:DataGridTextColumn Header="Unit" Binding="{Binding Equipment.UnitNumber}" Width="0.2*" />                
-                <WPF:DataGridTextColumn Header="Service Type" Binding="{Binding Rate.Name}" Width="0.3*" />
-                <WPF:DataGridTextColumn Header="Description" Binding="{Binding Description}" />                
-            </WPF:DataGrid.Columns>
-        </WPF:DataGrid>
-        
-        <Grid Margin="0,0,0,5">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition />
-                <ColumnDefinition />
-                <ColumnDefinition />
-                <ColumnDefinition />
-            </Grid.ColumnDefinitions>
-
-            <Button Style="{StaticResource Horizontal}" Grid.Column="0" Click="NewDispatch_Click">New dispatch</Button>
-            <Button Style="{StaticResource Horizontal}" Grid.Column="1" Click="DuplicateDispatch_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgDispatches, Path=SelectedItem}">Duplicate dispatch</Button>
-            <Button Style="{StaticResource Horizontal}" Grid.Column="2" Click="ViewDispatch_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgDispatches, Path=SelectedItem}">View dispatch</Button>
-            <Button Style="{StaticResource HorizontalEnd}" Grid.Column="3" Click="RemoveDispatch_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgDispatches, Path=SelectedItem}">Remove dispatch</Button>
-        </Grid>
-        
-        <GroupBox Header="Dispatch Details" DataContext="{Binding ElementName=dgDispatches, Path=SelectedItem}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgDispatches, Path=SelectedItem}">
+    <DockPanel>
+        <StackPanel DockPanel.Dock="Bottom">
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="90" />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
                     <ColumnDefinition />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition />
-                    <RowDefinition />
-                    <RowDefinition />
-                    <RowDefinition />
-                    <RowDefinition />
-                    <RowDefinition />
-                    <RowDefinition />
-                </Grid.RowDefinitions>
-                
-                <Label Grid.Row="0" Grid.Column="0">Load:</Label>
-                <ComboBox Name="cmbLoads" Grid.Row="0" Grid.Column="1" SelectedItem="{Binding Load}" ItemTemplate="{StaticResource LoadNameTemplate}" ></ComboBox>
-                
-                <Label Grid.Row="1" Grid.Column="0">Service type:</Label>
-                <ComboBox Name="cmbServiceTypes" Grid.Row="1" Grid.Column="1" SelectedItem="{Binding Rate}" ItemTemplate="{StaticResource SimpleNameTemplate}" />
-                
-                <Label Grid.Row="2" Grid.Column="0">Employee:</Label>
-                <ComboBox Name="cmbEmployees" Grid.Row="2" Grid.Column="1" SelectedItem="{Binding Employee}" ItemTemplate="{StaticResource SimpleNameTemplate}" />
-                
-                <Label Grid.Row="3" Grid.Column="0">Unit:</Label>
-                <ComboBox Name="cmbUnits" Grid.Row="3" Grid.Column="1" SelectedItem="{Binding Equipment}" ItemTemplate="{StaticResource EquipmentNameTemplate}" />
-                
-                <Label Grid.Row="4" Grid.Column="0">Description:</Label>
-                <TextBox Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Description}"/>
-                
-                <Label Grid.Row="5" Grid.Column="0">Schedule:</Label>
-                <TextBox Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Schedule}"/>
-                
-                <Label Grid.Row="6" Grid.Column="0">Notes:</Label>
-                <TextBox Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Notes}" />
-                
-                
-                <GroupBox Grid.Column="2" Grid.Row="0" Grid.RowSpan="4" Header="Departure" DataContext="{Binding ElementName=dgDispatches, Path=SelectedItem}" Margin="5,0,0,0">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="60"/>
-                            <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                        </Grid.RowDefinitions>
-                         
-                        <Label Grid.Row="0" Grid.Column="0">Date:</Label>
-                        <WPF:DatePicker Grid.Row="0" Grid.Column="1" />
-                        
-                        <Label Grid.Row="1" Grid.Column="0">Time:</Label>
-                        <TextBox Grid.Row="1" Grid.Column="1" />
-                        
-                        <Label Grid.Row="2" Grid.Column="0">Location:</Label>
-                        <TextBox Grid.Row="2" Grid.Column="1" />
-                    </Grid>
-                </GroupBox>
+
+                <Button Style="{StaticResource Horizontal}" Grid.Column="0" Click="NewDispatch_Click">New dispatch</Button>
+                <Button Style="{StaticResource Horizontal}" Grid.Column="1" Click="DuplicateDispatch_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgDispatches, Path=SelectedItem}">Duplicate dispatch</Button>
+                <Button Style="{StaticResource Horizontal}" Grid.Column="2" Click="ViewDispatch_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgDispatches, Path=SelectedItem}">View dispatch</Button>
+                <Button Style="{StaticResource HorizontalEnd}" Grid.Column="3" Click="RemoveDispatch_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgDispatches, Path=SelectedItem}">Remove dispatch</Button>
             </Grid>
-        </GroupBox>
-    </StackPanel>
+            
+            <GroupBox Header="Dispatch Details" DataContext="{Binding ElementName=dgDispatches, Path=SelectedItem}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgDispatches, Path=SelectedItem}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="90" />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+
+                    <Label Grid.Row="0" Grid.Column="0">Load:</Label>
+                    <ComboBox Name="cmbLoads" Grid.Row="0" Grid.Column="1" SelectedItem="{Binding Load}" ItemTemplate="{StaticResource LoadNameTemplate}" ></ComboBox>
+
+                    <Label Grid.Row="1" Grid.Column="0">Service type:</Label>
+                    <ComboBox Name="cmbServiceTypes" Grid.Row="1" Grid.Column="1" SelectedItem="{Binding Rate}" ItemTemplate="{StaticResource SimpleNameTemplate}" />
+
+                    <Label Grid.Row="2" Grid.Column="0">Employee:</Label>
+                    <ComboBox Name="cmbEmployees" Grid.Row="2" Grid.Column="1" SelectedItem="{Binding Employee}" ItemTemplate="{StaticResource SimpleNameTemplate}" />
+
+                    <Label Grid.Row="3" Grid.Column="0">Unit:</Label>
+                    <ComboBox Name="cmbUnits" Grid.Row="3" Grid.Column="1" SelectedItem="{Binding Equipment}" ItemTemplate="{StaticResource EquipmentNameTemplate}" />
+
+                    <Label Grid.Row="4" Grid.Column="0">Description:</Label>
+                    <TextBox Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Description}"/>
+
+                    <Label Grid.Row="5" Grid.Column="0">Schedule:</Label>
+                    <TextBox Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Schedule}"/>
+
+                    <Label Grid.Row="6" Grid.Column="0">Notes:</Label>
+                    <TextBox Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Notes}" />
+
+
+                    <GroupBox Grid.Column="2" Grid.Row="0" Grid.RowSpan="4" Header="Departure" DataContext="{Binding ElementName=dgDispatches, Path=SelectedItem}" Margin="5,0,0,0">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="60"/>
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+
+                            <Label Grid.Row="0" Grid.Column="0">Date:</Label>
+                            <WPF:DatePicker Grid.Row="0" Grid.Column="1" />
+
+                            <Label Grid.Row="1" Grid.Column="0">Time:</Label>
+                            <TextBox Grid.Row="1" Grid.Column="1" />
+
+                            <Label Grid.Row="2" Grid.Column="0">Location:</Label>
+                            <TextBox Grid.Row="2" Grid.Column="1" />
+                        </Grid>
+                    </GroupBox>
+                </Grid>
+            </GroupBox>
+        </StackPanel>
+        
+        <WPF:DataGrid Name="dgDispatches" Style="{StaticResource ListDisplay}" MinHeight="100">
+            <WPF:DataGrid.Columns>
+                <WPF:DataGridTextColumn Header="Load" Binding="{Binding Load.FriendlyName}" Width="0.2*" />
+                <WPF:DataGridTextColumn Header="Driver" Binding="{Binding Employee.Name}" Width="0.3*" />
+                <WPF:DataGridTextColumn Header="Unit" Binding="{Binding Equipment.UnitNumber}" Width="0.2*" />
+                <WPF:DataGridTextColumn Header="Service Type" Binding="{Binding Rate.Name}" Width="0.3*" />
+                <WPF:DataGridTextColumn Header="Description" Binding="{Binding Description}" />
+            </WPF:DataGrid.Columns>
+        </WPF:DataGrid>
+    </DockPanel>
 </Panels:JobUserControl>

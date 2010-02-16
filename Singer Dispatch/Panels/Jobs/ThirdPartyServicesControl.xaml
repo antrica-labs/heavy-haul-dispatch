@@ -13,85 +13,87 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <StackPanel>
-        <WPF:DataGrid Name="dgServices" Style="{StaticResource ListDisplay}" Height="180">
-            <WPF:DataGrid.Columns>
-                <WPF:DataGridTextColumn Header="Company" Binding="{Binding Company.Name}" Width="0.4*" />
-                <WPF:DataGridTextColumn Header="Service Type" Binding="{Binding ServiceType.Name}" Width="0.3*" />                
-                <WPF:DataGridTextColumn Header="Notes" Binding="{Binding Notes}" />                    
-            </WPF:DataGrid.Columns>
-        </WPF:DataGrid>
-
-        <Grid Margin="0,0,0,5">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition />
-                <ColumnDefinition />
-                <ColumnDefinition />
-                <ColumnDefinition />
-            </Grid.ColumnDefinitions>
-
-            <Button Style="{StaticResource Horizontal}" Grid.Column="0" Click="NewService_Click">New service</Button>
-            <Button Style="{StaticResource Horizontal}" Grid.Column="1" Click="DuplicateService_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgServices, Path=SelectedItem}">Duplicate service</Button>
-            <Button Style="{StaticResource HorizontalEnd}" Grid.Column="3" Click="RemoveService_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgServices, Path=SelectedItem}">Remove service</Button>
-        </Grid>
-        
-        <GroupBox Header="Service Details" DataContext="{Binding ElementName=dgServices, Path=SelectedItem}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgServices, Path=SelectedItem}">
+    <DockPanel>
+        <StackPanel DockPanel.Dock="Bottom">
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="90" />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
                     <ColumnDefinition />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition />
-                    <RowDefinition />
-                    <RowDefinition />
-                    <RowDefinition />
-                    <RowDefinition />
-                    <RowDefinition />
-                    <RowDefinition />
-                </Grid.RowDefinitions>
 
-                <Label Grid.Row="0" Grid.Column="0">Load:</Label>
-                <ComboBox Name="cmbLoads"  Grid.Row="0" Grid.Column="1" SelectedItem="{Binding Load}" ItemTemplate="{StaticResource LoadNameTemplate}" />
-
-                <Label Grid.Row="1" Grid.Column="0">Company:</Label>
-                <ComboBox Name="cmbCompanies" Grid.Row="1" Grid.Column="1" SelectedItem="{Binding Company}" TextSearch.TextPath="Name" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectionChanged="ServiceCompany_SelectionChanged" />
-
-                <Label Grid.Row="2" Grid.Column="0">Service type:</Label>
-                <ComboBox Name="cmbServiceTypes" Grid.Row="2" Grid.Column="1" SelectedItem="{Binding ServiceType}" ItemTemplate="{StaticResource SimpleNameTemplate}" />
-
-                <Label Grid.Row="3" Grid.Column="0">Contact:</Label>
-                <ComboBox Name="cmbContacts" Grid.Row="3" Grid.Column="1" SelectedItem="{Binding Contact}" TextSearch.TextPath="Name" ItemTemplate="{StaticResource SimpleNameTemplate}" />
-
-                <Label Grid.Row="4" Grid.Column="0">Location:</Label>
-                <TextBox Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Location}" />
-
-                <Label Grid.Row="5" Grid.Column="0">Reference:</Label>
-                <TextBox Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Reference}" />
-
-                <Label Grid.Row="6" Grid.Column="0">Notes:</Label>
-                <TextBox Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Notes}" Style="{StaticResource MultiLine}" Height="40" />
-
-                <GroupBox Grid.Column="2" Grid.Row="0" Grid.RowSpan="3" Header="Departure" Margin="5,0,0,0">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="60" />
-                            <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition />
-                            <RowDefinition />
-                        </Grid.RowDefinitions>
-
-                        <Label Grid.Row="0" Grid.Column="0">Date:</Label>
-                        <WPF:DatePicker Grid.Row="0" Grid.Column="1" SelectedDate="{Binding ServiceDate}" />
-
-                        <Label Grid.Row="1" Grid.Column="0">Time:</Label>
-                        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding ServiceTime}" />
-                    </Grid>
-                </GroupBox>
+                <Button Style="{StaticResource Horizontal}" Grid.Column="0" Click="NewService_Click">New service</Button>
+                <Button Style="{StaticResource Horizontal}" Grid.Column="1" Click="DuplicateService_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgServices, Path=SelectedItem}">Duplicate service</Button>
+                <Button Style="{StaticResource HorizontalEnd}" Grid.Column="3" Click="RemoveService_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgServices, Path=SelectedItem}">Remove service</Button>
             </Grid>
-        </GroupBox>
-    </StackPanel>
+
+            <GroupBox Header="Service Details" DataContext="{Binding ElementName=dgServices, Path=SelectedItem}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgServices, Path=SelectedItem}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="90" />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+
+                    <Label Grid.Row="0" Grid.Column="0">Load:</Label>
+                    <ComboBox Name="cmbLoads"  Grid.Row="0" Grid.Column="1" SelectedItem="{Binding Load}" ItemTemplate="{StaticResource LoadNameTemplate}" />
+
+                    <Label Grid.Row="1" Grid.Column="0">Company:</Label>
+                    <ComboBox Name="cmbCompanies" Grid.Row="1" Grid.Column="1" SelectedItem="{Binding Company}" TextSearch.TextPath="Name" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectionChanged="ServiceCompany_SelectionChanged" />
+
+                    <Label Grid.Row="2" Grid.Column="0">Service type:</Label>
+                    <ComboBox Name="cmbServiceTypes" Grid.Row="2" Grid.Column="1" SelectedItem="{Binding ServiceType}" ItemTemplate="{StaticResource SimpleNameTemplate}" />
+
+                    <Label Grid.Row="3" Grid.Column="0">Contact:</Label>
+                    <ComboBox Name="cmbContacts" Grid.Row="3" Grid.Column="1" SelectedItem="{Binding Contact}" TextSearch.TextPath="Name" ItemTemplate="{StaticResource SimpleNameTemplate}" />
+
+                    <Label Grid.Row="4" Grid.Column="0">Location:</Label>
+                    <TextBox Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Location}" />
+
+                    <Label Grid.Row="5" Grid.Column="0">Reference:</Label>
+                    <TextBox Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Reference}" />
+
+                    <Label Grid.Row="6" Grid.Column="0">Notes:</Label>
+                    <TextBox Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Notes}" Style="{StaticResource MultiLine}" Height="40" />
+
+                    <GroupBox Grid.Column="2" Grid.Row="0" Grid.RowSpan="3" Header="Departure" Margin="5,0,0,0">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="60" />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+
+                            <Label Grid.Row="0" Grid.Column="0">Date:</Label>
+                            <WPF:DatePicker Grid.Row="0" Grid.Column="1" SelectedDate="{Binding ServiceDate}" />
+
+                            <Label Grid.Row="1" Grid.Column="0">Time:</Label>
+                            <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding ServiceTime}" />
+                        </Grid>
+                    </GroupBox>
+                </Grid>
+            </GroupBox>
+        </StackPanel>
+
+        <WPF:DataGrid Name="dgServices" Style="{StaticResource ListDisplay}" MinHeight="100">
+            <WPF:DataGrid.Columns>
+                <WPF:DataGridTextColumn Header="Company" Binding="{Binding Company.Name}" Width="0.4*" />
+                <WPF:DataGridTextColumn Header="Service Type" Binding="{Binding ServiceType.Name}" Width="0.3*" />
+                <WPF:DataGridTextColumn Header="Notes" Binding="{Binding Notes}" />
+            </WPF:DataGrid.Columns>
+        </WPF:DataGrid>
+    </DockPanel>
 </Panels:JobUserControl>

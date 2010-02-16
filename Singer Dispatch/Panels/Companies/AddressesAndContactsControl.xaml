@@ -153,28 +153,7 @@
                 <Button Style="{StaticResource HorizontalEnd}" Grid.Column="3" Click="RemoveContact_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgContacts, Path=SelectedItem}">Remove contact</Button>                
 			</Grid>
 		</StackPanel>
-		
-		<!--
-			<WPF:DataGrid Name="dgAddresses" Grid.Column="0" Margin="0,0,3,0" Style="{StaticResource ListDisplay}" MinHeight="100" SelectionChanged="dgAddresses_SelectionChanged">
-                <WPF:DataGrid.Columns>
-                    <WPF:DataGridTextColumn Header="Type" Binding="{Binding AddressType.Name}" IsReadOnly="True" />
-                    <WPF:DataGridTextColumn Header="Address" Width="1.5*" Binding="{Binding Line1}" />
-                    <WPF:DataGridTextColumn Header="City" Binding="{Binding City}" />
-                    <WPF:DataGridTextColumn Header="Province" Binding="{Binding ProvincesAndState.Name}" IsReadOnly="True" />
-                    <WPF:DataGridTextColumn Header="Country" Binding="{Binding ProvincesAndState.Country.Name}" IsReadOnly="True" />
-                </WPF:DataGrid.Columns>
-            </WPF:DataGrid>
 			
-			<WPF:DataGrid Name="dgContacts" Grid.Column="1" Margin="3,0,0,0" Style="{StaticResource ListDisplay}" MinHeight="100" ItemsSource="{Binding ElementName=dgAddresses, Path=SelectedItem.Contacts}">
-                <WPF:DataGrid.Columns>
-                    <WPF:DataGridTextColumn Header="First name" Binding="{Binding FirstName}" />
-                    <WPF:DataGridTextColumn Header="Last name" Binding="{Binding LastName}" />
-                    <WPF:DataGridTextColumn Header="Phone" Binding="{Binding PrimaryPhone}" />
-                    <WPF:DataGridTextColumn Header="Email" Binding="{Binding Email}" />                    
-                </WPF:DataGrid.Columns>
-            </WPF:DataGrid>
-		-->
-	
 		<Grid>
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition />

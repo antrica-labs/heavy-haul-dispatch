@@ -27,6 +27,6 @@
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid>
-        <ListBox Height="450" Name="TheList" Padding="10,10,10,0" Margin="5" />        
+        <ListBox MinHeight="150" Name="TheList" Padding="10,10,10,0" Margin="5" />        
     </Grid>
 </Panels:QuoteUserControl>

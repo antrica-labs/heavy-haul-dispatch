@@ -14,75 +14,67 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <StackPanel>
-        <WPF:DataGrid Name="dgInvoices" Style="{StaticResource ListDisplay}" Height="150" SelectedItem="{Binding SelectedInvoice}">
-            <WPF:DataGrid.Columns>
-                <WPF:DataGridTextColumn Header="Number" Binding="{Binding Number}" />
-                <WPF:DataGridTextColumn Header="Revision" Binding="{Binding Revision}" />
-                <WPF:DataGridTextColumn Header="Hours" Binding="{Binding Hours}" />
-                <WPF:DataGridTextColumn Header="Rate" Binding="{Binding HourlyRate, StringFormat=c}" />
-            </WPF:DataGrid.Columns>
-        </WPF:DataGrid>
-        
-        <Grid Margin="0,0,0,5">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition />
-                <ColumnDefinition />
-                <ColumnDefinition />
-                <ColumnDefinition />
-            </Grid.ColumnDefinitions>
-            
-            <Button Grid.Column="0" Style="{StaticResource Horizontal}" Click="NewInvoice_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, Path=SelectedJob}">New invoice</Button>
-            <Button Grid.Column="1" Style="{StaticResource Horizontal}" Click="CreateRevision_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, Path=SelectedInvoice}">Create revision</Button>
-            <Button Grid.Column="2" Style="{StaticResource Horizontal}" Click="ViewInvoice_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, Path=SelectedInvoice}">View invoice</Button>
-            <Button Grid.Column="3" Style="{StaticResource HorizontalEnd}" Click="DeleteInvoice_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, Path=SelectedInvoice}">Delete invoice</Button>
-        </Grid>
-        
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition />
-                <ColumnDefinition />
-            </Grid.ColumnDefinitions>
+    <DockPanel>
+        <StackPanel DockPanel.Dock="Bottom">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
 
-            <GroupBox Header="Invoice Details" Grid.Column="0" DataContext="{Binding SelectedInvoice}" Margin="0,0,5,0">
-                <StackPanel>
-                    <Label Content="Comments:"/>
-                    <TextBox Name="txtComment" Style="{StaticResource MultiLine}" VerticalScrollBarVisibility="Hidden" Text="{Binding Comment}" />
+                <Button Grid.Column="0" Style="{StaticResource Horizontal}" Click="NewInvoice_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, Path=SelectedJob}">New invoice</Button>
+                <Button Grid.Column="1" Style="{StaticResource Horizontal}" Click="CreateRevision_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, Path=SelectedInvoice}">Create revision</Button>
+                <Button Grid.Column="2" Style="{StaticResource Horizontal}" Click="ViewInvoice_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, Path=SelectedInvoice}">View invoice</Button>
+                <Button Grid.Column="3" Style="{StaticResource HorizontalEnd}" Click="DeleteInvoice_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, Path=SelectedInvoice}">Delete invoice</Button>
+            </Grid>
 
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition />
-                            <RowDefinition />
-                        </Grid.RowDefinitions>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
 
-                        <Label Grid.Row="0" Grid.Column="0">Invoice #</Label>
-                        <TextBox Grid.Row="1" Grid.Column="0" IsReadOnly="True">
-                            <TextBox.Text>
-                                <MultiBinding Converter="{StaticResource InvoiceFriendlyNameConverter}">
-                                    <Binding Path="Number" />
-                                    <Binding Path="Revision" />
-                                </MultiBinding>
-                            </TextBox.Text>
-                        </TextBox>
+                <GroupBox Header="Invoice Details" Grid.Column="0" DataContext="{Binding SelectedInvoice}" Margin="0,0,5,0">
+                    <StackPanel>
+                        <Label Content="Comments:"/>
+                        <TextBox Name="txtComment" Style="{StaticResource MultiLine}" VerticalScrollBarVisibility="Hidden" Text="{Binding Comment}" />
 
-                        <Label Grid.Row="0" Grid.Column="1">Hours:</Label>
-                        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Hours}" IsReadOnly="True" />
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
 
-                        <Label Grid.Row="0" Grid.Column="2">Rate:</Label>
-                        <TextBox Grid.Row="1" Grid.Column="2" Text="{Binding Path=HourlyRate, StringFormat=c}" IsReadOnly="True" />
+                            <Label Grid.Row="0" Grid.Column="0">Invoice #</Label>
+                            <TextBox Grid.Row="1" Grid.Column="0" IsReadOnly="True">
+                                <TextBox.Text>
+                                    <MultiBinding Converter="{StaticResource InvoiceFriendlyNameConverter}">
+                                        <Binding Path="Number" />
+                                        <Binding Path="Revision" />
+                                    </MultiBinding>
+                                </TextBox.Text>
+                            </TextBox>
 
-                        <CheckBox Grid.Row="1" Grid.Column="3">GST Exempt</CheckBox>
-                    </Grid>
-                </StackPanel>
-            </GroupBox>
+                            <Label Grid.Row="0" Grid.Column="1">Hours:</Label>
+                            <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Hours}" IsReadOnly="True" />
 
-            <GroupBox Header="Billing Contact" Grid.Column="1" DataContext="{Binding SelectedInvoice}">
+                            <Label Grid.Row="0" Grid.Column="2">Rate:</Label>
+                            <TextBox Grid.Row="1" Grid.Column="2" Text="{Binding Path=HourlyRate, StringFormat=c}" IsReadOnly="True" />
+
+                            <CheckBox Grid.Row="1" Grid.Column="3">GST Exempt</CheckBox>
+                        </Grid>
+                    </StackPanel>
+                </GroupBox>
+
+                <GroupBox Header="Billing Contact" Grid.Column="1" DataContext="{Binding SelectedInvoice}">
                     <StackPanel>
                         <Grid>
                             <Grid.ColumnDefinitions>
@@ -129,5 +121,15 @@
                     </StackPanel>
                 </GroupBox>
             </Grid>
-    </StackPanel>
+        </StackPanel>
+
+        <WPF:DataGrid Name="dgInvoices" Style="{StaticResource ListDisplay}" MinHeight="100" SelectedItem="{Binding SelectedInvoice}">
+            <WPF:DataGrid.Columns>
+                <WPF:DataGridTextColumn Header="Number" Binding="{Binding Number}" />
+                <WPF:DataGridTextColumn Header="Revision" Binding="{Binding Revision}" />
+                <WPF:DataGridTextColumn Header="Hours" Binding="{Binding Hours}" />
+                <WPF:DataGridTextColumn Header="Rate" Binding="{Binding HourlyRate, StringFormat=c}" />
+            </WPF:DataGrid.Columns>
+        </WPF:DataGrid>
+    </DockPanel>
 </Panels:InvoiceUserControl>
