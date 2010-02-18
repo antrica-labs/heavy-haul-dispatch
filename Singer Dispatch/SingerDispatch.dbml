@@ -18,6 +18,7 @@
       <Association Name="AddressType_Address" Member="AddressType" ThisKey="AddressTypeID" OtherKey="ID" Type="AddressType" IsForeignKey="true" />
       <Association Name="Company_Address" Member="Company" ThisKey="CompanyID" OtherKey="ID" Type="Company" IsForeignKey="true" />
       <Association Name="ProvincesAndState_Address" Member="ProvincesAndState" ThisKey="ProvinceStateID" OtherKey="ID" Type="ProvincesAndState" IsForeignKey="true" />
+      <Association Name="Address_Invoice" Member="Invoices" ThisKey="ID" OtherKey="AddressID" Type="Invoice" />
     </Type>
   </Table>
   <Table Name="" Member="AddressTypes">
@@ -543,6 +544,7 @@
     <Type Name="Invoice">
       <Column Name="ID" Type="System.Int64" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="JobID" Type="System.Int64" CanBeNull="true" />
+      <Column Name="AddressID" Type="System.Int64" CanBeNull="true" />
       <Column Name="ContactID" Type="System.Int64" CanBeNull="true" />
       <Column Name="Number" Type="System.Int32" CanBeNull="true" />
       <Column Name="Revision" Type="System.Int32" CanBeNull="true" />
@@ -551,6 +553,7 @@
       <Column Name="Hours" Type="System.Int32" CanBeNull="true" />
       <Column Name="HourlyRate" Type="System.Decimal" CanBeNull="true" />
       <Column Name="GSTExempt" Type="System.Boolean" CanBeNull="true" />
+      <Association Name="Address_Invoice" Member="BillingAddress" ThisKey="AddressID" OtherKey="ID" Type="Address" IsForeignKey="true" />
       <Association Name="Contact_Invoice" Member="Contact" ThisKey="ContactID" OtherKey="ID" Type="Contact" IsForeignKey="true" />
       <Association Name="Invoice_InvoiceLineItem" Member="InvoiceLineItems" ThisKey="ID" OtherKey="InvoiceID" Type="InvoiceLineItem" />
       <Association Name="Invoice_InvoiceExtra" Member="InvoiceExtras" ThisKey="ID" OtherKey="InvoiceID" Type="InvoiceExtra" />

@@ -65,7 +65,7 @@
 			                <Label Grid.Row="5" Grid.Column="0">Postal/Zip code:</Label>
 			                <TextBox Name="txtPostalZip" Grid.Row="6" Grid.Column="0" Text="{Binding PostalZip}" />
 
-			                <Label Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2">Address type:</Label>
+			                <Label Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2">Address type:</Label>                            
 			                <ComboBox Name="cmbAddressType" Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectedItem="{Binding AddressType}" TextSearch.TextPath="Name" />
 
 			                <Label Grid.Row="7" Grid.Column="0">Primary phone:</Label>
@@ -79,7 +79,7 @@
 
 			                <Label Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="3">Address notes:</Label>
 			                <TextBox Name="txtAddressNotes" Grid.Row="10" Grid.Column="0" Grid.ColumnSpan="3" Height="40" Style="{StaticResource MultiLine}" Text="{Binding Notes}"/>
-			            </Grid>			        
+			            </Grid>
 					</StackPanel>
 				</GroupBox>
 				
@@ -113,22 +113,20 @@
 			                <Label Grid.Column="1" Grid.Row="0">Last name:</Label>
 			                <TextBox Name="txtContactLastName" Grid.Column="1" Grid.Row="1" Text="{Binding LastName}" />
 
-							<TextBox Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2" BorderBrush="Transparent" Background="Transparent" />
+							<Label Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2">Email address:</Label>
+			                <TextBox Name="txtContactEmail" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" Text="{Binding Email}" />
 
-			                <Label Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="3">Email address:</Label>
-			                <TextBox Name="txtContactEmail" Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2" Text="{Binding Email}" />
+			                <Label Grid.Row="4" Grid.Column="0">Primary phone:</Label>
+			                <TextBox Name="txtContactPrimaryPhone" Grid.Column="0" Grid.Row="5" Text="{Binding PrimaryPhone}"/>
 
-			                <Label Grid.Row="5" Grid.Column="0">Primary phone:</Label>
-			                <TextBox Name="txtContactPrimaryPhone" Grid.Column="0" Grid.Row="6" Text="{Binding PrimaryPhone}"/>
+			                <Label Grid.Row="4" Grid.Column="1">Secondary phone:</Label>
+			                <TextBox Name="txtContactSecondaryPhone" Grid.Row="5" Grid.Column="1" Text="{Binding SecondaryPhone}" />
 
-			                <Label Grid.Row="5" Grid.Column="1">Secondary phone:</Label>
-			                <TextBox Name="txtContactSecondaryPhone" Grid.Row="6" Grid.Column="1" Text="{Binding SecondaryPhone}" />
+                            <Label Grid.Row="6" Grid.Column="0">Preferred contact method:</Label>
+                            <ComboBox Name="cmbContactPreferedContactMethod" Grid.Row="7" Grid.Column="0" SelectedItem="{Binding PreferedContactMethod}" />
 
-			                <Label Grid.Row="7" Grid.Column="0">Contact type:</Label>
-			                <ComboBox Name="cmbContactType" Grid.Row="8" Grid.Column="0" ItemTemplate="{StaticResource SimpleNameTemplate}"  SelectedItem="{Binding ContactType}" TextSearch.TextPath="Name" />
-
-			                <Label Grid.Row="7" Grid.Column="1">Preferred contact method:</Label>
-			                <ComboBox Name="cmbContactPreferedContactMethod" Grid.Row="8" Grid.Column="1" SelectedItem="{Binding PreferedContactMethod}" />
+                            <Label Grid.Row="6" Grid.Column="1">Contact type:</Label>                            
+			                <ComboBox Name="cmbContactType" Grid.Row="7" Grid.Column="1" ItemTemplate="{StaticResource SimpleNameTemplate}"  SelectedItem="{Binding ContactType}" TextSearch.TextPath="Name" Visibility="Hidden" /> 
 
 			                <Label Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="2">Contact notes:</Label>
 			                <TextBox Name="txtContactNotes" Grid.Row="10" Grid.Column="0" Grid.ColumnSpan="2" Height="40" Style="{StaticResource MultiLine}"  Text="{Binding Notes}" />

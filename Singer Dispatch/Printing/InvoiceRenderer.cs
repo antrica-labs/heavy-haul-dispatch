@@ -204,14 +204,14 @@ namespace SingerDispatch.Printing
                     <td class=""dollars"">%TOTAL%</td>
                 </tr>
             ";
-            
 
+            var tax = invoice.GSTExempt == true ? 0.00m : SingerConstants.GST;
 
             builder.Append(header);
 
             foreach (var item in invoice.InvoiceLineItems)
             {                
-                builder.Append(GetBreakdownLine(item));
+                builder.Append(GetBreakdownLine(item, tax));
 
                 if (item.Cost != null)
                     running += item.Cost;
@@ -219,7 +219,7 @@ namespace SingerDispatch.Printing
 
             foreach (var item in invoice.InvoiceExtras)
             {
-                builder.Append(GetBreakdownExtra(item));
+                builder.Append(GetBreakdownExtra(item, tax));
 
                 if (item.Cost != null)
                     running += item.Cost;
@@ -227,15 +227,15 @@ namespace SingerDispatch.Printing
 
             builder.Append(subtotal.Replace("%SUBTOTAL%", String.Format("{0:C}", running)));
             builder.Append(fuelTax.Replace("%FUEL_TAX%", String.Format("{0:C}", running * SingerConstants.FuelTax)));
-            builder.Append(gst.Replace("%GST%", String.Format("{0:C}", (running * (1 + SingerConstants.FuelTax)) * SingerConstants.GST)));
-            builder.Append(total.Replace("%TOTAL%", String.Format("{0:C}", (running * (1 + SingerConstants.FuelTax)) * (1 + SingerConstants.GST))));
+            builder.Append(gst.Replace("%GST%", String.Format("{0:C}", (running * (1 + SingerConstants.FuelTax)) * tax)));
+            builder.Append(total.Replace("%TOTAL%", String.Format("{0:C}", (running * (1 + SingerConstants.FuelTax)) * (1 + tax))));
 
             builder.Append(footer);
 
             return builder.ToString();
         }
 
-        private string GetBreakdownLine(InvoiceLineItem item)
+        private string GetBreakdownLine(InvoiceLineItem item, decimal gst)
         {
             var builder = new StringBuilder();
             
@@ -246,14 +246,14 @@ namespace SingerDispatch.Printing
             builder.Append(@"<td class=""destination"">%DESTINATION%</td>".Replace("%DESTINATION%", item.Destination));
             builder.Append(@"<td class=""hours"">%HOURS%</td>".Replace("%HOURS%", item.Hours.ToString()));
             builder.Append(@"<td class=""cost"">%COST%</td>".Replace("%COST%", String.Format("{0:C}", item.Cost)));
-            builder.Append(@"<td class=""line_tax"">%LINE_TAX%</td>".Replace("%LINE_TAX%", String.Format("{0:C}", item.Cost * SingerConstants.GST)));
-            builder.Append(@"<td class=""amount"">%AMOUNT%</td>".Replace("%AMOUNT%", String.Format("{0:C}", item.Cost * (1 + SingerConstants.GST))));
+            builder.Append(@"<td class=""line_tax"">%LINE_TAX%</td>".Replace("%LINE_TAX%", String.Format("{0:C}", item.Cost * gst)));
+            builder.Append(@"<td class=""amount"">%AMOUNT%</td>".Replace("%AMOUNT%", String.Format("{0:C}", item.Cost * (1 + gst))));
             builder.Append("</tr>");
             
             return builder.ToString();
         }
 
-        private string GetBreakdownExtra(InvoiceExtra item)
+        private string GetBreakdownExtra(InvoiceExtra item, decimal gst)
         {
             var builder = new StringBuilder();
 
@@ -264,8 +264,8 @@ namespace SingerDispatch.Printing
             builder.Append(@"<td class=""destination"">%DESTINATION%</td>".Replace("%DESTINATION%", item.Destination));
             builder.Append(@"<td class=""hours"">%HOURS%</td>".Replace("%HOURS%", item.Hours.ToString()));
             builder.Append(@"<td class=""cost"">%COST%</td>".Replace("%COST%", String.Format("{0:C}", item.Cost)));
-            builder.Append(@"<td class=""line_tax"">%LINE_TAX%</td>".Replace("%LINE_TAX%", String.Format("{0:C}", item.Cost * SingerConstants.GST)));
-            builder.Append(@"<td class=""amount"">%AMOUNT%</td>".Replace("%AMOUNT%", String.Format("{0:C}", item.Cost * (1 + SingerConstants.GST))));
+            builder.Append(@"<td class=""line_tax"">%LINE_TAX%</td>".Replace("%LINE_TAX%", String.Format("{0:C}", item.Cost * gst)));
+            builder.Append(@"<td class=""amount"">%AMOUNT%</td>".Replace("%AMOUNT%", String.Format("{0:C}", item.Cost * (1 + gst))));
             builder.Append("</tr>");
 
             return builder.ToString();

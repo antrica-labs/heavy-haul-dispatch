@@ -15,7 +15,7 @@
             <DataTemplate x:Key="operatingAsTemplate">
                 <TextBlock Text="{Binding Path=Alias}" />
             </DataTemplate>
-        </ResourceDictionary>        
+        </ResourceDictionary>
     </Window.Resources>
     <Border>
         <DockPanel>

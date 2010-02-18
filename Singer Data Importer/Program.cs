@@ -212,7 +212,8 @@ namespace SingerDispatch.Importer
 
 
             // Add any existing contacts to this company
-            sql = String.Format("SELECT c.*, t.contactType FROM tbl_Contact c LEFT JOIN join_tbl_Contact_ContactType t ON c.contactId = t.contactId WHERE companyId = {0}", company.ArchiveID);
+            //sql = String.Format("SELECT c.*, t.contactType FROM tbl_Contact c LEFT JOIN join_tbl_Contact_ContactType t ON c.contactId = t.contactId WHERE companyId = {0}", company.ArchiveID);
+            sql = String.Format("SELECT * from tbl_Contact WHERE companyId = {0}", company.ArchiveID);
             using (var command = new OleDbCommand(sql, connection))
             {
                 using (var innerReader = command.ExecuteReader())
@@ -344,11 +345,13 @@ namespace SingerDispatch.Importer
             }
             catch { }
 
+            /*
             try
             {
                 contact.TypeID = reader["contactType"] == DBNull.Value ? (long?)null : ContactTypes[(string)reader["contactType"]].ID;
             }
             catch { }
+            */
 
             var pext = reader["contactPrimaryPhoneExt"] == DBNull.Value ? null : (string)reader["contactPrimaryPhoneExt"];
             if (pext != null)

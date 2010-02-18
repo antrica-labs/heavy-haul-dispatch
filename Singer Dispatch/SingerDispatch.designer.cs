@@ -506,6 +506,8 @@ namespace SingerDispatch
 		
 		private EntitySet<Contact> _Contacts;
 		
+		private EntitySet<Invoice> _Invoices;
+		
 		private EntityRef<AddressType> _AddressType;
 		
 		private EntityRef<Company> _Company;
@@ -545,6 +547,7 @@ namespace SingerDispatch
 		public Address()
 		{
 			this._Contacts = new EntitySet<Contact>(new Action<Contact>(this.attach_Contacts), new Action<Contact>(this.detach_Contacts));
+			this._Invoices = new EntitySet<Invoice>(new Action<Invoice>(this.attach_Invoices), new Action<Invoice>(this.detach_Invoices));
 			this._AddressType = default(EntityRef<AddressType>);
 			this._Company = default(EntityRef<Company>);
 			this._ProvincesAndState = default(EntityRef<ProvincesAndState>);
@@ -816,6 +819,19 @@ namespace SingerDispatch
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Address_Invoice", Storage="_Invoices", ThisKey="ID", OtherKey="AddressID")]
+		public EntitySet<Invoice> Invoices
+		{
+			get
+			{
+				return this._Invoices;
+			}
+			set
+			{
+				this._Invoices.Assign(value);
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="AddressType_Address", Storage="_AddressType", ThisKey="AddressTypeID", OtherKey="ID", IsForeignKey=true)]
 		public AddressType AddressType
 		{
@@ -948,6 +964,18 @@ namespace SingerDispatch
 		{
 			this.SendPropertyChanging();
 			entity.Address = null;
+		}
+		
+		private void attach_Invoices(Invoice entity)
+		{
+			this.SendPropertyChanging();
+			entity.BillingAddress = this;
+		}
+		
+		private void detach_Invoices(Invoice entity)
+		{
+			this.SendPropertyChanging();
+			entity.BillingAddress = null;
 		}
 	}
 	
@@ -12512,6 +12540,8 @@ namespace SingerDispatch
 		
 		private System.Nullable<long> _JobID;
 		
+		private System.Nullable<long> _AddressID;
+		
 		private System.Nullable<long> _ContactID;
 		
 		private System.Nullable<int> _Number;
@@ -12532,6 +12562,8 @@ namespace SingerDispatch
 		
 		private EntitySet<InvoiceExtra> _InvoiceExtras;
 		
+		private EntityRef<Address> _BillingAddress;
+		
 		private EntityRef<Contact> _Contact;
 		
 		private EntityRef<Job> _Job;
@@ -12544,6 +12576,8 @@ namespace SingerDispatch
     partial void OnIDChanged();
     partial void OnJobIDChanging(System.Nullable<long> value);
     partial void OnJobIDChanged();
+    partial void OnAddressIDChanging(System.Nullable<long> value);
+    partial void OnAddressIDChanged();
     partial void OnContactIDChanging(System.Nullable<long> value);
     partial void OnContactIDChanged();
     partial void OnNumberChanging(System.Nullable<int> value);
@@ -12566,6 +12600,7 @@ namespace SingerDispatch
 		{
 			this._InvoiceLineItems = new EntitySet<InvoiceLineItem>(new Action<InvoiceLineItem>(this.attach_InvoiceLineItems), new Action<InvoiceLineItem>(this.detach_InvoiceLineItems));
 			this._InvoiceExtras = new EntitySet<InvoiceExtra>(new Action<InvoiceExtra>(this.attach_InvoiceExtras), new Action<InvoiceExtra>(this.detach_InvoiceExtras));
+			this._BillingAddress = default(EntityRef<Address>);
 			this._Contact = default(EntityRef<Contact>);
 			this._Job = default(EntityRef<Job>);
 			OnCreated();
@@ -12611,6 +12646,30 @@ namespace SingerDispatch
 					this._JobID = value;
 					this.SendPropertyChanged("JobID");
 					this.OnJobIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AddressID")]
+		public System.Nullable<long> AddressID
+		{
+			get
+			{
+				return this._AddressID;
+			}
+			set
+			{
+				if ((this._AddressID != value))
+				{
+					if (this._BillingAddress.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnAddressIDChanging(value);
+					this.SendPropertyChanging();
+					this._AddressID = value;
+					this.SendPropertyChanged("AddressID");
+					this.OnAddressIDChanged();
 				}
 			}
 		}
@@ -12802,6 +12861,40 @@ namespace SingerDispatch
 			set
 			{
 				this._InvoiceExtras.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Address_Invoice", Storage="_BillingAddress", ThisKey="AddressID", OtherKey="ID", IsForeignKey=true)]
+		public Address BillingAddress
+		{
+			get
+			{
+				return this._BillingAddress.Entity;
+			}
+			set
+			{
+				Address previousValue = this._BillingAddress.Entity;
+				if (((previousValue != value) 
+							|| (this._BillingAddress.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._BillingAddress.Entity = null;
+						previousValue.Invoices.Remove(this);
+					}
+					this._BillingAddress.Entity = value;
+					if ((value != null))
+					{
+						value.Invoices.Add(this);
+						this._AddressID = value.ID;
+					}
+					else
+					{
+						this._AddressID = default(Nullable<long>);
+					}
+					this.SendPropertyChanged("BillingAddress");
+				}
 			}
 		}
 		

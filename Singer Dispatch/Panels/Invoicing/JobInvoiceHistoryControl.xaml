@@ -6,12 +6,25 @@
                            xmlns:WPF="http://schemas.microsoft.com/wpf/2008/toolkit"
                            xmlns:Panels="clr-namespace:SingerDispatch.Panels"
                            Loaded="Control_Loaded"
+                           x:Name="ThePanel"
                            d:DesignWidth="780" mc:Ignorable="d">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/SingerDispatchDictionary.xaml" />
             </ResourceDictionary.MergedDictionaries>
+
+            <DataTemplate x:Key="AddressTemplate">
+                <TextBlock>
+                    <TextBlock.Text>
+                        <MultiBinding StringFormat="{}{0}, {1}, {2}">
+                            <Binding Path="Line1" />
+                            <Binding Path="City" />
+                            <Binding Path="PostalZip" />
+                        </MultiBinding>
+                    </TextBlock.Text>
+                </TextBlock>
+            </DataTemplate>
         </ResourceDictionary>
     </UserControl.Resources>
     <DockPanel>
@@ -30,13 +43,15 @@
                 <Button Grid.Column="3" Style="{StaticResource HorizontalEnd}" Click="DeleteInvoice_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, Path=SelectedInvoice}">Delete invoice</Button>
             </Grid>
 
+            
+
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
 
-                <GroupBox Header="Invoice Details" Grid.Column="0" DataContext="{Binding SelectedInvoice}" Margin="0,0,5,0">
+                <GroupBox Header="Invoice Details" Grid.Column="0"  Margin="0,0,5,0" DataContext="{Binding SelectedInvoice}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=ThePanel, Path=SelectedInvoice}">
                     <StackPanel>
                         <Label Content="Comments:"/>
                         <TextBox Name="txtComment" Style="{StaticResource MultiLine}" VerticalScrollBarVisibility="Hidden" Text="{Binding Comment}" />
@@ -46,7 +61,7 @@
                                 <ColumnDefinition />
                                 <ColumnDefinition />
                                 <ColumnDefinition />
-                                <ColumnDefinition />
+                                <ColumnDefinition Width="90" />
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
                                 <RowDefinition />
@@ -69,30 +84,37 @@
                             <Label Grid.Row="0" Grid.Column="2">Rate:</Label>
                             <TextBox Grid.Row="1" Grid.Column="2" Text="{Binding Path=HourlyRate, StringFormat=c}" IsReadOnly="True" />
 
-                            <CheckBox Grid.Row="1" Grid.Column="3">GST Exempt</CheckBox>
+                            <CheckBox Grid.Row="1" Grid.Column="3" IsChecked="{Binding GSTExempt}">GST Exempt</CheckBox>
                         </Grid>
                     </StackPanel>
                 </GroupBox>
 
-                <GroupBox Header="Billing Contact" Grid.Column="1" DataContext="{Binding SelectedInvoice}">
+                <GroupBox Header="Billing Contact" Grid.Column="1" DataContext="{Binding SelectedInvoice}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=ThePanel, Path=SelectedInvoice}">
                     <StackPanel>
-                        <Grid>
+                        <Grid Margin="0,0,0,5">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="75" />
+                                <ColumnDefinition Width="65" />
                                 <ColumnDefinition />
                             </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
 
-                            <Label Grid.Column="0">Name:</Label>
-                            <ComboBox Grid.Column="1" Name="cmbContacts" SelectedItem="{Binding Contact}" ItemTemplate="{StaticResource SimpleNameTemplate}" />
+                            <Label Grid.Column="0" Grid.Row="0">Address:</Label>
+                            <ComboBox Grid.Column="1" Grid.Row="0" Name="cmbAddresses" SelectedItem="{Binding BillingAddress}" ItemTemplate="{StaticResource AddressTemplate}" />
+                            
+                            <Label Grid.Column="0" Grid.Row="1">Name:</Label>
+                            <ComboBox Grid.Column="1" Grid.Row="1" Name="cmbContacts" SelectedItem="{Binding Contact}" ItemTemplate="{StaticResource SimpleNameTemplate}" />
                         </Grid>
 
-                        <Grid DataContext="{Binding Contact}" Margin="20,10,20,0">
+                        <Grid DataContext="{Binding Contact}">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="65"/>
-                                <ColumnDefinition Width="2*"/>
-                                <ColumnDefinition Width="10"/>
-                                <ColumnDefinition Width="57"/>
-                                <ColumnDefinition Width="1.1*" />
+                                <ColumnDefinition Width="65" />
+                                <ColumnDefinition />
+                                <ColumnDefinition Width="10" />
+                                <ColumnDefinition Width="65" />
+                                <ColumnDefinition />
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
                                 <RowDefinition />
@@ -100,23 +122,23 @@
                                 <RowDefinition />
                             </Grid.RowDefinitions>
 
-                            <Label Grid.Column="0" Grid.Row="0">Name:</Label>
-                            <Label Grid.Column="1" Grid.Row="0" Content="{Binding Name}" />
+                            <Label Grid.Column="0" Grid.Row="0">Company:</Label>
+                            <Label Grid.Column="1" Grid.Row="0" Content="{Binding Address.Company.Name}" />
 
                             <Label Grid.Column="0" Grid.Row="1">Email:</Label>
                             <Label Grid.Column="1" Grid.Row="1" Content="{Binding Email}" />
 
-                            <Label Grid.Column="0" Grid.Row="2">Company:</Label>
-                            <Label Grid.Column="1" Grid.Row="2" Content="{Binding Address.Company.Name}" />
+                            <Label Grid.Column="0" Grid.Row="2">Phone 1:</Label>
+                            <Label Grid.Column="1" Grid.Row="2" Content="{Binding PrimaryPhone}" />
 
-                            <Label Grid.Column="3" Grid.Row="0">Phone 1:</Label>
-                            <Label Grid.Column="4" Grid.Row="0" Content="{Binding PrimaryPhone}" />
+                            <Label Grid.Column="3" Grid.Row="0">Phone 2:</Label>
+                            <Label Grid.Column="4" Grid.Row="0" Content="{Binding SecondaryPhone}" />
 
-                            <Label Grid.Column="3" Grid.Row="1">Phone 2:</Label>
-                            <Label Grid.Column="4" Grid.Row="1" Content="{Binding SecondaryPhone}" />
+                            <Label Grid.Column="3" Grid.Row="1">Fax:</Label>
+                            <Label Grid.Column="4" Grid.Row="1" Content="{Binding Fax}" />
 
-                            <Label Grid.Column="3" Grid.Row="2">Fax:</Label>
-                            <Label Grid.Column="4" Grid.Row="2" Content="{Binding Fax}" />
+                            <Label Grid.Column="3" Grid.Row="2">Preferred:</Label>
+                            <Label Grid.Column="4" Grid.Row="2" Content="{Binding PreferedContactMethod}" />
                         </Grid>
                     </StackPanel>
                 </GroupBox>

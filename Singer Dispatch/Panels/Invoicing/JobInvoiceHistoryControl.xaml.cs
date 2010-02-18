@@ -32,23 +32,33 @@ namespace SingerDispatch.Panels.Invoicing
 
         private void Control_Loaded(object sender, RoutedEventArgs e)
         {
-            //cmbContacts.ItemsSource = (SelectedJob == null) ? null : from c in Database.Con
-            if (SelectedJob != null)
-            {
-                var addressQuery = from a in Database.Addresses where a.Company == SelectedJob.Company || a.Company == SelectedJob.CareOfCompany select a;
-                cmbContacts.ItemsSource = from c in Database.Contacts where addressQuery.Contains(c.Address) select c;
-            }
-            else
-            {
-                cmbContacts.ItemsSource = null;
-            }
+            RefreshAddressesAndContacts();
         }
 
         protected override void SelectedJobChanged(Job newValue, Job oldValue)
         {
             base.SelectedJobChanged(newValue, oldValue);
 
+            RefreshAddressesAndContacts();
+
             dgInvoices.ItemsSource = (newValue == null) ? null : new ObservableCollection<Invoice>(from i in Database.Invoices where i.Job == newValue orderby i.Number descending, i.Revision descending select i);
+        }
+
+        private void RefreshAddressesAndContacts()
+        {
+            //cmbContacts.ItemsSource = (SelectedJob == null) ? null : from c in Database.Con
+            if (SelectedJob != null)
+            {
+                var addressQuery = from a in Database.Addresses where a.Company == SelectedJob.Company || a.Company == SelectedJob.CareOfCompany select a;
+
+                cmbAddresses.ItemsSource = addressQuery.ToList();
+                cmbContacts.ItemsSource = (from c in Database.Contacts where addressQuery.Contains(c.Address) select c).ToList();
+            }
+            else
+            {
+                cmbAddresses.ItemsSource = null;
+                cmbContacts.ItemsSource = null;
+            }
         }
 
         private void NewInvoice_Click(object sender, RoutedEventArgs e)        
