@@ -1,7 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:WPF="http://schemas.microsoft.com/wpf/2008/toolkit"
-                    xmlns:Avalon="http://schemas.AvalonControls/AvalonControlsLibrary/Controls"
+                    xmlns:WPF="http://schemas.microsoft.com/wpf/2008/toolkit"                    
                     xmlns:Controls="clr-namespace:SingerDispatch.Controls"                    
                     xmlns:Panels="clr-namespace:SingerDispatch.Panels">
     <ResourceDictionary.MergedDictionaries>        
@@ -139,13 +138,6 @@
     <Style TargetType="{x:Type WPF:DatePicker}">
         <Setter Property="Margin" Value="3" />
         <Setter Property="Background" Value="White" />
-    </Style>
-    
-    <Style TargetType="{x:Type Avalon:TimePicker}">
-        <Setter Property="Margin" Value="3" />
-        <Setter Property="Background" Value="White" />
-        <Setter Property="BorderBrush" Value="Silver" />
-        <Setter Property="BorderThickness" Value="1" />        
     </Style>
     
     <Style TargetType="{x:Type WPF:DatePickerTextBox}">
