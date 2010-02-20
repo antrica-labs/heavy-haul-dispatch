@@ -12,8 +12,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/SingerDispatchDictionary.xaml" />
             </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
-        
+        </ResourceDictionary>        
     </UserControl.Resources>
     <DockPanel>
         <StackPanel DockPanel.Dock="Bottom">

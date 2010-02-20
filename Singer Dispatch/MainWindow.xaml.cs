@@ -379,6 +379,12 @@ namespace SingerDispatch
             cmbOperators.ItemsSource = Companies;
         }
 
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            var viewer = new SingerDispatch.Windows.DocumentViewer();
+            viewer.DisplayPrintout(new Dispatch());
+        }
+
         
     }
 }

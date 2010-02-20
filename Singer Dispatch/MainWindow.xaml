@@ -1,9 +1,9 @@
 ﻿<Window x:Class="SingerDispatch.MainWindow"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    Title="Singer Dispatch" MinWidth="780" MinHeight="700"
-    Loaded="Window_Loaded"
-    x:Name="mainWindow">
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Singer Dispatch" MinWidth="780" MinHeight="700"
+        Loaded="Window_Loaded"
+        x:Name="mainWindow">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -22,6 +22,7 @@
             <Menu DockPanel.Dock="Top">
                 <MenuItem Header="_File">                    
                     <MenuItem Header="_Save Changes" Click="SaveChanges_Click" InputGestureText="Ctrl+Shift+S" />
+                    <MenuItem Header="Print Test" Click="MenuItem_Click" />
                     <MenuItem Header="_Exit" Click="Terminate_Click" />
                 </MenuItem>
                 <MenuItem Header="_Companies">

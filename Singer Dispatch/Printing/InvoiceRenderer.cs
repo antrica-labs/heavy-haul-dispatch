@@ -122,10 +122,10 @@ namespace SingerDispatch.Printing
             builder.Append(header);
             builder.Append(line.Replace("%LINE%", company.Name));
 
-            if (company.Addresses.Count > 0)
-            {
-                var address = company.Addresses.First();
-                
+            var address = (invoice.BillingAddress != null) ? invoice.BillingAddress : company.Addresses.First();
+            
+            if (address != null)
+            {   
                 if (address.Line1 != null)
                     builder.Append(line.Replace("%LINE%", address.Line1));
 
@@ -341,10 +341,10 @@ namespace SingerDispatch.Printing
                     /*******/
 
                     body
-                    {
-	                    margin: 20px;
+                    {          
+                        margin: 5px;         
                         font-size: 10pt;
-                        font-family: Trebuchet MS, Arial, Helvetica, Tahoma, sans-serif;
+                        font-family: Verdana, Arial, Helvetica, sans-serif;
                     }
 
                     th
@@ -392,7 +392,7 @@ namespace SingerDispatch.Printing
 
                     div#details td
                     {
-	                    border-bottom: 1px #838383 dotted;
+	                    border-bottom: 1px #CACACA solid;
 	                    text-align: center;
                         padding: 0 0.2em;
                     }
@@ -411,7 +411,7 @@ namespace SingerDispatch.Printing
                     div.subsection span.heading
                     {	
 	                    text-transform: uppercase;
-                        border-bottom: 1px #838383 dotted;
+                        border-bottom: 1px #CACACA solid;
 	                    font-weight: bold;
 	                    margin: -0.3em;
 	                    margin-bottom: 0.3em;
@@ -437,6 +437,7 @@ namespace SingerDispatch.Printing
 
                     div#breakdown table.breakdown
                     {
+	                    width: 100%;
 	                    border-collapse: collapse;
                     }
 
@@ -478,7 +479,7 @@ namespace SingerDispatch.Printing
 
                     div#breakdown table.breakdown tr.subtotal td, div#breakdown table.breakdown tr.subtotal th
                     {
-	                    border-top: 1px #838383 dotted;
+	                    border-top: 1px #CACACA solid;
                     }
 
                     div#breakdown table.breakdown tr.summary th
@@ -514,7 +515,7 @@ namespace SingerDispatch.Printing
 
                     div#breakdown table.breakdown tr.total
                     {
-	                    border-top: 1px #838383 dotted;
+	                    border-top: 1px #CACACA solid;
 	                    font-weight: bold;
                     }
                 </style>

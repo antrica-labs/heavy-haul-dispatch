@@ -116,8 +116,8 @@ namespace SingerDispatch.Printing
                     
                     body
                     {
-                        font-size: 11px;
-                        font-family: Arial, Helvetica, Tahoma, sans-serif;
+                        font-size: 10pt;
+                        font-family: Verdana, Arial, Helvetica, sans-serif;
                     }
 
                     th

@@ -42,6 +42,9 @@
     <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.mshtml, Version=7.0.3300.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core">
@@ -189,7 +192,9 @@
     </Compile>
     <Compile Include="Panels\QuoteUserControl.cs" />
     <Compile Include="Printing\DispatchRenderer.cs" />
+    <Compile Include="Printing\FileUtils.cs" />
     <Compile Include="Printing\InvoiceRenderer.cs" />
+    <Compile Include="Printing\PDFizer.cs" />
     <Compile Include="Printing\QuoteRenderer.cs" />
     <Compile Include="Printing\Renderer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -205,7 +210,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="Reporting\XsltSample.cs" />
     <Compile Include="Security\AuthenticationService.cs" />
     <Compile Include="SingerConstants.cs" />
     <Compile Include="SingerDispatch.cs">
@@ -482,7 +486,23 @@
   <ItemGroup>
     <SplashScreen Include="Splash.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Reporting\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="PDF\libeay32.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="PDF\libgcc_s_dw2-1.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="PDF\ssleay32.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="PDF\wkhtmltopdf.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

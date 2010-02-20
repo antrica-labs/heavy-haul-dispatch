@@ -1,7 +1,8 @@
 ﻿using System.Windows;
 using SingerDispatch.Printing;
-//using mshtml;
-//using Microsoft.Win32;
+using Microsoft.Win32;
+using mshtml;
+using System;
 
 namespace SingerDispatch.Windows
 {
@@ -10,6 +11,8 @@ namespace SingerDispatch.Windows
     /// </summary>
     public partial class DocumentViewer
     {
+        private string SourceHTML { get; set; }
+
         public DocumentViewer()
         {
             InitializeComponent();
@@ -28,32 +31,71 @@ namespace SingerDispatch.Windows
             else
                 return;
 
-            TheBrowser.NavigateToString(renderer.GenerateHTML(obj));
+            SourceHTML = renderer.GenerateHTML(obj);
+
+            TheBrowser.NavigateToString(SourceHTML);
 
             ShowDialog();
         }
 
-        private void Print_Click(object sender, RoutedEventArgs e)
-        { }
+        private void PDF_Click(object sender, RoutedEventArgs e)
+        {
+            var dialog = new SaveFileDialog();
+            
+            dialog.DefaultExt = ".pdf";
+            dialog.Filter = "PDF documents (.pdf)|*.pdf"; 
 
-        /*
+            if (dialog.ShowDialog() != true)
+                return;
+            
+            var pdf = new PDFizer();
+
+            try
+            {
+                pdf.SaveHTMLToPDF(SourceHTML, dialog.FileName);
+            }
+            catch (Exception ex)
+            {
+                ErrorNoticeWindow.ShowError("Problem saving to PDF", ex.Message);
+            }                     
+        }
+        
         private void Print_Click(object sender, RoutedEventArgs e)
         {
-            IHTMLDocument2 document = TheBrowser.Document as IHTMLDocument2;
-            RegistryKey psKey = Registry.CurrentUser.CreateSubKey("SOFTWARE\\MICROSOFT\\Internet Explorer\\PageSetup");
+            try
+            {
+                IHTMLDocument2 document = TheBrowser.Document as IHTMLDocument2;
+                RegistryKey psKey = Registry.CurrentUser.CreateSubKey("SOFTWARE\\MICROSOFT\\Internet Explorer\\PageSetup");
 
-            var header = psKey.GetValue("header");
-            var footer = psKey.GetValue("footer");
-            
-            psKey.SetValue("header", "");
-            psKey.SetValue("footer", "");
+                var font = psKey.GetValue("font");
+                var header = psKey.GetValue("header");
+                var footer = psKey.GetValue("footer");
+                var mTop = psKey.GetValue("margin_top");
+                var mBottom = psKey.GetValue("margin_bottom");
+                var mLeft = psKey.GetValue("margin_left");
+                var mRight = psKey.GetValue("margin_right");
+                var printBackground = psKey.GetValue("Print_Background");
+                var srinkToFit = psKey.GetValue("Shrink_To_Fit");
 
-            document.execCommand("Print", true, null);
+                psKey.SetValue("font", "");
+                psKey.SetValue("header", "");
+                psKey.SetValue("footer", "");
+                psKey.SetValue("margin_top", "0.39370");
+                psKey.SetValue("margin_bottom", "0.39370");
+                psKey.SetValue("margin_left", "0.39370");
+                psKey.SetValue("margin_right", "0.39370");
+                psKey.SetValue("Print_Background", "yes");
+                psKey.SetValue("Shrink_To_Fit", "yes");
 
-            // These actually need to be set back the way they were AFTER the execCommand is done... wont work this way.
-            psKey.SetValue("header", header);
-            psKey.SetValue("footer", footer);
+                document.execCommand("Print", true, null);
+
+                // The registry values actually need to be set back to way they original values AFTER the print job is done... not sure how to tell when it's done yet.
+            }
+            catch (Exception ex)
+            {
+                ErrorNoticeWindow.ShowError("Printing error", ex.Message);
+            }
+
         }
-        */
     }
 }
