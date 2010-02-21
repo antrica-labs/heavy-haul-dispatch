@@ -484,7 +484,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <SplashScreen Include="Splash.png" />
+    <SplashScreen Include="Images\Splash.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Reporting\" />
@@ -500,6 +500,11 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="PDF\wkhtmltopdf.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\Header.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

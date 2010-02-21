@@ -176,8 +176,8 @@ namespace SingerDispatch.Printing
                         font-size: 1.5em;
                         padding: 0.5em 0.3em;
                         text-align: center;
-                        border-top: dotted 1px #000000;
-                        border-bottom: dotted 1px #000000;
+                        border-top: 1px #CACACA solid;
+                        border-bottom: 1px #CACACA solid;
                     }
                     
                     div#details
@@ -207,7 +207,7 @@ namespace SingerDispatch.Printing
                     {
                         padding: 10px;
                         margin-top: 2px;
-                        border-top: dotted 1px #000000;
+                        border-top: 1px #CACACA solid;
                     }
                     
                     div.section span.heading
@@ -225,7 +225,7 @@ namespace SingerDispatch.Printing
                     div#load_and_unload hr
                     {
                         border: none;
-                        border-top: dotted 1px #000000;
+                        border-top: 1px #CACACA solid;
                         margin: 10px 0;
                     }
 
@@ -328,13 +328,13 @@ namespace SingerDispatch.Printing
         }
 
         private string GetHeader(string dispatchNumber)
-        {
+        {           
             string content = @"
                 <div id=""header"">
                     <table>
                         <tr>
                             <td id=""logo_col"">
-                                <span class=""logo""><img src=""\\sindcx001\Storage\Programers\logo.png"" alt=""Singer Specialized""></span>
+                                <span class=""logo""><img src=""%HEADER_IMG%"" alt=""Singer Specialized""></span>
                             </td>
                             <td id=""address_col"">
                                 <span>Singer Specialized Ltd.</span>
@@ -352,8 +352,9 @@ namespace SingerDispatch.Printing
                     <span class=""title"">Dispatch Order</span>            
                 </div>
             ";
+            var headerImg = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName), @"Images\Header.png");
 
-            return content.Replace("%DISPATCH_NUMBER%", dispatchNumber);
+            return content.Replace("%HEADER_IMG%", headerImg).Replace("%DISPATCH_NUMBER%", dispatchNumber);
         }
 
         private string GetDetails()

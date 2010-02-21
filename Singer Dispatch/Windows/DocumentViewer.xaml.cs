@@ -3,6 +3,7 @@ using SingerDispatch.Printing;
 using Microsoft.Win32;
 using mshtml;
 using System;
+using System.Diagnostics;
 
 namespace SingerDispatch.Windows
 {
@@ -52,7 +53,18 @@ namespace SingerDispatch.Windows
 
             try
             {
-                pdf.SaveHTMLToPDF(SourceHTML, dialog.FileName);
+                var outputFile = dialog.FileName;
+
+                pdf.SaveHTMLToPDF(SourceHTML, outputFile);
+
+                var process = new Process();
+                var shell = new ProcessStartInfo(outputFile);
+
+                shell.UseShellExecute = true;
+                shell.WindowStyle = ProcessWindowStyle.Normal;
+
+                process.StartInfo = shell;
+                process.Start();
             }
             catch (Exception ex)
             {
