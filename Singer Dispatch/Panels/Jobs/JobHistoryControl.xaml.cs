@@ -86,6 +86,9 @@ namespace SingerDispatch.Panels.Jobs
                 contacts = (from c in Database.Contacts where c.Address.CompanyID == SelectedCompany.ID select c).ToList();
             }
 
+            dgJobContacts.ItemsSource = null;
+            dgJobContacts.UpdateLayout();
+            dgJobContacts.MaxHeight = dgJobContacts.ActualHeight;
             dgJobContacts.ItemsSource = contacts;
         }
 

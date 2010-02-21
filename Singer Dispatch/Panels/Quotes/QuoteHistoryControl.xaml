@@ -15,13 +15,16 @@
         </ResourceDictionary>
     </UserControl.Resources>
     <DockPanel>
-        <StackPanel DockPanel.Dock="Bottom">            <Grid>                                <Grid.ColumnDefinitions>                   
+        <StackPanel DockPanel.Dock="Bottom">
+            <Grid>
+                <Grid.ColumnDefinitions>
                     <ColumnDefinition />
                     <ColumnDefinition />
                     <ColumnDefinition />
                     <ColumnDefinition />
                     <ColumnDefinition />
-                </Grid.ColumnDefinitions>
+                </Grid.ColumnDefinitions>
+
                 <Button Style="{StaticResource Horizontal}" Grid.Column="0" Click="NewQuote_Click">New quote</Button>
                 <Button Style="{StaticResource Horizontal}" Grid.Column="1" Click="CreateRevision_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgQuotes, Path=SelectedItem}">Create revision</Button>
                 <Button Style="{StaticResource Horizontal}" Grid.Column="2" Click="CreateJob_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgQuotes, Path=SelectedItem}">Convert to job</Button>

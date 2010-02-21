@@ -147,7 +147,10 @@ namespace SingerDispatch.Panels.Quotes
             {
                 contacts = (from c in Database.Contacts where c.Address.CompanyID == SelectedCompany.ID select c).ToList();
             }
-            
+
+            dgQuoteContacts.ItemsSource = null;
+            dgQuoteContacts.UpdateLayout();
+            dgQuoteContacts.MaxHeight = dgQuoteContacts.ActualHeight;
             dgQuoteContacts.ItemsSource = contacts;
         }
 
