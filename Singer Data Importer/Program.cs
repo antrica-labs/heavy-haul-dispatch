@@ -31,34 +31,62 @@ namespace SingerDispatch.Importer
 
         public void Run()
         {
-            CleanDatabase();
-            SetupReferences();
+            Console.WriteLine("WARNING: THIS OPERATION WILL DESTROY ANY DATA CURRENTLY IN THE DATABASE!");
+            Console.Write("Are you sure you wish to continue? [Y/N]: ");
+            
+            var key = Console.ReadKey(false);
 
-            ImportOldData();
-        }
+            Console.WriteLine();
+            Console.WriteLine();
 
-        private void CleanDatabase()
-        {
-            Console.WriteLine("Initializing database...");
+            if (key.Key != ConsoleKey.Y)
+            {   
+                Console.WriteLine("Opperation cancelled - Press any key to exit.");
+                Console.ReadKey(true);
+
+                return;
+            }
 
             try
             {
-                using (var connection = new SqlConnection(ConfigurationManager.ConnectionStrings["NewDBConnectionParameters"].ConnectionString))
+                Console.WriteLine("Initializing database...");
+                CleanDatabase();
+
+                Console.WriteLine("Setting up import lookups...");
+                SetupReferences();
+
+                ImportOldData();
+
+                Console.WriteLine("Import complete!");
+            }
+            catch (Exception e)
+            {
+                Console.Error.WriteLine();
+                Console.Error.WriteLine("ERROR - Unable to complete database setup: " + e.Message);                
+            }
+
+            Console.WriteLine();
+
+            Console.WriteLine("Hit any key to continue");
+            Console.ReadKey(true);
+        }
+
+        private void CleanDatabase()
+        {   
+            using (var connection = new SqlConnection(ConfigurationManager.ConnectionStrings["NewDBConnectionParameters"].ConnectionString))
+            {
+                var sql = String.Format("DROP DATABASE [{0}]", connection.Database);
+
+                connection.Open();
+                connection.ChangeDatabase("master");
+
+                SqlConnection.ClearPool(connection);
+
+                using (var command = new SqlCommand(sql, connection))
                 {
-                    var sql = String.Format("DROP DATABASE [{0}]", connection.Database);
-
-                    connection.Open();
-                    connection.ChangeDatabase("master");
-
-                    SqlConnection.ClearPool(connection);
-
-                    using (var command = new SqlCommand(sql, connection))
-                    {
-                        command.ExecuteNonQuery();
-                    }
+                    command.ExecuteNonQuery();
                 }
             }
-            catch { }
 
             var linq = new SingerDispatchDataContext(ConfigurationManager.ConnectionStrings["NewDBConnectionParameters"].ConnectionString);
 
@@ -68,8 +96,6 @@ namespace SingerDispatch.Importer
 
         private void SetupReferences()
         {
-            Console.WriteLine("Setting up import lookups...");
-
             var linq = new SingerDispatchDataContext(ConfigurationManager.ConnectionStrings["NewDBConnectionParameters"].ConnectionString);
 
             PriorityLevels = new Dictionary<string, CompanyPriorityLevel>();
@@ -158,12 +184,6 @@ namespace SingerDispatch.Importer
             Console.WriteLine("Saving companies to database...");
 
             InsertCompanies(companies);
-            
-            Console.WriteLine("Import complete!");
-            Console.WriteLine();
-
-            Console.WriteLine("Hit enter to continue");
-            Console.ReadLine();
         }
 
         private Company CreateCompanyFromRow(OleDbConnection connection, OleDbDataReader reader)
