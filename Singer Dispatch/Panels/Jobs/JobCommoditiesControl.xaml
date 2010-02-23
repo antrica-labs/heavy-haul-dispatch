@@ -208,7 +208,7 @@
             </TabControl>            
         </StackPanel>
 
-        <WPF:DataGrid Name="dgCommodities" Style="{StaticResource ListDisplay}" MinHeight="100">
+        <WPF:DataGrid Name="dgCommodities" Style="{StaticResource ListDisplay}">
             <WPF:DataGrid.Columns>
                 <WPF:DataGridTextColumn Header="Assigned load" Binding="{Binding Load.FriendlyName}" />
                 <WPF:DataGridTextColumn Header="Unit" Binding="{Binding Unit}" />

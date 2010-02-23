@@ -5,7 +5,7 @@
                        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                        xmlns:WPF="http://schemas.microsoft.com/wpf/2008/toolkit"
                        xmlns:Panels="clr-namespace:SingerDispatch.Panels" 
-                       Loaded="ControlLoaded" mc:Ignorable="d" d:DesignWidth="780">
+                       Loaded="ControlLoaded" mc:Ignorable="d" d:DesignWidth="780" d:DesignHeight="500">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -41,7 +41,7 @@
                     <TextBox Name="txtServiceDescription" Text="{Binding ServiceDescription}"/>
 
                     <Label>Additional notes:</Label>
-                    <TextBox Text="{Binding Notes}" Height="50" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" />
+                    <TextBox Text="{Binding Notes}" Height="40" Style="{StaticResource MultiLine}"/>
                 </StackPanel>
             </GroupBox>
 
@@ -185,7 +185,7 @@
             </GroupBox>
         </StackPanel>        
 
-        <WPF:DataGrid Name="dgLoads" Style="{StaticResource ListDisplay}" MinHeight="100">
+        <WPF:DataGrid Name="dgLoads" Style="{StaticResource ListDisplay}">
             <WPF:DataGrid.Columns>
                 <WPF:DataGridTextColumn Header="Unit" Width="0.15*" Binding="{Binding Equipment.UnitNumber}"/>
                 <WPF:DataGridTextColumn Header="Wheel type" Width="0.2*" Binding="{Binding Rate.Name}" />

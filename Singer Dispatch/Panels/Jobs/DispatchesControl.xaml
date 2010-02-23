@@ -5,7 +5,7 @@
                        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                        xmlns:WPF="http://schemas.microsoft.com/wpf/2008/toolkit"                     
                        xmlns:Panels="clr-namespace:SingerDispatch.Panels"
-                       Loaded="ControlLoaded" mc:Ignorable="d" d:DesignWidth="780">
+                       Loaded="ControlLoaded" mc:Ignorable="d" d:DesignWidth="780" d:DesignHeight="500">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -98,7 +98,7 @@
             </GroupBox>
         </StackPanel>
         
-        <WPF:DataGrid Name="dgDispatches" Style="{StaticResource ListDisplay}" MinHeight="100">
+        <WPF:DataGrid Name="dgDispatches" Style="{StaticResource ListDisplay}">
             <WPF:DataGrid.Columns>
                 <WPF:DataGridTextColumn Header="Load" Binding="{Binding Load.FriendlyName}" Width="0.2*" />
                 <WPF:DataGridTextColumn Header="Driver" Binding="{Binding Employee.Name}" Width="0.3*" />

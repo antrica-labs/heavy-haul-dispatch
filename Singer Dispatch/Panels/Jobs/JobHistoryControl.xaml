@@ -140,7 +140,7 @@
             </Grid>
         </StackPanel>
 
-        <WPF:DataGrid Name="dgJobs" Style="{StaticResource ListDisplay}" MinHeight="100" SelectedItem="{Binding SelectedJob}">
+        <WPF:DataGrid Name="dgJobs" Style="{StaticResource ListDisplay}" SelectedItem="{Binding SelectedJob}">
             <WPF:DataGrid.Columns>
                 <WPF:DataGridTextColumn Header="Number" Width="0.15*" Binding="{Binding Number}"/>
                 <WPF:DataGridTextColumn Header="Quote" Width="0.15*">

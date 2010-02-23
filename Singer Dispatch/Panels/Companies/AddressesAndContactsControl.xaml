@@ -158,7 +158,7 @@
 				<ColumnDefinition />
 			</Grid.ColumnDefinitions>
 						
-			<WPF:DataGrid Name="dgAddresses" Grid.Column="0" Margin="0,0,3,0" Style="{StaticResource ListDisplay}" MinHeight="100" SelectionChanged="dgAddresses_SelectionChanged">
+			<WPF:DataGrid Name="dgAddresses" Grid.Column="0" Margin="0,0,3,0" Style="{StaticResource ListDisplay}" SelectionChanged="dgAddresses_SelectionChanged">
                 <WPF:DataGrid.Columns>
                     <WPF:DataGridTextColumn Header="Type" Binding="{Binding AddressType.Name}" IsReadOnly="True" />
                     <WPF:DataGridTextColumn Header="Address" Width="1.5*" Binding="{Binding Line1}" />
@@ -168,7 +168,7 @@
                 </WPF:DataGrid.Columns>
             </WPF:DataGrid>
 			
-			<WPF:DataGrid Name="dgContacts" Grid.Column="1" Margin="3,0,0,0" Style="{StaticResource ListDisplay}" MinHeight="100" ItemsSource="{Binding ElementName=dgAddresses, Path=SelectedItem.Contacts}">
+			<WPF:DataGrid Name="dgContacts" Grid.Column="1" Margin="3,0,0,0" Style="{StaticResource ListDisplay}" ItemsSource="{Binding ElementName=dgAddresses, Path=SelectedItem.Contacts}">
                 <WPF:DataGrid.Columns>
                     <WPF:DataGridTextColumn Header="First name" Binding="{Binding FirstName}" />
                     <WPF:DataGridTextColumn Header="Last name" Binding="{Binding LastName}" />

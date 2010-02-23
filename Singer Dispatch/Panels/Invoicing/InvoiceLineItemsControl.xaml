@@ -90,7 +90,7 @@
             </GroupBox>
         </StackPanel>
 
-        <WPF:DataGrid Name="dgLineItems" Style="{StaticResource ListDisplay}" MinHeight="100">
+        <WPF:DataGrid Name="dgLineItems" Style="{StaticResource ListDisplay}">
             <WPF:DataGrid.Columns>
                 <WPF:DataGridTextColumn Header="Start" Binding="{Binding StartDate, StringFormat={}{0:MM/dd/yyyy}}" Width="0.5*" />
                 <WPF:DataGridTextColumn Header="End" Binding="{Binding EndDate, StringFormat={}{0:MM/dd/yyyy}}" Width="0.5*" />

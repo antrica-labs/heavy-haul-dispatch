@@ -88,7 +88,7 @@
             </GroupBox>
         </StackPanel>
 
-        <WPF:DataGrid Name="dgServices" Style="{StaticResource ListDisplay}" MinHeight="100">
+        <WPF:DataGrid Name="dgServices" Style="{StaticResource ListDisplay}">
             <WPF:DataGrid.Columns>
                 <WPF:DataGridTextColumn Header="Company" Binding="{Binding Company.Name}" Width="0.4*" />
                 <WPF:DataGridTextColumn Header="Service Type" Binding="{Binding ServiceType.Name}" Width="0.3*" />

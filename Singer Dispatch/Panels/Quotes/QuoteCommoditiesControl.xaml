@@ -161,7 +161,7 @@
             </Grid>
         </StackPanel>
 
-        <WPF:DataGrid Name="dgQuoteCommodities" Style="{StaticResource ListDisplay}" MinHeight="100" >
+        <WPF:DataGrid Name="dgQuoteCommodities" Style="{StaticResource ListDisplay}">
             <WPF:DataGrid.Columns>
                 <WPF:DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="2*" />
                 <WPF:DataGridTextColumn Header="Unit" Binding="{Binding Unit}" />

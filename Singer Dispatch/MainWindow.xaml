@@ -1,7 +1,7 @@
 ﻿<Window x:Class="SingerDispatch.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Singer Dispatch" MinWidth="780" MinHeight="700"
+        Title="Singer Dispatch" MinWidth="780" MinHeight="730"
         Loaded="Window_Loaded"
         x:Name="mainWindow">
     <Window.Resources>

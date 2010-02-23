@@ -114,7 +114,7 @@
             <Button Style="{StaticResource Bottom}" Name="CommitChangesButton" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgCommodities, Path=SelectedItem}">Save commodity</Button>
         </StackPanel>
         
-        <WPF:DataGrid Name="dgCommodities" Style="{StaticResource ListDisplay}" MinHeight="100">
+        <WPF:DataGrid Name="dgCommodities" Style="{StaticResource ListDisplay}">
             <WPF:DataGrid.Columns>
                 <WPF:DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="2*" />
                 <WPF:DataGridTextColumn Header="Unit" Binding="{Binding Unit}" />                

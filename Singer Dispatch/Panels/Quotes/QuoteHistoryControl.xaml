@@ -189,7 +189,7 @@
             </Grid>
         </StackPanel>
 
-        <WPF:DataGrid Name="dgQuotes" Style="{StaticResource ListDisplay}" MinHeight="100" SelectedItem="{Binding SelectedQuote}">
+        <WPF:DataGrid Name="dgQuotes" Style="{StaticResource ListDisplay}" SelectedItem="{Binding SelectedQuote}">
             <WPF:DataGrid.Columns>
                 <WPF:DataGridTextColumn Header="Quote #" Width="0.3*" Binding="{Binding Number}"/>
                 <WPF:DataGridTextColumn Header="Revision" Width="0.3*" Binding="{Binding Revision}"/>

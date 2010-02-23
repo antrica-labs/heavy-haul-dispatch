@@ -60,7 +60,7 @@
             </GroupBox>
         </StackPanel>
 
-        <WPF:DataGrid Name="dgStorageList" Style="{StaticResource ListDisplay}" MinHeight="100">
+        <WPF:DataGrid Name="dgStorageList" Style="{StaticResource ListDisplay}">
             <WPF:DataGrid.Columns>
                 <WPF:DataGridTextColumn Header="Commodity" Binding="{Binding Commodity.Name}" />
                 <WPF:DataGridTextColumn Header="Details" Binding="{Binding Details}" />

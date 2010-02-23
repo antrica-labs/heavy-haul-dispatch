@@ -25,7 +25,7 @@
             <Button Style="{StaticResource HorizontalEnd}" Grid.Column="2" Click="RemoveCondition_Click">Remove condition</Button>
         </Grid>
 	
-        <WPF:DataGrid Name="TheGrid" Style="{StaticResource ListDisplay}" MinHeight="100" IsReadOnly="False" RowEditEnding="RowEditEnding">
+        <WPF:DataGrid Name="TheGrid" Style="{StaticResource ListDisplay}" IsReadOnly="False" RowEditEnding="RowEditEnding">
             <WPF:DataGrid.Columns>
                 <WPF:DataGridTextColumn Header="Condition" Binding="{Binding Line}" />
             </WPF:DataGrid.Columns>

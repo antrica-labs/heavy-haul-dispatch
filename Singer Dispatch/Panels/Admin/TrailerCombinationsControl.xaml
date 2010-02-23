@@ -28,7 +28,7 @@
             <Button Style="{StaticResource HorizontalEnd}" Grid.Column="2" Click="RemoveCombination_Click">Remove combination</Button>
         </Grid>
 	
-        <WPF:DataGrid Name="dgCombinations" Style="{StaticResource ListDisplay}" MinHeight="100" IsReadOnly="False" RowEditEnding="RowEditEnding">
+        <WPF:DataGrid Name="dgCombinations" Style="{StaticResource ListDisplay}" IsReadOnly="False" RowEditEnding="RowEditEnding">
             <WPF:DataGrid.Columns>
                 <WPF:DataGridComboBoxColumn Header="Wheel type" ItemsSource="{Binding Source={StaticResource RatesDropList}}" DisplayMemberPath="Name" SelectedItemBinding="{Binding Rate}" />
                 <WPF:DataGridTextColumn Header="Combination" Binding="{Binding Combination}" Width="2*" />

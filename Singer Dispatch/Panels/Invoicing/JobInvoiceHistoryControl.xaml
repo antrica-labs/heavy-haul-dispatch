@@ -145,7 +145,7 @@
             </Grid>
         </StackPanel>
 
-        <WPF:DataGrid Name="dgInvoices" Style="{StaticResource ListDisplay}" MinHeight="100" SelectedItem="{Binding SelectedInvoice}">
+        <WPF:DataGrid Name="dgInvoices" Style="{StaticResource ListDisplay}" SelectedItem="{Binding SelectedInvoice}">
             <WPF:DataGrid.Columns>
                 <WPF:DataGridTextColumn Header="Number" Binding="{Binding Number}" />
                 <WPF:DataGridTextColumn Header="Revision" Binding="{Binding Revision}" />
