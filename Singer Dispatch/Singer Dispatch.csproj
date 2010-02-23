@@ -182,6 +182,9 @@
     <Compile Include="Panels\Quotes\QuoteHistoryControl.xaml.cs">
       <DependentUpon>QuoteHistoryControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Panels\Quotes\QuoteInclusionsControl.xaml.cs">
+      <DependentUpon>QuoteInclusionsControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Panels\Quotes\QuotesPanel.xaml.cs">
       <DependentUpon>QuotesPanel.xaml</DependentUpon>
     </Compile>
@@ -422,6 +425,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Panels\Quotes\QuoteInclusionsControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Panels\Quotes\QuotesPanel.xaml">
       <Generator>MSBuild:Compile</Generator>

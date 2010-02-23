@@ -439,7 +439,7 @@ namespace SingerDispatch.Printing
                     </table>
                 </div>
 
-                <p class=""fine_print""><em>*</em> Dimensions or weights estimated. Actual values may impacted quoted price.</p>
+                <p class=""fine_print""><em>*</em> Dimensions or weights estimated. Actual values may impact quoted price.</p>
             ";
 
             var rows = new StringBuilder();
@@ -582,11 +582,18 @@ namespace SingerDispatch.Printing
 
             builder.Append(header);
 
-            var conditions = from qc in quote.QuoteConditions select qc.Condition;            
+            var conditions = from qc in quote.QuoteConditions select qc;            
 
             foreach (var condition in conditions)
             {
-                builder.Append(line.Replace("%CONDITION%", condition.Line));
+                try
+                {
+                    builder.Append(line.Replace("%CONDITION%", String.Format(condition.Condition.Line, condition.Replacement1, condition.Replacement2, condition.Replacement3)));
+                }
+                catch (Exception ex)
+                {
+                    Console.Error.WriteLine(ex);
+                }
             }
 
             builder.Append(footer);

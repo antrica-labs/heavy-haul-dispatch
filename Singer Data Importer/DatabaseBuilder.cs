@@ -684,63 +684,7 @@ namespace SingerDispatch.Importer
             methods.Add(new LoadUnloadMethod() { Name = "Winch" });
 
             database.LoadUnloadMethods.InsertAllOnSubmit(methods);
-
-
-
-            // Add the various conditions that can be attached to quotes
-            var conditions = new List<Condition>();
-
-            conditions.Add(new Condition() { Line = "Subject to Alberta infrastructure regulations of today's date." });
-            conditions.Add(new Condition() { Line = "Weights & dimensions being as stated." });
-            conditions.Add(new Condition() { Line = "Availability of transport equipment at time of firm order." });
-            conditions.Add(new Condition() { Line = "Loading provided by Singer Specialized." });
-            conditions.Add(new Condition() { Line = "Loading provided by others." });
-            conditions.Add(new Condition() { Line = "Unloading provided by Singer Specialized." });
-            conditions.Add(new Condition() { Line = "Unloading provided by others." });
-            conditions.Add(new Condition() { Line = "Placement provided by Singer Specialized." });
-            conditions.Add(new Condition() { Line = "Placement provided by others." });
-            conditions.Add(new Condition() { Line = "Subject to site inspection." });
-            conditions.Add(new Condition() { Line = "Must be able to position highway transporter beside pad for offloading." });
-            conditions.Add(new Condition() { Line = "Must be able to be jacked." });
-            conditions.Add(new Condition() { Line = "Must be able to winch load." });
-            conditions.Add(new Condition() { Line = "Must be able to park beside saddle bases." });
-            conditions.Add(new Condition() { Line = "No restricted bridges." });
-            conditions.Add(new Condition() { Line = "No road bans." });
-            conditions.Add(new Condition() { Line = "When there are ice bridges on the winter road to site, it would be customer's responsibility to ensure they will support our weights. Any damages incurred to property or equipment (including our equipment) and recovery costs as a result of breaking thru ice will be charged as an extra." });
-            conditions.Add(new Condition() { Line = "Applicable fuel surcharge and all taxes will be extra." });
-            conditions.Add(new Condition() { Line = "Wire lifting, utility services, rail crossing charges, police escorts, sign crews, bridge surveys or engineering, if required, will be invoiced at cost plus 10%." });
-            conditions.Add(new Condition() { Line = "Wire lift charges included." });
-            conditions.Add(new Condition() { Line = "High load corridor charges included." });
-            conditions.Add(new Condition() { Line = "Subject to over weight permits being available." });
-            conditions.Add(new Condition() { Line = "Subject to over width permits being available." });
-            conditions.Add(new Condition() { Line = "Subject to over length permits being available." });
-            conditions.Add(new Condition() { Line = "Subject to over height permits being available." });
-            conditions.Add(new Condition() { Line = "Allow 2 hours for loading each piece." });
-            conditions.Add(new Condition() { Line = "Allow 2 hours for unloading each piece." });
-            conditions.Add(new Condition() { Line = "Subject to 75% weight restriction." });
-            conditions.Add(new Condition() { Line = "Subject to summer weight restriction." });
-            conditions.Add(new Condition() { Line = "Subject to spring weight restriction." });
-            conditions.Add(new Condition() { Line = "Subject to fall weight restriction." });
-            conditions.Add(new Condition() { Line = "Subject to post ban weight restriction." });
-            conditions.Add(new Condition() { Line = "Subject to winter weight restriction." });
-            conditions.Add(new Condition() { Line = "A different seasonal weight restriction may result in a recalculation of the quoted price." });
-            conditions.Add(new Condition() { Line = "Suitable access to and on site as well as ground conditions on site and in all work areas to be provided by others. If additional towing or pushing of our equipment is required because of off highway or site conditions, any cost incurred will be extra. Any damages incurred to property or equipment (including our equipment) as a result of towing or pushing will be charged as an extra." });
-            conditions.Add(new Condition() { Line = "Delays due to any reason beyond our direct control including inclement weather may result in extra charges for labour and equipment." });
-            conditions.Add(new Condition() { Line = "Our standard land transport cargo insurance coverage to a maximum $2,000,000.00 Canadian is included covering cargo that is in our direct care, custody and control. If no declared value is stated on the bill of lading, coverage is limited to $2.00/lb. Additional insurance if required, will be extra." });
-            conditions.Add(new Condition() { Line = "Client is responsible for purging all oils, fluids, contaminates, or otherwise from equipment prior to transport and will be liable for any attributed damages, environmental contamination, remedial costs or fines." });
-            conditions.Add(new Condition() { Line = "Payment terms 30 days." });
-            conditions.Add(new Condition() { Line = "Sites in remote areas camps supplied by others." });
-            conditions.Add(new Condition() { Line = "Where camp is not available cost + 15% on accommodation plus $60.00/man for meals a day." });
-            conditions.Add(new Condition() { Line = "Tarping extra if required, $300.00 / cooler to a safe working height." });
-            conditions.Add(new Condition() { Line = "Tarping extra if required" });
-            conditions.Add(new Condition() { Line = "Other items to be tarped will be priced separately per occasion." });
-            conditions.Add(new Condition() { Line = "Any crane, bridge, or rig mats charged at cost + 15%." });
-            conditions.Add(new Condition() { Line = "One mob and demob to loading site" });
-            conditions.Add(new Condition() { Line = "One mob and demob to unloading site" });
-            conditions.Add(new Condition() { Line = "Extra mob and demob of cranes to be charged extra at cost + 15%" });
-            conditions.Add(new Condition() { Line = "If 16 wheeler is required to assist in loading or unloading add $ 225.00 per hour." });
                         
-            database.Conditions.InsertAllOnSubmit(conditions);
 
             database.SubmitChanges();
         }

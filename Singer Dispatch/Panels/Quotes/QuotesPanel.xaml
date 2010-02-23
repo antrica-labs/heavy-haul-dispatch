@@ -53,6 +53,9 @@
             <TabItem Header="Storage Items" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, Path=SelectedQuote}">
                 <Quotes:QuoteStorageControl SelectedCompany="{Binding SelectedCompany}" SelectedQuote="{Binding SelectedQuote}" />
             </TabItem>
+            <TabItem Header="Inclusions" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, Path=SelectedQuote}">
+                <Quotes:QuoteInclusionsControl SelectedCompany="{Binding SelectedCompany}" SelectedQuote="{Binding SelectedQuote}" />
+            </TabItem>
             <TabItem Header="Conditions" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, Path=SelectedQuote}">
                 <Quotes:QuoteConditionsControl SelectedCompany="{Binding SelectedCompany}" SelectedQuote="{Binding SelectedQuote}" />                
             </TabItem>

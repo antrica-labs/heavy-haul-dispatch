@@ -354,6 +354,7 @@
       <Association Name="Quote_QuoteSupplement" Member="QuoteSupplements" ThisKey="ID" OtherKey="QuoteID" Type="QuoteSupplement" />
       <Association Name="Quote_QuoteStorageItem" Member="QuoteStorageItems" ThisKey="ID" OtherKey="QuoteID" Type="QuoteStorageItem" />
       <Association Name="Quote_QuoteCondition" Member="QuoteConditions" ThisKey="ID" OtherKey="QuoteID" Type="QuoteCondition" />
+      <Association Name="Quote_QuoteInclusion" Member="QuoteInclusions" ThisKey="ID" OtherKey="QuoteID" Type="QuoteInclusion" />
       <Association Name="Employee_Quote" Member="Employee" ThisKey="EmployeeID" OtherKey="ID" Type="Employee" IsForeignKey="true" />
       <Association Name="Company_Quote" Member="Company" ThisKey="CompanyID" OtherKey="ID" Type="Company" IsForeignKey="true" />
       <Association Name="Company_Quote1" Member="CareOfCompany" ThisKey="CareOfCompanyID" OtherKey="ID" Type="Company" IsForeignKey="true" />
@@ -386,6 +387,40 @@
       <Association Name="BillingType_QuoteStorageItem" Member="BillingType" ThisKey="BillingTypeID" OtherKey="ID" Type="BillingType" IsForeignKey="true" />
       <Association Name="Quote_QuoteStorageItem" Member="Quote" ThisKey="QuoteID" OtherKey="ID" Type="Quote" IsForeignKey="true" />
       <Association Name="Commodity_QuoteStorageItem" Member="Commodity" ThisKey="CommodityID" OtherKey="ID" Type="Commodity" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="" Member="Inclusions">
+    <Type Name="Inclusion">
+      <Column Name="ID" Type="System.Int64" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Line" Type="System.String" CanBeNull="true" />      
+    </Type>    
+  </Table>
+  <Table Name="" Member="QuoteInclusions">
+    <Type Name="QuoteInclusion">
+      <Column Name="ID" Type="System.Int64" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="QuoteID" Type="System.Int64" CanBeNull="true" />
+      <Column Name="InclusionID" Type="System.Int64" CanBeNull="true" />
+      <Association Name="Quote_QuoteInclusion" Member="Quote" ThisKey="QuoteID" OtherKey="ID" Type="Quote" IsForeignKey="true" />
+      <Association Name="Inclusion_QuoteInclusion" Member="Inclusion" ThisKey="InclusionID" OtherKey="ID" Type="Inclusion" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="" Member="Conditions">
+    <Type Name="Condition">
+      <Column Name="ID" Type="System.Int64" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Line" Type="System.String" CanBeNull="true" />
+      <Association Name="Condition_QuoteCondition" Member="QuoteConditions" ThisKey="ID" OtherKey="ConditionID" Type="QuoteCondition" />
+    </Type>
+  </Table>
+  <Table Name="" Member="QuoteConditions">
+    <Type Name="QuoteCondition">
+      <Column Name="ID" Type="System.Int64" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="QuoteID" Type="System.Int64" CanBeNull="true" />
+      <Column Name="ConditionID" Type="System.Int64" CanBeNull="true" />
+      <Column Name="Replacement1" Type="System.String" CanBeNull="true" />
+      <Column Name="Replacement2" Type="System.String" CanBeNull="true" />
+      <Column Name="Replacement3" Type="System.String" CanBeNull="true" />      
+      <Association Name="Quote_QuoteCondition" Member="Quote" ThisKey="QuoteID" OtherKey="ID" Type="Quote" IsForeignKey="true" />
+      <Association Name="Condition_QuoteCondition" Member="Condition" ThisKey="ConditionID" OtherKey="ID" Type="Condition" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="" Member="Rates">
@@ -528,22 +563,6 @@
       <Column Name="Name" Type="System.String" CanBeNull="true" />
       <Association Name="LoadUnloadMethod_JobCommodity" Member="LoadedJobCommodities" ThisKey="ID" OtherKey="LoadMethodID" Type="JobCommodity" />
       <Association Name="LoadUnloadMethod_JobCommodity1" Member="UnloadedJobCommodities" ThisKey="ID" OtherKey="UnloadMethodID" Type="JobCommodity" />
-    </Type>
-  </Table>
-  <Table Name="" Member="Conditions">
-    <Type Name="Condition">
-      <Column Name="ID" Type="System.Int64" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Line" Type="System.String" CanBeNull="true" />
-      <Association Name="Condition_QuoteCondition" Member="QuoteConditions" ThisKey="ID" OtherKey="ConditionID" Type="QuoteCondition" />
-    </Type>
-  </Table>
-  <Table Name="" Member="QuoteConditions">
-    <Type Name="QuoteCondition">
-      <Column Name="ID" Type="System.Int64" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="QuoteID" Type="System.Int64" CanBeNull="true" />
-      <Column Name="ConditionID" Type="System.Int64" CanBeNull="true" />
-      <Association Name="Quote_QuoteCondition" Member="Quote" ThisKey="QuoteID" OtherKey="ID" Type="Quote" IsForeignKey="true" />
-      <Association Name="Condition_QuoteCondition" Member="Condition" ThisKey="ConditionID" OtherKey="ID" Type="Condition" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="" Member="Invoices">

@@ -16,13 +16,13 @@ using System.Collections.ObjectModel;
 namespace SingerDispatch.Panels.Quotes
 {
     /// <summary>
-    /// Interaction logic for QuoteConditionsControl.xaml
+    /// Interaction logic for QuoteInclusionsControl.xaml
     /// </summary>
-    public partial class QuoteConditionsControl : QuoteUserControl
+    public partial class QuoteInclusionsControl : QuoteUserControl
     {
         public SingerDispatchDataContext Database { get; set; }
 
-        public QuoteConditionsControl()
+        public QuoteInclusionsControl()
         {
             InitializeComponent();
 
@@ -30,40 +30,38 @@ namespace SingerDispatch.Panels.Quotes
             TheList.ItemsSource = new ObservableCollection<CheckBox>();
         }
 
-        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        private void QuoteUserControl_Loaded(object sender, RoutedEventArgs e)
         {
             var list = (ObservableCollection<CheckBox>)TheList.ItemsSource;
 
             list.Clear();
 
-            if (SelectedQuote == null) return;            
-            
-            var conditions = from c in Database.Conditions select c;
-            var selected = from qc in SelectedQuote.QuoteConditions select qc.Condition;
-         
-            foreach (var condition in conditions)
+            if (SelectedQuote == null) return;
+
+            var inclusions = from c in Database.Inclusions select c;
+            var selected = from qc in SelectedQuote.QuoteInclusions select qc.Inclusion;
+
+            foreach (var inclusion in inclusions)
             {
-                var cb = new CheckBox { Content = condition.Line, DataContext = condition, IsChecked = selected.Contains(condition) };
-                
+                var cb = new CheckBox { Content = inclusion.Line, DataContext = inclusion, IsChecked = selected.Contains(inclusion) };
+
                 cb.Checked += new RoutedEventHandler(CheckBox_Checked);
                 cb.Unchecked += new RoutedEventHandler(CheckBox_Unchecked);
 
                 list.Add(cb);
             }
-
-            gbVariableDetails.DataContext = null;
         }
 
         private void CheckBox_Checked(object sender, RoutedEventArgs e)
         {
             var cb = (CheckBox)sender;
-            var condition = (Condition)cb.DataContext;
+            var inclusion = (Inclusion)cb.DataContext;
 
-            if (SelectedQuote == null || condition == null) return;
+            if (SelectedQuote == null || inclusion == null) return;
 
-            var quoteCondition = new QuoteCondition { Condition = condition, Quote = SelectedQuote };
+            var quoteInclusion = new QuoteInclusion { Inclusion = inclusion, Quote = SelectedQuote };
 
-            SelectedQuote.QuoteConditions.Add(quoteCondition);
+            SelectedQuote.QuoteInclusions.Add(quoteInclusion);
         }
 
         private void CheckBox_Unchecked(object sender, RoutedEventArgs e)
@@ -78,25 +76,6 @@ namespace SingerDispatch.Panels.Quotes
             foreach (var item in list)
             {
                 SelectedQuote.QuoteConditions.Remove(item);
-            }
-        }
-
-        private void TheList_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (SelectedQuote == null || TheList.SelectedItem == null) return;
-
-            var cb = (CheckBox)TheList.SelectedItem;
-            var condition = (Condition)cb.DataContext;
-
-            if (condition == null) return;
-            
-            try
-            {
-                gbVariableDetails.DataContext = (from qc in SelectedQuote.QuoteConditions where qc.Condition == condition select qc).First();
-            }
-            catch
-            {
-                gbVariableDetails.DataContext = null;
             }
         }
     }

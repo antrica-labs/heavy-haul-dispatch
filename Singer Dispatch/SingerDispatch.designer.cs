@@ -95,6 +95,18 @@ namespace SingerDispatch
     partial void InsertQuoteStorageItem(QuoteStorageItem instance);
     partial void UpdateQuoteStorageItem(QuoteStorageItem instance);
     partial void DeleteQuoteStorageItem(QuoteStorageItem instance);
+    partial void InsertInclusion(Inclusion instance);
+    partial void UpdateInclusion(Inclusion instance);
+    partial void DeleteInclusion(Inclusion instance);
+    partial void InsertQuoteInclusion(QuoteInclusion instance);
+    partial void UpdateQuoteInclusion(QuoteInclusion instance);
+    partial void DeleteQuoteInclusion(QuoteInclusion instance);
+    partial void InsertCondition(Condition instance);
+    partial void UpdateCondition(Condition instance);
+    partial void DeleteCondition(Condition instance);
+    partial void InsertQuoteCondition(QuoteCondition instance);
+    partial void UpdateQuoteCondition(QuoteCondition instance);
+    partial void DeleteQuoteCondition(QuoteCondition instance);
     partial void InsertRate(Rate instance);
     partial void UpdateRate(Rate instance);
     partial void DeleteRate(Rate instance);
@@ -128,12 +140,6 @@ namespace SingerDispatch
     partial void InsertLoadUnloadMethod(LoadUnloadMethod instance);
     partial void UpdateLoadUnloadMethod(LoadUnloadMethod instance);
     partial void DeleteLoadUnloadMethod(LoadUnloadMethod instance);
-    partial void InsertCondition(Condition instance);
-    partial void UpdateCondition(Condition instance);
-    partial void DeleteCondition(Condition instance);
-    partial void InsertQuoteCondition(QuoteCondition instance);
-    partial void UpdateQuoteCondition(QuoteCondition instance);
-    partial void DeleteQuoteCondition(QuoteCondition instance);
     partial void InsertInvoice(Invoice instance);
     partial void UpdateInvoice(Invoice instance);
     partial void DeleteInvoice(Invoice instance);
@@ -345,6 +351,38 @@ namespace SingerDispatch
 			}
 		}
 		
+		public System.Data.Linq.Table<Inclusion> Inclusions
+		{
+			get
+			{
+				return this.GetTable<Inclusion>();
+			}
+		}
+		
+		public System.Data.Linq.Table<QuoteInclusion> QuoteInclusions
+		{
+			get
+			{
+				return this.GetTable<QuoteInclusion>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Condition> Conditions
+		{
+			get
+			{
+				return this.GetTable<Condition>();
+			}
+		}
+		
+		public System.Data.Linq.Table<QuoteCondition> QuoteConditions
+		{
+			get
+			{
+				return this.GetTable<QuoteCondition>();
+			}
+		}
+		
 		public System.Data.Linq.Table<Rate> Rates
 		{
 			get
@@ -430,22 +468,6 @@ namespace SingerDispatch
 			get
 			{
 				return this.GetTable<LoadUnloadMethod>();
-			}
-		}
-		
-		public System.Data.Linq.Table<Condition> Conditions
-		{
-			get
-			{
-				return this.GetTable<Condition>();
-			}
-		}
-		
-		public System.Data.Linq.Table<QuoteCondition> QuoteConditions
-		{
-			get
-			{
-				return this.GetTable<QuoteCondition>();
 			}
 		}
 		
@@ -8016,6 +8038,8 @@ namespace SingerDispatch
 		
 		private EntitySet<QuoteStorageItem> _QuoteStorageItems;
 		
+		private EntitySet<QuoteInclusion> _QuoteInclusions;
+		
 		private EntitySet<QuoteCondition> _QuoteConditions;
 		
 		private EntityRef<Employee> _Employee;
@@ -8070,6 +8094,7 @@ namespace SingerDispatch
 			this._QuoteCommodities = new EntitySet<QuoteCommodity>(new Action<QuoteCommodity>(this.attach_QuoteCommodities), new Action<QuoteCommodity>(this.detach_QuoteCommodities));
 			this._QuoteSupplements = new EntitySet<QuoteSupplement>(new Action<QuoteSupplement>(this.attach_QuoteSupplements), new Action<QuoteSupplement>(this.detach_QuoteSupplements));
 			this._QuoteStorageItems = new EntitySet<QuoteStorageItem>(new Action<QuoteStorageItem>(this.attach_QuoteStorageItems), new Action<QuoteStorageItem>(this.detach_QuoteStorageItems));
+			this._QuoteInclusions = new EntitySet<QuoteInclusion>(new Action<QuoteInclusion>(this.attach_QuoteInclusions), new Action<QuoteInclusion>(this.detach_QuoteInclusions));
 			this._QuoteConditions = new EntitySet<QuoteCondition>(new Action<QuoteCondition>(this.attach_QuoteConditions), new Action<QuoteCondition>(this.detach_QuoteConditions));
 			this._Employee = default(EntityRef<Employee>);
 			this._Company = default(EntityRef<Company>);
@@ -8451,6 +8476,19 @@ namespace SingerDispatch
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Quote_QuoteInclusion", Storage="_QuoteInclusions", ThisKey="ID", OtherKey="QuoteID")]
+		public EntitySet<QuoteInclusion> QuoteInclusions
+		{
+			get
+			{
+				return this._QuoteInclusions;
+			}
+			set
+			{
+				this._QuoteInclusions.Assign(value);
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Quote_QuoteCondition", Storage="_QuoteConditions", ThisKey="ID", OtherKey="QuoteID")]
 		public EntitySet<QuoteCondition> QuoteConditions
 		{
@@ -8697,6 +8735,18 @@ namespace SingerDispatch
 		}
 		
 		private void detach_QuoteStorageItems(QuoteStorageItem entity)
+		{
+			this.SendPropertyChanging();
+			entity.Quote = null;
+		}
+		
+		private void attach_QuoteInclusions(QuoteInclusion entity)
+		{
+			this.SendPropertyChanging();
+			entity.Quote = this;
+		}
+		
+		private void detach_QuoteInclusions(QuoteInclusion entity)
 		{
 			this.SendPropertyChanging();
 			entity.Quote = null;
@@ -9291,6 +9341,646 @@ namespace SingerDispatch
 					this.SendPropertyChanging();
 					this._Commodity.Entity = value;
 					this.SendPropertyChanged("Commodity");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="")]
+	public partial class Inclusion : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private long _ID;
+		
+		private string _Line;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDChanging(long value);
+    partial void OnIDChanged();
+    partial void OnLineChanging(string value);
+    partial void OnLineChanged();
+    #endregion
+		
+		public Inclusion()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, IsPrimaryKey=true, IsDbGenerated=true)]
+		public long ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this.OnIDChanging(value);
+					this.SendPropertyChanging();
+					this._ID = value;
+					this.SendPropertyChanged("ID");
+					this.OnIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Line")]
+		public string Line
+		{
+			get
+			{
+				return this._Line;
+			}
+			set
+			{
+				if ((this._Line != value))
+				{
+					this.OnLineChanging(value);
+					this.SendPropertyChanging();
+					this._Line = value;
+					this.SendPropertyChanged("Line");
+					this.OnLineChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="")]
+	public partial class QuoteInclusion : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private long _ID;
+		
+		private System.Nullable<long> _QuoteID;
+		
+		private System.Nullable<long> _InclusionID;
+		
+		private EntityRef<Quote> _Quote;
+		
+		private EntityRef<Inclusion> _Inclusion;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDChanging(long value);
+    partial void OnIDChanged();
+    partial void OnQuoteIDChanging(System.Nullable<long> value);
+    partial void OnQuoteIDChanged();
+    partial void OnInclusionIDChanging(System.Nullable<long> value);
+    partial void OnInclusionIDChanged();
+    #endregion
+		
+		public QuoteInclusion()
+		{
+			this._Quote = default(EntityRef<Quote>);
+			this._Inclusion = default(EntityRef<Inclusion>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, IsPrimaryKey=true, IsDbGenerated=true)]
+		public long ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this.OnIDChanging(value);
+					this.SendPropertyChanging();
+					this._ID = value;
+					this.SendPropertyChanged("ID");
+					this.OnIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_QuoteID")]
+		public System.Nullable<long> QuoteID
+		{
+			get
+			{
+				return this._QuoteID;
+			}
+			set
+			{
+				if ((this._QuoteID != value))
+				{
+					if (this._Quote.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnQuoteIDChanging(value);
+					this.SendPropertyChanging();
+					this._QuoteID = value;
+					this.SendPropertyChanged("QuoteID");
+					this.OnQuoteIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_InclusionID")]
+		public System.Nullable<long> InclusionID
+		{
+			get
+			{
+				return this._InclusionID;
+			}
+			set
+			{
+				if ((this._InclusionID != value))
+				{
+					if (this._Inclusion.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnInclusionIDChanging(value);
+					this.SendPropertyChanging();
+					this._InclusionID = value;
+					this.SendPropertyChanged("InclusionID");
+					this.OnInclusionIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Quote_QuoteInclusion", Storage="_Quote", ThisKey="QuoteID", OtherKey="ID", IsForeignKey=true)]
+		public Quote Quote
+		{
+			get
+			{
+				return this._Quote.Entity;
+			}
+			set
+			{
+				Quote previousValue = this._Quote.Entity;
+				if (((previousValue != value) 
+							|| (this._Quote.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Quote.Entity = null;
+						previousValue.QuoteInclusions.Remove(this);
+					}
+					this._Quote.Entity = value;
+					if ((value != null))
+					{
+						value.QuoteInclusions.Add(this);
+						this._QuoteID = value.ID;
+					}
+					else
+					{
+						this._QuoteID = default(Nullable<long>);
+					}
+					this.SendPropertyChanged("Quote");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Inclusion_QuoteInclusion", Storage="_Inclusion", ThisKey="InclusionID", OtherKey="ID", IsForeignKey=true)]
+		public Inclusion Inclusion
+		{
+			get
+			{
+				return this._Inclusion.Entity;
+			}
+			set
+			{
+				if ((this._Inclusion.Entity != value))
+				{
+					this.SendPropertyChanging();
+					this._Inclusion.Entity = value;
+					this.SendPropertyChanged("Inclusion");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="")]
+	public partial class Condition : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private long _ID;
+		
+		private string _Line;
+		
+		private EntitySet<QuoteCondition> _QuoteConditions;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDChanging(long value);
+    partial void OnIDChanged();
+    partial void OnLineChanging(string value);
+    partial void OnLineChanged();
+    #endregion
+		
+		public Condition()
+		{
+			this._QuoteConditions = new EntitySet<QuoteCondition>(new Action<QuoteCondition>(this.attach_QuoteConditions), new Action<QuoteCondition>(this.detach_QuoteConditions));
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, IsPrimaryKey=true, IsDbGenerated=true)]
+		public long ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this.OnIDChanging(value);
+					this.SendPropertyChanging();
+					this._ID = value;
+					this.SendPropertyChanged("ID");
+					this.OnIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Line")]
+		public string Line
+		{
+			get
+			{
+				return this._Line;
+			}
+			set
+			{
+				if ((this._Line != value))
+				{
+					this.OnLineChanging(value);
+					this.SendPropertyChanging();
+					this._Line = value;
+					this.SendPropertyChanged("Line");
+					this.OnLineChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Condition_QuoteCondition", Storage="_QuoteConditions", ThisKey="ID", OtherKey="ConditionID")]
+		public EntitySet<QuoteCondition> QuoteConditions
+		{
+			get
+			{
+				return this._QuoteConditions;
+			}
+			set
+			{
+				this._QuoteConditions.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_QuoteConditions(QuoteCondition entity)
+		{
+			this.SendPropertyChanging();
+			entity.Condition = this;
+		}
+		
+		private void detach_QuoteConditions(QuoteCondition entity)
+		{
+			this.SendPropertyChanging();
+			entity.Condition = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="")]
+	public partial class QuoteCondition : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private long _ID;
+		
+		private System.Nullable<long> _QuoteID;
+		
+		private System.Nullable<long> _ConditionID;
+		
+		private string _Replacement1;
+		
+		private string _Replacement2;
+		
+		private string _Replacement3;
+		
+		private EntityRef<Quote> _Quote;
+		
+		private EntityRef<Condition> _Condition;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDChanging(long value);
+    partial void OnIDChanged();
+    partial void OnQuoteIDChanging(System.Nullable<long> value);
+    partial void OnQuoteIDChanged();
+    partial void OnConditionIDChanging(System.Nullable<long> value);
+    partial void OnConditionIDChanged();
+    partial void OnReplacement1Changing(string value);
+    partial void OnReplacement1Changed();
+    partial void OnReplacement2Changing(string value);
+    partial void OnReplacement2Changed();
+    partial void OnReplacement3Changing(string value);
+    partial void OnReplacement3Changed();
+    #endregion
+		
+		public QuoteCondition()
+		{
+			this._Quote = default(EntityRef<Quote>);
+			this._Condition = default(EntityRef<Condition>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, IsPrimaryKey=true, IsDbGenerated=true)]
+		public long ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this.OnIDChanging(value);
+					this.SendPropertyChanging();
+					this._ID = value;
+					this.SendPropertyChanged("ID");
+					this.OnIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_QuoteID")]
+		public System.Nullable<long> QuoteID
+		{
+			get
+			{
+				return this._QuoteID;
+			}
+			set
+			{
+				if ((this._QuoteID != value))
+				{
+					if (this._Quote.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnQuoteIDChanging(value);
+					this.SendPropertyChanging();
+					this._QuoteID = value;
+					this.SendPropertyChanged("QuoteID");
+					this.OnQuoteIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ConditionID")]
+		public System.Nullable<long> ConditionID
+		{
+			get
+			{
+				return this._ConditionID;
+			}
+			set
+			{
+				if ((this._ConditionID != value))
+				{
+					if (this._Condition.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnConditionIDChanging(value);
+					this.SendPropertyChanging();
+					this._ConditionID = value;
+					this.SendPropertyChanged("ConditionID");
+					this.OnConditionIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Replacement1")]
+		public string Replacement1
+		{
+			get
+			{
+				return this._Replacement1;
+			}
+			set
+			{
+				if ((this._Replacement1 != value))
+				{
+					this.OnReplacement1Changing(value);
+					this.SendPropertyChanging();
+					this._Replacement1 = value;
+					this.SendPropertyChanged("Replacement1");
+					this.OnReplacement1Changed();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Replacement2")]
+		public string Replacement2
+		{
+			get
+			{
+				return this._Replacement2;
+			}
+			set
+			{
+				if ((this._Replacement2 != value))
+				{
+					this.OnReplacement2Changing(value);
+					this.SendPropertyChanging();
+					this._Replacement2 = value;
+					this.SendPropertyChanged("Replacement2");
+					this.OnReplacement2Changed();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Replacement3")]
+		public string Replacement3
+		{
+			get
+			{
+				return this._Replacement3;
+			}
+			set
+			{
+				if ((this._Replacement3 != value))
+				{
+					this.OnReplacement3Changing(value);
+					this.SendPropertyChanging();
+					this._Replacement3 = value;
+					this.SendPropertyChanged("Replacement3");
+					this.OnReplacement3Changed();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Quote_QuoteCondition", Storage="_Quote", ThisKey="QuoteID", OtherKey="ID", IsForeignKey=true)]
+		public Quote Quote
+		{
+			get
+			{
+				return this._Quote.Entity;
+			}
+			set
+			{
+				Quote previousValue = this._Quote.Entity;
+				if (((previousValue != value) 
+							|| (this._Quote.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Quote.Entity = null;
+						previousValue.QuoteConditions.Remove(this);
+					}
+					this._Quote.Entity = value;
+					if ((value != null))
+					{
+						value.QuoteConditions.Add(this);
+						this._QuoteID = value.ID;
+					}
+					else
+					{
+						this._QuoteID = default(Nullable<long>);
+					}
+					this.SendPropertyChanged("Quote");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Condition_QuoteCondition", Storage="_Condition", ThisKey="ConditionID", OtherKey="ID", IsForeignKey=true)]
+		public Condition Condition
+		{
+			get
+			{
+				return this._Condition.Entity;
+			}
+			set
+			{
+				Condition previousValue = this._Condition.Entity;
+				if (((previousValue != value) 
+							|| (this._Condition.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Condition.Entity = null;
+						previousValue.QuoteConditions.Remove(this);
+					}
+					this._Condition.Entity = value;
+					if ((value != null))
+					{
+						value.QuoteConditions.Add(this);
+						this._ConditionID = value.ID;
+					}
+					else
+					{
+						this._ConditionID = default(Nullable<long>);
+					}
+					this.SendPropertyChanged("Condition");
 				}
 			}
 		}
@@ -12407,312 +13097,6 @@ namespace SingerDispatch
 		{
 			this.SendPropertyChanging();
 			entity.UnloadMethod = null;
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="")]
-	public partial class Condition : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private long _ID;
-		
-		private string _Line;
-		
-		private EntitySet<QuoteCondition> _QuoteConditions;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIDChanging(long value);
-    partial void OnIDChanged();
-    partial void OnLineChanging(string value);
-    partial void OnLineChanged();
-    #endregion
-		
-		public Condition()
-		{
-			this._QuoteConditions = new EntitySet<QuoteCondition>(new Action<QuoteCondition>(this.attach_QuoteConditions), new Action<QuoteCondition>(this.detach_QuoteConditions));
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, IsPrimaryKey=true, IsDbGenerated=true)]
-		public long ID
-		{
-			get
-			{
-				return this._ID;
-			}
-			set
-			{
-				if ((this._ID != value))
-				{
-					this.OnIDChanging(value);
-					this.SendPropertyChanging();
-					this._ID = value;
-					this.SendPropertyChanged("ID");
-					this.OnIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Line")]
-		public string Line
-		{
-			get
-			{
-				return this._Line;
-			}
-			set
-			{
-				if ((this._Line != value))
-				{
-					this.OnLineChanging(value);
-					this.SendPropertyChanging();
-					this._Line = value;
-					this.SendPropertyChanged("Line");
-					this.OnLineChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Condition_QuoteCondition", Storage="_QuoteConditions", ThisKey="ID", OtherKey="ConditionID")]
-		public EntitySet<QuoteCondition> QuoteConditions
-		{
-			get
-			{
-				return this._QuoteConditions;
-			}
-			set
-			{
-				this._QuoteConditions.Assign(value);
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_QuoteConditions(QuoteCondition entity)
-		{
-			this.SendPropertyChanging();
-			entity.Condition = this;
-		}
-		
-		private void detach_QuoteConditions(QuoteCondition entity)
-		{
-			this.SendPropertyChanging();
-			entity.Condition = null;
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="")]
-	public partial class QuoteCondition : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private long _ID;
-		
-		private System.Nullable<long> _QuoteID;
-		
-		private System.Nullable<long> _ConditionID;
-		
-		private EntityRef<Quote> _Quote;
-		
-		private EntityRef<Condition> _Condition;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIDChanging(long value);
-    partial void OnIDChanged();
-    partial void OnQuoteIDChanging(System.Nullable<long> value);
-    partial void OnQuoteIDChanged();
-    partial void OnConditionIDChanging(System.Nullable<long> value);
-    partial void OnConditionIDChanged();
-    #endregion
-		
-		public QuoteCondition()
-		{
-			this._Quote = default(EntityRef<Quote>);
-			this._Condition = default(EntityRef<Condition>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, IsPrimaryKey=true, IsDbGenerated=true)]
-		public long ID
-		{
-			get
-			{
-				return this._ID;
-			}
-			set
-			{
-				if ((this._ID != value))
-				{
-					this.OnIDChanging(value);
-					this.SendPropertyChanging();
-					this._ID = value;
-					this.SendPropertyChanged("ID");
-					this.OnIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_QuoteID")]
-		public System.Nullable<long> QuoteID
-		{
-			get
-			{
-				return this._QuoteID;
-			}
-			set
-			{
-				if ((this._QuoteID != value))
-				{
-					if (this._Quote.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnQuoteIDChanging(value);
-					this.SendPropertyChanging();
-					this._QuoteID = value;
-					this.SendPropertyChanged("QuoteID");
-					this.OnQuoteIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ConditionID")]
-		public System.Nullable<long> ConditionID
-		{
-			get
-			{
-				return this._ConditionID;
-			}
-			set
-			{
-				if ((this._ConditionID != value))
-				{
-					if (this._Condition.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnConditionIDChanging(value);
-					this.SendPropertyChanging();
-					this._ConditionID = value;
-					this.SendPropertyChanged("ConditionID");
-					this.OnConditionIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Quote_QuoteCondition", Storage="_Quote", ThisKey="QuoteID", OtherKey="ID", IsForeignKey=true)]
-		public Quote Quote
-		{
-			get
-			{
-				return this._Quote.Entity;
-			}
-			set
-			{
-				Quote previousValue = this._Quote.Entity;
-				if (((previousValue != value) 
-							|| (this._Quote.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Quote.Entity = null;
-						previousValue.QuoteConditions.Remove(this);
-					}
-					this._Quote.Entity = value;
-					if ((value != null))
-					{
-						value.QuoteConditions.Add(this);
-						this._QuoteID = value.ID;
-					}
-					else
-					{
-						this._QuoteID = default(Nullable<long>);
-					}
-					this.SendPropertyChanged("Quote");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Condition_QuoteCondition", Storage="_Condition", ThisKey="ConditionID", OtherKey="ID", IsForeignKey=true)]
-		public Condition Condition
-		{
-			get
-			{
-				return this._Condition.Entity;
-			}
-			set
-			{
-				Condition previousValue = this._Condition.Entity;
-				if (((previousValue != value) 
-							|| (this._Condition.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Condition.Entity = null;
-						previousValue.QuoteConditions.Remove(this);
-					}
-					this._Condition.Entity = value;
-					if ((value != null))
-					{
-						value.QuoteConditions.Add(this);
-						this._ConditionID = value.ID;
-					}
-					else
-					{
-						this._ConditionID = default(Nullable<long>);
-					}
-					this.SendPropertyChanged("Condition");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
 		}
 	}
 	

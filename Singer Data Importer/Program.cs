@@ -155,7 +155,9 @@ namespace SingerDispatch.Importer
         {
             NewAddresses = new Dictionary<int?, Address>();
 
-            var companies = new List<Company>();
+            List<Company> companies;
+            List<Inclusion> inclusions;
+            List<Condition> conditions;
 
             var datasource = ConfigurationManager.ConnectionStrings["OldDBConnectionParameters"].ConnectionString;
             var provider = ConfigurationManager.ConnectionStrings["OldDBConnectionParameters"].ProviderName;
@@ -165,25 +167,87 @@ namespace SingerDispatch.Importer
             {
                 connection.Open();
 
-                Console.Write("Importing companies");                
-                var select = "SELECT c.*, n.companyNoteNotes FROM tbl_Company AS c LEFT JOIN tbl_CompanyNotes AS n ON c.companyId = n.companyId";
-                using (var command = new OleDbCommand(select, connection))
+                Console.WriteLine("Importing support data...");
+                inclusions = ImportInclusions(connection);
+                conditions = ImportConditions(connection);
+                
+
+                Console.Write("Importing companies");
+                companies = ImportCompanies(connection);                
+            }
+
+            Console.WriteLine();
+            Console.WriteLine("Saving imported data to database...");
+
+            var context = new SingerDispatchDataContext(ConfigurationManager.ConnectionStrings["NewDBConnectionParameters"].ConnectionString);
+
+            context.Inclusions.InsertAllOnSubmit(inclusions);
+            context.Conditions.InsertAllOnSubmit(conditions);
+            context.Companies.InsertAllOnSubmit(companies);
+
+            context.SubmitChanges();
+        }
+
+        private List<Inclusion> ImportInclusions(OleDbConnection connection)
+        {
+            var inclusions = new List<Inclusion>();
+
+            var select = "SELECT * FROM tbl_OptionType";
+            using (var command = new OleDbCommand(select, connection))
+            {
+                using (var reader = command.ExecuteReader())
                 {
-                    using (var reader = command.ExecuteReader())
+                    while (reader.Read())
                     {
-                        while (reader.Read())
-                        {
-                            companies.Add(CreateCompanyFromRow(connection, reader));
-                            Console.Write(".");
-                        }
+                        var line = reader["optionType"] == DBNull.Value ? null : (string)reader["optionType"];
+
+                        inclusions.Add(new Inclusion { Line = line });
+                    }
+                }
+            }
+            
+            return inclusions;
+        }
+
+        private List<Condition> ImportConditions(OleDbConnection connection)
+        {
+            var conditions = new List<Condition>();
+
+            var select = "SELECT * FROM tbl_QuoteConditionType";
+            using (var command = new OleDbCommand(select, connection))
+            {
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        var line = reader["quoteConditionType"] == DBNull.Value ? null : (string)reader["quoteConditionType"];
+
+                        conditions.Add(new Condition { Line = line });
                     }
                 }
             }
 
-            Console.WriteLine();
-            Console.WriteLine("Saving companies to database...");
+            return conditions;
+        }
 
-            InsertCompanies(companies);
+        private List<Company> ImportCompanies(OleDbConnection connection)
+        {
+            var companies = new List<Company>();
+
+            var select = "SELECT c.*, n.companyNoteNotes FROM tbl_Company AS c LEFT JOIN tbl_CompanyNotes AS n ON c.companyId = n.companyId";
+            using (var command = new OleDbCommand(select, connection))
+            {
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        companies.Add(CreateCompanyFromRow(connection, reader));
+                        Console.Write(".");
+                    }
+                }
+            }
+
+            return companies;
         }
 
         private Company CreateCompanyFromRow(OleDbConnection connection, OleDbDataReader reader)
@@ -427,14 +491,6 @@ namespace SingerDispatch.Importer
             commodity.WeightEstimated = (weight == null);
             
             return commodity;
-        }
-
-        private void InsertCompanies(List<Company> companies)
-        {
-            var context = new SingerDispatchDataContext(ConfigurationManager.ConnectionStrings["NewDBConnectionParameters"].ConnectionString);
-
-            context.Companies.InsertAllOnSubmit(companies);
-            context.SubmitChanges();
         }
 
     }
