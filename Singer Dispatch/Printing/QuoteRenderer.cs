@@ -183,30 +183,15 @@ namespace SingerDispatch.Printing
                         margin-bottom: 25px;
                     }
                     
-                    div#description span.attention 
+                    div#description table
                     {
-                        display: block;
+                    	margin-bottom: 10px;
+                    }
+                    
+                    div#description td.fieldname 
+                    {                        
                         font-weight: bold;
-                        
-                    }
-                    
-                    div#description span.attention span.name
-                    {
-                        font-weight: normal;
-                        margin-left: 10px;
-                    }
-                    
-                    div#description span.regarding
-                    {
-                        display: block;
-                        font-weight: bold;
-                        margin-bottom: 20px;
-                    }
-                    
-                    div#description span.regarding span.subject
-                    {
-                        font-weight: normal;
-                        margin-left: 50px;
+                        padding-right: 10px;                        
                     }
                     
                     div#commodities 
@@ -403,15 +388,16 @@ namespace SingerDispatch.Printing
 
             content = @"
                 <div id=""description"">
-                    %ATTENTION%
-                    
-                    <span class=""regarding"">Re: <span class=""subject"">%SUBJECT%</span></span>
-                    
+                    <table>
+                        %ATTENTION%
+                        <tr><td class=""fieldname"">Re:</td><td>%SUBJECT%</td></tr>
+                    </table>
+
                     <p>As per your quotation of %OPEN_DATE% we are pleased to submit the following proposal, valid until %CLOSING_DATE%:</p>
                 </div>
             ";
 
-            var attention = (recipient != null) ? "Attention: " + recipient.Name : "";
+            var attention = (recipient != null) ? @"<tr><td class=""fieldname"">Attention:</td><td>" + recipient.Name + "</td></tr>" : "";
 
             if (openDate == null)
             {

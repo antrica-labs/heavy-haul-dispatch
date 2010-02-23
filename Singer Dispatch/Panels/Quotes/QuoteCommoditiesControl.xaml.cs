@@ -39,10 +39,12 @@ namespace SingerDispatch.Panels.Quotes
 
             if (commodity == null)
                 return;
-            
+            else if (commodity.OriginalCommodity == original)
+                return;
+
             if (original != null)
             {
-                commodity.OriginalCommodityID = original.ID;
+                commodity.OriginalCommodity = original;
                 commodity.Name = original.Name;
                 commodity.Value = original.Value;
                 commodity.Serial = original.Serial;
@@ -62,7 +64,7 @@ namespace SingerDispatch.Panels.Quotes
             }
             else
             {
-                commodity.OriginalCommodityID = null;
+                commodity.OriginalCommodity = null;
                 commodity.Name = null;
                 commodity.Value = null;
                 commodity.Serial = null;
