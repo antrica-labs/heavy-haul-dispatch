@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace SingerDispatch.Printing
 {
-    class QuoteRenderer : Renderer
+    class QuoteRenderer : IRenderer
     {
         public string GenerateHTML(object quote)
         {
@@ -24,8 +24,8 @@ namespace SingerDispatch.Printing
             content.Append("</head>");
             content.Append("<body>");
             content.Append(GetHeader(quote.NumberAndRev));
-            content.Append(GetRecipient());
-            content.Append(GetDescription("Some guy", "Transportation Quote", quote.CreationDate, quote.ExpirationDate));
+            content.Append(GetRecipient(quote.BillingAddress, quote.Contact));
+            content.Append(GetDescription(quote.Contact, "Transportation Quote", quote.CreationDate, quote.ExpirationDate));
             content.Append(GetCommodities(quote.QuoteCommodities.ToList()));
             content.Append(GetSuppluments(quote.QuoteSupplements.ToList()));
             content.Append(GetConditions(quote));
@@ -303,70 +303,115 @@ namespace SingerDispatch.Printing
                     <table>
                         <tr>
                             <td id=""logo"">
-                                <span class=""logo""><img src=""\\sindcx001\Storage\Programers\logo.png"" alt=""Singer Specialized""></span>                        
+                                <span class=""logo""><img src=""%HEADER_IMG%"" alt=""Singer Specialized""></span>                        
                             </td>
                             <td id=""quote_name"">
                                 <span class=""title"">Quote</span>
                                 <span class=""quote_number"">#%QUOTE_NUMBER%</span>
                             </td>
                             <td id=""hq_location"">
-                                <span class=""address"">Site 12 Box 26 RR5. Calgary, AB T2P 2G6</span>
-                                <span class=""phone"">Ph: (403) 569 - 8605</span>
-                                <span class=""fax"">Fax: (403) 569 - 7643</span>
+                                <span class=""address"">235132 84th St. SE</span>
+                                <span class=""phone"">Calgary, AB T1X 0K1</span>
+                                <span class=""fax"">Phone: (403) 569-8605</span>                                
                             </td>
                         </tr>
                     </table>                        
                 </div>
             ";
 
-            return content.Replace("%QUOTE_NUMBER%", quoteName);
+            var img = "file:///" + System.IO.Path.Combine(System.IO.Path.GetDirectoryName(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName), @"Images\Header.png");            
+
+            return content.Replace("%HEADER_IMG%", img).Replace("%QUOTE_NUMBER%", quoteName);
         }
 
-        private string GetRecipient()
+        private string GetRecipient(Address address, Contact contact)
         {
-            string content;
+            var content = new StringBuilder();
 
-            content = @"
+            var header = @"
                 <div id=""recipient"">
                     <span id=""quote_date"">%TODAY%</span>
         
                     <table>
                         <tr>                    
                             <td id=""address"">
-                                <span>Xyz Company</span>
-                                <span>C/O Somothere Systems</span>
-                                <span>Calgary, Alberta</span>
-                                <span>Canada</span>
-                                <span>X2X 2X3</span>
+            ";
+            var middle = @"
                             </td>
                             <td id=""contact"">
-                                <span>Telephone: (403) 279-8388</span>
-                                <span>Fax: (403) 279-8390</span>
-                                <span>Email: dosomethign@xyzcompany.com</span>
+            ";
+            var footer = @"
                             </td>
                         </tr>
                     </table>
                 </div>
             ";
 
-            content = content.Replace("%TODAY%", DateTime.Now.ToString(SingerConstants.PrintedDateFormatString));
+            content.Append(header.Replace("%TODAY%", DateTime.Now.ToString(SingerConstants.PrintedDateFormatString)));
 
-            return content;
+            if (address != null)
+            {
+                if (address.Company != null)
+                    content.Append("<span>" + address.Company.Name + "</span>");
+
+                if (address.Line1 != null)
+                    content.Append("<span>" + address.Line1 + "</span>");
+
+                if (address.Line2 != null)
+                    content.Append("<span>" + address.Line2 + "</span>");
+
+                var cityandprov = "" + address.City;
+
+                if (address.ProvincesAndState != null)
+                {
+                    cityandprov += (cityandprov.Length == 0) ? address.ProvincesAndState.Name : ", " + address.ProvincesAndState.Name;
+
+                    content.Append("<span>" + cityandprov + "</span>");
+                    content.Append("<span>" + address.ProvincesAndState.Country.Name + "</span>");
+                }
+
+                if (address.PostalZip != null)
+                    content.Append("<span>" + address.PostalZip + "</span>");
+            }
+
+            content.Append(middle);
+
+            if (contact != null)
+            {
+                if (contact.PrimaryPhone != null)
+                    content.Append("<span>Telephone: " + contact.PrimaryPhone + "</span>");
+
+                if (contact.SecondaryPhone != null)
+                    content.Append("<span>Telephone: " + contact.SecondaryPhone + "</span>");
+
+                if (contact.Fax != null)
+                    content.Append("<span>Fax: " + contact.Fax + "</span>");
+
+                if (contact.Email != null)
+                    content.Append("<span>Email: " + contact.Email + "</span>");
+            }
+
+            content.Append(footer);
+
+
+            return content.ToString();
         }
 
-        private string GetDescription(string recipient, string subject, DateTime? openDate, DateTime? closingDate)
+        private string GetDescription(Contact recipient, string subject, DateTime? openDate, DateTime? closingDate)
         {
             string content;
 
             content = @"
                 <div id=""description"">
-                    <span class=""attention"">Attention: <span class=""name"">%RECIPIENT_CONTACT%</span></span>
+                    %ATTENTION%
                     
                     <span class=""regarding"">Re: <span class=""subject"">%SUBJECT%</span></span>
                     
                     <p>As per your quotation of %OPEN_DATE% we are pleased to submit the following proposal, valid until %CLOSING_DATE%:</p>
                 </div>
             ";
+
+            var attention = (recipient != null) ? "Attention: " + recipient.Name : "";
 
             if (openDate == null)
             {
@@ -379,7 +424,7 @@ namespace SingerDispatch.Printing
                 closingDate = openDate.Value.AddDays(30);
             }
 
-            content = content.Replace("%RECIPIENT_CONTACT%", recipient);
+            content = content.Replace("%ATTENTION%", attention);
             content = content.Replace("%SUBJECT%", subject);
             content = content.Replace("%OPEN_DATE%", openDate.Value.ToString(SingerConstants.PrintedDateFormatString));
             content = content.Replace("%CLOSING_DATE%", closingDate.Value.ToString(SingerConstants.PrintedDateFormatString));
@@ -412,7 +457,7 @@ namespace SingerDispatch.Printing
             ";
 
             var rows = new StringBuilder();
-            int count = 0;
+            int count = 1;
 
             foreach (var commodity in commodities)
             {
@@ -481,7 +526,7 @@ namespace SingerDispatch.Printing
             ";
 
             StringBuilder rows = new StringBuilder();
-            int count = 0;
+            int count = 1;
 
             foreach (QuoteSupplement supplement in supplements)
             {

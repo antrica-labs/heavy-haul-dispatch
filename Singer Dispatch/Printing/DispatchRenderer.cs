@@ -2,7 +2,7 @@
 
 namespace SingerDispatch.Printing
 {
-    class DispatchRenderer : Renderer
+    class DispatchRenderer : IRenderer
     {
         public string GenerateHTML(object dispatch)
         {
@@ -67,7 +67,6 @@ namespace SingerDispatch.Printing
                         outline: 0;
                         font-size: 100%;
                         vertical-align: baseline;
-                        background: transparent;
                     }
                     body 
                     {
@@ -352,9 +351,10 @@ namespace SingerDispatch.Printing
                     <span class=""title"">Dispatch Order</span>            
                 </div>
             ";
-            var headerImg = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName), @"Images\Header.png");
 
-            return content.Replace("%HEADER_IMG%", headerImg).Replace("%DISPATCH_NUMBER%", dispatchNumber);
+            var img = "file:///" + System.IO.Path.Combine(System.IO.Path.GetDirectoryName(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName), @"Images\Header.png");
+                        
+            return content.Replace("%HEADER_IMG%", img).Replace("%DISPATCH_NUMBER%", dispatchNumber);
         }
 
         private string GetDetails()

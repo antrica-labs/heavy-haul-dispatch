@@ -5,7 +5,7 @@ using System.Text;
 
 namespace SingerDispatch.Printing
 {
-    class InvoiceRenderer : Renderer
+    class InvoiceRenderer : IRenderer
     {
         public string GenerateHTML(object invoice)
         {

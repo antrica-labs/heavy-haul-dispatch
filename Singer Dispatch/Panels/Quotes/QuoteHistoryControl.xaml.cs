@@ -42,6 +42,8 @@ namespace SingerDispatch.Panels.Quotes
             {
                 dgQuotes.ItemsSource = null;
             }
+
+            RefreshAddressesAndContacts();
         }
 
         protected override void SelectedCompanyChanged(Company newValue, Company oldValue)
@@ -54,15 +56,15 @@ namespace SingerDispatch.Panels.Quotes
 
         protected override void SelectedQuoteChanged(Quote newValue, Quote oldValue)
         {
-            base.SelectedQuoteChanged(newValue, oldValue);         
+            base.SelectedQuoteChanged(newValue, oldValue);
 
-            UpdateContactList();
+            RefreshAddressesAndContacts();
         }
                
         private void NewQuote_Click(object sender, RoutedEventArgs e)
         {
-            var list = (ObservableCollection<Quote>)dgQuotes.ItemsSource;            
-            var quote = new Quote { CreationDate = DateTime.Today, ExpirationDate = DateTime.Today.AddDays(30) };
+            var list = (ObservableCollection<Quote>)dgQuotes.ItemsSource;
+            var quote = new Quote { CreationDate = DateTime.Today, ExpirationDate = DateTime.Today.AddDays(30), Company = SelectedCompany };
 
             try
             {
@@ -91,7 +93,7 @@ namespace SingerDispatch.Panels.Quotes
 
         private void CareOfCompanies_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            UpdateContactList();           
+            RefreshAddressesAndContacts();           
         }
 
         private void CreateJob_Click(object sender, RoutedEventArgs e)
@@ -131,29 +133,22 @@ namespace SingerDispatch.Panels.Quotes
             }
         }
 
-        private void UpdateContactList()
-        {
-            List<Contact> contacts;
+        private void RefreshAddressesAndContacts()
+        {            
+            if (SelectedQuote != null)
+            {
+                var addressQuery = from a in Database.Addresses where a.Company == SelectedQuote.Company || a.Company == SelectedQuote.CareOfCompany select a;
 
-            if (SelectedQuote == null)
-            {
-                contacts = new List<Contact>();
-            }
-            else if (SelectedQuote.CareOfCompanyID != null)
-            {
-                contacts = (from c in Database.Contacts where c.Address.CompanyID == SelectedCompany.ID || c.Address.CompanyID == SelectedQuote.CareOfCompanyID select c).ToList();
+                cmbAddresses.ItemsSource = addressQuery.ToList();
+                cmbContacts.ItemsSource = (from c in Database.Contacts where addressQuery.Contains(c.Address) select c).ToList();
             }
             else
             {
-                contacts = (from c in Database.Contacts where c.Address.CompanyID == SelectedCompany.ID select c).ToList();
+                cmbAddresses.ItemsSource = null;
+                cmbContacts.ItemsSource = null;
             }
-
-            dgQuoteContacts.ItemsSource = null;
-            dgQuoteContacts.UpdateLayout();
-            dgQuoteContacts.MaxHeight = dgQuoteContacts.ActualHeight;
-            dgQuoteContacts.ItemsSource = contacts;
         }
-
+       
         private void ViewQuote_Click(object sender, RoutedEventArgs e)
         {
             if (SelectedQuote == null) return;

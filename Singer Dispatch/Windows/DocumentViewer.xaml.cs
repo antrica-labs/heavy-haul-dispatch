@@ -21,7 +21,7 @@ namespace SingerDispatch.Windows
 
         public void DisplayPrintout(object obj)
         {
-            Renderer renderer;
+            IRenderer renderer;
 
             if (obj is Quote)
                 renderer = new QuoteRenderer();

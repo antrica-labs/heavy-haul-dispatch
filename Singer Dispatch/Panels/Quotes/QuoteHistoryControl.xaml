@@ -5,17 +5,30 @@
                          xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                          xmlns:WPF="http://schemas.microsoft.com/wpf/2008/toolkit"
                          xmlns:Panels="clr-namespace:SingerDispatch.Panels"
-                         xmlns:Company="clr-namespace:SingerDispatch.Panels.Companies"    
+                         xmlns:Company="clr-namespace:SingerDispatch.Panels.Companies"
+                         x:Name="ThePanel"
                          Loaded="Control_Loaded" mc:Ignorable="d" d:DesignWidth="780">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/SingerDispatchDictionary.xaml" />
             </ResourceDictionary.MergedDictionaries>
+
+            <DataTemplate x:Key="AddressTemplate">
+                <TextBlock>
+                    <TextBlock.Text>
+                        <MultiBinding StringFormat="{}{0}, {1}, {2}">
+                            <Binding Path="Line1" />
+                            <Binding Path="City" />
+                            <Binding Path="PostalZip" />
+                        </MultiBinding>
+                    </TextBlock.Text>
+                </TextBlock>
+            </DataTemplate>
         </ResourceDictionary>
     </UserControl.Resources>
     <DockPanel>
-        <StackPanel DockPanel.Dock="Bottom">
+        <StackPanel DockPanel.Dock="Bottom">            
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
@@ -26,10 +39,10 @@
                 </Grid.ColumnDefinitions>
 
                 <Button Style="{StaticResource Horizontal}" Grid.Column="0" Click="NewQuote_Click">New quote</Button>
-                <Button Style="{StaticResource Horizontal}" Grid.Column="1" Click="CreateRevision_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgQuotes, Path=SelectedItem}">Create revision</Button>
-                <Button Style="{StaticResource Horizontal}" Grid.Column="2" Click="CreateJob_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgQuotes, Path=SelectedItem}">Convert to job</Button>
-                <Button Style="{StaticResource Horizontal}" Grid.Column="3" Click="ViewQuote_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgQuotes, Path=SelectedItem}">View quote</Button>
-                <Button Style="{StaticResource HorizontalEnd}" Grid.Column="4" Click="DeleteQuote_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgQuotes, Path=SelectedItem}">Delete quote</Button>
+                <Button Style="{StaticResource Horizontal}" Grid.Column="1" Click="CreateRevision_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=ThePanel, Path=SelectedQuote}">Create revision</Button>
+                <Button Style="{StaticResource Horizontal}" Grid.Column="2" Click="CreateJob_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=ThePanel, Path=SelectedQuote}">Convert to job</Button>
+                <Button Style="{StaticResource Horizontal}" Grid.Column="3" Click="ViewQuote_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=ThePanel, Path=SelectedQuote}">View quote</Button>
+                <Button Style="{StaticResource HorizontalEnd}" Grid.Column="4" Click="DeleteQuote_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=ThePanel, Path=SelectedQuote}">Delete quote</Button>
             </Grid>
 
             <Grid>
@@ -37,9 +50,13 @@
                     <ColumnDefinition />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
 
-                <StackPanel Grid.Column="0">
-                    <GroupBox Header="Quote Details" Margin="0,0,3,0" DataContext="{Binding ElementName=dgQuotes, Path=SelectedItem}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgQuotes, Path=SelectedItem}">
+                <StackPanel Grid.Column="0" Grid.Row="0" Grid.RowSpan="2">
+                    <GroupBox Header="Quote Details" Margin="0,0,3,0" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=ThePanel, Path=SelectedQuote}" DataContext="{Binding SelectedQuote}">
                         <StackPanel>
                             <Label>Project description</Label>
                             <TextBox Name="txtDescription" Style="{StaticResource MultiLine}" VerticalScrollBarVisibility="Hidden" Text="{Binding Description}"/>
@@ -83,35 +100,44 @@
                                 <Grid.RowDefinitions>
                                     <RowDefinition />
                                     <RowDefinition />
-                                    <RowDefinition />
-                                    <RowDefinition />
-                                </Grid.RowDefinitions>
+                                </Grid.RowDefinitions>                                
 
-                                <Label Grid.Row="0" Grid.Column="0">Creation date:</Label>
-                                <WPF:DatePicker Name="dpCreationDate" Grid.Row="1" Grid.Column="0" SelectedDate="{Binding CreationDate}" />
+                                <Label Grid.Row="0" Grid.Column="0">Start date:</Label>
+                                <WPF:DatePicker Name="dpStartDate" Grid.Row="1" Grid.Column="0" SelectedDate="{Binding StartDate}" />
 
-                                <Label Grid.Row="0" Grid.Column="1">Expiration date:</Label>
-                                <WPF:DatePicker Name="dpExpirationDate" Grid.Row="1" Grid.Column="1" SelectedDate="{Binding ExpirationDate}" />
-
-                                <Label Grid.Row="2" Grid.Column="0">Start date:</Label>
-                                <WPF:DatePicker Name="dpStartDate" Grid.Row="3" Grid.Column="0" SelectedDate="{Binding StartDate}" />
-
-                                <Label Grid.Row="2" Grid.Column="1">End date:</Label>
-                                <WPF:DatePicker Name="dpEndDate" Grid.Row="3" Grid.Column="1" SelectedDate="{Binding EndDate}" />
+                                <Label Grid.Row="0" Grid.Column="1">End date:</Label>
+                                <WPF:DatePicker Name="dpEndDate" Grid.Row="1" Grid.Column="1" SelectedDate="{Binding EndDate}" />
                             </Grid>
                         </StackPanel>
                     </GroupBox>
                 </StackPanel>
 
-                <GroupBox Header="Contact List" Grid.Column="1" Margin="3,0,0,0" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgQuotes, Path=SelectedItem}">
-                    <DockPanel>
-                        <Grid DockPanel.Dock="Bottom" DataContext="{Binding ElementName=dgQuoteContacts, Path=SelectedItem}">
+                <GroupBox Header="Quote Recipient" Grid.Column="1" Grid.Row="0" Margin="3,0,0,0" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=ThePanel, Path=SelectedQuote}" DataContext="{Binding SelectedQuote}">
+                    <StackPanel>
+                        <Grid Margin="0,4,0,5">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="65"/>
-                                <ColumnDefinition Width="2*"/>
-                                <ColumnDefinition Width="10"/>
-                                <ColumnDefinition Width="58"/>
-                                <ColumnDefinition Width="1.1*" />
+                                <ColumnDefinition Width="65" />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+
+                            <Label Grid.Column="0" Grid.Row="0">Address:</Label>
+                            <ComboBox Grid.Column="1" Grid.Row="0" Name="cmbAddresses" SelectedItem="{Binding BillingAddress}" ItemTemplate="{StaticResource AddressTemplate}" />
+
+                            <Label Grid.Column="0" Grid.Row="1">Name:</Label>
+                            <ComboBox Grid.Column="1" Grid.Row="1" Name="cmbContacts" SelectedItem="{Binding Contact}" ItemTemplate="{StaticResource SimpleNameTemplate}" />
+                        </Grid>
+
+                        <Grid DataContext="{Binding Contact}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="65" />
+                                <ColumnDefinition />
+                                <ColumnDefinition Width="10" />
+                                <ColumnDefinition Width="65" />
+                                <ColumnDefinition />
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
                                 <RowDefinition />
@@ -119,32 +145,45 @@
                                 <RowDefinition />
                             </Grid.RowDefinitions>
 
-                            <Label Grid.Column="0" Grid.Row="0">Name:</Label>
-                            <Label Grid.Column="1" Grid.Row="0" Content="{Binding Name}" />
+                            <Label Grid.Column="0" Grid.Row="0">Company:</Label>
+                            <Label Grid.Column="1" Grid.Row="0" Content="{Binding Address.Company.Name}" />
 
                             <Label Grid.Column="0" Grid.Row="1">Email:</Label>
                             <Label Grid.Column="1" Grid.Row="1" Content="{Binding Email}" />
 
-                            <Label Grid.Column="0" Grid.Row="2">Company:</Label>
-                            <Label Grid.Column="1" Grid.Row="2" Content="{Binding Address.Company.Name}" />
+                            <Label Grid.Column="0" Grid.Row="2">Phone 1:</Label>
+                            <Label Grid.Column="1" Grid.Row="2" Content="{Binding PrimaryPhone}" />
 
-                            <Label Grid.Column="3" Grid.Row="0">Phone 1:</Label>
-                            <Label Grid.Column="4" Grid.Row="0" Content="{Binding PrimaryPhone}" />
+                            <Label Grid.Column="3" Grid.Row="0">Phone 2:</Label>
+                            <Label Grid.Column="4" Grid.Row="0" Content="{Binding SecondaryPhone}" />
 
-                            <Label Grid.Column="3" Grid.Row="1">Phone 2:</Label>
-                            <Label Grid.Column="4" Grid.Row="1" Content="{Binding SecondaryPhone}" />
+                            <Label Grid.Column="3" Grid.Row="1">Fax:</Label>
+                            <Label Grid.Column="4" Grid.Row="1" Content="{Binding Fax}" />
 
-                            <Label Grid.Column="3" Grid.Row="2">Fax:</Label>
-                            <Label Grid.Column="4" Grid.Row="2" Content="{Binding Fax}" />
+                            <Label Grid.Column="3" Grid.Row="2">Preferred:</Label>
+                            <Label Grid.Column="4" Grid.Row="2" Content="{Binding PreferedContactMethod}" />
                         </Grid>
+                    </StackPanel>                   
+                </GroupBox>
 
-                        <WPF:DataGrid Name="dgQuoteContacts" Style="{StaticResource ListDisplay}" Margin="0,0,0,5">
-                            <WPF:DataGrid.Columns>
-                                <WPF:DataGridTextColumn Header="First" Binding="{Binding FirstName}" IsReadOnly="True" />
-                                <WPF:DataGridTextColumn Header="Last" Binding="{Binding LastName}" IsReadOnly="True" />
-                                <WPF:DataGridTextColumn Header="Company" Binding="{Binding Address.Company.Name}" IsReadOnly="True" />
-                            </WPF:DataGrid.Columns>
-                        </WPF:DataGrid>
+                <GroupBox Header="Quote Timeline" Grid.Column="1" Grid.Row="1" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=ThePanel, Path=SelectedQuote}" DataContext="{Binding SelectedQuote}">
+                    <DockPanel>
+                        <Grid DockPanel.Dock="Bottom">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+
+                            <Label Grid.Row="0" Grid.Column="0">Creation date:</Label>
+                            <WPF:DatePicker Grid.Row="1" Grid.Column="0" SelectedDate="{Binding CreationDate}" />
+
+                            <Label Grid.Row="0" Grid.Column="1">Expiration date:</Label>
+                            <WPF:DatePicker Grid.Row="1" Grid.Column="1" SelectedDate="{Binding ExpirationDate}" />
+                        </Grid>
                     </DockPanel>
                 </GroupBox>
             </Grid>

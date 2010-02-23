@@ -506,6 +506,8 @@ namespace SingerDispatch
 		
 		private EntitySet<Contact> _Contacts;
 		
+		private EntitySet<Quote> _Quotes;
+		
 		private EntitySet<Invoice> _Invoices;
 		
 		private EntityRef<AddressType> _AddressType;
@@ -547,6 +549,7 @@ namespace SingerDispatch
 		public Address()
 		{
 			this._Contacts = new EntitySet<Contact>(new Action<Contact>(this.attach_Contacts), new Action<Contact>(this.detach_Contacts));
+			this._Quotes = new EntitySet<Quote>(new Action<Quote>(this.attach_Quotes), new Action<Quote>(this.detach_Quotes));
 			this._Invoices = new EntitySet<Invoice>(new Action<Invoice>(this.attach_Invoices), new Action<Invoice>(this.detach_Invoices));
 			this._AddressType = default(EntityRef<AddressType>);
 			this._Company = default(EntityRef<Company>);
@@ -819,6 +822,19 @@ namespace SingerDispatch
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Address_Quote", Storage="_Quotes", ThisKey="ID", OtherKey="AddressID")]
+		public EntitySet<Quote> Quotes
+		{
+			get
+			{
+				return this._Quotes;
+			}
+			set
+			{
+				this._Quotes.Assign(value);
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Address_Invoice", Storage="_Invoices", ThisKey="ID", OtherKey="AddressID")]
 		public EntitySet<Invoice> Invoices
 		{
@@ -964,6 +980,18 @@ namespace SingerDispatch
 		{
 			this.SendPropertyChanging();
 			entity.Address = null;
+		}
+		
+		private void attach_Quotes(Quote entity)
+		{
+			this.SendPropertyChanging();
+			entity.BillingAddress = this;
+		}
+		
+		private void detach_Quotes(Quote entity)
+		{
+			this.SendPropertyChanging();
+			entity.BillingAddress = null;
 		}
 		
 		private void attach_Invoices(Invoice entity)
@@ -2491,6 +2519,8 @@ namespace SingerDispatch
 		
 		private string _Notes;
 		
+		private EntitySet<Quote> _Quotes;
+		
 		private EntitySet<ThirdPartyService> _ThirdPartyServices;
 		
 		private EntitySet<Invoice> _Invoices;
@@ -2529,6 +2559,7 @@ namespace SingerDispatch
 		
 		public Contact()
 		{
+			this._Quotes = new EntitySet<Quote>(new Action<Quote>(this.attach_Quotes), new Action<Quote>(this.detach_Quotes));
 			this._ThirdPartyServices = new EntitySet<ThirdPartyService>(new Action<ThirdPartyService>(this.attach_ThirdPartyServices), new Action<ThirdPartyService>(this.detach_ThirdPartyServices));
 			this._Invoices = new EntitySet<Invoice>(new Action<Invoice>(this.attach_Invoices), new Action<Invoice>(this.detach_Invoices));
 			this._Address = default(EntityRef<Address>);
@@ -2764,6 +2795,19 @@ namespace SingerDispatch
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Contact_Quote", Storage="_Quotes", ThisKey="ID", OtherKey="ContactID")]
+		public EntitySet<Quote> Quotes
+		{
+			get
+			{
+				return this._Quotes;
+			}
+			set
+			{
+				this._Quotes.Assign(value);
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Contact_ThirdPartyService", Storage="_ThirdPartyServices", ThisKey="ID", OtherKey="ContactID")]
 		public EntitySet<ThirdPartyService> ThirdPartyServices
 		{
@@ -2876,6 +2920,18 @@ namespace SingerDispatch
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
+		}
+		
+		private void attach_Quotes(Quote entity)
+		{
+			this.SendPropertyChanging();
+			entity.Contact = this;
+		}
+		
+		private void detach_Quotes(Quote entity)
+		{
+			this.SendPropertyChanging();
+			entity.Contact = null;
 		}
 		
 		private void attach_ThirdPartyServices(ThirdPartyService entity)
@@ -7926,6 +7982,10 @@ namespace SingerDispatch
 		
 		private System.Nullable<long> _CompanyID;
 		
+		private System.Nullable<long> _AddressID;
+		
+		private System.Nullable<long> _ContactID;
+		
 		private System.Nullable<int> _Number;
 		
 		private System.Nullable<int> _Revision;
@@ -7964,6 +8024,10 @@ namespace SingerDispatch
 		
 		private EntityRef<Company> _CareOfCompany;
 		
+		private EntityRef<Address> _BillingAddress;
+		
+		private EntityRef<Contact> _Contact;
+		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -7972,6 +8036,10 @@ namespace SingerDispatch
     partial void OnIDChanged();
     partial void OnCompanyIDChanging(System.Nullable<long> value);
     partial void OnCompanyIDChanged();
+    partial void OnAddressIDChanging(System.Nullable<long> value);
+    partial void OnAddressIDChanged();
+    partial void OnContactIDChanging(System.Nullable<long> value);
+    partial void OnContactIDChanged();
     partial void OnNumberChanging(System.Nullable<int> value);
     partial void OnNumberChanged();
     partial void OnRevisionChanging(System.Nullable<int> value);
@@ -8006,6 +8074,8 @@ namespace SingerDispatch
 			this._Employee = default(EntityRef<Employee>);
 			this._Company = default(EntityRef<Company>);
 			this._CareOfCompany = default(EntityRef<Company>);
+			this._BillingAddress = default(EntityRef<Address>);
+			this._Contact = default(EntityRef<Contact>);
 			OnCreated();
 		}
 		
@@ -8049,6 +8119,54 @@ namespace SingerDispatch
 					this._CompanyID = value;
 					this.SendPropertyChanged("CompanyID");
 					this.OnCompanyIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AddressID")]
+		public System.Nullable<long> AddressID
+		{
+			get
+			{
+				return this._AddressID;
+			}
+			set
+			{
+				if ((this._AddressID != value))
+				{
+					if (this._BillingAddress.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnAddressIDChanging(value);
+					this.SendPropertyChanging();
+					this._AddressID = value;
+					this.SendPropertyChanged("AddressID");
+					this.OnAddressIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ContactID")]
+		public System.Nullable<long> ContactID
+		{
+			get
+			{
+				return this._ContactID;
+			}
+			set
+			{
+				if ((this._ContactID != value))
+				{
+					if (this._Contact.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnContactIDChanging(value);
+					this.SendPropertyChanging();
+					this._ContactID = value;
+					this.SendPropertyChanged("ContactID");
+					this.OnContactIDChanged();
 				}
 			}
 		}
@@ -8444,6 +8562,74 @@ namespace SingerDispatch
 						this._CareOfCompanyID = default(Nullable<long>);
 					}
 					this.SendPropertyChanged("CareOfCompany");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Address_Quote", Storage="_BillingAddress", ThisKey="AddressID", OtherKey="ID", IsForeignKey=true)]
+		public Address BillingAddress
+		{
+			get
+			{
+				return this._BillingAddress.Entity;
+			}
+			set
+			{
+				Address previousValue = this._BillingAddress.Entity;
+				if (((previousValue != value) 
+							|| (this._BillingAddress.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._BillingAddress.Entity = null;
+						previousValue.Quotes.Remove(this);
+					}
+					this._BillingAddress.Entity = value;
+					if ((value != null))
+					{
+						value.Quotes.Add(this);
+						this._AddressID = value.ID;
+					}
+					else
+					{
+						this._AddressID = default(Nullable<long>);
+					}
+					this.SendPropertyChanged("BillingAddress");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Contact_Quote", Storage="_Contact", ThisKey="ContactID", OtherKey="ID", IsForeignKey=true)]
+		public Contact Contact
+		{
+			get
+			{
+				return this._Contact.Entity;
+			}
+			set
+			{
+				Contact previousValue = this._Contact.Entity;
+				if (((previousValue != value) 
+							|| (this._Contact.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Contact.Entity = null;
+						previousValue.Quotes.Remove(this);
+					}
+					this._Contact.Entity = value;
+					if ((value != null))
+					{
+						value.Quotes.Add(this);
+						this._ContactID = value.ID;
+					}
+					else
+					{
+						this._ContactID = default(Nullable<long>);
+					}
+					this.SendPropertyChanged("Contact");
 				}
 			}
 		}

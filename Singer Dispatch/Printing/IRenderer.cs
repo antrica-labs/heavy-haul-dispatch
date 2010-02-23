@@ -5,7 +5,7 @@ using System.Text;
 
 namespace SingerDispatch.Printing
 {
-    interface Renderer
+    interface IRenderer
     {
         string GenerateHTML(object entity);
     }

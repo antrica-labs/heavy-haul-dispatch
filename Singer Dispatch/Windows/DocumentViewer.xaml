@@ -10,16 +10,15 @@
         </ResourceDictionary>
     </Window.Resources>
     <DockPanel>
-        <Border DockPanel.Dock="Bottom" BorderBrush="LightGray" BorderThickness="0,1,0,0" Background="WhiteSmoke">
-            <Grid DockPanel.Dock="Bottom">
+        <Border DockPanel.Dock="Top" BorderBrush="LightGray" BorderThickness="0,0,0,1" Background="WhiteSmoke">
+            <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />                    
                     <ColumnDefinition />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
-
-                <Button Grid.Column="0" Margin="3" Click="Print_Click">Print</Button>
-                <Button Grid.Column="2" Margin="3" Click="PDF_Click">Save to PDF</Button>
+                
+                <Button Grid.Column="1" Margin="4" Click="PDF_Click">Save to PDF</Button>
             </Grid>
         </Border>
 

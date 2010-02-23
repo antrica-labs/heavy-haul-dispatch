@@ -197,7 +197,7 @@
     <Compile Include="Printing\InvoiceRenderer.cs" />
     <Compile Include="Printing\PDFizer.cs" />
     <Compile Include="Printing\QuoteRenderer.cs" />
-    <Compile Include="Printing\Renderer.cs" />
+    <Compile Include="Printing\IRenderer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -487,9 +487,7 @@
   <ItemGroup>
     <SplashScreen Include="Images\Splash.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Reporting\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="PDF\libeay32.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
