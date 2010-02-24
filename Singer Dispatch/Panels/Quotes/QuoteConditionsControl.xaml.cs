@@ -1,16 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Collections.ObjectModel;
 
 namespace SingerDispatch.Panels.Quotes
@@ -18,7 +8,7 @@ namespace SingerDispatch.Panels.Quotes
     /// <summary>
     /// Interaction logic for QuoteConditionsControl.xaml
     /// </summary>
-    public partial class QuoteConditionsControl : QuoteUserControl
+    public partial class QuoteConditionsControl
     {
         public SingerDispatchDataContext Database { get; set; }
 
@@ -45,8 +35,8 @@ namespace SingerDispatch.Panels.Quotes
             {
                 var cb = new CheckBox { Content = condition.Line, DataContext = condition, IsChecked = selected.Contains(condition) };
                 
-                cb.Checked += new RoutedEventHandler(CheckBox_Checked);
-                cb.Unchecked += new RoutedEventHandler(CheckBox_Unchecked);
+                cb.Checked += CheckBox_Checked;
+                cb.Unchecked += CheckBox_Unchecked;
 
                 list.Add(cb);
             }

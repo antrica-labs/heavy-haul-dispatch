@@ -30,7 +30,7 @@ namespace SingerDispatch
         {
             get
             {
-                return OperatingAs != null ? OperatingAs : Name;
+                return OperatingAs ?? Name;
             }
         }
     }
@@ -460,8 +460,8 @@ namespace SingerDispatch
             {
                 if (Equipment != null)
                     return "Unit: " + Equipment.UnitNumber;
-                else
-                    return "Unit: (undefined)";
+                
+                return "Unit: (undefined)";
             }
         }
     }

@@ -1,16 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Linq;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Collections.ObjectModel;
 using SingerDispatch.Controls;
 
@@ -19,7 +8,7 @@ namespace SingerDispatch.Panels.Admin
     /// <summary>
     /// Interaction logic for ConditionsControl.xaml
     /// </summary>
-    public partial class ConditionsControl : UserControl
+    public partial class ConditionsControl
     {
         public SingerDispatchDataContext Database { get; set; }
 
@@ -45,7 +34,7 @@ namespace SingerDispatch.Panels.Admin
                 }
                 catch (System.Exception ex)
                 {
-                    SingerDispatch.Windows.ErrorNoticeWindow.ShowError("Error while attempting write changes to database", ex.Message);
+                    Windows.ErrorNoticeWindow.ShowError("Error while attempting write changes to database", ex.Message);
                 }
             }
         }
@@ -80,7 +69,7 @@ namespace SingerDispatch.Panels.Admin
             }
             catch (System.Exception ex)
             {
-                SingerDispatch.Windows.ErrorNoticeWindow.ShowError("Error while attempting write changes to database", ex.Message);
+                Windows.ErrorNoticeWindow.ShowError("Error while attempting write changes to database", ex.Message);
             }
         }
     }

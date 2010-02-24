@@ -10,7 +10,6 @@ using SingerDispatch.Panels.Quotes;
 using SingerDispatch.Panels.Companies;
 using SingerDispatch.Panels.Jobs;
 using SingerDispatch.Panels.Invoicing;
-using SingerDispatch.Database;
 using System.Collections.Generic;
 using System;
 using System.Reflection;
@@ -25,7 +24,7 @@ namespace SingerDispatch
     /// </summary>
     public partial class MainWindow
     {
-        private Dictionary<System.Type, UserControl> Panels { get; set; }        
+        private Dictionary<Type, UserControl> Panels { get; set; }        
         private ObservableCollection<Company> Companies { get; set; }
         private SingerDispatchDataContext Database { get; set; }
 
@@ -37,7 +36,7 @@ namespace SingerDispatch
 
             try
             {
-                Panels = new Dictionary<System.Type, UserControl>();
+                Panels = new Dictionary<Type, UserControl>();
                 Database = SingerConstants.CommonDataContext;
                 Companies = new ObservableCollection<Company>();
 
@@ -55,24 +54,24 @@ namespace SingerDispatch
         private void SetupKeyBindings()
         {
             var cb1 = new CommandBinding(CustomCommands.QuoteLoookupCommand);
-            cb1.Executed += new ExecutedRoutedEventHandler(QuoteLoookupCommandHandler);
-            this.CommandBindings.Add(cb1);
+            cb1.Executed += QuoteLoookupCommandHandler;
+            CommandBindings.Add(cb1);
 
             var cb2 = new CommandBinding(CustomCommands.JobLookupCommand);
-            cb2.Executed += new ExecutedRoutedEventHandler(JobLookupCommandHandler);
-            this.CommandBindings.Add(cb2);
+            cb2.Executed += JobLookupCommandHandler;
+            CommandBindings.Add(cb2);
 
             var cb3 = new CommandBinding(CustomCommands.InvoiceLookupCommand);
-            cb3.Executed += new ExecutedRoutedEventHandler(InvoiceLookupCommandHandler);
-            this.CommandBindings.Add(cb3);
+            cb3.Executed += InvoiceLookupCommandHandler;
+            CommandBindings.Add(cb3);
 
             var cb4 = new CommandBinding(CustomCommands.CreateCompanyCommand);
-            cb4.Executed += new ExecutedRoutedEventHandler(CreateCompanyCommandHandler);
-            this.CommandBindings.Add(cb4);
+            cb4.Executed += CreateCompanyCommandHandler;
+            CommandBindings.Add(cb4);
 
             var cb5 = new CommandBinding(CustomCommands.EditCompaniesCommand);
-            cb5.Executed += new ExecutedRoutedEventHandler(EditCompaniesCommandHandler);
-            this.CommandBindings.Add(cb5);
+            cb5.Executed += EditCompaniesCommandHandler;
+            CommandBindings.Add(cb5);
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -146,7 +145,7 @@ namespace SingerDispatch
             }
         }
 
-        private void ExpandSection(Expander expander, System.Type panelType)
+        private void ExpandSection(Expander expander, Type panelType)
         {
             if (panelMainContent.Child.GetType() == panelType)
             {
@@ -179,8 +178,10 @@ namespace SingerDispatch
                 }
 
                 var binding = new Binding();
+
                 binding.ElementName = "cmbCompanies";
                 binding.Path = new PropertyPath(Selector.SelectedItemProperty);
+
                 panel.SetBinding(CompanyUserControl.SelectedCompanyProperty, binding);
                 
                 Panels.Add(panel.GetType(), panel);
@@ -322,7 +323,7 @@ namespace SingerDispatch
 
         private void FindQuote()
         {
-            var window = new QuoteLocatorWindow() { Owner = this };
+            var window = new QuoteLocatorWindow { Owner = this };
             var quote = window.GetQuote();
 
             if (quote != null)
@@ -333,7 +334,7 @@ namespace SingerDispatch
 
         private void FindJob()
         {
-            var window = new JobLocatorWindow() { Owner = this };
+            var window = new JobLocatorWindow { Owner = this };
             var job = window.GetJob();
 
             if (job != null)
@@ -344,7 +345,7 @@ namespace SingerDispatch
 
         private void FindInvoices()
         {
-            var window = new JobLocatorWindow() { Owner = this };
+            var window = new JobLocatorWindow { Owner = this };
             var job = window.GetJob();
 
             if (job != null)
@@ -366,7 +367,7 @@ namespace SingerDispatch
 
         private void EditCompanies()
         {
-            var window = new EditCompaniesWindow() { Owner = this };
+            var window = new EditCompaniesWindow { Owner = this };
             window.ShowDialog();
 
             cmbCompanies.SelectedItem = null;
@@ -381,7 +382,7 @@ namespace SingerDispatch
 
         private void MenuItem_Click(object sender, RoutedEventArgs e)
         {
-            var viewer = new SingerDispatch.Windows.DocumentViewer();
+            var viewer = new Windows.DocumentViewer();
             viewer.DisplayPrintout(new Dispatch());
         }
 

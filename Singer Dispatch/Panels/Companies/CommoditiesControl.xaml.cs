@@ -1,6 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
+using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using SingerDispatch.Controls;
 
@@ -9,7 +10,7 @@ namespace SingerDispatch.Panels.Companies
     /// <summary>
     /// Interaction logic for CommoditiesControl.xaml
     /// </summary>
-    public partial class CommoditiesControl : CompanyUserControl
+    public partial class CommoditiesControl
     {
         private CommandBinding SaveCommand { get; set; }
 
@@ -26,7 +27,7 @@ namespace SingerDispatch.Panels.Companies
 
         private void Control_Loaded(object sender, RoutedEventArgs e)
         {
-            SaveCommand.Executed += new ExecutedRoutedEventHandler(CommitChanges_Executed);
+            SaveCommand.Executed += CommitChanges_Executed;
         }
 
         protected override void SelectedCompanyChanged(Company newValue, Company oldValue)
@@ -70,25 +71,15 @@ namespace SingerDispatch.Panels.Companies
                 }
                 catch (System.Exception ex)
                 {
-                    SingerDispatch.Windows.ErrorNoticeWindow.ShowError("Error while attempting write changes to database", ex.Message);
+                    Windows.ErrorNoticeWindow.ShowError("Error while attempting write changes to database", ex.Message);
                 }
             }
-        }
-
-        private void CreateNewCommodity(Company company)
-        {
-            var commodity = new Commodity();
-            
-            SelectedCompany.Commodities.Add(commodity);            
-            ((ObservableCollection<Commodity>)dgCommodities.ItemsSource).Add(commodity);
-
-            dgCommodities.SelectedItem = commodity;
         }
 
         private void CommitChanges_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             CommitChangesButton.Focus();
-            CommitChangesButton.RaiseEvent(new System.Windows.RoutedEventArgs(System.Windows.Controls.Button.ClickEvent, CommitChangesButton));
+            CommitChangesButton.RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent, CommitChangesButton));
         }
 
         private void SaveCommodity_Click(object sender, RoutedEventArgs e)
@@ -99,7 +90,7 @@ namespace SingerDispatch.Panels.Companies
             }
             catch (System.Exception ex)
             {
-                SingerDispatch.Windows.ErrorNoticeWindow.ShowError("Error while attempting write changes to database", ex.Message);
+                Windows.ErrorNoticeWindow.ShowError("Error while attempting write changes to database", ex.Message);
             }
         }        
 

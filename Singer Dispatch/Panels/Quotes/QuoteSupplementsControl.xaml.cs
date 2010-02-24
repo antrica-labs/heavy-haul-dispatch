@@ -8,7 +8,7 @@ namespace SingerDispatch.Panels.Quotes
     /// <summary>
     /// Interaction logic for QuoteSupplements.xaml
     /// </summary>
-    public partial class QuoteSupplementsControl : QuoteUserControl
+    public partial class QuoteSupplementsControl
     {
         public SingerDispatchDataContext Database { get; set; }
 

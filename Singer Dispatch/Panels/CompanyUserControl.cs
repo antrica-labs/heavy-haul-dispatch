@@ -5,7 +5,7 @@ namespace SingerDispatch.Panels
 {
     public class CompanyUserControl : UserControl
     {
-        public static DependencyProperty SelectedCompanyProperty = DependencyProperty.Register("SelectedCompany", typeof(Company), typeof(CompanyUserControl), new PropertyMetadata(null, CompanyUserControl.SelectedCompanyPropertyChanged));
+        public static DependencyProperty SelectedCompanyProperty = DependencyProperty.Register("SelectedCompany", typeof(Company), typeof(CompanyUserControl), new PropertyMetadata(null, SelectedCompanyPropertyChanged));
 
         public Company SelectedCompany
         {
@@ -21,7 +21,7 @@ namespace SingerDispatch.Panels
 
         public static void SelectedCompanyPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            CompanyUserControl control = (CompanyUserControl)d;
+            var control = (CompanyUserControl)d;
 
             control.SelectedCompanyChanged((Company)e.NewValue, (Company)e.OldValue);
         }

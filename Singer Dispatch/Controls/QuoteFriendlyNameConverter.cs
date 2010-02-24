@@ -11,8 +11,8 @@ namespace SingerDispatch.Controls
             {
                 if ((int)values[0] != 0)
                     return String.Format("{0} rev. {1}", values[0], values[1]);
-                else
-                    return "--";
+                
+                return "--";
             }
             catch
             {

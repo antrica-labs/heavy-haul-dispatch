@@ -4,7 +4,7 @@ namespace SingerDispatch.Panels
 {
     public class QuoteUserControl : CompanyUserControl
     {       
-        public static DependencyProperty SelectedQuoteProperty = DependencyProperty.Register("SelectedQuote", typeof(Quote), typeof(QuoteUserControl), new PropertyMetadata(null, QuoteUserControl.SelectedQuotePropertyChanged));
+        public static DependencyProperty SelectedQuoteProperty = DependencyProperty.Register("SelectedQuote", typeof(Quote), typeof(QuoteUserControl), new PropertyMetadata(null, SelectedQuotePropertyChanged));
 
         public Quote SelectedQuote
         {

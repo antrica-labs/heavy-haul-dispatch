@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Data;
 using System.Collections.ObjectModel;
 using SingerDispatch.Controls;
@@ -11,7 +11,7 @@ namespace SingerDispatch.Panels.Admin
     /// <summary>
     /// Interaction logic for TrailerCombinationsControl.xaml
     /// </summary>
-    public partial class TrailerCombinationsControl : UserControl
+    public partial class TrailerCombinationsControl
     {
         public SingerDispatchDataContext Database { get; set; }
         public IEnumerable<Rate> Rates { get; set; }
@@ -52,8 +52,10 @@ namespace SingerDispatch.Panels.Admin
             {
                 combination.Rate = (from r in Database.Rates select r).First();
             }
-            catch
-            {}
+            catch (Exception ex)
+            {
+                Console.Error.WriteLine(ex);
+            }
 
             Database.TrailerCombinations.InsertOnSubmit(combination);
             list.Insert(0, combination);
@@ -77,9 +79,9 @@ namespace SingerDispatch.Panels.Admin
             {
                 Database.SubmitChanges();
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
-                SingerDispatch.Windows.ErrorNoticeWindow.ShowError("Error while attempting write changes to database", ex.Message);
+                Windows.ErrorNoticeWindow.ShowError("Error while attempting write changes to database", ex.Message);
             }
         }
 
@@ -91,9 +93,9 @@ namespace SingerDispatch.Panels.Admin
                 {
                     Database.SubmitChanges();
                 }
-                catch (System.Exception ex)
+                catch (Exception ex)
                 {
-                    SingerDispatch.Windows.ErrorNoticeWindow.ShowError("Error while attempting write changes to database", ex.Message);
+                    Windows.ErrorNoticeWindow.ShowError("Error while attempting write changes to database", ex.Message);
                 }
             }
         }        

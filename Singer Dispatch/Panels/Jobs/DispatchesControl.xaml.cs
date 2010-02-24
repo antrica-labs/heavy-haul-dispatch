@@ -1,14 +1,13 @@
 ﻿using System.Linq;
 using System.Windows;
 using System.Collections.ObjectModel;
-using SingerDispatch.Printing;
 
 namespace SingerDispatch.Panels.Jobs
 {
     /// <summary>
     /// Interaction logic for DispatchesControl.xaml
     /// </summary>
-    public partial class DispatchesControl : JobUserControl
+    public partial class DispatchesControl
     {
         public SingerDispatchDataContext Database { get; set; }
 
@@ -64,7 +63,7 @@ namespace SingerDispatch.Panels.Jobs
         {
             if (dgDispatches.SelectedItem == null) return;
 
-            var viewer = new SingerDispatch.Windows.DocumentViewer();
+            var viewer = new Windows.DocumentViewer();
             viewer.DisplayPrintout(dgDispatches.SelectedItem);
         }
 

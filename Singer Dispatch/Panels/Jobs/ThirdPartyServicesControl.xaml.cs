@@ -8,7 +8,7 @@ namespace SingerDispatch.Panels.Jobs
     /// <summary>
     /// Interaction logic for ThirdPartyServicesControl.xaml
     /// </summary>
-    public partial class ThirdPartyServicesControl : JobUserControl
+    public partial class ThirdPartyServicesControl
     {
         public SingerDispatchDataContext Database { get; set; }
 
@@ -53,7 +53,7 @@ namespace SingerDispatch.Panels.Jobs
         private void NewService_Click(object sender, RoutedEventArgs e)
         {
             var list = (ObservableCollection<ThirdPartyService>)dgServices.ItemsSource;
-            var service = new ThirdPartyService() { JobID = SelectedJob.ID };
+            var service = new ThirdPartyService { JobID = SelectedJob.ID };
 
             SelectedJob.ThirdPartyServices.Add(service);
             list.Add(service);

@@ -8,7 +8,7 @@ namespace SingerDispatch.Panels.Quotes
     /// <summary>
     /// Interaction logic for StoragQuoteStorageControleControl.xaml
     /// </summary>
-    public partial class QuoteStorageControl : QuoteUserControl
+    public partial class QuoteStorageControl
     {
         public SingerDispatchDataContext Database { get; set; }
 
@@ -37,7 +37,7 @@ namespace SingerDispatch.Panels.Quotes
         private void NewStorageItem_Click(object sender, RoutedEventArgs e)
         {
             var list = (ObservableCollection<QuoteStorageItem>)dgStorageList.ItemsSource;
-            var item = new QuoteStorageItem() { QuoteID = SelectedQuote.ID };
+            var item = new QuoteStorageItem { QuoteID = SelectedQuote.ID };
 
             SelectedQuote.QuoteStorageItems.Add(item);
             list.Add(item);

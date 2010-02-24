@@ -5,22 +5,22 @@ namespace SingerDispatch.Windows
     /// <summary>
     /// Interaction logic for ErrorNoticeWindow.xaml
     /// </summary>
-    public partial class ErrorNoticeWindow : Window
+    public partial class ErrorNoticeWindow
     {
         public string Heading { get; set; }
         public string Message { get; set; }
         
         public ErrorNoticeWindow(string heading, string message)
         {
-            this.Heading = heading;
-            this.Message = message;
+            Heading = heading;
+            Message = message;
 
             InitializeComponent();
         }
 
         private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            Close();
         }
 
         public static void ShowError(string heading, string message)

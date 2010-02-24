@@ -29,23 +29,21 @@ namespace SingerDispatch.Printing
             File.Delete(source);
         }
 
-
-        private static int RandomNumber(int min, int max)
+        public static int RandomNumber(int min, int max)
         {
             var random = new Random();
 
             return random.Next(min, max);
         }
 
-        private static string RandomString(int size, bool lowerCase)
+        public static string RandomString(int size, bool lowerCase)
         {
             var builder = new StringBuilder();
             var random = new Random();
-            char ch;
 
-            for (int i = 0; i < size; i++)
+            for (var i = 0; i < size; i++)
             {
-                ch = Convert.ToChar(Convert.ToInt32(Math.Floor(26 * random.NextDouble() + 65)));
+                var ch = Convert.ToChar(Convert.ToInt32(Math.Floor(26 * random.NextDouble() + 65)));
                 builder.Append(ch);
             }
 

@@ -158,7 +158,7 @@
 				<ColumnDefinition />
 			</Grid.ColumnDefinitions>
 						
-			<WPF:DataGrid Name="dgAddresses" Grid.Column="0" Margin="0,0,3,0" Style="{StaticResource ListDisplay}" SelectionChanged="dgAddresses_SelectionChanged">
+			<WPF:DataGrid Name="dgAddresses" Grid.Column="0" Margin="0,0,3,0" Style="{StaticResource ListDisplay}" SelectionChanged="Addresses_SelectionChanged">
                 <WPF:DataGrid.Columns>
                     <WPF:DataGridTextColumn Header="Type" Binding="{Binding AddressType.Name}" IsReadOnly="True" />
                     <WPF:DataGridTextColumn Header="Address" Width="1.5*" Binding="{Binding Line1}" />

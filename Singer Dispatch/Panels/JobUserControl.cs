@@ -4,7 +4,7 @@ namespace SingerDispatch.Panels
 {
     public class JobUserControl : CompanyUserControl
     {
-        public static DependencyProperty SelectedJobProperty = DependencyProperty.Register("SelectedJob", typeof(Job), typeof(JobUserControl), new PropertyMetadata(null, JobUserControl.SelectedJobPropertyChanged));
+        public static DependencyProperty SelectedJobProperty = DependencyProperty.Register("SelectedJob", typeof(Job), typeof(JobUserControl), new PropertyMetadata(null, SelectedJobPropertyChanged));
 
         public Job SelectedJob
         {

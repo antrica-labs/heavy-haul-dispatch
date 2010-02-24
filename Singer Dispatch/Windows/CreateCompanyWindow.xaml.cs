@@ -10,7 +10,7 @@ namespace SingerDispatch.Windows
     /// <summary>
     /// Interaction logic for CreateCompany.xaml
     /// </summary>
-    public partial class CreateCompanyWindow : Window
+    public partial class CreateCompanyWindow
     {
         private Company Company { get; set; }
         private Address Address { get; set; }
@@ -60,9 +60,9 @@ namespace SingerDispatch.Windows
 
                 Close();
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
-                SingerDispatch.Windows.ErrorNoticeWindow.ShowError("Error while building the database", ex.Message);
+                ErrorNoticeWindow.ShowError("Error while building the database", ex.Message);
             }
         }
 
@@ -71,7 +71,7 @@ namespace SingerDispatch.Windows
             CreateCompanyHandler();
         }        
 
-        private void Window_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        private void Window_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Escape)
             {

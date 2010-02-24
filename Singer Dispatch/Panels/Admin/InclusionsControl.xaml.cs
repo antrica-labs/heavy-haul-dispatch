@@ -1,16 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using SingerDispatch.Controls;
 using System.Collections.ObjectModel;
 
@@ -19,7 +9,7 @@ namespace SingerDispatch.Panels.Admin
     /// <summary>
     /// Interaction logic for InclusionsControl.xaml
     /// </summary>
-    public partial class InclusionsControl : UserControl
+    public partial class InclusionsControl
     {
         public SingerDispatchDataContext Database { get; set; }
 
@@ -43,9 +33,9 @@ namespace SingerDispatch.Panels.Admin
                 {
                     Database.SubmitChanges();
                 }
-                catch (System.Exception ex)
+                catch (Exception ex)
                 {
-                    SingerDispatch.Windows.ErrorNoticeWindow.ShowError("Error while attempting write changes to database", ex.Message);
+                    Windows.ErrorNoticeWindow.ShowError("Error while attempting write changes to database", ex.Message);
                 }
             }
         }
@@ -53,12 +43,12 @@ namespace SingerDispatch.Panels.Admin
         private void NewInclusion_Click(object sender, RoutedEventArgs e)
         {
             var list = (ObservableCollection<Inclusion>)TheGrid.ItemsSource;
-            var Inclusion = new Inclusion();
+            var inclusion = new Inclusion();
 
-            Database.Inclusions.InsertOnSubmit(Inclusion);
-            list.Add(Inclusion);
-            TheGrid.SelectedItem = Inclusion;
-            TheGrid.ScrollIntoView(Inclusion);
+            Database.Inclusions.InsertOnSubmit(inclusion);
+            list.Add(inclusion);
+            TheGrid.SelectedItem = inclusion;
+            TheGrid.ScrollIntoView(inclusion);
 
             DataGridHelper.GetCell(TheGrid, TheGrid.SelectedIndex, 0).Focus();
         }
@@ -66,20 +56,20 @@ namespace SingerDispatch.Panels.Admin
         private void RemoveInclusion_Click(object sender, RoutedEventArgs e)
         {
             var list = (ObservableCollection<Inclusion>)TheGrid.ItemsSource;
-            var Inclusion = (Inclusion)TheGrid.SelectedItem;
+            var inclusion = (Inclusion)TheGrid.SelectedItem;
 
-            if (Inclusion == null) return;
+            if (inclusion == null) return;
 
             try
             {
-                list.Remove(Inclusion);
-                Database.Inclusions.DeleteOnSubmit(Inclusion);
+                list.Remove(inclusion);
+                Database.Inclusions.DeleteOnSubmit(inclusion);
 
                 Database.SubmitChanges();
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
-                SingerDispatch.Windows.ErrorNoticeWindow.ShowError("Error while attempting write changes to database", ex.Message);
+                Windows.ErrorNoticeWindow.ShowError("Error while attempting write changes to database", ex.Message);
             }
         }
     }

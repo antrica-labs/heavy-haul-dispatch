@@ -2,14 +2,13 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Collections.ObjectModel;
-using System;
 
 namespace SingerDispatch.Panels.Quotes
 {
     /// <summary>
     /// Interaction logic for QuoteCommoditiesControl.xaml
     /// </summary>
-    public partial class QuoteCommoditiesControl : QuoteUserControl
+    public partial class QuoteCommoditiesControl
     {
         public SingerDispatchDataContext Database { get; set; }
 
@@ -37,10 +36,7 @@ namespace SingerDispatch.Panels.Quotes
             var original = (Commodity)cmbCommodityName.SelectedItem;
             var commodity = (QuoteCommodity)dgQuoteCommodities.SelectedItem;
 
-            if (commodity == null)
-                return;
-            else if (commodity.OriginalCommodity == original)
-                return;
+            if (commodity == null || commodity.OriginalCommodity == original) return;
 
             if (original != null)
             {

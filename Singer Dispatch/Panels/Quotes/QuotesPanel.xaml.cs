@@ -1,15 +1,15 @@
 ﻿using System.Windows;
+using System.Windows.Controls.Primitives;
 using SingerDispatch.Database;
 using System.Windows.Input;
 using SingerDispatch.Controls;
-using System.Windows.Automation.Peers;
 
 namespace SingerDispatch.Panels.Quotes
 {
     /// <summary>
     /// Interaction logic for QuotesPanel.xaml
     /// </summary>
-    public partial class QuotesPanel : QuoteUserControl
+    public partial class QuotesPanel
     {
         private CommandBinding SaveCommand { get; set; }
 
@@ -27,7 +27,7 @@ namespace SingerDispatch.Panels.Quotes
 
         private void Control_Loaded(object sender, RoutedEventArgs e)
         {               
-            SaveCommand.Executed += new ExecutedRoutedEventHandler(CommitQuoteChanges_Executed);
+            SaveCommand.Executed += CommitQuoteChanges_Executed;
         }
 
         protected override void SelectedCompanyChanged(Company newValue, Company oldValue)
@@ -47,20 +47,10 @@ namespace SingerDispatch.Panels.Quotes
             Tabs.SelectedIndex = 0;
         }
       
-        private void DiscardQuoteChanges_Click(object sender, RoutedEventArgs e)
-        {
-            MessageBoxResult confirmation = MessageBox.Show("Are you sure you want to discard all changes made to this quote?", "Discard confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
-
-            if (confirmation != MessageBoxResult.Yes) return;
-            
-            SelectedQuote = null;            
-            Tabs.SelectedIndex = 0;
-        }
-
         private void CommitQuoteChanges_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             CommitChangesButton.Focus();
-            CommitChangesButton.RaiseEvent(new System.Windows.RoutedEventArgs(System.Windows.Controls.Button.ClickEvent, CommitChangesButton));
+            CommitChangesButton.RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent, CommitChangesButton));
         }
 
         private void CommitQuoteChanges_Click(object sender, RoutedEventArgs e)
@@ -91,7 +81,7 @@ namespace SingerDispatch.Panels.Quotes
             }
             catch (System.Exception ex)
             {
-                SingerDispatch.Windows.ErrorNoticeWindow.ShowError("Error while attempting write changes to database", ex.Message);
+                Windows.ErrorNoticeWindow.ShowError("Error while attempting write changes to database", ex.Message);
             }
         }
 

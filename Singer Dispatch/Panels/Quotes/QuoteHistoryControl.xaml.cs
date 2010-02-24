@@ -3,7 +3,6 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Collections.ObjectModel;
-using System.Collections.Generic;
 using SingerDispatch.Database;
 using SingerDispatch.Windows;
 
@@ -12,7 +11,7 @@ namespace SingerDispatch.Panels.Quotes
     /// <summary>
     /// Interaction logic for QuoteHistoryControl.xaml
     /// </summary>
-    public partial class QuoteHistoryControl : QuoteUserControl
+    public partial class QuoteHistoryControl
     {
         public SingerDispatchDataContext Database { get; set; }
 
@@ -70,7 +69,10 @@ namespace SingerDispatch.Panels.Quotes
             {
                 quote.Employee = (from emp in Database.Employees where emp.FirstName == "Dan" && emp.LastName == "Klassen" select emp).First();
             }
-            catch { }
+            catch (Exception ex)
+            {
+                Console.Error.WriteLine(ex);
+            }
 
             list.Insert(0, quote);
             dgQuotes.SelectedItem = quote;
@@ -114,9 +116,12 @@ namespace SingerDispatch.Panels.Quotes
 
             try
             {
-                job.JobStatusType = (JobStatusType)(from s in Database.JobStatusTypes where s.Name == "Pending" select s).First();
+                job.JobStatusType = (from s in Database.JobStatusTypes where s.Name == "Pending" select s).First();
             }
-            catch { }
+            catch (Exception ex)
+            {
+                Console.Error.WriteLine(ex);
+            }
 
             SelectedCompany.Jobs.Add(job);
             Database.Jobs.InsertOnSubmit(job);
@@ -127,9 +132,9 @@ namespace SingerDispatch.Panels.Quotes
 
                 window.ViewJob(job);
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
-                SingerDispatch.Windows.ErrorNoticeWindow.ShowError("Error while attempting write changes to database", ex.Message);
+                ErrorNoticeWindow.ShowError("Error while attempting write changes to database", ex.Message);
             }
         }
 
@@ -153,7 +158,7 @@ namespace SingerDispatch.Panels.Quotes
         {
             if (SelectedQuote == null) return;
 
-            var viewer = new SingerDispatch.Windows.DocumentViewer();
+            var viewer = new Windows.DocumentViewer();
             viewer.DisplayPrintout(SelectedQuote);
         }
 
@@ -170,9 +175,9 @@ namespace SingerDispatch.Panels.Quotes
 
                 Database.SubmitChanges();
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
-                SingerDispatch.Windows.ErrorNoticeWindow.ShowError("Error while attempting write changes to database", ex.Message);
+                ErrorNoticeWindow.ShowError("Error while attempting write changes to database", ex.Message);
             }
         }
     }

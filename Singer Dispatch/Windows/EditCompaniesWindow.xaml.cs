@@ -6,7 +6,7 @@ namespace SingerDispatch.Windows
     /// <summary>
     /// Interaction logic for EditCompanies.xaml
     /// </summary>
-    public partial class EditCompaniesWindow : Window
+    public partial class EditCompaniesWindow
     {
         public SingerDispatchDataContext Database { get; set; }
 
@@ -35,7 +35,7 @@ namespace SingerDispatch.Windows
             }
             catch (System.Exception ex)
             {
-                SingerDispatch.Windows.ErrorNoticeWindow.ShowError("Error while attempting write changes to database", ex.Message);
+                ErrorNoticeWindow.ShowError("Error while attempting write changes to database", ex.Message);
             }
         }
     }

@@ -7,7 +7,7 @@ namespace SingerDispatch.Panels.Jobs
     /// <summary>
     /// Interaction logic for PermitsControl.xaml
     /// </summary>
-    public partial class PermitsControl : JobUserControl
+    public partial class PermitsControl
     {
         public SingerDispatchDataContext Database { get; set; }
 
@@ -33,7 +33,7 @@ namespace SingerDispatch.Panels.Jobs
         private void NewPermit_Click(object sender, RoutedEventArgs e)
         {
             var list = (ObservableCollection<Permit>)dgPermits.ItemsSource;
-            var permit = new Permit() { JobID = SelectedJob.ID };
+            var permit = new Permit { JobID = SelectedJob.ID };
 
             SelectedJob.Permits.Add(permit);
             list.Add(permit);

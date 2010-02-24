@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using System.Windows;
-using System.Windows.Controls;
 using System.Collections.ObjectModel;
+using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using SingerDispatch.Controls;
 
@@ -10,7 +10,7 @@ namespace SingerDispatch.Panels.Admin
     /// <summary>
     /// Interaction logic for EmployeesControl.xaml
     /// </summary>
-    public partial class EmployeesControl : UserControl
+    public partial class EmployeesControl
     {
         private CommandBinding SaveCommand { get; set; }
 
@@ -26,7 +26,7 @@ namespace SingerDispatch.Panels.Admin
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            SaveCommand.Executed += new ExecutedRoutedEventHandler(CommitChanges_Executed);
+            SaveCommand.Executed += CommitChanges_Executed;
             
             dgEmployees.ItemsSource = new ObservableCollection<Employee>(from emp in Database.Employees select emp);            
         }
@@ -71,7 +71,7 @@ namespace SingerDispatch.Panels.Admin
             }
             catch (System.Exception ex)
             {
-                SingerDispatch.Windows.ErrorNoticeWindow.ShowError("Error while attempting write changes to database", ex.Message);
+                Windows.ErrorNoticeWindow.ShowError("Error while attempting write changes to database", ex.Message);
             }
         }
 
@@ -83,14 +83,14 @@ namespace SingerDispatch.Panels.Admin
             }
             catch (System.Exception ex)
             {
-                SingerDispatch.Windows.ErrorNoticeWindow.ShowError("Error while attempting write changes to database", ex.Message);
+                Windows.ErrorNoticeWindow.ShowError("Error while attempting write changes to database", ex.Message);
             }
         }
 
         private void CommitChanges_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             CommitChangesButton.Focus();
-            CommitChangesButton.RaiseEvent(new System.Windows.RoutedEventArgs(System.Windows.Controls.Button.ClickEvent, CommitChangesButton));
+            CommitChangesButton.RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent, CommitChangesButton));
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System;
+using System.Text;
 
 namespace SingerDispatch.Printing
 {
@@ -48,7 +49,7 @@ namespace SingerDispatch.Printing
 
         private string GetStyles()
         {
-            string content = @"
+            const string content = @"
                 <style type=""text/css"">
                     /***** RESET DEFAULT BROWSER STYLES *****/
                     html, body, div, span, applet, object, iframe,
@@ -328,7 +329,7 @@ namespace SingerDispatch.Printing
 
         private string GetHeader(string dispatchNumber)
         {           
-            string content = @"
+            const string content = @"
                 <div id=""header"">
                     <table>
                         <tr>
@@ -352,14 +353,24 @@ namespace SingerDispatch.Printing
                 </div>
             ";
 
-            var img = "file:///" + System.IO.Path.Combine(System.IO.Path.GetDirectoryName(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName), @"Images\Header.png");
+            string img;
+
+            try
+            {
+                img = "file:///" + System.IO.Path.Combine(System.IO.Path.GetDirectoryName(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName), @"Images\Header.png");                    
+            }
+            catch (Exception)
+            {
+                img = "";
+            }
+            
                         
             return content.Replace("%HEADER_IMG%", img).Replace("%DISPATCH_NUMBER%", dispatchNumber);
         }
 
         private string GetDetails()
         {
-            string content = @"
+            const string content = @"
                 <div id=""details"">
                     <table id=""dispatch_info"">
                         <tr>
@@ -411,7 +422,7 @@ namespace SingerDispatch.Printing
 
         private string GetDescription(string description)
         {
-            string content = @"
+            const string content = @"
                 <div id=""description"" class=""section"">
                     <span class=""heading"">Dispatch Description</span>
                     
@@ -424,7 +435,7 @@ namespace SingerDispatch.Printing
 
         private string GetEquipment()
         {
-            string content = @"
+            const string content = @"
                 <div id=""equipment_requirements"" class=""section"">
                     <span class=""heading"">Equipment Required Information</span>
                     
@@ -436,7 +447,7 @@ namespace SingerDispatch.Printing
 
         private string GetSchedule()
         {
-            string content = @"
+            const string content = @"
                 <div id=""schuedule"" class=""section"">
                     <span class=""heading"">Dispatch Schedule</span>
                     
@@ -449,7 +460,7 @@ namespace SingerDispatch.Printing
 
         private string GetLoadInstructions()
         {
-            string content = @"
+            const string content = @"
                 <div id=""load_and_unload"" class=""section"">
                     <span class=""heading"">Load/Unload Information</span>
                     
@@ -656,7 +667,7 @@ namespace SingerDispatch.Printing
 
         private string GetDimensions()
         {
-            string content = @"
+            const string content = @"
                 <div id=""dimensions"" class=""section"">
                     <span class=""heading"">Dimensional Information</span>
                     
@@ -724,7 +735,7 @@ namespace SingerDispatch.Printing
 
         private string GetTractors()
         {
-            string content = @"
+            const string content = @"
                 <div id=""tractors"" class=""section"">
                     <span class=""heading"">Tractors (Singer Service)</span>
                     
@@ -767,7 +778,7 @@ namespace SingerDispatch.Printing
 
         private string GetSingerPilots()
         {
-            string content = @"
+            const string content = @"
                 <div id=""other_equipment"" class=""section"">
                     <span class=""heading"">Pilot Car and Other Equipment (Singer Service)</span>
                     
@@ -801,7 +812,7 @@ namespace SingerDispatch.Printing
 
         private string GetThirdPartyPilots()
         {
-            string content = @"
+            const string content = @"
                 <div id=""third_party_pilot"" class=""section"">
                     <span class=""heading"">Pilot Car (Thrid Party)</span>
                 </div>
@@ -812,7 +823,7 @@ namespace SingerDispatch.Printing
 
         private string GetThridPartyServices()
         {
-            string content = @"
+            const string content = @"
                 <div id=""thid_party_services"" class=""section"">
                     <span class=""heading"">Third Party Services</span>
                     
@@ -853,7 +864,7 @@ namespace SingerDispatch.Printing
 
         private string GetWireLiftInfo()
         {
-            string content = @"
+            const string content = @"
                 <div id=""wire_lifts"" class=""section"">
                     <span class=""heading"">Wire Lift Information</span>
                     
@@ -931,7 +942,7 @@ namespace SingerDispatch.Printing
 
         private string GetPermits()
         {
-            string content = @"
+            const string content = @"
                 <div id=""permits"" class=""section"">
                     <span class=""heading"">Permit Information</span>
                     
@@ -999,7 +1010,7 @@ namespace SingerDispatch.Printing
 
         private string GetOtherInfo()
         {
-            string content = @"
+            const string content = @"
                 <div id=""other_info"" class=""section"">
                     <span class=""heading"">Other Information</span>
                 </div>

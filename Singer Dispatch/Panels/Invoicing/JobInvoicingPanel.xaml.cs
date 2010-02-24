@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Linq;
+using System.Windows.Controls.Primitives;
 using SingerDispatch.Database;
 using System.Windows.Input;
 using SingerDispatch.Controls;
@@ -9,7 +10,7 @@ namespace SingerDispatch.Panels.Invoicing
     /// <summary>
     /// Interaction logic for JobInvoicingPanel.xaml
     /// </summary>
-    public partial class JobInvoicingPanel : InvoiceUserControl
+    public partial class JobInvoicingPanel
     {
         private CommandBinding SaveCommand { get; set; }
 
@@ -29,7 +30,7 @@ namespace SingerDispatch.Panels.Invoicing
 
         private void Panel_Loaded(object sender, RoutedEventArgs e)
         {
-            SaveCommand.Executed += new ExecutedRoutedEventHandler(CommitJobChanges_Executed);
+            SaveCommand.Executed += CommitJobChanges_Executed;
 
             RefreshJobList();
         }
@@ -41,20 +42,9 @@ namespace SingerDispatch.Panels.Invoicing
             RefreshJobList();
         }
 
-        protected override void SelectedJobChanged(Job newValue, Job oldValue)
-        {
-            base.SelectedJobChanged(newValue, oldValue);
-
-        }
-
         private void RefreshJobList()
         {
             cmbJobList.ItemsSource = (SelectedCompany == null) ? null : from j in Database.Jobs where j.Company == SelectedCompany orderby j.Number select j;
-        }
-
-        private void cmbJobList_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
-        {
-            
         }
 
         private void CommitInvoiceChanges_Click(object sender, RoutedEventArgs e)
@@ -79,14 +69,14 @@ namespace SingerDispatch.Panels.Invoicing
             }
             catch (System.Exception ex)
             {
-                SingerDispatch.Windows.ErrorNoticeWindow.ShowError("Error while attempting write changes to database", ex.Message);
+                Windows.ErrorNoticeWindow.ShowError("Error while attempting write changes to database", ex.Message);
             }
         }
 
         private void CommitJobChanges_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             CommitChangesButton.Focus();
-            CommitChangesButton.RaiseEvent(new System.Windows.RoutedEventArgs(System.Windows.Controls.Button.ClickEvent, CommitChangesButton));
+            CommitChangesButton.RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent, CommitChangesButton));
         }
     }
 }

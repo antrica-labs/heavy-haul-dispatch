@@ -3,7 +3,7 @@
     /// <summary>
     /// Interaction logic for CompaniesPanel.xaml
     /// </summary>
-    public partial class CompaniesPanel : CompanyUserControl
+    public partial class CompaniesPanel
     {
         public CompaniesPanel()
         {

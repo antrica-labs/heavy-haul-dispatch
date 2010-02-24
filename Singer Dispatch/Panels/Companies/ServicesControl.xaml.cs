@@ -3,6 +3,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Collections.ObjectModel;
+using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using SingerDispatch.Controls;
 
@@ -11,7 +12,7 @@ namespace SingerDispatch.Panels.Companies
     /// <summary>
     /// Interaction logic for ServicesControl.xaml
     /// </summary>
-    public partial class ServicesControl : CompanyUserControl
+    public partial class ServicesControl
     {
         private CommandBinding SaveCommand { get; set; }
 
@@ -31,7 +32,7 @@ namespace SingerDispatch.Panels.Companies
 
         private void ControlLoaded(object sender, RoutedEventArgs e)
         {
-            SaveCommand.Executed += new ExecutedRoutedEventHandler(CommitChanges_Executed);
+            SaveCommand.Executed += CommitChanges_Executed;
 
             var list = (ObservableCollection<CheckBox>)TheList.ItemsSource;
 
@@ -46,8 +47,8 @@ namespace SingerDispatch.Panels.Companies
             {
                 var cb = new CheckBox { Content = type.Name, DataContext = type, IsChecked = selected.Contains(type) };
 
-                cb.Checked += new RoutedEventHandler(CheckBox_Checked);
-                cb.Unchecked += new RoutedEventHandler(CheckBox_Unchecked);
+                cb.Checked += CheckBox_Checked;
+                cb.Unchecked += CheckBox_Unchecked;
 
                 list.Add(cb);
             }
@@ -83,7 +84,7 @@ namespace SingerDispatch.Panels.Companies
         private void CommitChanges_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             CommitChangesButton.Focus();
-            CommitChangesButton.RaiseEvent(new System.Windows.RoutedEventArgs(System.Windows.Controls.Button.ClickEvent, CommitChangesButton));
+            CommitChangesButton.RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent, CommitChangesButton));
         }
 
         private void UpdateServices_Click(object sender, RoutedEventArgs e)
@@ -94,7 +95,7 @@ namespace SingerDispatch.Panels.Companies
             }
             catch (System.Exception ex)
             {
-                SingerDispatch.Windows.ErrorNoticeWindow.ShowError("Error while attempting write changes to database", ex.Message);
+                Windows.ErrorNoticeWindow.ShowError("Error while attempting write changes to database", ex.Message);
             }
         }
     }

@@ -11,7 +11,7 @@ namespace SingerDispatch.Panels.Companies
     /// <summary>
     /// Interaction logic for AddressesAndContactsControl.xaml
     /// </summary>
-    public partial class AddressesAndContactsControl : CompanyUserControl
+    public partial class AddressesAndContactsControl
     {
         private CommandBinding SaveCommand { get; set; }
 
@@ -31,7 +31,7 @@ namespace SingerDispatch.Panels.Companies
 
         private void Control_Loaded(object sender, RoutedEventArgs e)
         {            
-            SaveCommand.Executed += new ExecutedRoutedEventHandler(CommitChanges_Executed);
+            SaveCommand.Executed += CommitChanges_Executed;
 
             cmbProvinceOrState.ItemsSource = from p in Database.ProvincesAndStates orderby p.CountryID, p.Name select p;
             cmbContactType.ItemsSource = from ct in Database.ContactTypes select ct;
@@ -58,9 +58,9 @@ namespace SingerDispatch.Panels.Companies
             }
         }
 
-        private void dgAddresses_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void Addresses_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var control = (Microsoft.Windows.Controls.DataGrid)sender;
+            var control = (DataGrid)sender;
             var address = (Address)control.SelectedItem;
 
             dgContacts.ItemsSource = (address == null) ? null : new ObservableCollection<Contact>(from c in Database.Contacts where c.AddressID == address.ID orderby c.LastName select c);
@@ -91,7 +91,7 @@ namespace SingerDispatch.Panels.Companies
             }
             catch (System.Exception ex)
             {
-                SingerDispatch.Windows.ErrorNoticeWindow.ShowError("Error while attempting write changes to database", ex.Message);
+                Windows.ErrorNoticeWindow.ShowError("Error while attempting write changes to database", ex.Message);
             }
         }
 
@@ -120,7 +120,7 @@ namespace SingerDispatch.Panels.Companies
             }
             catch (System.Exception ex)
             {
-                SingerDispatch.Windows.ErrorNoticeWindow.ShowError("Error while attempting write changes to database", ex.Message);
+                Windows.ErrorNoticeWindow.ShowError("Error while attempting write changes to database", ex.Message);
             }
         }
 
@@ -164,7 +164,7 @@ namespace SingerDispatch.Panels.Companies
             }
             catch (System.Exception ex)
             {
-                SingerDispatch.Windows.ErrorNoticeWindow.ShowError("Error while attempting write changes to database", ex.Message);
+                Windows.ErrorNoticeWindow.ShowError("Error while attempting write changes to database", ex.Message);
             }
         }
 
@@ -176,7 +176,7 @@ namespace SingerDispatch.Panels.Companies
             }
             catch (System.Exception ex)
             {
-                SingerDispatch.Windows.ErrorNoticeWindow.ShowError("Error while attempting write changes to database", ex.Message);
+                Windows.ErrorNoticeWindow.ShowError("Error while attempting write changes to database", ex.Message);
             }
         }
     }

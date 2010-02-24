@@ -4,8 +4,8 @@ namespace SingerDispatch.Printing
 {
     class PDFizer
     {
-        private static string PDF_COMMAND = @"PDF\wkhtmltopdf.exe";
-        private static string PDF_ARGS = @"-s Letter ""%HTML_FILE%"" ""%PDF_FILE%""";
+        private const string PDF_COMMAND = @"PDF\wkhtmltopdf.exe";
+        private const string PDF_ARGS = @"-s Letter ""%HTML_FILE%"" ""%PDF_FILE%""";
 
         public void SaveHTMLToPDF(string html, string filename)
         {
@@ -42,7 +42,7 @@ namespace SingerDispatch.Printing
 
         private void ExecuteCommandSync(string command, string arguments)
         {
-            System.Diagnostics.Process process = new System.Diagnostics.Process();
+            var process = new System.Diagnostics.Process();
 
             process.StartInfo.FileName = command;
             process.StartInfo.Arguments = arguments;
@@ -53,7 +53,7 @@ namespace SingerDispatch.Printing
 
             process.Start();
 
-            string output = process.StandardOutput.ReadToEnd();
+            process.StandardOutput.ReadToEnd();
 
             //Wait for process to finish
             process.WaitForExit();

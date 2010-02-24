@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Documents;
 using System.Collections.ObjectModel;
 using SingerDispatch.Database;
 
@@ -11,7 +10,7 @@ namespace SingerDispatch.Panels.Jobs
     /// <summary>
     /// Interaction logic for JobHistoryControl.xaml
     /// </summary>
-    public partial class JobHistoryControl : JobUserControl
+    public partial class JobHistoryControl
     {
         public SingerDispatchDataContext Database { get; set; }
         public JobStatusType DefaultJobStatus { get; set; }
@@ -22,7 +21,7 @@ namespace SingerDispatch.Panels.Jobs
 
             Database = SingerConstants.CommonDataContext;
 
-            DefaultJobStatus = (JobStatusType)(from s in Database.JobStatusTypes where s.Name == "Pending" select s).First();
+            DefaultJobStatus = (from s in Database.JobStatusTypes where s.Name == "Pending" select s).First();
         }
 
         private void ControlLoaded(object sender, RoutedEventArgs e)
@@ -135,7 +134,7 @@ namespace SingerDispatch.Panels.Jobs
             }
             catch (System.Exception ex)
             {
-                SingerDispatch.Windows.ErrorNoticeWindow.ShowError("Error while attempting write changes to database", ex.Message);
+                Windows.ErrorNoticeWindow.ShowError("Error while attempting write changes to database", ex.Message);
             }
         }
     }

@@ -8,7 +8,7 @@ namespace SingerDispatch.Panels.Jobs
     /// <summary>
     /// Interaction logic for LoadsControl.xaml
     /// </summary>
-    public partial class LoadsControl : JobUserControl
+    public partial class LoadsControl
     {
         public SingerDispatchDataContext Database { get; set; }
 
@@ -99,7 +99,7 @@ namespace SingerDispatch.Panels.Jobs
             }
 
             var rates = from r in Database.Rates where r.RateType.Name == "Trailer" select r;
-            var discount = company.RateAdjustment != null ? company.RateAdjustment : 0.00m;
+            var discount = company.RateAdjustment ?? 0.00m;
             var enterprise = company.Type == "M.E. Signer Enterprise";
 
             foreach (var rate in rates)

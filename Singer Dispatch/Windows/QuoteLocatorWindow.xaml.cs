@@ -10,7 +10,7 @@ namespace SingerDispatch.Windows
     /// <summary>
     /// Interaction logic for QuoteLocatorWindow.xaml
     /// </summary>
-    public partial class QuoteLocatorWindow : Window
+    public partial class QuoteLocatorWindow
     {
         private Quote LocatedQuote { get; set; }
 

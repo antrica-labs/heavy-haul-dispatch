@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using System.Windows.Controls.Primitives;
 using SingerDispatch.Database;
 using SingerDispatch.Controls;
 using System.Windows.Input;
@@ -8,7 +9,7 @@ namespace SingerDispatch.Panels.Jobs
     /// <summary>
     /// Interaction logic for JobsPanel.xaml
     /// </summary>
-    public partial class JobsPanel : JobUserControl
+    public partial class JobsPanel
     {
         private CommandBinding SaveCommand { get; set; }
 
@@ -26,7 +27,7 @@ namespace SingerDispatch.Panels.Jobs
 
         private void Control_Loaded(object sender, RoutedEventArgs e)
         {            
-            SaveCommand.Executed += new ExecutedRoutedEventHandler(CommitJobChanges_Executed);
+            SaveCommand.Executed += CommitJobChanges_Executed;
         }
 
         protected override void SelectedCompanyChanged(Company newValue, Company oldValue)
@@ -64,14 +65,14 @@ namespace SingerDispatch.Panels.Jobs
             }
             catch (System.Exception ex)
             {
-                SingerDispatch.Windows.ErrorNoticeWindow.ShowError("Error while attempting write changes to database", ex.Message);
+                Windows.ErrorNoticeWindow.ShowError("Error while attempting write changes to database", ex.Message);
             }
         }
 
         private void CommitJobChanges_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             CommitChangesButton.Focus();
-            CommitChangesButton.RaiseEvent(new System.Windows.RoutedEventArgs(System.Windows.Controls.Button.ClickEvent, CommitChangesButton));
+            CommitChangesButton.RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent, CommitChangesButton));
         }
     }
 }

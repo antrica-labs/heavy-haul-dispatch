@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Data;
 using System.Collections.ObjectModel;
 using SingerDispatch.Controls;
@@ -10,7 +9,7 @@ namespace SingerDispatch.Panels.Admin
     /// <summary>
     /// Interaction logic for RatesControl.xaml
     /// </summary>
-    public partial class RatesControl : UserControl
+    public partial class RatesControl
     {
         public SingerDispatchDataContext Database { get; set; }
       
@@ -70,7 +69,7 @@ namespace SingerDispatch.Panels.Admin
             }
             catch (System.Exception ex)
             {
-                SingerDispatch.Windows.ErrorNoticeWindow.ShowError("Error while attempting write changes to database", ex.Message);
+                Windows.ErrorNoticeWindow.ShowError("Error while attempting write changes to database", ex.Message);
             }
         }
 
@@ -84,7 +83,7 @@ namespace SingerDispatch.Panels.Admin
                 }
                 catch (System.Exception ex)
                 {
-                    SingerDispatch.Windows.ErrorNoticeWindow.ShowError("Error while attempting write changes to database", ex.Message);
+                    Windows.ErrorNoticeWindow.ShowError("Error while attempting write changes to database", ex.Message);
                 }
             }
         }        

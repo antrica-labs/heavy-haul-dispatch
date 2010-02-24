@@ -10,7 +10,7 @@ namespace SingerDispatch.Windows
     /// <summary>
     /// Interaction logic for JobLocatorWindow.xaml
     /// </summary>
-    public partial class JobLocatorWindow : Window
+    public partial class JobLocatorWindow
     {
         private Job LocatedJob { get; set; }
 
@@ -30,13 +30,14 @@ namespace SingerDispatch.Windows
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Escape)
+            switch (e.Key)
             {
-                Close();
-            }
-            else if (e.Key == Key.Enter)
-            {
-                FindJob();
+                case Key.Escape:
+                    Close();
+                    break;
+                case Key.Enter:
+                    FindJob();
+                    break;
             }
         }
 

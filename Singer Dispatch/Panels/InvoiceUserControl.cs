@@ -4,7 +4,7 @@ namespace SingerDispatch.Panels
 {
     public class InvoiceUserControl : JobUserControl
     {
-        public static DependencyProperty SelectedInvoiceProperty = DependencyProperty.Register("SelectedInvoice", typeof(Invoice), typeof(InvoiceUserControl), new PropertyMetadata(null, InvoiceUserControl.SelectedInvoicePropertyChanged));
+        public static DependencyProperty SelectedInvoiceProperty = DependencyProperty.Register("SelectedInvoice", typeof(Invoice), typeof(InvoiceUserControl), new PropertyMetadata(null, SelectedInvoicePropertyChanged));
 
         public Invoice SelectedInvoice
         {
@@ -21,7 +21,7 @@ namespace SingerDispatch.Panels
 
         public static void SelectedInvoicePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            InvoiceUserControl control = (InvoiceUserControl)d;
+            var control = (InvoiceUserControl)d;
 
             control.SelectedInvoiceChanged((Invoice)e.NewValue, (Invoice)e.OldValue);
         }

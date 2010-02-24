@@ -76,8 +76,8 @@ namespace SingerDispatch.Windows
         {
             try
             {
-                IHTMLDocument2 document = TheBrowser.Document as IHTMLDocument2;
-                RegistryKey psKey = Registry.CurrentUser.CreateSubKey("SOFTWARE\\MICROSOFT\\Internet Explorer\\PageSetup");
+                var document = (IHTMLDocument2)TheBrowser.Document;
+                var psKey = Registry.CurrentUser.CreateSubKey("SOFTWARE\\MICROSOFT\\Internet Explorer\\PageSetup");
 
                 var font = psKey.GetValue("font");
                 var header = psKey.GetValue("header");

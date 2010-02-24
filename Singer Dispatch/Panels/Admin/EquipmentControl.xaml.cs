@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Collections.ObjectModel;
+using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using SingerDispatch.Controls;
 
@@ -10,7 +11,7 @@ namespace SingerDispatch.Panels.Admin
     /// <summary>
     /// Interaction logic for EquipmentControl.xaml
     /// </summary>
-    public partial class EquipmentControl : UserControl
+    public partial class EquipmentControl
     {
         private CommandBinding SaveCommand { get; set; }
 
@@ -28,7 +29,7 @@ namespace SingerDispatch.Panels.Admin
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            SaveCommand.Executed += new ExecutedRoutedEventHandler(CommitChanges_Executed);
+            SaveCommand.Executed += CommitChanges_Executed;
 
             cmbEmployees.ItemsSource = from emp in Database.Employees orderby emp.FirstName select emp;            
             dgEquipment.ItemsSource = new ObservableCollection<Equipment>(from equip in Database.Equipment select equip);            
@@ -72,7 +73,7 @@ namespace SingerDispatch.Panels.Admin
             }
             catch (System.Exception ex)
             {
-                SingerDispatch.Windows.ErrorNoticeWindow.ShowError("Error while attempting to remove equipment", ex.Message);
+                Windows.ErrorNoticeWindow.ShowError("Error while attempting to remove equipment", ex.Message);
             }
 
         }
@@ -86,7 +87,7 @@ namespace SingerDispatch.Panels.Admin
             }
             catch (System.Exception ex)
             {
-                SingerDispatch.Windows.ErrorNoticeWindow.ShowError("Error while attempting to save equipment", ex.Message);
+                Windows.ErrorNoticeWindow.ShowError("Error while attempting to save equipment", ex.Message);
             }
         }
 
@@ -107,7 +108,7 @@ namespace SingerDispatch.Panels.Admin
         private void CommitChanges_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             CommitChangesButton.Focus();
-            CommitChangesButton.RaiseEvent(new System.Windows.RoutedEventArgs(System.Windows.Controls.Button.ClickEvent, CommitChangesButton));
+            CommitChangesButton.RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent, CommitChangesButton));
         }
         
     }
