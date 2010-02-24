@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="SingerDispatch.Panels.Admin.ConditionsControl"
+﻿<UserControl x:Class="SingerDispatch.Panels.Admin.InclusionsControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -14,20 +14,20 @@
         </ResourceDictionary>
     </UserControl.Resources>
     <DockPanel>
-		<Grid DockPanel.Dock="Bottom">
+        <Grid DockPanel.Dock="Bottom">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
                 <ColumnDefinition />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
 
-            <Button Style="{StaticResource Horizontal}" Grid.Column="0" Click="NewCondition_Click">New condition</Button>
-            <Button Style="{StaticResource HorizontalEnd}" Grid.Column="2" Click="RemoveCondition_Click">Remove condition</Button>
+            <Button Style="{StaticResource Horizontal}" Grid.Column="0" Click="NewInclusion_Click">New inclusion</Button>
+            <Button Style="{StaticResource HorizontalEnd}" Grid.Column="2" Click="RemoveInclusion_Click">Remove inclusion</Button>
         </Grid>
-	
+
         <WPF:DataGrid Name="TheGrid" Style="{StaticResource ListDisplay}" IsReadOnly="False" RowEditEnding="RowEditEnding">
             <WPF:DataGrid.Columns>
-                <WPF:DataGridTextColumn Header="Condition" Binding="{Binding Line}" />
+                <WPF:DataGridTextColumn Header="Inclusion" Binding="{Binding Line}" />
             </WPF:DataGrid.Columns>
         </WPF:DataGrid>
     </DockPanel>

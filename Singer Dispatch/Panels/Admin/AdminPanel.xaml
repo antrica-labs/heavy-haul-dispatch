@@ -20,6 +20,9 @@
             <TabItem Header="Equipment">
                 <Admin:EquipmentControl />
             </TabItem>
+            <TabItem Header="Inclusions">
+                <Admin:InclusionsControl />
+            </TabItem>
             <TabItem Header="Conditions">
                 <Admin:ConditionsControl />
             </TabItem>

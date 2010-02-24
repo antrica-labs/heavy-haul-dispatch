@@ -116,6 +116,9 @@
     <Compile Include="Panels\Admin\EquipmentControl.xaml.cs">
       <DependentUpon>EquipmentControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Panels\Admin\InclusionsControl.xaml.cs">
+      <DependentUpon>InclusionsControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Panels\Admin\RatesControl.xaml.cs">
       <DependentUpon>RatesControl.xaml</DependentUpon>
     </Compile>
@@ -299,6 +302,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Panels\Admin\InclusionsControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Panels\Admin\RatesControl.xaml">
       <Generator>MSBuild:Compile</Generator>
