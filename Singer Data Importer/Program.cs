@@ -1,33 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data;
+using System.Data.OleDb;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
-using System.Data.OleDb;
 using SingerDispatch;
-using System.Data.SqlClient;
-using System.Configuration;
 
 namespace SingerDispatch.Importer
 {
     public class Program
     {   
-        private Dictionary<string, CompanyPriorityLevel> PriorityLevels;
-        private Dictionary<bool?, string> CompanyTypes;
-        private Dictionary<string, ProvincesAndState> ProvincesAndStates;
-        private Dictionary<string, AddressType> AddressTypes;
-        private Dictionary<string, ContactType> ContactTypes;
+        private Dictionary<string, CompanyPriorityLevel> PriorityLevels { get; set; }
+        private Dictionary<bool?, string> CompanyTypes { get; set; }
+        private Dictionary<string, ProvincesAndState> ProvincesAndStates { get; set; }
+        private Dictionary<string, AddressType> AddressTypes { get; set; }
+        private Dictionary<string, ContactType> ContactTypes { get; set; }
 
-        private Dictionary<int?, Address> NewAddresses;
+        private Dictionary<int?, Address> NewAddresses { get; set; }
 
         static void Main(string[] args)
         {
-            Program prog = new Program();            
+            var prog = new Program();            
             prog.Run();
         }
-
-        public Program()
-        {            
-        }        
 
         public void Run()
         {
@@ -71,7 +68,7 @@ namespace SingerDispatch.Importer
             Console.ReadKey(true);
         }
 
-        private void CleanDatabase()
+        private static void CleanDatabase()
         {   
             using (var connection = new SqlConnection(ConfigurationManager.ConnectionStrings["NewDBConnectionParameters"].ConnectionString))
             {
@@ -127,6 +124,7 @@ namespace SingerDispatch.Importer
 
 
             CompanyTypes = new Dictionary<bool?, string>();
+
             CompanyTypes.Add(true, "Singer Specialized");
             CompanyTypes.Add(false, "M.E. Signer Enterprise");
 
@@ -188,11 +186,11 @@ namespace SingerDispatch.Importer
             context.SubmitChanges();
         }
 
-        private List<Inclusion> ImportInclusions(OleDbConnection connection)
+        private static List<Inclusion> ImportInclusions(OleDbConnection connection)
         {
             var inclusions = new List<Inclusion>();
 
-            var select = "SELECT * FROM tbl_OptionType";
+            const string select = "SELECT * FROM tbl_OptionType";
             using (var command = new OleDbCommand(select, connection))
             {
                 using (var reader = command.ExecuteReader())
@@ -209,11 +207,11 @@ namespace SingerDispatch.Importer
             return inclusions;
         }
 
-        private List<Condition> ImportConditions(OleDbConnection connection)
+        private static List<Condition> ImportConditions(OleDbConnection connection)
         {
             var conditions = new List<Condition>();
 
-            var select = "SELECT * FROM tbl_QuoteConditionType";
+            const string select = "SELECT * FROM tbl_QuoteConditionType";
             using (var command = new OleDbCommand(select, connection))
             {
                 using (var reader = command.ExecuteReader())
@@ -234,7 +232,7 @@ namespace SingerDispatch.Importer
         {
             var companies = new List<Company>();
 
-            var select = "SELECT c.*, n.companyNoteNotes FROM tbl_Company AS c LEFT JOIN tbl_CompanyNotes AS n ON c.companyId = n.companyId";
+            const string select = "SELECT c.*, n.companyNoteNotes FROM tbl_Company AS c LEFT JOIN tbl_CompanyNotes AS n ON c.companyId = n.companyId";
             using (var command = new OleDbCommand(select, connection))
             {
                 using (var reader = command.ExecuteReader())
@@ -250,9 +248,8 @@ namespace SingerDispatch.Importer
             return companies;
         }
 
-        private Company CreateCompanyFromRow(OleDbConnection connection, OleDbDataReader reader)
+        private Company CreateCompanyFromRow(OleDbConnection connection, IDataRecord reader)
         {
-            String sql;
             var company = new Company();
 
             company.ArchiveID = (int)reader["companyId"];
@@ -262,6 +259,7 @@ namespace SingerDispatch.Importer
             company.AvailableCredit = reader["companyCreditLimit"] == DBNull.Value ? null : (decimal?)reader["companyCreditLimit"];
             company.EquifaxComplete = reader["companyIsCreditApproved"] == DBNull.Value ? null : (bool?)reader["companyIsCreditApproved"];
             company.Notes = reader["companyNoteNotes"] == DBNull.Value ? null : (string)reader["companyNoteNotes"];
+
             var priorityLevel = reader["companyPriorityType"] == DBNull.Value ? null : (string)reader["companyPriorityType"];
             var isSingerCustomer = reader["companyIsBillFromSpecialized"] == DBNull.Value ? null : (bool?)reader["companyIsBillFromSpecialized"];
                         
@@ -279,8 +277,8 @@ namespace SingerDispatch.Importer
             
 
             // Add all addresses for this company
-            sql = String.Format("SELECT a.*, c.cityName, c.provinceAbr AS cityProvinceAbr FROM tbl_Address a LEFT JOIN tbl_City c ON a.cityId = c.cityId WHERE a.companyId = {0} AND a.addressIsValid = 1", company.ArchiveID);
-            using (var command = new OleDbCommand(sql, connection))
+            var addressSql = String.Format("SELECT a.*, c.cityName, c.provinceAbr AS cityProvinceAbr FROM tbl_Address a LEFT JOIN tbl_City c ON a.cityId = c.cityId WHERE a.companyId = {0} AND a.addressIsValid = 1", company.ArchiveID);
+            using (var command = new OleDbCommand(addressSql, connection))
             {
                 using (var innerReader = command.ExecuteReader())
                 {
@@ -297,14 +295,14 @@ namespace SingerDispatch.Importer
 
             // Add any existing contacts to this company
             //sql = String.Format("SELECT c.*, t.contactType FROM tbl_Contact c LEFT JOIN join_tbl_Contact_ContactType t ON c.contactId = t.contactId WHERE companyId = {0}", company.ArchiveID);
-            sql = String.Format("SELECT * from tbl_Contact WHERE companyId = {0}", company.ArchiveID);
-            using (var command = new OleDbCommand(sql, connection))
+            var contactSql = String.Format("SELECT * from tbl_Contact WHERE companyId = {0}", company.ArchiveID);
+            using (var command = new OleDbCommand(contactSql, connection))
             {
                 using (var innerReader = command.ExecuteReader())
                 {
                     while (innerReader.Read())
                     {
-                        var contact = CreateContactFromRow(connection, innerReader);
+                        var contact = CreateContactFromRow(innerReader);
 
                         if (contact != null)
                         {
@@ -319,7 +317,10 @@ namespace SingerDispatch.Importer
 
                                 contact.Address.Contacts.Add(contact);
                             }
-                            catch { }
+                            catch (Exception ex)
+                            {
+                                Console.Error.Write(ex);
+                            }
                         }   
 
                     }
@@ -328,14 +329,14 @@ namespace SingerDispatch.Importer
 
 
             // Add all recorded commodities for this company
-            sql = String.Format("SELECT * FROM tbl_Commodity WHERE companyId = {0}", company.ArchiveID);
-            using (var command = new OleDbCommand(sql, connection))
+            var commoditySql = String.Format("SELECT * FROM tbl_Commodity WHERE companyId = {0}", company.ArchiveID);
+            using (var command = new OleDbCommand(commoditySql, connection))
             {
                 using (var innerReader = command.ExecuteReader())
                 {
                     while (innerReader.Read())
                     {
-                        var commodity = CreateCommodityFromRow(connection, innerReader);
+                        var commodity = CreateCommodityFromRow(innerReader);
 
                         if (commodity != null)
                             company.Commodities.Add(commodity);
@@ -346,7 +347,7 @@ namespace SingerDispatch.Importer
             return company;
         }
 
-        private Address CreateAddressFromRow(OleDbConnection connection, OleDbDataReader reader)
+        private Address CreateAddressFromRow(OleDbConnection connection, IDataRecord reader)
         {
             if (reader["addressLine1"] == DBNull.Value)
                 return null;
@@ -364,10 +365,8 @@ namespace SingerDispatch.Importer
             address.Fax = reader["addressFax"] == DBNull.Value ? null : (string)reader["addressFax"];
             address.Notes = reader["addressNote"] == DBNull.Value ? null : (string)reader["addressNote"];
 
-            var provinceAbbr = reader["cityProvinceAbr"] == DBNull.Value ? null : (string)reader["cityProvinceAbr"];
-
-            if (provinceAbbr == null)
-                provinceAbbr = reader["provinceAbr"] == DBNull.Value ? null : (string)reader["provinceAbr"];
+            var provinceAbbr = (reader["cityProvinceAbr"] == DBNull.Value ? null : (string)reader["cityProvinceAbr"]) ??
+                               (reader["provinceAbr"] == DBNull.Value ? null : (string)reader["provinceAbr"]);
 
             if (provinceAbbr != null)
             {
@@ -405,12 +404,15 @@ namespace SingerDispatch.Importer
             {
                 NewAddresses.Add(address.ArchiveID, address);
             }
-            catch { }
+            catch (Exception ex)
+            {
+                Console.Error.WriteLine(ex);
+            }
             
             return address;
         }
 
-        private Contact CreateContactFromRow(OleDbConnection connection, OleDbDataReader reader)
+        private Contact CreateContactFromRow(IDataRecord reader)
         {
             var contact = new Contact();
 
@@ -427,16 +429,11 @@ namespace SingerDispatch.Importer
             {
                 contact.Address = reader["addressId"] == DBNull.Value ? null : NewAddresses[(int?)reader["addressId"]];
             }
-            catch { }
-
-            /*
-            try
+            catch (Exception ex)
             {
-                contact.TypeID = reader["contactType"] == DBNull.Value ? (long?)null : ContactTypes[(string)reader["contactType"]].ID;
+                Console.Error.WriteLine(ex);
             }
-            catch { }
-            */
-
+            
             var pext = reader["contactPrimaryPhoneExt"] == DBNull.Value ? null : (string)reader["contactPrimaryPhoneExt"];
             if (pext != null)
                 contact.PrimaryPhone += " ext. " + pext;
@@ -452,7 +449,7 @@ namespace SingerDispatch.Importer
             return contact;
         }
 
-        private Commodity CreateCommodityFromRow(OleDbConnection connection, OleDbDataReader reader)
+        private static Commodity CreateCommodityFromRow(IDataRecord reader)
         {
             if (reader["commodityName"] == DBNull.Value)
                 return null;
@@ -465,27 +462,23 @@ namespace SingerDispatch.Importer
             commodity.Unit = reader["commodityUnitNum"] == DBNull.Value ? null : (string)reader["commodityUnitNum"];
             commodity.Owner = reader["commodityOwner"] == DBNull.Value ? null : (string)reader["commodityOwner"];
             commodity.LastLocation = reader["commodityLastKnownLocation"] == DBNull.Value ? null : (string)reader["commodityLastKnownLocation"];
-            commodity.LastAddress = reader["commodityLastKnownSiteName"] == DBNull.Value ? null : (string)reader["commodityLastKnownSiteName"];
+            commodity.LastAddress = (reader["commodityLastKnownSiteName"] == DBNull.Value ? null : (string)reader["commodityLastKnownSiteName"]) ??
+                                    (reader["commodityLastKnownLSD"] == DBNull.Value ? null : (string)reader["commodityLastKnownLSD"]);
 
-            if (commodity.LastAddress == null)
-            {
-                commodity.LastAddress = reader["commodityLastKnownLSD"] == DBNull.Value ? null : (string)reader["commodityLastKnownLSD"];
-            }
+            var length = reader["commodityActualLength"] == DBNull.Value ? null : (double?)reader["commodityActualLength"];
+            var width = reader["commodityActualWidth"] == DBNull.Value ? null : (double?)reader["commodityActualWidth"];
+            var height = reader["commodityActualHeight"] == DBNull.Value ? null : (double?)reader["commodityActualHeight"];
+            var weight = reader["commodityActualWeight"] == DBNull.Value ? null : (double?)reader["commodityActualWeight"];
 
-            double? length = reader["commodityActualLength"] == DBNull.Value ? null : (double?)reader["commodityActualLength"];
-            double? width = reader["commodityActualWidth"] == DBNull.Value ? null : (double?)reader["commodityActualWidth"]; ;
-            double? height = reader["commodityActualHeight"] == DBNull.Value ? null : (double?)reader["commodityActualHeight"]; ;
-            double? weight = reader["commodityActualWeight"] == DBNull.Value ? null : (double?)reader["commodityActualWeight"]; ;
-            
-            double? elength = reader["commodityEstimatedLength"] == DBNull.Value ? null : (double?)reader["commodityEstimatedLength"];
-            double? ewidth = reader["commodityEstimatedWidth"] == DBNull.Value ? null : (double?)reader["commodityEstimatedWidth"]; ;
-            double? eheight = reader["commodityEstimatedHeight"] == DBNull.Value ? null : (double?)reader["commodityEstimatedHeight"]; ;
-            double? eweight = reader["commodityEstimatedWeight"] == DBNull.Value ? null : (double?)reader["commodityEstimatedWeight"]; ;
+            var elength = reader["commodityEstimatedLength"] == DBNull.Value ? null : (double?)reader["commodityEstimatedLength"];
+            var ewidth = reader["commodityEstimatedWidth"] == DBNull.Value ? null : (double?)reader["commodityEstimatedWidth"];
+            var eheight = reader["commodityEstimatedHeight"] == DBNull.Value ? null : (double?)reader["commodityEstimatedHeight"];
+            var eweight = reader["commodityEstimatedWeight"] == DBNull.Value ? null : (double?)reader["commodityEstimatedWeight"];
 
-            commodity.Length = (length != null) ? length : elength;
-            commodity.Width = (width != null) ? width : ewidth;
-            commodity.Height = (height != null) ? height : eheight;
-            commodity.Weight = (weight != null) ? weight : eweight;
+            commodity.Length = length ?? elength;
+            commodity.Width = width ?? ewidth;
+            commodity.Height = height ?? eheight;
+            commodity.Weight = weight ?? eweight;
 
             commodity.SizeEstimated = (length == null) || (width == null) || (height == null);
             commodity.WeightEstimated = (weight == null);
