@@ -16,8 +16,8 @@ namespace SingerDispatch.Importer
 
         public void CreateNewDatabase()
         {
-            string dateFormat = "M/d/yyyy";
-            CultureInfo provider = CultureInfo.InvariantCulture;
+            const string dateFormat = "M/d/yyyy";
+            var provider = CultureInfo.InvariantCulture;
 
             if (database.DatabaseExists())
             {
@@ -32,8 +32,8 @@ namespace SingerDispatch.Importer
             var countries = new List<Country>();
             var provinces = new List<ProvincesAndState>();
 
-            Country canada = new Country { Name = "Canada" };
-            Country usa = new Country { Name = "USA" };
+            var canada = new Country { Name = "Canada" };
+            var usa = new Country { Name = "USA" };
 
             countries.Add(canada);
             countries.Add(usa);
