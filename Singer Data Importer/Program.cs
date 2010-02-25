@@ -317,9 +317,8 @@ namespace SingerDispatch.Importer
 
                                 contact.Address.Contacts.Add(contact);
                             }
-                            catch (Exception ex)
+                            catch
                             {
-                                Console.Error.Write(ex);
                             }
                         }   
 
@@ -404,11 +403,10 @@ namespace SingerDispatch.Importer
             {
                 NewAddresses.Add(address.ArchiveID, address);
             }
-            catch (Exception ex)
+            catch
             {
-                Console.Error.WriteLine(ex);
             }
-            
+
             return address;
         }
 
@@ -429,9 +427,8 @@ namespace SingerDispatch.Importer
             {
                 contact.Address = reader["addressId"] == DBNull.Value ? null : NewAddresses[(int?)reader["addressId"]];
             }
-            catch (Exception ex)
+            catch
             {
-                Console.Error.WriteLine(ex);
             }
             
             var pext = reader["contactPrimaryPhoneExt"] == DBNull.Value ? null : (string)reader["contactPrimaryPhoneExt"];
