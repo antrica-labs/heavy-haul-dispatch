@@ -31,7 +31,7 @@
         </ResourceDictionary>
     </UserControl.Resources>
     <DockPanel>
-        <GroupBox Name="gbVariableDetails" Header="Condition Variables" DockPanel.Dock="Bottom">
+        <GroupBox Name="gbVariableDetails" Header="Condition Variables" DockPanel.Dock="Bottom" IsEnabled="{Binding ElementName=TheList, Path=SelectedItem.IsChecked}">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />

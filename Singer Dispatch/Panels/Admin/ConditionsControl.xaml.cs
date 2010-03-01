@@ -21,7 +21,7 @@ namespace SingerDispatch.Panels.Admin
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            TheGrid.ItemsSource = new ObservableCollection<Condition>(from c in Database.Conditions orderby c.ID select c);            
+            TheGrid.ItemsSource = new ObservableCollection<Condition>(from c in Database.Conditions orderby c.ID select c);
         }
 
         private void RowEditEnding(object sender, Microsoft.Windows.Controls.DataGridRowEditEndingEventArgs e)
@@ -65,6 +65,28 @@ namespace SingerDispatch.Panels.Admin
                 list.Remove(condition);
                 Database.Conditions.DeleteOnSubmit(condition);
 
+                Database.SubmitChanges();
+            }
+            catch (System.Exception ex)
+            {
+                Windows.ErrorNoticeWindow.ShowError("Error while attempting write changes to database", ex.Message);
+            }
+        }
+
+        private void TheGrid_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            SaveChanges();
+        }
+
+        private void TextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            SaveChanges();
+        }
+
+        private void SaveChanges()
+        {
+            try
+            {
                 Database.SubmitChanges();
             }
             catch (System.Exception ex)

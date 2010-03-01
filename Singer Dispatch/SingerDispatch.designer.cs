@@ -9638,6 +9638,12 @@ namespace SingerDispatch
 		
 		private string _Line;
 		
+		private string _DefaultVariable1;
+		
+		private string _DefaultVariable2;
+		
+		private string _DefaultVariable3;
+		
 		private EntitySet<QuoteCondition> _QuoteConditions;
 		
     #region Extensibility Method Definitions
@@ -9648,6 +9654,12 @@ namespace SingerDispatch
     partial void OnIDChanged();
     partial void OnLineChanging(string value);
     partial void OnLineChanged();
+    partial void OnDefaultVariable1Changing(string value);
+    partial void OnDefaultVariable1Changed();
+    partial void OnDefaultVariable2Changing(string value);
+    partial void OnDefaultVariable2Changed();
+    partial void OnDefaultVariable3Changing(string value);
+    partial void OnDefaultVariable3Changed();
     #endregion
 		
 		public Condition()
@@ -9692,6 +9704,66 @@ namespace SingerDispatch
 					this._Line = value;
 					this.SendPropertyChanged("Line");
 					this.OnLineChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DefaultVariable1")]
+		public string DefaultVariable1
+		{
+			get
+			{
+				return this._DefaultVariable1;
+			}
+			set
+			{
+				if ((this._DefaultVariable1 != value))
+				{
+					this.OnDefaultVariable1Changing(value);
+					this.SendPropertyChanging();
+					this._DefaultVariable1 = value;
+					this.SendPropertyChanged("DefaultVariable1");
+					this.OnDefaultVariable1Changed();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DefaultVariable2")]
+		public string DefaultVariable2
+		{
+			get
+			{
+				return this._DefaultVariable2;
+			}
+			set
+			{
+				if ((this._DefaultVariable2 != value))
+				{
+					this.OnDefaultVariable2Changing(value);
+					this.SendPropertyChanging();
+					this._DefaultVariable2 = value;
+					this.SendPropertyChanged("DefaultVariable2");
+					this.OnDefaultVariable2Changed();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DefaultVariable3")]
+		public string DefaultVariable3
+		{
+			get
+			{
+				return this._DefaultVariable3;
+			}
+			set
+			{
+				if ((this._DefaultVariable3 != value))
+				{
+					this.OnDefaultVariable3Changing(value);
+					this.SendPropertyChanging();
+					this._DefaultVariable3 = value;
+					this.SendPropertyChanged("DefaultVariable3");
+					this.OnDefaultVariable3Changed();
 				}
 			}
 		}

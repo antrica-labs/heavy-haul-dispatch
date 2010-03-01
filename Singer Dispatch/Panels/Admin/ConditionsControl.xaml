@@ -24,8 +24,29 @@
             <Button Style="{StaticResource Horizontal}" Grid.Column="0" Click="NewCondition_Click">New condition</Button>
             <Button Style="{StaticResource HorizontalEnd}" Grid.Column="2" Click="RemoveCondition_Click">Remove condition</Button>
         </Grid>
-	
-        <WPF:DataGrid Name="TheGrid" Style="{StaticResource ListDisplay}" IsReadOnly="False" RowEditEnding="RowEditEnding">
+
+        <Grid DockPanel.Dock="Bottom" DataContext="{Binding ElementName=TheGrid, Path=SelectedItem}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+
+            <Label Grid.Row="0" Grid.Column="0">Variable 1:</Label>
+            <TextBox Grid.Row="1" Grid.Column="0" Text="{Binding DefaultVariable1}" LostFocus="TextBox_LostFocus" />
+
+            <Label Grid.Row="0" Grid.Column="1">Variable 2:</Label>
+            <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding DefaultVariable2}" LostFocus="TextBox_LostFocus" />
+
+            <Label Grid.Row="0" Grid.Column="2">Variable 3:</Label>
+            <TextBox Grid.Row="1" Grid.Column="2" Text="{Binding DefaultVariable3}" LostFocus="TextBox_LostFocus" />
+        </Grid>
+
+        <WPF:DataGrid Name="TheGrid" Style="{StaticResource ListDisplay}" IsReadOnly="False" RowEditEnding="RowEditEnding" SelectionChanged="TheGrid_SelectionChanged">
             <WPF:DataGrid.Columns>
                 <WPF:DataGridTextColumn Header="Condition" Binding="{Binding Line}" />
             </WPF:DataGrid.Columns>

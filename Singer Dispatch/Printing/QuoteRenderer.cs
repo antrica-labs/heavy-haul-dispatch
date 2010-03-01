@@ -37,16 +37,14 @@ namespace SingerDispatch.Printing
         }
 
 
-        private string GetTitle(string title)
+        private static string GetTitle(string title)
         {
             return "<title>" + title + "</title>";
         }
 
-        private string GetStyles()
+        private static string GetStyles()
         {
-            string content;
-
-            content = @"
+            const string content = @"
                 <style type=""text/css"">
                     /***** RESET DEFAULT BROWSER STYLES *****/
                     html, body, div, span, applet, object, iframe,
@@ -279,11 +277,9 @@ namespace SingerDispatch.Printing
             return content;
         }
 
-        private string GetHeader(string quoteName)
+        private static string GetHeader(string quoteName)
         {
-            string content;
-
-            content = @"
+            const string content = @"
                 <div id=""header"">
                     <table>
                         <tr>
@@ -309,11 +305,11 @@ namespace SingerDispatch.Printing
             return content.Replace("%HEADER_IMG%", img).Replace("%QUOTE_NUMBER%", quoteName);
         }
 
-        private string GetRecipient(Address address, Contact contact)
+        private static string GetRecipient(Address address, Contact contact)
         {
             var content = new StringBuilder();
 
-            var header = @"
+            const string header = @"
                 <div id=""recipient"">
                     <span id=""quote_date"">%TODAY%</span>
         
@@ -321,11 +317,11 @@ namespace SingerDispatch.Printing
                         <tr>                    
                             <td id=""address"">
             ";
-            var middle = @"
+            const string middle = @"
                             </td>
                             <td id=""contact"">
             ";
-            var footer = @"
+            const string footer = @"
                             </td>
                         </tr>
                     </table>
@@ -382,11 +378,9 @@ namespace SingerDispatch.Printing
             return content.ToString();
         }
 
-        private string GetDescription(Contact recipient, string subject, DateTime? openDate, DateTime? closingDate)
+        private static string GetDescription(Contact recipient, string subject, DateTime? openDate, DateTime? closingDate)
         {
-            string content;
-
-            content = @"
+            var content = @"
                 <div id=""description"">
                     <table>
                         %ATTENTION%
@@ -418,7 +412,7 @@ namespace SingerDispatch.Printing
             return content;
         }
         
-        private string GetCommodities(List<QuoteCommodity> commodities)
+        private static string GetCommodities(List<QuoteCommodity> commodities)
         {
             var content = @"
                 <div id=""commodities"">
@@ -511,7 +505,7 @@ namespace SingerDispatch.Printing
                 </div>
             ";
 
-            StringBuilder rows = new StringBuilder();
+            var rows = new StringBuilder();
             int count = 1;
 
             foreach (QuoteSupplement supplement in supplements)
@@ -561,11 +555,11 @@ namespace SingerDispatch.Printing
             return content;
         }
 
-        private string GetConditions(Quote quote)
+        private static string GetConditions(Quote quote)
         {
             var builder = new StringBuilder();
     
-            var header = @"
+            const string header = @"
                 <div id=""conditions"">
                     <p>The quoted price includes Transportation Equipment, Permits.</p>
 
@@ -573,8 +567,8 @@ namespace SingerDispatch.Printing
 
                     <ol class=""conditions"">
             ";
-            var line = "<li>%CONDITION%</li>";
-            var footer = @"
+            const string line = "<li>%CONDITION%</li>";
+            const string footer = @"
                      </ol>
                 </div>
             ";
@@ -588,7 +582,11 @@ namespace SingerDispatch.Printing
             {
                 try
                 {
-                    builder.Append(line.Replace("%CONDITION%", String.Format(condition.Condition.Line, condition.Replacement1, condition.Replacement2, condition.Replacement3)));
+                    var replacement1 = condition.Replacement1 ?? condition.Condition.DefaultVariable1;
+                    var replacement2 = condition.Replacement2 ?? condition.Condition.DefaultVariable2;
+                    var replacement3 = condition.Replacement3 ?? condition.Condition.DefaultVariable3;
+
+                    builder.Append(line.Replace("%CONDITION%", String.Format(condition.Condition.Line, replacement1, replacement2, replacement3)));
                 }
                 catch (Exception ex)
                 {
@@ -602,11 +600,9 @@ namespace SingerDispatch.Printing
             return builder.ToString();
         }
 
-        private string GetSignoff(Quote quote)
+        private static string GetSignoff(Quote quote)
         {
-            string content;
-
-            content = @"
+            var content = @"
                 <div id=""signoff"">
                     <p>We appreciate the opportunity to supply a quotation for your project.  Should you have any questions, concerns, or  comments, please feel free to contact me at your convenience.</p>
 
@@ -618,10 +614,7 @@ namespace SingerDispatch.Printing
                 </div>
             ";
 
-            if (quote.Employee != null)
-                content = content.Replace("%AUTHOR%", quote.Employee.Name);
-            else
-                content = content.Replace("%AUTHOR%", "Dan Klassen");
+            content = content.Replace("%AUTHOR%", quote.Employee != null ? quote.Employee.Name : "Dan Klassen");
 
             return content;
         }

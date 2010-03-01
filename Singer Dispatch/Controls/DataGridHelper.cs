@@ -8,14 +8,14 @@ namespace SingerDispatch.Controls
     {
         public static DataGridCell GetCell(DataGrid grid, int row, int column)
         {
-            DataGridRow rowContainer = GetRow(grid, row);
+            var rowContainer = GetRow(grid, row);
 
             if (rowContainer != null)
             {
-                DataGridCellsPresenter presenter = GetVisualChild<DataGridCellsPresenter>(rowContainer);
+                var presenter = GetVisualChild<DataGridCellsPresenter>(rowContainer);
 
                 // try to get the cell but it may possibly be virtualized
-                DataGridCell cell = (DataGridCell)presenter.ItemContainerGenerator.ContainerFromIndex(column);
+                var cell = (DataGridCell)presenter.ItemContainerGenerator.ContainerFromIndex(column);
                 if (cell == null)
                 {
                     // now try to bring into view and retreive the cell
@@ -29,7 +29,7 @@ namespace SingerDispatch.Controls
 
         public static DataGridRow GetRow(DataGrid grid, int index)
         {
-            DataGridRow row = (DataGridRow)grid.ItemContainerGenerator.ContainerFromIndex(index);
+            var row = (DataGridRow)grid.ItemContainerGenerator.ContainerFromIndex(index);
 
             if (row == null)
             {
@@ -44,16 +44,13 @@ namespace SingerDispatch.Controls
 
         public static T GetVisualChild<T>(Visual parent) where T : Visual
         {
-            T child = default(T);
-            int numVisuals = VisualTreeHelper.GetChildrenCount(parent);
-            for (int i = 0; i < numVisuals; i++)
+            var child = default(T);
+            var numVisuals = VisualTreeHelper.GetChildrenCount(parent);
+            for (var i = 0; i < numVisuals; i++)
             {
-                Visual v = (Visual)VisualTreeHelper.GetChild(parent, i);
-                child = v as T;
-                if (child == null)
-                {
-                    child = GetVisualChild<T>(v);
-                }
+                var v = (Visual)VisualTreeHelper.GetChild(parent, i);
+                child = v as T ?? GetVisualChild<T>(v);
+
                 if (child != null)
                 {
                     break;

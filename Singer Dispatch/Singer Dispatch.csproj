@@ -264,8 +264,8 @@
     </None>
     <None Include="SingerDispatch.dbml">
       <Generator>MSLinqToSQLGenerator</Generator>
-      <LastGenOutput>SingerDispatch.designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <LastGenOutput>SingerDispatch.designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
   </ItemGroup>

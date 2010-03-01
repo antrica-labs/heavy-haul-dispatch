@@ -40,7 +40,7 @@ namespace SingerDispatch.Panels.Quotes
 
                 list.Add(cb);
             }
-
+            
             gbVariableDetails.DataContext = null;
         }
 
@@ -48,6 +48,8 @@ namespace SingerDispatch.Panels.Quotes
         {
             var cb = (CheckBox)sender;
             var condition = (Condition)cb.DataContext;
+
+            TheList.SelectedItem = cb;
 
             if (SelectedQuote == null || condition == null) return;
 
@@ -60,6 +62,8 @@ namespace SingerDispatch.Panels.Quotes
         {
             var cb = (CheckBox)sender;
             var condition = (Condition)cb.DataContext;
+
+            TheList.SelectedItem = cb;
 
             if (SelectedQuote == null || condition == null) return;
 
@@ -79,10 +83,16 @@ namespace SingerDispatch.Panels.Quotes
             var condition = (Condition)cb.DataContext;
 
             if (condition == null) return;
-            
+
             try
             {
-                gbVariableDetails.DataContext = (from qc in SelectedQuote.QuoteConditions where qc.Condition == condition select qc).First();
+                var quoteCondition = (from qc in SelectedQuote.QuoteConditions where qc.Condition == condition select qc).First();
+
+                quoteCondition.Replacement1 = quoteCondition.Replacement1 ?? condition.DefaultVariable1;
+                quoteCondition.Replacement2 = quoteCondition.Replacement2 ?? condition.DefaultVariable2;
+                quoteCondition.Replacement3 = quoteCondition.Replacement3 ?? condition.DefaultVariable3;
+
+                gbVariableDetails.DataContext = quoteCondition;
             }
             catch
             {
