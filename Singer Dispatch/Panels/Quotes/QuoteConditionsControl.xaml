@@ -17,8 +17,7 @@
 
             <Style TargetType="ListBox">
                 <Style.Resources>
-                    <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="AliceBlue" />
-                    <!-- <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="White" /> -->
+                    <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="AliceBlue" />                    
                 </Style.Resources>                
             </Style>
             
