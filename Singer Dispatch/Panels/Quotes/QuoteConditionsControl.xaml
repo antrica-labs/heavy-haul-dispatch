@@ -16,15 +16,15 @@
             </Style>
 
             <Style TargetType="ListBox">
-                <Style.Resources>                    
-                    <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="LightBlue" />                    
-                    <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="White" />
+                <Style.Resources>
+                    <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="AliceBlue" />
+                    <!-- <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="White" /> -->
                 </Style.Resources>                
             </Style>
             
             <Style TargetType="ListBoxItem">
                 <Setter Property="BorderThickness" Value="1" />
-                <Setter Property="BorderBrush" Value="LightGray" />
+                <Setter Property="BorderBrush" Value="WhiteSmoke" />
                 <Setter Property="Margin" Value="0,2" />
                 <Setter Property="Padding" Value="5" />
             </Style>            
