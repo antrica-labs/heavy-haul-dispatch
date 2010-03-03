@@ -105,7 +105,7 @@ namespace SingerDispatch.Database
         {
             var revision = (from q in context.Quotes where q.Number == quote.Number select q.Revision).Max() + 1;
 
-            quote.Revision = (revision != null) ? revision : 0;
+            quote.Revision = revision ?? 0;
 
             context.SubmitChanges();
         }
@@ -115,7 +115,7 @@ namespace SingerDispatch.Database
             var number = (from q in context.Quotes select q.Number).Max() + 1;
 
             quote.Revision = 0;
-            quote.Number = (number != null) ? number : 10001;
+            quote.Number = number ?? 10001;
 
             context.SubmitChanges();
         }
@@ -124,7 +124,7 @@ namespace SingerDispatch.Database
         {
             var number = (from j in context.Jobs select j.Number).Max() + 1;
 
-            job.Number = (number != null) ? number : 10001;
+            job.Number = number ?? 10001;
 
             context.SubmitChanges();
         }
@@ -134,7 +134,7 @@ namespace SingerDispatch.Database
             var number = (from i in context.Invoices select i.Number).Max() + 1;
 
             invoice.Revision = 0;
-            invoice.Number = (number != null) ? number : 10001;
+            invoice.Number = number ?? 10001;
 
             context.SubmitChanges();
         }
@@ -143,7 +143,7 @@ namespace SingerDispatch.Database
         {
             var revision = (from i in context.Invoices where i.Number == invoice.Number select i.Revision).Max() + 1;
 
-            invoice.Revision = (revision != null) ? revision : 0;
+            invoice.Revision = revision ?? 0;
 
             context.SubmitChanges();
         }

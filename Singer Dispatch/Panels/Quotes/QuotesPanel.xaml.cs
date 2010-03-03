@@ -63,21 +63,8 @@ namespace SingerDispatch.Panels.Quotes
             if (SelectedQuote == null) return;
 
             try
-            {
-                // Check if this quote is new and not yet in the database
-                if (SelectedQuote.ID == 0)
-                {
-                    SelectedCompany.Quotes.Add(SelectedQuote);
-
-                    if (SelectedQuote.Number != null)
-                        EntityHelper.SaveAsQuoteRevision(SelectedQuote, Database);
-                    else
-                        EntityHelper.SaveAsNewQuote(SelectedQuote, Database);
-                }
-                else
-                {
-                    Database.SubmitChanges();
-                }
+            {   
+                Database.SubmitChanges();
             }
             catch (System.Exception ex)
             {

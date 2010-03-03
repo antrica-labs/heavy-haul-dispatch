@@ -77,8 +77,18 @@ namespace SingerDispatch.Panels.Quotes
             list.Insert(0, quote);
             dgQuotes.SelectedItem = quote;
             dgQuotes.ScrollIntoView(quote);
+            SelectedCompany.Quotes.Add(quote);
+            
+            try
+            {
+                EntityHelper.SaveAsNewQuote(quote, Database);
 
-            txtDescription.Focus();
+                txtDescription.Focus();
+            }
+            catch (Exception ex)
+            {
+                ErrorNoticeWindow.ShowError("Error while attempting write changes to database", ex.Message);
+            }
         }
 
         private void CreateRevision_Click(object sender, RoutedEventArgs e)
@@ -86,11 +96,21 @@ namespace SingerDispatch.Panels.Quotes
             if (SelectedQuote == null) return;
 
             var quote = SelectedQuote.Duplicate();
-            var quotes = (ObservableCollection<Quote>)dgQuotes.ItemsSource;
+            var list = (ObservableCollection<Quote>)dgQuotes.ItemsSource;
                         
-            quotes.Add(quote);
+            list.Insert(0, quote);
             dgQuotes.SelectedItem = quote;
             dgQuotes.ScrollIntoView(quote);
+            SelectedCompany.Quotes.Add(quote);
+
+            try
+            {
+                EntityHelper.SaveAsQuoteRevision(quote, Database);                    
+            }
+            catch (Exception ex)
+            {
+                ErrorNoticeWindow.ShowError("Error while attempting write changes to database", ex.Message);
+            }
         }
 
         private void CareOfCompanies_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -104,7 +124,7 @@ namespace SingerDispatch.Panels.Quotes
 
             if (quote == null) return;
 
-            MessageBoxResult confirmation = MessageBox.Show("Are you sure you wish to create a new job from the selected quote? Doing so will save any changes made to this quote.", "New job confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            var confirmation = MessageBox.Show("Are you sure you wish to create a new job from the selected quote? Doing so will save any changes made to this quote.", "New job confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
             if (confirmation != MessageBoxResult.Yes)
             {
