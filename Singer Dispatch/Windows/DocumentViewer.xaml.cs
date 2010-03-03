@@ -12,14 +12,22 @@ namespace SingerDispatch.Windows
     /// </summary>
     public partial class DocumentViewer
     {
+        private string Filename { get; set; }
         private string SourceHTML { get; set; }
 
         public DocumentViewer()
         {
             InitializeComponent();
+
+            Filename = "";
         }
 
         public void DisplayPrintout(object obj)
+        {
+            DisplayPrintout("", obj);
+        }
+
+        public void DisplayPrintout(string filename, object obj)
         {
             IRenderer renderer;
 
@@ -32,6 +40,7 @@ namespace SingerDispatch.Windows
             else
                 return;
 
+            Filename = filename;
             SourceHTML = renderer.GenerateHTML(obj);
 
             TheBrowser.NavigateToString(SourceHTML);
@@ -42,8 +51,9 @@ namespace SingerDispatch.Windows
         private void PDF_Click(object sender, RoutedEventArgs e)
         {
             var dialog = new SaveFileDialog();
-            
-            dialog.DefaultExt = ".pdf";
+
+            dialog.FileName = Filename;
+            dialog.DefaultExt = "pdf";
             dialog.Filter = "PDF documents (.pdf)|*.pdf"; 
 
             if (dialog.ShowDialog() != true)

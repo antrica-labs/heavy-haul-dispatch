@@ -178,8 +178,10 @@ namespace SingerDispatch.Panels.Quotes
         {
             if (SelectedQuote == null) return;
 
+            var title = String.Format("Quote #{0}-{1}", SelectedQuote.Number, SelectedQuote.Revision);
+
             var viewer = new Windows.DocumentViewer();
-            viewer.DisplayPrintout(SelectedQuote);
+            viewer.DisplayPrintout(title, SelectedQuote);
         }
 
         private void DeleteQuote_Click(object sender, RoutedEventArgs e)
