@@ -142,7 +142,7 @@ namespace SingerDispatch.Panels.Quotes
         {            
             if (SelectedQuote != null)
             {
-                var addressQuery = from a in Database.Addresses where a.Company == SelectedQuote.Company || a.Company == SelectedQuote.CareOfCompany select a;
+                var addressQuery = from a in Database.Addresses where a.Company == SelectedQuote.Company || a.Company == SelectedQuote.CareOfCompany orderby a.AddressType.Name select a;
 
                 cmbAddresses.ItemsSource = addressQuery.ToList();
                 cmbContacts.ItemsSource = (from c in Database.Contacts where addressQuery.Contains(c.Address) select c).ToList();

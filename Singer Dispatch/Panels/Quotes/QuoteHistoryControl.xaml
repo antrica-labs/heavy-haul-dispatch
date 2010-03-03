@@ -5,7 +5,6 @@
                          xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                          xmlns:WPF="http://schemas.microsoft.com/wpf/2008/toolkit"
                          xmlns:Panels="clr-namespace:SingerDispatch.Panels"
-                         xmlns:Company="clr-namespace:SingerDispatch.Panels.Companies"
                          x:Name="ThePanel"
                          Loaded="Control_Loaded" mc:Ignorable="d" d:DesignWidth="780">
     <UserControl.Resources>
@@ -17,7 +16,8 @@
             <DataTemplate x:Key="AddressTemplate">
                 <TextBlock>
                     <TextBlock.Text>
-                        <MultiBinding StringFormat="{}{0}, {1}, {2}">
+                        <MultiBinding StringFormat="{}{0} - {1}, {2}, {3}">
+                            <Binding Path="AddressType.Name" />
                             <Binding Path="Line1" />
                             <Binding Path="City" />
                             <Binding Path="PostalZip" />
@@ -128,7 +128,7 @@
                             <ComboBox Grid.Column="1" Grid.Row="0" Name="cmbAddresses" SelectedItem="{Binding BillingAddress}" ItemTemplate="{StaticResource AddressTemplate}" />
 
                             <Label Grid.Column="0" Grid.Row="1">Name:</Label>
-                            <ComboBox Grid.Column="1" Grid.Row="1" Name="cmbContacts" SelectedItem="{Binding Contact}" ItemTemplate="{StaticResource SimpleNameTemplate}" />
+                            <ComboBox Grid.Column="1" Grid.Row="1" Name="cmbContacts" SelectedItem="{Binding Contact}" ItemTemplate="{StaticResource SimpleNameTemplate}" TextSearch.TextPath="Name" />
                         </Grid>
 
                         <Grid DataContext="{Binding Contact}">

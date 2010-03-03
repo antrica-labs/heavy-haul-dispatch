@@ -136,6 +136,7 @@ namespace SingerDispatch.Importer
             // Populate address types
             var addresstypes = new List<AddressType>();
 
+            addresstypes.Add(new AddressType { Name = "Billing Address" });
             addresstypes.Add(new AddressType { Name = "Head Office" });
             addresstypes.Add(new AddressType { Name = "Local Office" });
             addresstypes.Add(new AddressType { Name = "Site Office" });
