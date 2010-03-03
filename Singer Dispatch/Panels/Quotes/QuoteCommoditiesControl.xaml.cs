@@ -1,7 +1,9 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Collections.ObjectModel;
+using System.Windows.Input;
 
 namespace SingerDispatch.Panels.Quotes
 {
@@ -83,7 +85,7 @@ namespace SingerDispatch.Panels.Quotes
         private void NewCommodity_Click(object sender, RoutedEventArgs e)
         {
             var list = (ObservableCollection<QuoteCommodity>)dgQuoteCommodities.ItemsSource;
-            var commodity = new QuoteCommodity { QuoteID = SelectedQuote.ID };
+            var commodity = new QuoteCommodity { QuoteID = SelectedQuote.ID, SizeEstimated = true, WeightEstimated = true};
 
             SelectedQuote.QuoteCommodities.Add(commodity);
             list.Add(commodity);            
@@ -126,8 +128,5 @@ namespace SingerDispatch.Panels.Quotes
             SelectedQuote.QuoteCommodities.Remove(commodity);
             ((ObservableCollection<QuoteCommodity>)dgQuoteCommodities.ItemsSource).Remove(commodity);
         }
-
-        
-        
     }
 }

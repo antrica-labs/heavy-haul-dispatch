@@ -2,7 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:WPF="http://schemas.microsoft.com/wpf/2008/toolkit"                    
                     xmlns:Controls="clr-namespace:SingerDispatch.Controls"                    
-                    xmlns:Panels="clr-namespace:SingerDispatch.Panels">
+                    x:Class="SingerDispatch.SingerDispatchDictionary">
     <ResourceDictionary.MergedDictionaries>        
         <!-- <ResourceDictionary Source="/PresentationFramework.Aero, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, ProcessorArchitecture=MSIL;component/themes/aero.normalcolor.xaml" /> -->
         <!-- <ResourceDictionary Source="/PresentationFramework.Luna, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, ProcessorArchitecture=MSIL;component/themes/luna.normalcolor.xaml" /> -->
@@ -44,6 +44,8 @@
     
     <Style TargetType="TextBox">
         <Setter Property="Margin" Value="3" />
+        <EventSetter Event="GotMouseCapture" Handler="TextBox_GotKeyboardFocus"/>
+        <EventSetter Event="GotFocus" Handler="TextBox_GotKeyboardFocus" />        
     </Style>
 
     <Style TargetType="ComboBox">
