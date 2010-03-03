@@ -9638,12 +9638,6 @@ namespace SingerDispatch
 		
 		private string _Line;
 		
-		private string _DefaultVariable1;
-		
-		private string _DefaultVariable2;
-		
-		private string _DefaultVariable3;
-		
 		private EntitySet<QuoteCondition> _QuoteConditions;
 		
     #region Extensibility Method Definitions
@@ -9654,12 +9648,6 @@ namespace SingerDispatch
     partial void OnIDChanged();
     partial void OnLineChanging(string value);
     partial void OnLineChanged();
-    partial void OnDefaultVariable1Changing(string value);
-    partial void OnDefaultVariable1Changed();
-    partial void OnDefaultVariable2Changing(string value);
-    partial void OnDefaultVariable2Changed();
-    partial void OnDefaultVariable3Changing(string value);
-    partial void OnDefaultVariable3Changed();
     #endregion
 		
 		public Condition()
@@ -9708,66 +9696,6 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DefaultVariable1")]
-		public string DefaultVariable1
-		{
-			get
-			{
-				return this._DefaultVariable1;
-			}
-			set
-			{
-				if ((this._DefaultVariable1 != value))
-				{
-					this.OnDefaultVariable1Changing(value);
-					this.SendPropertyChanging();
-					this._DefaultVariable1 = value;
-					this.SendPropertyChanged("DefaultVariable1");
-					this.OnDefaultVariable1Changed();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DefaultVariable2")]
-		public string DefaultVariable2
-		{
-			get
-			{
-				return this._DefaultVariable2;
-			}
-			set
-			{
-				if ((this._DefaultVariable2 != value))
-				{
-					this.OnDefaultVariable2Changing(value);
-					this.SendPropertyChanging();
-					this._DefaultVariable2 = value;
-					this.SendPropertyChanged("DefaultVariable2");
-					this.OnDefaultVariable2Changed();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DefaultVariable3")]
-		public string DefaultVariable3
-		{
-			get
-			{
-				return this._DefaultVariable3;
-			}
-			set
-			{
-				if ((this._DefaultVariable3 != value))
-				{
-					this.OnDefaultVariable3Changing(value);
-					this.SendPropertyChanging();
-					this._DefaultVariable3 = value;
-					this.SendPropertyChanged("DefaultVariable3");
-					this.OnDefaultVariable3Changed();
-				}
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Condition_QuoteCondition", Storage="_QuoteConditions", ThisKey="ID", OtherKey="ConditionID")]
 		public EntitySet<QuoteCondition> QuoteConditions
 		{
@@ -9804,13 +9732,13 @@ namespace SingerDispatch
 		private void attach_QuoteConditions(QuoteCondition entity)
 		{
 			this.SendPropertyChanging();
-			entity.Condition = this;
+			entity.OriginalCondition = this;
 		}
 		
 		private void detach_QuoteConditions(QuoteCondition entity)
 		{
 			this.SendPropertyChanging();
-			entity.Condition = null;
+			entity.OriginalCondition = null;
 		}
 	}
 	
@@ -9826,15 +9754,11 @@ namespace SingerDispatch
 		
 		private System.Nullable<long> _ConditionID;
 		
-		private string _Replacement1;
-		
-		private string _Replacement2;
-		
-		private string _Replacement3;
+		private string _Line;
 		
 		private EntityRef<Quote> _Quote;
 		
-		private EntityRef<Condition> _Condition;
+		private EntityRef<Condition> _OriginalCondition;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -9846,18 +9770,14 @@ namespace SingerDispatch
     partial void OnQuoteIDChanged();
     partial void OnConditionIDChanging(System.Nullable<long> value);
     partial void OnConditionIDChanged();
-    partial void OnReplacement1Changing(string value);
-    partial void OnReplacement1Changed();
-    partial void OnReplacement2Changing(string value);
-    partial void OnReplacement2Changed();
-    partial void OnReplacement3Changing(string value);
-    partial void OnReplacement3Changed();
+    partial void OnLineChanging(string value);
+    partial void OnLineChanged();
     #endregion
 		
 		public QuoteCondition()
 		{
 			this._Quote = default(EntityRef<Quote>);
-			this._Condition = default(EntityRef<Condition>);
+			this._OriginalCondition = default(EntityRef<Condition>);
 			OnCreated();
 		}
 		
@@ -9916,7 +9836,7 @@ namespace SingerDispatch
 			{
 				if ((this._ConditionID != value))
 				{
-					if (this._Condition.HasLoadedOrAssignedValue)
+					if (this._OriginalCondition.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -9929,62 +9849,22 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Replacement1")]
-		public string Replacement1
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Line")]
+		public string Line
 		{
 			get
 			{
-				return this._Replacement1;
+				return this._Line;
 			}
 			set
 			{
-				if ((this._Replacement1 != value))
+				if ((this._Line != value))
 				{
-					this.OnReplacement1Changing(value);
+					this.OnLineChanging(value);
 					this.SendPropertyChanging();
-					this._Replacement1 = value;
-					this.SendPropertyChanged("Replacement1");
-					this.OnReplacement1Changed();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Replacement2")]
-		public string Replacement2
-		{
-			get
-			{
-				return this._Replacement2;
-			}
-			set
-			{
-				if ((this._Replacement2 != value))
-				{
-					this.OnReplacement2Changing(value);
-					this.SendPropertyChanging();
-					this._Replacement2 = value;
-					this.SendPropertyChanged("Replacement2");
-					this.OnReplacement2Changed();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Replacement3")]
-		public string Replacement3
-		{
-			get
-			{
-				return this._Replacement3;
-			}
-			set
-			{
-				if ((this._Replacement3 != value))
-				{
-					this.OnReplacement3Changing(value);
-					this.SendPropertyChanging();
-					this._Replacement3 = value;
-					this.SendPropertyChanged("Replacement3");
-					this.OnReplacement3Changed();
+					this._Line = value;
+					this.SendPropertyChanged("Line");
+					this.OnLineChanged();
 				}
 			}
 		}
@@ -10023,26 +9903,26 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Condition_QuoteCondition", Storage="_Condition", ThisKey="ConditionID", OtherKey="ID", IsForeignKey=true)]
-		public Condition Condition
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Condition_QuoteCondition", Storage="_OriginalCondition", ThisKey="ConditionID", OtherKey="ID", IsForeignKey=true)]
+		public Condition OriginalCondition
 		{
 			get
 			{
-				return this._Condition.Entity;
+				return this._OriginalCondition.Entity;
 			}
 			set
 			{
-				Condition previousValue = this._Condition.Entity;
+				Condition previousValue = this._OriginalCondition.Entity;
 				if (((previousValue != value) 
-							|| (this._Condition.HasLoadedOrAssignedValue == false)))
+							|| (this._OriginalCondition.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._Condition.Entity = null;
+						this._OriginalCondition.Entity = null;
 						previousValue.QuoteConditions.Remove(this);
 					}
-					this._Condition.Entity = value;
+					this._OriginalCondition.Entity = value;
 					if ((value != null))
 					{
 						value.QuoteConditions.Add(this);
@@ -10052,7 +9932,7 @@ namespace SingerDispatch
 					{
 						this._ConditionID = default(Nullable<long>);
 					}
-					this.SendPropertyChanged("Condition");
+					this.SendPropertyChanged("OriginalCondition");
 				}
 			}
 		}

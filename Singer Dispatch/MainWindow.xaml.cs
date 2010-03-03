@@ -157,15 +157,12 @@ namespace SingerDispatch
 
             UserControl panel;
 
-            try
-            {
-                panel = Panels[panelType];
-            }
-            catch
+            if (!Panels.ContainsKey(panelType))
             {
                 panel = (UserControl)Activator.CreateInstance(panelType);
+                
                 var fields = panel.GetType().GetFields(BindingFlags.Instance | BindingFlags.NonPublic);
-                               
+
                 foreach (var field in fields)
                 {
                     if (field.Name == "Tabs" && field.FieldType == typeof(TabControl))
@@ -177,14 +174,15 @@ namespace SingerDispatch
                     }
                 }
 
-                var binding = new Binding();
-
-                binding.ElementName = "cmbCompanies";
-                binding.Path = new PropertyPath(Selector.SelectedItemProperty);
+                var binding = new Binding { ElementName = "cmbCompanies", Path = new PropertyPath(Selector.SelectedItemProperty) };
 
                 panel.SetBinding(CompanyUserControl.SelectedCompanyProperty, binding);
-                
+
                 Panels.Add(panel.GetType(), panel);
+            }
+            else
+            {
+                panel = Panels[panelType];
             }
 
             expander.IsExpanded = true;
@@ -198,7 +196,15 @@ namespace SingerDispatch
 
         private void ExpandQuotes(object sender, RoutedEventArgs e)
         {
-            ExpandSection(expanderQuotes, typeof(QuotesPanel));
+            try
+            {
+                ExpandSection(expanderQuotes, typeof(QuotesPanel));
+            }
+            catch (Exception ex)
+            {
+                ErrorNoticeWindow.ShowError(ex.Message, ex.ToString());
+            }
+            
         }
 
         private void ExpandJobs(object sender, RoutedEventArgs e)

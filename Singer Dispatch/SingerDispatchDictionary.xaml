@@ -48,12 +48,20 @@
         <EventSetter Event="GotFocus" Handler="TextBox_GotKeyboardFocus" />        
     </Style>
 
+    <Style TargetType="TextBox" x:Key="LongText">
+        <Setter Property="Margin" Value="3" />        
+    </Style>
+
     <Style TargetType="ComboBox">
         <Setter Property="Margin" Value="3" />
     </Style>
 
     <Style TargetType="CheckBox">
         <Setter Property="Margin" Value="3,6,0,0" />
+    </Style>
+
+    <Style TargetType="ColumnDefinition" x:Key="CheckBoxColumn">
+        <Setter Property="Width" Value="Auto" />
     </Style>
 
     <Style TargetType="Button" x:Key="Standard">

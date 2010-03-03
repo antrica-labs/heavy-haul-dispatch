@@ -582,11 +582,7 @@ namespace SingerDispatch.Printing
             {
                 try
                 {
-                    var replacement1 = condition.Replacement1 ?? condition.Condition.DefaultVariable1;
-                    var replacement2 = condition.Replacement2 ?? condition.Condition.DefaultVariable2;
-                    var replacement3 = condition.Replacement3 ?? condition.Condition.DefaultVariable3;
-
-                    builder.Append(line.Replace("%CONDITION%", String.Format(condition.Condition.Line, replacement1, replacement2, replacement3)));
+                    builder.Append(line.Replace("%CONDITION%", condition.Line));
                 }
                 catch (Exception ex)
                 {

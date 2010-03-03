@@ -407,22 +407,17 @@
     <Type Name="Condition">
       <Column Name="ID" Type="System.Int64" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Line" Type="System.String" CanBeNull="true" />
-      <Column Name="DefaultVariable1" Type="System.String" CanBeNull="true" />
-      <Column Name="DefaultVariable2" Type="System.String" CanBeNull="true" />
-      <Column Name="DefaultVariable3" Type="System.String" CanBeNull="true" />
       <Association Name="Condition_QuoteCondition" Member="QuoteConditions" ThisKey="ID" OtherKey="ConditionID" Type="QuoteCondition" />
     </Type>
   </Table>
   <Table Name="" Member="QuoteConditions">
     <Type Name="QuoteCondition">
-      <Column Name="ID" Type="System.Int64" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ID" Type="System.Int64" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />      
       <Column Name="QuoteID" Type="System.Int64" CanBeNull="true" />
       <Column Name="ConditionID" Type="System.Int64" CanBeNull="true" />
-      <Column Name="Replacement1" Type="System.String" CanBeNull="true" />
-      <Column Name="Replacement2" Type="System.String" CanBeNull="true" />
-      <Column Name="Replacement3" Type="System.String" CanBeNull="true" />
+      <Column Name="Line" Type="System.String" CanBeNull="true" />
       <Association Name="Quote_QuoteCondition" Member="Quote" ThisKey="QuoteID" OtherKey="ID" Type="Quote" IsForeignKey="true" />
-      <Association Name="Condition_QuoteCondition" Member="Condition" ThisKey="ConditionID" OtherKey="ID" Type="Condition" IsForeignKey="true" />
+      <Association Name="Condition_QuoteCondition" Member="OriginalCondition" ThisKey="ConditionID" OtherKey="ID" Type="Condition" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="" Member="Rates">

@@ -236,7 +236,8 @@ namespace SingerDispatch
         {
             var copy = new QuoteCondition();
 
-            copy.Condition = Condition;
+            copy.OriginalCondition = OriginalCondition;
+            copy.Line = Line;
 
             return copy;
         }

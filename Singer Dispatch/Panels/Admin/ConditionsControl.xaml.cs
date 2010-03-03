@@ -61,7 +61,6 @@ namespace SingerDispatch.Panels.Admin
 
             try
             {
-
                 list.Remove(condition);
                 Database.Conditions.DeleteOnSubmit(condition);
 
@@ -74,11 +73,6 @@ namespace SingerDispatch.Panels.Admin
         }
 
         private void TheGrid_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
-        {
-            SaveChanges();
-        }
-
-        private void TextBox_LostFocus(object sender, RoutedEventArgs e)
         {
             SaveChanges();
         }

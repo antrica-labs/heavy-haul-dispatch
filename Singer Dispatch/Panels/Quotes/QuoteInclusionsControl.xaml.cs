@@ -57,15 +57,15 @@ namespace SingerDispatch.Panels.Quotes
         private void CheckBox_Unchecked(object sender, RoutedEventArgs e)
         {
             var cb = (CheckBox)sender;
-            var condition = (Condition)cb.DataContext;
+            var inclusion = (Inclusion)cb.DataContext;
 
-            if (SelectedQuote == null || condition == null) return;
+            if (SelectedQuote == null || inclusion == null) return;
 
-            var list = (from c in SelectedQuote.QuoteConditions where c.Condition == condition select c).ToList();
+            var list = (from c in SelectedQuote.QuoteInclusions where c.Inclusion == inclusion select c).ToList();
 
             foreach (var item in list)
             {
-                SelectedQuote.QuoteConditions.Remove(item);
+                SelectedQuote.QuoteInclusions.Remove(item);
             }
         }
     }
