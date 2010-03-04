@@ -26,8 +26,13 @@ namespace SingerDispatch.Printing
             content.Append(GetHeader(quote.NumberAndRev));
             content.Append(GetRecipient(quote.BillingAddress, quote.Contact));
             content.Append(GetDescription(quote.Contact, "Transportation Quote", quote.CreationDate, quote.ExpirationDate));
-            content.Append(GetCommodities(quote.QuoteCommodities.ToList()));
-            content.Append(GetSuppluments(quote.QuoteSupplements.ToList()));
+
+            if (quote.QuoteCommodities.Count > 0)
+                content.Append(GetCommodities(quote.QuoteCommodities.ToList()));
+
+            if (quote.QuoteSupplements.Count > 0)
+                content.Append(GetSuppluments(quote.QuoteSupplements.ToList()));
+
             content.Append(GetConditions(quote));
             content.Append(GetSignoff(quote));
             content.Append("</body>");
@@ -133,7 +138,7 @@ namespace SingerDispatch.Printing
                     
                     div#header td#quote_name span.title 
                     {                
-                        font-size: 52px;
+                        font-size: 1.8em;
                         margin: 20px 0;
                     }
                     
@@ -222,31 +227,46 @@ namespace SingerDispatch.Printing
                     
                     table.itemized 
                     {
-                        border-collapse: collapse;
-                        border-spacing: 0;
-                        width: 99%;
+                        border-collapse: collapse;                        
+                        width: 100%;
                         margin: 0 auto;
+                        border-bottom: 1px #000000 solid;
                     }
 
                     table.itemized th 
                     {
                         text-align: left;
                         text-transform: uppercase;
-                        border-bottom: 2px #000000 solid;
+                        border-bottom: 1px #000000 solid;
                         padding: 4px;
                         padding-right: 15px;                
                     }
 
                     table.itemized td 
                     {
+                    	border-top: 1px;
                         padding: 4px;                
                         padding-right: 25px;
-                        border-bottom: 1px #000000 solid;
+                    }
+                    
+                    table.itemized tr.details
+                    {
+                        border-top: 1px #000000 solid;                       
+                    }
+
+                    table.itemized tr.notes
+                    {
+                    	font-style: italic;
+                    }
+
+                    table.itemized tr.notes td
+                    {
+                        padding-bottom: 10px;
                     }
 
                     table.itemized tbody 
                     {
-                        border: 1px #000000 solid;
+                        
                     }
 
                     table.itemized tr.alt 
@@ -287,8 +307,7 @@ namespace SingerDispatch.Printing
                                 <span class=""logo""><img src=""%HEADER_IMG%"" alt=""Singer Specialized""></span>                        
                             </td>
                             <td id=""quote_name"">
-                                <span class=""title"">Quote</span>
-                                <span class=""quote_number"">#%QUOTE_NUMBER%</span>
+                                <span class=""title"">Quote #%QUOTE_NUMBER%</span>
                             </td>
                             <td id=""hq_location"">
                                 <span class=""address"">235132 84th St. SE</span>
@@ -431,9 +450,9 @@ namespace SingerDispatch.Printing
                             %TABLE_BODY%
                         </tbody>
                     </table>
-                </div>
 
-                <p class=""fine_print""><em>*</em> Dimensions or weights estimated. Actual values may impact quoted price.</p>
+                    <p class=""fine_print""><em>*</em> Dimensions or weights estimated. Actual values may impact quoted price.</p>
+                </div>
             ";
 
             var rows = new StringBuilder();
@@ -441,7 +460,7 @@ namespace SingerDispatch.Printing
 
             foreach (var commodity in commodities)
             {
-                rows.Append("<tr>");
+                rows.Append(@"<tr class=""details"">");
                 rows.Append("<td>");
                 rows.Append(count);
                 rows.Append("</td>");
@@ -465,6 +484,17 @@ namespace SingerDispatch.Printing
                 rows.Append(commodity.Weight);
                 rows.Append("</td>");
                 rows.Append("</tr>");
+
+                if (commodity.Notes != null && commodity.Notes.Length > 0)
+                {
+                    rows.Append(@"<tr class=""notes"">");
+                    rows.Append("<td></td>");
+                    rows.Append(@"<td colspan=""4"">");
+                    rows.Append(commodity.Notes.Replace("\n", "<br>"));
+                    rows.Append("</td>");
+                    rows.Append("<td></td>");
+                    rows.Append("</tr>");
+                }
 
                 count++;
             }
