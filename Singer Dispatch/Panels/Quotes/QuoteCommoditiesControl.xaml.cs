@@ -4,6 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
+using System.Collections.Generic;
 
 namespace SingerDispatch.Panels.Quotes
 {
@@ -12,25 +13,76 @@ namespace SingerDispatch.Panels.Quotes
     /// </summary>
     public partial class QuoteCommoditiesControl
     {
+        public static DependencyProperty CommonSiteNamesProperty = DependencyProperty.Register("CommonSiteNames", typeof(ObservableCollection<string>), typeof(QuoteCommoditiesControl));
+        public static DependencyProperty CommonSiteAddressesProperty = DependencyProperty.Register("CommonSiteAddresses", typeof(ObservableCollection<string>), typeof(QuoteCommoditiesControl));
+
         public SingerDispatchDataContext Database { get; set; }
+
+        public ObservableCollection<string> CommonSiteNames
+        {
+            get
+            {
+                return (ObservableCollection<string>)GetValue(CommonSiteNamesProperty);
+            }
+            set
+            {
+                SetValue(CommonSiteNamesProperty, value);
+            }
+        }
+
+        public ObservableCollection<string> CommonSiteAddresses
+        {
+            get
+            {
+                return (ObservableCollection<string>)GetValue(CommonSiteAddressesProperty);
+            }
+            set
+            {
+                SetValue(CommonSiteAddressesProperty, value);
+            }
+        }
 
         public QuoteCommoditiesControl()
         {
             InitializeComponent();
 
             Database = SingerConstants.CommonDataContext;
+
+            CommonSiteNames = new ObservableCollection<string>();
+            CommonSiteAddresses = new ObservableCollection<string>();
         }
 
         private void Control_Loaded(object sender, RoutedEventArgs e)
         {
             cmbCommodityName.ItemsSource = (SelectedQuote == null) ? null : from c in Database.Commodities where c.Company == SelectedCompany || c.Company == SelectedQuote.CareOfCompany select c;
+            
+            UpdateAddressesAndSites();
         }
 
         protected override void SelectedQuoteChanged(Quote newValue, Quote oldValue)
         {
             base.SelectedQuoteChanged(newValue, oldValue);
 
-            dgQuoteCommodities.ItemsSource = (newValue == null) ? null : new ObservableCollection<QuoteCommodity>(newValue.QuoteCommodities);
+            dgQuoteCommodities.ItemsSource = newValue != null ? new ObservableCollection<QuoteCommodity>(newValue.QuoteCommodities) : null;
+        }
+
+        private void UpdateAddressesAndSites()
+        {
+            CommonSiteNames.Clear();
+            CommonSiteAddresses.Clear();
+
+            var list = (ObservableCollection<QuoteCommodity>)dgQuoteCommodities.ItemsSource;
+
+            if (list != null)
+            {
+                foreach (var item in list)
+                {
+                    if (item.DepartureAddress != null) CommonSiteAddresses.Add(item.DepartureAddress);
+                    if (item.ArrivalAddress != null) CommonSiteAddresses.Add(item.ArrivalAddress);
+                    if (item.DepartureSiteName != null) CommonSiteNames.Add(item.DepartureSiteName);
+                    if (item.ArrivalSiteName != null) CommonSiteNames.Add(item.ArrivalSiteName);
+                }
+            }
         }
 
         private void CommodityName_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -84,6 +136,8 @@ namespace SingerDispatch.Panels.Quotes
 
         private void NewCommodity_Click(object sender, RoutedEventArgs e)
         {
+            UpdateAddressesAndSites();
+
             var list = (ObservableCollection<QuoteCommodity>)dgQuoteCommodities.ItemsSource;
             var commodity = new QuoteCommodity { QuoteID = SelectedQuote.ID, SizeEstimated = true, WeightEstimated = true};
 
@@ -117,7 +171,7 @@ namespace SingerDispatch.Panels.Quotes
                 return;
             }
 
-            MessageBoxResult confirmation = MessageBox.Show("Are you sure you want to remove this commodity?", "Delete confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            var confirmation = MessageBox.Show("Are you sure you want to remove this commodity?", "Delete confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
             if (confirmation != MessageBoxResult.Yes)
             {
@@ -130,3 +184,4 @@ namespace SingerDispatch.Panels.Quotes
         }
     }
 }
+
