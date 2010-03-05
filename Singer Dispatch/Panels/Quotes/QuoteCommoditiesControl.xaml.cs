@@ -66,21 +66,27 @@ namespace SingerDispatch.Panels.Quotes
             dgQuoteCommodities.ItemsSource = newValue != null ? new ObservableCollection<QuoteCommodity>(newValue.QuoteCommodities) : null;
         }
 
+        private void dgQuoteCommodities_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            UpdateAddressesAndSites();
+        }
+
         private void UpdateAddressesAndSites()
         {
-            CommonSiteNames.Clear();
-            CommonSiteAddresses.Clear();
-
             var list = (ObservableCollection<QuoteCommodity>)dgQuoteCommodities.ItemsSource;
 
             if (list != null)
             {
                 foreach (var item in list)
                 {
-                    if (item.DepartureAddress != null) CommonSiteAddresses.Add(item.DepartureAddress);
-                    if (item.ArrivalAddress != null) CommonSiteAddresses.Add(item.ArrivalAddress);
-                    if (item.DepartureSiteName != null) CommonSiteNames.Add(item.DepartureSiteName);
-                    if (item.ArrivalSiteName != null) CommonSiteNames.Add(item.ArrivalSiteName);
+                    if (item.DepartureAddress != null && item.DepartureAddress.Trim().Length > 0 && !CommonSiteAddresses.Contains(item.DepartureAddress))
+                        CommonSiteAddresses.Add(item.DepartureAddress);
+                    if (item.ArrivalAddress != null && item.ArrivalAddress.Trim().Length > 0 && !CommonSiteAddresses.Contains(item.ArrivalAddress))
+                        CommonSiteAddresses.Add(item.ArrivalAddress);
+                    if (item.DepartureSiteName != null && item.DepartureSiteName.Trim().Length > 0 && !CommonSiteNames.Contains(item.DepartureSiteName))
+                        CommonSiteNames.Add(item.DepartureSiteName);
+                    if (item.ArrivalSiteName != null && item.ArrivalSiteName.Trim().Length > 0 && !CommonSiteNames.Contains(item.ArrivalSiteName))
+                        CommonSiteNames.Add(item.ArrivalSiteName);
                 }
             }
         }

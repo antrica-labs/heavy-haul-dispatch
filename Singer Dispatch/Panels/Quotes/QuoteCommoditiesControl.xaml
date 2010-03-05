@@ -136,7 +136,7 @@
                         <ComboBox Grid.Column="1" Grid.Row="0" Text="{Binding DepartureSiteName}" IsEditable="True" ItemsSource="{Binding ElementName=ThePanel, Path=CommonSiteNames}" />
 
                         <Label Grid.Column="0" Grid.Row="1">Address/LSD:</Label>
-                        <ComboBox Grid.Column="1" Grid.Row="0" Text="{Binding DepartureAddress}" IsEditable="True" ItemsSource="{Binding ElementName=ThePanel, Path=CommonSiteAddresses}" />
+                        <ComboBox Grid.Column="1" Grid.Row="1" Text="{Binding DepartureAddress}" IsEditable="True" ItemsSource="{Binding ElementName=ThePanel, Path=CommonSiteAddresses}" />
                     </Grid>
                 </GroupBox>
 
@@ -156,13 +156,13 @@
                         <ComboBox Grid.Column="1" Grid.Row="0" Text="{Binding ArrivalSiteName}" IsEditable="True" ItemsSource="{Binding ElementName=ThePanel, Path=CommonSiteNames}" />
 
                         <Label Grid.Column="0" Grid.Row="1">Address/LSD:</Label>
-                        <ComboBox Grid.Column="1" Grid.Row="0" Text="{Binding ArrivalAddress}" IsEditable="True" ItemsSource="{Binding ElementName=ThePanel, Path=CommonSiteAddresses}" />
+                        <ComboBox Grid.Column="1" Grid.Row="1" Text="{Binding ArrivalAddress}" IsEditable="True" ItemsSource="{Binding ElementName=ThePanel, Path=CommonSiteAddresses}" />
                     </Grid>
                 </GroupBox>
             </Grid>
         </StackPanel>
 
-        <WPF:DataGrid Name="dgQuoteCommodities" Style="{StaticResource ListDisplay}">
+        <WPF:DataGrid Name="dgQuoteCommodities" Style="{StaticResource ListDisplay}" SelectionChanged="dgQuoteCommodities_SelectionChanged">
             <WPF:DataGrid.Columns>
                 <WPF:DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="2*" />
                 <WPF:DataGridTextColumn Header="Unit" Binding="{Binding Unit}" />
