@@ -610,4 +610,11 @@
       <Association Name="Invoice_InvoiceExtra" Member="Invoice" ThisKey="InvoiceID" OtherKey="ID" Type="Invoice" IsForeignKey="true" />
     </Type>
   </Table>
+  <Table Name="" Member="Configurations">
+    <Type Name="Configuration">
+      <Column Name="ID" Type="System.Int64" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" CanBeNull="true" />
+      <Column Name="Value" Type="System.String" CanBeNull="true" />
+    </Type>
+  </Table>
 </Database>
