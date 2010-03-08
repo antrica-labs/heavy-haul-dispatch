@@ -63,9 +63,9 @@
     <Type Name="Company">
       <Column Name="ID" Type="System.Int64" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="PriorityLevelID" Type="System.Int64" CanBeNull="true" />
+      <Column Name="CustomerTypeID" Type="System.Int64" CanBeNull="true" />
       <Column Name="Name" Type="System.String" CanBeNull="true" />
-      <Column Name="OperatingAs" Type="System.String" CanBeNull="true" />
-      <Column Name="Type" Type="System.String" CanBeNull="true" />
+      <Column Name="OperatingAs" Type="System.String" CanBeNull="true" />      
       <Column Name="AvailableCredit" Type="System.Decimal" CanBeNull="true" />
       <Column Name="AccPacVendorCode" Type="System.String" CanBeNull="true" />
       <Column Name="EquifaxComplete" Type="System.Boolean" CanBeNull="true" />
@@ -82,6 +82,7 @@
       <Association Name="Company_Service" Member="Services" ThisKey="ID" OtherKey="CompanyID" Type="Service" />
       <Association Name="Company_ThirdPartyService" Member="ThirdPartyServices" ThisKey="ID" OtherKey="CompanyID" Type="ThirdPartyService" />
       <Association Name="CompanyPriorityLevel_Company" Member="CompanyPriorityLevel" ThisKey="PriorityLevelID" OtherKey="ID" Type="CompanyPriorityLevel" IsForeignKey="true" />
+      <Association Name="CustomerType_Company" Member="CustomerType" ThisKey="CustomerTypeID" OtherKey="ID" Type="CustomerType" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="" Member="CompanyPriorityLevels">
@@ -96,19 +97,20 @@
       <Column Name="ID" Type="System.Int64" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="AddressID" Type="System.Int64" CanBeNull="true" />
       <Column Name="TypeID" Type="System.Int64" CanBeNull="true" />
+      <Column Name="ContactMethodID" Type="System.Int64" CanBeNull="true" />
       <Column Name="FirstName" Type="System.String" CanBeNull="true" />
       <Column Name="LastName" Type="System.String" CanBeNull="true" />
       <Column Name="Email" Type="System.String" CanBeNull="true" />
       <Column Name="PrimaryPhone" Type="System.String" CanBeNull="true" />
       <Column Name="SecondaryPhone" Type="System.String" CanBeNull="true" />
-      <Column Name="Fax" Type="System.String" CanBeNull="true" />
-      <Column Name="PreferedContactMethod" Type="System.String" CanBeNull="true" />
+      <Column Name="Fax" Type="System.String" CanBeNull="true" />      
       <Column Name="Notes" Type="System.String" CanBeNull="true" UpdateCheck="Never" />
       <Association Name="Contact_Quote" Member="Quotes" ThisKey="ID" OtherKey="ContactID" Type="Quote" />
       <Association Name="Contact_ThirdPartyService" Member="ThirdPartyServices" ThisKey="ID" OtherKey="ContactID" Type="ThirdPartyService" />
       <Association Name="Contact_Invoice" Member="Invoices" ThisKey="ID" OtherKey="ContactID" Type="Invoice" />
       <Association Name="Address_Contact" Member="Address" ThisKey="AddressID" OtherKey="ID" Type="Address" IsForeignKey="true" />
       <Association Name="ContactType_Contact" Member="ContactType" ThisKey="TypeID" OtherKey="ID" Type="ContactType" IsForeignKey="true" />
+      <Association Name="ContactMethod_Contact" Member="PreferedContactMethod" ThisKey="ContactMethodID" OtherKey="ID" Type="ContactMethod" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="" Member="ContactTypes">
@@ -608,6 +610,21 @@
       <Column Name="Hours" Type="System.Double" CanBeNull="true" />
       <Column Name="Cost" Type="System.Decimal" CanBeNull="true" />
       <Association Name="Invoice_InvoiceExtra" Member="Invoice" ThisKey="InvoiceID" OtherKey="ID" Type="Invoice" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="" Member="CustomerType">
+    <Type Name="CustomerType">
+      <Column Name="ID" Type="System.Int64" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="true" />
+      <Column Name="Name" Type="System.String" />
+      <Column Name="IsEnterprise" Type="System.Boolean" CanBeNull="true" />
+      <Association Name="CustomerType_Company" Member="Companies" ThisKey="ID" OtherKey="CustomerTypeID" Type="Company" />
+    </Type>
+  </Table>
+  <Table Name="" Member="ContactMethods">
+    <Type Name="ContactMethod">
+      <Column Name="ID" Type="System.Int64" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="true" />
+      <Column Name="Name" Type="System.String" />
+      <Association Name="ContactMethod_Contact" Member="Contacts" ThisKey="ID" OtherKey="ContactMethodID" Type="Contact" />
     </Type>
   </Table>
   <Table Name="" Member="Configurations">

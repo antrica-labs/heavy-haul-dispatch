@@ -149,6 +149,12 @@ namespace SingerDispatch
     partial void InsertInvoiceExtra(InvoiceExtra instance);
     partial void UpdateInvoiceExtra(InvoiceExtra instance);
     partial void DeleteInvoiceExtra(InvoiceExtra instance);
+    partial void InsertCustomerType(CustomerType instance);
+    partial void UpdateCustomerType(CustomerType instance);
+    partial void DeleteCustomerType(CustomerType instance);
+    partial void InsertContactMethod(ContactMethod instance);
+    partial void UpdateContactMethod(ContactMethod instance);
+    partial void DeleteContactMethod(ContactMethod instance);
     partial void InsertConfiguration(Configuration instance);
     partial void UpdateConfiguration(Configuration instance);
     partial void DeleteConfiguration(Configuration instance);
@@ -495,6 +501,22 @@ namespace SingerDispatch
 			get
 			{
 				return this.GetTable<InvoiceExtra>();
+			}
+		}
+		
+		public System.Data.Linq.Table<CustomerType> CustomerType
+		{
+			get
+			{
+				return this.GetTable<CustomerType>();
+			}
+		}
+		
+		public System.Data.Linq.Table<ContactMethod> ContactMethods
+		{
+			get
+			{
+				return this.GetTable<ContactMethod>();
 			}
 		}
 		
@@ -1825,11 +1847,11 @@ namespace SingerDispatch
 		
 		private System.Nullable<long> _PriorityLevelID;
 		
+		private System.Nullable<long> _CustomerTypeID;
+		
 		private string _Name;
 		
 		private string _OperatingAs;
-		
-		private string _Type;
 		
 		private System.Nullable<decimal> _AvailableCredit;
 		
@@ -1863,6 +1885,8 @@ namespace SingerDispatch
 		
 		private EntityRef<CompanyPriorityLevel> _CompanyPriorityLevel;
 		
+		private EntityRef<CustomerType> _CustomerType;
+		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -1871,12 +1895,12 @@ namespace SingerDispatch
     partial void OnIDChanged();
     partial void OnPriorityLevelIDChanging(System.Nullable<long> value);
     partial void OnPriorityLevelIDChanged();
+    partial void OnCustomerTypeIDChanging(System.Nullable<long> value);
+    partial void OnCustomerTypeIDChanged();
     partial void OnNameChanging(string value);
     partial void OnNameChanged();
     partial void OnOperatingAsChanging(string value);
     partial void OnOperatingAsChanged();
-    partial void OnTypeChanging(string value);
-    partial void OnTypeChanged();
     partial void OnAvailableCreditChanging(System.Nullable<decimal> value);
     partial void OnAvailableCreditChanged();
     partial void OnAccPacVendorCodeChanging(string value);
@@ -1903,6 +1927,7 @@ namespace SingerDispatch
 			this._Services = new EntitySet<Service>(new Action<Service>(this.attach_Services), new Action<Service>(this.detach_Services));
 			this._ThirdPartyServices = new EntitySet<ThirdPartyService>(new Action<ThirdPartyService>(this.attach_ThirdPartyServices), new Action<ThirdPartyService>(this.detach_ThirdPartyServices));
 			this._CompanyPriorityLevel = default(EntityRef<CompanyPriorityLevel>);
+			this._CustomerType = default(EntityRef<CustomerType>);
 			OnCreated();
 		}
 		
@@ -1950,6 +1975,30 @@ namespace SingerDispatch
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CustomerTypeID")]
+		public System.Nullable<long> CustomerTypeID
+		{
+			get
+			{
+				return this._CustomerTypeID;
+			}
+			set
+			{
+				if ((this._CustomerTypeID != value))
+				{
+					if (this._CustomerType.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnCustomerTypeIDChanging(value);
+					this.SendPropertyChanging();
+					this._CustomerTypeID = value;
+					this.SendPropertyChanged("CustomerTypeID");
+					this.OnCustomerTypeIDChanged();
+				}
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name")]
 		public string Name
 		{
@@ -1986,26 +2035,6 @@ namespace SingerDispatch
 					this._OperatingAs = value;
 					this.SendPropertyChanged("OperatingAs");
 					this.OnOperatingAsChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Type")]
-		public string Type
-		{
-			get
-			{
-				return this._Type;
-			}
-			set
-			{
-				if ((this._Type != value))
-				{
-					this.OnTypeChanging(value);
-					this.SendPropertyChanging();
-					this._Type = value;
-					this.SendPropertyChanged("Type");
-					this.OnTypeChanged();
 				}
 			}
 		}
@@ -2281,6 +2310,40 @@ namespace SingerDispatch
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="CustomerType_Company", Storage="_CustomerType", ThisKey="CustomerTypeID", OtherKey="ID", IsForeignKey=true)]
+		public CustomerType CustomerType
+		{
+			get
+			{
+				return this._CustomerType.Entity;
+			}
+			set
+			{
+				CustomerType previousValue = this._CustomerType.Entity;
+				if (((previousValue != value) 
+							|| (this._CustomerType.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._CustomerType.Entity = null;
+						previousValue.Companies.Remove(this);
+					}
+					this._CustomerType.Entity = value;
+					if ((value != null))
+					{
+						value.Companies.Add(this);
+						this._CustomerTypeID = value.ID;
+					}
+					else
+					{
+						this._CustomerTypeID = default(Nullable<long>);
+					}
+					this.SendPropertyChanged("CustomerType");
+				}
+			}
+		}
+		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -2536,6 +2599,8 @@ namespace SingerDispatch
 		
 		private System.Nullable<long> _TypeID;
 		
+		private System.Nullable<long> _ContactMethodID;
+		
 		private string _FirstName;
 		
 		private string _LastName;
@@ -2547,8 +2612,6 @@ namespace SingerDispatch
 		private string _SecondaryPhone;
 		
 		private string _Fax;
-		
-		private string _PreferedContactMethod;
 		
 		private string _Notes;
 		
@@ -2562,6 +2625,8 @@ namespace SingerDispatch
 		
 		private EntityRef<ContactType> _ContactType;
 		
+		private EntityRef<ContactMethod> _PreferedContactMethod;
+		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -2572,6 +2637,8 @@ namespace SingerDispatch
     partial void OnAddressIDChanged();
     partial void OnTypeIDChanging(System.Nullable<long> value);
     partial void OnTypeIDChanged();
+    partial void OnContactMethodIDChanging(System.Nullable<long> value);
+    partial void OnContactMethodIDChanged();
     partial void OnFirstNameChanging(string value);
     partial void OnFirstNameChanged();
     partial void OnLastNameChanging(string value);
@@ -2584,8 +2651,6 @@ namespace SingerDispatch
     partial void OnSecondaryPhoneChanged();
     partial void OnFaxChanging(string value);
     partial void OnFaxChanged();
-    partial void OnPreferedContactMethodChanging(string value);
-    partial void OnPreferedContactMethodChanged();
     partial void OnNotesChanging(string value);
     partial void OnNotesChanged();
     #endregion
@@ -2597,6 +2662,7 @@ namespace SingerDispatch
 			this._Invoices = new EntitySet<Invoice>(new Action<Invoice>(this.attach_Invoices), new Action<Invoice>(this.detach_Invoices));
 			this._Address = default(EntityRef<Address>);
 			this._ContactType = default(EntityRef<ContactType>);
+			this._PreferedContactMethod = default(EntityRef<ContactMethod>);
 			OnCreated();
 		}
 		
@@ -2664,6 +2730,30 @@ namespace SingerDispatch
 					this._TypeID = value;
 					this.SendPropertyChanged("TypeID");
 					this.OnTypeIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ContactMethodID")]
+		public System.Nullable<long> ContactMethodID
+		{
+			get
+			{
+				return this._ContactMethodID;
+			}
+			set
+			{
+				if ((this._ContactMethodID != value))
+				{
+					if (this._PreferedContactMethod.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnContactMethodIDChanging(value);
+					this.SendPropertyChanging();
+					this._ContactMethodID = value;
+					this.SendPropertyChanged("ContactMethodID");
+					this.OnContactMethodIDChanged();
 				}
 			}
 		}
@@ -2784,26 +2874,6 @@ namespace SingerDispatch
 					this._Fax = value;
 					this.SendPropertyChanged("Fax");
 					this.OnFaxChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PreferedContactMethod")]
-		public string PreferedContactMethod
-		{
-			get
-			{
-				return this._PreferedContactMethod;
-			}
-			set
-			{
-				if ((this._PreferedContactMethod != value))
-				{
-					this.OnPreferedContactMethodChanging(value);
-					this.SendPropertyChanging();
-					this._PreferedContactMethod = value;
-					this.SendPropertyChanged("PreferedContactMethod");
-					this.OnPreferedContactMethodChanged();
 				}
 			}
 		}
@@ -2931,6 +3001,40 @@ namespace SingerDispatch
 						this._TypeID = default(Nullable<long>);
 					}
 					this.SendPropertyChanged("ContactType");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ContactMethod_Contact", Storage="_PreferedContactMethod", ThisKey="ContactMethodID", OtherKey="ID", IsForeignKey=true)]
+		public ContactMethod PreferedContactMethod
+		{
+			get
+			{
+				return this._PreferedContactMethod.Entity;
+			}
+			set
+			{
+				ContactMethod previousValue = this._PreferedContactMethod.Entity;
+				if (((previousValue != value) 
+							|| (this._PreferedContactMethod.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._PreferedContactMethod.Entity = null;
+						previousValue.Contacts.Remove(this);
+					}
+					this._PreferedContactMethod.Entity = value;
+					if ((value != null))
+					{
+						value.Contacts.Add(this);
+						this._ContactMethodID = value.ID;
+					}
+					else
+					{
+						this._ContactMethodID = default(Nullable<long>);
+					}
+					this.SendPropertyChanged("PreferedContactMethod");
 				}
 			}
 		}
@@ -14131,6 +14235,258 @@ namespace SingerDispatch
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="")]
+	public partial class CustomerType : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private System.Nullable<long> _ID;
+		
+		private string _Name;
+		
+		private System.Nullable<bool> _IsEnterprise;
+		
+		private EntitySet<Company> _Companies;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDChanging(System.Nullable<long> value);
+    partial void OnIDChanged();
+    partial void OnNameChanging(string value);
+    partial void OnNameChanged();
+    partial void OnIsEnterpriseChanging(System.Nullable<bool> value);
+    partial void OnIsEnterpriseChanged();
+    #endregion
+		
+		public CustomerType()
+		{
+			this._Companies = new EntitySet<Company>(new Action<Company>(this.attach_Companies), new Action<Company>(this.detach_Companies));
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, IsPrimaryKey=true, IsDbGenerated=true)]
+		public System.Nullable<long> ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this.OnIDChanging(value);
+					this.SendPropertyChanging();
+					this._ID = value;
+					this.SendPropertyChanged("ID");
+					this.OnIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", CanBeNull=false)]
+		public string Name
+		{
+			get
+			{
+				return this._Name;
+			}
+			set
+			{
+				if ((this._Name != value))
+				{
+					this.OnNameChanging(value);
+					this.SendPropertyChanging();
+					this._Name = value;
+					this.SendPropertyChanged("Name");
+					this.OnNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsEnterprise")]
+		public System.Nullable<bool> IsEnterprise
+		{
+			get
+			{
+				return this._IsEnterprise;
+			}
+			set
+			{
+				if ((this._IsEnterprise != value))
+				{
+					this.OnIsEnterpriseChanging(value);
+					this.SendPropertyChanging();
+					this._IsEnterprise = value;
+					this.SendPropertyChanged("IsEnterprise");
+					this.OnIsEnterpriseChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="CustomerType_Company", Storage="_Companies", ThisKey="ID", OtherKey="CustomerTypeID")]
+		public EntitySet<Company> Companies
+		{
+			get
+			{
+				return this._Companies;
+			}
+			set
+			{
+				this._Companies.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_Companies(Company entity)
+		{
+			this.SendPropertyChanging();
+			entity.CustomerType = this;
+		}
+		
+		private void detach_Companies(Company entity)
+		{
+			this.SendPropertyChanging();
+			entity.CustomerType = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="")]
+	public partial class ContactMethod : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private System.Nullable<long> _ID;
+		
+		private string _Name;
+		
+		private EntitySet<Contact> _Contacts;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDChanging(System.Nullable<long> value);
+    partial void OnIDChanged();
+    partial void OnNameChanging(string value);
+    partial void OnNameChanged();
+    #endregion
+		
+		public ContactMethod()
+		{
+			this._Contacts = new EntitySet<Contact>(new Action<Contact>(this.attach_Contacts), new Action<Contact>(this.detach_Contacts));
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, IsPrimaryKey=true, IsDbGenerated=true)]
+		public System.Nullable<long> ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this.OnIDChanging(value);
+					this.SendPropertyChanging();
+					this._ID = value;
+					this.SendPropertyChanged("ID");
+					this.OnIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", CanBeNull=false)]
+		public string Name
+		{
+			get
+			{
+				return this._Name;
+			}
+			set
+			{
+				if ((this._Name != value))
+				{
+					this.OnNameChanging(value);
+					this.SendPropertyChanging();
+					this._Name = value;
+					this.SendPropertyChanged("Name");
+					this.OnNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ContactMethod_Contact", Storage="_Contacts", ThisKey="ID", OtherKey="ContactMethodID")]
+		public EntitySet<Contact> Contacts
+		{
+			get
+			{
+				return this._Contacts;
+			}
+			set
+			{
+				this._Contacts.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_Contacts(Contact entity)
+		{
+			this.SendPropertyChanging();
+			entity.PreferedContactMethod = this;
+		}
+		
+		private void detach_Contacts(Contact entity)
+		{
+			this.SendPropertyChanging();
+			entity.PreferedContactMethod = null;
 		}
 	}
 	

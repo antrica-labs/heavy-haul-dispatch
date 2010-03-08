@@ -123,7 +123,7 @@
 			                <TextBox Name="txtContactSecondaryPhone" Grid.Row="5" Grid.Column="1" Text="{Binding SecondaryPhone}" />
 
                             <Label Grid.Row="6" Grid.Column="0">Preferred contact method:</Label>
-                            <ComboBox Name="cmbContactPreferedContactMethod" Grid.Row="7" Grid.Column="0" SelectedItem="{Binding PreferedContactMethod}" />
+                            <ComboBox Name="cmbContactPreferedContactMethod" Grid.Row="7" Grid.Column="0" SelectedItem="{Binding PreferedContactMethod}" ItemTemplate="{StaticResource SimpleNameTemplate}" />
 
                             <Label Grid.Row="6" Grid.Column="1">Contact type:</Label>                            
 			                <ComboBox Name="cmbContactType" Grid.Row="7" Grid.Column="1" ItemTemplate="{StaticResource SimpleNameTemplate}"  SelectedItem="{Binding ContactType}" TextSearch.TextPath="Name" Visibility="Hidden" /> 

@@ -1,17 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
-using SingerDispatch;
 
 namespace SingerDispatch.Importer
 {
     public class DatabaseBuilder
     {
-        private SingerDispatchDataContext database;
+        public SingerDispatchDataContext Database { get; set; }
 
         public DatabaseBuilder(SingerDispatchDataContext context)
         {
-            database = context;
+            Database = context;
         }
 
         public void CreateNewDatabase()
@@ -19,12 +18,12 @@ namespace SingerDispatch.Importer
             const string dateFormat = "M/d/yyyy";
             var provider = CultureInfo.InvariantCulture;
 
-            if (database.DatabaseExists())
+            if (Database.DatabaseExists())
             {
                 throw new Exception("Database already exists!");
             }
                        
-            database.CreateDatabase();
+            Database.CreateDatabase();
            
       
             // Populate countries and provinces
@@ -102,9 +101,18 @@ namespace SingerDispatch.Importer
             provinces.Add(new ProvincesAndState { Name = "Alaska", Country = usa });
             provinces.Add(new ProvincesAndState { Name = "Hawaii", Country = usa });
 
-            database.Countries.InsertAllOnSubmit(countries);
+            Database.Countries.InsertAllOnSubmit(countries);
 
 
+            // Populate customer types
+            Database.CustomerType.InsertOnSubmit(new CustomerType { Name = "Singer Specialized", IsEnterprise = false });
+            Database.CustomerType.InsertOnSubmit(new CustomerType { Name = "M.E. Signer Enterprise", IsEnterprise = true });
+
+            // Populate contact methods
+            Database.ContactMethods.InsertOnSubmit(new ContactMethod { Name = "Email" });
+            Database.ContactMethods.InsertOnSubmit(new ContactMethod { Name = "Primary phone" });
+            Database.ContactMethods.InsertOnSubmit(new ContactMethod { Name = "Secondary phone" });
+            
 
             // Populate service types
             var servicetypes = new List<ServiceType>();
@@ -130,7 +138,7 @@ namespace SingerDispatch.Importer
             servicetypes.Add(new ServiceType { Name = "Welders" });
             servicetypes.Add(new ServiceType { Name = "Wirelift" });
 
-            database.ServiceTypes.InsertAllOnSubmit(servicetypes);
+            Database.ServiceTypes.InsertAllOnSubmit(servicetypes);
             
 
             // Populate address types
@@ -141,7 +149,7 @@ namespace SingerDispatch.Importer
             addresstypes.Add(new AddressType { Name = "Local Office" });
             addresstypes.Add(new AddressType { Name = "Site Office" });
 
-            database.AddressTypes.InsertAllOnSubmit(addresstypes);
+            Database.AddressTypes.InsertAllOnSubmit(addresstypes);
 
 
             // Contact types
@@ -159,7 +167,7 @@ namespace SingerDispatch.Importer
             contacttypes.Add(new ContactType { Name = "Unload Site" });
             contacttypes.Add(new ContactType { Name = "Unloading" });
 
-            database.ContactTypes.InsertAllOnSubmit(contacttypes);
+            Database.ContactTypes.InsertAllOnSubmit(contacttypes);
 
             
             // Populate priority levels            
@@ -172,7 +180,7 @@ namespace SingerDispatch.Importer
             levels.Add(new CompanyPriorityLevel { Name = "5. Cash on Delivery" });
             levels.Add(new CompanyPriorityLevel { Name = "6. Do not haul" });
 
-            database.CompanyPriorityLevels.InsertAllOnSubmit(levels);
+            Database.CompanyPriorityLevels.InsertAllOnSubmit(levels);
 
 
             // Populate seasons
@@ -184,7 +192,7 @@ namespace SingerDispatch.Importer
             seasons.Add(new Season { Name = "Summer Weight Restriction" });
             seasons.Add(new Season { Name = "Winter Weight Restriction" });
 
-            database.Seasons.InsertAllOnSubmit(seasons);
+            Database.Seasons.InsertAllOnSubmit(seasons);
 
 
             // Populate billing types            
@@ -196,12 +204,12 @@ namespace SingerDispatch.Importer
             billingtypes.Add(new BillingType { Name = "Per Month" });
             billingtypes.Add(new BillingType { Name = "Cost Included" });
 
-            database.BillingTypes.InsertAllOnSubmit(billingtypes);
+            Database.BillingTypes.InsertAllOnSubmit(billingtypes);
 
 
             // Insert the rate types
-            var servicerate = new RateType() { Name = "Service" };
-            var trailerrate = new RateType() { Name = "Trailer" };
+            var servicerate = new RateType { Name = "Service" };
+            var trailerrate = new RateType { Name = "Trailer" };
             
 
             // Populate rates
@@ -271,22 +279,22 @@ namespace SingerDispatch.Importer
             rates.Add(new Rate { RateType = servicerate, Name = "Tandem Winch Tractor", HourlyEnterprise = 145.00m, HourlySpecialized = 145.00m });
             rates.Add(new Rate { RateType = servicerate, Name = "Trojan Loader", HourlyEnterprise = 170.00m, HourlySpecialized = 170.00m });
 
-            database.Rates.InsertAllOnSubmit(rates);
+            Database.Rates.InsertAllOnSubmit(rates);
 
 
             // Job status types
 
             var jobstatustypes = new List<JobStatusType>();
 
-            jobstatustypes.Add(new JobStatusType() { Name = "Billed" });
-            jobstatustypes.Add(new JobStatusType() { Name = "Cancelled" });
-            jobstatustypes.Add(new JobStatusType() { Name = "Completed" });
-            jobstatustypes.Add(new JobStatusType() { Name = "Delayed" });
-            jobstatustypes.Add(new JobStatusType() { Name = "In Process" });
-            jobstatustypes.Add(new JobStatusType() { Name = "Pending" });
-            jobstatustypes.Add(new JobStatusType() { Name = "Storage" });
+            jobstatustypes.Add(new JobStatusType { Name = "Billed" });
+            jobstatustypes.Add(new JobStatusType { Name = "Cancelled" });
+            jobstatustypes.Add(new JobStatusType { Name = "Completed" });
+            jobstatustypes.Add(new JobStatusType { Name = "Delayed" });
+            jobstatustypes.Add(new JobStatusType { Name = "In Process" });
+            jobstatustypes.Add(new JobStatusType { Name = "Pending" });
+            jobstatustypes.Add(new JobStatusType { Name = "Storage" });
 
-            database.JobStatusTypes.InsertAllOnSubmit(jobstatustypes);
+            Database.JobStatusTypes.InsertAllOnSubmit(jobstatustypes);
 
 
             // Fill employees table
@@ -382,7 +390,7 @@ namespace SingerDispatch.Importer
             employees.Add(new Employee { FirstName = "Cody", LastName = "Hanna", Phone = "(403)285-7318", Mobile = "(403)465-6702", IsAvailable = true, IsSupervisor = false, IsSingerStaff = true, StartDate = DateTime.ParseExact("1/26/2009", dateFormat, provider), EndDate = null, Responsibilities = null });
             employees.Add(new Employee { FirstName = "Julien", LastName = "Barré", Phone = null, Mobile = "(403)921-8294", IsAvailable = true, IsSupervisor = false, IsSingerStaff = true, StartDate = DateTime.ParseExact("8/1/2005", dateFormat, provider), EndDate = null, Responsibilities = "Tractor" });
 
-            database.Employees.InsertAllOnSubmit(employees);
+            Database.Employees.InsertAllOnSubmit(employees);
 
             
             // Create equipment types
@@ -445,7 +453,7 @@ namespace SingerDispatch.Importer
             equipmenttypes.Add(new EquipmentType { Prefix = "Rental", Name = "Rental Equipment" });
             equipmenttypes.Add(new EquipmentType { Prefix = "Scheuerle", Name = "Scheuerle" });
 
-            database.EquipmentTypes.InsertAllOnSubmit(equipmenttypes);
+            Database.EquipmentTypes.InsertAllOnSubmit(equipmenttypes);
 
 
             // Create the quipment classes
@@ -454,10 +462,10 @@ namespace SingerDispatch.Importer
             var pilotClass = new EquipmentClass { Name = "Pilot" };
             var otherClass = new EquipmentClass { Name = "Other" };
 
-            database.EquipmentClasses.InsertOnSubmit(tractorClass);
-            database.EquipmentClasses.InsertOnSubmit(trailorClass);
-            database.EquipmentClasses.InsertOnSubmit(pilotClass);
-            database.EquipmentClasses.InsertOnSubmit(otherClass);
+            Database.EquipmentClasses.InsertOnSubmit(tractorClass);
+            Database.EquipmentClasses.InsertOnSubmit(trailorClass);
+            Database.EquipmentClasses.InsertOnSubmit(pilotClass);
+            Database.EquipmentClasses.InsertOnSubmit(otherClass);
 
             // Populate the Equipment table
 
@@ -659,7 +667,7 @@ namespace SingerDispatch.Importer
             equipment.Add(new Equipment { UnitNumber = "Rental Trailer", Serial = "Rental Trailer", Make = null, Model = null, Year = null, LicencePlate = null, EngineMake = null, EngineModel = null, EngineType = "Rental Trailer", IsDispatchable = true, EquipmentClass = trailorClass, Tare = null, AxleConfig = null, HasWinch = false, SteerTireSize = null, DriveTireSize = null, IsProrated = false, IsOnlyForScheuerle = false, IsOnlyForPushing = false, Height = null, InServiceDate = DateTime.ParseExact("1/1/2005", dateFormat, provider), OutOfServiceDate = null });
             equipment.Add(new Equipment { UnitNumber = "Scheuerle", Serial = "Scheuerle", Make = null, Model = null, Year = null, LicencePlate = null, EngineMake = null, EngineModel = null, EngineType = "Scheuerle", IsDispatchable = false, EquipmentClass = otherClass, Tare = null, AxleConfig = null, HasWinch = false, SteerTireSize = null, DriveTireSize = null, IsProrated = false, IsOnlyForScheuerle = false, IsOnlyForPushing = false, Height = null, InServiceDate = DateTime.ParseExact("1/1/2005", dateFormat, provider), OutOfServiceDate = null });
             
-            database.Equipment.InsertAllOnSubmit(equipment);
+            Database.Equipment.InsertAllOnSubmit(equipment);
                   
             
             
@@ -684,10 +692,10 @@ namespace SingerDispatch.Importer
             methods.Add(new LoadUnloadMethod { Name = "Tower Crane" });
             methods.Add(new LoadUnloadMethod { Name = "Winch" });
 
-            database.LoadUnloadMethods.InsertAllOnSubmit(methods);
+            Database.LoadUnloadMethods.InsertAllOnSubmit(methods);
                         
 
-            database.SubmitChanges();
+            Database.SubmitChanges();
         }
     }
 }

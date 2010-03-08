@@ -25,17 +25,16 @@ namespace SingerDispatch.Panels.Companies
 
             SaveCommand = new CommandBinding(CustomCommands.GenericSaveCommand);
             CommandBindings.Add(SaveCommand);
-
-            cmbContactPreferedContactMethod.ItemsSource = SingerConstants.ContactMethods;
         }
 
         private void Control_Loaded(object sender, RoutedEventArgs e)
         {            
             SaveCommand.Executed += CommitChanges_Executed;
-
+            
             cmbProvinceOrState.ItemsSource = from p in Database.ProvincesAndStates orderby p.CountryID, p.Name select p;
             cmbContactType.ItemsSource = from ct in Database.ContactTypes select ct;
             cmbAddressType.ItemsSource = from at in Database.AddressTypes select at;
+            cmbContactPreferedContactMethod.ItemsSource = from cm in Database.ContactMethods select cm;
         }
 
 

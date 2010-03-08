@@ -13,7 +13,7 @@ namespace SingerDispatch.Importer
     public class Program
     {   
         private Dictionary<string, CompanyPriorityLevel> PriorityLevels { get; set; }
-        private Dictionary<bool?, string> CompanyTypes { get; set; }
+        private Dictionary<bool?, CustomerType> CompanyTypes { get; set; }
         private Dictionary<string, ProvincesAndState> ProvincesAndStates { get; set; }
         private Dictionary<string, AddressType> AddressTypes { get; set; }
         private Dictionary<string, ContactType> ContactTypes { get; set; }
@@ -123,11 +123,13 @@ namespace SingerDispatch.Importer
             }
 
 
-            CompanyTypes = new Dictionary<bool?, string>();
-
-            CompanyTypes.Add(true, "Singer Specialized");
-            CompanyTypes.Add(false, "M.E. Signer Enterprise");
-
+            CompanyTypes = new Dictionary<bool?, CustomerType>();
+            foreach (var item in (from ct in linq.CustomerType select ct).ToList())
+            {
+                if (item.IsEnterprise != null && !CompanyTypes.ContainsKey(item.IsEnterprise)) 
+                    CompanyTypes.Add(item.IsEnterprise, item);
+            }
+            
 
             ProvincesAndStates = new Dictionary<string, ProvincesAndState>();
             foreach (var item in (from ps in linq.ProvincesAndStates select ps).ToList())
@@ -273,7 +275,7 @@ namespace SingerDispatch.Importer
                 isSingerCustomer = true;
 
             company.PriorityLevelID = PriorityLevels[priorityLevel].ID;
-            company.Type = CompanyTypes[isSingerCustomer];
+            company.CustomerType = CompanyTypes[isSingerCustomer];
             
 
             // Add all addresses for this company

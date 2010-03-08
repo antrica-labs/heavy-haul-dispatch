@@ -24,8 +24,6 @@ namespace SingerDispatch.Panels.Companies
 
             SaveCommand = new CommandBinding(CustomCommands.GenericSaveCommand);
             CommandBindings.Add(SaveCommand);
-
-            cmbCreditCustomerType.ItemsSource = SingerConstants.CustomerTypes;
         }
 
         private void Control_Loaded(object sender, RoutedEventArgs e)
@@ -33,6 +31,7 @@ namespace SingerDispatch.Panels.Companies
             SaveCommand.Executed += CommitChanges_Executed;            
 
             cmbCreditPriority.ItemsSource = from l in Database.CompanyPriorityLevels orderby l.Name select l;
+            cmbCreditCustomerType.ItemsSource = from ct in Database.CustomerType select ct;
 
             dgCreditRates.ItemsSource = GetCompanyRates(SelectedCompany);
         }
@@ -72,7 +71,7 @@ namespace SingerDispatch.Panels.Companies
 
             var rates = from r in Database.Rates select r;
             var discount = company.RateAdjustment ?? 0.00m;
-            var enterprise = company.Type == "M.E. Signer Enterprise";
+            var enterprise = company.CustomerType != null && company.CustomerType.IsEnterprise == true;
 
             foreach (var rate in rates)
             {

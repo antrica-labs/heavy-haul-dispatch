@@ -100,7 +100,7 @@ namespace SingerDispatch.Panels.Jobs
 
             var rates = from r in Database.Rates where r.RateType.Name == "Trailer" select r;
             var discount = company.RateAdjustment ?? 0.00m;
-            var enterprise = company.Type == "M.E. Signer Enterprise";
+            var enterprise = company.CustomerType != null && company.CustomerType.IsEnterprise == true;
 
             foreach (var rate in rates)
             {

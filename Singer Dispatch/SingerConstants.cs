@@ -1,48 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Linq;
+using System.Collections.Generic;
 
 namespace SingerDispatch
 {
     public class SingerConstants
     {
-        private static List<string> contactMethods = new List<string>();
-        private static List<string> customerTypes = new List<string>();
-        private static List<string> serviceTypes = new List<string>();
-        private static SingerDispatchDataContext database = new SingerDispatchDataContext();
-
-        static SingerConstants()
-        {
-            contactMethods.Add("Email");
-            contactMethods.Add("Primary phone");
-            contactMethods.Add("Secondary phone");
-
-            customerTypes.Add("Singer Specialized");
-            customerTypes.Add("M.E. Signer Enterprise");
-        }
-
-        public static List<string> ContactMethods 
-        {
-            get
-            {
-                return contactMethods;
-            }
-                
-        }
-
-        public static List<string> CustomerTypes
-        {
-            get
-            {
-                return customerTypes;
-            }
-        }
-
-        public static List<string> ServiceTypes
-        {
-            get
-            {
-                return serviceTypes;
-            }
-        }
+        private static readonly SingerDispatchDataContext database = new SingerDispatchDataContext();
 
         public static SingerDispatchDataContext CommonDataContext
         {
@@ -52,15 +16,71 @@ namespace SingerDispatch
             }
         }
 
+        public static string GetConfig(string key)
+        {
+            string result;
+
+            try
+            {
+                var config = (from c in CommonDataContext.Configurations where c.Name == key select c).First();
+
+                result = config.Value;
+            }
+            catch (Exception)
+            {
+                result = null;
+            }
+
+            return result;
+        }
+
         public static string PrintedDateFormatString
         {
             get
             {
-                return "MMMM d, yyyy";
+                return GetConfig("PrintedDateFormatString") ?? "MMMM d, yyyy";
+            }
+        }
+        
+        public static decimal GST
+        {
+            get
+            {
+                var gst = GetConfig("GSTRate") ?? "";
+                decimal result;
+
+                try
+                {
+                    result = Convert.ToDecimal(gst);
+                }
+                catch (Exception)
+                {
+                    result = 0.05m;
+                }
+
+                return result;
             }
         }
 
-        public static readonly decimal GST = 0.05m;
-        public static readonly decimal FuelTax = 0.00m;
+        public static decimal FuelTax
+        {
+            get
+            {
+                var tax = GetConfig("FuelTaxRate");
+                decimal result;
+
+                try
+                {
+                    result = Convert.ToDecimal(tax);
+                }
+                catch (Exception)
+                {
+                    result = 0.00m;
+                }
+
+                return result;
+            }
+
+        }
     }
 }
