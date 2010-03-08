@@ -8,4 +8,4 @@ _ReSharper.*
 Singer Dispatch/app.config
 Singer Data Importer/app.config
 glob:Singer Dispatch.sln.cache
-glob:~$*
+relre:~*
