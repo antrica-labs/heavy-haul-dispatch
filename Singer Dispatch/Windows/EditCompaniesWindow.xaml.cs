@@ -20,9 +20,9 @@ namespace SingerDispatch.Windows
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             CompaniesGrid.ItemsSource = from c in Database.Companies orderby c.Name select c;
-            CBSearch.ItemsSource = CompaniesGrid.ItemsSource;
+            CmbSearch.ItemsSource = CompaniesGrid.ItemsSource;
 
-            CBSearch.Focus();
+            CmbSearch.Focus();
         }
 
         private void CloseWindow_Click(object sender, RoutedEventArgs e)
@@ -42,10 +42,12 @@ namespace SingerDispatch.Windows
             }
         }
 
-        private void CBSearch_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        private void CmbSearch_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
-            CompaniesGrid.ScrollIntoView(CBSearch.SelectedItem);
-            CompaniesGrid.SelectedItem = CBSearch.SelectedItem;
+            if (CmbSearch.SelectedItem == null) return;
+
+            CompaniesGrid.ScrollIntoView(CmbSearch.SelectedItem);
+            CompaniesGrid.SelectedItem = CmbSearch.SelectedItem;
         }
     }
 }

@@ -14,7 +14,7 @@
     <DockPanel>
         <Button DockPanel.Dock="Bottom" Margin="5,0,5,5" Click="CloseWindow_Click">Close</Button>
 
-        <ComboBox Name="CBSearch" DockPanel.Dock="Bottom" ItemTemplate="{StaticResource SimpleNameTemplate}" TextSearch.TextPath="Name" IsEditable="True" SelectionChanged="CBSearch_SelectionChanged" />
+        <ComboBox Name="CmbSearch" DockPanel.Dock="Bottom" ItemTemplate="{StaticResource SimpleNameTemplate}" TextSearch.TextPath="Name" IsEditable="True" SelectionChanged="CmbSearch_SelectionChanged" />
 
         <WPF:DataGrid Name="CompaniesGrid" Margin="5" Style="{StaticResource ListDisplay}" IsReadOnly="False" RowEditEnding="CompaniesGrid_RowEditEnding">
             <WPF:DataGrid.Columns>
