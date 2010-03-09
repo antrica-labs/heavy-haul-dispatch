@@ -697,5 +697,18 @@ namespace SingerDispatch.Importer
 
             Database.SubmitChanges();
         }
+
+        public void PopulateDefaults()
+        {
+            Database.Configurations.InsertOnSubmit(new Configuration { Name = "SingerName", Value = "Singer Specialized Ltd." });
+            Database.Configurations.InsertOnSubmit(new Configuration { Name = "GSTRate", Value = "0.05m" });
+            Database.Configurations.InsertOnSubmit(new Configuration { Name = "FuelTaxRate", Value = "0.00m" });
+            Database.Configurations.InsertOnSubmit(new Configuration { Name = "SingerAddress-StreetAddress", Value = "235132 84th St. SE" });
+            Database.Configurations.InsertOnSubmit(new Configuration { Name = "SingerAddress-City", Value = "Calgary, AB T1X 0K1" });
+            Database.Configurations.InsertOnSubmit(new Configuration { Name = "SingerAddress-Phone", Value = "(403) 569-8605" });
+            Database.Configurations.InsertOnSubmit(new Configuration { Name = "", Value = "" });
+
+            Database.SubmitChanges();
+        }
     }
 }

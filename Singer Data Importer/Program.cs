@@ -89,6 +89,7 @@ namespace SingerDispatch.Importer
 
             var builder = new DatabaseBuilder(linq);
             builder.CreateNewDatabase();
+            builder.PopulateDefaults();
         }
 
         private void SetupReferences()

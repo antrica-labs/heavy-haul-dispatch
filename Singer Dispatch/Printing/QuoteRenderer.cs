@@ -310,18 +310,28 @@ namespace SingerDispatch.Printing
                                 <span class=""title"">Quote #%QUOTE_NUMBER%</span>
                             </td>
                             <td id=""hq_location"">
-                                <span class=""address"">235132 84th St. SE</span>
-                                <span class=""phone"">Calgary, AB T1X 0K1</span>
-                                <span class=""fax"">Phone: (403) 569-8605</span>                                
+                                <span class=""address"">%STREET_ADDRESS%</span>
+                                <span class=""phone"">%CITY%</span>
+                                <span class=""fax"">Phone: %PHONE%</span>                                
                             </td>
                         </tr>
                     </table>                        
                 </div>
             ";
 
-            var img = "file:///" + System.IO.Path.Combine(System.IO.Path.GetDirectoryName(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName), @"Images\Header.png");            
+            var address = SingerConstants.GetConfig("SingerAddress-StreetAddress");
+            var city = SingerConstants.GetConfig("SingerAddress-City");
+            var phone = SingerConstants.GetConfig("SingerAddress-Phone");
 
-            return content.Replace("%HEADER_IMG%", img).Replace("%QUOTE_NUMBER%", quoteName);
+            var process = System.Diagnostics.Process.GetCurrentProcess();
+            var img = "";
+
+            if (process.MainModule != null)
+            {
+                img = "file:///" + System.IO.Path.Combine(System.IO.Path.GetDirectoryName(process.MainModule.FileName), @"Images\Header.png");
+            }
+
+            return content.Replace("%HEADER_IMG%", img).Replace("%QUOTE_NUMBER%", quoteName).Replace("%STREET_ADDRESS%", address).Replace("%CITY%", city).Replace("%PHONE%", phone);
         }
 
         private static string GetRecipient(Address address, Contact contact)
@@ -431,7 +441,7 @@ namespace SingerDispatch.Printing
             return content;
         }
         
-        private static string GetCommodities(List<QuoteCommodity> commodities)
+        private static string GetCommodities(IEnumerable<QuoteCommodity> commodities)
         {
             var content = @"
                 <div id=""commodities"">
@@ -485,7 +495,7 @@ namespace SingerDispatch.Printing
                 rows.Append("</td>");
                 rows.Append("</tr>");
 
-                if (commodity.Notes != null && commodity.Notes.Length > 0)
+                if (!string.IsNullOrEmpty(commodity.Notes))
                 {
                     rows.Append(@"<tr class=""notes"">");
                     rows.Append("<td></td>");
@@ -499,23 +509,14 @@ namespace SingerDispatch.Printing
                 count++;
             }
 
-            if (count > 0)
-            {
-                content = content.Replace("%TABLE_BODY%", rows.ToString());
-            }
-            else
-            {
-                content = content.Replace("%TABLE_BODY%", "");
-            }
+            content = content.Replace("%TABLE_BODY%", count > 0 ? rows.ToString() : "");
 
             return content;
         }
 
-        private string GetSuppluments(List<QuoteSupplement> supplements)
+        private static string GetSuppluments(IEnumerable<QuoteSupplement> supplements)
         {
-            string content;
-
-            content = @"
+            var content = @"
                 <div id=""supplements"">
                     <table class=""itemized"">
                         <thead>
@@ -573,14 +574,7 @@ namespace SingerDispatch.Printing
                 count++;
             }
 
-            if (count > 0)
-            {
-                content = content.Replace("%TABLE_BODY%", rows.ToString());
-            }
-            else
-            {
-                content = content.Replace("%TABLE_BODY%", "");
-            }
+            content = content.Replace("%TABLE_BODY%", count > 0 ? rows.ToString() : "");
 
             return content;
         }

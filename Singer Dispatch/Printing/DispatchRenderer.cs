@@ -1,5 +1,4 @@
-﻿using System;
-using System.Text;
+﻿using System.Text;
 
 namespace SingerDispatch.Printing
 {
@@ -42,12 +41,12 @@ namespace SingerDispatch.Printing
             return content.ToString();
         }
 
-        private string GetTitle(string title)
+        private static string GetTitle(string title)
         {
             return "<title>" + title + "</title>";
         }
 
-        private string GetStyles()
+        private static string GetStyles()
         {
             const string content = @"
                 <style type=""text/css"">
@@ -327,9 +326,9 @@ namespace SingerDispatch.Printing
             return content;
         }
 
-        private string GetHeader(string dispatchNumber)
+        private static string GetHeader(string dispatchNumber)
         {           
-            const string content = @"
+            var content = @"
                 <div id=""header"">
                     <table>
                         <tr>
@@ -337,10 +336,10 @@ namespace SingerDispatch.Printing
                                 <span class=""logo""><img src=""%HEADER_IMG%"" alt=""Singer Specialized""></span>
                             </td>
                             <td id=""address_col"">
-                                <span>Singer Specialized Ltd.</span>
-                                <span>Site 12 Box 26 RR5</span>
-                                <span>Calgary, AB T2P 2G6</span>
-                                <span>Phone: (403) 569 - 8605</span>
+                                <span>%COMPANY_NAME%</span>
+                                <span>%STREET_ADDRESS%</span>
+                                <span>%CITY%</span>
+                                <span>Phone: %PHONE%</span>
                             </td>
                             <td id=""id_col"">
                                 <span>File Copy</span>
@@ -353,22 +352,26 @@ namespace SingerDispatch.Printing
                 </div>
             ";
 
-            string img;
+            var company = SingerConstants.GetConfig("SingerName");
+            var address = SingerConstants.GetConfig("SingerAddress-StreetAddress");
+            var city = SingerConstants.GetConfig("SingerAddress-City");
+            var phone = SingerConstants.GetConfig("SingerAddress-Phone");
 
-            try
+            var process = System.Diagnostics.Process.GetCurrentProcess();
+            var img = "";
+
+            if (process.MainModule != null)
             {
-                img = "file:///" + System.IO.Path.Combine(System.IO.Path.GetDirectoryName(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName), @"Images\Header.png");                    
+                img = "file:///" + System.IO.Path.Combine(System.IO.Path.GetDirectoryName(process.MainModule.FileName), @"Images\Header.png");
             }
-            catch (Exception)
-            {
-                img = "";
-            }
-            
-                        
-            return content.Replace("%HEADER_IMG%", img).Replace("%DISPATCH_NUMBER%", dispatchNumber);
+
+            content = content.Replace("%HEADER_IMG%", img).Replace("%DISPATCH_NUMBER%", dispatchNumber);
+            content = content.Replace("%COMPANY_NAME%", company).Replace("%STREET_ADDRESS%", address).Replace("%CITY%", city).Replace("%PHONE%", phone);
+
+            return content;
         }
 
-        private string GetDetails()
+        private static string GetDetails()
         {
             const string content = @"
                 <div id=""details"">
@@ -420,7 +423,7 @@ namespace SingerDispatch.Printing
             return content;
         }
 
-        private string GetDescription(string description)
+        private static string GetDescription(string description)
         {
             const string content = @"
                 <div id=""description"" class=""section"">
@@ -433,7 +436,7 @@ namespace SingerDispatch.Printing
             return content.Replace("%DESCRIPTION%", description);
         }
 
-        private string GetEquipment()
+        private static string GetEquipment()
         {
             const string content = @"
                 <div id=""equipment_requirements"" class=""section"">
@@ -445,7 +448,7 @@ namespace SingerDispatch.Printing
             return content;
         }
 
-        private string GetSchedule()
+        private static string GetSchedule()
         {
             const string content = @"
                 <div id=""schuedule"" class=""section"">
@@ -458,7 +461,7 @@ namespace SingerDispatch.Printing
             return content;
         }
 
-        private string GetLoadInstructions()
+        private static string GetLoadInstructions()
         {
             const string content = @"
                 <div id=""load_and_unload"" class=""section"">
@@ -665,7 +668,7 @@ namespace SingerDispatch.Printing
             return content;
         }
 
-        private string GetDimensions()
+        private static string GetDimensions()
         {
             const string content = @"
                 <div id=""dimensions"" class=""section"">
@@ -733,7 +736,7 @@ namespace SingerDispatch.Printing
             return content;
         }
 
-        private string GetTractors()
+        private static string GetTractors()
         {
             const string content = @"
                 <div id=""tractors"" class=""section"">
@@ -776,7 +779,7 @@ namespace SingerDispatch.Printing
             return content;
         }
 
-        private string GetSingerPilots()
+        private static string GetSingerPilots()
         {
             const string content = @"
                 <div id=""other_equipment"" class=""section"">
@@ -810,7 +813,7 @@ namespace SingerDispatch.Printing
             return content;
         }
 
-        private string GetThirdPartyPilots()
+        private static string GetThirdPartyPilots()
         {
             const string content = @"
                 <div id=""third_party_pilot"" class=""section"">
@@ -821,7 +824,7 @@ namespace SingerDispatch.Printing
             return content;
         }
 
-        private string GetThridPartyServices()
+        private static string GetThridPartyServices()
         {
             const string content = @"
                 <div id=""thid_party_services"" class=""section"">
@@ -862,7 +865,7 @@ namespace SingerDispatch.Printing
             return content;
         }
 
-        private string GetWireLiftInfo()
+        private static string GetWireLiftInfo()
         {
             const string content = @"
                 <div id=""wire_lifts"" class=""section"">
@@ -940,7 +943,7 @@ namespace SingerDispatch.Printing
             return content;
         }
 
-        private string GetPermits()
+        private static string GetPermits()
         {
             const string content = @"
                 <div id=""permits"" class=""section"">
@@ -1008,7 +1011,7 @@ namespace SingerDispatch.Printing
             return content;
         }
 
-        private string GetOtherInfo()
+        private static string GetOtherInfo()
         {
             const string content = @"
                 <div id=""other_info"" class=""section"">
