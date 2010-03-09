@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Collections.ObjectModel;
 using SingerDispatch.Database;
+using SingerDispatch.Windows;
 
 namespace SingerDispatch.Panels.Jobs
 {
@@ -26,11 +28,11 @@ namespace SingerDispatch.Panels.Jobs
 
         private void ControlLoaded(object sender, RoutedEventArgs e)
         {
-            cmbCreatedBy.ItemsSource = from emp in Database.Employees select emp;
-            cmbStausTypes.ItemsSource = from s in Database.JobStatusTypes select s;
+            CmbCreatedBy.ItemsSource = from emp in Database.Employees select emp;
+            CmbStausTypes.ItemsSource = from s in Database.JobStatusTypes select s;
 
-            cmbQuotes.ItemsSource = (SelectedCompany == null) ? null : from q in Database.Quotes where q.Company == SelectedCompany select q;
-            cmbCareOfCompanies.ItemsSource = (SelectedCompany == null) ? null : from c in Database.Companies where c != SelectedCompany && c.IsVisible == true select c;
+            CmbQuotes.ItemsSource = (SelectedCompany == null) ? null : from q in Database.Quotes where q.Company == SelectedCompany select q;
+            CmbCareOfCompanies.ItemsSource = (SelectedCompany == null) ? null : from c in Database.Companies where c != SelectedCompany && c.IsVisible == true select c;
 
             if (SelectedCompany != null)
             {
@@ -39,10 +41,10 @@ namespace SingerDispatch.Panels.Jobs
                 if (SelectedJob != null && SelectedJob.ID == 0)
                     jobs.Insert(0, SelectedJob);
 
-                dgJobs.ItemsSource = jobs;
+                DgJobs.ItemsSource = jobs;
             }
             else
-                dgJobs.ItemsSource = null;
+                DgJobs.ItemsSource = null;
 
         }
 
@@ -50,9 +52,9 @@ namespace SingerDispatch.Panels.Jobs
         {
             base.SelectedCompanyChanged(newValue, oldValue);
 
-            cmbQuotes.ItemsSource = (SelectedCompany == null) ? null : from q in Database.Quotes where q.Company == SelectedCompany select q;
-            cmbCareOfCompanies.ItemsSource = (SelectedCompany == null) ? null : from c in Database.Companies where c != SelectedCompany && c.IsVisible == true select c;
-            dgJobs.ItemsSource = (SelectedCompany == null) ? null : new ObservableCollection<Job>(from j in Database.Jobs where j.Company == SelectedCompany orderby j.Number descending select j);
+            CmbQuotes.ItemsSource = (SelectedCompany == null) ? null : from q in Database.Quotes where q.Company == SelectedCompany select q;
+            CmbCareOfCompanies.ItemsSource = (SelectedCompany == null) ? null : from c in Database.Companies where c != SelectedCompany && c.IsVisible == true select c;
+            DgJobs.ItemsSource = (SelectedCompany == null) ? null : new ObservableCollection<Job>(from j in Database.Jobs where j.Company == SelectedCompany orderby j.Number descending select j);
         }
 
         protected override void SelectedJobChanged(Job newValue, Job oldValue)
@@ -61,9 +63,8 @@ namespace SingerDispatch.Panels.Jobs
                      
             UpdateContactList();
         }
-     
 
-        private void cmbCareOfCompanies_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void CmbCareOfCompanies_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {           
             UpdateContactList();
         }
@@ -85,22 +86,33 @@ namespace SingerDispatch.Panels.Jobs
                 contacts = (from c in Database.Contacts where c.Address.CompanyID == SelectedCompany.ID select c).ToList();
             }
 
-            dgJobContacts.ItemsSource = null;
-            dgJobContacts.UpdateLayout();
-            dgJobContacts.MaxHeight = dgJobContacts.ActualHeight;
-            dgJobContacts.ItemsSource = contacts;
+            DgJobContacts.ItemsSource = null;
+            DgJobContacts.UpdateLayout();
+            DgJobContacts.MaxHeight = DgJobContacts.ActualHeight;
+            DgJobContacts.ItemsSource = contacts;
         }
 
         private void NewJob_Click(object sender, RoutedEventArgs e)
         {
-            var list = (ObservableCollection<Job>)dgJobs.ItemsSource;
+            var list = (ObservableCollection<Job>)DgJobs.ItemsSource;
             var job = new Job { JobStatusType = DefaultJobStatus, Company = SelectedCompany };
 
             list.Insert(0, job);
-            dgJobs.SelectedItem = job;
-            dgJobs.ScrollIntoView(job);
+            DgJobs.SelectedItem = job;
+            DgJobs.ScrollIntoView(job);
+            SelectedCompany.Jobs.Add(SelectedJob);
 
-            txtDescription.Focus();
+            try
+            {
+                EntityHelper.SaveAsNewJob(SelectedJob, Database);
+
+                TxtDescription.Focus();
+            }
+            catch (Exception ex)
+            {
+                ErrorNoticeWindow.ShowError("Error while attempting write changes to database", ex.Message);
+            }
+            
         }
                
         private void ViewQuote_Click(object sender, RoutedEventArgs e)
@@ -127,7 +139,7 @@ namespace SingerDispatch.Panels.Jobs
             {
                 EntityHelper.PrepareEntityDelete(job, Database);
 
-                ((ObservableCollection<Job>)dgJobs.ItemsSource).Remove(job);
+                ((ObservableCollection<Job>)DgJobs.ItemsSource).Remove(job);
                 SelectedCompany.Jobs.Remove(job);
 
                 Database.SubmitChanges();

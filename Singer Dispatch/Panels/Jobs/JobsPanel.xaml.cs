@@ -1,6 +1,5 @@
 ﻿using System.Windows;
 using System.Windows.Controls.Primitives;
-using SingerDispatch.Database;
 using SingerDispatch.Controls;
 using System.Windows.Input;
 
@@ -52,16 +51,7 @@ namespace SingerDispatch.Panels.Jobs
 
             try
             {
-                if (SelectedJob.ID == 0 || SelectedJob.Number == null)
-                {
-                    SelectedCompany.Jobs.Add(SelectedJob);
-                    SelectedJob.CompanyID = SelectedCompany.ID;
-                    EntityHelper.SaveAsNewJob(SelectedJob, Database);
-                }
-                else
-                {
-                    Database.SubmitChanges();
-                }
+                Database.SubmitChanges();
             }
             catch (System.Exception ex)
             {

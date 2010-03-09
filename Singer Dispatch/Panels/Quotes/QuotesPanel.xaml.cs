@@ -55,11 +55,6 @@ namespace SingerDispatch.Panels.Quotes
 
         private void CommitQuoteChanges_Click(object sender, RoutedEventArgs e)
         {
-            CommitQuoteChanges();
-        }
-
-        private void CommitQuoteChanges()
-        {
             if (SelectedQuote == null) return;
 
             try

@@ -53,19 +53,7 @@ namespace SingerDispatch.Panels.Invoicing
 
             try
             {
-                if (SelectedInvoice.ID == 0)
-                {
-                    SelectedJob.Invoices.Add(SelectedInvoice);
-
-                    if (SelectedInvoice.Number != null)
-                        EntityHelper.SaveAsInvoiceRevision(SelectedInvoice, Database);
-                    else
-                        EntityHelper.SaveAsNewInvoice(SelectedInvoice, Database);
-                }
-                else
-                {
-                    Database.SubmitChanges();
-                }
+                Database.SubmitChanges();
             }
             catch (System.Exception ex)
             {

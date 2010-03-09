@@ -34,7 +34,7 @@
         </Border>
 
         <TabControl Name="Tabs" DataContext="{Binding ElementName=ThePanel}">
-            <TabItem Name="masterTab" Header="Jobs History">
+            <TabItem Header="Jobs History">
                 <Jobs:JobHistoryControl SelectedCompany="{Binding SelectedCompany}" SelectedJob="{Binding SelectedJob}" />
             </TabItem>
             <TabItem Header="Loads" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, Path=SelectedJob}">

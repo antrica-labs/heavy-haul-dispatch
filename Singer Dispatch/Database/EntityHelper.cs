@@ -10,36 +10,24 @@ namespace SingerDispatch.Database
             if (quote.Jobs.Count > 0)
                 throw new Exception("One or more jobs rely on this quote, so it cannot be deleted.");
 
-            foreach (var c in quote.QuoteCommodities)
+            foreach (var c in quote.QuoteCommodities.Where(c => c.ID != 0))
             {
-                if (c.ID != 0)
-                {
-                    context.QuoteCommodities.DeleteOnSubmit(c);
-                }
+                context.QuoteCommodities.DeleteOnSubmit(c);
             }
 
-            foreach (var s in quote.QuoteSupplements)
+            foreach (var s in quote.QuoteSupplements.Where(s => s.ID != 0))
             {
-                if (s.ID != 0)
-                {
-                    context.QuoteSupplements.DeleteOnSubmit(s);
-                }
+                context.QuoteSupplements.DeleteOnSubmit(s);
             }
 
-            foreach (var item in quote.QuoteStorageItems)
+            foreach (var item in quote.QuoteStorageItems.Where(item => item.ID != 0))
             {
-                if (item.ID != 0)
-                {
-                    context.QuoteStorageItems.DeleteOnSubmit(item);
-                }
+                context.QuoteStorageItems.DeleteOnSubmit(item);
             }
 
-            foreach (var item in quote.QuoteConditions)
+            foreach (var item in quote.QuoteConditions.Where(item => item.ID != 0))
             {
-                if (item.ID != 0)
-                {
-                    context.QuoteConditions.DeleteOnSubmit(item);
-                }
+                context.QuoteConditions.DeleteOnSubmit(item);
             }
 
             if (quote.ID != 0)
@@ -51,44 +39,29 @@ namespace SingerDispatch.Database
 
         public static void PrepareEntityDelete(Job job, SingerDispatchDataContext context)
         {
-            foreach (var c in job.JobCommodities)
+            foreach (var c in job.JobCommodities.Where(c => c.ID != 0))
             {
-                if (c.ID != 0)
-                {
-                    context.JobCommodities.DeleteOnSubmit(c);
-                }            
+                context.JobCommodities.DeleteOnSubmit(c);
             }
 
-            foreach (var d in job.Dispatches)
+            foreach (var d in job.Dispatches.Where(d => d.ID != 0))
             {
-                if (d.ID != 0)
-                {
-                    context.Dispatches.DeleteOnSubmit(d);
-                }
+                context.Dispatches.DeleteOnSubmit(d);
             }
             
-            foreach (var l in job.Loads)
+            foreach (var l in job.Loads.Where(l => l.ID != 0))
             {
-                if (l.ID != 0)
-                {
-                    context.Loads.DeleteOnSubmit(l);
-                }
+                context.Loads.DeleteOnSubmit(l);
             }
 
-            foreach (var t in job.ThirdPartyServices)
+            foreach (var t in job.ThirdPartyServices.Where(t => t.ID != 0))
             {
-                if (t.ID != 0)
-                {
-                    context.ThirdPartyServices.DeleteOnSubmit(t);
-                }
+                context.ThirdPartyServices.DeleteOnSubmit(t);
             }
 
-            foreach (var p in job.Permits)
+            foreach (var p in job.Permits.Where(p => p.ID != 0))
             {
-                if (p.ID != 0)
-                {
-                    context.Permits.DeleteOnSubmit(p);
-                }
+                context.Permits.DeleteOnSubmit(p);
             }
 
             if (job.ID != 0)
@@ -98,7 +71,23 @@ namespace SingerDispatch.Database
 
         public static void PrepareEntityDelete(Invoice invoice, SingerDispatchDataContext context)
         {
+            foreach (var item in invoice.ReferenceNumbers.Where(item => item.ID != 0))
+            {
+                context.ReferenceNumbers.DeleteOnSubmit(item);
+            }
 
+            foreach (var item in invoice.InvoiceLineItems.Where(item => item.ID != 0))
+            {
+                context.InvoiceLineItems.DeleteOnSubmit(item);
+            }
+
+            foreach (var item in invoice.InvoiceExtras.Where(item => item.ID != 0))
+            {
+                context.InvoiceExtras.DeleteOnSubmit(item);
+            }
+
+            if (invoice.ID != 0)
+                context.Invoices.DeleteOnSubmit(invoice);
         }
 
         public static void SaveAsQuoteRevision(Quote quote, SingerDispatchDataContext context)

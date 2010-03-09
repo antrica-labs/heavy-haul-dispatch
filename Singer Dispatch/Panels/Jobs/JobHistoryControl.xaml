@@ -25,8 +25,8 @@
                 </Grid.ColumnDefinitions>
 
                 <Button Style="{StaticResource Horizontal}" Grid.Column="0" Click="NewJob_Click">New job</Button>
-                <Button Style="{StaticResource Horizontal}" Grid.Column="1" Click="ViewQuote_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgJobs, Path=SelectedItem}">View quote</Button>
-                <Button Style="{StaticResource HorizontalEnd}" Grid.Column="3" Click="DeleteJob_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgJobs, Path=SelectedItem}">Delete Job</Button>
+                <Button Style="{StaticResource Horizontal}" Grid.Column="1" Click="ViewQuote_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=DgJobs, Path=SelectedItem}">View quote</Button>
+                <Button Style="{StaticResource HorizontalEnd}" Grid.Column="3" Click="DeleteJob_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=DgJobs, Path=SelectedItem}">Delete Job</Button>
             </Grid>
 
             <Grid>
@@ -39,13 +39,13 @@
                     <RowDefinition />
                 </Grid.RowDefinitions>
 
-                <GroupBox Header="Job Details" Name="gbJobDetails" Grid.Column="0" Grid.Row="0" Margin="0,0,3,0" DataContext="{Binding ElementName=dgJobs, Path=SelectedItem}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgJobs, Path=SelectedItem}">
+                <GroupBox Header="Job Details" Name="gbJobDetails" Grid.Column="0" Grid.Row="0" Margin="0,0,3,0" DataContext="{Binding ElementName=DgJobs, Path=SelectedItem}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=DgJobs, Path=SelectedItem}">
                     <StackPanel>
                         <Label>Project description</Label>
-                        <TextBox Name="txtDescription" Style="{StaticResource MultiLine}" VerticalScrollBarVisibility="Hidden" Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}"/>
+                        <TextBox Name="TxtDescription" Style="{StaticResource MultiLine}" VerticalScrollBarVisibility="Hidden" Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}"/>
 
                         <Label>Care of:</Label>
-                        <ComboBox Name="cmbCareOfCompanies" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectedItem="{Binding CareOfCompany}" TextSearch.TextPath="Name" IsEditable="True" SelectionChanged="cmbCareOfCompanies_SelectionChanged" />
+                        <ComboBox Name="CmbCareOfCompanies" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectedItem="{Binding CareOfCompany}" TextSearch.TextPath="Name" IsEditable="True" SelectionChanged="CmbCareOfCompanies_SelectionChanged" />
 
                         <Grid>
                             <Grid.ColumnDefinitions>
@@ -62,15 +62,15 @@
                             <TextBox Grid.Row="1" Grid.Column="0" IsReadOnly="True" Text="{Binding Number}" />
 
                             <Label Grid.Row="0" Grid.Column="1">Quote #:</Label>
-                            <ComboBox Name="cmbQuotes" Grid.Row="1" Grid.Column="1" SelectedItem="{Binding Quote}" ItemTemplate="{StaticResource QuoteNameTemplate}" />
+                            <ComboBox Name="CmbQuotes" Grid.Row="1" Grid.Column="1" SelectedItem="{Binding Quote}" ItemTemplate="{StaticResource QuoteNameTemplate}" />
 
                             <Label Grid.Row="0" Grid.Column="2">Author:</Label>
-                            <ComboBox Name="cmbCreatedBy" Grid.Row="1" Grid.Column="2" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectedItem="{Binding Employee}" TextSearch.TextPath="Name" IsEditable="True"></ComboBox>
+                            <ComboBox Name="CmbCreatedBy" Grid.Row="1" Grid.Column="2" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectedItem="{Binding Employee}" TextSearch.TextPath="Name" IsEditable="True"></ComboBox>
                         </Grid>
                     </StackPanel>
                 </GroupBox>
 
-                <GroupBox Header="Job Timeline" Name="gbJobTimeline" Grid.Column="0" Grid.Row="1" Margin="0,3,3,0" DataContext="{Binding ElementName=dgJobs, Path=SelectedItem}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgJobs, Path=SelectedItem}">
+                <GroupBox Header="Job Timeline" Grid.Column="0" Grid.Row="1" Margin="0,3,3,0" DataContext="{Binding ElementName=DgJobs, Path=SelectedItem}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=DgJobs, Path=SelectedItem}">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition />
@@ -89,13 +89,13 @@
                         <WPF:DatePicker Name="dpEndDate" Grid.Row="1" Grid.Column="1" Margin="2" SelectedDate="{Binding EndDate}" />
 
                         <Label Grid.Row="0" Grid.Column="2">Status</Label>
-                        <ComboBox Name="cmbStausTypes" Grid.Row="1" Grid.Column="2" SelectedItem="{Binding JobStatusType}" ItemTemplate="{StaticResource SimpleNameTemplate}" />
+                        <ComboBox Name="CmbStausTypes" Grid.Row="1" Grid.Column="2" SelectedItem="{Binding JobStatusType}" ItemTemplate="{StaticResource SimpleNameTemplate}" />
                     </Grid>
                 </GroupBox>
 
-                <GroupBox Header="Contact List" Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" Margin="3,0,0,0" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgJobs, Path=SelectedItem}">
+                <GroupBox Header="Contact List" Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" Margin="3,0,0,0" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=DgJobs, Path=SelectedItem}">
                     <DockPanel>
-                        <Grid DockPanel.Dock="Bottom" DataContext="{Binding ElementName=dgJobContacts, Path=SelectedItem}">
+                        <Grid DockPanel.Dock="Bottom" DataContext="{Binding ElementName=DgJobContacts, Path=SelectedItem}">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="65"/>
                                 <ColumnDefinition Width="2*"/>
@@ -128,7 +128,7 @@
                             <Label Grid.Column="4" Grid.Row="2" Content="{Binding Fax}" />
                         </Grid>
 
-                        <WPF:DataGrid Name="dgJobContacts" Style="{StaticResource ListDisplay}" Margin="0,0,0,5">
+                        <WPF:DataGrid Name="DgJobContacts" Style="{StaticResource ListDisplay}" Margin="0,0,0,5">
                             <WPF:DataGrid.Columns>
                                 <WPF:DataGridTextColumn Header="First" Binding="{Binding FirstName}" IsReadOnly="True" />
                                 <WPF:DataGridTextColumn Header="Last" Binding="{Binding LastName}" IsReadOnly="True" />
@@ -140,7 +140,7 @@
             </Grid>
         </StackPanel>
 
-        <WPF:DataGrid Name="dgJobs" Style="{StaticResource ListDisplay}" SelectedItem="{Binding SelectedJob}">
+        <WPF:DataGrid Name="DgJobs" Style="{StaticResource ListDisplay}" SelectedItem="{Binding SelectedJob}">
             <WPF:DataGrid.Columns>
                 <WPF:DataGridTextColumn Header="Number" Width="0.15*" Binding="{Binding Number}"/>
                 <WPF:DataGridTextColumn Header="Quote" Width="0.15*">

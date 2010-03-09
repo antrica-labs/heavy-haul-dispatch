@@ -55,18 +55,17 @@ namespace SingerDispatch.Panels.Invoicing
 
         private void RefreshAddressesAndContacts()
         {
-            //cmbContacts.ItemsSource = (SelectedJob == null) ? null : from c in Database.Con
             if (SelectedJob != null)
             {
                 var addressQuery = from a in Database.Addresses where a.Company == SelectedJob.Company || a.Company == SelectedJob.CareOfCompany select a;
 
-                cmbAddresses.ItemsSource = addressQuery.ToList();
-                cmbContacts.ItemsSource = (from c in Database.Contacts where addressQuery.Contains(c.Address) select c).ToList();
+                CmbAddresses.ItemsSource = addressQuery.ToList();
+                CmbContacts.ItemsSource = (from c in Database.Contacts where addressQuery.Contains(c.Address) select c).ToList();
             }
             else
             {
-                cmbAddresses.ItemsSource = null;
-                cmbContacts.ItemsSource = null;
+                CmbAddresses.ItemsSource = null;
+                CmbContacts.ItemsSource = null;
             }
         }
 
@@ -74,14 +73,24 @@ namespace SingerDispatch.Panels.Invoicing
         {
             if (SelectedJob == null) return;
 
-            var list = (ObservableCollection<Invoice>)DgInvoices.ItemsSource;
+            var list = (ObservableCollection<Invoice>) DgInvoices.ItemsSource;
             var invoice = new Invoice { Job = SelectedJob, InvoiceDate = DateTime.Now };
 
             list.Insert(0, invoice);
             DgInvoices.SelectedItem = invoice;
             DgInvoices.ScrollIntoView(invoice);
+            SelectedJob.Invoices.Add(SelectedInvoice);
 
-            cmbAddresses.Focus();
+            try
+            {
+                EntityHelper.SaveAsNewInvoice(SelectedInvoice, Database);
+
+                CmbAddresses.Focus();
+            }
+            catch (Exception ex)
+            {
+                Windows.ErrorNoticeWindow.ShowError("Error while attempting write changes to database", ex.ToString());
+            }
         }
 
         private void CreateRevision_Click(object sender, RoutedEventArgs e)
@@ -97,6 +106,16 @@ namespace SingerDispatch.Panels.Invoicing
             list.Insert(0, invoice);
             DgInvoices.SelectedItem = invoice;
             DgInvoices.ScrollIntoView(invoice);
+            SelectedJob.Invoices.Add(SelectedInvoice);
+
+            try
+            {
+                EntityHelper.SaveAsInvoiceRevision(SelectedInvoice, Database);   
+            }
+            catch (Exception ex)
+            {
+                Windows.ErrorNoticeWindow.ShowError("Error while attempting write changes to database", ex.Message);
+            }
         }
 
         private void ViewInvoice_Click(object sender, RoutedEventArgs e)

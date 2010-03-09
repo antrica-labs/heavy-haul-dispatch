@@ -62,10 +62,10 @@
                             </Grid.RowDefinitions>
 
                             <Label Grid.Column="0" Grid.Row="0">Address:</Label>
-                            <ComboBox Grid.Column="1" Grid.Row="0" Name="cmbAddresses" SelectedItem="{Binding BillingAddress}" ItemTemplate="{StaticResource AddressTemplate}" />
+                            <ComboBox Grid.Column="1" Grid.Row="0" Name="CmbAddresses" SelectedItem="{Binding BillingAddress}" ItemTemplate="{StaticResource AddressTemplate}" />
 
                             <Label Grid.Column="0" Grid.Row="1">Name:</Label>
-                            <ComboBox Grid.Column="1" Grid.Row="1" Name="cmbContacts" SelectedItem="{Binding Contact}" ItemTemplate="{StaticResource SimpleNameTemplate}" />
+                            <ComboBox Grid.Column="1" Grid.Row="1" Name="CmbContacts" SelectedItem="{Binding Contact}" ItemTemplate="{StaticResource SimpleNameTemplate}" />
                         </Grid>
                     </GroupBox>
                     
