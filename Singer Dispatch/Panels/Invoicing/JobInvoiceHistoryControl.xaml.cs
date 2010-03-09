@@ -3,6 +3,7 @@ using System.Linq;
 using System.Windows;
 using System.Collections.ObjectModel;
 using SingerDispatch.Database;
+using SingerDispatch.Controls;
 
 namespace SingerDispatch.Panels.Invoicing
 {
@@ -18,6 +19,7 @@ namespace SingerDispatch.Panels.Invoicing
             InitializeComponent();
 
             Database = SingerConstants.CommonDataContext;
+            DgReferenceNumbers.ItemsSource = new ObservableCollection<ReferenceNumber>();
         }
 
         private void Control_Loaded(object sender, RoutedEventArgs e)
@@ -31,7 +33,24 @@ namespace SingerDispatch.Panels.Invoicing
 
             RefreshAddressesAndContacts();
 
-            dgInvoices.ItemsSource = (newValue == null) ? null : new ObservableCollection<Invoice>(from i in Database.Invoices where i.Job == newValue orderby i.Number descending, i.Revision descending select i);
+            DgInvoices.ItemsSource = (newValue == null) ? null : new ObservableCollection<Invoice>(from i in Database.Invoices where i.Job == newValue orderby i.Number descending, i.Revision descending select i);
+        }
+
+        protected override void SelectedInvoiceChanged(Invoice newValue, Invoice oldValue)
+        {
+            base.SelectedInvoiceChanged(newValue, oldValue);
+
+            var invoice = newValue;
+            var list = (ObservableCollection<ReferenceNumber>)DgReferenceNumbers.ItemsSource;
+
+            list.Clear();
+
+            if (invoice == null) return;
+
+            foreach (var item in invoice.ReferenceNumbers)
+            {
+                list.Add(item);
+            }
         }
 
         private void RefreshAddressesAndContacts()
@@ -55,29 +74,29 @@ namespace SingerDispatch.Panels.Invoicing
         {
             if (SelectedJob == null) return;
 
-            var list = (ObservableCollection<Invoice>)dgInvoices.ItemsSource;
+            var list = (ObservableCollection<Invoice>)DgInvoices.ItemsSource;
             var invoice = new Invoice { Job = SelectedJob, InvoiceDate = DateTime.Now };
 
             list.Insert(0, invoice);
-            dgInvoices.SelectedItem = invoice;
-            dgInvoices.ScrollIntoView(invoice);
+            DgInvoices.SelectedItem = invoice;
+            DgInvoices.ScrollIntoView(invoice);
 
-            txtComment.Focus();
+            cmbAddresses.Focus();
         }
 
         private void CreateRevision_Click(object sender, RoutedEventArgs e)
         {
             if (SelectedInvoice == null) return;
 
-            var list = (ObservableCollection<Invoice>)dgInvoices.ItemsSource;
-            var invoice = (Invoice)dgInvoices.SelectedItem;
+            var list = (ObservableCollection<Invoice>)DgInvoices.ItemsSource;
+            var invoice = (Invoice)DgInvoices.SelectedItem;
 
             invoice = invoice.Duplicate();
 
             SelectedJob.Invoices.Add(invoice);
             list.Insert(0, invoice);
-            dgInvoices.SelectedItem = invoice;
-            dgInvoices.ScrollIntoView(invoice);
+            DgInvoices.SelectedItem = invoice;
+            DgInvoices.ScrollIntoView(invoice);
         }
 
         private void ViewInvoice_Click(object sender, RoutedEventArgs e)
@@ -96,7 +115,7 @@ namespace SingerDispatch.Panels.Invoicing
             {
                 EntityHelper.PrepareEntityDelete(SelectedInvoice, Database);
 
-                ((ObservableCollection<Invoice>)dgInvoices.ItemsSource).Remove(SelectedInvoice);
+                ((ObservableCollection<Invoice>)DgInvoices.ItemsSource).Remove(SelectedInvoice);
                 SelectedJob.Invoices.Remove(SelectedInvoice);
 
                 Database.SubmitChanges();
@@ -106,6 +125,30 @@ namespace SingerDispatch.Panels.Invoicing
                 Windows.ErrorNoticeWindow.ShowError("Error while attempting write changes to database", ex.Message);
             }
         }
-        
+
+        private void AddReferenceNumber_Click(object sender, RoutedEventArgs e)
+        {
+            if (SelectedInvoice == null) return;
+
+            var reference = new ReferenceNumber();
+
+            SelectedInvoice.ReferenceNumbers.Add(reference);
+            ((ObservableCollection<ReferenceNumber>)DgReferenceNumbers.ItemsSource).Add(reference);
+            DgReferenceNumbers.SelectedItem = reference;
+            DgReferenceNumbers.ScrollIntoView(reference);
+
+            DataGridHelper.GetCell(DgReferenceNumbers, DgReferenceNumbers.SelectedIndex, 0).Focus();
+        }
+
+        private void RemoveReferenceNumber_Click(object sender, RoutedEventArgs e)
+        {
+            var selected = (ReferenceNumber) DgReferenceNumbers.SelectedItem;
+
+            if (SelectedInvoice == null || selected == null) return;
+
+            SelectedInvoice.ReferenceNumbers.Remove(selected);
+            ((ObservableCollection<ReferenceNumber>) DgReferenceNumbers.ItemsSource).Remove(selected);
+        }
+
     }
 }

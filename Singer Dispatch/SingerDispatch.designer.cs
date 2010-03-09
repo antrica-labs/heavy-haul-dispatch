@@ -56,9 +56,6 @@ namespace SingerDispatch
     partial void InsertCountry(Country instance);
     partial void UpdateCountry(Country instance);
     partial void DeleteCountry(Country instance);
-    partial void InsertCustomerNumber(CustomerNumber instance);
-    partial void UpdateCustomerNumber(CustomerNumber instance);
-    partial void DeleteCustomerNumber(CustomerNumber instance);
     partial void InsertEmployee(Employee instance);
     partial void UpdateEmployee(Employee instance);
     partial void DeleteEmployee(Employee instance);
@@ -143,6 +140,9 @@ namespace SingerDispatch
     partial void InsertInvoice(Invoice instance);
     partial void UpdateInvoice(Invoice instance);
     partial void DeleteInvoice(Invoice instance);
+    partial void InsertReferenceNumber(ReferenceNumber instance);
+    partial void UpdateReferenceNumber(ReferenceNumber instance);
+    partial void DeleteReferenceNumber(ReferenceNumber instance);
     partial void InsertInvoiceLineItem(InvoiceLineItem instance);
     partial void UpdateInvoiceLineItem(InvoiceLineItem instance);
     partial void DeleteInvoiceLineItem(InvoiceLineItem instance);
@@ -253,14 +253,6 @@ namespace SingerDispatch
 			get
 			{
 				return this.GetTable<Country>();
-			}
-		}
-		
-		public System.Data.Linq.Table<CustomerNumber> CustomerNumbers
-		{
-			get
-			{
-				return this.GetTable<CustomerNumber>();
 			}
 		}
 		
@@ -485,6 +477,14 @@ namespace SingerDispatch
 			get
 			{
 				return this.GetTable<Invoice>();
+			}
+		}
+		
+		public System.Data.Linq.Table<ReferenceNumber> ReferenceNumbers
+		{
+			get
+			{
+				return this.GetTable<ReferenceNumber>();
 			}
 		}
 		
@@ -1869,8 +1869,6 @@ namespace SingerDispatch
 		
 		private EntitySet<Commodity> _Commodities;
 		
-		private EntitySet<CustomerNumber> _CustomerNumbers;
-		
 		private EntitySet<Job> _Jobs;
 		
 		private EntitySet<Job> _CareOfJobs;
@@ -1919,7 +1917,6 @@ namespace SingerDispatch
 		{
 			this._Addresses = new EntitySet<Address>(new Action<Address>(this.attach_Addresses), new Action<Address>(this.detach_Addresses));
 			this._Commodities = new EntitySet<Commodity>(new Action<Commodity>(this.attach_Commodities), new Action<Commodity>(this.detach_Commodities));
-			this._CustomerNumbers = new EntitySet<CustomerNumber>(new Action<CustomerNumber>(this.attach_CustomerNumbers), new Action<CustomerNumber>(this.detach_CustomerNumbers));
 			this._Jobs = new EntitySet<Job>(new Action<Job>(this.attach_Jobs), new Action<Job>(this.detach_Jobs));
 			this._CareOfJobs = new EntitySet<Job>(new Action<Job>(this.attach_CareOfJobs), new Action<Job>(this.detach_CareOfJobs));
 			this._Quotes = new EntitySet<Quote>(new Action<Quote>(this.attach_Quotes), new Action<Quote>(this.detach_Quotes));
@@ -2185,19 +2182,6 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Company_CustomerNumber", Storage="_CustomerNumbers", ThisKey="ID", OtherKey="CompanyID")]
-		public EntitySet<CustomerNumber> CustomerNumbers
-		{
-			get
-			{
-				return this._CustomerNumbers;
-			}
-			set
-			{
-				this._CustomerNumbers.Assign(value);
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Company_Job", Storage="_Jobs", ThisKey="ID", OtherKey="CompanyID")]
 		public EntitySet<Job> Jobs
 		{
@@ -2383,18 +2367,6 @@ namespace SingerDispatch
 		}
 		
 		private void detach_Commodities(Commodity entity)
-		{
-			this.SendPropertyChanging();
-			entity.Company = null;
-		}
-		
-		private void attach_CustomerNumbers(CustomerNumber entity)
-		{
-			this.SendPropertyChanging();
-			entity.Company = this;
-		}
-		
-		private void detach_CustomerNumbers(CustomerNumber entity)
 		{
 			this.SendPropertyChanging();
 			entity.Company = null;
@@ -3321,181 +3293,6 @@ namespace SingerDispatch
 		{
 			this.SendPropertyChanging();
 			entity.Country = null;
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="")]
-	public partial class CustomerNumber : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private long _ID;
-		
-		private System.Nullable<long> _CompanyID;
-		
-		private string _Field;
-		
-		private string _Value;
-		
-		private EntityRef<Company> _Company;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIDChanging(long value);
-    partial void OnIDChanged();
-    partial void OnCompanyIDChanging(System.Nullable<long> value);
-    partial void OnCompanyIDChanged();
-    partial void OnFieldChanging(string value);
-    partial void OnFieldChanged();
-    partial void OnValueChanging(string value);
-    partial void OnValueChanged();
-    #endregion
-		
-		public CustomerNumber()
-		{
-			this._Company = default(EntityRef<Company>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, IsPrimaryKey=true, IsDbGenerated=true)]
-		public long ID
-		{
-			get
-			{
-				return this._ID;
-			}
-			set
-			{
-				if ((this._ID != value))
-				{
-					this.OnIDChanging(value);
-					this.SendPropertyChanging();
-					this._ID = value;
-					this.SendPropertyChanged("ID");
-					this.OnIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CompanyID")]
-		public System.Nullable<long> CompanyID
-		{
-			get
-			{
-				return this._CompanyID;
-			}
-			set
-			{
-				if ((this._CompanyID != value))
-				{
-					if (this._Company.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnCompanyIDChanging(value);
-					this.SendPropertyChanging();
-					this._CompanyID = value;
-					this.SendPropertyChanged("CompanyID");
-					this.OnCompanyIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Field")]
-		public string Field
-		{
-			get
-			{
-				return this._Field;
-			}
-			set
-			{
-				if ((this._Field != value))
-				{
-					this.OnFieldChanging(value);
-					this.SendPropertyChanging();
-					this._Field = value;
-					this.SendPropertyChanged("Field");
-					this.OnFieldChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Value")]
-		public string Value
-		{
-			get
-			{
-				return this._Value;
-			}
-			set
-			{
-				if ((this._Value != value))
-				{
-					this.OnValueChanging(value);
-					this.SendPropertyChanging();
-					this._Value = value;
-					this.SendPropertyChanged("Value");
-					this.OnValueChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Company_CustomerNumber", Storage="_Company", ThisKey="CompanyID", OtherKey="ID", IsForeignKey=true)]
-		public Company Company
-		{
-			get
-			{
-				return this._Company.Entity;
-			}
-			set
-			{
-				Company previousValue = this._Company.Entity;
-				if (((previousValue != value) 
-							|| (this._Company.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Company.Entity = null;
-						previousValue.CustomerNumbers.Remove(this);
-					}
-					this._Company.Entity = value;
-					if ((value != null))
-					{
-						value.CustomerNumbers.Add(this);
-						this._CompanyID = value.ID;
-					}
-					else
-					{
-						this._CompanyID = default(Nullable<long>);
-					}
-					this.SendPropertyChanged("Company");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
 		}
 	}
 	
@@ -13195,6 +12992,8 @@ namespace SingerDispatch
 		
 		private System.Nullable<bool> _GSTExempt;
 		
+		private EntitySet<ReferenceNumber> _ReferenceNumbers;
+		
 		private EntitySet<InvoiceLineItem> _InvoiceLineItems;
 		
 		private EntitySet<InvoiceExtra> _InvoiceExtras;
@@ -13235,6 +13034,7 @@ namespace SingerDispatch
 		
 		public Invoice()
 		{
+			this._ReferenceNumbers = new EntitySet<ReferenceNumber>(new Action<ReferenceNumber>(this.attach_ReferenceNumbers), new Action<ReferenceNumber>(this.detach_ReferenceNumbers));
 			this._InvoiceLineItems = new EntitySet<InvoiceLineItem>(new Action<InvoiceLineItem>(this.attach_InvoiceLineItems), new Action<InvoiceLineItem>(this.detach_InvoiceLineItems));
 			this._InvoiceExtras = new EntitySet<InvoiceExtra>(new Action<InvoiceExtra>(this.attach_InvoiceExtras), new Action<InvoiceExtra>(this.detach_InvoiceExtras));
 			this._BillingAddress = default(EntityRef<Address>);
@@ -13475,6 +13275,19 @@ namespace SingerDispatch
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Invoice_ReferenceNumber", Storage="_ReferenceNumbers", ThisKey="ID", OtherKey="InvoiceID")]
+		public EntitySet<ReferenceNumber> ReferenceNumbers
+		{
+			get
+			{
+				return this._ReferenceNumbers;
+			}
+			set
+			{
+				this._ReferenceNumbers.Assign(value);
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Invoice_InvoiceLineItem", Storage="_InvoiceLineItems", ThisKey="ID", OtherKey="InvoiceID")]
 		public EntitySet<InvoiceLineItem> InvoiceLineItems
 		{
@@ -13623,6 +13436,18 @@ namespace SingerDispatch
 			}
 		}
 		
+		private void attach_ReferenceNumbers(ReferenceNumber entity)
+		{
+			this.SendPropertyChanging();
+			entity.Invoice = this;
+		}
+		
+		private void detach_ReferenceNumbers(ReferenceNumber entity)
+		{
+			this.SendPropertyChanging();
+			entity.Invoice = null;
+		}
+		
 		private void attach_InvoiceLineItems(InvoiceLineItem entity)
 		{
 			this.SendPropertyChanging();
@@ -13645,6 +13470,181 @@ namespace SingerDispatch
 		{
 			this.SendPropertyChanging();
 			entity.Invoice = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="")]
+	public partial class ReferenceNumber : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private long _ID;
+		
+		private System.Nullable<long> _InvoiceID;
+		
+		private string _Field;
+		
+		private string _Value;
+		
+		private EntityRef<Invoice> _Invoice;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDChanging(long value);
+    partial void OnIDChanged();
+    partial void OnInvoiceIDChanging(System.Nullable<long> value);
+    partial void OnInvoiceIDChanged();
+    partial void OnFieldChanging(string value);
+    partial void OnFieldChanged();
+    partial void OnValueChanging(string value);
+    partial void OnValueChanged();
+    #endregion
+		
+		public ReferenceNumber()
+		{
+			this._Invoice = default(EntityRef<Invoice>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, IsPrimaryKey=true, IsDbGenerated=true)]
+		public long ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this.OnIDChanging(value);
+					this.SendPropertyChanging();
+					this._ID = value;
+					this.SendPropertyChanged("ID");
+					this.OnIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_InvoiceID")]
+		public System.Nullable<long> InvoiceID
+		{
+			get
+			{
+				return this._InvoiceID;
+			}
+			set
+			{
+				if ((this._InvoiceID != value))
+				{
+					if (this._Invoice.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnInvoiceIDChanging(value);
+					this.SendPropertyChanging();
+					this._InvoiceID = value;
+					this.SendPropertyChanged("InvoiceID");
+					this.OnInvoiceIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Field")]
+		public string Field
+		{
+			get
+			{
+				return this._Field;
+			}
+			set
+			{
+				if ((this._Field != value))
+				{
+					this.OnFieldChanging(value);
+					this.SendPropertyChanging();
+					this._Field = value;
+					this.SendPropertyChanged("Field");
+					this.OnFieldChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Value")]
+		public string Value
+		{
+			get
+			{
+				return this._Value;
+			}
+			set
+			{
+				if ((this._Value != value))
+				{
+					this.OnValueChanging(value);
+					this.SendPropertyChanging();
+					this._Value = value;
+					this.SendPropertyChanged("Value");
+					this.OnValueChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Invoice_ReferenceNumber", Storage="_Invoice", ThisKey="InvoiceID", OtherKey="ID", IsForeignKey=true)]
+		public Invoice Invoice
+		{
+			get
+			{
+				return this._Invoice.Entity;
+			}
+			set
+			{
+				Invoice previousValue = this._Invoice.Entity;
+				if (((previousValue != value) 
+							|| (this._Invoice.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Invoice.Entity = null;
+						previousValue.ReferenceNumbers.Remove(this);
+					}
+					this._Invoice.Entity = value;
+					if ((value != null))
+					{
+						value.ReferenceNumbers.Add(this);
+						this._InvoiceID = value.ID;
+					}
+					else
+					{
+						this._InvoiceID = default(Nullable<long>);
+					}
+					this.SendPropertyChanged("Invoice");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
 		}
 	}
 	

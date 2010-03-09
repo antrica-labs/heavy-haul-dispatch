@@ -43,54 +43,14 @@
                 <Button Grid.Column="3" Style="{StaticResource HorizontalEnd}" Click="DeleteInvoice_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, Path=SelectedInvoice}">Delete invoice</Button>
             </Grid>
 
-            
-
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
 
-                <GroupBox Header="Invoice Details" Grid.Column="0"  Margin="0,0,5,0" DataContext="{Binding SelectedInvoice}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=ThePanel, Path=SelectedInvoice}">
-                    <StackPanel>
-                        <Label Content="Comments:"/>
-                        <TextBox Name="txtComment" Style="{StaticResource MultiLine}" VerticalScrollBarVisibility="Hidden" Text="{Binding Comment}" />
-
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition />
-                                <ColumnDefinition />
-                                <ColumnDefinition />
-                                <ColumnDefinition Width="90" />
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition />
-                                <RowDefinition />
-                            </Grid.RowDefinitions>
-
-                            <Label Grid.Row="0" Grid.Column="0">Invoice #</Label>
-                            <TextBox Grid.Row="1" Grid.Column="0" IsReadOnly="True">
-                                <TextBox.Text>
-                                    <MultiBinding Converter="{StaticResource InvoiceFriendlyNameConverter}">
-                                        <Binding Path="Number" />
-                                        <Binding Path="Revision" />
-                                    </MultiBinding>
-                                </TextBox.Text>
-                            </TextBox>
-
-                            <Label Grid.Row="0" Grid.Column="1">Hours:</Label>
-                            <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Hours}" IsReadOnly="True" />
-
-                            <Label Grid.Row="0" Grid.Column="2">Rate:</Label>
-                            <TextBox Grid.Row="1" Grid.Column="2" Text="{Binding Path=HourlyRate, StringFormat=c}" IsReadOnly="True" />
-
-                            <CheckBox Grid.Row="1" Grid.Column="3" IsChecked="{Binding GSTExempt}">GST Exempt</CheckBox>
-                        </Grid>
-                    </StackPanel>
-                </GroupBox>
-
-                <GroupBox Header="Billing Contact" Grid.Column="1" DataContext="{Binding SelectedInvoice}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=ThePanel, Path=SelectedInvoice}">
-                    <StackPanel>
+                <StackPanel Grid.Column="0" Margin="0,0,5,0">
+                    <GroupBox Header="Billing Contact" DataContext="{Binding SelectedInvoice}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=ThePanel, Path=SelectedInvoice}">
                         <Grid Margin="0,0,0,5">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="65" />
@@ -103,49 +63,114 @@
 
                             <Label Grid.Column="0" Grid.Row="0">Address:</Label>
                             <ComboBox Grid.Column="1" Grid.Row="0" Name="cmbAddresses" SelectedItem="{Binding BillingAddress}" ItemTemplate="{StaticResource AddressTemplate}" />
-                            
+
                             <Label Grid.Column="0" Grid.Row="1">Name:</Label>
                             <ComboBox Grid.Column="1" Grid.Row="1" Name="cmbContacts" SelectedItem="{Binding Contact}" ItemTemplate="{StaticResource SimpleNameTemplate}" />
                         </Grid>
+                    </GroupBox>
+                    
+                    <GroupBox Header="Invoice Details" DataContext="{Binding SelectedInvoice}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=ThePanel, Path=SelectedInvoice}">
+                        <StackPanel>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                    <ColumnDefinition Width="90" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
 
-                        <Grid DataContext="{Binding Contact}">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="65" />
-                                <ColumnDefinition />
-                                <ColumnDefinition Width="10" />
-                                <ColumnDefinition Width="65" />
-                                <ColumnDefinition />
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition />
-                                <RowDefinition />
-                                <RowDefinition />
-                            </Grid.RowDefinitions>
+                                <Label Grid.Row="0" Grid.Column="0">Invoice #</Label>
+                                <TextBox Grid.Row="1" Grid.Column="0" IsReadOnly="True">
+                                    <TextBox.Text>
+                                        <MultiBinding Converter="{StaticResource InvoiceFriendlyNameConverter}">
+                                            <Binding Path="Number" />
+                                            <Binding Path="Revision" />
+                                        </MultiBinding>
+                                    </TextBox.Text>
+                                </TextBox>
 
-                            <Label Grid.Column="0" Grid.Row="0">Company:</Label>
-                            <Label Grid.Column="1" Grid.Row="0" Content="{Binding Address.Company.Name}" />
+                                <Label Grid.Row="0" Grid.Column="1">Hours:</Label>
+                                <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Hours}" IsReadOnly="True" />
 
-                            <Label Grid.Column="0" Grid.Row="1">Email:</Label>
-                            <Label Grid.Column="1" Grid.Row="1" Content="{Binding Email}" />
+                                <Label Grid.Row="0" Grid.Column="2">Rate:</Label>
+                                <TextBox Grid.Row="1" Grid.Column="2" Text="{Binding Path=HourlyRate, StringFormat=c}" IsReadOnly="True" />
 
-                            <Label Grid.Column="0" Grid.Row="2">Phone 1:</Label>
-                            <Label Grid.Column="1" Grid.Row="2" Content="{Binding PrimaryPhone}" />
+                                <CheckBox Grid.Row="1" Grid.Column="3" IsChecked="{Binding GSTExempt}">GST Exempt</CheckBox>
+                            </Grid>
 
-                            <Label Grid.Column="3" Grid.Row="0">Phone 2:</Label>
-                            <Label Grid.Column="4" Grid.Row="0" Content="{Binding SecondaryPhone}" />
+                            <Label Content="Comments:"/>
+                            <TextBox Style="{StaticResource MultiLine}" VerticalScrollBarVisibility="Hidden" Text="{Binding Comment}" />
+                        </StackPanel>
+                    </GroupBox>
+                </StackPanel>                
 
-                            <Label Grid.Column="3" Grid.Row="1">Fax:</Label>
-                            <Label Grid.Column="4" Grid.Row="1" Content="{Binding Fax}" />
+                <StackPanel Grid.Column="1">
+                    <GroupBox Header="Customer Details" DataContext="{Binding SelectedInvoice}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=ThePanel, Path=SelectedInvoice}">
+                        <StackPanel>
+                            <Grid DataContext="{Binding Contact}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="65" />
+                                    <ColumnDefinition />
+                                    <ColumnDefinition Width="10" />
+                                    <ColumnDefinition Width="65" />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
 
-                            <Label Grid.Column="3" Grid.Row="2">Preferred:</Label>
-                            <Label Grid.Column="4" Grid.Row="2" Content="{Binding PreferedContactMethod}" />
-                        </Grid>
-                    </StackPanel>
-                </GroupBox>
+                                <Label Grid.Column="0" Grid.Row="0">Name:</Label>
+                                <Label Grid.Column="1" Grid.Row="0" Content="{Binding Name}" />
+
+                                <Label Grid.Column="0" Grid.Row="1">Company:</Label>
+                                <Label Grid.Column="1" Grid.Row="1" Content="{Binding Address.Company.Name}" />
+
+                                <Label Grid.Column="0" Grid.Row="2">Email:</Label>
+                                <Label Grid.Column="1" Grid.Row="2" Content="{Binding Email}" />
+
+                                <Label Grid.Column="3" Grid.Row="0">Phone:</Label>
+                                <Label Grid.Column="4" Grid.Row="0" Content="{Binding PrimaryPhone}" />
+
+                                <Label Grid.Column="3" Grid.Row="1">Fax:</Label>
+                                <Label Grid.Column="4" Grid.Row="1" Content="{Binding Fax}" />
+
+                                <Label Grid.Column="3" Grid.Row="2">Preferred:</Label>
+                                <Label Grid.Column="4" Grid.Row="2" Content="{Binding PreferedContactMethod}" />
+                            </Grid>
+                        </StackPanel>
+                    </GroupBox>
+                    
+                    <GroupBox Header="Reference Numbers">
+                        <StackPanel>
+                            <WPF:DataGrid Name="DgReferenceNumbers" Style="{StaticResource ListDisplay}" IsReadOnly="False" Height="80">
+                                <WPF:DataGrid.Columns>
+                                    <WPF:DataGridTextColumn Header="Field" Binding="{Binding Field}" />
+                                    <WPF:DataGridTextColumn Header="Value" Binding="{Binding Value}" />
+                                </WPF:DataGrid.Columns>
+                            </WPF:DataGrid>
+
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+
+                                <Button Style="{StaticResource Horizontal}" Grid.Column="0" Click="AddReferenceNumber_Click">Add</Button>
+                                <Button Style="{StaticResource HorizontalEnd}" Grid.Column="1" Click="RemoveReferenceNumber_Click">Remove</Button>
+                            </Grid>
+                        </StackPanel>
+                    </GroupBox>
+                </StackPanel>                
             </Grid>
         </StackPanel>
 
-        <WPF:DataGrid Name="dgInvoices" Style="{StaticResource ListDisplay}" SelectedItem="{Binding SelectedInvoice}">
+        <WPF:DataGrid Name="DgInvoices" Style="{StaticResource ListDisplay}" SelectedItem="{Binding SelectedInvoice}">
             <WPF:DataGrid.Columns>
                 <WPF:DataGridTextColumn Header="Number" Binding="{Binding Number}" />
                 <WPF:DataGridTextColumn Header="Revision" Binding="{Binding Revision}" />

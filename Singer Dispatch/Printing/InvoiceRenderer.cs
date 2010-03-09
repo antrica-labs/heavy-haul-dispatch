@@ -55,8 +55,16 @@ namespace SingerDispatch.Printing
                     <table class=""details"">
             ");
 
+            
             builder.Append(row.Replace("%NAME%", "Date").Replace("%VALUE%", String.Format("{0:MMMM d, yyyy}", invoice.InvoiceDate)));
-            builder.Append(row.Replace("%NAME%", "Invoice #").Replace("%VALUE%", invoice.Number.ToString()));
+            builder.Append(row.Replace("%NAME%", "Invoice #").Replace("%VALUE%", invoice.ToString()));
+
+
+            foreach (var item in invoice.ReferenceNumbers)
+            {
+                builder.Append(row.Replace("%NAME%", item.Field).Replace("%VALUE%", item.Value));
+            }
+
 
             builder.Append(@"
                     </table>
