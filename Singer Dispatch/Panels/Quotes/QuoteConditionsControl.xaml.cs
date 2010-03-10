@@ -53,6 +53,9 @@ namespace SingerDispatch.Panels.Quotes
                 var tb = new TextBox { Style = (Style)TryFindResource("LongText") };
                 var binding = new Binding("Line");
 
+                tb.GotMouseCapture += TextBox_GotFocus;
+                tb.GotFocus += TextBox_GotFocus;
+
                 tb.SetBinding(TextBox.TextProperty, binding);
 
                 cb.Checked += CheckBox_Checked;
@@ -62,6 +65,19 @@ namespace SingerDispatch.Panels.Quotes
                 
                 list.Add(cb);
             }
+        }
+
+        private static void TextBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            var txtbox = sender as TextBox;
+
+            if (txtbox == null) return;
+
+            var checkbox = txtbox.Parent as CheckBox;
+
+            if (checkbox == null) return;
+
+            checkbox.IsChecked = true;
         }
 
         private void CheckBox_Checked(object sender, RoutedEventArgs e)
