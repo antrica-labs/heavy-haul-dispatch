@@ -168,6 +168,5 @@ namespace SingerDispatch.Panels.Invoicing
             SelectedInvoice.ReferenceNumbers.Remove(selected);
             ((ObservableCollection<ReferenceNumber>) DgReferenceNumbers.ItemsSource).Remove(selected);
         }
-
     }
 }

@@ -66,7 +66,6 @@ namespace SingerDispatch.Database
 
             if (job.ID != 0)
                 context.Jobs.DeleteOnSubmit(job);
-            
         }
 
         public static void PrepareEntityDelete(Invoice invoice, SingerDispatchDataContext context)

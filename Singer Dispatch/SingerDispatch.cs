@@ -1,3 +1,5 @@
+using System;
+
 namespace SingerDispatch
 {
     partial class SingerDispatchDataContext
@@ -97,7 +99,7 @@ namespace SingerDispatch
         {
             get
             {
-                return Number + " : " + Revision;
+                return String.Format("{0}-{1}", Number, Revision);
             }
         }
 

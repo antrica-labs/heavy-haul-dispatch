@@ -108,6 +108,11 @@ namespace SingerDispatch.Printing
 
                     /***** QUOTE SPECIFIC STYLES *****/
 
+                    body
+                    {
+                        font-size: 10pt;
+                        font-family: Verdana, Arial, Helvetica, sans-serif;
+                    }
 
                     /***** SECTION STYLES *****/
                     div#header 
@@ -138,7 +143,7 @@ namespace SingerDispatch.Printing
                     
                     div#header td#quote_name span.title 
                     {                
-                        font-size: 1.8em;
+                        font-size: 1.6em;
                         margin: 20px 0;
                     }
                     
@@ -581,12 +586,13 @@ namespace SingerDispatch.Printing
 
         private static string GetConditions(Quote quote)
         {
+            if (quote.QuoteConditions.Count < 1) 
+                return "";
+
             var builder = new StringBuilder();
     
             const string header = @"
                 <div id=""conditions"">
-                    <p>The quoted price includes Transportation Equipment, Permits.</p>
-
                     <p>This quotation is subject to the following conditions:</p>
 
                     <ol class=""conditions"">
@@ -624,7 +630,7 @@ namespace SingerDispatch.Printing
         {
             var content = @"
                 <div id=""signoff"">
-                    <p>We appreciate the opportunity to supply a quotation for your project.  Should you have any questions, concerns, or  comments, please feel free to contact me at your convenience.</p>
+                    <p>%SIGNOFF%</p>
 
                     <p>Sincerely,</p>
 
@@ -634,7 +640,7 @@ namespace SingerDispatch.Printing
                 </div>
             ";
 
-            content = content.Replace("%AUTHOR%", quote.Employee != null ? quote.Employee.Name : "Dan Klassen");
+            content = content.Replace("%SIGNOFF%", SingerConstants.GetConfig("Quote-DefaultSignoff") ?? "").Replace("%AUTHOR%", quote.Employee != null ? quote.Employee.Name : "Dan Klassen");
 
             return content;
         }
