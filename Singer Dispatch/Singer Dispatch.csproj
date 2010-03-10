@@ -141,6 +141,7 @@
       <DependentUpon>ServicesControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Panels\CompanyUserControl.cs" />
+    <Compile Include="Panels\InputBindingsManager.cs" />
     <Compile Include="Panels\InvoiceUserControl.cs" />
     <Compile Include="Panels\Invoicing\InvoiceExtrasControl.xaml.cs">
       <DependentUpon>InvoiceExtrasControl.xaml</DependentUpon>
@@ -502,18 +503,18 @@
   <ItemGroup>
     <SplashScreen Include="Images\Splash.png" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <None Include="Images\Header.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>
   <Target Name="AfterBuild">
+    <Copy DestinationFolder="$(OutputPath)" SourceFiles="..\Libraries\PDF\wkhtmltopdf.exe" SkipUnchangedFiles="true" />
+    <Copy DestinationFolder="$(OutputPath)" SourceFiles="..\Libraries\PDF\libeay32.dll" SkipUnchangedFiles="true" />
+    <Copy DestinationFolder="$(OutputPath)" SourceFiles="..\Libraries\PDF\libgcc_s_dw2-1.dll" SkipUnchangedFiles="true" />
+    <Copy DestinationFolder="$(OutputPath)" SourceFiles="..\Libraries\PDF\ssleay32.dll" SkipUnchangedFiles="true" />
   </Target>
-  -->
 </Project>

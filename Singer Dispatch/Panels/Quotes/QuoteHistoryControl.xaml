@@ -58,12 +58,6 @@
                 <StackPanel Grid.Column="0" Grid.Row="0" Grid.RowSpan="2">
                     <GroupBox Header="Quote Details" Margin="0,0,3,0" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=ThePanel, Path=SelectedQuote}" DataContext="{Binding SelectedQuote}">
                         <StackPanel>
-                            <Label>Project description</Label>
-                            <TextBox Name="txtDescription" Style="{StaticResource MultiLine}" VerticalScrollBarVisibility="Hidden" Text="{Binding Description}"/>
-
-                            <Label>Care of:</Label>
-                            <ComboBox Name="cmbCareOfCompanies" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectionChanged="CareOfCompanies_SelectionChanged" SelectedItem="{Binding CareOfCompany}" TextSearch.TextPath="Name" IsEditable="True" />
-
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition />
@@ -89,9 +83,15 @@
                                 <ComboBox Name="cmbQuotedBy" Grid.Row="1" Grid.Column="1" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectedItem="{Binding Employee}" TextSearch.TextPath="Name" IsEditable="True"></ComboBox>
 
                                 <Label Grid.Row="0" Grid.Column="2">Quote price:</Label>
-                                <TextBox Name="txtPrice" Grid.Row="2" Grid.Column="2" Text="{Binding Price, StringFormat=c}" />
+                                <TextBox Name="txtPrice" Grid.Row="2" Grid.Column="2" Text="{Binding Price, StringFormat=c}" Panels:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" />
                             </Grid>
 
+                            <Label>Care of:</Label>
+                            <ComboBox Name="cmbCareOfCompanies" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectionChanged="CareOfCompanies_SelectionChanged" SelectedItem="{Binding CareOfCompany}" TextSearch.TextPath="Name" IsEditable="True" />
+
+                            <Label>Project description</Label>
+                            <TextBox Name="txtDescription" Style="{StaticResource MultiLine}" VerticalScrollBarVisibility="Hidden" Text="{Binding Description}"/>
+                            
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition />

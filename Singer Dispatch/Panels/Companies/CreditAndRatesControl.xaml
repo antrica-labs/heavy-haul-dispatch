@@ -42,7 +42,7 @@
                         <ComboBox Name="cmbCreditCustomerType" Grid.Row="1" Grid.Column="1" SelectedItem="{Binding CustomerType}" ItemTemplate="{StaticResource SimpleNameTemplate}" />
                         
                         <Label Grid.Row="2" Grid.Column="0">Available credit:</Label>
-                        <TextBox Name="txtCreditAvailableCredit" Grid.Row="2" Grid.Column="1" Text="{Binding AvailableCredit, StringFormat=c}" />
+                        <TextBox Name="txtCreditAvailableCredit" Grid.Row="2" Grid.Column="1" Text="{Binding AvailableCredit, StringFormat=c}" Panels:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" />
                        
                         <Label Grid.Row="3" Grid.Column="0">Priority level:</Label>
                         <ComboBox Name="cmbCreditPriority" Grid.Row="3" Grid.Column="1" ItemTemplate="{StaticResource nameTemplate}" SelectedItem="{Binding CompanyPriorityLevel}" />

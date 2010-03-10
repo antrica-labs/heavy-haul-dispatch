@@ -78,7 +78,7 @@ namespace SingerDispatch.Windows
             }
             catch (Exception ex)
             {
-                ErrorNoticeWindow.ShowError("Problem saving to PDF", ex.Message);
+                ErrorNoticeWindow.ShowError("Problem saving to PDF", ex.ToString());
             }                     
         }
         

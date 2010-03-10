@@ -83,7 +83,7 @@ namespace SingerDispatch.Panels.Quotes
             {
                 EntityHelper.SaveAsNewQuote(quote, Database);
 
-                txtDescription.Focus();
+                txtPrice.Focus();
             }
             catch (Exception ex)
             {
