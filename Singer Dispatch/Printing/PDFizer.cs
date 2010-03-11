@@ -4,8 +4,17 @@ namespace SingerDispatch.Printing
 {
     class PDFizer
     {
-        private const string PDF_COMMAND = @"PDF\wkhtmltopdf.exe";
-        private const string PDF_ARGS = @"-s Letter ""%HTML_FILE%"" ""%PDF_FILE%""";
+        private const string DEFAULT_PDF_COMMAND = @"wkhtmltopdf.exe";
+        private const string DEFAULT_PDF_ARGS = @"-s Letter ""%HTML_FILE%"" ""%PDF_FILE%""";
+
+        private string PdfCommand { get; set; }
+        private string PdfArgs { get; set; }
+
+        public PDFizer()
+        {
+            PdfCommand = SingerConstants.GetConfig("PDF-ExecutablePath") ?? DEFAULT_PDF_COMMAND;
+            PdfArgs = SingerConstants.GetConfig("PDF-Arguments") ?? DEFAULT_PDF_ARGS;
+        }
 
         public void SaveHTMLToPDF(string html, string filename)
         {
@@ -19,8 +28,8 @@ namespace SingerDispatch.Printing
             var htmlFile = WriteHTMLToTempFile(html);
             var pdfFile = FileUtils.CreateTempFile("pdf");
 
-            var command = PDF_COMMAND;
-            var arguments = PDF_ARGS.Replace("%HTML_FILE%", htmlFile).Replace("%PDF_FILE%", pdfFile);
+            var command = PdfCommand;
+            var arguments = PdfArgs.Replace("%HTML_FILE%", htmlFile).Replace("%PDF_FILE%", pdfFile);
 
             ExecuteCommandSync(command, arguments);
 
@@ -29,7 +38,7 @@ namespace SingerDispatch.Printing
             return pdfFile;
         }
 
-        private string WriteHTMLToTempFile(string html)
+        private static string WriteHTMLToTempFile(string html)
         {
             var file = FileUtils.CreateTempFile("html");
             var writer = new StreamWriter(file);
@@ -40,7 +49,7 @@ namespace SingerDispatch.Printing
             return file;
         }
 
-        private void ExecuteCommandSync(string command, string arguments)
+        private static void ExecuteCommandSync(string command, string arguments)
         {
             var process = new System.Diagnostics.Process();
 

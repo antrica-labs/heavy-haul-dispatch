@@ -707,6 +707,8 @@ namespace SingerDispatch.Importer
             Database.Configurations.InsertOnSubmit(new Configuration { Name = "SingerAddress-City", Value = "Calgary, AB T1X 0K1" });
             Database.Configurations.InsertOnSubmit(new Configuration { Name = "SingerAddress-Phone", Value = "(403) 569-8605" });
             Database.Configurations.InsertOnSubmit(new Configuration { Name = "Quote-DefaultSignoff", Value = "We appreciate the opportunity to supply a quotation for your project.  Should you have any questions, concerns, or  comments, please feel free to contact me at your convenience." });
+            Database.Configurations.InsertOnSubmit(new Configuration { Name = "PDF-ExecutablePath", Value = "wkhtmltopdf.exe" });
+            Database.Configurations.InsertOnSubmit(new Configuration { Name = "PDF-Arguments", Value = @"-s Letter ""%HTML_FILE%"" ""%PDF_FILE%""" });
             Database.Configurations.InsertOnSubmit(new Configuration { Name = "", Value = "" });
 
             Database.SubmitChanges();
