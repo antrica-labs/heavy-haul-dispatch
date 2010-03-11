@@ -47,6 +47,14 @@ namespace SingerDispatch.Panels.Invoicing
             cmbJobList.ItemsSource = (SelectedCompany == null) ? null : from j in Database.Jobs where j.Company == SelectedCompany orderby j.Number select j;
         }
 
+        private void ViewInvoice_Click(object sender, RoutedEventArgs e)
+        {
+            if (SelectedInvoice == null) return;
+
+            var viewer = new Windows.DocumentViewer();
+            viewer.DisplayPrintout(SelectedInvoice);
+        }
+
         private void CommitInvoiceChanges_Click(object sender, RoutedEventArgs e)
         {
             if (SelectedInvoice == null) return;

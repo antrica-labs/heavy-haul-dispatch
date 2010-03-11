@@ -3,6 +3,7 @@ using System.Windows.Controls.Primitives;
 using SingerDispatch.Database;
 using System.Windows.Input;
 using SingerDispatch.Controls;
+using System;
 
 namespace SingerDispatch.Panels.Quotes
 {
@@ -53,6 +54,16 @@ namespace SingerDispatch.Panels.Quotes
             CommitChangesButton.RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent, CommitChangesButton));
         }
 
+        private void ViewQuote_Click(object sender, RoutedEventArgs e)
+        {
+            if (SelectedQuote == null) return;
+
+            var title = String.Format("Quote #{0}-{1}", SelectedQuote.Number, SelectedQuote.Revision);
+
+            var viewer = new Windows.DocumentViewer();
+            viewer.DisplayPrintout(title, SelectedQuote);
+        }
+
         private void CommitQuoteChanges_Click(object sender, RoutedEventArgs e)
         {
             if (SelectedQuote == null) return;
@@ -61,7 +72,7 @@ namespace SingerDispatch.Panels.Quotes
             {   
                 Database.SubmitChanges();
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 Windows.ErrorNoticeWindow.ShowError("Error while attempting write changes to database", ex.Message);
             }

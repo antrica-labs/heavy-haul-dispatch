@@ -52,6 +52,7 @@
                     </Label>
                 </StackPanel>
 
+                <Button Style="{StaticResource Horizontal}" Grid.Column="2" Click="ViewInvoice_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, Path=SelectedInvoice}">View invoice</Button>
                 <Button Name="CommitChangesButton" Style="{StaticResource HorizontalEnd}" Grid.Column="3" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, Path=SelectedInvoice}" Click="CommitInvoiceChanges_Click">Save changes</Button>
             </Grid>
         </Border>        

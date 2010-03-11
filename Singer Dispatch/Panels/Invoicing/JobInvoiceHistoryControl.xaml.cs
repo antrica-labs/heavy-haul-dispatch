@@ -118,14 +118,6 @@ namespace SingerDispatch.Panels.Invoicing
             }
         }
 
-        private void ViewInvoice_Click(object sender, RoutedEventArgs e)
-        {
-            if (SelectedInvoice == null) return;
-
-            var viewer = new Windows.DocumentViewer();
-            viewer.DisplayPrintout(SelectedInvoice);
-        }
-
         private void DeleteInvoice_Click(object sender, RoutedEventArgs e)
         {
             if (SelectedInvoice == null) return;
