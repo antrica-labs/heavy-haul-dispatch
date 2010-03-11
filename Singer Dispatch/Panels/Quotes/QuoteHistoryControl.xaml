@@ -69,7 +69,7 @@
                                 </Grid.RowDefinitions>
 
                                 <Label Grid.Row="0" Grid.Column="0">Quote #:</Label>
-                                <TextBox Grid.Row="1" Grid.Column="0" IsReadOnly="True">
+                                <TextBox Grid.Row="1" Grid.Column="0" IsReadOnly="True" Style="{StaticResource ReadOnly}">
                                     <TextBox.Text>
                                         <MultiBinding Converter="{StaticResource QuoteFriendlyNameConverter}">
                                             <Binding Path="Number" />

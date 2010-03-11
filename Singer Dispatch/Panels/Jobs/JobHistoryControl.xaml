@@ -59,7 +59,7 @@
                             </Grid.RowDefinitions>
 
                             <Label Grid.Row="0" Grid.Column="0">Job #:</Label>
-                            <TextBox Grid.Row="1" Grid.Column="0" IsReadOnly="True" Text="{Binding Number}" />
+                            <TextBox Grid.Row="1" Grid.Column="0" IsReadOnly="True" Text="{Binding Number}" Style="{StaticResource ReadOnly}" />
 
                             <Label Grid.Row="0" Grid.Column="1">Quote #:</Label>
                             <ComboBox Name="CmbQuotes" Grid.Row="1" Grid.Column="1" SelectedItem="{Binding Quote}" ItemTemplate="{StaticResource QuoteNameTemplate}" />

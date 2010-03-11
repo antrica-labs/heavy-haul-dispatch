@@ -65,7 +65,7 @@
                     <ComboBox Name="cmbRates" Grid.Column="1" Grid.Row="1" SelectedItem="{Binding Rate}" SelectionChanged="cmbRates_SelectionChanged" ItemTemplate="{StaticResource SimpleNameTemplate}"></ComboBox>                
                     
                     <Label Grid.Column="2" Grid.Row="0">Rate:</Label>
-                    <TextBox Grid.Column="2" Grid.Row="1" Text="{Binding ElementName=cmbRates, Path=SelectedItem.Adjusted, StringFormat=c}" IsReadOnly="True" />                
+                    <TextBox Grid.Column="2" Grid.Row="1" Text="{Binding ElementName=cmbRates, Path=SelectedItem.Adjusted, StringFormat=c}" IsReadOnly="True" Style="{StaticResource ReadOnly}" />                
                     
                     <Label Grid.Column="3" Grid.Row="0">Combination:</Label>
                     <ComboBox Name="cmbTrailerCombinations" Grid.Column="3" Grid.Row="1" SelectedItem="{Binding TrailerCombination}" ItemTemplate="{StaticResource TrailerCombinationTemplate}" />
