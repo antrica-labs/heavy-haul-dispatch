@@ -38,7 +38,8 @@
                 </Grid.ColumnDefinitions>
 
                 <Button Grid.Column="0" Style="{StaticResource Horizontal}" Click="NewInvoice_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, Path=SelectedJob}">New invoice</Button>
-                <Button Grid.Column="1" Style="{StaticResource Horizontal}" Click="CreateRevision_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, Path=SelectedInvoice}">Create revision</Button>                
+                <Button Grid.Column="1" Style="{StaticResource Horizontal}" Click="CreateRevision_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, Path=SelectedInvoice}">Create revision</Button>
+                <Button Grid.Column="2" Style="{StaticResource Horizontal}" Click="ViewInvoice_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, Path=SelectedInvoice}">View invoice</Button>
                 <Button Grid.Column="3" Style="{StaticResource HorizontalEnd}" Click="DeleteInvoice_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, Path=SelectedInvoice}">Delete invoice</Button>
             </Grid>
 
@@ -93,10 +94,10 @@
                                 </TextBox>
 
                                 <Label Grid.Row="0" Grid.Column="1">Hours:</Label>
-                                <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Hours}" IsReadOnly="True" Style="{StaticResource ReadOnly}" />
+                                <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding TotalHours}" IsReadOnly="True" Style="{StaticResource ReadOnly}" />
 
-                                <Label Grid.Row="0" Grid.Column="2">Rate:</Label>
-                                <TextBox Grid.Row="1" Grid.Column="2" Text="{Binding Path=HourlyRate, StringFormat=c}" IsReadOnly="True" Style="{StaticResource ReadOnly}" />
+                                <Label Grid.Row="0" Grid.Column="2">Cost:</Label>
+                                <TextBox Grid.Row="1" Grid.Column="2" Text="{Binding Path=TotalCost, StringFormat=c}" IsReadOnly="True" Style="{StaticResource ReadOnly}" />
 
                                 <CheckBox Grid.Row="1" Grid.Column="3" IsChecked="{Binding GSTExempt}">GST Exempt</CheckBox>
                             </Grid>
@@ -173,8 +174,8 @@
             <WPF:DataGrid.Columns>
                 <WPF:DataGridTextColumn Header="Number" Binding="{Binding Number}" />
                 <WPF:DataGridTextColumn Header="Revision" Binding="{Binding Revision}" />
-                <WPF:DataGridTextColumn Header="Hours" Binding="{Binding Hours}" />
-                <WPF:DataGridTextColumn Header="Rate" Binding="{Binding HourlyRate, StringFormat=c}" />
+                <WPF:DataGridTextColumn Header="Hours" Binding="{Binding TotalHours}" />
+                <WPF:DataGridTextColumn Header="Cost" Binding="{Binding TotalCost, StringFormat=c}" />
             </WPF:DataGrid.Columns>
         </WPF:DataGrid>
     </DockPanel>

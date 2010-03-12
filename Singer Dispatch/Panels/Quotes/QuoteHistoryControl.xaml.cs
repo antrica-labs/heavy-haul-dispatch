@@ -113,6 +113,16 @@ namespace SingerDispatch.Panels.Quotes
             }
         }
 
+        private void ViewQuote_Click(object sender, RoutedEventArgs e)
+        {
+            if (SelectedQuote == null) return;
+
+            var title = String.Format("Quote #{0}-{1}", SelectedQuote.Number, SelectedQuote.Revision);
+
+            var viewer = new Windows.DocumentViewer();
+            viewer.DisplayPrintout(title, SelectedQuote);
+        }
+
         private void CareOfCompanies_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             RefreshAddressesAndContacts();           

@@ -5,6 +5,7 @@
                          xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                          xmlns:WPF="http://schemas.microsoft.com/wpf/2008/toolkit"
                          xmlns:Panels="clr-namespace:SingerDispatch.Panels"
+                         xmlns:Controls="clr-namespace:SingerDispatch.Controls"
                          x:Name="ThePanel"
                          Loaded="Control_Loaded" mc:Ignorable="d" d:DesignWidth="780">
     <UserControl.Resources>
@@ -40,7 +41,8 @@
 
                 <Button Style="{StaticResource Horizontal}" Grid.Column="0" Click="NewQuote_Click">New quote</Button>
                 <Button Style="{StaticResource Horizontal}" Grid.Column="1" Click="CreateRevision_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=ThePanel, Path=SelectedQuote}">Create revision</Button>
-                <Button Style="{StaticResource Horizontal}" Grid.Column="2" Click="CreateJob_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=ThePanel, Path=SelectedQuote}">Convert to job</Button>                
+                <Button Style="{StaticResource Horizontal}" Grid.Column="2" Click="CreateJob_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=ThePanel, Path=SelectedQuote}">Convert to job</Button>
+                <Button Style="{StaticResource Horizontal}" Grid.Column="3" Click="ViewQuote_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=ThePanel, Path=SelectedQuote}">View quote</Button>                
                 <Button Style="{StaticResource HorizontalEnd}" Grid.Column="4" Click="DeleteQuote_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=ThePanel, Path=SelectedQuote}">Delete quote</Button>
             </Grid>
 
@@ -82,7 +84,7 @@
                                 <ComboBox Name="cmbQuotedBy" Grid.Row="1" Grid.Column="1" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectedItem="{Binding Employee}" TextSearch.TextPath="Name" IsEditable="True"></ComboBox>
 
                                 <Label Grid.Row="0" Grid.Column="2">Quote price:</Label>
-                                <TextBox Name="txtPrice" Grid.Row="2" Grid.Column="2" Text="{Binding Price, StringFormat=c}" Panels:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" />
+                                <TextBox Name="txtPrice" Grid.Row="2" Grid.Column="2" Text="{Binding Price, StringFormat=c}" Controls:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" />
                             </Grid>
 
                             <Label>Care of:</Label>

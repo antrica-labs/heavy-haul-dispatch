@@ -3,7 +3,7 @@ using System.Windows.Input;
 using System.Windows.Data;
 using System.Windows.Controls;
 
-namespace SingerDispatch.Panels
+namespace SingerDispatch.Controls
 {
     public static class InputBindingsManager
     {
@@ -79,3 +79,5 @@ namespace SingerDispatch.Panels
         }
     }
 }
+
+

@@ -4,10 +4,8 @@ namespace SingerDispatch
 {
     partial class SingerDispatchDataContext
     {
-        public SingerDispatchDataContext() :
-            base(System.Configuration.ConfigurationManager.ConnectionStrings["ConnectionParameters"].ConnectionString)
+        public SingerDispatchDataContext() : base(System.Configuration.ConfigurationManager.ConnectionStrings["ConnectionParameters"].ConnectionString)
         {
-            OnCreated();
         }
     }
 
@@ -66,8 +64,6 @@ namespace SingerDispatch
         }
 
     }
-
-    
 
     partial class Commodity
     {
@@ -479,6 +475,37 @@ namespace SingerDispatch
 
     partial class Invoice
     {
+        private double? _totalHours;
+        private decimal? _totalCost;
+        
+        public double? TotalHours
+        {
+            get
+            {
+                return _totalHours;
+            }
+            set
+            {
+                SendPropertyChanging();
+                _totalHours = value;
+                SendPropertyChanged("TotalHours");
+            }
+        }
+
+        public decimal? TotalCost
+        {
+            get
+            {
+                return _totalCost;
+            }
+            set
+            {
+                SendPropertyChanging();
+                _totalCost = value;
+                SendPropertyChanged("TotalCost");
+            }
+        }
+
         partial void OnCreated()
         {
             if (GSTExempt == null)

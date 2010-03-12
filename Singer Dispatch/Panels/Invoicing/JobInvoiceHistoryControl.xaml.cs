@@ -25,15 +25,16 @@ namespace SingerDispatch.Panels.Invoicing
         private void Control_Loaded(object sender, RoutedEventArgs e)
         {
             RefreshAddressesAndContacts();
+            UpdatePriceAndHours();
         }
 
         protected override void SelectedJobChanged(Job newValue, Job oldValue)
         {
             base.SelectedJobChanged(newValue, oldValue);
+            
+            DgInvoices.ItemsSource = (newValue == null) ? null : new ObservableCollection<Invoice>(from i in Database.Invoices where i.Job == newValue orderby i.Number descending, i.Revision descending select i);
 
             RefreshAddressesAndContacts();
-
-            DgInvoices.ItemsSource = (newValue == null) ? null : new ObservableCollection<Invoice>(from i in Database.Invoices where i.Job == newValue orderby i.Number descending, i.Revision descending select i);
         }
 
         protected override void SelectedInvoiceChanged(Invoice newValue, Invoice oldValue)
@@ -50,6 +51,35 @@ namespace SingerDispatch.Panels.Invoicing
             foreach (var item in invoice.ReferenceNumbers)
             {
                 list.Add(item);
+            }
+
+
+            UpdatePriceAndHours();
+        }
+
+        private void UpdatePriceAndHours()
+        {
+            if (SelectedInvoice == null) return;
+
+            SelectedInvoice.TotalCost = 0.00m;
+            SelectedInvoice.TotalHours = 0.0;
+
+            foreach (var item in SelectedInvoice.InvoiceLineItems)
+            {
+                if (item.Hours != null)
+                    SelectedInvoice.TotalHours += item.Hours;
+
+                if (item.Cost != null)
+                    SelectedInvoice.TotalCost += item.Cost;
+            }
+
+            foreach (var item in SelectedInvoice.InvoiceExtras)
+            {
+                if (item.Hours != null)
+                    SelectedInvoice.TotalHours += item.Hours;
+
+                if (item.Cost != null)
+                    SelectedInvoice.TotalCost += item.Cost;
             }
         }
 
@@ -116,6 +146,14 @@ namespace SingerDispatch.Panels.Invoicing
             {
                 Windows.ErrorNoticeWindow.ShowError("Error while attempting write changes to database", ex.Message);
             }
+        }
+
+        private void ViewInvoice_Click(object sender, RoutedEventArgs e)
+        {
+            if (SelectedInvoice == null) return;
+
+            var viewer = new Windows.DocumentViewer();
+            viewer.DisplayPrintout(SelectedInvoice);
         }
 
         private void DeleteInvoice_Click(object sender, RoutedEventArgs e)

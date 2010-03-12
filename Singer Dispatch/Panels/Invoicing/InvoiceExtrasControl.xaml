@@ -5,6 +5,7 @@
                            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                            xmlns:WPF="http://schemas.microsoft.com/wpf/2008/toolkit"
                            xmlns:Panels="clr-namespace:SingerDispatch.Panels"
+                           xmlns:Controls="clr-namespace:SingerDispatch.Controls"
                            Loaded="Control_Loaded"
                            d:DesignWidth="780" mc:Ignorable="d">
     <UserControl.Resources>
@@ -83,7 +84,7 @@
                         <TextBox Grid.Column="0" Grid.Row="1" Text="{Binding Hours}" />
 
                         <Label Grid.Column="1" Grid.Row="0">Cost:</Label>
-                        <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding Cost, StringFormat=c}" Panels:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" />
+                        <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding Cost, StringFormat=c}" Controls:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" />
                     </Grid>
                 </Grid>
             </GroupBox>
