@@ -69,23 +69,26 @@ namespace SingerDispatch.Importer
         }
 
         private static void CleanDatabase()
-        {   
-            using (var connection = new SqlConnection(ConfigurationManager.ConnectionStrings["NewDBConnectionParameters"].ConnectionString))
+        {
+            var linq = new SingerDispatchDataContext(ConfigurationManager.ConnectionStrings["NewDBConnectionParameters"].ConnectionString);
+
+            if (linq.DatabaseExists())
             {
-                var sql = String.Format("DROP DATABASE [{0}]", connection.Database);
-
-                connection.Open();
-                connection.ChangeDatabase("master");
-
-                SqlConnection.ClearPool(connection);
-
-                using (var command = new SqlCommand(sql, connection))
+                using (var connection = new SqlConnection(ConfigurationManager.ConnectionStrings["NewDBConnectionParameters"].ConnectionString))
                 {
-                    command.ExecuteNonQuery();
+                    var sql = String.Format("DROP DATABASE [{0}]", connection.Database);
+                    
+                    connection.Open();
+                    connection.ChangeDatabase("master");
+
+                    SqlConnection.ClearPool(connection);
+
+                    using (var command = new SqlCommand(sql, connection))
+                    {
+                        command.ExecuteNonQuery();
+                    }
                 }
             }
-
-            var linq = new SingerDispatchDataContext(ConfigurationManager.ConnectionStrings["NewDBConnectionParameters"].ConnectionString);
 
             var builder = new DatabaseBuilder(linq);
             builder.CreateNewDatabase();
