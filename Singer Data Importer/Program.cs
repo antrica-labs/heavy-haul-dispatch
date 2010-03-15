@@ -149,10 +149,6 @@ namespace SingerDispatch.Importer
             }
 
             ContactTypes = new Dictionary<string, ContactType>();
-            foreach (var item in (from t in linq.ContactTypes select t).ToList())
-            {
-                ContactTypes[item.Name] = item;
-            }
         }
 
         private void ImportOldData()
@@ -162,6 +158,7 @@ namespace SingerDispatch.Importer
             List<Company> companies;
             List<Inclusion> inclusions;
             List<Condition> conditions;
+            List<ContactType> contactTypes;
 
             var datasource = ConfigurationManager.ConnectionStrings["OldDBConnectionParameters"].ConnectionString;
             var provider = ConfigurationManager.ConnectionStrings["OldDBConnectionParameters"].ProviderName;
@@ -172,9 +169,9 @@ namespace SingerDispatch.Importer
                 connection.Open();
 
                 Console.WriteLine("Importing support data...");
+                contactTypes = ImportContactTypes(connection);
                 inclusions = ImportInclusions(connection);
                 conditions = ImportConditions(connection);
-                
 
                 Console.Write("Importing companies");
                 companies = ImportCompanies(connection);                
@@ -185,11 +182,38 @@ namespace SingerDispatch.Importer
 
             var context = new SingerDispatchDataContext(ConfigurationManager.ConnectionStrings["NewDBConnectionParameters"].ConnectionString);
 
+            context.ContactTypes.InsertAllOnSubmit(contactTypes);
             context.Inclusions.InsertAllOnSubmit(inclusions);
             context.Conditions.InsertAllOnSubmit(conditions);
             context.Companies.InsertAllOnSubmit(companies);
 
             context.SubmitChanges();
+        }
+
+        private List<ContactType> ImportContactTypes(OleDbConnection connection)
+        {
+            var list = new List<ContactType>();
+
+            const string select = "SELECT * FROM tbl_ContactType";
+            using (var command = new OleDbCommand(select, connection))
+            {
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        var name = reader["contactType"] == DBNull.Value ? null : (string) reader["contactType"];
+
+                        if (name == null) continue;
+
+                        var type = new ContactType { Name = name };    
+
+                        list.Add(type);
+                        ContactTypes[name.ToUpper()] = type;
+                    }
+                }
+            }
+
+            return list;
         }
 
         private static List<Inclusion> ImportInclusions(OleDbConnection connection)
@@ -278,8 +302,15 @@ namespace SingerDispatch.Importer
             if (isSingerCustomer == null)
                 isSingerCustomer = true;
 
-            company.PriorityLevelID = PriorityLevels[priorityLevel].ID;
-            company.CustomerType = CompanyTypes[isSingerCustomer];
+            try
+            {
+                company.PriorityLevelID = PriorityLevels[priorityLevel].ID;
+                company.CustomerTypeID = CompanyTypes[isSingerCustomer].ID;
+            }
+            catch
+            {
+            }
+            
             
 
             // Add all addresses for this company
@@ -312,22 +343,46 @@ namespace SingerDispatch.Importer
 
                         if (contact != null)
                         {
-                            // Figure out what address to put them into...
+                            var typesSql = String.Format("SELECT contactType FROM join_tbl_Contact_ContactType where contactId = {0}", contact.ArchiveID);
+                            using (var command2 = new OleDbCommand(typesSql, connection))
+                            {
+                                using (var innerReader2 = command2.ExecuteReader())
+                                {
+                                    while (innerReader2.Read())
+                                    {
+                                        var name = innerReader2["contactType"] == DBNull.Value ? null : (string) innerReader2["contactType"];
+
+                                        try
+                                        {
+                                            if (name == null || ContactTypes[name.ToUpper()] == null) continue;
+
+                                            var role = new ContactRoles();
+
+                                            role.Contact = contact;
+                                            role.ContactType = ContactTypes[name.ToUpper()];
+
+                                            contact.ContactRoles.Add(role);
+                                        }
+                                        catch
+                                        {
+                                        }
+                                    }
+                                }
+                            }
 
                             try
                             {
+                                // Figure out what address to put them into...
                                 if (contact.Address == null)
                                     contact.Address = company.Addresses.First();
-                                else
-                                    contact.Email = contact.Email + "";
+                                
 
                                 contact.Address.Contacts.Add(contact);
                             }
                             catch
                             {
                             }
-                        }   
-
+                        }
                     }
                 }
             }

@@ -151,24 +151,6 @@ namespace SingerDispatch.Importer
 
             Database.AddressTypes.InsertAllOnSubmit(addresstypes);
 
-
-            // Contact types
-            var contacttypes = new List<ContactType>();
-
-            contacttypes.Add(new ContactType { Name = "Billing" });
-            contacttypes.Add(new ContactType { Name = "Issuer" });
-            contacttypes.Add(new ContactType { Name = "Job" });
-            contacttypes.Add(new ContactType { Name = "Load Site" });
-            contacttypes.Add(new ContactType { Name = "Loading" });
-            contacttypes.Add(new ContactType { Name = "Office" });
-            contacttypes.Add(new ContactType { Name = "Permit" });
-            contacttypes.Add(new ContactType { Name = "Quote" });            
-            contacttypes.Add(new ContactType { Name = "Service" });
-            contacttypes.Add(new ContactType { Name = "Unload Site" });
-            contacttypes.Add(new ContactType { Name = "Unloading" });
-
-            Database.ContactTypes.InsertAllOnSubmit(contacttypes);
-
             
             // Populate priority levels            
             var levels = new List<CompanyPriorityLevel>();

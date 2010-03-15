@@ -54,7 +54,7 @@ namespace SingerDispatch.Panels.Companies
                 var contactQuery = from c in Database.Contacts where addressQuery.Contains(c.Address) select c;
 
                 dgAddresses.ItemsSource = new ObservableCollection<Address>(addressQuery);
-                dgContacts.ItemsSource = new ObservableCollection<Contact>(contactQuery);
+                //dgContacts.ItemsSource = new ObservableCollection<Contact>(contactQuery);
             }
             else
             {
