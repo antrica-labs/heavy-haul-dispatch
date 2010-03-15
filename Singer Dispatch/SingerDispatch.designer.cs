@@ -50,6 +50,9 @@ namespace SingerDispatch
     partial void InsertContact(Contact instance);
     partial void UpdateContact(Contact instance);
     partial void DeleteContact(Contact instance);
+    partial void InsertContactRoles(ContactRoles instance);
+    partial void UpdateContactRoles(ContactRoles instance);
+    partial void DeleteContactRoles(ContactRoles instance);
     partial void InsertContactType(ContactType instance);
     partial void UpdateContactType(ContactType instance);
     partial void DeleteContactType(ContactType instance);
@@ -237,6 +240,14 @@ namespace SingerDispatch
 			get
 			{
 				return this.GetTable<Contact>();
+			}
+		}
+		
+		public System.Data.Linq.Table<ContactRoles> ContactRoles
+		{
+			get
+			{
+				return this.GetTable<ContactRoles>();
 			}
 		}
 		
@@ -2569,8 +2580,6 @@ namespace SingerDispatch
 		
 		private System.Nullable<long> _AddressID;
 		
-		private System.Nullable<long> _TypeID;
-		
 		private System.Nullable<long> _ContactMethodID;
 		
 		private string _FirstName;
@@ -2587,6 +2596,8 @@ namespace SingerDispatch
 		
 		private string _Notes;
 		
+		private EntitySet<ContactRoles> _ContactRoles;
+		
 		private EntitySet<Quote> _Quotes;
 		
 		private EntitySet<ThirdPartyService> _ThirdPartyServices;
@@ -2594,8 +2605,6 @@ namespace SingerDispatch
 		private EntitySet<Invoice> _Invoices;
 		
 		private EntityRef<Address> _Address;
-		
-		private EntityRef<ContactType> _ContactType;
 		
 		private EntityRef<ContactMethod> _PreferedContactMethod;
 		
@@ -2607,8 +2616,6 @@ namespace SingerDispatch
     partial void OnIDChanged();
     partial void OnAddressIDChanging(System.Nullable<long> value);
     partial void OnAddressIDChanged();
-    partial void OnTypeIDChanging(System.Nullable<long> value);
-    partial void OnTypeIDChanged();
     partial void OnContactMethodIDChanging(System.Nullable<long> value);
     partial void OnContactMethodIDChanged();
     partial void OnFirstNameChanging(string value);
@@ -2629,11 +2636,11 @@ namespace SingerDispatch
 		
 		public Contact()
 		{
+			this._ContactRoles = new EntitySet<ContactRoles>(new Action<ContactRoles>(this.attach_ContactRoles), new Action<ContactRoles>(this.detach_ContactRoles));
 			this._Quotes = new EntitySet<Quote>(new Action<Quote>(this.attach_Quotes), new Action<Quote>(this.detach_Quotes));
 			this._ThirdPartyServices = new EntitySet<ThirdPartyService>(new Action<ThirdPartyService>(this.attach_ThirdPartyServices), new Action<ThirdPartyService>(this.detach_ThirdPartyServices));
 			this._Invoices = new EntitySet<Invoice>(new Action<Invoice>(this.attach_Invoices), new Action<Invoice>(this.detach_Invoices));
 			this._Address = default(EntityRef<Address>);
-			this._ContactType = default(EntityRef<ContactType>);
 			this._PreferedContactMethod = default(EntityRef<ContactMethod>);
 			OnCreated();
 		}
@@ -2678,30 +2685,6 @@ namespace SingerDispatch
 					this._AddressID = value;
 					this.SendPropertyChanged("AddressID");
 					this.OnAddressIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TypeID")]
-		public System.Nullable<long> TypeID
-		{
-			get
-			{
-				return this._TypeID;
-			}
-			set
-			{
-				if ((this._TypeID != value))
-				{
-					if (this._ContactType.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnTypeIDChanging(value);
-					this.SendPropertyChanging();
-					this._TypeID = value;
-					this.SendPropertyChanged("TypeID");
-					this.OnTypeIDChanged();
 				}
 			}
 		}
@@ -2870,6 +2853,19 @@ namespace SingerDispatch
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Contact_ContactRoles", Storage="_ContactRoles", ThisKey="ID", OtherKey="ContactID")]
+		public EntitySet<ContactRoles> ContactRoles
+		{
+			get
+			{
+				return this._ContactRoles;
+			}
+			set
+			{
+				this._ContactRoles.Assign(value);
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Contact_Quote", Storage="_Quotes", ThisKey="ID", OtherKey="ContactID")]
 		public EntitySet<Quote> Quotes
 		{
@@ -2943,40 +2939,6 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ContactType_Contact", Storage="_ContactType", ThisKey="TypeID", OtherKey="ID", IsForeignKey=true)]
-		public ContactType ContactType
-		{
-			get
-			{
-				return this._ContactType.Entity;
-			}
-			set
-			{
-				ContactType previousValue = this._ContactType.Entity;
-				if (((previousValue != value) 
-							|| (this._ContactType.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._ContactType.Entity = null;
-						previousValue.Contacts.Remove(this);
-					}
-					this._ContactType.Entity = value;
-					if ((value != null))
-					{
-						value.Contacts.Add(this);
-						this._TypeID = value.ID;
-					}
-					else
-					{
-						this._TypeID = default(Nullable<long>);
-					}
-					this.SendPropertyChanged("ContactType");
-				}
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ContactMethod_Contact", Storage="_PreferedContactMethod", ThisKey="ContactMethodID", OtherKey="ID", IsForeignKey=true)]
 		public ContactMethod PreferedContactMethod
 		{
@@ -3031,6 +2993,18 @@ namespace SingerDispatch
 			}
 		}
 		
+		private void attach_ContactRoles(ContactRoles entity)
+		{
+			this.SendPropertyChanging();
+			entity.Contact = this;
+		}
+		
+		private void detach_ContactRoles(ContactRoles entity)
+		{
+			this.SendPropertyChanging();
+			entity.Contact = null;
+		}
+		
 		private void attach_Quotes(Quote entity)
 		{
 			this.SendPropertyChanging();
@@ -3069,6 +3043,198 @@ namespace SingerDispatch
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="")]
+	public partial class ContactRoles : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private long _ID;
+		
+		private System.Nullable<long> _ContactID;
+		
+		private System.Nullable<long> _ContactTypeID;
+		
+		private EntityRef<Contact> _Contact;
+		
+		private EntityRef<ContactType> _ContactType;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDChanging(long value);
+    partial void OnIDChanged();
+    partial void OnContactIDChanging(System.Nullable<long> value);
+    partial void OnContactIDChanged();
+    partial void OnContactTypeIDChanging(System.Nullable<long> value);
+    partial void OnContactTypeIDChanged();
+    #endregion
+		
+		public ContactRoles()
+		{
+			this._Contact = default(EntityRef<Contact>);
+			this._ContactType = default(EntityRef<ContactType>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, IsPrimaryKey=true, IsDbGenerated=true)]
+		public long ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this.OnIDChanging(value);
+					this.SendPropertyChanging();
+					this._ID = value;
+					this.SendPropertyChanged("ID");
+					this.OnIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ContactID")]
+		public System.Nullable<long> ContactID
+		{
+			get
+			{
+				return this._ContactID;
+			}
+			set
+			{
+				if ((this._ContactID != value))
+				{
+					if (this._Contact.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnContactIDChanging(value);
+					this.SendPropertyChanging();
+					this._ContactID = value;
+					this.SendPropertyChanged("ContactID");
+					this.OnContactIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ContactTypeID")]
+		public System.Nullable<long> ContactTypeID
+		{
+			get
+			{
+				return this._ContactTypeID;
+			}
+			set
+			{
+				if ((this._ContactTypeID != value))
+				{
+					if (this._ContactType.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnContactTypeIDChanging(value);
+					this.SendPropertyChanging();
+					this._ContactTypeID = value;
+					this.SendPropertyChanged("ContactTypeID");
+					this.OnContactTypeIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Contact_ContactRoles", Storage="_Contact", ThisKey="ContactID", OtherKey="ID", IsForeignKey=true)]
+		public Contact Contact
+		{
+			get
+			{
+				return this._Contact.Entity;
+			}
+			set
+			{
+				Contact previousValue = this._Contact.Entity;
+				if (((previousValue != value) 
+							|| (this._Contact.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Contact.Entity = null;
+						previousValue.ContactRoles.Remove(this);
+					}
+					this._Contact.Entity = value;
+					if ((value != null))
+					{
+						value.ContactRoles.Add(this);
+						this._ContactID = value.ID;
+					}
+					else
+					{
+						this._ContactID = default(Nullable<long>);
+					}
+					this.SendPropertyChanged("Contact");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ContactType_ContactRoles", Storage="_ContactType", ThisKey="ContactTypeID", OtherKey="ID", IsForeignKey=true)]
+		public ContactType ContactType
+		{
+			get
+			{
+				return this._ContactType.Entity;
+			}
+			set
+			{
+				ContactType previousValue = this._ContactType.Entity;
+				if (((previousValue != value) 
+							|| (this._ContactType.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._ContactType.Entity = null;
+						previousValue.ContactRoles.Remove(this);
+					}
+					this._ContactType.Entity = value;
+					if ((value != null))
+					{
+						value.ContactRoles.Add(this);
+						this._ContactTypeID = value.ID;
+					}
+					else
+					{
+						this._ContactTypeID = default(Nullable<long>);
+					}
+					this.SendPropertyChanged("ContactType");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="")]
 	public partial class ContactType : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
@@ -3078,7 +3244,7 @@ namespace SingerDispatch
 		
 		private string _Name;
 		
-		private EntitySet<Contact> _Contacts;
+		private EntitySet<ContactRoles> _ContactRoles;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -3092,7 +3258,7 @@ namespace SingerDispatch
 		
 		public ContactType()
 		{
-			this._Contacts = new EntitySet<Contact>(new Action<Contact>(this.attach_Contacts), new Action<Contact>(this.detach_Contacts));
+			this._ContactRoles = new EntitySet<ContactRoles>(new Action<ContactRoles>(this.attach_ContactRoles), new Action<ContactRoles>(this.detach_ContactRoles));
 			OnCreated();
 		}
 		
@@ -3136,16 +3302,16 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ContactType_Contact", Storage="_Contacts", ThisKey="ID", OtherKey="TypeID")]
-		public EntitySet<Contact> Contacts
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ContactType_ContactRoles", Storage="_ContactRoles", ThisKey="ID", OtherKey="ContactTypeID")]
+		public EntitySet<ContactRoles> ContactRoles
 		{
 			get
 			{
-				return this._Contacts;
+				return this._ContactRoles;
 			}
 			set
 			{
-				this._Contacts.Assign(value);
+				this._ContactRoles.Assign(value);
 			}
 		}
 		
@@ -3169,13 +3335,13 @@ namespace SingerDispatch
 			}
 		}
 		
-		private void attach_Contacts(Contact entity)
+		private void attach_ContactRoles(ContactRoles entity)
 		{
 			this.SendPropertyChanging();
 			entity.ContactType = this;
 		}
 		
-		private void detach_Contacts(Contact entity)
+		private void detach_ContactRoles(ContactRoles entity)
 		{
 			this.SendPropertyChanging();
 			entity.ContactType = null;

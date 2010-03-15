@@ -60,7 +60,7 @@
     <Style TargetType="ComboBox">
         <Setter Property="Margin" Value="3" />
     </Style>
-
+    
     <Style TargetType="CheckBox">
         <Setter Property="Margin" Value="3,6,0,0" />
     </Style>

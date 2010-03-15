@@ -94,8 +94,7 @@
   <Table Name="" Member="Contacts">
     <Type Name="Contact">
       <Column Name="ID" Type="System.Int64" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="AddressID" Type="System.Int64" CanBeNull="true" />
-      <Column Name="TypeID" Type="System.Int64" CanBeNull="true" />
+      <Column Name="AddressID" Type="System.Int64" CanBeNull="true" />      
       <Column Name="ContactMethodID" Type="System.Int64" CanBeNull="true" />
       <Column Name="FirstName" Type="System.String" CanBeNull="true" />
       <Column Name="LastName" Type="System.String" CanBeNull="true" />
@@ -108,15 +107,24 @@
       <Association Name="Contact_ThirdPartyService" Member="ThirdPartyServices" ThisKey="ID" OtherKey="ContactID" Type="ThirdPartyService" />
       <Association Name="Contact_Invoice" Member="Invoices" ThisKey="ID" OtherKey="ContactID" Type="Invoice" />
       <Association Name="Address_Contact" Member="Address" ThisKey="AddressID" OtherKey="ID" Type="Address" IsForeignKey="true" />
-      <Association Name="ContactType_Contact" Member="ContactType" ThisKey="TypeID" OtherKey="ID" Type="ContactType" IsForeignKey="true" />
+      <Association Name="Contact_ContactRole" Member="ContactRoles" ThisKey="ID" OtherKey="ContactID" Type="ContactRole" />
       <Association Name="ContactMethod_Contact" Member="PreferedContactMethod" ThisKey="ContactMethodID" OtherKey="ID" Type="ContactMethod" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="" Member="ContactRoles">
+    <Type Name="ContactRoles">
+      <Column Name="ID" Type="System.Int64" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ContactID" Type="System.Int64" CanBeNull="true" />
+      <Column Name="ContactTypeID" Type="System.Int64" CanBeNull="true" />
+      <Association Name="Contact_ContactRole" Member="Contact" ThisKey="ContactID" OtherKey="ID" Type="Contact" IsForeignKey="true" />
+      <Association Name="ContactType_ContactRole" Member="ContactType" ThisKey="ContactTypeID" OtherKey="ID" Type="ContactType" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="" Member="ContactTypes">
     <Type Name="ContactType">
       <Column Name="ID" Type="System.Int64" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Name" Type="System.String" CanBeNull="true" />
-      <Association Name="ContactType_Contact" Member="Contacts" ThisKey="ID" OtherKey="TypeID" Type="Contact" />
+      <Association Name="ContactType_ContactRole" Member="ContactRoles" ThisKey="ID" OtherKey="ContactTypeID" Type="ContactRole" />
     </Type>
   </Table>
   <Table Name="" Member="Countries">

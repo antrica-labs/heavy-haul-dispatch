@@ -25,18 +25,24 @@ namespace SingerDispatch.Panels.Companies
 
             SaveCommand = new CommandBinding(CustomCommands.GenericSaveCommand);
             CommandBindings.Add(SaveCommand);
+
+            lbContactTypes.ItemsSource = new ObservableCollection<CheckBox>();
         }
 
         private void Control_Loaded(object sender, RoutedEventArgs e)
         {            
             SaveCommand.Executed += CommitChanges_Executed;
-            
+
+            var list = (ObservableCollection<CheckBox>)lbContactTypes.ItemsSource;
+
+            list.Clear();
+
             cmbProvinceOrState.ItemsSource = from p in Database.ProvincesAndStates orderby p.CountryID, p.Name select p;
-            cmbContactType.ItemsSource = from ct in Database.ContactTypes select ct;
             cmbAddressType.ItemsSource = from at in Database.AddressTypes select at;
             cmbContactPreferedContactMethod.ItemsSource = from cm in Database.ContactMethods select cm;
-        }
 
+            lbContactTypes.MaxHeight = lbContactTypes.ActualHeight;
+        }
 
         protected override void SelectedCompanyChanged(Company newValue, Company oldValue)
         {
@@ -57,12 +63,58 @@ namespace SingerDispatch.Panels.Companies
             }
         }
 
+        private void ContactTypeCheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            var cb = (CheckBox) sender;
+            var type = (ContactType) cb.DataContext;
+            var contact = (Contact) dgContacts.SelectedItem;
+
+            var role = new ContactRoles { Contact = contact, ContactType = type };
+
+            contact.ContactRoles.Add(role);
+        }
+
+        private void ContactTypeCheckBox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            var cb = (CheckBox)sender;
+            var type = (ContactType)cb.DataContext;
+            var contact = (Contact) dgContacts.SelectedItem;
+            
+            foreach (var item in (from role in contact.ContactRoles where role.ContactType == type select role).ToList())
+            {
+                contact.ContactRoles.Remove(item);
+            }
+        }
+
         private void Addresses_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var control = (DataGrid)sender;
             var address = (Address)control.SelectedItem;
 
             dgContacts.ItemsSource = (address == null) ? null : new ObservableCollection<Contact>(from c in Database.Contacts where c.AddressID == address.ID orderby c.LastName select c);
+        }
+
+        private void Contact_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var control = (DataGrid) sender;
+            var contact = (Contact) control.SelectedItem;
+            var list = (ObservableCollection<CheckBox>)lbContactTypes.ItemsSource;
+
+            list.Clear();
+
+            if (contact == null) return;
+
+            var selected = from types in contact.ContactRoles select types.ContactType;
+
+            foreach (var type in from ct in Database.ContactTypes select ct)
+            {
+                var cb = new CheckBox { Content = type.Name, DataContext = type, IsChecked = selected.Contains(type) };
+
+                cb.Checked += ContactTypeCheckBox_Checked;
+                cb.Unchecked += ContactTypeCheckBox_Unchecked;
+
+                list.Add(cb);
+            }
         }
      
         private void RemoveAddress_Click(object sender, RoutedEventArgs e)
@@ -74,7 +126,7 @@ namespace SingerDispatch.Panels.Companies
                 return;
             }
 
-            MessageBoxResult confirmation = MessageBox.Show("Are you sure you want to remove this address and all of its coresponding contacts?", "Delete confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            var confirmation = MessageBox.Show("Are you sure you want to remove this address and all of its coresponding contacts?", "Delete confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
             if (confirmation != MessageBoxResult.Yes)
             {
@@ -103,7 +155,7 @@ namespace SingerDispatch.Panels.Companies
                 return;
             }
 
-            MessageBoxResult confirmation = MessageBox.Show("Are you sure you want to remove this contact?", "Delete confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            var confirmation = MessageBox.Show("Are you sure you want to remove this contact?", "Delete confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
             if (confirmation != MessageBoxResult.Yes)
             {
