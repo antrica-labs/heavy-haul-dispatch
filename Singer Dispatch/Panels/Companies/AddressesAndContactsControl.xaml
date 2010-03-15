@@ -113,23 +113,23 @@
 			                <Label Grid.Column="1" Grid.Row="0">Last name:</Label>
 			                <TextBox Name="txtContactLastName" Grid.Column="1" Grid.Row="1" Text="{Binding LastName}" />
 
-							<Label Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2">Email address:</Label>
-			                <TextBox Name="txtContactEmail" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" Text="{Binding Email}" />
+							<Label Grid.Column="0" Grid.Row="2">Email address:</Label>
+			                <TextBox Name="txtContactEmail" Grid.Column="0" Grid.Row="3" Text="{Binding Email}" />
 
-			                <Label Grid.Row="4" Grid.Column="0">Primary phone:</Label>
-			                <TextBox Name="txtContactPrimaryPhone" Grid.Column="0" Grid.Row="5" Text="{Binding PrimaryPhone}"/>
+			                <Label Grid.Row="2" Grid.Column="1">Primary phone:</Label>
+			                <TextBox Name="txtContactPrimaryPhone" Grid.Column="1" Grid.Row="3" Text="{Binding PrimaryPhone}"/>
 
-			                <Label Grid.Row="4" Grid.Column="1">Secondary phone:</Label>
-			                <TextBox Name="txtContactSecondaryPhone" Grid.Row="5" Grid.Column="1" Text="{Binding SecondaryPhone}" />
+			                <Label Grid.Row="4" Grid.Column="0">Secondary phone:</Label>
+			                <TextBox Name="txtContactSecondaryPhone" Grid.Row="5" Grid.Column="0" Text="{Binding SecondaryPhone}" />
 
-                            <Label Grid.Row="6" Grid.Column="0">Preferred contact method:</Label>
-                            <ComboBox Name="cmbContactPreferedContactMethod" Grid.Row="7" Grid.Column="0" SelectedItem="{Binding PreferedContactMethod}" ItemTemplate="{StaticResource SimpleNameTemplate}" />
+                            <Label Grid.Row="4" Grid.Column="1">Preferred contact method:</Label>
+                            <ComboBox Name="cmbContactPreferedContactMethod" Grid.Row="5" Grid.Column="1" SelectedItem="{Binding PreferedContactMethod}" ItemTemplate="{StaticResource SimpleNameTemplate}" />
 
-                            <Label Grid.Row="6" Grid.Column="1">Contact type:</Label>                            
-			                <ComboBox Name="cmbContactType" Grid.Row="7" Grid.Column="1" ItemTemplate="{StaticResource SimpleNameTemplate}"  SelectedItem="{Binding ContactType}" TextSearch.TextPath="Name" Visibility="Hidden" /> 
+                            <Label Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2">Contact type:</Label>
+			                <ListBox Name="cmbContactType" Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2" Height="50" ItemTemplate="{StaticResource SimpleNameTemplate}"  SelectedItem="{Binding ContactType}" TextSearch.TextPath="Name" /> 
 
-			                <Label Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="2">Contact notes:</Label>
-			                <TextBox Name="txtContactNotes" Grid.Row="10" Grid.Column="0" Grid.ColumnSpan="2" Height="40" Style="{StaticResource MultiLine}"  Text="{Binding Notes}" />
+			                <Label Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="2">Contact notes:</Label>
+			                <TextBox Name="txtContactNotes" Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="2" Height="40" Style="{StaticResource MultiLine}"  Text="{Binding Notes}" />
 			            </Grid>			        	
 					</StackPanel>
 				</GroupBox>
