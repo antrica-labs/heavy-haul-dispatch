@@ -381,8 +381,14 @@ namespace SingerDispatch.Printing
 	                    font-size: 2.0em;
 	                    text-transform: uppercase;
 	                    color: #8393C9;
-	                    text-align: right;
+	                    text-align: center;
 	                    margin-bottom: 0.2em;
+                    }
+
+                    span.logo 
+                    {
+                    	display: block;
+                    	margin-bottom: 0.3em;
                     }
 
                     h2
@@ -424,7 +430,7 @@ namespace SingerDispatch.Printing
                     div.subsection 
                     {
 	                    width: 40%;	
-	                    margin: 1.2em 0;
+	                    margin: 2em 0;
                     }
 
                     div.subsection span
