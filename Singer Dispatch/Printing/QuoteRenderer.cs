@@ -329,9 +329,9 @@ namespace SingerDispatch.Printing
             var phone = SingerConstants.GetConfig("SingerAddress-Phone");
 
             var process = System.Diagnostics.Process.GetCurrentProcess();
-            var img = "";
+            var img = SingerConstants.GetConfig("Documents-HeaderImg");
 
-            if (process.MainModule != null)
+            if (img == null && process.MainModule != null)
             {
                 img = "file:///" + System.IO.Path.Combine(System.IO.Path.GetDirectoryName(process.MainModule.FileName), @"Images\Header.png");
             }

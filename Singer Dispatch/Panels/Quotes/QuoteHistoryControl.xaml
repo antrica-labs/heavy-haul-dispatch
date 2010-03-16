@@ -78,17 +78,30 @@
                                             <Binding Path="Revision" />
                                         </MultiBinding>
                                     </TextBox.Text>
-                                </TextBox>
+                                </TextBox>                                
+
+                                <Label Grid.Row="0" Grid.Column="1">Quote price:</Label>
+                                <TextBox Name="txtPrice" Grid.Row="2" Grid.Column="1" Text="{Binding Price, StringFormat=c}" Controls:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" />
+
+                                <CheckBox Grid.Row="1" Grid.Column="2" IsChecked="{Binding IsItemizedBilling}" Checked="ItemizedBilling_Checked" Unchecked="ItemizedBilling_Unchecked">Itemized billing</CheckBox>
+                            </Grid>
+
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+
+                                <Label Grid.Row="0" Grid.Column="0">Care of:</Label>
+                                <ComboBox Name="cmbCareOfCompanies" Grid.Row="1" Grid.Column="0" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectionChanged="CareOfCompanies_SelectionChanged" SelectedItem="{Binding CareOfCompany}" TextSearch.TextPath="Name" IsEditable="True" />
 
                                 <Label Grid.Row="0" Grid.Column="1">Author:</Label>
                                 <ComboBox Name="cmbQuotedBy" Grid.Row="1" Grid.Column="1" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectedItem="{Binding Employee}" TextSearch.TextPath="Name" IsEditable="True"></ComboBox>
-
-                                <Label Grid.Row="0" Grid.Column="2">Quote price:</Label>
-                                <TextBox Name="txtPrice" Grid.Row="2" Grid.Column="2" Text="{Binding Price, StringFormat=c}" Controls:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" />
                             </Grid>
-
-                            <Label>Care of:</Label>
-                            <ComboBox Name="cmbCareOfCompanies" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectionChanged="CareOfCompanies_SelectionChanged" SelectedItem="{Binding CareOfCompany}" TextSearch.TextPath="Name" IsEditable="True" />
 
                             <Label>Project description</Label>
                             <TextBox Name="txtDescription" Style="{StaticResource MultiLine}" VerticalScrollBarVisibility="Hidden" Text="{Binding Description}"/>

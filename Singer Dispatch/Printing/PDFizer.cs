@@ -1,11 +1,12 @@
 ﻿using System.IO;
 
+
 namespace SingerDispatch.Printing
 {
     class PDFizer
     {
         private const string DEFAULT_PDF_COMMAND = @"wkhtmltopdf.exe";
-        private const string DEFAULT_PDF_ARGS = @"-s Letter ""%HTML_FILE%"" ""%PDF_FILE%""";
+        private const string DEFAULT_PDF_ARGS = @"--margin-bottom 0 --margin-left 0 --margin-right 0 --margin-top 0 --page-size Letter ""%HTML_FILE%"" ""%PDF_FILE%""";
 
         private string PdfCommand { get; set; }
         private string PdfArgs { get; set; }

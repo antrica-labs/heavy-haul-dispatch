@@ -5,6 +5,7 @@ using System.Windows.Controls;
 using System.Collections.ObjectModel;
 using SingerDispatch.Database;
 using SingerDispatch.Windows;
+using System.Windows.Data;
 
 namespace SingerDispatch.Panels.Quotes
 {
@@ -13,6 +14,8 @@ namespace SingerDispatch.Panels.Quotes
     /// </summary>
     public partial class QuoteHistoryControl
     {
+        private Style _previousStyle;
+
         public SingerDispatchDataContext Database { get; set; }
 
         public QuoteHistoryControl()
@@ -26,7 +29,7 @@ namespace SingerDispatch.Panels.Quotes
         {
             // refresh database lists in case they have been modified elsewhere.
             cmbQuotedBy.ItemsSource = from emp in Database.Employees orderby emp.FirstName select emp;
-            cmbCareOfCompanies.ItemsSource = (SelectedCompany == null) ? null : from c in Database.Companies where c != SelectedCompany && c.IsVisible == true select c;            
+            cmbCareOfCompanies.ItemsSource = (SelectedCompany == null) ? null : from c in Database.Companies where c != SelectedCompany && c.IsVisible == true select c;
 
             if (SelectedCompany != null)
             {
@@ -43,6 +46,7 @@ namespace SingerDispatch.Panels.Quotes
             }
 
             RefreshAddressesAndContacts();
+            CalculateItemizedCost();
         }
 
         protected override void SelectedCompanyChanged(Company newValue, Company oldValue)
@@ -58,8 +62,9 @@ namespace SingerDispatch.Panels.Quotes
             base.SelectedQuoteChanged(newValue, oldValue);
 
             RefreshAddressesAndContacts();
+            CalculateItemizedCost();
         }
-               
+
         private void NewQuote_Click(object sender, RoutedEventArgs e)
         {
             var list = (ObservableCollection<Quote>)dgQuotes.ItemsSource;
@@ -78,7 +83,7 @@ namespace SingerDispatch.Panels.Quotes
             dgQuotes.SelectedItem = quote;
             dgQuotes.ScrollIntoView(quote);
             SelectedCompany.Quotes.Add(quote);
-            
+
             try
             {
                 EntityHelper.SaveAsNewQuote(quote, Database);
@@ -97,7 +102,7 @@ namespace SingerDispatch.Panels.Quotes
 
             var quote = SelectedQuote.Duplicate();
             var list = (ObservableCollection<Quote>)dgQuotes.ItemsSource;
-                        
+
             list.Insert(0, quote);
             dgQuotes.SelectedItem = quote;
             dgQuotes.ScrollIntoView(quote);
@@ -105,7 +110,7 @@ namespace SingerDispatch.Panels.Quotes
 
             try
             {
-                EntityHelper.SaveAsQuoteRevision(quote, Database);                    
+                EntityHelper.SaveAsQuoteRevision(quote, Database);
             }
             catch (Exception ex)
             {
@@ -125,7 +130,7 @@ namespace SingerDispatch.Panels.Quotes
 
         private void CareOfCompanies_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            RefreshAddressesAndContacts();           
+            RefreshAddressesAndContacts();
         }
 
         private void CreateJob_Click(object sender, RoutedEventArgs e)
@@ -140,7 +145,7 @@ namespace SingerDispatch.Panels.Quotes
             {
                 return;
             }
-            
+
             var window = (MainWindow)Application.Current.MainWindow;
             var job = quote.ToJob();
 
@@ -169,7 +174,7 @@ namespace SingerDispatch.Panels.Quotes
         }
 
         private void RefreshAddressesAndContacts()
-        {            
+        {
             if (SelectedQuote != null)
             {
                 var addressQuery = from a in Database.Addresses where a.Company == SelectedQuote.Company || a.Company == SelectedQuote.CareOfCompany orderby a.AddressType.Name select a;
@@ -200,6 +205,45 @@ namespace SingerDispatch.Panels.Quotes
             catch (Exception ex)
             {
                 ErrorNoticeWindow.ShowError("Error while attempting write changes to database", ex.Message);
+            }
+        }
+
+        private void ItemizedBilling_Checked(object sender, RoutedEventArgs e)
+        {
+            if (SelectedQuote == null) return;
+
+            txtPrice.IsReadOnly = true;
+            _previousStyle = txtPrice.Style;
+            txtPrice.Style = (Style)TryFindResource("ReadOnly");
+
+            CalculateItemizedCost();
+        }
+
+        private void ItemizedBilling_Unchecked(object sender, RoutedEventArgs e)
+        {
+            if (SelectedQuote == null) return;
+
+            txtPrice.IsReadOnly = false;
+            txtPrice.Style = _previousStyle;
+        }
+
+        private void CalculateItemizedCost()
+        {
+            if (SelectedQuote == null) return;
+
+            SelectedQuote.Price = 0.00m;
+
+            foreach (var item in (from c in SelectedQuote.QuoteCommodities where c.Cost != null select c.Cost))
+            {
+                SelectedQuote.Price += item;
+            }
+
+            foreach (var item in (from c in SelectedQuote.QuoteSupplements where c.CostPerItem != null select c))
+            {
+                if (item.Quantity != null)
+                    SelectedQuote.Price += item.Quantity * item.CostPerItem;
+                else
+                    SelectedQuote.Price += item.CostPerItem;
             }
         }
     }
