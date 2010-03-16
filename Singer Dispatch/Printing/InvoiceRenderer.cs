@@ -26,7 +26,7 @@ namespace SingerDispatch.Printing
             content.Append("<body>");
             content.Append("<h1>Invoice</h1>");
             content.Append(GetDetails(invoice));
-            content.Append("<h2>Singer Specialized</h2>");
+            content.Append(GetHeaderLogo());
             content.Append("<h3>GST Registration #883578023</h3>");
             content.Append(GetBillFrom(invoice));
             content.Append(GetAttention(invoice));
@@ -73,6 +73,22 @@ namespace SingerDispatch.Printing
 
 
             return builder.ToString();
+        }
+
+        private string GetHeaderLogo()
+        {
+            var process = System.Diagnostics.Process.GetCurrentProcess();
+            var img = SingerConstants.GetConfig("Documents-HeaderImg");
+
+            if (img == null && process.MainModule != null)
+            {
+                img = "file:///" + System.IO.Path.Combine(System.IO.Path.GetDirectoryName(process.MainModule.FileName), @"Images\Header.png");
+            }
+
+            if (img != null)
+                img = @"<span class=""logo""><img src=""" + img + @""" alt=""Singer Specialized""></span>";
+
+            return img ?? "<h2>Singer Specialized</h2>";
         }
 
         private string GetBillFrom(Invoice invoice)
@@ -350,7 +366,7 @@ namespace SingerDispatch.Printing
 
                     body
                     {          
-                        margin: 5px;         
+                        margin: 10px;         
                         font-size: 10pt;
                         font-family: Verdana, Arial, Helvetica, sans-serif;
                     }
@@ -525,6 +541,13 @@ namespace SingerDispatch.Printing
                     {
 	                    border-top: 1px #CACACA solid;
 	                    font-weight: bold;
+                    }
+                </style>
+                <style type=""text/css"" media=""print"">
+                    body
+                    {
+                    	font-size: 12pt;
+                        padding: 0;
                     }
                 </style>
             ";

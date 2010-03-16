@@ -15,15 +15,8 @@ namespace SingerDispatch
 
         partial void OnCreated()
         {
-            if (IsVisible == null)
-            {
-                IsVisible = true;
-            }
-
-            if (EquifaxComplete == null)
-            {
-                EquifaxComplete = false;
-            }
+            IsVisible = IsVisible ?? true;
+            EquifaxComplete = EquifaxComplete ?? false;
         }
 
         public string Alias
@@ -69,20 +62,18 @@ namespace SingerDispatch
     {
         partial void OnCreated()
         {
-            if (WeightEstimated == null)
-            {
-                WeightEstimated = false;
-            }
-
-            if (SizeEstimated == null)
-            {
-                SizeEstimated = false;
-            }
+            WeightEstimated = WeightEstimated ?? false;
+            SizeEstimated = SizeEstimated ?? false;
         }
     }
 
     partial class Quote
     {
+        partial void OnCreated()
+        {
+            Price = Price ?? 0.00m;
+        }
+
         public string FriendlyName
         {
             get
@@ -160,15 +151,8 @@ namespace SingerDispatch
     {
         partial void OnCreated()
         {
-            if (WeightEstimated == null)
-            {
-                WeightEstimated = false;
-            }
-
-            if (SizeEstimated == null)
-            {
-                SizeEstimated = false;
-            }
+            WeightEstimated = WeightEstimated ?? false;
+            SizeEstimated = SizeEstimated ?? false;
         }
 
         public QuoteCommodity Duplicate()
@@ -302,15 +286,8 @@ namespace SingerDispatch
     {
         partial void OnCreated()
         {
-            if (WeightEstimated == null)
-            {
-                WeightEstimated = false;
-            }
-
-            if (SizeEstimated == null)
-            {
-                SizeEstimated = false;
-            }
+            WeightEstimated = WeightEstimated ?? false;
+            SizeEstimated = SizeEstimated ?? false;
         }
 
         public JobCommodity Duplicate()
@@ -412,10 +389,7 @@ namespace SingerDispatch
     {
         partial void OnCreated()
         {
-            if (WeightEstimated == null)
-            {
-                WeightEstimated = false;
-            }
+            WeightEstimated = WeightEstimated ?? false;
         }
 
         public Load Duplicate()
@@ -508,10 +482,7 @@ namespace SingerDispatch
 
         partial void OnCreated()
         {
-            if (GSTExempt == null)
-            {
-                GSTExempt = false;
-            }
+            GSTExempt = GSTExempt ?? false;
         }
 
         public Invoice Duplicate()

@@ -49,7 +49,7 @@ namespace SingerDispatch.Printing
         private static string GetStyles()
         {
             const string content = @"
-                <style type=""text/css"">
+                <style type=""text/css"" media=""all"">
                     /***** RESET DEFAULT BROWSER STYLES *****/
                     html, body, div, span, applet, object, iframe,
                     h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -117,6 +117,7 @@ namespace SingerDispatch.Printing
                     {                        
                         font-size: 10pt;
                         font-family: Verdana, Arial, Helvetica, sans-serif;
+                        padding: 10px;
                     }
 
                     th
@@ -319,6 +320,13 @@ namespace SingerDispatch.Printing
                     {
                         padding: 5px 15px;
                         padding-bottom: 10px;                
+                    }
+                </style>
+                <style type=""text/css"" media=""print"">
+                    body
+                    {
+                    	font-size: 12pt;
+                        padding: 0;
                     }
                 </style>
             ";

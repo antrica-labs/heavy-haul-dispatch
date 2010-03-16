@@ -72,8 +72,7 @@ namespace SingerDispatch.Printing
                     }
                     body 
                     {
-                        line-height: 1.2em;
-                        padding: 5px;
+                        line-height: 1.2em;                        
                     }
                     ol, ul 
                     {
@@ -112,6 +111,7 @@ namespace SingerDispatch.Printing
                     {
                         font-size: 10pt;
                         font-family: Verdana, Arial, Helvetica, sans-serif;
+                        padding: 10px;
                     }
 
                     /***** SECTION STYLES *****/
@@ -295,6 +295,13 @@ namespace SingerDispatch.Printing
                     ol.conditions li 
                     {
                         padding: 2px 0;
+                    }
+                </style>
+                <style type=""text/css"" media=""print"">
+                    body
+                    {
+                    	font-size: 13pt;
+                        padding: 0;
                     }
                 </style>
             ";
