@@ -3,7 +3,6 @@
                          xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"                         
                          xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                          xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-                         xmlns:WPF="http://schemas.microsoft.com/wpf/2008/toolkit"
                          xmlns:Panels="clr-namespace:SingerDispatch.Panels"
                          xmlns:Controls="clr-namespace:SingerDispatch.Controls"
                          Loaded="Control_Loaded" mc:Ignorable="d" d:DesignWidth="780">
@@ -61,14 +60,14 @@
             </GroupBox>
         </StackPanel>
 
-        <WPF:DataGrid Name="dgStorageList" Style="{StaticResource ListDisplay}">
-            <WPF:DataGrid.Columns>
-                <WPF:DataGridTextColumn Header="Commodity" Binding="{Binding Commodity.Name}" />
-                <WPF:DataGridTextColumn Header="Details" Binding="{Binding Details}" />
-                <WPF:DataGridTextColumn Header="Billing type" Binding="{Binding BillingType.Name}" IsReadOnly="True" />
-                <WPF:DataGridTextColumn Header="Quantity" Binding="{Binding Quantity}" />
-                <WPF:DataGridTextColumn Header="Cost" Binding="{Binding CostPerItem, StringFormat=c}" />
-            </WPF:DataGrid.Columns>
-        </WPF:DataGrid>
+        <DataGrid Name="dgStorageList" Style="{StaticResource ListDisplay}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Commodity" Binding="{Binding Commodity.Name}" />
+                <DataGridTextColumn Header="Details" Binding="{Binding Details}" />
+                <DataGridTextColumn Header="Billing type" Binding="{Binding BillingType.Name}" IsReadOnly="True" />
+                <DataGridTextColumn Header="Quantity" Binding="{Binding Quantity}" />
+                <DataGridTextColumn Header="Cost" Binding="{Binding CostPerItem, StringFormat=c}" />
+            </DataGrid.Columns>
+        </DataGrid>
     </DockPanel>
 </Panels:QuoteUserControl>

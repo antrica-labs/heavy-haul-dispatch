@@ -3,7 +3,6 @@
                            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
                            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-                           xmlns:WPF="http://schemas.microsoft.com/wpf/2008/toolkit"
                            xmlns:Panels="clr-namespace:SingerDispatch.Panels"
                            xmlns:Controls="clr-namespace:SingerDispatch.Controls"
                            x:Name="creditAndRatesControl"
@@ -65,12 +64,12 @@
             <Button Style="{StaticResource Bottom}" Name="CommitChangesButton" Click="SaveDetails_Click">Save adjustments</Button>
         </StackPanel>
 
-        <WPF:DataGrid Name="dgCreditRates" Style="{StaticResource ListDisplay}">
-            <WPF:DataGrid.Columns>                
-                <WPF:DataGridTextColumn Header="Type" Binding="{Binding Name}" Width="2*" />
-                <WPF:DataGridTextColumn Header="Hourly" Binding="{Binding Path=Hourly, StringFormat=c}" />
-                <WPF:DataGridTextColumn Header="Adjusted" Binding="{Binding Path=Adjusted, StringFormat=c}" />
-            </WPF:DataGrid.Columns>
-        </WPF:DataGrid>
+        <DataGrid Name="dgCreditRates" Style="{StaticResource ListDisplay}">
+            <DataGrid.Columns>                
+                <DataGridTextColumn Header="Type" Binding="{Binding Name}" Width="2*" />
+                <DataGridTextColumn Header="Hourly" Binding="{Binding Path=Hourly, StringFormat=c}" />
+                <DataGridTextColumn Header="Adjusted" Binding="{Binding Path=Adjusted, StringFormat=c}" />
+            </DataGrid.Columns>
+        </DataGrid>
 	</DockPanel>
 </Panels:CompanyUserControl>

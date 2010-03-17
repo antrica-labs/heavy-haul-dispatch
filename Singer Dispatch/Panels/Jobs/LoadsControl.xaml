@@ -3,7 +3,6 @@
                        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
                        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-                       xmlns:WPF="http://schemas.microsoft.com/wpf/2008/toolkit"
                        xmlns:Panels="clr-namespace:SingerDispatch.Panels" 
                        Loaded="ControlLoaded" mc:Ignorable="d" d:DesignWidth="780" d:DesignHeight="500">
     <UserControl.Resources>
@@ -86,10 +85,10 @@
                     </Grid.RowDefinitions>
 
                     <Label Grid.Row="0" Grid.Column="0">Start date:</Label>
-                    <WPF:DatePicker Grid.Row="1" Grid.Column="0" SelectedDate="{Binding StartDate}" />
+                    <DatePicker Grid.Row="1" Grid.Column="0" SelectedDate="{Binding StartDate}" />
 
                     <Label Grid.Row="0" Grid.Column="1">End date:</Label>
-                    <WPF:DatePicker Grid.Row="1" Grid.Column="1" SelectedDate="{Binding EndDate}" />
+                    <DatePicker Grid.Row="1" Grid.Column="1" SelectedDate="{Binding EndDate}" />
 
                     <Label Grid.Row="0" Grid.Column="2">Season</Label>
                     <ComboBox Name="cmbSeasons" Grid.Row="1" Grid.Column="2" SelectedItem="{Binding Season}" ItemTemplate="{StaticResource SimpleNameTemplate}" />                    
@@ -185,13 +184,13 @@
             </GroupBox>
         </StackPanel>        
 
-        <WPF:DataGrid Name="dgLoads" Style="{StaticResource ListDisplay}">
-            <WPF:DataGrid.Columns>
-                <WPF:DataGridTextColumn Header="Unit" Width="0.15*" Binding="{Binding Equipment.UnitNumber}"/>
-                <WPF:DataGridTextColumn Header="Wheel type" Width="0.2*" Binding="{Binding Rate.Name}" />
-                <WPF:DataGridTextColumn Header="Trailer" Width="0.2*" Binding="{Binding TrailerCombination.Combination}" />
-                <WPF:DataGridTextColumn Header="Description" Binding="{Binding ServiceDescription}" />
-            </WPF:DataGrid.Columns>
-        </WPF:DataGrid>
+        <DataGrid Name="dgLoads" Style="{StaticResource ListDisplay}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Unit" Width="0.15*" Binding="{Binding Equipment.UnitNumber}"/>
+                <DataGridTextColumn Header="Wheel type" Width="0.2*" Binding="{Binding Rate.Name}" />
+                <DataGridTextColumn Header="Trailer" Width="0.2*" Binding="{Binding TrailerCombination.Combination}" />
+                <DataGridTextColumn Header="Description" Binding="{Binding ServiceDescription}" />
+            </DataGrid.Columns>
+        </DataGrid>
     </DockPanel>
 </Panels:JobUserControl>

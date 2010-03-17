@@ -3,7 +3,6 @@
                            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
                            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-                           xmlns:WPF="http://schemas.microsoft.com/wpf/2008/toolkit"
                            xmlns:Panels="clr-namespace:SingerDispatch.Panels"
                            Loaded="Control_Loaded"
                            x:Name="ThePanel"
@@ -148,12 +147,12 @@
                     
                     <GroupBox Header="Reference Numbers">
                         <StackPanel>
-                            <WPF:DataGrid Name="DgReferenceNumbers" Style="{StaticResource ListDisplay}" IsReadOnly="False" Height="80">
-                                <WPF:DataGrid.Columns>
-                                    <WPF:DataGridTextColumn Header="Field" Binding="{Binding Field}" />
-                                    <WPF:DataGridTextColumn Header="Value" Binding="{Binding Value}" />
-                                </WPF:DataGrid.Columns>
-                            </WPF:DataGrid>
+                            <DataGrid Name="DgReferenceNumbers" Style="{StaticResource ListDisplay}" IsReadOnly="False" Height="80">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="Field" Binding="{Binding Field}" />
+                                    <DataGridTextColumn Header="Value" Binding="{Binding Value}" />
+                                </DataGrid.Columns>
+                            </DataGrid>
 
                             <Grid>
                                 <Grid.ColumnDefinitions>
@@ -170,13 +169,13 @@
             </Grid>
         </StackPanel>
 
-        <WPF:DataGrid Name="DgInvoices" Style="{StaticResource ListDisplay}" SelectedItem="{Binding SelectedInvoice}">
-            <WPF:DataGrid.Columns>
-                <WPF:DataGridTextColumn Header="Number" Binding="{Binding Number}" />
-                <WPF:DataGridTextColumn Header="Revision" Binding="{Binding Revision}" />
-                <WPF:DataGridTextColumn Header="Hours" Binding="{Binding TotalHours}" />
-                <WPF:DataGridTextColumn Header="Cost" Binding="{Binding TotalCost, StringFormat=c}" />
-            </WPF:DataGrid.Columns>
-        </WPF:DataGrid>
+        <DataGrid Name="DgInvoices" Style="{StaticResource ListDisplay}" SelectedItem="{Binding SelectedInvoice}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Number" Binding="{Binding Number}" />
+                <DataGridTextColumn Header="Revision" Binding="{Binding Revision}" />
+                <DataGridTextColumn Header="Hours" Binding="{Binding TotalHours}" />
+                <DataGridTextColumn Header="Cost" Binding="{Binding TotalCost, StringFormat=c}" />
+            </DataGrid.Columns>
+        </DataGrid>
     </DockPanel>
 </Panels:InvoiceUserControl>

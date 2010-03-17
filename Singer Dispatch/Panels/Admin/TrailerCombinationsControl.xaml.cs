@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Collections.ObjectModel;
+using System.Windows.Input;
 using SingerDispatch.Controls;
+using System.Windows.Controls;
 
 namespace SingerDispatch.Panels.Admin
 {
@@ -59,10 +62,8 @@ namespace SingerDispatch.Panels.Admin
 
             Database.TrailerCombinations.InsertOnSubmit(combination);
             list.Insert(0, combination);
-            dgCombinations.SelectedItem = combination;
-            dgCombinations.ScrollIntoView(combination);
 
-            DataGridHelper.GetCell(dgCombinations, dgCombinations.SelectedIndex, 0).Focus();
+            DataGridHelper.EditFirstColumn(dgCombinations, combination);
         }
 
         private void RemoveCombination_Click(object sender, RoutedEventArgs e)
@@ -85,9 +86,9 @@ namespace SingerDispatch.Panels.Admin
             }
         }
 
-        private void RowEditEnding(object sender, Microsoft.Windows.Controls.DataGridRowEditEndingEventArgs e)
+        private void RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
         {
-            if (e.EditAction == Microsoft.Windows.Controls.DataGridEditAction.Commit)
+            if (e.EditAction == DataGridEditAction.Commit)
             {
                 try
                 {

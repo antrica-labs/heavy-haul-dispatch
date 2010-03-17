@@ -1,7 +1,6 @@
 ﻿<UserControl x:Class="SingerDispatch.Panels.Admin.EmployeesControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:WPF="http://schemas.microsoft.com/wpf/2008/toolkit"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              Loaded="UserControl_Loaded" mc:Ignorable="d" d:DesignWidth="780">
@@ -73,10 +72,10 @@
 	                <CheckBox Grid.Row="7" Grid.Column="1" IsChecked="{Binding IsSingerStaff}" />
 	                
 	                <Label Grid.Row="8" Grid.Column="0">Start date:</Label>
-	                <WPF:DatePicker Grid.Row="8" Grid.Column="1" SelectedDate="{Binding StartDate}" />
+	                <DatePicker Grid.Row="8" Grid.Column="1" SelectedDate="{Binding StartDate}" />
 	                
 	                <Label Grid.Row="9" Grid.Column="0">End date:</Label>
-	                <WPF:DatePicker Grid.Row="9" Grid.Column="1" SelectedDate="{Binding EndDate}" />
+	                <DatePicker Grid.Row="9" Grid.Column="1" SelectedDate="{Binding EndDate}" />
 	                
 	                <Label Grid.Row="10" Grid.Column="0">Responsibility:</Label>
 	                <TextBox Grid.Row="10" Grid.Column="1" Text="{Binding Responsibilities}" />
@@ -87,13 +86,13 @@
 	        </GroupBox>
 		</StackPanel>
         
-        <WPF:DataGrid Name="dgEmployees" Style="{StaticResource ListDisplay}">
-            <WPF:DataGrid.Columns>
-                <WPF:DataGridTextColumn Header="First name" Binding="{Binding FirstName}" />
-                <WPF:DataGridTextColumn Header="Last name" Binding="{Binding LastName}" />
-                <WPF:DataGridTextColumn Header="Mobile" Binding="{Binding Mobile}" />
-                <WPF:DataGridTextColumn Header="Phone" Binding="{Binding Phone}" />
-            </WPF:DataGrid.Columns>
-        </WPF:DataGrid>
+        <DataGrid Name="dgEmployees" Style="{StaticResource ListDisplay}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="First name" Binding="{Binding FirstName}" />
+                <DataGridTextColumn Header="Last name" Binding="{Binding LastName}" />
+                <DataGridTextColumn Header="Mobile" Binding="{Binding Mobile}" />
+                <DataGridTextColumn Header="Phone" Binding="{Binding Phone}" />
+            </DataGrid.Columns>
+        </DataGrid>
     </DockPanel>
 </UserControl>

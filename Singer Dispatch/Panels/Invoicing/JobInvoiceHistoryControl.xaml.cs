@@ -2,6 +2,8 @@
 using System.Linq;
 using System.Windows;
 using System.Collections.ObjectModel;
+using System.Windows.Controls;
+using System.Windows.Input;
 using SingerDispatch.Database;
 using SingerDispatch.Controls;
 
@@ -183,10 +185,8 @@ namespace SingerDispatch.Panels.Invoicing
 
             SelectedInvoice.ReferenceNumbers.Add(reference);
             ((ObservableCollection<ReferenceNumber>)DgReferenceNumbers.ItemsSource).Add(reference);
-            DgReferenceNumbers.SelectedItem = reference;
-            DgReferenceNumbers.ScrollIntoView(reference);
 
-            DataGridHelper.GetCell(DgReferenceNumbers, DgReferenceNumbers.SelectedIndex, 0).Focus();
+            DataGridHelper.EditFirstColumn(DgReferenceNumbers, reference);
         }
 
         private void RemoveReferenceNumber_Click(object sender, RoutedEventArgs e)

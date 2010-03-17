@@ -3,7 +3,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:WPF="http://schemas.microsoft.com/wpf/2008/toolkit"
              mc:Ignorable="d" d:DesignWidth="780" d:DesignHeight="400"
              Loaded="UserControl_Loaded">
     <UserControl.Resources>
@@ -25,10 +24,10 @@
             <Button Style="{StaticResource HorizontalEnd}" Grid.Column="2" Click="RemoveInclusion_Click">Remove inclusion</Button>
         </Grid>
 
-        <WPF:DataGrid Name="TheGrid" Style="{StaticResource ListDisplay}" IsReadOnly="False" RowEditEnding="RowEditEnding">
-            <WPF:DataGrid.Columns>
-                <WPF:DataGridTextColumn Header="Inclusion" Binding="{Binding Line}" />
-            </WPF:DataGrid.Columns>
-        </WPF:DataGrid>
+        <DataGrid Name="TheGrid" Style="{StaticResource ListDisplay}" IsReadOnly="False" RowEditEnding="RowEditEnding">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Inclusion" Binding="{Binding Line}" />
+            </DataGrid.Columns>
+        </DataGrid>
     </DockPanel>
 </UserControl>

@@ -3,7 +3,6 @@
                        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
                        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-                       xmlns:WPF="http://schemas.microsoft.com/wpf/2008/toolkit"
                        xmlns:Panels="clr-namespace:SingerDispatch.Panels"
                        x:Name="panelJobHistory"
                        Loaded="ControlLoaded" mc:Ignorable="d" d:DesignWidth="780">
@@ -83,10 +82,10 @@
                         </Grid.RowDefinitions>
 
                         <Label Grid.Row="0" Grid.Column="0">Start date:</Label>
-                        <WPF:DatePicker Name="dpStartDate" Grid.Row="1" Grid.Column="0" Margin="2" SelectedDate="{Binding StartDate}"></WPF:DatePicker>
+                        <DatePicker Name="dpStartDate" Grid.Row="1" Grid.Column="0" Margin="2" SelectedDate="{Binding StartDate}"></DatePicker>
 
                         <Label Grid.Row="0" Grid.Column="1">End date:</Label>
-                        <WPF:DatePicker Name="dpEndDate" Grid.Row="1" Grid.Column="1" Margin="2" SelectedDate="{Binding EndDate}" />
+                        <DatePicker Name="dpEndDate" Grid.Row="1" Grid.Column="1" Margin="2" SelectedDate="{Binding EndDate}" />
 
                         <Label Grid.Row="0" Grid.Column="2">Status</Label>
                         <ComboBox Name="CmbStausTypes" Grid.Row="1" Grid.Column="2" SelectedItem="{Binding JobStatusType}" ItemTemplate="{StaticResource SimpleNameTemplate}" />
@@ -128,32 +127,32 @@
                             <Label Grid.Column="4" Grid.Row="2" Content="{Binding Fax}" />
                         </Grid>
 
-                        <WPF:DataGrid Name="DgJobContacts" Style="{StaticResource ListDisplay}" Margin="0,0,0,5">
-                            <WPF:DataGrid.Columns>
-                                <WPF:DataGridTextColumn Header="First" Binding="{Binding FirstName}" IsReadOnly="True" />
-                                <WPF:DataGridTextColumn Header="Last" Binding="{Binding LastName}" IsReadOnly="True" />
-                                <WPF:DataGridTextColumn Header="Company" Binding="{Binding Address.Company.Name}" IsReadOnly="True" />
-                            </WPF:DataGrid.Columns>
-                        </WPF:DataGrid>
+                        <DataGrid Name="DgJobContacts" Style="{StaticResource ListDisplay}" Margin="0,0,0,5">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="First" Binding="{Binding FirstName}" IsReadOnly="True" />
+                                <DataGridTextColumn Header="Last" Binding="{Binding LastName}" IsReadOnly="True" />
+                                <DataGridTextColumn Header="Company" Binding="{Binding Address.Company.Name}" IsReadOnly="True" />
+                            </DataGrid.Columns>
+                        </DataGrid>
                     </DockPanel>
                 </GroupBox>
             </Grid>
         </StackPanel>
 
-        <WPF:DataGrid Name="DgJobs" Style="{StaticResource ListDisplay}" SelectedItem="{Binding SelectedJob}">
-            <WPF:DataGrid.Columns>
-                <WPF:DataGridTextColumn Header="Number" Width="0.15*" Binding="{Binding Number}"/>
-                <WPF:DataGridTextColumn Header="Quote" Width="0.15*">
-                    <WPF:DataGridTextColumn.Binding>
+        <DataGrid Name="DgJobs" Style="{StaticResource ListDisplay}" SelectedItem="{Binding SelectedJob}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Number" Width="0.15*" Binding="{Binding Number}"/>
+                <DataGridTextColumn Header="Quote" Width="0.15*">
+                    <DataGridTextColumn.Binding>
                         <MultiBinding Converter="{StaticResource QuoteFriendlyNameConverter}">
                             <Binding Path="Quote.Number" />
                             <Binding Path="Quote.Revision" />
                         </MultiBinding>
-                    </WPF:DataGridTextColumn.Binding>
-                </WPF:DataGridTextColumn>
-                <WPF:DataGridTextColumn Header="Status" Width="0.2*" Binding="{Binding JobStatusType.Name}" />
-                <WPF:DataGridTextColumn Header="Description" Binding="{Binding Description}" />
-            </WPF:DataGrid.Columns>
-        </WPF:DataGrid>
+                    </DataGridTextColumn.Binding>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="Status" Width="0.2*" Binding="{Binding JobStatusType.Name}" />
+                <DataGridTextColumn Header="Description" Binding="{Binding Description}" />
+            </DataGrid.Columns>
+        </DataGrid>
     </DockPanel>
 </Panels:JobUserControl>

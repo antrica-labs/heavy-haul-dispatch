@@ -3,7 +3,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:WPF="http://schemas.microsoft.com/wpf/2008/toolkit"
              xmlns:Local="clr-namespace:SingerDispatch.Panels.Admin"
              Loaded="Control_Loaded" mc:Ignorable="d" d:DesignWidth="780">
     <UserControl.Resources>
@@ -27,13 +26,13 @@
             <Button Style="{StaticResource HorizontalEnd}" Grid.Column="2" Click="RemoveRate_Click">Remove rate</Button>
         </Grid>
 	
-        <WPF:DataGrid Name="dgRates" VerticalContentAlignment="Stretch" Style="{StaticResource ListDisplay}" IsReadOnly="False" RowEditEnding="RowEditEnding">
-            <WPF:DataGrid.Columns>
-                <WPF:DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="2*" />
-                <WPF:DataGridTextColumn Header="Specialized rate" Binding="{Binding HourlySpecialized, StringFormat=c}" />
-                <WPF:DataGridTextColumn Header="Enterprise rate" Binding="{Binding HourlyEnterprise, StringFormat=c}" />
-                <WPF:DataGridComboBoxColumn Header="Rate type" DisplayMemberPath="Name" ItemsSource="{Binding Source={StaticResource RateTypesDropList}}" SelectedItemBinding="{Binding RateType}" />
-            </WPF:DataGrid.Columns>
-        </WPF:DataGrid>        
+        <DataGrid Name="dgRates" VerticalContentAlignment="Stretch" Style="{StaticResource ListDisplay}" IsReadOnly="False" RowEditEnding="RowEditEnding">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="2*" />
+                <DataGridTextColumn Header="Specialized rate" Binding="{Binding HourlySpecialized, StringFormat=c}" />
+                <DataGridTextColumn Header="Enterprise rate" Binding="{Binding HourlyEnterprise, StringFormat=c}" />
+                <DataGridComboBoxColumn Header="Rate type" DisplayMemberPath="Name" ItemsSource="{Binding Source={StaticResource RateTypesDropList}}" SelectedItemBinding="{Binding RateType}" />
+            </DataGrid.Columns>
+        </DataGrid>        
     </DockPanel>
 </UserControl>

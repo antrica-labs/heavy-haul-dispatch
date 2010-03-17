@@ -1,7 +1,6 @@
 ﻿<Window x:Class="SingerDispatch.Windows.EditCompaniesWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:WPF="http://schemas.microsoft.com/wpf/2008/toolkit"
     Title="Edit Companies" WindowStartupLocation="CenterOwner" Height="400" Width="525"
     Loaded="Window_Loaded">
     <Window.Resources>
@@ -16,12 +15,12 @@
 
         <ComboBox Name="CmbSearch" DockPanel.Dock="Bottom" ItemTemplate="{StaticResource SimpleNameTemplate}" TextSearch.TextPath="Name" IsEditable="True" SelectionChanged="CmbSearch_SelectionChanged" />
 
-        <WPF:DataGrid Name="CompaniesGrid" Margin="5" Style="{StaticResource ListDisplay}" IsReadOnly="False" RowEditEnding="CompaniesGrid_RowEditEnding">
-            <WPF:DataGrid.Columns>
-                <WPF:DataGridTextColumn Header="Name" Binding="{Binding Name}" />
-                <WPF:DataGridTextColumn Header="Operating As" Binding="{Binding OperatingAs}" />
-                <WPF:DataGridCheckBoxColumn Header="Visible" Binding="{Binding IsVisible}" Width="60" />
-            </WPF:DataGrid.Columns>    
-        </WPF:DataGrid>        
+        <DataGrid Name="CompaniesGrid" Margin="5" Style="{StaticResource ListDisplay}" IsReadOnly="False" RowEditEnding="CompaniesGrid_RowEditEnding">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Name" Binding="{Binding Name}" />
+                <DataGridTextColumn Header="Operating As" Binding="{Binding OperatingAs}" />
+                <DataGridCheckBoxColumn Header="Visible" Binding="{Binding IsVisible}" Width="60" />
+            </DataGrid.Columns>    
+        </DataGrid>        
     </DockPanel>
 </Window>

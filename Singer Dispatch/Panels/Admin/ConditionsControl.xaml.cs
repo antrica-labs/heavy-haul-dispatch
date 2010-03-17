@@ -1,7 +1,9 @@
 ﻿using System.Linq;
 using System.Windows;
 using System.Collections.ObjectModel;
+using System.Windows.Input;
 using SingerDispatch.Controls;
+using System.Windows.Controls;
 
 namespace SingerDispatch.Panels.Admin
 {
@@ -24,9 +26,9 @@ namespace SingerDispatch.Panels.Admin
             TheGrid.ItemsSource = new ObservableCollection<Condition>(from c in Database.Conditions orderby c.ID select c);
         }
 
-        private void RowEditEnding(object sender, Microsoft.Windows.Controls.DataGridRowEditEndingEventArgs e)
+        private void RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
         {
-            if (e.EditAction == Microsoft.Windows.Controls.DataGridEditAction.Commit)
+            if (e.EditAction == DataGridEditAction.Commit)
             {
                 try
                 {
@@ -46,10 +48,8 @@ namespace SingerDispatch.Panels.Admin
 
             Database.Conditions.InsertOnSubmit(condition);
             list.Add(condition);
-            TheGrid.SelectedItem = condition;
-            TheGrid.ScrollIntoView(condition);
 
-            DataGridHelper.GetCell(TheGrid, TheGrid.SelectedIndex, 0).Focus();
+            DataGridHelper.EditFirstColumn(TheGrid, condition);
         }
 
         private void RemoveCondition_Click(object sender, RoutedEventArgs e)

@@ -1,6 +1,5 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:WPF="http://schemas.microsoft.com/wpf/2008/toolkit"                    
                     xmlns:Controls="clr-namespace:SingerDispatch.Controls"                    
                     x:Class="SingerDispatch.SingerDispatchDictionary">
     <ResourceDictionary.MergedDictionaries>        
@@ -135,7 +134,7 @@
         <Setter Property="Padding" Value="10" />
     </Style>
 
-    <Style x:Key="ListDisplay" TargetType="{x:Type WPF:DataGrid}">
+    <Style x:Key="ListDisplay" TargetType="{x:Type DataGrid}">
         <Setter Property="IsReadOnly" Value="True" />
         <Setter Property="AutoGenerateColumns" Value="False" />
         <Setter Property="Background" Value="White" />
@@ -150,12 +149,12 @@
         <Setter Property="ColumnWidth" Value="*" />        
     </Style>
     
-    <Style TargetType="{x:Type WPF:DatePicker}">
+    <Style TargetType="{x:Type DatePicker}">
         <Setter Property="Margin" Value="3" />
         <Setter Property="Background" Value="White" />
     </Style>
     
-    <Style TargetType="{x:Type WPF:DatePickerTextBox}">
+    <Style TargetType="{x:Type DatePickerTextBox}">
         <Setter Property="IsReadOnly" Value="True" />        
     </Style>
 </ResourceDictionary>

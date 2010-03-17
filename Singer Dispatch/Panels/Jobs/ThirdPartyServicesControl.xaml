@@ -3,7 +3,6 @@
                        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-                       xmlns:WPF="http://schemas.microsoft.com/wpf/2008/toolkit"
                        xmlns:Panels="clr-namespace:SingerDispatch.Panels"
                        Loaded="ControlLoaded" mc:Ignorable="d" d:DesignWidth="780">
     <UserControl.Resources>
@@ -78,7 +77,7 @@
                             </Grid.RowDefinitions>
 
                             <Label Grid.Row="0" Grid.Column="0">Date:</Label>
-                            <WPF:DatePicker Grid.Row="0" Grid.Column="1" SelectedDate="{Binding ServiceDate}" />
+                            <DatePicker Grid.Row="0" Grid.Column="1" SelectedDate="{Binding ServiceDate}" />
 
                             <Label Grid.Row="1" Grid.Column="0">Time:</Label>
                             <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding ServiceTime}" />
@@ -88,12 +87,12 @@
             </GroupBox>
         </StackPanel>
 
-        <WPF:DataGrid Name="dgServices" Style="{StaticResource ListDisplay}">
-            <WPF:DataGrid.Columns>
-                <WPF:DataGridTextColumn Header="Company" Binding="{Binding Company.Name}" Width="0.4*" />
-                <WPF:DataGridTextColumn Header="Service Type" Binding="{Binding ServiceType.Name}" Width="0.3*" />
-                <WPF:DataGridTextColumn Header="Notes" Binding="{Binding Notes}" />
-            </WPF:DataGrid.Columns>
-        </WPF:DataGrid>
+        <DataGrid Name="dgServices" Style="{StaticResource ListDisplay}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Company" Binding="{Binding Company.Name}" Width="0.4*" />
+                <DataGridTextColumn Header="Service Type" Binding="{Binding ServiceType.Name}" Width="0.3*" />
+                <DataGridTextColumn Header="Notes" Binding="{Binding Notes}" />
+            </DataGrid.Columns>
+        </DataGrid>
     </DockPanel>
 </Panels:JobUserControl>

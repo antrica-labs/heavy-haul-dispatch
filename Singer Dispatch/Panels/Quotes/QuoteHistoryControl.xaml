@@ -3,7 +3,6 @@
                          xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                          xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                          xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-                         xmlns:WPF="http://schemas.microsoft.com/wpf/2008/toolkit"
                          xmlns:Panels="clr-namespace:SingerDispatch.Panels"
                          xmlns:Controls="clr-namespace:SingerDispatch.Controls"
                          x:Name="ThePanel"
@@ -117,10 +116,10 @@
                                 </Grid.RowDefinitions>                                
 
                                 <Label Grid.Row="0" Grid.Column="0">Start date:</Label>
-                                <WPF:DatePicker Name="dpStartDate" Grid.Row="1" Grid.Column="0" SelectedDate="{Binding StartDate}" />
+                                <DatePicker Name="dpStartDate" Grid.Row="1" Grid.Column="0" SelectedDate="{Binding StartDate}" />
 
                                 <Label Grid.Row="0" Grid.Column="1">End date:</Label>
-                                <WPF:DatePicker Name="dpEndDate" Grid.Row="1" Grid.Column="1" SelectedDate="{Binding EndDate}" />
+                                <DatePicker Name="dpEndDate" Grid.Row="1" Grid.Column="1" SelectedDate="{Binding EndDate}" />
                             </Grid>
                         </StackPanel>
                     </GroupBox>
@@ -193,23 +192,23 @@
                             </Grid.RowDefinitions>
 
                             <Label Grid.Row="0" Grid.Column="0">Creation date:</Label>
-                            <WPF:DatePicker Grid.Row="1" Grid.Column="0" SelectedDate="{Binding CreationDate}" />
+                            <DatePicker Grid.Row="1" Grid.Column="0" SelectedDate="{Binding CreationDate}" />
 
                             <Label Grid.Row="0" Grid.Column="1">Expiration date:</Label>
-                            <WPF:DatePicker Grid.Row="1" Grid.Column="1" SelectedDate="{Binding ExpirationDate}" />
+                            <DatePicker Grid.Row="1" Grid.Column="1" SelectedDate="{Binding ExpirationDate}" />
                         </Grid>
                     </DockPanel>
                 </GroupBox>
             </Grid>
         </StackPanel>
 
-        <WPF:DataGrid Name="dgQuotes" Style="{StaticResource ListDisplay}" SelectedItem="{Binding SelectedQuote}">
-            <WPF:DataGrid.Columns>
-                <WPF:DataGridTextColumn Header="Quote #" Width="0.3*" Binding="{Binding Number}"/>
-                <WPF:DataGridTextColumn Header="Revision" Width="0.3*" Binding="{Binding Revision}"/>
-                <WPF:DataGridTextColumn Header="Price" Width="0.4*" Binding="{Binding Price, StringFormat=c}" />
-                <WPF:DataGridTextColumn Header="Description" Width="3*" Binding="{Binding Description}" />
-            </WPF:DataGrid.Columns>            
-        </WPF:DataGrid>
+        <DataGrid Name="dgQuotes" Style="{StaticResource ListDisplay}" SelectedItem="{Binding SelectedQuote}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Quote #" Width="0.3*" Binding="{Binding Number}"/>
+                <DataGridTextColumn Header="Revision" Width="0.3*" Binding="{Binding Revision}"/>
+                <DataGridTextColumn Header="Price" Width="0.4*" Binding="{Binding Price, StringFormat=c}" />
+                <DataGridTextColumn Header="Description" Width="3*" Binding="{Binding Description}" />
+            </DataGrid.Columns>            
+        </DataGrid>
     </DockPanel>
 </Panels:QuoteUserControl>

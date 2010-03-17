@@ -3,7 +3,6 @@
                        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
                        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-                       xmlns:WPF="http://schemas.microsoft.com/wpf/2008/toolkit"                     
                        xmlns:Panels="clr-namespace:SingerDispatch.Panels"
                        Loaded="ControlLoaded" mc:Ignorable="d" d:DesignWidth="780" d:DesignHeight="500">
     <UserControl.Resources>
@@ -85,7 +84,7 @@
                             </Grid.RowDefinitions>
 
                             <Label Grid.Row="0" Grid.Column="0">Date:</Label>
-                            <WPF:DatePicker Grid.Row="0" Grid.Column="1" />
+                            <DatePicker Grid.Row="0" Grid.Column="1" />
 
                             <Label Grid.Row="1" Grid.Column="0">Time:</Label>
                             <TextBox Grid.Row="1" Grid.Column="1" />
@@ -98,14 +97,14 @@
             </GroupBox>
         </StackPanel>
         
-        <WPF:DataGrid Name="dgDispatches" Style="{StaticResource ListDisplay}">
-            <WPF:DataGrid.Columns>
-                <WPF:DataGridTextColumn Header="Load" Binding="{Binding Load.FriendlyName}" Width="0.2*" />
-                <WPF:DataGridTextColumn Header="Driver" Binding="{Binding Employee.Name}" Width="0.3*" />
-                <WPF:DataGridTextColumn Header="Unit" Binding="{Binding Equipment.UnitNumber}" Width="0.2*" />
-                <WPF:DataGridTextColumn Header="Service Type" Binding="{Binding Rate.Name}" Width="0.3*" />
-                <WPF:DataGridTextColumn Header="Description" Binding="{Binding Description}" />
-            </WPF:DataGrid.Columns>
-        </WPF:DataGrid>
+        <DataGrid Name="dgDispatches" Style="{StaticResource ListDisplay}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Load" Binding="{Binding Load.FriendlyName}" Width="0.2*" />
+                <DataGridTextColumn Header="Driver" Binding="{Binding Employee.Name}" Width="0.3*" />
+                <DataGridTextColumn Header="Unit" Binding="{Binding Equipment.UnitNumber}" Width="0.2*" />
+                <DataGridTextColumn Header="Service Type" Binding="{Binding Rate.Name}" Width="0.3*" />
+                <DataGridTextColumn Header="Description" Binding="{Binding Description}" />
+            </DataGrid.Columns>
+        </DataGrid>
     </DockPanel>
 </Panels:JobUserControl>

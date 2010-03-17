@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace SingerDispatch.Windows
 {
@@ -30,7 +31,7 @@ namespace SingerDispatch.Windows
             Close();
         }
 
-        private void CompaniesGrid_RowEditEnding(object sender, Microsoft.Windows.Controls.DataGridRowEditEndingEventArgs e)
+        private void CompaniesGrid_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
         {
             try
             {

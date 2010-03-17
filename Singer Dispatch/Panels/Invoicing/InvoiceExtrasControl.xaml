@@ -3,7 +3,6 @@
                            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
                            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-                           xmlns:WPF="http://schemas.microsoft.com/wpf/2008/toolkit"
                            xmlns:Panels="clr-namespace:SingerDispatch.Panels"
                            xmlns:Controls="clr-namespace:SingerDispatch.Controls"
                            Loaded="Control_Loaded"
@@ -58,10 +57,10 @@
                         </Grid.RowDefinitions>
 
                         <Label Grid.Column="0" Grid.Row="0">Start:</Label>
-                        <WPF:DatePicker Grid.Column="0" Grid.Row="1" SelectedDate="{Binding StartDate}" />
+                        <DatePicker Grid.Column="0" Grid.Row="1" SelectedDate="{Binding StartDate}" />
 
                         <Label Grid.Column="1" Grid.Row="0">End:</Label>
-                        <WPF:DatePicker Grid.Column="1" Grid.Row="1" SelectedDate="{Binding EndDate}" />
+                        <DatePicker Grid.Column="1" Grid.Row="1" SelectedDate="{Binding EndDate}" />
                     </Grid>
 
                     <Label Grid.Column="1" Grid.Row="2">From:</Label>
@@ -90,16 +89,16 @@
             </GroupBox>
         </StackPanel>
 
-        <WPF:DataGrid Name="dgExtras" Style="{StaticResource ListDisplay}">
-            <WPF:DataGrid.Columns>
-                <WPF:DataGridTextColumn Header="Start" Binding="{Binding StartDate, StringFormat={}{0:MM/dd/yyyy}}" Width="0.5*" />
-                <WPF:DataGridTextColumn Header="End" Binding="{Binding EndDate, StringFormat={}{0:MM/dd/yyyy}}" Width="0.5*" />
-                <WPF:DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="2*" />
-                <WPF:DataGridTextColumn Header="From" Binding="{Binding Departure}" />
-                <WPF:DataGridTextColumn Header="To" Binding="{Binding Destination}" />
-                <WPF:DataGridTextColumn Header="Hours" Binding="{Binding Hours}" Width="0.5*" />
-                <WPF:DataGridTextColumn Header="Cost" Binding="{Binding Cost, StringFormat=c}" Width="0.5*" />
-            </WPF:DataGrid.Columns>
-        </WPF:DataGrid>
+        <DataGrid Name="dgExtras" Style="{StaticResource ListDisplay}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Start" Binding="{Binding StartDate, StringFormat={}{0:MM/dd/yyyy}}" Width="0.5*" />
+                <DataGridTextColumn Header="End" Binding="{Binding EndDate, StringFormat={}{0:MM/dd/yyyy}}" Width="0.5*" />
+                <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="2*" />
+                <DataGridTextColumn Header="From" Binding="{Binding Departure}" />
+                <DataGridTextColumn Header="To" Binding="{Binding Destination}" />
+                <DataGridTextColumn Header="Hours" Binding="{Binding Hours}" Width="0.5*" />
+                <DataGridTextColumn Header="Cost" Binding="{Binding Cost, StringFormat=c}" Width="0.5*" />
+            </DataGrid.Columns>
+        </DataGrid>
     </DockPanel>
 </Panels:InvoiceUserControl>

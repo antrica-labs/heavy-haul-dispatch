@@ -2,7 +2,9 @@
 using System.Windows;
 using System.Windows.Data;
 using System.Collections.ObjectModel;
+using System.Windows.Input;
 using SingerDispatch.Controls;
+using System.Windows.Controls;
 
 namespace SingerDispatch.Panels.Admin
 {
@@ -46,11 +48,9 @@ namespace SingerDispatch.Panels.Admin
             var rate = new Rate();
 
             Database.Rates.InsertOnSubmit(rate);
-            list.Insert(0, rate);            
-            dgRates.SelectedItem = rate;
-            dgRates.ScrollIntoView(rate);
+            list.Insert(0, rate);
 
-            DataGridHelper.GetCell(dgRates, dgRates.SelectedIndex, 0);
+            DataGridHelper.EditFirstColumn(dgRates, rate);
         }
 
         private void RemoveRate_Click(object sender, RoutedEventArgs e)
@@ -73,9 +73,9 @@ namespace SingerDispatch.Panels.Admin
             }
         }
 
-        private void RowEditEnding(object sender, Microsoft.Windows.Controls.DataGridRowEditEndingEventArgs e)
+        private void RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
         {
-            if (e.EditAction == Microsoft.Windows.Controls.DataGridEditAction.Commit)
+            if (e.EditAction == DataGridEditAction.Commit)
             {
                 try
                 {

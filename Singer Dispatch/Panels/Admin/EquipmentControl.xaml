@@ -3,7 +3,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:WPF="http://schemas.microsoft.com/wpf/2008/toolkit"
              Loaded="UserControl_Loaded" mc:Ignorable="d" d:DesignWidth="780">
     <UserControl.Resources>
         <ResourceDictionary>
@@ -135,13 +134,13 @@
 	        </GroupBox>
 		</StackPanel>
 
-        <WPF:DataGrid Name="dgEquipment" Style="{StaticResource ListDisplay}">
-            <WPF:DataGrid.Columns>
-                <WPF:DataGridTextColumn Header="Unit" Binding="{Binding UnitNumber}" />
-                <WPF:DataGridTextColumn Header="Make" Binding="{Binding Make}" />
-                <WPF:DataGridTextColumn Header="Model" Binding="{Binding Model}" />
-                <WPF:DataGridTextColumn Header="Driver" Binding="{Binding Employee.Name}" />
-            </WPF:DataGrid.Columns>
-        </WPF:DataGrid>
+        <DataGrid Name="dgEquipment" Style="{StaticResource ListDisplay}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Unit" Binding="{Binding UnitNumber}" />
+                <DataGridTextColumn Header="Make" Binding="{Binding Make}" />
+                <DataGridTextColumn Header="Model" Binding="{Binding Model}" />
+                <DataGridTextColumn Header="Driver" Binding="{Binding Employee.Name}" />
+            </DataGrid.Columns>
+        </DataGrid>
     </DockPanel>
 </UserControl>
