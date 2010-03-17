@@ -60,6 +60,19 @@ namespace SingerDispatch
 
     partial class Commodity
     {
+        public string NameAndUnit
+        {
+            get
+            {
+                var name = Name;
+
+                if (!string.IsNullOrEmpty(Unit))
+                    name += " - " + Unit;
+                
+                return name;
+            }
+        }
+
         partial void OnCreated()
         {
             WeightEstimated = WeightEstimated ?? false;

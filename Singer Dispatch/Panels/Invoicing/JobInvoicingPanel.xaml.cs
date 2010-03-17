@@ -1,7 +1,6 @@
 ﻿using System.Windows;
 using System.Linq;
 using System.Windows.Controls.Primitives;
-using SingerDispatch.Database;
 using System.Windows.Input;
 using SingerDispatch.Controls;
 using System;
@@ -66,7 +65,7 @@ namespace SingerDispatch.Panels.Invoicing
             {
                 Database.SubmitChanges();
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 Windows.ErrorNoticeWindow.ShowError("Error while attempting write changes to database", ex.Message);
             }
