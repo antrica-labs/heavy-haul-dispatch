@@ -22,7 +22,6 @@
             <Menu DockPanel.Dock="Top">
                 <MenuItem Header="_File">                    
                     <MenuItem Header="_Save Changes" Click="SaveChanges_Click" InputGestureText="Ctrl+Shift+S" />
-                    <MenuItem Header="Print Test" Click="MenuItem_Click" />
                     <MenuItem Header="_Exit" Click="Terminate_Click" />
                 </MenuItem>
                 <MenuItem Header="_Companies">

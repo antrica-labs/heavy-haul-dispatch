@@ -378,9 +378,9 @@ namespace SingerDispatch.Printing
             if (dispatch != null)
             {
                 if (dispatch.Load == null)
-                    dispatchNumber = string.Format("{0}-{1:dd}", dispatch.Job.Number, dispatch.Number);
+                    dispatchNumber = string.Format("{0}-{1:D2}", dispatch.Job.Number, dispatch.Number);
                 else
-                    dispatchNumber = string.Format("{0}-{1:dd}-{2:dd}", dispatch.Job.Number, dispatch.Load.Number, dispatch.Number);
+                    dispatchNumber = string.Format("{0}-{1:D2}-{2:D2}", dispatch.Job.Number, dispatch.Load.Number, dispatch.Number);
             }
             else
                 dispatchNumber = "UNKNOWN";

@@ -385,13 +385,5 @@ namespace SingerDispatch
             cmbCompanies.ItemsSource = Companies;
             cmbOperators.ItemsSource = Companies;
         }
-
-        private void MenuItem_Click(object sender, RoutedEventArgs e)
-        {
-            var viewer = new Windows.DocumentViewer();
-            viewer.DisplayPrintout(new Dispatch());
-        }
-
-        
     }
 }
