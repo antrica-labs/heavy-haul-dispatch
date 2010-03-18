@@ -28,7 +28,7 @@ namespace SingerDispatch.Panels.Admin
         {
             SaveCommand.Executed += CommitChanges_Executed;
             
-            dgEmployees.ItemsSource = new ObservableCollection<Employee>(from emp in Database.Employees select emp);            
+            dgEmployees.ItemsSource = new ObservableCollection<Employee>(from emp in Database.Employees orderby emp.LastName, emp.FirstName select emp);            
         }
 
         private void NewEmployee_Click(object sender, RoutedEventArgs e)

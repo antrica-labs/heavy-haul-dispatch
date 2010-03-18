@@ -21,7 +21,7 @@ namespace SingerDispatch.Printing
             content.Append(GetStyles());
             content.Append("</head>");
             content.Append("<body>");
-            content.Append(GetHeader("9244-01-01"));
+            content.Append(GetHeader(dispatch));
             content.Append(GetDetails());
             content.Append(GetDescription("Supply mean and equipment to transport 1450 HP compressor package skid - Winter weight restriction"));
             content.Append(GetEquipment());
@@ -334,7 +334,7 @@ namespace SingerDispatch.Printing
             return content;
         }
 
-        private static string GetHeader(string dispatchNumber)
+        private static string GetHeader(Dispatch dispatch)
         {           
             var content = @"
                 <div id=""header"">
@@ -372,6 +372,18 @@ namespace SingerDispatch.Printing
             {
                 img = "file:///" + System.IO.Path.Combine(System.IO.Path.GetDirectoryName(process.MainModule.FileName), @"Images\Header.png");
             }
+
+            string dispatchNumber;
+
+            if (dispatch != null)
+            {
+                if (dispatch.Load == null)
+                    dispatchNumber = string.Format("{0}-{1:dd}", dispatch.Job.Number, dispatch.Number);
+                else
+                    dispatchNumber = string.Format("{0}-{1:dd}-{2:dd}", dispatch.Job.Number, dispatch.Load.Number, dispatch.Number);
+            }
+            else
+                dispatchNumber = "UNKNOWN";
 
             content = content.Replace("%HEADER_IMG%", img).Replace("%DISPATCH_NUMBER%", dispatchNumber);
             content = content.Replace("%COMPANY_NAME%", company).Replace("%STREET_ADDRESS%", address).Replace("%CITY%", city).Replace("%PHONE%", phone);

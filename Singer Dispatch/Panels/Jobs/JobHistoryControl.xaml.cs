@@ -28,7 +28,7 @@ namespace SingerDispatch.Panels.Jobs
 
         private void ControlLoaded(object sender, RoutedEventArgs e)
         {
-            CmbCreatedBy.ItemsSource = from emp in Database.Employees select emp;
+            CmbCreatedBy.ItemsSource = from emp in Database.Employees orderby emp.FirstName, emp.LastName select emp;
             CmbStausTypes.ItemsSource = from s in Database.JobStatusTypes select s;
 
             CmbQuotes.ItemsSource = (SelectedCompany == null) ? null : from q in Database.Quotes where q.Company == SelectedCompany select q;

@@ -28,7 +28,7 @@ namespace SingerDispatch.Panels.Quotes
         private void Control_Loaded(object sender, RoutedEventArgs e)
         {
             // refresh database lists in case they have been modified elsewhere.
-            cmbQuotedBy.ItemsSource = from emp in Database.Employees orderby emp.FirstName select emp;
+            cmbQuotedBy.ItemsSource = from emp in Database.Employees orderby emp.FirstName, emp.LastName select emp;
             cmbCareOfCompanies.ItemsSource = (SelectedCompany == null) ? null : from c in Database.Companies where c != SelectedCompany && c.IsVisible == true select c;
 
             if (SelectedCompany != null)

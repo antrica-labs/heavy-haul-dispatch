@@ -31,7 +31,7 @@ namespace SingerDispatch.Panels.Admin
         {
             SaveCommand.Executed += CommitChanges_Executed;
 
-            cmbEmployees.ItemsSource = from emp in Database.Employees orderby emp.FirstName select emp;            
+            cmbEmployees.ItemsSource = from emp in Database.Employees orderby emp.FirstName, emp.LastName select emp;            
             dgEquipment.ItemsSource = new ObservableCollection<Equipment>(from equip in Database.Equipment select equip);            
         }
 

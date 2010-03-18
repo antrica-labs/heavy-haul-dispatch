@@ -117,6 +117,30 @@ namespace SingerDispatch.Database
             context.SubmitChanges();
         }
 
+        public static void SaveAsNewLoad(Load load, SingerDispatchDataContext context)
+        {
+            if (load.Job == null)
+                throw new Exception("Load must be assigned to a job");
+
+            var number = (from l in context.Loads where l.Job == load.Job select l.Number).Max() + 1;
+
+            load.Number = number ?? 1;
+            
+            context.SubmitChanges();
+        }
+
+        public static void SaveAsNewDispatch(Dispatch dispatch, SingerDispatchDataContext context)
+        {
+            if (dispatch.Job == null)
+                throw new Exception("Dispatch must be assigned to a job");
+
+            var number = (from d in context.Dispatches where d.Job == dispatch.Job select d.Number).Max() + 1;
+
+            dispatch.Number = number ?? 1;
+
+            context.SubmitChanges();
+        }
+
         public static void SaveAsNewInvoice(Invoice invoice, SingerDispatchDataContext context)
         {
             var number = (from i in context.Invoices select i.Number).Max() + 1;

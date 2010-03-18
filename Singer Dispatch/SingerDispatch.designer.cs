@@ -5852,6 +5852,8 @@ namespace SingerDispatch
 		
 		private System.Nullable<long> _TrailerCombinationID;
 		
+		private System.Nullable<int> _Number;
+		
 		private string _Info;
 		
 		private System.Nullable<System.DateTime> _StartDate;
@@ -5932,6 +5934,8 @@ namespace SingerDispatch
     partial void OnSeasonIDChanged();
     partial void OnTrailerCombinationIDChanging(System.Nullable<long> value);
     partial void OnTrailerCombinationIDChanged();
+    partial void OnNumberChanging(System.Nullable<int> value);
+    partial void OnNumberChanged();
     partial void OnInfoChanging(string value);
     partial void OnInfoChanged();
     partial void OnStartDateChanging(System.Nullable<System.DateTime> value);
@@ -6130,6 +6134,26 @@ namespace SingerDispatch
 					this._TrailerCombinationID = value;
 					this.SendPropertyChanged("TrailerCombinationID");
 					this.OnTrailerCombinationIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Number")]
+		public System.Nullable<int> Number
+		{
+			get
+			{
+				return this._Number;
+			}
+			set
+			{
+				if ((this._Number != value))
+				{
+					this.OnNumberChanging(value);
+					this.SendPropertyChanging();
+					this._Number = value;
+					this.SendPropertyChanged("Number");
+					this.OnNumberChanged();
 				}
 			}
 		}
@@ -12270,7 +12294,11 @@ namespace SingerDispatch
 		
 		private System.Nullable<long> _EquipmentID;
 		
+		private System.Nullable<int> _Number;
+		
 		private string _Description;
+		
+		private string _Schedule;
 		
 		private string _Notes;
 		
@@ -12300,8 +12328,12 @@ namespace SingerDispatch
     partial void OnEmployeeIDChanged();
     partial void OnEquipmentIDChanging(System.Nullable<long> value);
     partial void OnEquipmentIDChanged();
+    partial void OnNumberChanging(System.Nullable<int> value);
+    partial void OnNumberChanged();
     partial void OnDescriptionChanging(string value);
     partial void OnDescriptionChanged();
+    partial void OnScheduleChanging(string value);
+    partial void OnScheduleChanged();
     partial void OnNotesChanging(string value);
     partial void OnNotesChanged();
     partial void OnRateIDChanging(System.Nullable<long> value);
@@ -12434,6 +12466,26 @@ namespace SingerDispatch
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Number")]
+		public System.Nullable<int> Number
+		{
+			get
+			{
+				return this._Number;
+			}
+			set
+			{
+				if ((this._Number != value))
+				{
+					this.OnNumberChanging(value);
+					this.SendPropertyChanging();
+					this._Number = value;
+					this.SendPropertyChanged("Number");
+					this.OnNumberChanged();
+				}
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Description")]
 		public string Description
 		{
@@ -12450,6 +12502,26 @@ namespace SingerDispatch
 					this._Description = value;
 					this.SendPropertyChanged("Description");
 					this.OnDescriptionChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Schedule")]
+		public string Schedule
+		{
+			get
+			{
+				return this._Schedule;
+			}
+			set
+			{
+				if ((this._Schedule != value))
+				{
+					this.OnScheduleChanging(value);
+					this.SendPropertyChanging();
+					this._Schedule = value;
+					this.SendPropertyChanged("Schedule");
+					this.OnScheduleChanged();
 				}
 			}
 		}

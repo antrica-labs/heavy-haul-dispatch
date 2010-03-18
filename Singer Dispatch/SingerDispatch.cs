@@ -396,6 +396,14 @@ namespace SingerDispatch
 
             return cp;
         }
+
+        public string FriendlyName
+        {
+            get
+            {
+                return String.Format("{0:D2}", Number);    
+            }
+        }
     }
 
     partial class Load
@@ -444,10 +452,9 @@ namespace SingerDispatch
         {
             get
             {
-                if (Equipment != null)
-                    return "Unit: " + Equipment.UnitNumber;
+                var name = String.Format("{0:D2}", Number);
                 
-                return "Unit: (undefined)";
+                return name;
             }
         }
     }

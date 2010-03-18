@@ -1,6 +1,9 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Windows;
 using System.Collections.ObjectModel;
+using SingerDispatch.Database;
+using SingerDispatch.Windows;
 
 namespace SingerDispatch.Panels.Jobs
 {
@@ -23,7 +26,7 @@ namespace SingerDispatch.Panels.Jobs
             cmbLoads.ItemsSource = (SelectedJob == null) ? null : SelectedJob.Loads.ToList();
             cmbUnits.ItemsSource = (SelectedJob == null) ? null : from u in Database.Equipment select u;
             cmbServiceTypes.ItemsSource = (SelectedJob == null) ? null : from r in Database.Rates where r.RateType.Name == "Service" select r;
-            cmbEmployees.ItemsSource = (SelectedJob == null) ? null : from emp in Database.Employees select emp;
+            cmbEmployees.ItemsSource = (SelectedJob == null) ? null : from emp in Database.Employees orderby emp.FirstName, emp.LastName select emp;
         }
 
         protected override void SelectedJobChanged(Job newValue, Job oldValue)
@@ -43,7 +46,17 @@ namespace SingerDispatch.Panels.Jobs
             dgDispatches.SelectedItem = dispatch;
             dgDispatches.ScrollIntoView(dispatch);
 
-            cmbLoads.Focus();
+            try
+            {
+                EntityHelper.SaveAsNewDispatch(dispatch, Database);
+
+                cmbLoads.Focus();
+            }
+            catch (Exception ex)
+            {
+                ErrorNoticeWindow.ShowError("Error while attempting write changes to database", ex.Message);
+            }
+            
         }
 
         private void DuplicateDispatch_Click(object sender, RoutedEventArgs e)
@@ -63,7 +76,7 @@ namespace SingerDispatch.Panels.Jobs
         {
             if (dgDispatches.SelectedItem == null) return;
 
-            var viewer = new Windows.DocumentViewer();
+            var viewer = new DocumentViewer();
             viewer.DisplayPrintout(dgDispatches.SelectedItem);
         }
 
@@ -74,7 +87,7 @@ namespace SingerDispatch.Panels.Jobs
                 return;
             }
 
-            MessageBoxResult confirmation = MessageBox.Show("Are you sure you want to remove this dispatch?", "Remove dispatch", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            var confirmation = MessageBox.Show("Are you sure you want to remove this dispatch?", "Remove dispatch", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
             if (confirmation != MessageBoxResult.Yes)
             {

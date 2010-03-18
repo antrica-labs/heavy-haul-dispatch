@@ -53,13 +53,13 @@
                     <ComboBox Name="cmbLoads" Grid.Row="0" Grid.Column="1" SelectedItem="{Binding Load}" ItemTemplate="{StaticResource LoadNameTemplate}" ></ComboBox>
 
                     <Label Grid.Row="1" Grid.Column="0">Service type:</Label>
-                    <ComboBox Name="cmbServiceTypes" Grid.Row="1" Grid.Column="1" SelectedItem="{Binding Rate}" ItemTemplate="{StaticResource SimpleNameTemplate}" />
+                    <ComboBox Name="cmbServiceTypes" Grid.Row="1" Grid.Column="1" SelectedItem="{Binding Rate}" ItemTemplate="{StaticResource SimpleNameTemplate}" IsEditable="True" TextSearch.TextPath="Name" />
 
                     <Label Grid.Row="2" Grid.Column="0">Employee:</Label>
-                    <ComboBox Name="cmbEmployees" Grid.Row="2" Grid.Column="1" SelectedItem="{Binding Employee}" ItemTemplate="{StaticResource SimpleNameTemplate}" />
+                    <ComboBox Name="cmbEmployees" Grid.Row="2" Grid.Column="1" SelectedItem="{Binding Employee}" ItemTemplate="{StaticResource SimpleNameTemplate}" IsEditable="True" TextSearch.TextPath="Name" />
 
                     <Label Grid.Row="3" Grid.Column="0">Unit:</Label>
-                    <ComboBox Name="cmbUnits" Grid.Row="3" Grid.Column="1" SelectedItem="{Binding Equipment}" ItemTemplate="{StaticResource EquipmentNameTemplate}" />
+                    <ComboBox Name="cmbUnits" Grid.Row="3" Grid.Column="1" SelectedItem="{Binding Equipment}" ItemTemplate="{StaticResource EquipmentNameTemplate}" IsEditable="True" TextSearch.TextPath="UnitNumber" />
 
                     <Label Grid.Row="4" Grid.Column="0">Description:</Label>
                     <TextBox Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Description}"/>
@@ -99,6 +99,7 @@
         
         <DataGrid Name="dgDispatches" Style="{StaticResource ListDisplay}">
             <DataGrid.Columns>
+                <DataGridTextColumn Header="Number" Binding="{Binding Number, StringFormat={}{0:D2}}" Width="0.2*" />
                 <DataGridTextColumn Header="Load" Binding="{Binding Load.FriendlyName}" Width="0.2*" />
                 <DataGridTextColumn Header="Driver" Binding="{Binding Employee.Name}" Width="0.3*" />
                 <DataGridTextColumn Header="Unit" Binding="{Binding Equipment.UnitNumber}" Width="0.2*" />

@@ -61,7 +61,7 @@
                         </Grid.RowDefinitions>
 
                         <Label Grid.Row="0" Grid.Column="0">Commodity name:</Label>
-                        <ComboBox Name="cmbCommodityName" Text="{Binding Name}" Grid.Row="0" Grid.Column="1" IsEditable="True" ItemTemplate="{StaticResource NameAndUnitTemplate}" TextSearch.TextPath="NameAndUnit" SelectionChanged="CommodityName_SelectionChanged" />
+                        <ComboBox Name="cmbCommodityName" Text="{Binding Name}" Grid.Row="0" Grid.Column="1" IsEditable="True" ItemTemplate="{StaticResource NameAndUnitTemplate}" TextSearch.TextPath="Name" SelectionChanged="CommodityName_SelectionChanged" />
 
                         <Label Grid.Row="1" Grid.Column="0">Value:</Label>
                         <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Value, StringFormat=c}" Controls:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" />

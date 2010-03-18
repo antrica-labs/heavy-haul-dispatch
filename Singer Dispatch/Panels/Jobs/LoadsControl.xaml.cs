@@ -1,7 +1,10 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Collections.ObjectModel;
+using SingerDispatch.Database;
+using SingerDispatch.Windows;
 
 namespace SingerDispatch.Panels.Jobs
 {
@@ -30,25 +33,34 @@ namespace SingerDispatch.Panels.Jobs
         {
             base.SelectedJobChanged(newValue, oldValue);
 
-            dgLoads.ItemsSource = (newValue == null) ? null : new ObservableCollection<Load>(newValue.Loads);
+            dgLoads.ItemsSource = (newValue == null) ? null : new ObservableCollection<Load>(from l in newValue.Loads orderby l.Number select l);
         }
 
         private void NewLoad_Click(object sender, RoutedEventArgs e)
         {
             var list = (ObservableCollection<Load>)dgLoads.ItemsSource;
-            var load = new Load { JobID = SelectedJob.ID };
+            var load = new Load { Job = SelectedJob, StartDate = SelectedJob.StartDate, EndDate = SelectedJob.EndDate };
 
             SelectedJob.Loads.Add(load);
             list.Add(load);
             dgLoads.SelectedItem = load;
             dgLoads.ScrollIntoView(load);
 
-            txtServiceDescription.Focus();
+            try
+            {
+                EntityHelper.SaveAsNewLoad(load, Database);
+                txtServiceDescription.Focus();
+            }
+            catch (Exception ex)
+            {
+                ErrorNoticeWindow.ShowError("Error while attempting write changes to database", ex.Message);
+            }
         }
 
         private void DuplicateLoad_Click(object sender, RoutedEventArgs e)
         {
             var load = (Load)dgLoads.SelectedItem;
+            var list = (ObservableCollection<Load>)dgLoads.ItemsSource;
 
             if (load == null)
                 return;
@@ -56,7 +68,7 @@ namespace SingerDispatch.Panels.Jobs
             load = load.Duplicate();
 
             SelectedJob.Loads.Add(load);
-            ((ObservableCollection<Load>)dgLoads.ItemsSource).Insert(0, load);
+            list.Add(load);
         }
 
         private void AxleWeightChanged(object sender, TextChangedEventArgs e)
