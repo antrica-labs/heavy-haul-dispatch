@@ -73,7 +73,7 @@ namespace SingerDispatch.Panels.Jobs
 
             var dispatches = (from d in SelectedJob.Dispatches select d).ToList();
 
-            var document = new DocumentViewer();
+            var document = new DocumentViewerWindow();
             document.DisplayPrintout(dispatches);
         }
     }

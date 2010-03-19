@@ -60,7 +60,7 @@ namespace SingerDispatch.Panels.Quotes
 
             var title = String.Format("Quote #{0}-{1}", SelectedQuote.Number, SelectedQuote.Revision);
 
-            var viewer = new Windows.DocumentViewer();
+            var viewer = new Windows.DocumentViewerWindow();
             viewer.DisplayPrintout(title, SelectedQuote);
         }
 

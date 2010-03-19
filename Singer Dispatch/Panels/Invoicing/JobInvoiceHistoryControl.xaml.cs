@@ -154,7 +154,7 @@ namespace SingerDispatch.Panels.Invoicing
         {
             if (SelectedInvoice == null) return;
 
-            var viewer = new Windows.DocumentViewer();
+            var viewer = new Windows.DocumentViewerWindow();
             viewer.DisplayPrintout(SelectedInvoice);
         }
 

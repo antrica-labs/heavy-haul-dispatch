@@ -10,14 +10,14 @@ using SingerDispatch.Printing.Documents;
 namespace SingerDispatch.Windows
 {
     /// <summary>
-    /// Interaction logic for DocumentViewer.xaml
+    /// Interaction logic for DocumentViewerWindow.xaml
     /// </summary>
-    public partial class DocumentViewer
+    public partial class DocumentViewerWindow
     {
         private string Filename { get; set; }
         private string SourceHTML { get; set; }
 
-        public DocumentViewer()
+        public DocumentViewerWindow()
         {
             InitializeComponent();
 

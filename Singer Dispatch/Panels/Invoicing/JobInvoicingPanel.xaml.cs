@@ -53,7 +53,7 @@ namespace SingerDispatch.Panels.Invoicing
 
             var title = String.Format("Invoice #{0}-{1}", SelectedInvoice.Number, SelectedInvoice.Revision);
 
-            var viewer = new Windows.DocumentViewer();
+            var viewer = new Windows.DocumentViewerWindow();
             viewer.DisplayPrintout(title, SelectedInvoice);
         }
 

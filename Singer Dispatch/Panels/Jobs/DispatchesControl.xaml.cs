@@ -93,7 +93,7 @@ namespace SingerDispatch.Panels.Jobs
 
             var dispatch = (Dispatch)dgDispatches.SelectedItem;
 
-            var viewer = new DocumentViewer();
+            var viewer = new DocumentViewerWindow();
             viewer.DisplayPrintout(String.Format("Dispatch #{0}", dispatch.Name), dgDispatches.SelectedItem);
         }
 
