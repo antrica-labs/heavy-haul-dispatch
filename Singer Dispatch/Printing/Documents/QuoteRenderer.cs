@@ -3,7 +3,7 @@ using System.Text;
 using System.Linq;
 using System.Collections.Generic;
 
-namespace SingerDispatch.Printing
+namespace SingerDispatch.Printing.Documents
 {
     class QuoteRenderer : IRenderer
     {
@@ -655,3 +655,5 @@ namespace SingerDispatch.Printing
 
     
 }
+
+

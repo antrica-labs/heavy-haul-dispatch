@@ -212,12 +212,12 @@
       <DependentUpon>QuoteStorageControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Panels\QuoteUserControl.cs" />
-    <Compile Include="Printing\DispatchRenderer.cs" />
+    <Compile Include="Printing\Documents\DispatchRenderer.cs" />
     <Compile Include="Printing\FileUtils.cs" />
-    <Compile Include="Printing\InvoiceRenderer.cs" />
+    <Compile Include="Printing\Documents\InvoiceRenderer.cs" />
     <Compile Include="Printing\PDFizer.cs" />
-    <Compile Include="Printing\QuoteRenderer.cs" />
-    <Compile Include="Printing\IRenderer.cs" />
+    <Compile Include="Printing\Documents\QuoteRenderer.cs" />
+    <Compile Include="Printing\Documents\IRenderer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

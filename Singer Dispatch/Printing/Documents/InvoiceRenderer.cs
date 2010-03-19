@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace SingerDispatch.Printing
+namespace SingerDispatch.Printing.Documents
 {
     class InvoiceRenderer : IRenderer
     {
@@ -562,4 +561,5 @@ namespace SingerDispatch.Printing
         }
     }
 }
+
 

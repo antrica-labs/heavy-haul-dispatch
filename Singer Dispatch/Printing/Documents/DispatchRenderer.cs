@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Text;
 
-namespace SingerDispatch.Printing
+namespace SingerDispatch.Printing.Documents
 {
     class DispatchRenderer : IRenderer
     {
@@ -1099,3 +1099,5 @@ namespace SingerDispatch.Printing
         }
     }
 }
+
+

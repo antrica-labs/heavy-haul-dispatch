@@ -5,6 +5,7 @@ using Microsoft.Win32;
 using mshtml;
 using System;
 using System.Diagnostics;
+using SingerDispatch.Printing.Documents;
 
 namespace SingerDispatch.Windows
 {
