@@ -1,5 +1,8 @@
-﻿using System.IO;
-
+﻿using System;
+using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.IO;
+using System.Windows.Threading;
 
 namespace SingerDispatch.Printing
 {
@@ -10,13 +13,13 @@ namespace SingerDispatch.Printing
 
         private string PdfCommand { get; set; }
         private string PdfArgs { get; set; }
-
+        
         public PDFizer()
         {
             PdfCommand = SingerConstants.GetConfig("PDF-ExecutablePath") ?? DEFAULT_PDF_COMMAND;
             PdfArgs = SingerConstants.GetConfig("PDF-Arguments") ?? DEFAULT_PDF_ARGS;
         }
-
+        
         public void SaveHTMLToPDF(string html, string filename)
         {
             var tmp = ConvertHTMLToTempPDF(html);
@@ -50,23 +53,27 @@ namespace SingerDispatch.Printing
             return file;
         }
 
-        private static void ExecuteCommandSync(string command, string arguments)
+        private void ExecuteCommandSync(string command, string arguments)
         {
-            var process = new System.Diagnostics.Process();
+            var process = new Process();
 
+            // Configure the process to run
             process.StartInfo.FileName = command;
             process.StartInfo.Arguments = arguments;
-            process.StartInfo.UseShellExecute = false;
-            process.StartInfo.RedirectStandardOutput = true;
+
+            // Don't show the console window
             process.StartInfo.CreateNoWindow = true;
-            process.StartInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
+            process.StartInfo.UseShellExecute = false;
+            
+            // Capture console output.
+            process.StartInfo.RedirectStandardOutput = true;
+            
 
             process.Start();
-
-            process.StandardOutput.ReadToEnd();
 
             //Wait for process to finish
             process.WaitForExit();
         }
+        
     }
 }

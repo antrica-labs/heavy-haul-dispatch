@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Windows;
+using System.Windows.Threading;
 using SingerDispatch.Printing;
 using Microsoft.Win32;
 using mshtml;
@@ -17,11 +19,14 @@ namespace SingerDispatch.Windows
         private string Filename { get; set; }
         private string SourceHTML { get; set; }
 
+        private ObservableCollection<string> OuputWindowContent { get; set; }
+
         public DocumentViewerWindow()
         {
             InitializeComponent();
 
             Filename = "";
+            OuputWindowContent = new ObservableCollection<string>();
         }
 
         public void DisplayPrintout(object obj)
@@ -56,19 +61,27 @@ namespace SingerDispatch.Windows
 
             dialog.FileName = Filename;
             dialog.DefaultExt = "pdf";
-            dialog.Filter = "PDF documents (.pdf)|*.pdf"; 
+            dialog.Filter = "PDF documents (.pdf)|*.pdf";
 
             if (dialog.ShowDialog() != true)
                 return;
-            
-            var pdf = new PDFizer();
+
+            OuputWindowContent.Clear();
 
             try
             {
+                var window = new SimpleMessageDialog("Converting to PDF...") { Owner = this };
+                var pdf = new PDFizer();
                 var outputFile = dialog.FileName;
-
+                
+                window.Show();
+                window.UpdateLayout();
+                
                 pdf.SaveHTMLToPDF(SourceHTML, outputFile);
+                
+                window.Close();
 
+                // Open the file in an external PDF viewer
                 var process = new Process();
                 var shell = new ProcessStartInfo(outputFile);
 
@@ -81,9 +94,10 @@ namespace SingerDispatch.Windows
             catch (Exception ex)
             {
                 ErrorNoticeWindow.ShowError("Problem saving to PDF", ex.ToString());
-            }                     
+            }
         }
-        
+
+        /*
         private void Print_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -121,5 +135,6 @@ namespace SingerDispatch.Windows
             }
 
         }
+        */
     }
 }
