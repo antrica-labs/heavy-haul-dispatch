@@ -245,8 +245,8 @@
     <Compile Include="Windows\CreateCompanyWindow.xaml.cs">
       <DependentUpon>CreateCompanyWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Windows\DocumentViewer.xaml.cs">
-      <DependentUpon>DocumentViewer.xaml</DependentUpon>
+    <Compile Include="Windows\DocumentViewerWindow.xaml.cs">
+      <DependentUpon>DocumentViewerWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\EditCompaniesWindow.xaml.cs">
       <DependentUpon>EditCompaniesWindow.xaml</DependentUpon>
@@ -484,7 +484,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Windows\DocumentViewer.xaml">
+    <Page Include="Windows\DocumentViewerWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
