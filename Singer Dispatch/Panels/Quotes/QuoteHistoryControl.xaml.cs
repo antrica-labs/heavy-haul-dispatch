@@ -141,10 +141,7 @@ namespace SingerDispatch.Panels.Quotes
 
             var confirmation = MessageBox.Show("Are you sure you wish to create a new job from the selected quote? Doing so will save any changes made to this quote.", "New job confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
-            if (confirmation != MessageBoxResult.Yes)
-            {
-                return;
-            }
+            if (confirmation != MessageBoxResult.Yes) return;
 
             var window = (MainWindow)Application.Current.MainWindow;
             var job = quote.ToJob();
@@ -163,7 +160,7 @@ namespace SingerDispatch.Panels.Quotes
 
             try
             {
-                Database.SubmitChanges();
+                EntityHelper.SaveAsNewJob(job, Database);
 
                 window.ViewJob(job);
             }

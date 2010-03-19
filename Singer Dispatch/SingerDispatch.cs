@@ -111,6 +111,8 @@ namespace SingerDispatch
             copy.Number = Number;
             copy.CareOfCompany = CareOfCompany;
             copy.Description = Description;
+            copy.StartDate = StartDate;
+            copy.EndDate = EndDate;
             copy.CreationDate = CreationDate;
             copy.ExpirationDate = ExpirationDate;
             copy.Employee = Employee;

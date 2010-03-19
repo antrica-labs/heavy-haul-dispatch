@@ -61,6 +61,7 @@ namespace SingerDispatch.Panels.Jobs
 
         private void DuplicateDispatch_Click(object sender, RoutedEventArgs e)
         {
+            var list = (ObservableCollection<Dispatch>)dgDispatches.ItemsSource;
             var dispatch = (Dispatch)dgDispatches.SelectedItem;
 
             if (dispatch == null)
@@ -69,15 +70,38 @@ namespace SingerDispatch.Panels.Jobs
             dispatch = dispatch.Duplicate();
 
             SelectedJob.Dispatches.Add(dispatch);
-            ((ObservableCollection<Dispatch>)dgDispatches.ItemsSource).Insert(0, dispatch);
+            list.Add(dispatch);
+
+            dgDispatches.ScrollIntoView(dispatch);
+            dgDispatches.SelectedItem = dispatch;
+
+            try
+            {
+                EntityHelper.SaveAsNewDispatch(dispatch, Database);
+
+                cmbLoads.Focus();
+            }
+            catch (Exception ex)
+            {
+                ErrorNoticeWindow.ShowError("Error while attempting write changes to database", ex.Message);
+            }
         }
 
         private void ViewDispatch_Click(object sender, RoutedEventArgs e)
         {
             if (dgDispatches.SelectedItem == null) return;
 
+            var dispatch = (Dispatch)dgDispatches.SelectedItem;
+
+            string dispatchNumber;
+
+            if (dispatch.Load == null)
+                dispatchNumber = string.Format("{0}-{1:D2}", dispatch.Job.Number, dispatch.Number);
+            else
+                dispatchNumber = string.Format("{0}-{1:D2}-{2:D2}", dispatch.Job.Number, dispatch.Load.Number, dispatch.Number);
+
             var viewer = new DocumentViewer();
-            viewer.DisplayPrintout(dgDispatches.SelectedItem);
+            viewer.DisplayPrintout(String.Format("Dispatch #{0}", dispatchNumber), dgDispatches.SelectedItem);
         }
 
         private void RemoveDispatch_Click(object sender, RoutedEventArgs e)

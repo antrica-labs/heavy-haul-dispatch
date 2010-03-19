@@ -43,8 +43,9 @@ namespace SingerDispatch.Panels.Jobs
 
             SelectedJob.Loads.Add(load);
             list.Add(load);
-            dgLoads.SelectedItem = load;
+            
             dgLoads.ScrollIntoView(load);
+            dgLoads.SelectedItem = load;
 
             try
             {
@@ -69,6 +70,19 @@ namespace SingerDispatch.Panels.Jobs
 
             SelectedJob.Loads.Add(load);
             list.Add(load);
+
+            dgLoads.ScrollIntoView(load);
+            dgLoads.SelectedItem = load;            
+
+            try
+            {
+                EntityHelper.SaveAsNewLoad(load, Database);
+                txtServiceDescription.Focus();
+            }
+            catch (Exception ex)
+            {
+                ErrorNoticeWindow.ShowError("Error while attempting write changes to database", ex.Message);
+            }
         }
 
         private void AxleWeightChanged(object sender, TextChangedEventArgs e)
