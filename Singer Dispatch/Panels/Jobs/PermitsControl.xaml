@@ -45,7 +45,7 @@
                     </Grid.RowDefinitions>
 
                     <Label Grid.Row="0" Grid.Column="0">Load:</Label>
-                    <ComboBox Name="cmbLoads" Grid.Column="1" SelectedItem="{Binding Load}" ItemTemplate="{StaticResource LoadNameTemplate}" Margin="4,3,2,3" />
+                    <ComboBox Name="cmbLoads" Grid.Column="1" SelectedItem="{Binding Load}" ItemTemplate="{StaticResource SimpleNameTemplate}" Margin="4,3,2,3" />
 
                     <Label Grid.Row="1" Grid.Column="0">Permit #:</Label>
                     <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Reference}" />

@@ -398,12 +398,19 @@ namespace SingerDispatch
 
             return cp;
         }
-
-        public string FriendlyName
+        
+        public string Name
         {
             get
             {
-                return String.Format("{0:D2}", Number);    
+                string dispatchNumber;
+
+                if (Load == null)
+                    dispatchNumber = string.Format("{0}-{1:D2}", Job.Number, Number);
+                else
+                    dispatchNumber = string.Format("{0}-{1:D2}-{2:D2}", Job.Number, Load.Number, Number);
+
+                return dispatchNumber;
             }
         }
     }
@@ -450,7 +457,7 @@ namespace SingerDispatch
             return cp;
         }
 
-        public string FriendlyName
+        public string Name
         {
             get
             {

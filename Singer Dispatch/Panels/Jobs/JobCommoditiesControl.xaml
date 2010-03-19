@@ -35,7 +35,7 @@
             <Border BorderBrush="LightGray" BorderThickness="1" Margin="0,3" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgCommodities, Path=SelectedItem}">
                 <StackPanel Orientation="Horizontal" Margin="3" DataContext="{Binding ElementName=dgCommodities, Path=SelectedItem}">
                     <Label>Assign to load:</Label>
-                    <ComboBox Name="cmbLoads" MinWidth="300" SelectedItem="{Binding Load}" ItemTemplate="{StaticResource LoadNameTemplate}" />
+                    <ComboBox Name="cmbLoads" MinWidth="300" SelectedItem="{Binding Load}" ItemTemplate="{StaticResource SimpleNameTemplate}" />
                 </StackPanel>
             </Border>
 

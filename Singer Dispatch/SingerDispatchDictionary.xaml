@@ -19,10 +19,6 @@
     <DataTemplate x:Key="QuoteNameTemplate">
         <TextBlock Text="{Binding FriendlyName}" />
     </DataTemplate>
-
-    <DataTemplate x:Key="LoadNameTemplate">
-        <TextBlock Text="{Binding FriendlyName}" />
-    </DataTemplate>    
     
     <Style TargetType="{x:Type Controls:TabIndexHyperlink}">
         <Setter Property="TextDecorations" Value="None" />

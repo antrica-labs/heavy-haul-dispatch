@@ -1,11 +1,17 @@
-﻿using System.Text;
+﻿using System.Collections.Generic;
+using System.Text;
 
 namespace SingerDispatch.Printing
 {
     class DispatchRenderer : IRenderer
     {
+        private const string PageBreak = @"<div class=""page_break""></div>";
+
         public string GenerateHTML(object dispatch)
         {
+            if (dispatch is List<Dispatch>)
+                return GenerateHTML((List<Dispatch>)dispatch);
+            
             return GenerateHTML((Dispatch)dispatch);
         }
 
@@ -35,6 +41,48 @@ namespace SingerDispatch.Printing
             content.Append(GetWireLiftInfo());
             content.Append(GetPermits());
             content.Append(GetOtherInfo());
+            content.Append("</body>");
+            content.Append("</html>");
+
+            return content.ToString();
+        }
+
+        public string GenerateHTML(List<Dispatch> dispatches)
+        {
+            var content = new StringBuilder();
+
+            content.Append(@"<!DOCTYPE HTML PUBLIC ""-//W3C//DTD HTML 4.01//EN"" ""http://www.w3.org/TR/html4/strict.dtd"">");
+            content.Append("<html>");
+            content.Append("<head>");
+            content.Append(@"<meta http-equiv=""Content-Type"" content=""text/html;charset=utf-8"">");
+            content.Append(GetTitle("Singer Specialized - Dispatch"));
+            content.Append(GetStyles());
+            content.Append("</head>");
+            content.Append("<body>");
+
+            for (var i = 0; i < dispatches.Count; i++)
+            {
+                var dispatch = dispatches[i];
+
+                content.Append(GetHeader(dispatch));
+                content.Append(GetDetails());
+                content.Append(GetDescription("Supply mean and equipment to transport 1450 HP compressor package skid - Winter weight restriction"));
+                content.Append(GetEquipment());
+                content.Append(GetSchedule());
+                content.Append(GetLoadInstructions());
+                content.Append(GetDimensions());
+                content.Append(GetTractors());
+                content.Append(GetSingerPilots());
+                content.Append(GetThirdPartyPilots());
+                content.Append(GetThridPartyServices());
+                content.Append(GetWireLiftInfo());
+                content.Append(GetPermits());
+                content.Append(GetOtherInfo());
+
+                if ((i + 1) != dispatches.Count)
+                    content.Append(PageBreak);
+            }
+
             content.Append("</body>");
             content.Append("</html>");
 
@@ -130,46 +178,46 @@ namespace SingerDispatch.Printing
                         font-weight: bold;
                     }
 
-                    div#header
+                    div.header
                     {
                         
                     }
                     
-                    div#header table 
+                    div.header table 
                     {
                         width: 100%;
                         border-collapse: collapse;
                     }
                     
-                    div#header td
+                    div.header td
                     {                
                         vertical-align: top;
                         padding: 10px;
                     }
                     
-                    div#header td#logo_col
+                    div.header td.logo_col
                     {
                         width: 200px;
                         
                     }
                     
-                    div#header td#address_col
+                    div.header td.address_col
                     {
                         
                     }
                     
-                    div#header td#id_col
+                    div.header td.id_col
                     {             
                         text-align: center;
                         font-weight: bold;
                     }
                     
-                    div#header span
+                    div.header span
                     {
                         display: block;
                     }
                     
-                    div#header span.title
+                    div.header span.title
                     {
                         display: block;
                         font-weight: bold;
@@ -180,17 +228,17 @@ namespace SingerDispatch.Printing
                         border-bottom: 1px #CACACA solid;
                     }
                     
-                    div#details
+                    div.details
                     {
                         padding: 10px;                
                     }            
                     
-                    div#details table#dispatch_info, div#details table#departure_info
+                    div.details table.dispatch_info, div.details table.departure_info
                     {
                         margin-bottom: 10px;
                     }
                     
-                    div#details td.field_name
+                    div.details td.field_name
                     {
                         font-weight: bold;
                         white-space: nowrap;
@@ -198,7 +246,7 @@ namespace SingerDispatch.Printing
                         padding-right: 10px;
                     }
                     
-                    div#details td.value
+                    div.details td.value
                     {
                         padding-right: 15px;
                     }
@@ -217,109 +265,117 @@ namespace SingerDispatch.Printing
                         margin-bottom: 10px;
                     }
 
-                    div#load_and_unload span.heading
+                    div.load_and_unload span.heading
                     {
                         
                     }
 
-                    div#load_and_unload hr
+                    div.load_and_unload hr
                     {
                         border: none;
                         border-top: 1px #CACACA solid;
                         margin: 10px 0;
                     }
 
-                    div#load_and_unload div.commodity
+                    div.load_and_unload div.commodity
                     {
                     }
 
-                    div#load_and_unload span.commodity_name
+                    div.load_and_unload span.commodity_name
                     {
                         font-weight: bold;                
                     }
 
-                    div#load_and_unload div.loading, div#load_and_unload div.unloading
+                    div.load_and_unload div.loading, div.load_and_unload div.unloading
                     {
                         margin-top: 10px;                
                     }
 
-                    div#load_and_unload div.loading span.heading, div#load_and_unload div.unloading span.heading
+                    div.load_and_unload div.loading span.heading, div.load_and_unload div.unloading span.heading
                     {
                         text-decoration: underline;
                     }
 
-                    div#load_and_unload td
+                    div.load_and_unload td
                     {
                         padding-right: 10px;
                     }
 
-                    div#load_and_unload table.instructions
+                    div.load_and_unload table.instructions
                     {
                         margin-top: 10px;
                         width: 100%;
                     }
 
-                    div#load_and_unload table.instructions td
+                    div.load_and_unload table.instructions td
                     {
                         width: 33%;
                     }
 
-                    div#dimensions table.dimensions
+                    div.dimensions table.dimensions
                     {
                         width: 100%;
                         margin-bottom: 5px;
                     }
 
-                    div#dimensions table.weights
+                    div.dimensions table.weights
                     {
                         width: 100%
                     }
 
-                    div#dimensions table.weights th
+                    div.dimensions table.weights th
                     {
                         text-align: center;
                     }
 
-                    div#dimensions table.weights th.vertical
+                    div.dimensions table.weights th.vertical
                     {
                         text-align: left;
                     }
                     
-                    div#dimensions table.weights td
+                    div.dimensions table.weights td
                     {
                         text-align: center;
                      
                     }
 
-                    div#tractors td, div#other_equipment td
+                    div.tractors td, div.other_equipment td
                     {
                         padding-right: 10px;
                         padding-bottom: 2px;
                     }
 
-                    div#third_party_pilot table,
-                    div#thid_party_services table,
-                    div#wire_lifts table,
-                    div#permits table
+                    div.third_party_pilot table,
+                    div.thid_party_services table,
+                    div.wire_lifts table,
+                    div.permits table
                     {
                         width: 100%;
                     }
 
-                    div#third_party_pilot th, 
-                    div#thid_party_services th,
-                    div#wire_lifts th,
-                    div#permits th
+                    div.third_party_pilot th, 
+                    div.thid_party_services th,
+                    div.wire_lifts th,
+                    div.permits th
                     {
                         padding-bottom: 10px;
                     }
 
-                    div#third_party_pilot tr.comments td, 
-                    div#thid_party_services tr.comments td,
-                    div#wire_lifts tr.comments td,
-                    div#permits tr.comments td
+                    div.third_party_pilot tr.comments td, 
+                    div.thid_party_services tr.comments td,
+                    div.wire_lifts tr.comments td,
+                    div.permits tr.comments td
                     {
                         padding: 5px 15px;
                         padding-bottom: 10px;                
+                    }
+
+                    div.page_break
+                    {
+                        display: block;
+                        margin: 35px;
+                        height: 1px;
+                        border-top: 1px #454545 solid;
                     }
                 </style>
                 <style type=""text/css"" media=""print"">
@@ -327,6 +383,14 @@ namespace SingerDispatch.Printing
                     {
                     	font-size: 12pt;
                         padding: 0;
+                    }
+
+                    div.page_break
+                    {
+                        border: none;
+                        display: block;
+                        page-break-before: always;
+                        margin: 0;
                     }
                 </style>
             ";
@@ -337,19 +401,19 @@ namespace SingerDispatch.Printing
         private static string GetHeader(Dispatch dispatch)
         {           
             var content = @"
-                <div id=""header"">
+                <div class=""header"">
                     <table>
                         <tr>
-                            <td id=""logo_col"">
+                            <td class=""logo_col"">
                                 <span class=""logo""><img src=""%HEADER_IMG%"" alt=""Singer Specialized""></span>
                             </td>
-                            <td id=""address_col"">
+                            <td class=""address_col"">
                                 <span>%COMPANY_NAME%</span>
                                 <span>%STREET_ADDRESS%</span>
                                 <span>%CITY%</span>
                                 <span>Phone: %PHONE%</span>
                             </td>
-                            <td id=""id_col"">
+                            <td class=""id_col"">
                                 <span>File Copy</span>
                                 <span>%DISPATCH_NUMBER%</span>
                             </td>
@@ -373,19 +437,9 @@ namespace SingerDispatch.Printing
                 img = "file:///" + System.IO.Path.Combine(System.IO.Path.GetDirectoryName(process.MainModule.FileName), @"Images\Header.png");
             }
 
-            string dispatchNumber;
-
-            if (dispatch != null)
-            {
-                if (dispatch.Load == null)
-                    dispatchNumber = string.Format("{0}-{1:D2}", dispatch.Job.Number, dispatch.Number);
-                else
-                    dispatchNumber = string.Format("{0}-{1:D2}-{2:D2}", dispatch.Job.Number, dispatch.Load.Number, dispatch.Number);
-            }
-            else
-                dispatchNumber = "UNKNOWN";
-
-            content = content.Replace("%HEADER_IMG%", img).Replace("%DISPATCH_NUMBER%", dispatchNumber);
+            var name = (dispatch != null) ? dispatch.Name : "UNKNOWN";
+            
+            content = content.Replace("%HEADER_IMG%", img).Replace("%DISPATCH_NUMBER%", name);
             content = content.Replace("%COMPANY_NAME%", company).Replace("%STREET_ADDRESS%", address).Replace("%CITY%", city).Replace("%PHONE%", phone);
 
             return content;
@@ -394,8 +448,8 @@ namespace SingerDispatch.Printing
         private static string GetDetails()
         {
             const string content = @"
-                <div id=""details"">
-                    <table id=""dispatch_info"">
+                <div class=""details"">
+                    <table class=""dispatch_info"">
                         <tr>
                             <td class=""field_name col1_4"">Date:</td>
                             <td class=""value col2_4"">January 6, 2009</td>
@@ -416,7 +470,7 @@ namespace SingerDispatch.Printing
                         </tr>
                     </table>
                     
-                    <table id=""departure_info"">
+                    <table class=""departure_info"">
                         <tr>
                             <td class=""field_name col1_2"">Depart Date:</td>
                             <td class=""value col2_2"">Jan 7, 09 - 09:00</td>
@@ -431,7 +485,7 @@ namespace SingerDispatch.Printing
                         </tr>
                     </table>
                    
-                    <table id=""customer_references"">
+                    <table class=""customer_references"">
                         <tr>
                             <td class=""field_name col1_2"">Customer References:</td>
                             <td class=""value col2_2""><span class=""reference""><span class=""field_name"">AFE</span>: <span class=""value"">9342</span></span>, <span class=""reference""><span class=""field_name"">PO#</span>: <span class=""value"">13940</span></span></td>
@@ -446,7 +500,7 @@ namespace SingerDispatch.Printing
         private static string GetDescription(string description)
         {
             const string content = @"
-                <div id=""description"" class=""section"">
+                <div class=""description section"">
                     <span class=""heading"">Dispatch Description</span>
                     
                     <p>%DESCRIPTION%</p>
@@ -459,7 +513,7 @@ namespace SingerDispatch.Printing
         private static string GetEquipment()
         {
             const string content = @"
-                <div id=""equipment_requirements"" class=""section"">
+                <div class=""equipment_requirements section"">
                     <span class=""heading"">Equipment Required Information</span>
                     
                 </div>
@@ -471,7 +525,7 @@ namespace SingerDispatch.Printing
         private static string GetSchedule()
         {
             const string content = @"
-                <div id=""schuedule"" class=""section"">
+                <div class=""schuedule section"">
                     <span class=""heading"">Dispatch Schedule</span>
                     
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce quis est sapien. Donec tempor, tortor at auctor scelerisque, justo elit condimentum enim, ac tristique nunc risus eu neque. Nam scelerisque nulla vel sapien facilisis ut commodo velit feugiat. Phasellus non mi ullamcorper neque porttitor semper at at dolor. Nullam ut erat at ipsum molestie tempus in nec lectus. Morbi risus ipsum, consectetur id laoreet ut, ullamcorper id urna. Duis a iaculis quam. Donec tempor, arcu eu cursus egestas, purus purus mattis velit, in suscipit neque metus nec augue. Nunc id justo vitae massa porta placerat sed vitae tellus. Aliquam erat.</p>
@@ -484,7 +538,7 @@ namespace SingerDispatch.Printing
         private static string GetLoadInstructions()
         {
             const string content = @"
-                <div id=""load_and_unload"" class=""section"">
+                <div class=""load_and_unload section"">
                     <span class=""heading"">Load/Unload Information</span>
                     
                     <div class=""commodity"">
@@ -691,7 +745,7 @@ namespace SingerDispatch.Printing
         private static string GetDimensions()
         {
             const string content = @"
-                <div id=""dimensions"" class=""section"">
+                <div class=""dimensions section"">
                     <span class=""heading"">Dimensional Information</span>
                     
                     <table class=""dimensions"">
@@ -759,7 +813,7 @@ namespace SingerDispatch.Printing
         private static string GetTractors()
         {
             const string content = @"
-                <div id=""tractors"" class=""section"">
+                <div class=""tractors section"">
                     <span class=""heading"">Tractors (Singer Service)</span>
                     
                     <table>
@@ -802,7 +856,7 @@ namespace SingerDispatch.Printing
         private static string GetSingerPilots()
         {
             const string content = @"
-                <div id=""other_equipment"" class=""section"">
+                <div class=""other_equipment section"">
                     <span class=""heading"">Pilot Car and Other Equipment (Singer Service)</span>
                     
                     <table>
@@ -836,7 +890,7 @@ namespace SingerDispatch.Printing
         private static string GetThirdPartyPilots()
         {
             const string content = @"
-                <div id=""third_party_pilot"" class=""section"">
+                <div class=""third_party_pilot section"">
                     <span class=""heading"">Pilot Car (Thrid Party)</span>
                 </div>
             ";
@@ -847,7 +901,7 @@ namespace SingerDispatch.Printing
         private static string GetThridPartyServices()
         {
             const string content = @"
-                <div id=""thid_party_services"" class=""section"">
+                <div class=""thid_party_services section"">
                     <span class=""heading"">Third Party Services</span>
                     
                     <table>
@@ -888,7 +942,7 @@ namespace SingerDispatch.Printing
         private static string GetWireLiftInfo()
         {
             const string content = @"
-                <div id=""wire_lifts"" class=""section"">
+                <div class=""wire_lifts section"">
                     <span class=""heading"">Wire Lift Information</span>
                     
                     <table>
@@ -966,7 +1020,7 @@ namespace SingerDispatch.Printing
         private static string GetPermits()
         {
             const string content = @"
-                <div id=""permits"" class=""section"">
+                <div class=""permits section"">
                     <span class=""heading"">Permit Information</span>
                     
                     <table>
@@ -1034,8 +1088,10 @@ namespace SingerDispatch.Printing
         private static string GetOtherInfo()
         {
             const string content = @"
-                <div id=""other_info"" class=""section"">
+                <div class=""other_info section"">
                     <span class=""heading"">Other Information</span>
+
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce quis est sapien. Donec tempor, tortor at auctor scelerisque, justo elit condimentum enim, ac tristique nunc risus eu neque. Nam scelerisque nulla vel sapien facilisis ut commodo velit feugiat. Phasellus non mi ullamcorper neque porttitor semper at at dolor. Nullam ut erat at ipsum molestie tempus in nec lectus. Morbi risus ipsum, consectetur id laoreet ut, ullamcorper id urna. Duis a iaculis quam. Donec tempor, arcu eu cursus egestas, purus purus mattis velit, in suscipit neque metus nec augue. Nunc id justo vitae massa porta placerat sed vitae tellus. Aliquam erat.</p>
                 </div>
             ";
 

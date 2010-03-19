@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Collections.Generic;
+using System.Windows;
 using SingerDispatch.Printing;
 using Microsoft.Win32;
 using mshtml;
@@ -35,7 +36,7 @@ namespace SingerDispatch.Windows
                 renderer = new QuoteRenderer();
             else if (obj is Invoice)
                 renderer = new InvoiceRenderer();
-            else if (obj is Dispatch)
+            else if (obj is Dispatch || obj is List<Dispatch>)
                 renderer = new DispatchRenderer();
             else
                 return;

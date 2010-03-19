@@ -1,7 +1,9 @@
-﻿using System.Windows;
+﻿using System.Linq;
+using System.Windows;
 using System.Windows.Controls.Primitives;
 using SingerDispatch.Controls;
 using System.Windows.Input;
+using SingerDispatch.Windows;
 
 namespace SingerDispatch.Panels.Jobs
 {
@@ -63,6 +65,16 @@ namespace SingerDispatch.Panels.Jobs
         {
             CommitChangesButton.Focus();
             CommitChangesButton.RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent, CommitChangesButton));
+        }
+
+        private void ViewDispatches_Click(object sender, RoutedEventArgs e)
+        {
+            if (SelectedJob == null) return;
+
+            var dispatches = (from d in SelectedJob.Dispatches select d).ToList();
+
+            var document = new DocumentViewer();
+            document.DisplayPrintout(dispatches);
         }
     }
 }

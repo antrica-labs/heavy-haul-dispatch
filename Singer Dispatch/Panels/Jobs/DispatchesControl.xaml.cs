@@ -93,15 +93,8 @@ namespace SingerDispatch.Panels.Jobs
 
             var dispatch = (Dispatch)dgDispatches.SelectedItem;
 
-            string dispatchNumber;
-
-            if (dispatch.Load == null)
-                dispatchNumber = string.Format("{0}-{1:D2}", dispatch.Job.Number, dispatch.Number);
-            else
-                dispatchNumber = string.Format("{0}-{1:D2}-{2:D2}", dispatch.Job.Number, dispatch.Load.Number, dispatch.Number);
-
             var viewer = new DocumentViewer();
-            viewer.DisplayPrintout(String.Format("Dispatch #{0}", dispatchNumber), dgDispatches.SelectedItem);
+            viewer.DisplayPrintout(String.Format("Dispatch #{0}", dispatch.Name), dgDispatches.SelectedItem);
         }
 
         private void RemoveDispatch_Click(object sender, RoutedEventArgs e)

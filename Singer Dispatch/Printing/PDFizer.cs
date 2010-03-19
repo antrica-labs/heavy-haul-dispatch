@@ -6,7 +6,7 @@ namespace SingerDispatch.Printing
     class PDFizer
     {
         private const string DEFAULT_PDF_COMMAND = @"wkhtmltopdf.exe";
-        private const string DEFAULT_PDF_ARGS = @"--page-size Letter ""%HTML_FILE%"" ""%PDF_FILE%""";
+        private const string DEFAULT_PDF_ARGS = @"--print-media-type --page-size Letter ""%HTML_FILE%"" ""%PDF_FILE%""";
 
         private string PdfCommand { get; set; }
         private string PdfArgs { get; set; }
