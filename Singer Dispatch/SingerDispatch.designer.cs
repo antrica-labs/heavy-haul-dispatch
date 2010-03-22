@@ -4042,7 +4042,7 @@ namespace SingerDispatch
 		
 		private long _ID;
 		
-		private long _JobID;
+		private System.Nullable<long> _JobID;
 		
 		private System.Nullable<long> _LoadID;
 		
@@ -4122,7 +4122,7 @@ namespace SingerDispatch
     partial void OnCreated();
     partial void OnIDChanging(long value);
     partial void OnIDChanged();
-    partial void OnJobIDChanging(long value);
+    partial void OnJobIDChanging(System.Nullable<long> value);
     partial void OnJobIDChanged();
     partial void OnLoadIDChanging(System.Nullable<long> value);
     partial void OnLoadIDChanged();
@@ -4219,7 +4219,7 @@ namespace SingerDispatch
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_JobID")]
-		public long JobID
+		public System.Nullable<long> JobID
 		{
 			get
 			{
@@ -4939,7 +4939,7 @@ namespace SingerDispatch
 					}
 					else
 					{
-						this._JobID = default(long);
+						this._JobID = default(Nullable<long>);
 					}
 					this.SendPropertyChanged("Job");
 				}

@@ -155,7 +155,7 @@
                         <TextBox Grid.Column="1" Grid.Row="3" Text="{Binding LoadBy}"/>
 
                         <Label Grid.Column="0" Grid.Row="4">Load method:</Label>
-                        <ComboBox Name="cmbLoadMethods" Grid.Column="1" Grid.Row="4" SelectedItem="{Binding LoadMethod}" ItemTemplate="{StaticResource SimpleNameTemplate}" />
+                        <ComboBox Name="cmbLoadMethods" Grid.Column="1" Grid.Row="4" SelectedItem="{Binding LoadMethod}" ItemTemplate="{StaticResource SimpleNameTemplate}" IsEditable="True" TextSearch.TextPath="Name" />
 
                         <Label Grid.Column="0" Grid.Row="5">Loading date:</Label>
                         <DatePicker Grid.Column="1" Grid.Row="5" SelectedDate="{Binding LoadDate}" />
@@ -197,7 +197,7 @@
                         <TextBox Grid.Column="1" Grid.Row="3" Text="{Binding UnloadBy}" />
 
                         <Label Grid.Column="0" Grid.Row="4">Unload method:</Label>
-                        <ComboBox Name="cmbUnloadMethods" Grid.Column="1" Grid.Row="4" SelectedItem="{Binding UnloadMethod}" ItemTemplate="{StaticResource SimpleNameTemplate}" />
+                        <ComboBox Name="cmbUnloadMethods" Grid.Column="1" Grid.Row="4" SelectedItem="{Binding UnloadMethod}" ItemTemplate="{StaticResource SimpleNameTemplate}" IsEditable="True" TextSearch.TextPath="Name" />
 
                         <Label Grid.Column="0" Grid.Row="5">Unloading date:</Label>
                         <DatePicker Grid.Column="1" Grid.Row="5" SelectedDate="{Binding UnloadDate}"  />

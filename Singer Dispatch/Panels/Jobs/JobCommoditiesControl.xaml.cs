@@ -39,7 +39,9 @@ namespace SingerDispatch.Panels.Jobs
 
         private void NewCommodity_Click(object sender, RoutedEventArgs e)
         {
-            var commodity = new JobCommodity { JobID = SelectedJob.ID };
+            if (SelectedJob == null) return;
+
+            var commodity = new JobCommodity { JobID = SelectedJob.ID, LoadDate = SelectedJob.StartDate, UnloadDate = SelectedJob.EndDate };
             var list = (ObservableCollection<JobCommodity>)dgCommodities.ItemsSource;
             
             SelectedJob.JobCommodities.Insert(0, commodity);

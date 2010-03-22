@@ -165,7 +165,7 @@
   <Table Name="" Member="JobCommodities">
     <Type Name="JobCommodity">
       <Column Name="ID" Type="System.Int64" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="JobID" Type="System.Int64" CanBeNull="false" />
+      <Column Name="JobID" Type="System.Int64" CanBeNull="true" />
       <Column Name="LoadID" Type="System.Int64" CanBeNull="true" />
       <Column Name="OriginalCommodityID" Type="System.Int64" CanBeNull="true" />
       <Column Name="Name" Type="System.String" CanBeNull="true" />

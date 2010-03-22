@@ -73,8 +73,9 @@ namespace SingerDispatch.Panels.Jobs
 
             var dispatches = (from d in SelectedJob.Dispatches select d).ToList();
 
+            var name = string.Format("Dispatches - Job #{0}", SelectedJob.Number);
             var document = new DocumentViewerWindow();
-            document.DisplayPrintout(dispatches);
+            document.DisplayPrintout(name, dispatches);
         }
     }
 }
