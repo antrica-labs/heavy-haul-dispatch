@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Text;
 
 namespace SingerDispatch.Printing.Documents
@@ -28,7 +29,7 @@ namespace SingerDispatch.Printing.Documents
             content.Append("</head>");
             content.Append("<body>");
             content.Append(GetHeader(dispatch));
-            content.Append(GetDetails());
+            content.Append(GetDetails(dispatch));
             content.Append(GetDescription("Supply mean and equipment to transport 1450 HP compressor package skid - Winter weight restriction"));
             content.Append(GetEquipment());
             content.Append(GetSchedule());
@@ -65,7 +66,7 @@ namespace SingerDispatch.Printing.Documents
                 var dispatch = dispatches[i];
 
                 content.Append(GetHeader(dispatch));
-                content.Append(GetDetails());
+                content.Append(GetDetails(dispatch));
                 content.Append(GetDescription("Supply mean and equipment to transport 1450 HP compressor package skid - Winter weight restriction"));
                 content.Append(GetEquipment());
                 content.Append(GetSchedule());
@@ -445,26 +446,26 @@ namespace SingerDispatch.Printing.Documents
             return content;
         }
 
-        private static string GetDetails()
+        private static string GetDetails(Dispatch dispatch)
         {
-            const string content = @"
+            const string html = @"
                 <div class=""details"">
                     <table class=""dispatch_info"">
                         <tr>
                             <td class=""field_name col1_4"">Date:</td>
-                            <td class=""value col2_4"">January 6, 2009</td>
+                            <td class=""value col2_4"">%CURRENT_DATE%</td>
                             <td class=""field_name col3_4"">Customer #:</td>
-                            <td class=""value col4_4"">Harmattan Gas Processing Partnership C/O Excelsior Engineering</td>
+                            <td class=""value col4_4"">%CUSTOMER%</td>
                         </tr>
                         <tr>
                             <td class=""field_name"">Unit #:</td>
-                            <td class=""value"">03-12</td>
+                            <td class=""value"">%UNIT%</td>
                             <td class=""field_name"">Trailer #:</td>
-                            <td class=""value"">64Wheel - 35-81,35-67-29-67</td>
+                            <td class=""value"">%TRAILER%</td>
                         </tr>
                         <tr>
                             <td class=""field_name"">Driver:</td>
-                            <td class=""value"">John Hall</td>
+                            <td class=""value"">%DRIVER%</td>
                             <td class=""field_name"">Swampers:</td>
                             <td class=""value""></td>
                         </tr>
@@ -473,7 +474,7 @@ namespace SingerDispatch.Printing.Documents
                     <table class=""departure_info"">
                         <tr>
                             <td class=""field_name col1_2"">Depart Date:</td>
-                            <td class=""value col2_2"">Jan 7, 09 - 09:00</td>
+                            <td class=""value col2_2"">%DISPATCH_DATE%</td>
                         </tr>                
                         <tr>                    
                             <td class=""field_name"">Depart From:</td>
@@ -494,7 +495,18 @@ namespace SingerDispatch.Printing.Documents
                 </div>
             ";
 
-            return content;
+            var date = DateTime.Now;
+            var dispatchDate = dispatch.MeetingTime;
+            var customer = dispatch.Job.Company.Name;
+            var unit = (dispatch.Equipment != null) ? dispatch.Equipment.UnitNumber : "";
+            var driver = (dispatch.Employee != null) ? dispatch.Employee.Name : "";
+            var trailer = (dispatch.Load != null && dispatch.Load.Rate != null) ? dispatch.Load.Rate.Name + " - " : "";
+
+            if (dispatch.Load != null && dispatch.Load.TrailerCombination != null)
+                trailer += dispatch.Load.TrailerCombination.Combination;
+            var output = html.Replace("%CURRENT_DATE%", date.ToShortDateString()).Replace("%CUSTOMER%", customer).Replace("%UNIT%", unit)                .Replace("%DRIVER%", driver).Replace("%TRAILER%", trailer).Replace("%DISPATCH_DATE%", dispatchDate.ToString());
+
+            return output;
         }
 
         private static string GetDescription(string description)

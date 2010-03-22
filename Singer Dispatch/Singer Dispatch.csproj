@@ -104,9 +104,6 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Windows\SimpleMessageDialog.xaml.cs">
-      <DependentUpon>SimpleMessageDialog.xaml</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controls\CustomCommands.cs" />
@@ -259,6 +256,9 @@
     </Compile>
     <Compile Include="Windows\JobLocatorWindow.xaml.cs">
       <DependentUpon>JobLocatorWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\PdfCreationWindow.xaml.cs">
+      <DependentUpon>PdfCreationWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\QuoteLocatorWindow.xaml.cs">
       <DependentUpon>QuoteLocatorWindow.xaml</DependentUpon>
@@ -511,15 +511,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Windows\PdfCreationWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Windows\QuoteLocatorWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Windows\SimpleMessageDialog.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
