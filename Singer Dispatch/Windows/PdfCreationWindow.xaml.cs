@@ -64,7 +64,7 @@ namespace SingerDispatch.Windows
 
         private void UpdateStatus(string status)
         {
-            txtOutput.Text = status;
+            lblStatusOutput.Content = status;
         }
     }
 }
