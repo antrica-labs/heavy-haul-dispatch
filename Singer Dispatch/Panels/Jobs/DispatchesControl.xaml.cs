@@ -38,8 +38,10 @@ namespace SingerDispatch.Panels.Jobs
 
         private void NewDispatch_Click(object sender, RoutedEventArgs e)
         {
+            if (SelectedJob == null) return;
+
             var list = (ObservableCollection<Dispatch>)dgDispatches.ItemsSource;
-            var dispatch = new Dispatch { JobID = SelectedJob.ID };
+            var dispatch = new Dispatch { JobID = SelectedJob.ID, MeetingTime = SelectedJob.StartDate };
 
             SelectedJob.Dispatches.Add(dispatch);
             list.Add(dispatch);

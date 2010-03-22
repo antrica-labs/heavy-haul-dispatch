@@ -356,7 +356,6 @@ namespace SingerDispatch
             copy.ServiceType = ServiceType;
             copy.Contact = Contact;
             copy.ServiceDate = ServiceDate;
-            copy.ServiceTime = ServiceTime;
             copy.Location = Location;
             copy.Reference = Reference;
             copy.Notes = Notes;
@@ -377,7 +376,6 @@ namespace SingerDispatch
             cp.Conditions = Conditions;
             cp.Cost = Cost;
             cp.PermitDate = PermitDate;
-            cp.PermitTime = PermitTime;
 
             return cp;
         }

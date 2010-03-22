@@ -63,12 +63,12 @@
                         <Label Grid.Row="0" Grid.Column="0">Commodity name:</Label>
                         <ComboBox Name="cmbCommodityName" Text="{Binding Name}" Grid.Row="0" Grid.Column="1" IsEditable="True" ItemTemplate="{StaticResource NameAndUnitTemplate}" TextSearch.TextPath="Name" SelectionChanged="CommodityName_SelectionChanged" />
 
-                        <Label Grid.Row="1" Grid.Column="0">Value:</Label>
-                        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Value, StringFormat=c}" Controls:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" />
+                        <Label Grid.Row="1" Grid.Column="0">Hauling cost:</Label>
+                        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Cost, StringFormat=c}" Controls:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" />
 
-                        <Label Grid.Row="2" Grid.Column="0">Hauling cost:</Label>
-                        <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Cost, StringFormat=c}" Controls:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" />
-
+                        <Label Grid.Row="2" Grid.Column="0">Value:</Label>
+                        <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Value, StringFormat=c}" Controls:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" />
+                        
                         <Label Grid.Row="3" Grid.Column="0">Serial number:</Label>
                         <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Serial}" />
 
@@ -214,7 +214,7 @@
 
         <DataGrid Name="dgCommodities" Style="{StaticResource ListDisplay}">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Assigned load" Binding="{Binding Load.FriendlyName}" />
+                <DataGridTextColumn Header="Assigned load" Binding="{Binding Load.Name}" />
                 <DataGridTextColumn Header="Unit" Binding="{Binding Unit}" />
                 <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="2*" />
                 <DataGridTextColumn Header="Length" Binding="{Binding Length}" />

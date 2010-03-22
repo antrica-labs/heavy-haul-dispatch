@@ -4,6 +4,7 @@
                        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
                        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                        xmlns:Panels="clr-namespace:SingerDispatch.Panels"
+                       xmlns:Controls="clr-namespace:SingerDispatch.Controls"
                        Loaded="ControlLoaded" mc:Ignorable="d" d:DesignWidth="780">
     <UserControl.Resources>
         <ResourceDictionary>
@@ -75,10 +76,10 @@
                             <DatePicker Grid.Row="0" Grid.Column="1" SelectedDate="{Binding PermitDate}" />
 
                             <Label Grid.Row="1" Grid.Column="0">Time:</Label>
-                            <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding PermitTime}" />
+                            <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding PermitDate, StringFormat=T}" />
                             
                             <Label Grid.Row="2" Grid.Column="0">Cost:</Label>
-                            <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Cost, StringFormat=c}" />
+                            <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Cost, StringFormat=c}" Controls:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" />
                         </Grid>
                     </GroupBox>
                 </Grid>
@@ -87,6 +88,7 @@
         
         <DataGrid Name="dgPermits" Style="{StaticResource ListDisplay}">
             <DataGrid.Columns>
+                <DataGridTextColumn Header="Load" Binding="{Binding Load.Name}" Width="0.2*" />
                 <DataGridTextColumn Header="Issuer" Binding="{Binding Issuer}" Width="0.4*"  />
                 <DataGridTextColumn Header="Permit Type" Binding="{Binding PermitType}" Width="0.3*" />
                 <DataGridTextColumn Header="Conditions" Binding="{Binding Conditions}" />

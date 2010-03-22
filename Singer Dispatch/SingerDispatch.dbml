@@ -290,7 +290,6 @@
       <Column Name="Conditions" Type="System.String" CanBeNull="true" />
       <Column Name="Cost" Type="System.Decimal" CanBeNull="true" />
       <Column Name="PermitDate" Type="System.DateTime" CanBeNull="true" />
-      <Column Name="PermitTime" Type="System.DateTime" CanBeNull="true" />
       <Association Name="Job_Permit" Member="Job" ThisKey="JobID" OtherKey="ID" Type="Job" IsForeignKey="true" />
       <Association Name="Load_Permit" Member="Load" ThisKey="LoadID" OtherKey="ID" Type="Load" IsForeignKey="true" />
     </Type>
@@ -474,7 +473,6 @@
       <Column Name="ServiceTypeID" Type="System.Int64" CanBeNull="true" />
       <Column Name="ContactID" Type="System.Int64" CanBeNull="true" />
       <Column Name="ServiceDate" Type="System.DateTime" CanBeNull="true" />
-      <Column Name="ServiceTime" Type="System.String" CanBeNull="true" />
       <Column Name="Location" Type="System.String" CanBeNull="true" />
       <Column Name="Reference" Type="System.String" CanBeNull="true" />
       <Column Name="Notes" Type="System.String" CanBeNull="true" />
@@ -534,6 +532,8 @@
       <Column Name="Number" Type="System.Int32" CanBeNull="true" />
       <Column Name="Description" Type="System.String" CanBeNull="true" />
       <Column Name="Schedule" Type="System.String" CanBeNull="true" />
+      <Column Name="MeetingTime" Type="System.DateTime" CanBeNull="true" />
+      <Column Name="Location" Type="System.String" CanBeNull="true" />
       <Column Name="Notes" Type="System.String" CanBeNull="true" UpdateCheck="Never" />
       <Column Name="RateID" Type="System.Int64" CanBeNull="true" />
       <Association Name="Equipment_Dispatch" Member="Equipment" ThisKey="EquipmentID" OtherKey="ID" Type="Equipment" IsForeignKey="true" />

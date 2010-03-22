@@ -32,8 +32,10 @@ namespace SingerDispatch.Panels.Jobs
 
         private void NewPermit_Click(object sender, RoutedEventArgs e)
         {
+            if (SelectedJob == null) return;
+
             var list = (ObservableCollection<Permit>)dgPermits.ItemsSource;
-            var permit = new Permit { JobID = SelectedJob.ID };
+            var permit = new Permit { JobID = SelectedJob.ID, PermitDate = SelectedJob.StartDate };
 
             SelectedJob.Permits.Add(permit);
             list.Add(permit);

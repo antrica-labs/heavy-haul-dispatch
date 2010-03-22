@@ -52,8 +52,10 @@ namespace SingerDispatch.Panels.Jobs
 
         private void NewService_Click(object sender, RoutedEventArgs e)
         {
+            if (SelectedJob == null) return;
+
             var list = (ObservableCollection<ThirdPartyService>)dgServices.ItemsSource;
-            var service = new ThirdPartyService { JobID = SelectedJob.ID };
+            var service = new ThirdPartyService { JobID = SelectedJob.ID, ServiceDate = SelectedJob.StartDate };
 
             SelectedJob.ThirdPartyServices.Add(service);
             list.Add(service);

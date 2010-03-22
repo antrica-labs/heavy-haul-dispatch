@@ -80,7 +80,7 @@
                             <DatePicker Grid.Row="0" Grid.Column="1" SelectedDate="{Binding ServiceDate}" />
 
                             <Label Grid.Row="1" Grid.Column="0">Time:</Label>
-                            <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding ServiceTime}" />
+                            <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding ServiceDate, StringFormat=T}" />
                         </Grid>
                     </GroupBox>
                 </Grid>

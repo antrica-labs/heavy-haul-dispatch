@@ -6933,8 +6933,6 @@ namespace SingerDispatch
 		
 		private System.Nullable<System.DateTime> _PermitDate;
 		
-		private System.Nullable<System.DateTime> _PermitTime;
-		
 		private EntityRef<Job> _Job;
 		
 		private EntityRef<Load> _Load;
@@ -6961,8 +6959,6 @@ namespace SingerDispatch
     partial void OnCostChanged();
     partial void OnPermitDateChanging(System.Nullable<System.DateTime> value);
     partial void OnPermitDateChanged();
-    partial void OnPermitTimeChanging(System.Nullable<System.DateTime> value);
-    partial void OnPermitTimeChanged();
     #endregion
 		
 		public Permit()
@@ -7156,26 +7152,6 @@ namespace SingerDispatch
 					this._PermitDate = value;
 					this.SendPropertyChanged("PermitDate");
 					this.OnPermitDateChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PermitTime")]
-		public System.Nullable<System.DateTime> PermitTime
-		{
-			get
-			{
-				return this._PermitTime;
-			}
-			set
-			{
-				if ((this._PermitTime != value))
-				{
-					this.OnPermitTimeChanging(value);
-					this.SendPropertyChanging();
-					this._PermitTime = value;
-					this.SendPropertyChanged("PermitTime");
-					this.OnPermitTimeChanged();
 				}
 			}
 		}
@@ -10925,8 +10901,6 @@ namespace SingerDispatch
 		
 		private System.Nullable<System.DateTime> _ServiceDate;
 		
-		private string _ServiceTime;
-		
 		private string _Location;
 		
 		private string _Reference;
@@ -10961,8 +10935,6 @@ namespace SingerDispatch
     partial void OnContactIDChanged();
     partial void OnServiceDateChanging(System.Nullable<System.DateTime> value);
     partial void OnServiceDateChanged();
-    partial void OnServiceTimeChanging(string value);
-    partial void OnServiceTimeChanged();
     partial void OnLocationChanging(string value);
     partial void OnLocationChanged();
     partial void OnReferenceChanging(string value);
@@ -11137,26 +11109,6 @@ namespace SingerDispatch
 					this._ServiceDate = value;
 					this.SendPropertyChanged("ServiceDate");
 					this.OnServiceDateChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ServiceTime")]
-		public string ServiceTime
-		{
-			get
-			{
-				return this._ServiceTime;
-			}
-			set
-			{
-				if ((this._ServiceTime != value))
-				{
-					this.OnServiceTimeChanging(value);
-					this.SendPropertyChanging();
-					this._ServiceTime = value;
-					this.SendPropertyChanged("ServiceTime");
-					this.OnServiceTimeChanged();
 				}
 			}
 		}
@@ -12300,6 +12252,10 @@ namespace SingerDispatch
 		
 		private string _Schedule;
 		
+		private System.Nullable<System.DateTime> _MeetingTime;
+		
+		private string _Location;
+		
 		private string _Notes;
 		
 		private System.Nullable<long> _RateID;
@@ -12334,6 +12290,10 @@ namespace SingerDispatch
     partial void OnDescriptionChanged();
     partial void OnScheduleChanging(string value);
     partial void OnScheduleChanged();
+    partial void OnMeetingTimeChanging(System.Nullable<System.DateTime> value);
+    partial void OnMeetingTimeChanged();
+    partial void OnLocationChanging(string value);
+    partial void OnLocationChanged();
     partial void OnNotesChanging(string value);
     partial void OnNotesChanged();
     partial void OnRateIDChanging(System.Nullable<long> value);
@@ -12522,6 +12482,46 @@ namespace SingerDispatch
 					this._Schedule = value;
 					this.SendPropertyChanged("Schedule");
 					this.OnScheduleChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MeetingTime")]
+		public System.Nullable<System.DateTime> MeetingTime
+		{
+			get
+			{
+				return this._MeetingTime;
+			}
+			set
+			{
+				if ((this._MeetingTime != value))
+				{
+					this.OnMeetingTimeChanging(value);
+					this.SendPropertyChanging();
+					this._MeetingTime = value;
+					this.SendPropertyChanged("MeetingTime");
+					this.OnMeetingTimeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Location")]
+		public string Location
+		{
+			get
+			{
+				return this._Location;
+			}
+			set
+			{
+				if ((this._Location != value))
+				{
+					this.OnLocationChanging(value);
+					this.SendPropertyChanging();
+					this._Location = value;
+					this.SendPropertyChanged("Location");
+					this.OnLocationChanged();
 				}
 			}
 		}
