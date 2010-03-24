@@ -58,7 +58,7 @@
         </Border>        
         
         <TabControl Name="Tabs" DataContext="{Binding ElementName=ThePanel}">
-            <TabItem Header="Invoice History">
+            <TabItem Header="Invoice List">
                 <Invoicing:JobInvoiceHistoryControl SelectedJob="{Binding SelectedJob}" SelectedInvoice="{Binding SelectedInvoice}" />
             </TabItem>
             <TabItem Header="Line Items" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, Path=SelectedInvoice}">

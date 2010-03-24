@@ -42,7 +42,7 @@
         </Border>
         
         <TabControl Name="Tabs" DataContext="{Binding ElementName=ThePanel}">
-            <TabItem Header="Quotes">
+            <TabItem Header="Quotes List">
                 <Quotes:QuoteHistoryControl SelectedCompany="{Binding SelectedCompany}" SelectedQuote="{Binding SelectedQuote}" />
             </TabItem>
             <TabItem Header="Commodities" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, Path=SelectedQuote}">

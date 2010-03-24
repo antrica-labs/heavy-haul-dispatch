@@ -28,20 +28,9 @@ namespace SingerDispatch.Printing.Documents
             content.Append(GetStyles());
             content.Append("</head>");
             content.Append("<body>");
-            content.Append(GetHeader(dispatch));
-            content.Append(GetDetails(dispatch));
-            content.Append(GetDescription("Supply mean and equipment to transport 1450 HP compressor package skid - Winter weight restriction"));
-            content.Append(GetEquipment());
-            content.Append(GetSchedule());
-            content.Append(GetLoadInstructions());
-            content.Append(GetDimensions());
-            content.Append(GetTractors());
-            content.Append(GetSingerPilots());
-            content.Append(GetThirdPartyPilots());
-            content.Append(GetThridPartyServices());
-            content.Append(GetWireLiftInfo());
-            content.Append(GetPermits());
-            content.Append(GetOtherInfo());
+
+            content.Append(FillDispatchBody(dispatch));
+
             content.Append("</body>");
             content.Append("</html>");
 
@@ -65,20 +54,7 @@ namespace SingerDispatch.Printing.Documents
             {
                 var dispatch = dispatches[i];
 
-                content.Append(GetHeader(dispatch));
-                content.Append(GetDetails(dispatch));
-                content.Append(GetDescription("Supply mean and equipment to transport 1450 HP compressor package skid - Winter weight restriction"));
-                content.Append(GetEquipment());
-                content.Append(GetSchedule());
-                content.Append(GetLoadInstructions());
-                content.Append(GetDimensions());
-                content.Append(GetTractors());
-                content.Append(GetSingerPilots());
-                content.Append(GetThirdPartyPilots());
-                content.Append(GetThridPartyServices());
-                content.Append(GetWireLiftInfo());
-                content.Append(GetPermits());
-                content.Append(GetOtherInfo());
+                content.Append(FillDispatchBody(dispatch));
 
                 if ((i + 1) != dispatches.Count)
                     content.Append(PageBreak);
@@ -88,6 +64,28 @@ namespace SingerDispatch.Printing.Documents
             content.Append("</html>");
 
             return content.ToString();
+        }
+
+        private static string FillDispatchBody(Dispatch dispatch)
+        {
+            var output = new StringBuilder();
+
+            output.Append(GetHeader(dispatch));
+            output.Append(GetDetails(dispatch));
+            output.Append(GetDescription(dispatch.Description));
+            output.Append(GetEquipment());
+            output.Append(GetSchedule());
+            output.Append(GetLoadInstructions());
+            output.Append(GetDimensions());
+            output.Append(GetTractors());
+            output.Append(GetSingerPilots());
+            output.Append(GetThirdPartyPilots());
+            output.Append(GetThridPartyServices());
+            output.Append(GetWireLiftInfo());
+            output.Append(GetPermits());
+            output.Append(GetOtherInfo());
+
+            return output.ToString();
         }
 
         private static string GetTitle(string title)
@@ -337,7 +335,7 @@ namespace SingerDispatch.Printing.Documents
                     div.dimensions table.weights td
                     {
                         text-align: center;
-                     
+                        border: solid 1px #CACACA;  
                     }
 
                     div.tractors td, div.other_equipment td
@@ -504,7 +502,9 @@ namespace SingerDispatch.Printing.Documents
 
             if (dispatch.Load != null && dispatch.Load.TrailerCombination != null)
                 trailer += dispatch.Load.TrailerCombination.Combination;
-            var output = html.Replace("%CURRENT_DATE%", date.ToShortDateString()).Replace("%CUSTOMER%", customer).Replace("%UNIT%", unit)                .Replace("%DRIVER%", driver).Replace("%TRAILER%", trailer).Replace("%DISPATCH_DATE%", dispatchDate.ToString());
+
+            var output = html.Replace("%CURRENT_DATE%", date.ToShortDateString()).Replace("%CUSTOMER%", customer).Replace("%UNIT%", unit)
+                .Replace("%DRIVER%", driver).Replace("%TRAILER%", trailer).Replace("%DISPATCH_DATE%", dispatchDate.ToString());
 
             return output;
         }
@@ -793,27 +793,27 @@ namespace SingerDispatch.Printing.Documents
                             <td>28000</td>
                             <td>28000</td>
                             <td>28000</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
                         </tr>
                         <tr>
                             <th class=""vertical"">Scaled Axle Weight</th>
                             <td>7300</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
                         </tr>
                     </table>
                 </div>
