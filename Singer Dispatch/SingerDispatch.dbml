@@ -213,6 +213,7 @@
       <Column Name="CareOfCompanyID" Type="System.Int64" CanBeNull="true" />
       <Column Name="StatusTypeID" Type="System.Int64" CanBeNull="true" />
       <Column Name="Number" Type="System.Int32" CanBeNull="true" />
+      <Column Name="Name" Type="System.String" CanBeNull="true" />
       <Column Name="Description" Type="System.String" CanBeNull="true" />
       <Column Name="StartDate" Type="System.DateTime" CanBeNull="true" />
       <Column Name="EndDate" Type="System.DateTime" CanBeNull="true" />
@@ -549,6 +550,7 @@
       <Column Name="RateID" Type="System.Int64" CanBeNull="true" />
       <Column Name="Combination" Type="System.String" CanBeNull="true" />
       <Column Name="LicencePlate" Type="System.String" CanBeNull="true" />
+      <Column Name="DeckLength" Type="System.Double" CanBeNull="true" />
       <Column Name="Length" Type="System.Double" CanBeNull="true" />
       <Column Name="Width" Type="System.Double" CanBeNull="true" />
       <Column Name="Height" Type="System.Double" CanBeNull="true" />

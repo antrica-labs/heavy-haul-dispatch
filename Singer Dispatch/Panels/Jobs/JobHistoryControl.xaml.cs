@@ -106,7 +106,7 @@ namespace SingerDispatch.Panels.Jobs
             {
                 EntityHelper.SaveAsNewJob(SelectedJob, Database);
 
-                TxtDescription.Focus();
+                txtName.Focus();
             }
             catch (Exception ex)
             {

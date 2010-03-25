@@ -39,6 +39,9 @@
                     <Label>Description of service:</Label>
                     <TextBox Name="txtServiceDescription" Text="{Binding ServiceDescription}"/>
 
+                    <Label>Schedule:</Label>
+                    <TextBox Text="{Binding Schedule}" Style="{StaticResource MultiLine}" />
+                    
                     <Label>Additional notes:</Label>
                     <TextBox Text="{Binding Notes}" Height="40" Style="{StaticResource MultiLine}"/>
                 </StackPanel>
@@ -48,9 +51,11 @@
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition />
+                        <ColumnDefinition Width="1.5*" />
                         <ColumnDefinition />
-                        <ColumnDefinition />
-                        <ColumnDefinition />
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="0.6*" />
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition />
@@ -68,34 +73,13 @@
                     
                     <Label Grid.Column="3" Grid.Row="0">Combination:</Label>
                     <ComboBox Name="cmbTrailerCombinations" Grid.Column="3" Grid.Row="1" SelectedItem="{Binding TrailerCombination}" ItemTemplate="{StaticResource TrailerCombinationTemplate}" />
+
+                    <Label Grid.Row="0" Grid.Column="4">Season</Label>
+                    <ComboBox Name="cmbSeasons" Grid.Row="1" Grid.Column="4" SelectedItem="{Binding Season}" ItemTemplate="{StaticResource SimpleNameTemplate}" IsEditable="True" TextSearch.TextPath="Name" />
+
+                    <Label Grid.Row="0" Grid.Column="5">Ban (%)</Label>
+                    <TextBox Grid.Row="1" Grid.Column="5" Text="{Binding Ban}"/>
                 </Grid>    
-            </GroupBox>
-            
-            <GroupBox Header="Timeline" DataContext="{Binding ElementName=dgLoads, Path=SelectedItem}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgLoads, Path=SelectedItem}">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition />
-                        <ColumnDefinition />
-                        <ColumnDefinition />
-                        <ColumnDefinition />
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition />
-                        <RowDefinition />
-                    </Grid.RowDefinitions>
-
-                    <Label Grid.Row="0" Grid.Column="0">Start date:</Label>
-                    <DatePicker Grid.Row="1" Grid.Column="0" SelectedDate="{Binding StartDate}" />
-
-                    <Label Grid.Row="0" Grid.Column="1">End date:</Label>
-                    <DatePicker Grid.Row="1" Grid.Column="1" SelectedDate="{Binding EndDate}" />
-
-                    <Label Grid.Row="0" Grid.Column="2">Season</Label>
-                    <ComboBox Name="cmbSeasons" Grid.Row="1" Grid.Column="2" SelectedItem="{Binding Season}" ItemTemplate="{StaticResource SimpleNameTemplate}" IsEditable="True" TextSearch.TextPath="Name" />                    
-                    
-                    <Label Grid.Row="0" Grid.Column="3">Ban (%)</Label>
-                    <TextBox Grid.Row="1" Grid.Column="3" Text="{Binding Ban}"/>
-                </Grid>
             </GroupBox>
             
             <GroupBox Header="Dimentions" DataContext="{Binding ElementName=dgLoads, Path=SelectedItem}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgLoads, Path=SelectedItem}">
@@ -188,8 +172,8 @@
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Number" Width="0.15*" Binding="{Binding Number, StringFormat={}{0:D2}}" />
                 <DataGridTextColumn Header="Unit" Width="0.15*" Binding="{Binding Equipment.UnitNumber}"/>
-                <DataGridTextColumn Header="Wheel type" Width="0.2*" Binding="{Binding Rate.Name}" />
-                <DataGridTextColumn Header="Trailer" Width="0.2*" Binding="{Binding TrailerCombination.Combination}" />
+                <DataGridTextColumn Header="Wheel type" Width="0.25*" Binding="{Binding Rate.Name}" />
+                <DataGridTextColumn Header="Trailer" Width="0.4*" Binding="{Binding TrailerCombination.Combination}" />
                 <DataGridTextColumn Header="Description" Binding="{Binding ServiceDescription}" />
             </DataGrid.Columns>
         </DataGrid>

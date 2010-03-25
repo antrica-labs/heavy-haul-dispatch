@@ -40,8 +40,11 @@
 
                 <GroupBox Header="Job Details" Name="gbJobDetails" Grid.Column="0" Grid.Row="0" Margin="0,0,3,0" DataContext="{Binding ElementName=DgJobs, Path=SelectedItem}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=DgJobs, Path=SelectedItem}">
                     <StackPanel>
-                        <Label>Project description</Label>
-                        <TextBox Name="TxtDescription" Style="{StaticResource MultiLine}" VerticalScrollBarVisibility="Hidden" Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}"/>
+                        <Label>Project name:</Label>                        
+                        <TextBox Name="txtName" Text="{Binding Name}" />
+                        
+                        <Label>Project description:</Label>
+                        <TextBox Style="{StaticResource MultiLine}" VerticalScrollBarVisibility="Hidden" Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}"/>
 
                         <Label>Care of:</Label>
                         <ComboBox Name="CmbCareOfCompanies" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectedItem="{Binding CareOfCompany}" TextSearch.TextPath="Name" IsEditable="True" SelectionChanged="CmbCareOfCompanies_SelectionChanged" />
@@ -151,7 +154,7 @@
                     </DataGridTextColumn.Binding>
                 </DataGridTextColumn>
                 <DataGridTextColumn Header="Status" Width="0.2*" Binding="{Binding JobStatusType.Name}" />
-                <DataGridTextColumn Header="Description" Binding="{Binding Description}" />
+                <DataGridTextColumn Header="Name" Binding="{Binding Name}" />
             </DataGrid.Columns>
         </DataGrid>
     </DockPanel>

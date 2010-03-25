@@ -41,7 +41,7 @@ namespace SingerDispatch.Panels.Jobs
             if (SelectedJob == null) return;
 
             var list = (ObservableCollection<Dispatch>)dgDispatches.ItemsSource;
-            var dispatch = new Dispatch { JobID = SelectedJob.ID, MeetingTime = SelectedJob.StartDate };
+            var dispatch = new Dispatch { JobID = SelectedJob.ID, MeetingTime = SelectedJob.StartDate, Description = "Supply men and equipment to transport " };
 
             SelectedJob.Dispatches.Add(dispatch);
             list.Add(dispatch);

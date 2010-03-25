@@ -5089,6 +5089,8 @@ namespace SingerDispatch
 		
 		private System.Nullable<int> _Number;
 		
+		private string _Name;
+		
 		private string _Description;
 		
 		private System.Nullable<System.DateTime> _StartDate;
@@ -5135,6 +5137,8 @@ namespace SingerDispatch
     partial void OnStatusTypeIDChanged();
     partial void OnNumberChanging(System.Nullable<int> value);
     partial void OnNumberChanged();
+    partial void OnNameChanging(string value);
+    partial void OnNameChanged();
     partial void OnDescriptionChanging(string value);
     partial void OnDescriptionChanged();
     partial void OnStartDateChanging(System.Nullable<System.DateTime> value);
@@ -5315,6 +5319,26 @@ namespace SingerDispatch
 					this._Number = value;
 					this.SendPropertyChanged("Number");
 					this.OnNumberChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name")]
+		public string Name
+		{
+			get
+			{
+				return this._Name;
+			}
+			set
+			{
+				if ((this._Name != value))
+				{
+					this.OnNameChanging(value);
+					this.SendPropertyChanging();
+					this._Name = value;
+					this.SendPropertyChanged("Name");
+					this.OnNameChanged();
 				}
 			}
 		}
@@ -12775,6 +12799,8 @@ namespace SingerDispatch
 		
 		private string _LicencePlate;
 		
+		private System.Nullable<double> _DeckLength;
+		
 		private System.Nullable<double> _Length;
 		
 		private System.Nullable<double> _Width;
@@ -12799,6 +12825,8 @@ namespace SingerDispatch
     partial void OnCombinationChanged();
     partial void OnLicencePlateChanging(string value);
     partial void OnLicencePlateChanged();
+    partial void OnDeckLengthChanging(System.Nullable<double> value);
+    partial void OnDeckLengthChanged();
     partial void OnLengthChanging(System.Nullable<double> value);
     partial void OnLengthChanged();
     partial void OnWidthChanging(System.Nullable<double> value);
@@ -12896,6 +12924,26 @@ namespace SingerDispatch
 					this._LicencePlate = value;
 					this.SendPropertyChanged("LicencePlate");
 					this.OnLicencePlateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DeckLength")]
+		public System.Nullable<double> DeckLength
+		{
+			get
+			{
+				return this._DeckLength;
+			}
+			set
+			{
+				if ((this._DeckLength != value))
+				{
+					this.OnDeckLengthChanging(value);
+					this.SendPropertyChanging();
+					this._DeckLength = value;
+					this.SendPropertyChanged("DeckLength");
+					this.OnDeckLengthChanged();
 				}
 			}
 		}

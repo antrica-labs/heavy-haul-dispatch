@@ -65,11 +65,10 @@
                     <TextBox Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Description}"/>
 
                     <Label Grid.Row="5" Grid.Column="0">Schedule:</Label>
-                    <TextBox Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Schedule}"/>
+                    <TextBox Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Schedule}" Style="{StaticResource MultiLine}" />
 
                     <Label Grid.Row="6" Grid.Column="0">Notes:</Label>
-                    <TextBox Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Notes}" />
-
+                    <TextBox Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Notes}" Style="{StaticResource MultiLine}" />
 
                     <GroupBox Grid.Column="2" Grid.Row="0" Grid.RowSpan="4" Header="Departure" DataContext="{Binding ElementName=dgDispatches, Path=SelectedItem}" Margin="5,0,0,0">
                         <Grid>

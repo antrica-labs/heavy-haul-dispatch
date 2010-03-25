@@ -39,7 +39,7 @@
                 </StackPanel>
             </Border>
 
-            <TabControl>
+            <TabControl IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgCommodities, Path=SelectedItem}">
                 <TabItem Header="Commodity" DataContext="{Binding ElementName=dgCommodities, Path=SelectedItem}">
                     <Grid>
                         <Grid.ColumnDefinitions>

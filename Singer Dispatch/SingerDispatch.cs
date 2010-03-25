@@ -417,7 +417,7 @@ namespace SingerDispatch
     {
         partial void OnCreated()
         {
-            WeightEstimated = WeightEstimated ?? false;
+            WeightEstimated = WeightEstimated ?? true;
         }
 
         public Load Duplicate()
