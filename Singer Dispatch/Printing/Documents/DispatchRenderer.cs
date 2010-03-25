@@ -209,6 +209,12 @@ namespace SingerDispatch.Printing.Documents
                     {             
                         text-align: center;
                         font-weight: bold;
+                        line-height: 1.35em;                     
+                    }
+                    
+                    div.header td.id_col span.copy_type, div.header td.id_col span.number
+                    {
+                    	font-size: 1.25em;
                     }
                     
                     div.header span
@@ -223,8 +229,8 @@ namespace SingerDispatch.Printing.Documents
                         font-size: 1.5em;
                         padding: 0.5em 0.3em;
                         text-align: center;
-                        border-top: 1px #CACACA solid;
-                        border-bottom: 1px #CACACA solid;
+                        border-top: 2px #808080 solid;
+                        border-bottom: 2px #808080 solid;
                     }
                     
                     div.details
@@ -254,30 +260,34 @@ namespace SingerDispatch.Printing.Documents
                     {
                         padding: 10px;
                         margin-top: 2px;
-                        border-top: 1px #CACACA solid;
+                        border-top: 2px #808080 solid;
                     }
                     
                     div.section span.heading
                     {
+                    	text-decoration: underline;
                         font-weight: bold;
                         display: block;                
                         margin-bottom: 10px;
                     }
 
-                    div.load_and_unload span.heading
+                    div.section span.subheading
                     {
-                        
-                    }
-
-                    div.load_and_unload hr
-                    {
-                        border: none;
-                        border-top: 1px #CACACA solid;
-                        margin: 10px 0;
+                        font-weight: bold;
+                        display: block;
                     }
 
                     div.load_and_unload div.commodity
                     {
+                    	margin: 5px 0;
+                    	padding: 15px;                    	
+                    }
+
+                    hr
+                    {
+                    	border: 0;
+                    	height: 1px;
+                    	background-color: #D9D9D9;
                     }
 
                     div.load_and_unload span.commodity_name
@@ -287,17 +297,53 @@ namespace SingerDispatch.Printing.Documents
 
                     div.load_and_unload div.loading, div.load_and_unload div.unloading
                     {
-                        margin-top: 10px;                
+                        margin-top: 15px;
                     }
-
-                    div.load_and_unload div.loading span.heading, div.load_and_unload div.unloading span.heading
+                    
+                    div.load_and_unload div.loading span.subheading, div.load_and_unload div.unloading span.subheading
                     {
                         text-decoration: underline;
+                        margin-bottom: 5px;
                     }
 
                     div.load_and_unload td
                     {
-                        padding-right: 10px;
+                        padding: 3px 10px;
+                    }
+
+                    div.load_and_unload table.details
+                    {
+                    	width: 100%;
+                    }
+                    
+                    div.load_and_unload table.details td
+                    {
+                    	border: solid 1px #A9A9A9;
+                    }
+
+                    div.load_and_unload table.details td span
+                    {
+                    	display: block;
+                    }
+
+                    div.load_and_unload table.details td.date
+                    {
+                    	width: 60px;
+                    }
+                    
+                    div.load_and_unload table.details td.time
+                    {
+                    	width: 45px;
+                    }
+
+                    div.load_and_unload table.details td.contact
+                    {
+                    	width: 130px;
+                    }
+                    
+                    div.load_and_unload table.details td.company
+                    {
+                    	width: 120px;
                     }
 
                     div.load_and_unload table.instructions
@@ -314,34 +360,39 @@ namespace SingerDispatch.Printing.Documents
                     div.dimensions table.dimensions
                     {
                         width: 100%;
-                        margin-bottom: 5px;
-                    }
-
-                    div.dimensions table.weights
-                    {
-                        width: 100%
-                    }
-
+                        margin-bottom: 10px;
+                    }                    
+                    
                     div.dimensions table.weights th
                     {
                         text-align: center;
-                    }
-
-                    div.dimensions table.weights th.vertical
-                    {
-                        text-align: left;
                     }
                     
                     div.dimensions table.weights td
                     {
                         text-align: center;
-                        border: solid 1px #CACACA;  
+                        border: solid 1px #A9A9A9;
                     }
-
+                    
+                    
+                    div.dimensions table.weights td
+                    {
+                    	width: 75px;
+                    }
+                    
+                    div.dimensions table.weights td.row_name
+                    {
+                        text-align: right;
+                        width: auto;
+                        font-weight: bold;
+                        border: none;
+                        padding-right: 3px;
+                    }
+                                        
                     div.tractors td, div.other_equipment td
                     {
                         padding-right: 10px;
-                        padding-bottom: 2px;
+                        padding-bottom: 5px;
                     }
 
                     div.third_party_pilot table,
@@ -350,6 +401,7 @@ namespace SingerDispatch.Printing.Documents
                     div.permits table
                     {
                         width: 100%;
+                        border-collapse: collapse;
                     }
 
                     div.third_party_pilot th, 
@@ -359,23 +411,48 @@ namespace SingerDispatch.Printing.Documents
                     {
                         padding-bottom: 10px;
                     }
+                    
+                    div.third_party_pilot tr, 
+                    div.thid_party_services tr,
+                    div.wire_lifts tr,
+                    div.permits tr
+                    {
+                    	
+                    }
+
+                    div.third_party_pilot td, 
+                    div.thid_party_services td,
+                    div.wire_lifts td,
+                    div.permits td
+                    {
+                    	
+                    }
+
+                    div.third_party_pilot tr.details td, 
+                    div.thid_party_services tr.details td,
+                    div.wire_lifts tr.details td,
+                    div.permits tr.details td
+                    {
+                    	border-top: 1px solid #E9E9E9;  
+                    	padding-top: 10px;                  	
+                    }
 
                     div.third_party_pilot tr.comments td, 
                     div.thid_party_services tr.comments td,
                     div.wire_lifts tr.comments td,
                     div.permits tr.comments td
                     {
-                        padding: 5px 15px;
-                        padding-bottom: 10px;                
+                        padding: 5px 10px;
+                        padding-bottom: 10px;                        
                     }
-
+                    
                     div.page_break
                     {
                         display: block;
                         margin: 35px;
                         height: 1px;
                         border-top: 1px #454545 solid;
-                    }
+                    }    
                 </style>
                 <style type=""text/css"" media=""print"">
                     body
@@ -413,8 +490,9 @@ namespace SingerDispatch.Printing.Documents
                                 <span>Phone: %PHONE%</span>
                             </td>
                             <td class=""id_col"">
-                                <span>File Copy</span>
-                                <span>%DISPATCH_NUMBER%</span>
+                                <span class=""copy_type"">FIle Copy</span>
+                                <span>Dispatch #:</span>
+                                <span class=""number"">%DISPATCH_NUMBER%</span>
                             </td>
                         </tr>
                     </table>
@@ -562,7 +640,7 @@ namespace SingerDispatch.Printing.Documents
                         </div>
                         
                         <div class=""loading"">
-                            <span class=""heading"">Load Information</span>
+                            <span class=""subheading"">Load Information</span>
                             
                             <table class=""details"">
                                 <thead>
@@ -577,12 +655,12 @@ namespace SingerDispatch.Printing.Documents
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td>Jan 07, 2009</td>
-                                        <td>10:00</td>
-                                        <td>Propak Systems - 404 East Lake Rd, Airdrie</td>
-                                        <td>Rob Ogle (403) 333 - 5369</td>
-                                        <td>Singer Specialized</td>
-                                        <td>Jordy Cropley (403) 816 - 1645</td>
+                                        <td class=""date"">Jan 07, 2009</td>
+                                        <td class=""time"">10:00</td>
+                                        <td class=""location"">Propak Systems - 404 East Lake Rd, Airdrie</td>
+                                        <td class=""contact""><span>Rob Ogle</span><span>(403) 333 - 5369</span></td>
+                                        <td class=""company"">Singer Specialized</td>
+                                        <td class=""contact""><span>Jordy Cropley</span><span>(403) 816 - 1645</span></td>                                        
                                     </tr>
                                 </tbody>                        
                             </table>
@@ -603,10 +681,10 @@ namespace SingerDispatch.Printing.Documents
                                     </tr>
                                 </tbody>
                             </table>
-                        </div>
-                        
+                        </div>                  
+
                         <div class=""unloading"">
-                            <span class=""heading"">Unload Information</span>
+                            <span class=""subheading"">Unload Information</span>
                             
                             <table class=""details"">
                                 <thead>
@@ -621,12 +699,12 @@ namespace SingerDispatch.Printing.Documents
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td>Jan 7, 2009</td>
-                                        <td>14:00</td>
-                                        <td>Harmattan Gas Processiong Parnership - Harmatton-9-27-31-4-W4M</td>
-                                        <td>Gord Fox (403) 335 - 7528</td>
-                                        <td>Singer Specialized</td>
-                                        <td>Jordy Cropley (403) 816 - 1645</td>
+                                        <td class=""date"">Jan 7, 2009</td>
+                                        <td class=""time"">14:00</td>
+                                        <td class=""location"">Harmattan Gas Processiong Parnership - Harmatton-9-27-31-4-W4M</td>
+                                        <td class=""contact""><span>Gord Fox</span><span>(403) 335 - 7528</span></td>
+                                        <td class=""company"">Singer Specialized</td>
+                                        <td class=""contact""><span>Jordy Cropley</span><span>(403) 816 - 1645</span></td>
                                     </tr>
                                 </tbody>                        
                             </table>
@@ -661,7 +739,7 @@ namespace SingerDispatch.Printing.Documents
                         </div>
 
                         <div class=""loading"">
-                            <span class=""heading"">Load Information</span>
+                            <span class=""subheading"">Load Information</span>
 
                             <table class=""details"">
                                 <thead>
@@ -676,12 +754,12 @@ namespace SingerDispatch.Printing.Documents
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td>Jan 7, 2009</td>
-                                        <td>14:00</td>
-                                        <td>Harmattan Gas Processiong Parnership - Harmatton-9-27-31-4-W4M</td>
-                                        <td>Gord Fox (403) 335 - 7528</td>
-                                        <td>Singer Specialized</td>
-                                        <td>Jordy Cropley (403) 816 - 1645</td>
+                                        <td class=""date"">Jan 7, 2009</td>
+                                        <td class=""time"">14:00</td>
+                                        <td class=""location"">Harmattan Gas Processiong Parnership - Harmatton-9-27-31-4-W4M</td>
+                                        <td class=""contact""><span>Gord Fox</span><span>(403) 335 - 7528</span></td>
+                                        <td class=""company"">Singer Specialized</td>
+                                        <td class=""contact""><span>Jordy Cropley</span><span>(403) 816 - 1645</span></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -705,7 +783,7 @@ namespace SingerDispatch.Printing.Documents
                         </div>
 
                         <div class=""unloading"">
-                            <span class=""heading"">Unload Information</span>
+                            <span class=""subheading"">Unload Information</span>
 
                             <table class=""details"">
                                 <thead>
@@ -720,12 +798,12 @@ namespace SingerDispatch.Printing.Documents
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td>Jan 07, 2009</td>
-                                        <td>10:00</td>
-                                        <td>Propak Systems - 404 East Lake Rd, Airdrie</td>
-                                        <td>Rob Ogle (403) 333 - 5369</td>
-                                        <td>Singer Specialized</td>
-                                        <td>Jordy Cropley (403) 816 - 1645</td>
+                                        <td class=""date"">Jan 07, 2009</td>
+                                        <td class=""time"">10:00</td>
+                                        <td class=""location"">Propak Systems - 404 East Lake Rd, Airdrie</td>
+                                        <td class=""contact""><span>Rob Ogle</span><span>(403) 333 - 5369</span></td>
+                                        <td class=""company"">Singer Specialized</td>
+                                        <td class=""contact""><span>Jordy Cropley</span><span>(403) 816 - 1645</span></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -769,6 +847,8 @@ namespace SingerDispatch.Printing.Documents
                         </tr>
                     </table>
                     
+                    <span class=""subheading"">Axle Weights</span>
+
                     <table class=""weights"">
                         <tr>
                             <th></th>
@@ -786,7 +866,7 @@ namespace SingerDispatch.Printing.Documents
                             <th>Group 10</th>                    
                         </tr>
                         <tr>
-                            <th class=""vertical"">Estimated Axle Weight</th>
+                            <th class=""row_name"">Estimated</th>
                             <td>7300</td>
                             <td>21000</td>
                             <td>28000</td>
@@ -801,7 +881,7 @@ namespace SingerDispatch.Printing.Documents
                             <td>&nbsp;</td>
                         </tr>
                         <tr>
-                            <th class=""vertical"">Scaled Axle Weight</th>
+                            <th class=""vertical"">Scaled</th>
                             <td>7300</td>
                             <td>&nbsp;</td>
                             <td>&nbsp;</td>
@@ -929,7 +1009,7 @@ namespace SingerDispatch.Printing.Documents
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
+                            <tr class=""details"">
                                 <td>Jan 7, 2009 09:00</td>
                                 <td>Light Swinging</td>
                                 <td>City of Airdrie</td>
@@ -969,7 +1049,7 @@ namespace SingerDispatch.Printing.Documents
                             </tr>                    
                         </thead>
                         <tbody>
-                            <tr>
+                            <tr class=""details"">
                                 <td>Jan 7, 2009 08:00</td>
                                 <td>Fortis Alberta</td>
                                 <td>24 Hour Dispatch</td>
@@ -982,7 +1062,7 @@ namespace SingerDispatch.Printing.Documents
                                     <span class=""field_name"">Comments: </span> Fortis to meet, measure, and escort in Airdrie, and then escort in Sundre area
                                 </td>
                             </tr>
-                            <tr>
+                            <tr class=""details"">
                                 <td>Jan 7, 2009 9:51</td>
                                 <td>Telus Communications</td>
                                 <td></td>
@@ -995,7 +1075,7 @@ namespace SingerDispatch.Printing.Documents
                                     <span class=""field_name"">Comments: </span> Cleared by Trevor
                                 </td>
                             </tr>
-                            <tr>
+                            <tr class=""details"">
                                 <td>Jan 7, 2009 09:52</td>
                                 <td>Shaw Cable</td>
                                 <td></td>
@@ -1008,7 +1088,7 @@ namespace SingerDispatch.Printing.Documents
                                     <span class=""field_name"">Comments: </span> Cleared by Earl
                                 </td>
                             </tr>
-                            <tr>
+                            <tr class=""details"">
                                 <td>Jan 7, 2009</td>
                                 <td>Central Alberta REA</td>
                                 <td></td>
@@ -1045,7 +1125,7 @@ namespace SingerDispatch.Printing.Documents
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
+                            <tr class=""details"">
                                 <td>Jan 7, 2009 to Jan 13, 2009</td>
                                 <td>Alberta Transportation</td>
                                 <td>Empty Trailer - Overweight and Overdimensional</td>
@@ -1056,7 +1136,7 @@ namespace SingerDispatch.Printing.Documents
                                     <span class=""field_name"">Conditions:</span> See permit
                                 </td>
                             </tr>
-                            <tr>
+                            <tr class=""details"">
                                 <td>Jan 7, 2009 to Jan 13, 2009</td>
                                 <td>Alberta Transport</td>
                                 <td>Overweight and Overdimensional</td>
@@ -1067,7 +1147,7 @@ namespace SingerDispatch.Printing.Documents
                                     <span class=""field_name"">Conditions:</span> See permit
                                 </td>
                             </tr>
-                            <tr>
+                            <tr class=""details"">
                                 <td>Jan 7, 2009 to Jan 13, 2009</td>
                                 <td>Alberta Transportation</td>
                                 <td>Empty Trailer - Overweight and Overdimensional</td>
@@ -1078,7 +1158,7 @@ namespace SingerDispatch.Printing.Documents
                                     <span class=""field_name"">Conditions:</span> See permit
                                 </td>
                             </tr>
-                            <tr>
+                            <tr class=""details"">
                                 <td>Jan 7, 2009 to Jan 13, 2009</td>
                                 <td>County 17 Mountainview</td>
                                 <td>Overweight and Overdimensional</td>
