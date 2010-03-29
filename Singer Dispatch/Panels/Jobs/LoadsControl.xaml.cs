@@ -113,6 +113,58 @@ namespace SingerDispatch.Panels.Jobs
             load.GrossWeight = gross;
         }
 
+        private void dgLoads_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            lbCommodities.ItemsSource = null;
+
+            if (dgLoads.SelectedItem == null) return;
+
+            var load = (Load)dgLoads.SelectedItem;
+            var checkboxList = new List<CheckBox>();
+
+            foreach (var item in SelectedJob.JobCommodities)
+            {
+                var cb = new CheckBox { Content = item.NameAndUnit, IsChecked = (item.Load == load), DataContext = item };
+
+                cb.Checked += CommodityCheckBox_Checked;
+                cb.Unchecked += CommodityCheckBox_Unchecked;
+
+                checkboxList.Add(cb);
+            }
+
+            lbCommodities.ItemsSource = checkboxList;
+        }
+
+        private void CommodityCheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            var cb = (CheckBox)sender;
+            var commodity = (JobCommodity)cb.DataContext;
+            var load = (Load)dgLoads.SelectedItem;
+
+            if (load == null || commodity == null) return;
+
+            if (commodity.Load != null && commodity.Load != load)
+            {
+                var message = string.Format("This commodity is already assigned to load #{0}. Would you like to reassign it?", commodity.Load.Name);
+                var confirmation = MessageBox.Show(message, "Commodity reassignment", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+                if (confirmation == MessageBoxResult.Yes)
+                    commodity.Load = load;
+            }
+            else
+                commodity.Load = load;
+        }
+
+        private void CommodityCheckBox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            var cb = (CheckBox)sender;
+            var commodity = (JobCommodity)cb.DataContext;            
+
+            if (commodity == null) return;
+
+            commodity.Load = null;
+        }
+
         private void RemoveLoad_Click(object sender, RoutedEventArgs e)
         {
             
@@ -151,18 +203,6 @@ namespace SingerDispatch.Panels.Jobs
             cmbTrailerCombinations.ItemsSource = from tc in Database.TrailerCombinations where tc.Rate == cmbRates.SelectedItem select tc;
         }
 
-        private void dgLoads_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (dgLoads.SelectedItem == null) return;
-
-            var list = new List<CheckBox>();
-
-            foreach (var item in SelectedJob.JobCommodities)
-            {
-                list.Add(new CheckBox { Content = item.NameAndUnit });
-            }
-
-            lbCommodities.ItemsSource = list;
-        }
+        
     }
 }

@@ -31,8 +31,8 @@
                 <Button Style="{StaticResource Horizontal}" Grid.Column="1" Click="DuplicateCommodity_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgCommodities, Path=SelectedItem}">Duplicate commodity</Button>
                 <Button Style="{StaticResource HorizontalEnd}" Grid.Column="3" Click="RemoveCommodity_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgCommodities, Path=SelectedItem}">Remove commodity</Button>
             </Grid>
-
-            <Border BorderBrush="LightGray" BorderThickness="1" Margin="0,3" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgCommodities, Path=SelectedItem}">
+            
+            <Border Visibility="Collapsed" BorderBrush="LightGray" BorderThickness="1" Margin="0,3" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgCommodities, Path=SelectedItem}">
                 <StackPanel Orientation="Horizontal" Margin="3" DataContext="{Binding ElementName=dgCommodities, Path=SelectedItem}">
                     <Label>Assign to load:</Label>
                     <ComboBox Name="cmbLoads" MinWidth="300" SelectedItem="{Binding Load}" ItemTemplate="{StaticResource SimpleNameTemplate}" />
