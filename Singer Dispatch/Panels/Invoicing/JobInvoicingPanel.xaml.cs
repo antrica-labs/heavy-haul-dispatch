@@ -63,7 +63,9 @@ namespace SingerDispatch.Panels.Invoicing
 
             try
             {
+                ((ButtonBase)sender).Focus();
                 Database.SubmitChanges();
+                lblSavedStatus.Content = "Saved";
             }
             catch (Exception ex)
             {
@@ -71,10 +73,17 @@ namespace SingerDispatch.Panels.Invoicing
             }
         }
 
+        private void CommitChangesButton_LostFocus(object sender, RoutedEventArgs e)
+        {
+            lblSavedStatus.Content = "";
+        }
+
         private void CommitJobChanges_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             CommitChangesButton.Focus();
             CommitChangesButton.RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent, CommitChangesButton));
         }
+
+        
     }
 }

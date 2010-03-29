@@ -8346,6 +8346,8 @@ namespace SingerDispatch
 		
 		private System.Nullable<bool> _IsPrinted;
 		
+		private System.Nullable<bool> _IsItemizedBilling;
+		
 		private EntitySet<Job> _Jobs;
 		
 		private EntitySet<QuoteCommodity> _QuoteCommodities;
@@ -8402,6 +8404,8 @@ namespace SingerDispatch
     partial void OnPriceChanged();
     partial void OnIsPrintedChanging(System.Nullable<bool> value);
     partial void OnIsPrintedChanged();
+    partial void OnIsItemizedBillingChanging(System.Nullable<bool> value);
+    partial void OnIsItemizedBillingChanged();
     #endregion
 		
 		public Quote()
@@ -8736,6 +8740,26 @@ namespace SingerDispatch
 					this._IsPrinted = value;
 					this.SendPropertyChanged("IsPrinted");
 					this.OnIsPrintedChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsItemizedBilling")]
+		public System.Nullable<bool> IsItemizedBilling
+		{
+			get
+			{
+				return this._IsItemizedBilling;
+			}
+			set
+			{
+				if ((this._IsItemizedBilling != value))
+				{
+					this.OnIsItemizedBillingChanging(value);
+					this.SendPropertyChanging();
+					this._IsItemizedBilling = value;
+					this.SendPropertyChanged("IsItemizedBilling");
+					this.OnIsItemizedBillingChanged();
 				}
 			}
 		}

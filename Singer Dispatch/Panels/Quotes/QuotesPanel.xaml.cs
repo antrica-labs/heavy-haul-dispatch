@@ -68,9 +68,15 @@ namespace SingerDispatch.Panels.Quotes
         {
             if (SelectedQuote == null) return;
 
+            var button = (ButtonBase)sender;
+
             try
-            {   
+            {
+                button.Focus();
+
                 Database.SubmitChanges();
+
+                lblSavedStatus.Content = "Saved";
             }
             catch (Exception ex)
             {
@@ -78,6 +84,9 @@ namespace SingerDispatch.Panels.Quotes
             }
         }
 
-        
+        private void CommitChangesButton_LostFocus(object sender, RoutedEventArgs e)
+        {
+            lblSavedStatus.Content = "";
+        }
     }
 }

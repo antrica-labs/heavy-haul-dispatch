@@ -51,14 +51,25 @@ namespace SingerDispatch.Panels.Jobs
         {
             if (SelectedJob == null) return;
 
+            var button = (ButtonBase)sender;
+
             try
             {
+                button.Focus();
+
                 Database.SubmitChanges();
+
+                lblSavedStatus.Content = "Saved";
             }
             catch (System.Exception ex)
             {
                 Windows.ErrorNoticeWindow.ShowError("Error while attempting write changes to database", ex.Message);
             }
+        }
+
+        private void CommitChangesButton_LostFocus(object sender, RoutedEventArgs e)
+        {
+            lblSavedStatus.Content = "";
         }
 
         private void CommitJobChanges_Executed(object sender, ExecutedRoutedEventArgs e)
@@ -77,5 +88,7 @@ namespace SingerDispatch.Panels.Jobs
             var document = new DocumentViewerWindow();
             document.DisplayPrintout(name, dispatches);
         }
+
+        
     }
 }

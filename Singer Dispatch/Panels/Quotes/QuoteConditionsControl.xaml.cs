@@ -37,17 +37,19 @@ namespace SingerDispatch.Panels.Quotes
                 QuoteCondition qc;
                 bool isChecked;
 
-                try
+                var copy = condition;
+                var query = from s in SelectedQuote.QuoteConditions where s.ConditionID == copy.ID select s;
+
+                if (query.Count() > 0)
                 {
-                    var copy = condition;
-                    qc = (from s in SelectedQuote.QuoteConditions where s.ConditionID == copy.ID select s).First();
+                    qc = query.First();
                     isChecked = true;
                 }
-                catch 
+                else
                 {
-                    qc = new QuoteCondition { Line = condition.Line, ConditionID = condition.ID};
+                    qc = new QuoteCondition { Line = condition.Line, ConditionID = condition.ID };
                     isChecked = false;
-                }
+                }                
 
                 var cb = new CheckBox { DataContext = qc, IsChecked = isChecked };
                 var tb = new TextBox { Style = (Style)TryFindResource("LongText") };

@@ -95,6 +95,12 @@
         <Setter Property="Margin" Value="0,0,0,5" />
     </Style>
 
+    <Style x:Key="SavedLabel" TargetType="Label">
+        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="HorizontalAlignment" Value="Right" />
+        <Setter Property="Margin" Value="0,0,5,0" />
+    </Style>
+
     <Style x:Key="SectionExpander" TargetType="Expander">
         <Setter Property="Margin" Value="0,0,0,5" />
         <Setter Property="FontWeight" Value="Bold" />

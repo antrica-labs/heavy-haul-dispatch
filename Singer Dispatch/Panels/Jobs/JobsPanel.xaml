@@ -29,8 +29,9 @@
                     <Label Content="{Binding SelectedJob.Number}" FontWeight="Bold" />
                 </StackPanel>
 
+                <Label x:Name="lblSavedStatus" Style="{StaticResource SavedLabel}" Grid.Column="1" />
                 <Button Style="{StaticResource Horizontal}" Grid.Column="2" Click="ViewDispatches_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, Path=SelectedJob}">View dispatches</Button>
-                <Button Style="{StaticResource HorizontalEnd}" Name="CommitChangesButton" Grid.Column="3" Click="CommitJobChanges_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, Path=SelectedJob}">Save changes</Button>
+                <Button Style="{StaticResource HorizontalEnd}" Name="CommitChangesButton" Grid.Column="3" Click="CommitJobChanges_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, Path=SelectedJob}" LostFocus="CommitChangesButton_LostFocus">Save changes</Button>
             </Grid>
         </Border>
 

@@ -226,7 +226,7 @@ namespace SingerDispatch.Panels.Quotes
 
         private void CalculateItemizedCost()
         {
-            if (SelectedQuote == null) return;
+            if (SelectedQuote == null || SelectedQuote.IsItemizedBilling != true) return;
 
             SelectedQuote.Price = 0.00m;
 

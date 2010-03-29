@@ -85,6 +85,7 @@ namespace SingerDispatch
         partial void OnCreated()
         {
             Price = Price ?? 0.00m;
+            IsItemizedBilling = IsItemizedBilling ?? false;
         }
 
         public string FriendlyName
