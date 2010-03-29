@@ -86,6 +86,28 @@ namespace SingerDispatch.Panels.Jobs
             }
         }
 
+        private void RemoveLoad_Click(object sender, RoutedEventArgs e)
+        {
+            var load = (Load)dgLoads.SelectedItem;
+            var list = (ObservableCollection<Load>)dgLoads.ItemsSource;
+
+            foreach (var item in load.Dispatches.ToList())
+                item.Load = null;
+
+            foreach (var item in load.JobCommodities.ToList())
+                item.Load = null;
+
+            foreach (var item in load.Permits.ToList())
+                item.Load = null;
+
+            foreach (var item in load.ThirdPartyServices.ToList())
+                item.Load = null;
+
+            list.Remove(load);
+            SelectedJob.Loads.Remove(load);
+            dgLoads.SelectedItem = null;
+        }
+
         private void AxleWeightChanged(object sender, TextChangedEventArgs e)
         {
             var load = (Load)dgLoads.SelectedItem;
@@ -163,11 +185,6 @@ namespace SingerDispatch.Panels.Jobs
             if (commodity == null) return;
 
             commodity.Load = null;
-        }
-
-        private void RemoveLoad_Click(object sender, RoutedEventArgs e)
-        {
-            
         }
 
         private System.Collections.IEnumerable GetCompanyRates(Company company)
