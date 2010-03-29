@@ -5,6 +5,7 @@ using System.Windows.Controls;
 using System.Collections.ObjectModel;
 using SingerDispatch.Database;
 using SingerDispatch.Windows;
+using System.Collections.Generic;
 
 namespace SingerDispatch.Panels.Jobs
 {
@@ -148,6 +149,20 @@ namespace SingerDispatch.Panels.Jobs
         private void cmbRates_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             cmbTrailerCombinations.ItemsSource = from tc in Database.TrailerCombinations where tc.Rate == cmbRates.SelectedItem select tc;
+        }
+
+        private void dgLoads_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (dgLoads.SelectedItem == null) return;
+
+            var list = new List<CheckBox>();
+
+            foreach (var item in SelectedJob.JobCommodities)
+            {
+                list.Add(new CheckBox { Content = item.NameAndUnit });
+            }
+
+            lbCommodities.ItemsSource = list;
         }
     }
 }

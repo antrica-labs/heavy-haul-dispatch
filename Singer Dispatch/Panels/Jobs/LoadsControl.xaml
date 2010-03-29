@@ -34,18 +34,30 @@
                 <Button Style="{StaticResource HorizontalEnd}" Grid.Column="3" Click="RemoveLoad_Click" IsEnabled="False">Remove load</Button>
             </Grid>
 
-            <GroupBox Header="Instruction" DataContext="{Binding ElementName=dgLoads, Path=SelectedItem}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgLoads, Path=SelectedItem}">
-                <StackPanel>
-                    <Label>Description of service:</Label>
-                    <TextBox Name="txtServiceDescription" Text="{Binding ServiceDescription}"/>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="300" />
+                </Grid.ColumnDefinitions>
 
-                    <Label>Schedule:</Label>
-                    <TextBox Text="{Binding Schedule}" Style="{StaticResource MultiLine}" />
-                    
-                    <Label>Additional notes:</Label>
-                    <TextBox Text="{Binding Notes}" Height="40" Style="{StaticResource MultiLine}"/>
-                </StackPanel>
-            </GroupBox>
+                <GroupBox Grid.Column="0" Header="Instruction" DataContext="{Binding ElementName=dgLoads, Path=SelectedItem}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgLoads, Path=SelectedItem}">
+                    <StackPanel >
+                        <Label>Description of service:</Label>
+                        <TextBox Name="txtServiceDescription" Text="{Binding ServiceDescription}"/>
+
+                        <Label>Schedule:</Label>
+                        <TextBox Text="{Binding Schedule}" Style="{StaticResource MultiLine}" />
+
+                        <Label>Additional notes:</Label>
+                        <TextBox Text="{Binding Notes}" Height="40" Style="{StaticResource MultiLine}"/>
+                    </StackPanel>
+                </GroupBox>
+
+                <GroupBox Grid.Column="1" Header="Commodities" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgLoads, Path=SelectedItem}">
+                    <ListBox Name="lbCommodities" />
+                </GroupBox>                
+            </Grid>
+
 
             <GroupBox Header="Vehicle" DataContext="{Binding ElementName=dgLoads, Path=SelectedItem}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgLoads, Path=SelectedItem}">
                 <Grid>
@@ -168,7 +180,7 @@
             </GroupBox>
         </StackPanel>        
 
-        <DataGrid Name="dgLoads" Style="{StaticResource ListDisplay}">
+        <DataGrid Name="dgLoads" Style="{StaticResource ListDisplay}" SelectionChanged="dgLoads_SelectionChanged">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Number" Width="0.15*" Binding="{Binding Number, StringFormat={}{0:D2}}" />
                 <DataGridTextColumn Header="Unit" Width="0.15*" Binding="{Binding Equipment.UnitNumber}"/>
