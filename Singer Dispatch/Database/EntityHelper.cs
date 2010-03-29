@@ -72,7 +72,7 @@ namespace SingerDispatch.Database
         {
             foreach (var item in invoice.ReferenceNumbers.Where(item => item.ID != 0))
             {
-                context.ReferenceNumbers.DeleteOnSubmit(item);
+                context.InvoiceReferenceNumbers.DeleteOnSubmit(item);
             }
 
             foreach (var item in invoice.InvoiceLineItems.Where(item => item.ID != 0))

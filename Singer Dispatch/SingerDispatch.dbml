@@ -228,6 +228,16 @@
       <Association Name="Company_Job1" Member="CareOfCompany" ThisKey="CareOfCompanyID" OtherKey="ID" Type="Company" IsForeignKey="true" />
       <Association Name="JobStatusType_Job" Member="JobStatusType" ThisKey="StatusTypeID" OtherKey="ID" Type="JobStatusType" IsForeignKey="true" />
       <Association Name="Quote_Job" Member="Quote" ThisKey="QuoteID" OtherKey="ID" Type="Quote" IsForeignKey="true" />
+      <Association Name="Job_JobReferenceNumber" Member="ReferenceNumbers" ThisKey="ID" OtherKey="JobID" Type="JobReferenceNumber" />
+    </Type>
+  </Table>
+  <Table Name="" Member="JobReferenceNumbers">
+    <Type Name="JobReferenceNumber">
+      <Column Name="ID" Type="System.Int64" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="JobID" Type="System.Int64" CanBeNull="true" />
+      <Column Name="Field" Type="System.String" CanBeNull="true" />
+      <Column Name="Value" Type="System.String" CanBeNull="true" />
+      <Association Name="Job_JobReferenceNumber" Member="Job" ThisKey="JobID" OtherKey="ID" Type="Job" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="" Member="JobStatusTypes">
@@ -580,7 +590,7 @@
       <Column Name="Hours" Type="System.Int32" CanBeNull="true" />
       <Column Name="HourlyRate" Type="System.Decimal" CanBeNull="true" />
       <Column Name="GSTExempt" Type="System.Boolean" CanBeNull="true" />
-      <Association Name="Invoice_ReferenceNumber" Member="ReferenceNumbers" ThisKey="ID" OtherKey="InvoiceID" Type="ReferenceNumber" />
+      <Association Name="Invoice_InvoiceReferenceNumber" Member="ReferenceNumbers" ThisKey="ID" OtherKey="InvoiceID" Type="InvoiceReferenceNumber" />
       <Association Name="Invoice_InvoiceLineItem" Member="InvoiceLineItems" ThisKey="ID" OtherKey="InvoiceID" Type="InvoiceLineItem" />
       <Association Name="Invoice_InvoiceExtra" Member="InvoiceExtras" ThisKey="ID" OtherKey="InvoiceID" Type="InvoiceExtra" />
       <Association Name="Address_Invoice" Member="BillingAddress" ThisKey="AddressID" OtherKey="ID" Type="Address" IsForeignKey="true" />
@@ -588,13 +598,13 @@
       <Association Name="Job_Invoice" Member="Job" ThisKey="JobID" OtherKey="ID" Type="Job" IsForeignKey="true" />
     </Type>
   </Table>
-  <Table Name="" Member="ReferenceNumbers">
-    <Type Name="ReferenceNumber">
+  <Table Name="" Member="InvoiceReferenceNumbers">
+    <Type Name="InvoiceReferenceNumber">
       <Column Name="ID" Type="System.Int64" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="InvoiceID" Type="System.Int64" CanBeNull="true" />
       <Column Name="Field" Type="System.String" CanBeNull="true" />
       <Column Name="Value" Type="System.String" CanBeNull="true" />
-      <Association Name="Invoice_ReferenceNumber" Member="Invoice" ThisKey="InvoiceID" OtherKey="ID" Type="Invoice" IsForeignKey="true" />
+      <Association Name="Invoice_InvoiceReferenceNumber" Member="Invoice" ThisKey="InvoiceID" OtherKey="ID" Type="Invoice" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="" Member="InvoiceLineItems">

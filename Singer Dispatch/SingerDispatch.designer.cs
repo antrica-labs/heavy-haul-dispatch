@@ -71,6 +71,9 @@ namespace SingerDispatch
     partial void InsertJob(Job instance);
     partial void UpdateJob(Job instance);
     partial void DeleteJob(Job instance);
+    partial void InsertJobReferenceNumber(JobReferenceNumber instance);
+    partial void UpdateJobReferenceNumber(JobReferenceNumber instance);
+    partial void DeleteJobReferenceNumber(JobReferenceNumber instance);
     partial void InsertJobStatusType(JobStatusType instance);
     partial void UpdateJobStatusType(JobStatusType instance);
     partial void DeleteJobStatusType(JobStatusType instance);
@@ -143,9 +146,9 @@ namespace SingerDispatch
     partial void InsertInvoice(Invoice instance);
     partial void UpdateInvoice(Invoice instance);
     partial void DeleteInvoice(Invoice instance);
-    partial void InsertReferenceNumber(ReferenceNumber instance);
-    partial void UpdateReferenceNumber(ReferenceNumber instance);
-    partial void DeleteReferenceNumber(ReferenceNumber instance);
+    partial void InsertInvoiceReferenceNumber(InvoiceReferenceNumber instance);
+    partial void UpdateInvoiceReferenceNumber(InvoiceReferenceNumber instance);
+    partial void DeleteInvoiceReferenceNumber(InvoiceReferenceNumber instance);
     partial void InsertInvoiceLineItem(InvoiceLineItem instance);
     partial void UpdateInvoiceLineItem(InvoiceLineItem instance);
     partial void DeleteInvoiceLineItem(InvoiceLineItem instance);
@@ -296,6 +299,14 @@ namespace SingerDispatch
 			get
 			{
 				return this.GetTable<Job>();
+			}
+		}
+		
+		public System.Data.Linq.Table<JobReferenceNumber> JobReferenceNumbers
+		{
+			get
+			{
+				return this.GetTable<JobReferenceNumber>();
 			}
 		}
 		
@@ -491,11 +502,11 @@ namespace SingerDispatch
 			}
 		}
 		
-		public System.Data.Linq.Table<ReferenceNumber> ReferenceNumbers
+		public System.Data.Linq.Table<InvoiceReferenceNumber> InvoiceReferenceNumbers
 		{
 			get
 			{
-				return this.GetTable<ReferenceNumber>();
+				return this.GetTable<InvoiceReferenceNumber>();
 			}
 		}
 		
@@ -5099,6 +5110,8 @@ namespace SingerDispatch
 		
 		private EntitySet<JobCommodity> _JobCommodities;
 		
+		private EntitySet<JobReferenceNumber> _ReferenceNumbers;
+		
 		private EntitySet<Load> _Loads;
 		
 		private EntitySet<Permit> _Permits;
@@ -5150,6 +5163,7 @@ namespace SingerDispatch
 		public Job()
 		{
 			this._JobCommodities = new EntitySet<JobCommodity>(new Action<JobCommodity>(this.attach_JobCommodities), new Action<JobCommodity>(this.detach_JobCommodities));
+			this._ReferenceNumbers = new EntitySet<JobReferenceNumber>(new Action<JobReferenceNumber>(this.attach_ReferenceNumbers), new Action<JobReferenceNumber>(this.detach_ReferenceNumbers));
 			this._Loads = new EntitySet<Load>(new Action<Load>(this.attach_Loads), new Action<Load>(this.detach_Loads));
 			this._Permits = new EntitySet<Permit>(new Action<Permit>(this.attach_Permits), new Action<Permit>(this.detach_Permits));
 			this._ThirdPartyServices = new EntitySet<ThirdPartyService>(new Action<ThirdPartyService>(this.attach_ThirdPartyServices), new Action<ThirdPartyService>(this.detach_ThirdPartyServices));
@@ -5413,6 +5427,19 @@ namespace SingerDispatch
 			set
 			{
 				this._JobCommodities.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Job_JobReferenceNumber", Storage="_ReferenceNumbers", ThisKey="ID", OtherKey="JobID")]
+		public EntitySet<JobReferenceNumber> ReferenceNumbers
+		{
+			get
+			{
+				return this._ReferenceNumbers;
+			}
+			set
+			{
+				this._ReferenceNumbers.Assign(value);
 			}
 		}
 		
@@ -5683,6 +5710,18 @@ namespace SingerDispatch
 			entity.Job = null;
 		}
 		
+		private void attach_ReferenceNumbers(JobReferenceNumber entity)
+		{
+			this.SendPropertyChanging();
+			entity.Job = this;
+		}
+		
+		private void detach_ReferenceNumbers(JobReferenceNumber entity)
+		{
+			this.SendPropertyChanging();
+			entity.Job = null;
+		}
+		
 		private void attach_Loads(Load entity)
 		{
 			this.SendPropertyChanging();
@@ -5741,6 +5780,181 @@ namespace SingerDispatch
 		{
 			this.SendPropertyChanging();
 			entity.Job = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="")]
+	public partial class JobReferenceNumber : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private long _ID;
+		
+		private System.Nullable<long> _JobID;
+		
+		private string _Field;
+		
+		private string _Value;
+		
+		private EntityRef<Job> _Job;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDChanging(long value);
+    partial void OnIDChanged();
+    partial void OnJobIDChanging(System.Nullable<long> value);
+    partial void OnJobIDChanged();
+    partial void OnFieldChanging(string value);
+    partial void OnFieldChanged();
+    partial void OnValueChanging(string value);
+    partial void OnValueChanged();
+    #endregion
+		
+		public JobReferenceNumber()
+		{
+			this._Job = default(EntityRef<Job>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, IsPrimaryKey=true, IsDbGenerated=true)]
+		public long ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this.OnIDChanging(value);
+					this.SendPropertyChanging();
+					this._ID = value;
+					this.SendPropertyChanged("ID");
+					this.OnIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_JobID")]
+		public System.Nullable<long> JobID
+		{
+			get
+			{
+				return this._JobID;
+			}
+			set
+			{
+				if ((this._JobID != value))
+				{
+					if (this._Job.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnJobIDChanging(value);
+					this.SendPropertyChanging();
+					this._JobID = value;
+					this.SendPropertyChanged("JobID");
+					this.OnJobIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Field")]
+		public string Field
+		{
+			get
+			{
+				return this._Field;
+			}
+			set
+			{
+				if ((this._Field != value))
+				{
+					this.OnFieldChanging(value);
+					this.SendPropertyChanging();
+					this._Field = value;
+					this.SendPropertyChanged("Field");
+					this.OnFieldChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Value")]
+		public string Value
+		{
+			get
+			{
+				return this._Value;
+			}
+			set
+			{
+				if ((this._Value != value))
+				{
+					this.OnValueChanging(value);
+					this.SendPropertyChanging();
+					this._Value = value;
+					this.SendPropertyChanged("Value");
+					this.OnValueChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Job_JobReferenceNumber", Storage="_Job", ThisKey="JobID", OtherKey="ID", IsForeignKey=true)]
+		public Job Job
+		{
+			get
+			{
+				return this._Job.Entity;
+			}
+			set
+			{
+				Job previousValue = this._Job.Entity;
+				if (((previousValue != value) 
+							|| (this._Job.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Job.Entity = null;
+						previousValue.ReferenceNumbers.Remove(this);
+					}
+					this._Job.Entity = value;
+					if ((value != null))
+					{
+						value.ReferenceNumbers.Add(this);
+						this._JobID = value.ID;
+					}
+					else
+					{
+						this._JobID = default(Nullable<long>);
+					}
+					this.SendPropertyChanged("Job");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
 		}
 	}
 	
@@ -13278,7 +13492,7 @@ namespace SingerDispatch
 		
 		private System.Nullable<bool> _GSTExempt;
 		
-		private EntitySet<ReferenceNumber> _ReferenceNumbers;
+		private EntitySet<InvoiceReferenceNumber> _ReferenceNumbers;
 		
 		private EntitySet<InvoiceLineItem> _InvoiceLineItems;
 		
@@ -13320,7 +13534,7 @@ namespace SingerDispatch
 		
 		public Invoice()
 		{
-			this._ReferenceNumbers = new EntitySet<ReferenceNumber>(new Action<ReferenceNumber>(this.attach_ReferenceNumbers), new Action<ReferenceNumber>(this.detach_ReferenceNumbers));
+			this._ReferenceNumbers = new EntitySet<InvoiceReferenceNumber>(new Action<InvoiceReferenceNumber>(this.attach_ReferenceNumbers), new Action<InvoiceReferenceNumber>(this.detach_ReferenceNumbers));
 			this._InvoiceLineItems = new EntitySet<InvoiceLineItem>(new Action<InvoiceLineItem>(this.attach_InvoiceLineItems), new Action<InvoiceLineItem>(this.detach_InvoiceLineItems));
 			this._InvoiceExtras = new EntitySet<InvoiceExtra>(new Action<InvoiceExtra>(this.attach_InvoiceExtras), new Action<InvoiceExtra>(this.detach_InvoiceExtras));
 			this._BillingAddress = default(EntityRef<Address>);
@@ -13561,8 +13775,8 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Invoice_ReferenceNumber", Storage="_ReferenceNumbers", ThisKey="ID", OtherKey="InvoiceID")]
-		public EntitySet<ReferenceNumber> ReferenceNumbers
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Invoice_InvoiceReferenceNumber", Storage="_ReferenceNumbers", ThisKey="ID", OtherKey="InvoiceID")]
+		public EntitySet<InvoiceReferenceNumber> ReferenceNumbers
 		{
 			get
 			{
@@ -13722,13 +13936,13 @@ namespace SingerDispatch
 			}
 		}
 		
-		private void attach_ReferenceNumbers(ReferenceNumber entity)
+		private void attach_ReferenceNumbers(InvoiceReferenceNumber entity)
 		{
 			this.SendPropertyChanging();
 			entity.Invoice = this;
 		}
 		
-		private void detach_ReferenceNumbers(ReferenceNumber entity)
+		private void detach_ReferenceNumbers(InvoiceReferenceNumber entity)
 		{
 			this.SendPropertyChanging();
 			entity.Invoice = null;
@@ -13760,7 +13974,7 @@ namespace SingerDispatch
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="")]
-	public partial class ReferenceNumber : INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class InvoiceReferenceNumber : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -13789,7 +14003,7 @@ namespace SingerDispatch
     partial void OnValueChanged();
     #endregion
 		
-		public ReferenceNumber()
+		public InvoiceReferenceNumber()
 		{
 			this._Invoice = default(EntityRef<Invoice>);
 			OnCreated();
@@ -13879,7 +14093,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Invoice_ReferenceNumber", Storage="_Invoice", ThisKey="InvoiceID", OtherKey="ID", IsForeignKey=true)]
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Invoice_InvoiceReferenceNumber", Storage="_Invoice", ThisKey="InvoiceID", OtherKey="ID", IsForeignKey=true)]
 		public Invoice Invoice
 		{
 			get

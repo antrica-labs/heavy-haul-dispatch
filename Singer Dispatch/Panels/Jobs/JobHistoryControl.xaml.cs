@@ -6,6 +6,7 @@ using System.Windows.Controls;
 using System.Collections.ObjectModel;
 using SingerDispatch.Database;
 using SingerDispatch.Windows;
+using SingerDispatch.Controls;
 
 namespace SingerDispatch.Panels.Jobs
 {
@@ -23,7 +24,7 @@ namespace SingerDispatch.Panels.Jobs
 
             Database = SingerConstants.CommonDataContext;
 
-            DefaultJobStatus = (from s in Database.JobStatusTypes where s.Name == "Pending" select s).First();
+            DefaultJobStatus = (from s in Database.JobStatusTypes where s.Name == "Pending" select s).First();            
         }
 
         private void ControlLoaded(object sender, RoutedEventArgs e)
@@ -60,7 +61,14 @@ namespace SingerDispatch.Panels.Jobs
         protected override void SelectedJobChanged(Job newValue, Job oldValue)
         {
             base.SelectedJobChanged(newValue, oldValue);
-                     
+
+            DgReferenceNumbers.ItemsSource = null;
+            DgReferenceNumbers.UpdateLayout();
+            DgReferenceNumbers.MaxHeight = DgReferenceNumbers.ActualHeight;
+
+            if (newValue != null)
+                DgReferenceNumbers.ItemsSource = new ObservableCollection<JobReferenceNumber>(newValue.ReferenceNumbers);
+
             UpdateContactList();
         }
 
@@ -113,6 +121,28 @@ namespace SingerDispatch.Panels.Jobs
                 ErrorNoticeWindow.ShowError("Error while attempting write changes to database", ex.Message);
             }
             
+        }
+
+        private void AddReferenceNumber_Click(object sender, RoutedEventArgs e)
+        {
+            if (SelectedJob == null) return;
+
+            var reference = new JobReferenceNumber();
+
+            SelectedJob.ReferenceNumbers.Add(reference);
+            ((ObservableCollection<JobReferenceNumber>)DgReferenceNumbers.ItemsSource).Add(reference);
+
+            DataGridHelper.EditFirstColumn(DgReferenceNumbers, reference);
+        }
+
+        private void RemoveReferenceNumber_Click(object sender, RoutedEventArgs e)
+        {
+            var selected = (JobReferenceNumber)DgReferenceNumbers.SelectedItem;
+
+            if (SelectedJob == null || selected == null) return;
+
+            SelectedJob.ReferenceNumbers.Remove(selected);
+            ((ObservableCollection<JobReferenceNumber>)DgReferenceNumbers.ItemsSource).Remove(selected);
         }
                
         private void ViewQuote_Click(object sender, RoutedEventArgs e)

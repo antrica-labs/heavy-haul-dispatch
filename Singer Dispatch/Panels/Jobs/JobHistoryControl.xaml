@@ -36,9 +36,12 @@
                 <Grid.RowDefinitions>
                     <RowDefinition />
                     <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
                 </Grid.RowDefinitions>
 
-                <GroupBox Header="Job Details" Name="gbJobDetails" Grid.Column="0" Grid.Row="0" Margin="0,0,3,0" DataContext="{Binding ElementName=DgJobs, Path=SelectedItem}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=DgJobs, Path=SelectedItem}">
+                <GroupBox Header="Job Details" Name="gbJobDetails" Grid.Column="0" Grid.Row="0" Grid.RowSpan="4" Margin="0,0,3,0" DataContext="{Binding ElementName=DgJobs, Path=SelectedItem}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=DgJobs, Path=SelectedItem}">
                     <StackPanel>
                         <Label>Project name:</Label>                        
                         <TextBox Name="txtName" Text="{Binding Name}" />
@@ -72,7 +75,7 @@
                     </StackPanel>
                 </GroupBox>
 
-                <GroupBox Header="Job Timeline" Grid.Column="0" Grid.Row="1" Margin="0,3,3,0" DataContext="{Binding ElementName=DgJobs, Path=SelectedItem}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=DgJobs, Path=SelectedItem}">
+                <GroupBox Header="Job Timeline" Grid.Column="0" Grid.Row="4" Grid.RowSpan="2" Margin="0,0,3,0" DataContext="{Binding ElementName=DgJobs, Path=SelectedItem}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=DgJobs, Path=SelectedItem}">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition />
@@ -95,7 +98,28 @@
                     </Grid>
                 </GroupBox>
 
-                <GroupBox Header="Contact List" Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" Margin="3,0,0,0" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=DgJobs, Path=SelectedItem}">
+                <GroupBox Header="Customer References" Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=DgJobs, Path=SelectedItem}">
+                    <DockPanel>
+                        <Grid DockPanel.Dock="Bottom">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+
+                            <Button Style="{StaticResource Horizontal}" Grid.Column="0" Click="AddReferenceNumber_Click">Add</Button>
+                            <Button Style="{StaticResource HorizontalEnd}" Grid.Column="1" Click="RemoveReferenceNumber_Click">Remove</Button>
+                        </Grid>
+
+                        <DataGrid Name="DgReferenceNumbers" Style="{StaticResource ListDisplay}" IsReadOnly="False">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Field" Binding="{Binding Field}" />
+                                <DataGridTextColumn Header="Value" Binding="{Binding Value}" />
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </DockPanel>
+                </GroupBox>
+
+                <GroupBox Header="Contact List" Grid.Column="1" Grid.Row="2" Grid.RowSpan="3" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=DgJobs, Path=SelectedItem}">
                     <DockPanel>
                         <Grid DockPanel.Dock="Bottom" DataContext="{Binding ElementName=DgJobContacts, Path=SelectedItem}">
                             <Grid.ColumnDefinitions>
@@ -139,6 +163,8 @@
                         </DataGrid>
                     </DockPanel>
                 </GroupBox>
+
+                
             </Grid>
         </StackPanel>
 

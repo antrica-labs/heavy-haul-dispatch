@@ -21,7 +21,7 @@ namespace SingerDispatch.Panels.Invoicing
             InitializeComponent();
 
             Database = SingerConstants.CommonDataContext;
-            DgReferenceNumbers.ItemsSource = new ObservableCollection<ReferenceNumber>();
+            DgReferenceNumbers.ItemsSource = new ObservableCollection<InvoiceReferenceNumber>();
         }
 
         private void Control_Loaded(object sender, RoutedEventArgs e)
@@ -44,7 +44,7 @@ namespace SingerDispatch.Panels.Invoicing
             base.SelectedInvoiceChanged(newValue, oldValue);
 
             var invoice = newValue;
-            var list = (ObservableCollection<ReferenceNumber>)DgReferenceNumbers.ItemsSource;
+            var list = (ObservableCollection<InvoiceReferenceNumber>)DgReferenceNumbers.ItemsSource;
 
             list.Clear();
 
@@ -107,6 +107,13 @@ namespace SingerDispatch.Panels.Invoicing
 
             var list = (ObservableCollection<Invoice>) DgInvoices.ItemsSource;
             var invoice = new Invoice { Job = SelectedJob, InvoiceDate = DateTime.Now };
+
+            foreach (var item in SelectedJob.ReferenceNumbers)
+            {
+                var reference = new InvoiceReferenceNumber { Field = item.Field, Value = item.Value };
+
+                invoice.ReferenceNumbers.Add(reference);
+            }
 
             list.Insert(0, invoice);
             DgInvoices.SelectedItem = invoice;
@@ -181,22 +188,22 @@ namespace SingerDispatch.Panels.Invoicing
         {
             if (SelectedInvoice == null) return;
 
-            var reference = new ReferenceNumber();
+            var reference = new InvoiceReferenceNumber();
 
             SelectedInvoice.ReferenceNumbers.Add(reference);
-            ((ObservableCollection<ReferenceNumber>)DgReferenceNumbers.ItemsSource).Add(reference);
+            ((ObservableCollection<InvoiceReferenceNumber>)DgReferenceNumbers.ItemsSource).Add(reference);
 
             DataGridHelper.EditFirstColumn(DgReferenceNumbers, reference);
         }
 
         private void RemoveReferenceNumber_Click(object sender, RoutedEventArgs e)
         {
-            var selected = (ReferenceNumber) DgReferenceNumbers.SelectedItem;
+            var selected = (InvoiceReferenceNumber)DgReferenceNumbers.SelectedItem;
 
             if (SelectedInvoice == null || selected == null) return;
 
             SelectedInvoice.ReferenceNumbers.Remove(selected);
-            ((ObservableCollection<ReferenceNumber>) DgReferenceNumbers.ItemsSource).Remove(selected);
+            ((ObservableCollection<InvoiceReferenceNumber>)DgReferenceNumbers.ItemsSource).Remove(selected);
         }
     }
 }

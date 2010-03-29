@@ -293,7 +293,7 @@ namespace SingerDispatch
             cp.StartDate = StartDate;
             cp.JobStatusType = JobStatusType;
 
-            return null;
+            return cp;
         }
     }
 

@@ -76,7 +76,7 @@ namespace SingerDispatch.Printing.Documents
             output.Append(GetEquipment());
             output.Append(GetSchedule());
             output.Append(GetLoadInstructions());
-            output.Append(GetDimensions());
+            output.Append(GetDimensions(dispatch.Load));
             output.Append(GetTractors());
             output.Append(GetSingerPilots());
             output.Append(GetThirdPartyPilots());
@@ -530,7 +530,7 @@ namespace SingerDispatch.Printing.Documents
                         <tr>
                             <td class=""field_name col1_4"">Date:</td>
                             <td class=""value col2_4"">%CURRENT_DATE%</td>
-                            <td class=""field_name col3_4"">Customer #:</td>
+                            <td class=""field_name col3_4"">Customer:</td>
                             <td class=""value col4_4"">%CUSTOMER%</td>
                         </tr>
                         <tr>
@@ -565,7 +565,9 @@ namespace SingerDispatch.Printing.Documents
                     <table class=""customer_references"">
                         <tr>
                             <td class=""field_name col1_2"">Customer References:</td>
-                            <td class=""value col2_2""><span class=""reference""><span class=""field_name"">AFE</span>: <span class=""value"">9342</span></span>, <span class=""reference""><span class=""field_name"">PO#</span>: <span class=""value"">13940</span></span></td>
+                            <td class=""value col2_2"">
+                                %REFERENCE_NUMBERS%                                
+                            </td>
                         </tr>
                     </table>
                 </div>
@@ -583,6 +585,21 @@ namespace SingerDispatch.Printing.Documents
 
             var output = html.Replace("%CURRENT_DATE%", date.ToShortDateString()).Replace("%CUSTOMER%", customer).Replace("%UNIT%", unit)
                 .Replace("%DRIVER%", driver).Replace("%TRAILER%", trailer).Replace("%DISPATCH_DATE%", dispatchDate.ToString());
+
+            var references = new StringBuilder();
+            
+            for (var i = 0; i < dispatch.Job.ReferenceNumbers.Count; i++) 
+            {
+                var item = dispatch.Job.ReferenceNumbers[i];
+
+                references.Append(@"<span class=""reference""><span class=""field_name"">" + item.Field + @"</span>: <span class=""value"">" + item.Value + "</span></span>");
+
+                if ((i + 1) != dispatch.Job.ReferenceNumbers.Count)
+                    references.Append(", ");
+            }
+
+            if (references.Length > 0)
+                output = output.Replace("%REFERENCE_NUMBERS%", references.ToString());
 
             return output;
         }
@@ -832,7 +849,7 @@ namespace SingerDispatch.Printing.Documents
             return content;
         }
 
-        private static string GetDimensions()
+        private static string GetDimensions(Load load)
         {
             const string content = @"
                 <div class=""dimensions section"">

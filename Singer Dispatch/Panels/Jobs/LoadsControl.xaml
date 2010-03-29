@@ -53,7 +53,7 @@
                     </StackPanel>
                 </GroupBox>
 
-                <GroupBox Grid.Column="1" Header="Commodities" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgLoads, Path=SelectedItem}">
+                <GroupBox Grid.Column="1" Header="Commodities" Margin="3,0,0,0" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgLoads, Path=SelectedItem}">
                     <ListBox Name="lbCommodities" />
                 </GroupBox>                
             </Grid>
@@ -98,7 +98,7 @@
                 <StackPanel>
                     <Grid>
                         <Grid.ColumnDefinitions>                        
-                            <ColumnDefinition Width="76"/>
+                            <ColumnDefinition Width="85"/>
                             <ColumnDefinition />
                             <ColumnDefinition />
                             <ColumnDefinition />
@@ -161,7 +161,7 @@
                         <Label Grid.Column="12" Grid.Row="0">Group 10:</Label>
                         <TextBox Grid.Column="12" Grid.Row="1" Text="{Binding WeightGroup10}"  />                    
                         
-                        <Label Grid.Column="13" Grid.Row="0">Esitmate:</Label>
+                        <Label Grid.Column="13" Grid.Row="0">Esitmated:</Label>
                         <CheckBox Grid.Column="13" Grid.Row="1" IsChecked="{Binding WeightEstimated}" />
 
                         <Label Grid.Column="0" Grid.Row="2">Gross weight:</Label>

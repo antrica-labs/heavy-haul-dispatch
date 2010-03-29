@@ -109,40 +109,38 @@
 
                 <StackPanel Grid.Column="1">
                     <GroupBox Header="Customer Details" DataContext="{Binding SelectedInvoice}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=ThePanel, Path=SelectedInvoice}">
-                        <StackPanel>
-                            <Grid DataContext="{Binding Contact}">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="65" />
-                                    <ColumnDefinition />
-                                    <ColumnDefinition Width="10" />
-                                    <ColumnDefinition Width="65" />
-                                    <ColumnDefinition />
-                                </Grid.ColumnDefinitions>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition />
-                                    <RowDefinition />
-                                    <RowDefinition />
-                                </Grid.RowDefinitions>
+                        <Grid DataContext="{Binding Contact}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="65" />
+                                <ColumnDefinition />
+                                <ColumnDefinition Width="10" />
+                                <ColumnDefinition Width="65" />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
 
-                                <Label Grid.Column="0" Grid.Row="0">Name:</Label>
-                                <Label Grid.Column="1" Grid.Row="0" Content="{Binding Name}" />
+                            <Label Grid.Column="0" Grid.Row="0">Name:</Label>
+                            <Label Grid.Column="1" Grid.Row="0" Content="{Binding Name}" />
 
-                                <Label Grid.Column="0" Grid.Row="1">Company:</Label>
-                                <Label Grid.Column="1" Grid.Row="1" Content="{Binding Address.Company.Name}" />
+                            <Label Grid.Column="0" Grid.Row="1">Company:</Label>
+                            <Label Grid.Column="1" Grid.Row="1" Content="{Binding Address.Company.Name}" />
 
-                                <Label Grid.Column="0" Grid.Row="2">Email:</Label>
-                                <Label Grid.Column="1" Grid.Row="2" Content="{Binding Email}" />
+                            <Label Grid.Column="0" Grid.Row="2">Email:</Label>
+                            <Label Grid.Column="1" Grid.Row="2" Content="{Binding Email}" />
 
-                                <Label Grid.Column="3" Grid.Row="0">Phone:</Label>
-                                <Label Grid.Column="4" Grid.Row="0" Content="{Binding PrimaryPhone}" />
+                            <Label Grid.Column="3" Grid.Row="0">Phone:</Label>
+                            <Label Grid.Column="4" Grid.Row="0" Content="{Binding PrimaryPhone}" />
 
-                                <Label Grid.Column="3" Grid.Row="1">Fax:</Label>
-                                <Label Grid.Column="4" Grid.Row="1" Content="{Binding Fax}" />
+                            <Label Grid.Column="3" Grid.Row="1">Fax:</Label>
+                            <Label Grid.Column="4" Grid.Row="1" Content="{Binding Fax}" />
 
-                                <Label Grid.Column="3" Grid.Row="2">Preferred:</Label>
-                                <Label Grid.Column="4" Grid.Row="2" Content="{Binding PreferedContactMethod}" />
-                            </Grid>
-                        </StackPanel>
+                            <Label Grid.Column="3" Grid.Row="2">Preferred:</Label>
+                            <Label Grid.Column="4" Grid.Row="2" Content="{Binding PreferedContactMethod}" />
+                        </Grid>
                     </GroupBox>
                     
                     <GroupBox Header="Reference Numbers">
