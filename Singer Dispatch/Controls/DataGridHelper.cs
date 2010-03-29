@@ -6,6 +6,7 @@ namespace SingerDispatch.Controls
     {
         public static void EditFirstColumn(DataGrid grid, object item)
         {
+            grid.UpdateLayout();
             grid.Focus();
             grid.CurrentCell = new DataGridCellInfo(item, grid.Columns[0]);
             grid.ScrollIntoView(item);

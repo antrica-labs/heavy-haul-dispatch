@@ -7,6 +7,8 @@ namespace SingerDispatch.Controls
     {
         public object Convert(object[] values, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
+            if (values.Length < 2 || !(values[0] is int) || !(values[1] is int)) return "";
+ 
             try
             {
                 if ((int)values[0] != 0)
@@ -17,7 +19,7 @@ namespace SingerDispatch.Controls
             catch
             {
                 return "";
-            }
+            }            
         }
 
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, System.Globalization.CultureInfo culture)
