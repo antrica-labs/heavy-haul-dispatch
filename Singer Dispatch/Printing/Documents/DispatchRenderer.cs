@@ -7,6 +7,17 @@ namespace SingerDispatch.Printing.Documents
     class DispatchRenderer : IRenderer
     {
         private const string PageBreak = @"<div class=""page_break""></div>";
+        private bool IncludeDriverCopy { get; set; }
+
+        public DispatchRenderer()
+        {
+            IncludeDriverCopy = false;
+        }
+
+        public DispatchRenderer(bool includeDriverCopy)
+        {
+            IncludeDriverCopy = includeDriverCopy;
+        }
 
         public string GenerateHTML(object dispatch)
         {
@@ -29,7 +40,13 @@ namespace SingerDispatch.Printing.Documents
             content.Append("</head>");
             content.Append("<body>");
 
-            content.Append(FillDispatchBody(dispatch));
+            content.Append(FillDispatchBody(dispatch, "File Copy"));
+            
+            if (IncludeDriverCopy == true)
+            {
+                content.Append(PageBreak);
+                content.Append(FillDispatchBody(dispatch, "Driver Copy"));
+            }
 
             content.Append("</body>");
             content.Append("</html>");
@@ -54,7 +71,13 @@ namespace SingerDispatch.Printing.Documents
             {
                 var dispatch = dispatches[i];
 
-                content.Append(FillDispatchBody(dispatch));
+                content.Append(FillDispatchBody(dispatch, "File Copy"));
+
+                if (IncludeDriverCopy == true)
+                {
+                    content.Append(PageBreak);
+                    content.Append(FillDispatchBody(dispatch, "Driver Copy"));
+                }
 
                 if ((i + 1) != dispatches.Count)
                     content.Append(PageBreak);
@@ -66,11 +89,11 @@ namespace SingerDispatch.Printing.Documents
             return content.ToString();
         }
 
-        private static string FillDispatchBody(Dispatch dispatch)
+        private static string FillDispatchBody(Dispatch dispatch, string copyType)
         {
             var output = new StringBuilder();
 
-            output.Append(GetHeader(dispatch));
+            output.Append(GetHeader(dispatch, copyType));
             output.Append(GetDetails(dispatch));
             output.Append(GetDescription(dispatch.Description));
             output.Append(GetEquipment());
@@ -474,7 +497,7 @@ namespace SingerDispatch.Printing.Documents
             return content;
         }
 
-        private static string GetHeader(Dispatch dispatch)
+        private static string GetHeader(Dispatch dispatch, string copyType)
         {           
             var content = @"
                 <div class=""header"">
@@ -490,7 +513,7 @@ namespace SingerDispatch.Printing.Documents
                                 <span>Phone: %PHONE%</span>
                             </td>
                             <td class=""id_col"">
-                                <span class=""copy_type"">FIle Copy</span>
+                                <span class=""copy_type"">%COPY%</span>
                                 <span>Dispatch #:</span>
                                 <span class=""number"">%DISPATCH_NUMBER%</span>
                             </td>
@@ -516,7 +539,7 @@ namespace SingerDispatch.Printing.Documents
 
             var name = (dispatch != null) ? dispatch.Name : "UNKNOWN";
             
-            content = content.Replace("%HEADER_IMG%", img).Replace("%DISPATCH_NUMBER%", name);
+            content = content.Replace("%HEADER_IMG%", img).Replace("%COPY%", copyType).Replace("%DISPATCH_NUMBER%", name);
             content = content.Replace("%COMPANY_NAME%", company).Replace("%STREET_ADDRESS%", address).Replace("%CITY%", city).Replace("%PHONE%", phone);
 
             return content;
