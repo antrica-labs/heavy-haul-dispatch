@@ -28,6 +28,8 @@ namespace SingerDispatch.Panels.Jobs
             cmbSeasons.ItemsSource = from s in Database.Seasons select s;
             cmbRates.ItemsSource = GetCompanyRates(SelectedCompany);
             cmbUnits.ItemsSource = (SelectedJob == null) ? null : from u in Database.Equipment where u.EquipmentClass.Name == "Tractor" || u.EquipmentClass.Name == "Trailor" select u;
+
+            UpdateCommodityList();
         }
 
         protected override void SelectedJobChanged(Job newValue, Job oldValue)
@@ -136,6 +138,11 @@ namespace SingerDispatch.Panels.Jobs
         }
 
         private void dgLoads_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            UpdateCommodityList();
+        }
+
+        private void UpdateCommodityList()
         {
             lbCommodities.ItemsSource = null;
 
