@@ -51,7 +51,7 @@
                     <Label Grid.Row="0" Grid.Column="0">Commodity name:</Label>
                     <TextBox Name="txtCommodityName" Grid.Row="0" Grid.Column="1" Text="{Binding Name}"/>
 
-                    <Label Grid.Row="1" Grid.Column="0">Value:</Label>
+                    <Label Grid.Row="1" Grid.Column="0">Declared value:</Label>
                     <TextBox Name="txtCommodityValue" Grid.Row="1" Grid.Column="1" Text="{Binding Value, StringFormat=c}" Controls:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" />
 
                     <Label Grid.Row="2" Grid.Column="0">Serial number:</Label>
