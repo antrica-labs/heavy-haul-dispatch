@@ -41,7 +41,7 @@ namespace SingerDispatch.Windows
                 renderer = new InvoiceRenderer();
             else if (obj is Dispatch || obj is List<Dispatch>)
             {
-                var result = MessageBox.Show("Do you wish to inlcude a driver's copy with this printout?", "Include drivers copy?", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                var result = MessageBox.Show("Do you wish to inlcude a file copy with this printout?", "Include drivers copy?", MessageBoxButton.YesNo, MessageBoxImage.Question);
                 
                 renderer = new DispatchRenderer(result == MessageBoxResult.Yes);
             }

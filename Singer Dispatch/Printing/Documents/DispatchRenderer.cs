@@ -7,16 +7,16 @@ namespace SingerDispatch.Printing.Documents
     class DispatchRenderer : IRenderer
     {
         private const string PageBreak = @"<div class=""page_break""></div>";
-        private bool IncludeDriverCopy { get; set; }
+        private bool IncludeFileCopy { get; set; }
 
         public DispatchRenderer()
         {
-            IncludeDriverCopy = false;
+            IncludeFileCopy = false;
         }
 
         public DispatchRenderer(bool includeDriverCopy)
         {
-            IncludeDriverCopy = includeDriverCopy;
+            IncludeFileCopy = includeDriverCopy;
         }
 
         public string GenerateHTML(object dispatch)
@@ -40,12 +40,12 @@ namespace SingerDispatch.Printing.Documents
             content.Append("</head>");
             content.Append("<body>");
 
-            content.Append(FillDispatchBody(dispatch, "File Copy"));
+            content.Append(FillDispatchBody(dispatch, "Driver Copy"));            
             
-            if (IncludeDriverCopy == true)
+            if (IncludeFileCopy == true)
             {
                 content.Append(PageBreak);
-                content.Append(FillDispatchBody(dispatch, "Driver Copy"));
+                content.Append(FillDispatchBody(dispatch, "File Copy"));
             }
 
             content.Append("</body>");
@@ -70,13 +70,13 @@ namespace SingerDispatch.Printing.Documents
             for (var i = 0; i < dispatches.Count; i++)
             {
                 var dispatch = dispatches[i];
+                                
+                content.Append(FillDispatchBody(dispatch, "Driver Copy"));
 
-                content.Append(FillDispatchBody(dispatch, "File Copy"));
-
-                if (IncludeDriverCopy == true)
+                if (IncludeFileCopy == true)
                 {
                     content.Append(PageBreak);
-                    content.Append(FillDispatchBody(dispatch, "Driver Copy"));
+                    content.Append(FillDispatchBody(dispatch, "File Copy"));    
                 }
 
                 if ((i + 1) != dispatches.Count)
