@@ -623,6 +623,8 @@ namespace SingerDispatch.Printing.Documents
 
             if (references.Length > 0)
                 output = output.Replace("%REFERENCE_NUMBERS%", references.ToString());
+            else
+                output = output.Replace("%REFERENCE_NUMBERS%", "");
 
             return output;
         }

@@ -39,6 +39,9 @@ namespace SingerDispatch.Database
 
         public static void PrepareEntityDelete(Job job, SingerDispatchDataContext context)
         {
+            if (job.Invoices.Count > 0)
+                throw new Exception("This job has already been invoiced and can no longer be deleted.");
+
             foreach (var c in job.JobCommodities.Where(c => c.ID != 0))
             {
                 context.JobCommodities.DeleteOnSubmit(c);

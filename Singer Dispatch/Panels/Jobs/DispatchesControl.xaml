@@ -62,7 +62,7 @@
                     <ComboBox Name="cmbUnits" Grid.Row="3" Grid.Column="1" SelectedItem="{Binding Equipment}" ItemTemplate="{StaticResource EquipmentNameTemplate}" IsEditable="True" TextSearch.TextPath="UnitNumber" />
 
                     <Label Grid.Row="4" Grid.Column="0">Description:</Label>
-                    <TextBox Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Description}"/>
+                    <TextBox Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Description}" Style="{StaticResource AutoFilled}"/>
 
                     <Label Grid.Row="5" Grid.Column="0">Schedule:</Label>
                     <TextBox Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Schedule}" Style="{StaticResource MultiLine}" />
