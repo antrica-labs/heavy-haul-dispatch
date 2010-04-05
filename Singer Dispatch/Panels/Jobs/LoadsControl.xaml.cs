@@ -178,20 +178,31 @@ namespace SingerDispatch.Panels.Jobs
                 var confirmation = MessageBox.Show(message, "Commodity reassignment", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
                 if (confirmation == MessageBoxResult.Yes)
+                {
+                    var orig = commodity.Load;
+
                     commodity.Load = load;
+
+                    orig.NotifyJobCommodities();
+                }
             }
             else
                 commodity.Load = load;
+
+            load.NotifyJobCommodities();
         }
 
         private void CommodityCheckBox_Unchecked(object sender, RoutedEventArgs e)
         {
             var cb = (CheckBox)sender;
-            var commodity = (JobCommodity)cb.DataContext;            
+            var commodity = (JobCommodity)cb.DataContext;
+            var load = (Load)dgLoads.SelectedItem;
 
-            if (commodity == null) return;
+            if (load == null || commodity == null) return;
 
             commodity.Load = null;
+
+            load.NotifyJobCommodities();
         }
 
         private System.Collections.IEnumerable GetCompanyRates(Company company)

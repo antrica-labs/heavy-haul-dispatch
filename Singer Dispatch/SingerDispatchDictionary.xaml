@@ -11,6 +11,7 @@
     <Controls:QuoteFriendlyNameConverter x:Key="QuoteFriendlyNameConverter" />
     <Controls:InvoiceFriendlyNameConverter x:Key="InvoiceFriendlyNameConverter" />
     <Controls:EmployeeFriendlyNameConverter x:Key="EmployeeFriendlyNameConverter" />
+    <Controls:LoadCommoditiesStringConverter x:Key="LoadCommoditiesStringConverter" />
     
     <DataTemplate x:Key="SimpleNameTemplate">
         <TextBlock Text="{Binding Name}" />
@@ -35,6 +36,11 @@
     <Style TargetType="Menu">        
         <Setter Property="BorderBrush" Value="LightGray" />
         <Setter Property="BorderThickness" Value="0,0,0,1" />
+    </Style>
+    
+    <Style TargetType="Label" x:Key="Important">
+        <Setter Property="Foreground" Value="Red" />
+        <Setter Property="FontWeight" Value="Bold" />
     </Style>
     
     <Style TargetType="TextBox">
@@ -100,7 +106,8 @@
     </Style>
 
     <Style x:Key="SavedLabel" TargetType="Label">
-        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="FontWeight" Value="Bold" />
+        <Setter Property="Foreground" Value="SeaGreen" />
         <Setter Property="HorizontalAlignment" Value="Right" />
         <Setter Property="Margin" Value="0,0,5,0" />
     </Style>

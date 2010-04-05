@@ -111,6 +111,7 @@
     <Compile Include="Controls\EmployeeFriendlyNameConverter.cs" />
     <Compile Include="Controls\InvoiceFriendlyNameConverter.cs" />
     <Compile Include="Controls\IsEnabledNullConverter.cs" />
+    <Compile Include="Controls\LoadCommoditiesStringConverter.cs" />
     <Compile Include="Controls\QuoteFriendlyNameConverter.cs" />
     <Compile Include="Controls\TabIndexHyperlink.cs" />
     <Compile Include="Database\EntityHelper.cs" />

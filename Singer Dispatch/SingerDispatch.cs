@@ -300,6 +300,12 @@ namespace SingerDispatch
 
     partial class JobCommodity
     {
+        partial void OnCreated()
+        {
+            WeightEstimated = WeightEstimated ?? false;
+            SizeEstimated = SizeEstimated ?? false;
+        }
+
         public string NameAndUnit
         {
             get
@@ -311,12 +317,6 @@ namespace SingerDispatch
 
                 return name;
             }
-        }
-
-        partial void OnCreated()
-        {
-            WeightEstimated = WeightEstimated ?? false;
-            SizeEstimated = SizeEstimated ?? false;
         }
 
         public JobCommodity Duplicate()
@@ -432,6 +432,12 @@ namespace SingerDispatch
         partial void OnCreated()
         {
             WeightEstimated = WeightEstimated ?? true;
+        }
+
+        public void NotifyJobCommodities()
+        {
+            SendPropertyChanging();
+            SendPropertyChanged("JobCommodities");
         }
 
         public Load Duplicate()

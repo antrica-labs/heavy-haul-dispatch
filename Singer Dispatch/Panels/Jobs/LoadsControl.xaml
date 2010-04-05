@@ -186,7 +186,13 @@
                 <DataGridTextColumn Header="Unit" Width="0.15*" Binding="{Binding Equipment.UnitNumber}"/>
                 <DataGridTextColumn Header="Wheel type" Width="0.25*" Binding="{Binding Rate.Name}" />
                 <DataGridTextColumn Header="Trailer" Width="0.4*" Binding="{Binding TrailerCombination.Combination}" />
-                <DataGridTextColumn Header="Description" Binding="{Binding ServiceDescription}" />
+                <DataGridTemplateColumn Header="Commodities">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Converter={StaticResource LoadCommoditiesStringConverter}, Path=JobCommodities}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
     </DockPanel>

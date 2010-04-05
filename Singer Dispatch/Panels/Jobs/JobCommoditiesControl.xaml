@@ -60,16 +60,16 @@
                             <RowDefinition />
                         </Grid.RowDefinitions>
 
-                        <Label Grid.Row="0" Grid.Column="0">Commodity name:</Label>
+                        <Label Grid.Row="0" Grid.Column="0" Style="{StaticResource Important}">Commodity name:</Label>
                         <ComboBox Name="cmbCommodityName" Text="{Binding Name}" Grid.Row="0" Grid.Column="1" IsEditable="True" ItemTemplate="{StaticResource NameAndUnitTemplate}" TextSearch.TextPath="Name" SelectionChanged="CommodityName_SelectionChanged" />
 
-                        <Label Grid.Row="1" Grid.Column="0">Declared value:</Label>
+                        <Label Grid.Row="1" Grid.Column="0" Style="{StaticResource Important}">Declared value:</Label>
                         <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Value, StringFormat=c}" Controls:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" />
 
                         <Label Grid.Row="2" Grid.Column="0">Serial number:</Label>
                         <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Serial}" />
 
-                        <Label Grid.Row="3" Grid.Column="0">Unit number:</Label>
+                        <Label Grid.Row="3" Grid.Column="0" Style="{StaticResource Important}">Unit number:</Label>
                         <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Unit}" />
 
                         <Label Grid.Row="4" Grid.Column="0">Owner:</Label>
