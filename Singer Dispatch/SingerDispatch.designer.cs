@@ -6104,31 +6104,53 @@ namespace SingerDispatch
 		
 		private string _Notes;
 		
-		private System.Nullable<double> _WeightSteer;
+		private System.Nullable<double> _EWeightSteer;
 		
-		private System.Nullable<double> _WeightDrive;
+		private System.Nullable<double> _EWeightDrive;
 		
-		private System.Nullable<double> _WeightGroup1;
+		private System.Nullable<double> _EWeightGroup1;
 		
-		private System.Nullable<double> _WeightGroup2;
+		private System.Nullable<double> _EWeightGroup2;
 		
-		private System.Nullable<double> _WeightGroup3;
+		private System.Nullable<double> _EWeightGroup3;
 		
-		private System.Nullable<double> _WeightGroup4;
+		private System.Nullable<double> _EWeightGroup4;
 		
-		private System.Nullable<double> _WeightGroup5;
+		private System.Nullable<double> _EWeightGroup5;
 		
-		private System.Nullable<double> _WeightGroup6;
+		private System.Nullable<double> _EWeightGroup6;
 		
-		private System.Nullable<double> _WeightGroup7;
+		private System.Nullable<double> _EWeightGroup7;
 		
-		private System.Nullable<double> _WeightGroup8;
+		private System.Nullable<double> _EWeightGroup8;
 		
-		private System.Nullable<double> _WeightGroup9;
+		private System.Nullable<double> _EWeightGroup9;
 		
-		private System.Nullable<double> _WeightGroup10;
+		private System.Nullable<double> _EWeightGroup10;
 		
-		private System.Nullable<bool> _WeightEstimated;
+		private System.Nullable<double> _SWeightSteer;
+		
+		private System.Nullable<double> _SWeightDrive;
+		
+		private System.Nullable<double> _SWeightGroup1;
+		
+		private System.Nullable<double> _SWeightGroup2;
+		
+		private System.Nullable<double> _SWeightGroup3;
+		
+		private System.Nullable<double> _SWeightGroup4;
+		
+		private System.Nullable<double> _SWeightGroup5;
+		
+		private System.Nullable<double> _SWeightGroup6;
+		
+		private System.Nullable<double> _SWeightGroup7;
+		
+		private System.Nullable<double> _SWeightGroup8;
+		
+		private System.Nullable<double> _SWeightGroup9;
+		
+		private System.Nullable<double> _SWeightGroup10;
 		
 		private System.Nullable<double> _GrossWeight;
 		
@@ -6186,32 +6208,54 @@ namespace SingerDispatch
     partial void OnServiceDescriptionChanged();
     partial void OnNotesChanging(string value);
     partial void OnNotesChanged();
-    partial void OnWeightSteerChanging(System.Nullable<double> value);
-    partial void OnWeightSteerChanged();
-    partial void OnWeightDriveChanging(System.Nullable<double> value);
-    partial void OnWeightDriveChanged();
-    partial void OnWeightGroup1Changing(System.Nullable<double> value);
-    partial void OnWeightGroup1Changed();
-    partial void OnWeightGroup2Changing(System.Nullable<double> value);
-    partial void OnWeightGroup2Changed();
-    partial void OnWeightGroup3Changing(System.Nullable<double> value);
-    partial void OnWeightGroup3Changed();
-    partial void OnWeightGroup4Changing(System.Nullable<double> value);
-    partial void OnWeightGroup4Changed();
-    partial void OnWeightGroup5Changing(System.Nullable<double> value);
-    partial void OnWeightGroup5Changed();
-    partial void OnWeightGroup6Changing(System.Nullable<double> value);
-    partial void OnWeightGroup6Changed();
-    partial void OnWeightGroup7Changing(System.Nullable<double> value);
-    partial void OnWeightGroup7Changed();
-    partial void OnWeightGroup8Changing(System.Nullable<double> value);
-    partial void OnWeightGroup8Changed();
-    partial void OnWeightGroup9Changing(System.Nullable<double> value);
-    partial void OnWeightGroup9Changed();
-    partial void OnWeightGroup10Changing(System.Nullable<double> value);
-    partial void OnWeightGroup10Changed();
-    partial void OnWeightEstimatedChanging(System.Nullable<bool> value);
-    partial void OnWeightEstimatedChanged();
+    partial void OnEWeightSteerChanging(System.Nullable<double> value);
+    partial void OnEWeightSteerChanged();
+    partial void OnEWeightDriveChanging(System.Nullable<double> value);
+    partial void OnEWeightDriveChanged();
+    partial void OnEWeightGroup1Changing(System.Nullable<double> value);
+    partial void OnEWeightGroup1Changed();
+    partial void OnEWeightGroup2Changing(System.Nullable<double> value);
+    partial void OnEWeightGroup2Changed();
+    partial void OnEWeightGroup3Changing(System.Nullable<double> value);
+    partial void OnEWeightGroup3Changed();
+    partial void OnEWeightGroup4Changing(System.Nullable<double> value);
+    partial void OnEWeightGroup4Changed();
+    partial void OnEWeightGroup5Changing(System.Nullable<double> value);
+    partial void OnEWeightGroup5Changed();
+    partial void OnEWeightGroup6Changing(System.Nullable<double> value);
+    partial void OnEWeightGroup6Changed();
+    partial void OnEWeightGroup7Changing(System.Nullable<double> value);
+    partial void OnEWeightGroup7Changed();
+    partial void OnEWeightGroup8Changing(System.Nullable<double> value);
+    partial void OnEWeightGroup8Changed();
+    partial void OnEWeightGroup9Changing(System.Nullable<double> value);
+    partial void OnEWeightGroup9Changed();
+    partial void OnEWeightGroup10Changing(System.Nullable<double> value);
+    partial void OnEWeightGroup10Changed();
+    partial void OnSWeightSteerChanging(System.Nullable<double> value);
+    partial void OnSWeightSteerChanged();
+    partial void OnSWeightDriveChanging(System.Nullable<double> value);
+    partial void OnSWeightDriveChanged();
+    partial void OnSWeightGroup1Changing(System.Nullable<double> value);
+    partial void OnSWeightGroup1Changed();
+    partial void OnSWeightGroup2Changing(System.Nullable<double> value);
+    partial void OnSWeightGroup2Changed();
+    partial void OnSWeightGroup3Changing(System.Nullable<double> value);
+    partial void OnSWeightGroup3Changed();
+    partial void OnSWeightGroup4Changing(System.Nullable<double> value);
+    partial void OnSWeightGroup4Changed();
+    partial void OnSWeightGroup5Changing(System.Nullable<double> value);
+    partial void OnSWeightGroup5Changed();
+    partial void OnSWeightGroup6Changing(System.Nullable<double> value);
+    partial void OnSWeightGroup6Changed();
+    partial void OnSWeightGroup7Changing(System.Nullable<double> value);
+    partial void OnSWeightGroup7Changed();
+    partial void OnSWeightGroup8Changing(System.Nullable<double> value);
+    partial void OnSWeightGroup8Changed();
+    partial void OnSWeightGroup9Changing(System.Nullable<double> value);
+    partial void OnSWeightGroup9Changed();
+    partial void OnSWeightGroup10Changing(System.Nullable<double> value);
+    partial void OnSWeightGroup10Changed();
     partial void OnGrossWeightChanging(System.Nullable<double> value);
     partial void OnGrossWeightChanged();
     partial void OnLoadedLengthChanging(System.Nullable<double> value);
@@ -6516,262 +6560,482 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WeightSteer")]
-		public System.Nullable<double> WeightSteer
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EWeightSteer")]
+		public System.Nullable<double> EWeightSteer
 		{
 			get
 			{
-				return this._WeightSteer;
+				return this._EWeightSteer;
 			}
 			set
 			{
-				if ((this._WeightSteer != value))
+				if ((this._EWeightSteer != value))
 				{
-					this.OnWeightSteerChanging(value);
+					this.OnEWeightSteerChanging(value);
 					this.SendPropertyChanging();
-					this._WeightSteer = value;
-					this.SendPropertyChanged("WeightSteer");
-					this.OnWeightSteerChanged();
+					this._EWeightSteer = value;
+					this.SendPropertyChanged("EWeightSteer");
+					this.OnEWeightSteerChanged();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WeightDrive")]
-		public System.Nullable<double> WeightDrive
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EWeightDrive")]
+		public System.Nullable<double> EWeightDrive
 		{
 			get
 			{
-				return this._WeightDrive;
+				return this._EWeightDrive;
 			}
 			set
 			{
-				if ((this._WeightDrive != value))
+				if ((this._EWeightDrive != value))
 				{
-					this.OnWeightDriveChanging(value);
+					this.OnEWeightDriveChanging(value);
 					this.SendPropertyChanging();
-					this._WeightDrive = value;
-					this.SendPropertyChanged("WeightDrive");
-					this.OnWeightDriveChanged();
+					this._EWeightDrive = value;
+					this.SendPropertyChanged("EWeightDrive");
+					this.OnEWeightDriveChanged();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WeightGroup1")]
-		public System.Nullable<double> WeightGroup1
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EWeightGroup1")]
+		public System.Nullable<double> EWeightGroup1
 		{
 			get
 			{
-				return this._WeightGroup1;
+				return this._EWeightGroup1;
 			}
 			set
 			{
-				if ((this._WeightGroup1 != value))
+				if ((this._EWeightGroup1 != value))
 				{
-					this.OnWeightGroup1Changing(value);
+					this.OnEWeightGroup1Changing(value);
 					this.SendPropertyChanging();
-					this._WeightGroup1 = value;
-					this.SendPropertyChanged("WeightGroup1");
-					this.OnWeightGroup1Changed();
+					this._EWeightGroup1 = value;
+					this.SendPropertyChanged("EWeightGroup1");
+					this.OnEWeightGroup1Changed();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WeightGroup2")]
-		public System.Nullable<double> WeightGroup2
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EWeightGroup2")]
+		public System.Nullable<double> EWeightGroup2
 		{
 			get
 			{
-				return this._WeightGroup2;
+				return this._EWeightGroup2;
 			}
 			set
 			{
-				if ((this._WeightGroup2 != value))
+				if ((this._EWeightGroup2 != value))
 				{
-					this.OnWeightGroup2Changing(value);
+					this.OnEWeightGroup2Changing(value);
 					this.SendPropertyChanging();
-					this._WeightGroup2 = value;
-					this.SendPropertyChanged("WeightGroup2");
-					this.OnWeightGroup2Changed();
+					this._EWeightGroup2 = value;
+					this.SendPropertyChanged("EWeightGroup2");
+					this.OnEWeightGroup2Changed();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WeightGroup3")]
-		public System.Nullable<double> WeightGroup3
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EWeightGroup3")]
+		public System.Nullable<double> EWeightGroup3
 		{
 			get
 			{
-				return this._WeightGroup3;
+				return this._EWeightGroup3;
 			}
 			set
 			{
-				if ((this._WeightGroup3 != value))
+				if ((this._EWeightGroup3 != value))
 				{
-					this.OnWeightGroup3Changing(value);
+					this.OnEWeightGroup3Changing(value);
 					this.SendPropertyChanging();
-					this._WeightGroup3 = value;
-					this.SendPropertyChanged("WeightGroup3");
-					this.OnWeightGroup3Changed();
+					this._EWeightGroup3 = value;
+					this.SendPropertyChanged("EWeightGroup3");
+					this.OnEWeightGroup3Changed();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WeightGroup4")]
-		public System.Nullable<double> WeightGroup4
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EWeightGroup4")]
+		public System.Nullable<double> EWeightGroup4
 		{
 			get
 			{
-				return this._WeightGroup4;
+				return this._EWeightGroup4;
 			}
 			set
 			{
-				if ((this._WeightGroup4 != value))
+				if ((this._EWeightGroup4 != value))
 				{
-					this.OnWeightGroup4Changing(value);
+					this.OnEWeightGroup4Changing(value);
 					this.SendPropertyChanging();
-					this._WeightGroup4 = value;
-					this.SendPropertyChanged("WeightGroup4");
-					this.OnWeightGroup4Changed();
+					this._EWeightGroup4 = value;
+					this.SendPropertyChanged("EWeightGroup4");
+					this.OnEWeightGroup4Changed();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WeightGroup5")]
-		public System.Nullable<double> WeightGroup5
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EWeightGroup5")]
+		public System.Nullable<double> EWeightGroup5
 		{
 			get
 			{
-				return this._WeightGroup5;
+				return this._EWeightGroup5;
 			}
 			set
 			{
-				if ((this._WeightGroup5 != value))
+				if ((this._EWeightGroup5 != value))
 				{
-					this.OnWeightGroup5Changing(value);
+					this.OnEWeightGroup5Changing(value);
 					this.SendPropertyChanging();
-					this._WeightGroup5 = value;
-					this.SendPropertyChanged("WeightGroup5");
-					this.OnWeightGroup5Changed();
+					this._EWeightGroup5 = value;
+					this.SendPropertyChanged("EWeightGroup5");
+					this.OnEWeightGroup5Changed();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WeightGroup6")]
-		public System.Nullable<double> WeightGroup6
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EWeightGroup6")]
+		public System.Nullable<double> EWeightGroup6
 		{
 			get
 			{
-				return this._WeightGroup6;
+				return this._EWeightGroup6;
 			}
 			set
 			{
-				if ((this._WeightGroup6 != value))
+				if ((this._EWeightGroup6 != value))
 				{
-					this.OnWeightGroup6Changing(value);
+					this.OnEWeightGroup6Changing(value);
 					this.SendPropertyChanging();
-					this._WeightGroup6 = value;
-					this.SendPropertyChanged("WeightGroup6");
-					this.OnWeightGroup6Changed();
+					this._EWeightGroup6 = value;
+					this.SendPropertyChanged("EWeightGroup6");
+					this.OnEWeightGroup6Changed();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WeightGroup7")]
-		public System.Nullable<double> WeightGroup7
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EWeightGroup7")]
+		public System.Nullable<double> EWeightGroup7
 		{
 			get
 			{
-				return this._WeightGroup7;
+				return this._EWeightGroup7;
 			}
 			set
 			{
-				if ((this._WeightGroup7 != value))
+				if ((this._EWeightGroup7 != value))
 				{
-					this.OnWeightGroup7Changing(value);
+					this.OnEWeightGroup7Changing(value);
 					this.SendPropertyChanging();
-					this._WeightGroup7 = value;
-					this.SendPropertyChanged("WeightGroup7");
-					this.OnWeightGroup7Changed();
+					this._EWeightGroup7 = value;
+					this.SendPropertyChanged("EWeightGroup7");
+					this.OnEWeightGroup7Changed();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WeightGroup8")]
-		public System.Nullable<double> WeightGroup8
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EWeightGroup8")]
+		public System.Nullable<double> EWeightGroup8
 		{
 			get
 			{
-				return this._WeightGroup8;
+				return this._EWeightGroup8;
 			}
 			set
 			{
-				if ((this._WeightGroup8 != value))
+				if ((this._EWeightGroup8 != value))
 				{
-					this.OnWeightGroup8Changing(value);
+					this.OnEWeightGroup8Changing(value);
 					this.SendPropertyChanging();
-					this._WeightGroup8 = value;
-					this.SendPropertyChanged("WeightGroup8");
-					this.OnWeightGroup8Changed();
+					this._EWeightGroup8 = value;
+					this.SendPropertyChanged("EWeightGroup8");
+					this.OnEWeightGroup8Changed();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WeightGroup9")]
-		public System.Nullable<double> WeightGroup9
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EWeightGroup9")]
+		public System.Nullable<double> EWeightGroup9
 		{
 			get
 			{
-				return this._WeightGroup9;
+				return this._EWeightGroup9;
 			}
 			set
 			{
-				if ((this._WeightGroup9 != value))
+				if ((this._EWeightGroup9 != value))
 				{
-					this.OnWeightGroup9Changing(value);
+					this.OnEWeightGroup9Changing(value);
 					this.SendPropertyChanging();
-					this._WeightGroup9 = value;
-					this.SendPropertyChanged("WeightGroup9");
-					this.OnWeightGroup9Changed();
+					this._EWeightGroup9 = value;
+					this.SendPropertyChanged("EWeightGroup9");
+					this.OnEWeightGroup9Changed();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WeightGroup10")]
-		public System.Nullable<double> WeightGroup10
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EWeightGroup10")]
+		public System.Nullable<double> EWeightGroup10
 		{
 			get
 			{
-				return this._WeightGroup10;
+				return this._EWeightGroup10;
 			}
 			set
 			{
-				if ((this._WeightGroup10 != value))
+				if ((this._EWeightGroup10 != value))
 				{
-					this.OnWeightGroup10Changing(value);
+					this.OnEWeightGroup10Changing(value);
 					this.SendPropertyChanging();
-					this._WeightGroup10 = value;
-					this.SendPropertyChanged("WeightGroup10");
-					this.OnWeightGroup10Changed();
+					this._EWeightGroup10 = value;
+					this.SendPropertyChanged("EWeightGroup10");
+					this.OnEWeightGroup10Changed();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WeightEstimated")]
-		public System.Nullable<bool> WeightEstimated
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SWeightSteer")]
+		public System.Nullable<double> SWeightSteer
 		{
 			get
 			{
-				return this._WeightEstimated;
+				return this._SWeightSteer;
 			}
 			set
 			{
-				if ((this._WeightEstimated != value))
+				if ((this._SWeightSteer != value))
 				{
-					this.OnWeightEstimatedChanging(value);
+					this.OnSWeightSteerChanging(value);
 					this.SendPropertyChanging();
-					this._WeightEstimated = value;
-					this.SendPropertyChanged("WeightEstimated");
-					this.OnWeightEstimatedChanged();
+					this._SWeightSteer = value;
+					this.SendPropertyChanged("SWeightSteer");
+					this.OnSWeightSteerChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SWeightDrive")]
+		public System.Nullable<double> SWeightDrive
+		{
+			get
+			{
+				return this._SWeightDrive;
+			}
+			set
+			{
+				if ((this._SWeightDrive != value))
+				{
+					this.OnSWeightDriveChanging(value);
+					this.SendPropertyChanging();
+					this._SWeightDrive = value;
+					this.SendPropertyChanged("SWeightDrive");
+					this.OnSWeightDriveChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SWeightGroup1")]
+		public System.Nullable<double> SWeightGroup1
+		{
+			get
+			{
+				return this._SWeightGroup1;
+			}
+			set
+			{
+				if ((this._SWeightGroup1 != value))
+				{
+					this.OnSWeightGroup1Changing(value);
+					this.SendPropertyChanging();
+					this._SWeightGroup1 = value;
+					this.SendPropertyChanged("SWeightGroup1");
+					this.OnSWeightGroup1Changed();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SWeightGroup2")]
+		public System.Nullable<double> SWeightGroup2
+		{
+			get
+			{
+				return this._SWeightGroup2;
+			}
+			set
+			{
+				if ((this._SWeightGroup2 != value))
+				{
+					this.OnSWeightGroup2Changing(value);
+					this.SendPropertyChanging();
+					this._SWeightGroup2 = value;
+					this.SendPropertyChanged("SWeightGroup2");
+					this.OnSWeightGroup2Changed();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SWeightGroup3")]
+		public System.Nullable<double> SWeightGroup3
+		{
+			get
+			{
+				return this._SWeightGroup3;
+			}
+			set
+			{
+				if ((this._SWeightGroup3 != value))
+				{
+					this.OnSWeightGroup3Changing(value);
+					this.SendPropertyChanging();
+					this._SWeightGroup3 = value;
+					this.SendPropertyChanged("SWeightGroup3");
+					this.OnSWeightGroup3Changed();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SWeightGroup4")]
+		public System.Nullable<double> SWeightGroup4
+		{
+			get
+			{
+				return this._SWeightGroup4;
+			}
+			set
+			{
+				if ((this._SWeightGroup4 != value))
+				{
+					this.OnSWeightGroup4Changing(value);
+					this.SendPropertyChanging();
+					this._SWeightGroup4 = value;
+					this.SendPropertyChanged("SWeightGroup4");
+					this.OnSWeightGroup4Changed();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SWeightGroup5")]
+		public System.Nullable<double> SWeightGroup5
+		{
+			get
+			{
+				return this._SWeightGroup5;
+			}
+			set
+			{
+				if ((this._SWeightGroup5 != value))
+				{
+					this.OnSWeightGroup5Changing(value);
+					this.SendPropertyChanging();
+					this._SWeightGroup5 = value;
+					this.SendPropertyChanged("SWeightGroup5");
+					this.OnSWeightGroup5Changed();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SWeightGroup6")]
+		public System.Nullable<double> SWeightGroup6
+		{
+			get
+			{
+				return this._SWeightGroup6;
+			}
+			set
+			{
+				if ((this._SWeightGroup6 != value))
+				{
+					this.OnSWeightGroup6Changing(value);
+					this.SendPropertyChanging();
+					this._SWeightGroup6 = value;
+					this.SendPropertyChanged("SWeightGroup6");
+					this.OnSWeightGroup6Changed();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SWeightGroup7")]
+		public System.Nullable<double> SWeightGroup7
+		{
+			get
+			{
+				return this._SWeightGroup7;
+			}
+			set
+			{
+				if ((this._SWeightGroup7 != value))
+				{
+					this.OnSWeightGroup7Changing(value);
+					this.SendPropertyChanging();
+					this._SWeightGroup7 = value;
+					this.SendPropertyChanged("SWeightGroup7");
+					this.OnSWeightGroup7Changed();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SWeightGroup8")]
+		public System.Nullable<double> SWeightGroup8
+		{
+			get
+			{
+				return this._SWeightGroup8;
+			}
+			set
+			{
+				if ((this._SWeightGroup8 != value))
+				{
+					this.OnSWeightGroup8Changing(value);
+					this.SendPropertyChanging();
+					this._SWeightGroup8 = value;
+					this.SendPropertyChanged("SWeightGroup8");
+					this.OnSWeightGroup8Changed();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SWeightGroup9")]
+		public System.Nullable<double> SWeightGroup9
+		{
+			get
+			{
+				return this._SWeightGroup9;
+			}
+			set
+			{
+				if ((this._SWeightGroup9 != value))
+				{
+					this.OnSWeightGroup9Changing(value);
+					this.SendPropertyChanging();
+					this._SWeightGroup9 = value;
+					this.SendPropertyChanged("SWeightGroup9");
+					this.OnSWeightGroup9Changed();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SWeightGroup10")]
+		public System.Nullable<double> SWeightGroup10
+		{
+			get
+			{
+				return this._SWeightGroup10;
+			}
+			set
+			{
+				if ((this._SWeightGroup10 != value))
+				{
+					this.OnSWeightGroup10Changing(value);
+					this.SendPropertyChanging();
+					this._SWeightGroup10 = value;
+					this.SendPropertyChanged("SWeightGroup10");
+					this.OnSWeightGroup10Changed();
 				}
 			}
 		}

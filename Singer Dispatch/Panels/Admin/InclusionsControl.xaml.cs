@@ -60,12 +60,16 @@ namespace SingerDispatch.Panels.Admin
 
             if (inclusion == null) return;
 
-            try
-            {
-                list.Remove(inclusion);
-                Database.Inclusions.DeleteOnSubmit(inclusion);
+            var confirmation = MessageBox.Show(SingerConstants.DefaultRemoveItemMessage, "Delete confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
+            if (confirmation != MessageBoxResult.Yes) return;
+
+            try
+            {                
+                Database.Inclusions.DeleteOnSubmit(inclusion);
                 Database.SubmitChanges();
+
+                list.Remove(inclusion);
             }
             catch (Exception ex)
             {

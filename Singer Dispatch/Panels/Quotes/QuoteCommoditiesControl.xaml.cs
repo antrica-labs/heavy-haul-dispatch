@@ -177,12 +177,9 @@ namespace SingerDispatch.Panels.Quotes
                 return;
             }
 
-            var confirmation = MessageBox.Show("Are you sure you want to remove this commodity?", "Delete confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            var confirmation = MessageBox.Show(SingerConstants.DefaultRemoveItemMessage, "Delete confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
-            if (confirmation != MessageBoxResult.Yes)
-            {
-                return;
-            }
+            if (confirmation != MessageBoxResult.Yes) return;
 
             dgQuoteCommodities.SelectedItem = null;
             SelectedQuote.QuoteCommodities.Remove(commodity);

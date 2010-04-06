@@ -101,17 +101,11 @@ namespace SingerDispatch.Panels.Jobs
 
         private void RemoveDispatch_Click(object sender, RoutedEventArgs e)
         {
-            if (dgDispatches.SelectedItem == null)
-            {
-                return;
-            }
+            if (dgDispatches.SelectedItem == null) return;
 
-            var confirmation = MessageBox.Show("Are you sure you want to remove this dispatch?", "Remove dispatch", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            var confirmation = MessageBox.Show(SingerConstants.DefaultRemoveItemMessage, "Delete confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
-            if (confirmation != MessageBoxResult.Yes)
-            {
-                return;
-            }
+            if (confirmation != MessageBoxResult.Yes) return;
 
             var dispatch = (Dispatch)dgDispatches.SelectedItem;
 

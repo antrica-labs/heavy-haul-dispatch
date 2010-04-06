@@ -60,12 +60,16 @@ namespace SingerDispatch.Panels.Admin
 
             if (rate == null) return;
 
-            Database.Rates.DeleteOnSubmit(rate);
-            list.Remove(rate);
+            var confirmation = MessageBox.Show(SingerConstants.DefaultRemoveItemMessage, "Delete confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
+            if (confirmation != MessageBoxResult.Yes) return;
+            
             try
             {
+                Database.Rates.DeleteOnSubmit(rate);
                 Database.SubmitChanges();
+
+                list.Remove(rate);
             }
             catch (System.Exception ex)
             {

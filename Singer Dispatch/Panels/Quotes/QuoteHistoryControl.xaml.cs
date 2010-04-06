@@ -190,14 +190,18 @@ namespace SingerDispatch.Panels.Quotes
         {
             if (SelectedQuote == null) return;
 
+            var confirmation = MessageBox.Show("Are you sure you wish to delete this quote and all of it's items?", "Delete confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+            if (confirmation != MessageBoxResult.Yes) return;
+
             try
             {
                 EntityHelper.PrepareEntityDelete(SelectedQuote, Database);
+                                
+                SelectedCompany.Quotes.Remove(SelectedQuote);
+                Database.SubmitChanges();
 
                 ((ObservableCollection<Quote>)dgQuotes.ItemsSource).Remove(SelectedQuote);
-                SelectedCompany.Quotes.Remove(SelectedQuote);
-
-                Database.SubmitChanges();
             }
             catch (Exception ex)
             {

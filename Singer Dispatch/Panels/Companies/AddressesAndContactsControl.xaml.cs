@@ -120,24 +120,18 @@ namespace SingerDispatch.Panels.Companies
         {
             var selected = (Address)dgAddresses.SelectedItem;
 
-            if (selected == null)
-            {
-                return;
-            }
+            if (selected == null) return;
 
-            var confirmation = MessageBox.Show("Are you sure you want to remove this address and all of its coresponding contacts?", "Delete confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            var confirmation = MessageBox.Show("Are you sure you want to remove this address and all of its corresponding contacts?", "Delete confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
-            if (confirmation != MessageBoxResult.Yes)
-            {
-                return;
-            }
-
-            SelectedCompany.Addresses.Remove(selected);
-            ((ObservableCollection<Address>)dgAddresses.ItemsSource).Remove(selected);
-
+            if (confirmation != MessageBoxResult.Yes) return;
+           
             try
             {
+                SelectedCompany.Addresses.Remove(selected);
                 Database.SubmitChanges();
+
+                ((ObservableCollection<Address>)dgAddresses.ItemsSource).Remove(selected);
             }
             catch (System.Exception ex)
             {
@@ -149,24 +143,18 @@ namespace SingerDispatch.Panels.Companies
         {
             var selected = (Contact)dgContacts.SelectedItem;
 
-            if (selected == null)
-            {
-                return;
-            }
+            if (selected == null) return;
 
             var confirmation = MessageBox.Show("Are you sure you want to remove this contact?", "Delete confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
-            if (confirmation != MessageBoxResult.Yes)
-            {
-                return;
-            }
-
-            selected.Address.Contacts.Remove(selected);
-            ((ObservableCollection<Contact>)dgContacts.ItemsSource).Remove(selected);
-
+            if (confirmation != MessageBoxResult.Yes) return;
+            
             try
             {
+                selected.Address.Contacts.Remove(selected);
                 Database.SubmitChanges();
+
+                ((ObservableCollection<Contact>)dgContacts.ItemsSource).Remove(selected);
             }
             catch (System.Exception ex)
             {

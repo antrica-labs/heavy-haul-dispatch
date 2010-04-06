@@ -430,14 +430,13 @@ namespace SingerDispatch
     partial class Load
     {
         partial void OnCreated()
-        {
-            WeightEstimated = WeightEstimated ?? true;
+        {            
         }
 
-        public void NotifyJobCommodities()
+        public void Notify(string property)
         {
             SendPropertyChanging();
-            SendPropertyChanged("JobCommodities");
+            SendPropertyChanged(property);
         }
 
         public Load Duplicate()
@@ -454,19 +453,30 @@ namespace SingerDispatch
             cp.Ban = Ban;
             cp.ServiceDescription = ServiceDescription;
             cp.Notes = Notes;
-            cp.WeightSteer = WeightSteer;
-            cp.WeightDrive = WeightDrive;
-            cp.WeightGroup1 = WeightGroup1;
-            cp.WeightGroup2 = WeightGroup2;
-            cp.WeightGroup3 = WeightGroup3;
-            cp.WeightGroup4 = WeightGroup4;
-            cp.WeightGroup5 = WeightGroup5;
-            cp.WeightGroup6 = WeightGroup6;
-            cp.WeightGroup7 = WeightGroup7;
-            cp.WeightGroup8 = WeightGroup8;
-            cp.WeightGroup9 = WeightGroup9;
-            cp.WeightGroup10 = WeightGroup10;
-            cp.WeightEstimated = WeightEstimated;
+            cp.EWeightSteer = EWeightSteer;
+            cp.EWeightDrive = EWeightDrive;
+            cp.EWeightGroup1 = EWeightGroup1;
+            cp.EWeightGroup2 = EWeightGroup2;
+            cp.EWeightGroup3 = EWeightGroup3;
+            cp.EWeightGroup4 = EWeightGroup4;
+            cp.EWeightGroup5 = EWeightGroup5;
+            cp.EWeightGroup6 = EWeightGroup6;
+            cp.EWeightGroup7 = EWeightGroup7;
+            cp.EWeightGroup8 = EWeightGroup8;
+            cp.EWeightGroup9 = EWeightGroup9;
+            cp.EWeightGroup10 = EWeightGroup10;
+            cp.SWeightSteer = SWeightSteer;
+            cp.SWeightDrive = SWeightDrive;
+            cp.SWeightGroup1 = SWeightGroup1;
+            cp.SWeightGroup2 = SWeightGroup2;
+            cp.SWeightGroup3 = SWeightGroup3;
+            cp.SWeightGroup4 = SWeightGroup4;
+            cp.SWeightGroup5 = SWeightGroup5;
+            cp.SWeightGroup6 = SWeightGroup6;
+            cp.SWeightGroup7 = SWeightGroup7;
+            cp.SWeightGroup8 = SWeightGroup8;
+            cp.SWeightGroup9 = SWeightGroup9;
+            cp.SWeightGroup10 = SWeightGroup10;            
             cp.GrossWeight = GrossWeight;
             cp.LoadedLength = LoadedLength;
             cp.LoadedWidth = LoadedWidth;

@@ -158,21 +158,20 @@ namespace SingerDispatch.Panels.Jobs
 
         private void DeleteJob_Click(object sender, RoutedEventArgs e)
         {
-            if (SelectedJob == null)
-            {
-                return;
-            }
+            if (SelectedJob == null) return;
 
-            var job = SelectedJob;
+            var confirmation = MessageBox.Show("Are you sure you want to delete this job?", "Delete confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+            if (confirmation != MessageBoxResult.Yes) return;
                         
             try
             {
-                EntityHelper.PrepareEntityDelete(job, Database);
-
-                ((ObservableCollection<Job>)DgJobs.ItemsSource).Remove(job);
-                SelectedCompany.Jobs.Remove(job);
-
+                EntityHelper.PrepareEntityDelete(SelectedJob, Database);
+                                
+                SelectedCompany.Jobs.Remove(SelectedJob);
                 Database.SubmitChanges();
+
+                ((ObservableCollection<Job>)DgJobs.ItemsSource).Remove(SelectedJob);
             }
             catch (System.Exception ex)
             {

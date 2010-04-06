@@ -59,12 +59,16 @@ namespace SingerDispatch.Panels.Admin
 
             if (condition == null) return;
 
-            try
-            {
-                list.Remove(condition);
-                Database.Conditions.DeleteOnSubmit(condition);
+            var confirmation = MessageBox.Show(SingerConstants.DefaultRemoveItemMessage, "Delete confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
+            if (confirmation != MessageBoxResult.Yes) return;
+
+            try
+            {                
+                Database.Conditions.DeleteOnSubmit(condition);
                 Database.SubmitChanges();
+
+                list.Remove(condition);
             }
             catch (System.Exception ex)
             {

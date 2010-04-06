@@ -51,25 +51,22 @@ namespace SingerDispatch.Panels.Admin
         {
             var unit = (Equipment)dgEquipment.SelectedItem;
 
-            if (unit == null)
-            {
-                return;
-            }
+            if (unit == null) return;
 
             MessageBoxResult confirmation = MessageBox.Show("Are you sure you want to remove this unit?", "Delete confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
-            if (confirmation != MessageBoxResult.Yes)
-            {
-                return;
-            }
+            if (confirmation != MessageBoxResult.Yes) return;
 
-            ((ObservableCollection<Equipment>)dgEquipment.ItemsSource).Remove(unit);
-            Database.Equipment.DeleteOnSubmit(unit);
-            dgEquipment.SelectedItem = null;
+            
+            
+            
 
             try
             {
+                Database.Equipment.DeleteOnSubmit(unit);
                 Database.SubmitChanges();
+
+                ((ObservableCollection<Equipment>)dgEquipment.ItemsSource).Remove(unit);
             }
             catch (System.Exception ex)
             {

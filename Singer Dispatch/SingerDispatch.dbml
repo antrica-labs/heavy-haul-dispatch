@@ -262,19 +262,30 @@
       <Column Name="Ban" Type="System.String" CanBeNull="true" />
       <Column Name="ServiceDescription" Type="System.String" CanBeNull="true" />
       <Column Name="Notes" Type="System.String" CanBeNull="true" UpdateCheck="Never" />
-      <Column Name="WeightSteer" Type="System.Double" CanBeNull="true" />
-      <Column Name="WeightDrive" Type="System.Double" CanBeNull="true" />
-      <Column Name="WeightGroup1" Type="System.Double" CanBeNull="true" />
-      <Column Name="WeightGroup2" Type="System.Double" CanBeNull="true" />
-      <Column Name="WeightGroup3" Type="System.Double" CanBeNull="true" />
-      <Column Name="WeightGroup4" Type="System.Double" CanBeNull="true" />
-      <Column Name="WeightGroup5" Type="System.Double" CanBeNull="true" />
-      <Column Name="WeightGroup6" Type="System.Double" CanBeNull="true" />
-      <Column Name="WeightGroup7" Type="System.Double" CanBeNull="true" />
-      <Column Name="WeightGroup8" Type="System.Double" CanBeNull="true" />
-      <Column Name="WeightGroup9" Type="System.Double" CanBeNull="true" />
-      <Column Name="WeightGroup10" Type="System.Double" CanBeNull="true" />
-      <Column Name="WeightEstimated" Type="System.Boolean" CanBeNull="true" />
+      <Column Name="EWeightSteer" Type="System.Double" CanBeNull="true" />
+      <Column Name="EWeightDrive" Type="System.Double" CanBeNull="true" />
+      <Column Name="EWeightGroup1" Type="System.Double" CanBeNull="true" />
+      <Column Name="EWeightGroup2" Type="System.Double" CanBeNull="true" />
+      <Column Name="EWeightGroup3" Type="System.Double" CanBeNull="true" />
+      <Column Name="EWeightGroup4" Type="System.Double" CanBeNull="true" />
+      <Column Name="EWeightGroup5" Type="System.Double" CanBeNull="true" />
+      <Column Name="EWeightGroup6" Type="System.Double" CanBeNull="true" />
+      <Column Name="EWeightGroup7" Type="System.Double" CanBeNull="true" />
+      <Column Name="EWeightGroup8" Type="System.Double" CanBeNull="true" />
+      <Column Name="EWeightGroup9" Type="System.Double" CanBeNull="true" />
+      <Column Name="EWeightGroup10" Type="System.Double" CanBeNull="true" />
+      <Column Name="SWeightSteer" Type="System.Double" CanBeNull="true" />
+      <Column Name="SWeightDrive" Type="System.Double" CanBeNull="true" />
+      <Column Name="SWeightGroup1" Type="System.Double" CanBeNull="true" />
+      <Column Name="SWeightGroup2" Type="System.Double" CanBeNull="true" />
+      <Column Name="SWeightGroup3" Type="System.Double" CanBeNull="true" />
+      <Column Name="SWeightGroup4" Type="System.Double" CanBeNull="true" />
+      <Column Name="SWeightGroup5" Type="System.Double" CanBeNull="true" />
+      <Column Name="SWeightGroup6" Type="System.Double" CanBeNull="true" />
+      <Column Name="SWeightGroup7" Type="System.Double" CanBeNull="true" />
+      <Column Name="SWeightGroup8" Type="System.Double" CanBeNull="true" />
+      <Column Name="SWeightGroup9" Type="System.Double" CanBeNull="true" />
+      <Column Name="SWeightGroup10" Type="System.Double" CanBeNull="true" />
       <Column Name="GrossWeight" Type="System.Double" CanBeNull="true" />
       <Column Name="LoadedLength" Type="System.Double" CanBeNull="true" />
       <Column Name="LoadedWidth" Type="System.Double" CanBeNull="true" />

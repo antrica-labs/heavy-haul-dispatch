@@ -62,10 +62,11 @@ namespace SingerDispatch.Panels.Jobs
         {
             var permit = (Permit)dgPermits.SelectedItem;
 
-            if (permit == null)
-            {
-                return;
-            }
+            if (permit == null) return;
+
+            var confirmation = MessageBox.Show(SingerConstants.DefaultRemoveItemMessage, "Delete confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+            if (confirmation != MessageBoxResult.Yes) return;
 
             SelectedJob.Permits.Remove(permit);
             ((ObservableCollection<Permit>)dgPermits.ItemsSource).Remove(permit);

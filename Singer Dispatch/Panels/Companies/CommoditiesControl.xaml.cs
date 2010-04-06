@@ -53,26 +53,22 @@ namespace SingerDispatch.Panels.Companies
         {
             var selected = (Commodity)dgCommodities.SelectedItem;
 
-            if (selected == null)
-            {                
-                return;
-            }
+            if (selected == null) return;
 
-            MessageBoxResult confirmation = MessageBox.Show("Are you sure you want to remove this commodity and all of it's history?", "Delete confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            var confirmation = MessageBox.Show("Are you sure you want to remove this commodity and all of it's history?", "Delete confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
-            if (confirmation == MessageBoxResult.Yes)
-            {                
+            if (confirmation != MessageBoxResult.Yes) return;
+
+            try
+            {
                 SelectedCompany.Commodities.Remove(selected);
-                ((ObservableCollection<Commodity>)dgCommodities.ItemsSource).Remove(selected);
+                Database.SubmitChanges();
 
-                try
-                {
-                    Database.SubmitChanges();
-                }
-                catch (System.Exception ex)
-                {
-                    Windows.ErrorNoticeWindow.ShowError("Error while attempting write changes to database", ex.Message);
-                }
+                ((ObservableCollection<Commodity>)dgCommodities.ItemsSource).Remove(selected);
+            }
+            catch (System.Exception ex)
+            {
+                Windows.ErrorNoticeWindow.ShowError("Error while attempting write changes to database", ex.Message);
             }
         }
 

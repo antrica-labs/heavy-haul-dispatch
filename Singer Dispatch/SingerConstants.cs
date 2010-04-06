@@ -82,5 +82,15 @@ namespace SingerDispatch
             }
 
         }
+
+        public static string DefaultRemoveItemMessage
+        {
+            get
+            {
+                var message = GetConfig("GenericRemoveItemConfirmation") ?? "Are you sure you want to remove this item?";
+
+                return message;
+            }
+        }
     }
 }

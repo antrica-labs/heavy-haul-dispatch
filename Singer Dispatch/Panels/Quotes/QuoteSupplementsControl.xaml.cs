@@ -62,18 +62,14 @@ namespace SingerDispatch.Panels.Quotes
         {
             var supplement = (QuoteSupplement)dgSupplements.SelectedItem;
 
-            if (supplement == null)
-            {
-                return;
-            }
+            if (supplement == null) return;
 
-            var confirmation = MessageBox.Show("Are you sure you want to remove this supplement?", "Delete confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            var confirmation = MessageBox.Show(SingerConstants.DefaultRemoveItemMessage, "Delete confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
-            if (confirmation == MessageBoxResult.Yes)
-            {
-                SelectedQuote.QuoteSupplements.Remove(supplement);
-                ((ObservableCollection<QuoteSupplement>)dgSupplements.ItemsSource).Remove(supplement);
-            }
+            if (confirmation != MessageBoxResult.Yes) return;
+
+            SelectedQuote.QuoteSupplements.Remove(supplement);
+            ((ObservableCollection<QuoteSupplement>)dgSupplements.ItemsSource).Remove(supplement);
         }
 
         private void BillingType_SelectionChanged(object sender, SelectionChangedEventArgs e)

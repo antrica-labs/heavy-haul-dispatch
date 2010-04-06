@@ -49,25 +49,18 @@ namespace SingerDispatch.Panels.Admin
             var employee = (Employee)dgEmployees.SelectedItem;
             var employees = (ObservableCollection<Employee>)dgEmployees.ItemsSource;
 
-            if (employee == null)
-            {
-                return;
-            }
+            if (employee == null) return;
 
             MessageBoxResult confirmation = MessageBox.Show("Are you sure you want to remove this employee?", "Delete confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
-            if (confirmation != MessageBoxResult.Yes)
-            {
-                return;
-            }
-
-            employees.Remove(employee);
-            Database.Employees.DeleteOnSubmit(employee);
-            dgEmployees.SelectedItem = null;
+            if (confirmation != MessageBoxResult.Yes) return;
 
             try
             {
+                Database.Employees.DeleteOnSubmit(employee);
                 Database.SubmitChanges();
+
+                employees.Remove(employee);
             }
             catch (System.Exception ex)
             {

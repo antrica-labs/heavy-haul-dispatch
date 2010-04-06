@@ -45,6 +45,10 @@ namespace SingerDispatch.Panels.Invoicing
 
             if (item == null) return;
 
+            var confirmation = MessageBox.Show(SingerConstants.DefaultRemoveItemMessage, "Delete confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+            if (confirmation != MessageBoxResult.Yes) return;
+
             list.Remove(item);
             SelectedInvoice.InvoiceExtras.Remove(item);
         }

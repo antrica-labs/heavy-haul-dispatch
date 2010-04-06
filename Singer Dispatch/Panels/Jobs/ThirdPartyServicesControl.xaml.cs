@@ -82,10 +82,11 @@ namespace SingerDispatch.Panels.Jobs
         {
             var service = (ThirdPartyService)dgServices.SelectedItem;
 
-            if (service == null)
-            {
-                return;
-            }
+            if (service == null) return;
+
+            var confirmation = MessageBox.Show(SingerConstants.DefaultRemoveItemMessage, "Delete confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+            if (confirmation != MessageBoxResult.Yes) return;
 
             ((ObservableCollection<ThirdPartyService>)dgServices.ItemsSource).Remove(service);
             SelectedJob.ThirdPartyServices.Remove(service);

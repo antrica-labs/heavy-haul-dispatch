@@ -64,16 +64,14 @@ namespace SingerDispatch.Panels.Quotes
         {
             var item = (QuoteStorageItem)dgStorageList.SelectedItem;
 
-            if (item == null)
-                return;
+            if (item == null) return;
 
-            var confirmation = MessageBox.Show("Are you sure you want to remove this storage item?", "Delete confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            var confirmation = MessageBox.Show(SingerConstants.DefaultRemoveItemMessage, "Delete confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
-            if (confirmation == MessageBoxResult.Yes)
-            {
-                ((ObservableCollection<QuoteStorageItem>)dgStorageList.ItemsSource).Remove(item);
-                SelectedQuote.QuoteStorageItems.Remove(item);
-            }
+            if (confirmation != MessageBoxResult.Yes) return;
+            
+            ((ObservableCollection<QuoteStorageItem>)dgStorageList.ItemsSource).Remove(item);
+            SelectedQuote.QuoteStorageItems.Remove(item);            
         }
 
 

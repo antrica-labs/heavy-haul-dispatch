@@ -692,6 +692,7 @@ namespace SingerDispatch.Importer
             Database.Configurations.InsertOnSubmit(new Configuration { Name = "PDF-ExecutablePath", Value = "wkhtmltopdf.exe" });
             Database.Configurations.InsertOnSubmit(new Configuration { Name = "PDF-Arguments", Value = @"--print-media-type --page-size Letter ""%HTML_FILE%"" ""%PDF_FILE%""" });
             Database.Configurations.InsertOnSubmit(new Configuration { Name = "Documents-HeaderImg", Value = "http://www.singerspecialized.com/image/pageParts/Header.png" });
+            Database.Configurations.InsertOnSubmit(new Configuration { Name = "GenericRemoveItemConfirmation", Value = "Are you sure you want to remove this item?" });
             Database.Configurations.InsertOnSubmit(new Configuration { Name = "", Value = "" });
 
             Database.SubmitChanges();

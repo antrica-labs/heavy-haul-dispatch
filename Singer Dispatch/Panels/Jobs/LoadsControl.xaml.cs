@@ -93,6 +93,12 @@ namespace SingerDispatch.Panels.Jobs
             var load = (Load)dgLoads.SelectedItem;
             var list = (ObservableCollection<Load>)dgLoads.ItemsSource;
 
+            if (load == null) return;
+
+            var confirmation = MessageBox.Show(SingerConstants.DefaultRemoveItemMessage, "Delete confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+            if (confirmation != MessageBoxResult.Yes) return;
+
             foreach (var item in load.Dispatches.ToList())
                 item.Load = null;
 
@@ -121,18 +127,18 @@ namespace SingerDispatch.Panels.Jobs
             
             double? gross = 0;
 
-            gross += load.WeightSteer;
-            gross += load.WeightDrive;
-            gross += load.WeightGroup1;
-            gross += load.WeightGroup2;
-            gross += load.WeightGroup3;
-            gross += load.WeightGroup4;
-            gross += load.WeightGroup5;
-            gross += load.WeightGroup6;
-            gross += load.WeightGroup7;
-            gross += load.WeightGroup8;
-            gross += load.WeightGroup9;
-            gross += load.WeightGroup10;
+            gross += load.SWeightSteer;
+            gross += load.SWeightDrive;
+            gross += load.SWeightGroup1;
+            gross += load.SWeightGroup2;
+            gross += load.SWeightGroup3;
+            gross += load.SWeightGroup4;
+            gross += load.SWeightGroup5;
+            gross += load.SWeightGroup6;
+            gross += load.SWeightGroup7;
+            gross += load.SWeightGroup8;
+            gross += load.SWeightGroup9;
+            gross += load.SWeightGroup10;
 
             load.GrossWeight = gross;
         }
@@ -183,13 +189,13 @@ namespace SingerDispatch.Panels.Jobs
 
                     commodity.Load = load;
 
-                    orig.NotifyJobCommodities();
+                    orig.Notify("JobCommodities");
                 }
             }
             else
                 commodity.Load = load;
 
-            load.NotifyJobCommodities();
+            load.Notify("JobCommodities");
         }
 
         private void CommodityCheckBox_Unchecked(object sender, RoutedEventArgs e)
@@ -202,7 +208,7 @@ namespace SingerDispatch.Panels.Jobs
 
             commodity.Load = null;
 
-            load.NotifyJobCommodities();
+            load.Notify("JobCommodities");
         }
 
         private System.Collections.IEnumerable GetCompanyRates(Company company)

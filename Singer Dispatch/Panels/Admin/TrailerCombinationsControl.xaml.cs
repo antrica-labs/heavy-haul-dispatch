@@ -73,12 +73,16 @@ namespace SingerDispatch.Panels.Admin
 
             if (combination == null) return;
 
-            Database.TrailerCombinations.DeleteOnSubmit(combination);
-            list.Remove(combination);
+            var confirmation = MessageBox.Show(SingerConstants.DefaultRemoveItemMessage, "Delete confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
+            if (confirmation != MessageBoxResult.Yes) return;
+                        
             try
             {
+                Database.TrailerCombinations.DeleteOnSubmit(combination);                
                 Database.SubmitChanges();
+
+                list.Remove(combination);
             }
             catch (Exception ex)
             {

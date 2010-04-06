@@ -169,14 +169,18 @@ namespace SingerDispatch.Panels.Invoicing
         {
             if (SelectedInvoice == null) return;
 
+            var confirmation = MessageBox.Show("Are you sure you want to complete remove this invoice?", "Delete confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+            if (confirmation != MessageBoxResult.Yes) return;
+
             try
             {
                 EntityHelper.PrepareEntityDelete(SelectedInvoice, Database);
+                                
+                SelectedJob.Invoices.Remove(SelectedInvoice);
+                Database.SubmitChanges();
 
                 ((ObservableCollection<Invoice>)DgInvoices.ItemsSource).Remove(SelectedInvoice);
-                SelectedJob.Invoices.Remove(SelectedInvoice);
-
-                Database.SubmitChanges();
             }
             catch (Exception ex)
             {

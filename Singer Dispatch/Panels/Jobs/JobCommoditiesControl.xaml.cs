@@ -69,17 +69,11 @@ namespace SingerDispatch.Panels.Jobs
         {
             var commodity = (JobCommodity)dgCommodities.SelectedItem;
 
-            if (commodity == null)
-            {
-                return;
-            }
+            if (commodity == null) return;
 
-            MessageBoxResult confirmation = MessageBox.Show("Are you sure you want to remove this commodity?", "Remove commodity", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            var confirmation = MessageBox.Show(SingerConstants.DefaultRemoveItemMessage, "Delete confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
-            if (confirmation != MessageBoxResult.Yes)
-            {
-                return;
-            }
+            if (confirmation != MessageBoxResult.Yes) return;
 
             SelectedJob.JobCommodities.Remove(commodity);
             ((ObservableCollection<JobCommodity>)dgCommodities.ItemsSource).Remove(commodity);
