@@ -51,15 +51,12 @@ namespace SingerDispatch.Panels.Jobs
         {
             if (SelectedJob == null) return;
 
-            var button = (ButtonBase)sender;
-
             try
             {
-                button.Focus();
-
                 Database.SubmitChanges();
 
                 lblSavedStatus.Content = "Saved";
+                ((ButtonBase)sender).Focus();
             }
             catch (System.Exception ex)
             {
@@ -73,8 +70,7 @@ namespace SingerDispatch.Panels.Jobs
         }
 
         private void CommitJobChanges_Executed(object sender, ExecutedRoutedEventArgs e)
-        {
-            CommitChangesButton.Focus();
+        {            
             CommitChangesButton.RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent, CommitChangesButton));
         }
 

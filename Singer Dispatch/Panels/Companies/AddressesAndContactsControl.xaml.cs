@@ -4,6 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 using SingerDispatch.Controls;
 using System.Windows.Input;
+using System.Windows.Controls.Primitives;
 
 namespace SingerDispatch.Panels.Companies
 {
@@ -199,6 +200,8 @@ namespace SingerDispatch.Panels.Companies
             try
             {
                 Database.SubmitChanges();
+
+                ((ButtonBase)sender).Focus();
             }
             catch (System.Exception ex)
             {
@@ -208,14 +211,7 @@ namespace SingerDispatch.Panels.Companies
 
         private void CommitChanges_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            try
-            {
-                Database.SubmitChanges();
-            }
-            catch (System.Exception ex)
-            {
-                Windows.ErrorNoticeWindow.ShowError("Error while attempting write changes to database", ex.Message);
-            }
+            CommitChangesButton.RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent, CommitChangesButton));
         }
     }
 }

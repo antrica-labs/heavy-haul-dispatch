@@ -50,7 +50,6 @@ namespace SingerDispatch.Panels.Quotes
       
         private void CommitQuoteChanges_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            CommitChangesButton.Focus();
             CommitChangesButton.RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent, CommitChangesButton));
         }
 
@@ -72,10 +71,9 @@ namespace SingerDispatch.Panels.Quotes
 
             try
             {
-                button.Focus();
-
                 Database.SubmitChanges();
-
+                
+                button.Focus();
                 lblSavedStatus.Content = "Saved";
             }
             catch (Exception ex)

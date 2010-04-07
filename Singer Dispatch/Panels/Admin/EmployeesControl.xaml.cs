@@ -73,6 +73,8 @@ namespace SingerDispatch.Panels.Admin
             try
             {
                 Database.SubmitChanges();
+
+                ((ButtonBase)sender).Focus();
             }
             catch (System.Exception ex)
             {
@@ -81,8 +83,7 @@ namespace SingerDispatch.Panels.Admin
         }
 
         private void CommitChanges_Executed(object sender, ExecutedRoutedEventArgs e)
-        {
-            CommitChangesButton.Focus();
+        {            
             CommitChangesButton.RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent, CommitChangesButton));
         }
     }

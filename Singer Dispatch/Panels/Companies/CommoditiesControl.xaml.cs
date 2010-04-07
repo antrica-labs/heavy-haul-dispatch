@@ -73,8 +73,7 @@ namespace SingerDispatch.Panels.Companies
         }
 
         private void CommitChanges_Executed(object sender, ExecutedRoutedEventArgs e)
-        {
-            CommitChangesButton.Focus();
+        {            
             CommitChangesButton.RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent, CommitChangesButton));
         }
 
@@ -83,6 +82,8 @@ namespace SingerDispatch.Panels.Companies
             try
             {
                 Database.SubmitChanges();
+
+                ((ButtonBase)sender).Focus();
             }
             catch (System.Exception ex)
             {
