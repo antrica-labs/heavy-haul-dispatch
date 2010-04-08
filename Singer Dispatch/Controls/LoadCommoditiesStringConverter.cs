@@ -25,7 +25,7 @@ namespace SingerDispatch.Controls
                         output += ", ";
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 output = "";
             }

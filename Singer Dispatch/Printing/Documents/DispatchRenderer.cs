@@ -577,11 +577,11 @@ namespace SingerDispatch.Printing.Documents
                         </tr>                
                         <tr>                    
                             <td class=""field_name"">Depart From:</td>
-                            <td class=""value"">Propak Main Yard</td>
+                            <td class=""value"">%DEPART_FROM%</td>
                         </tr>
                         <tr>
                             <td class=""field_name"">Depart Units:</td>
-                            <td class=""value"">#12,9909,55,47,18,42</td>
+                            <td class=""value"">%DEPARTING_UNITS%</td>
                         </tr>
                     </table>
                    
@@ -607,7 +607,8 @@ namespace SingerDispatch.Printing.Documents
                 trailer += dispatch.Load.TrailerCombination.Combination;
 
             var output = html.Replace("%CURRENT_DATE%", date.ToShortDateString()).Replace("%CUSTOMER%", customer).Replace("%UNIT%", unit)
-                .Replace("%DRIVER%", driver).Replace("%TRAILER%", trailer).Replace("%DISPATCH_DATE%", dispatchDate.ToString());
+                .Replace("%DRIVER%", driver).Replace("%TRAILER%", trailer).Replace("%DISPATCH_DATE%", dispatchDate.ToString())
+                .Replace("%DEPART_FROM%", dispatch.DepartingLocation).Replace("%DEPARTING_UNITS%", dispatch.DepartingUnits);
 
             var references = new StringBuilder();
             

@@ -405,6 +405,9 @@ namespace SingerDispatch
             cp.Employee = Employee;
             cp.Equipment = Equipment;
             cp.Description = Description;
+            cp.Schedule = Schedule;
+            cp.DepartingUnits = DepartingUnits;
+            cp.DepartingLocation = DepartingLocation;
             cp.Notes = Notes;
             cp.Rate = Rate;
 
