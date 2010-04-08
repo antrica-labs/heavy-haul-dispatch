@@ -159,7 +159,8 @@ namespace SingerDispatch.Importer
             List<Inclusion> inclusions;
             List<Condition> conditions;
             List<ContactType> contactTypes;
-
+            List<ExtraEquipmentType> extraEquipmentTypes;
+            
             var datasource = ConfigurationManager.ConnectionStrings["OldDBConnectionParameters"].ConnectionString;
             var provider = ConfigurationManager.ConnectionStrings["OldDBConnectionParameters"].ProviderName;
             var connectionString = String.Format("Provider={0};{1}", provider, datasource);
@@ -172,6 +173,7 @@ namespace SingerDispatch.Importer
                 contactTypes = ImportContactTypes(connection);
                 inclusions = ImportInclusions(connection);
                 conditions = ImportConditions(connection);
+                extraEquipmentTypes = ImportExtraEquipmentTypes(connection);
 
                 Console.Write("Importing companies");
                 companies = ImportCompanies(connection);                
@@ -256,6 +258,27 @@ namespace SingerDispatch.Importer
             }
 
             return conditions;
+        }
+
+        private List<ExtraEquipmentType> ImportExtraEquipmentTypes(OleDbConnection connection)
+        {
+            var types = new List<ExtraEquipmentType>();
+
+            const string select = "SELECT * FROM tbl_DispatchExtraItemType";
+            using (var command = new OleDbCommand(select, connection))
+            {
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        var name = reader["dispatchExtraItemType"] == DBNull.Value ? null : (string)reader["dispatchExtraItemType"];
+
+                        types.Add(new ExtraEquipmentType { Name = name });
+                    }
+                }
+            }
+
+            return types;
         }
 
         private List<Company> ImportCompanies(OleDbConnection connection)

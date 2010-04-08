@@ -80,6 +80,12 @@ namespace SingerDispatch
     partial void InsertLoad(Load instance);
     partial void UpdateLoad(Load instance);
     partial void DeleteLoad(Load instance);
+    partial void InsertExtraEquipmentType(ExtraEquipmentType instance);
+    partial void UpdateExtraEquipmentType(ExtraEquipmentType instance);
+    partial void DeleteExtraEquipmentType(ExtraEquipmentType instance);
+    partial void InsertLoadExtra(LoadExtra instance);
+    partial void UpdateLoadExtra(LoadExtra instance);
+    partial void DeleteLoadExtra(LoadExtra instance);
     partial void InsertPermit(Permit instance);
     partial void UpdatePermit(Permit instance);
     partial void DeletePermit(Permit instance);
@@ -323,6 +329,22 @@ namespace SingerDispatch
 			get
 			{
 				return this.GetTable<Load>();
+			}
+		}
+		
+		public System.Data.Linq.Table<ExtraEquipmentType> ExtraEquipmentTypes
+		{
+			get
+			{
+				return this.GetTable<ExtraEquipmentType>();
+			}
+		}
+		
+		public System.Data.Linq.Table<LoadExtra> LoadExtras
+		{
+			get
+			{
+				return this.GetTable<LoadExtra>();
 			}
 		}
 		
@@ -7436,6 +7458,344 @@ namespace SingerDispatch
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="")]
+	public partial class ExtraEquipmentType : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private long _ID;
+		
+		private string _Name;
+		
+		private EntitySet<LoadExtra> _LoadExtras;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDChanging(long value);
+    partial void OnIDChanged();
+    partial void OnNameChanging(string value);
+    partial void OnNameChanged();
+    #endregion
+		
+		public ExtraEquipmentType()
+		{
+			this._LoadExtras = new EntitySet<LoadExtra>(new Action<LoadExtra>(this.attach_LoadExtras), new Action<LoadExtra>(this.detach_LoadExtras));
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, IsPrimaryKey=true, IsDbGenerated=true)]
+		public long ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this.OnIDChanging(value);
+					this.SendPropertyChanging();
+					this._ID = value;
+					this.SendPropertyChanged("ID");
+					this.OnIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name")]
+		public string Name
+		{
+			get
+			{
+				return this._Name;
+			}
+			set
+			{
+				if ((this._Name != value))
+				{
+					this.OnNameChanging(value);
+					this.SendPropertyChanging();
+					this._Name = value;
+					this.SendPropertyChanged("Name");
+					this.OnNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ExtraEquipmentType_LoadExtra", Storage="_LoadExtras", ThisKey="ID", OtherKey="ExtraEquipmentTypeID")]
+		public EntitySet<LoadExtra> LoadExtras
+		{
+			get
+			{
+				return this._LoadExtras;
+			}
+			set
+			{
+				this._LoadExtras.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_LoadExtras(LoadExtra entity)
+		{
+			this.SendPropertyChanging();
+			entity.ExtraEquipmentType = this;
+		}
+		
+		private void detach_LoadExtras(LoadExtra entity)
+		{
+			this.SendPropertyChanging();
+			entity.ExtraEquipmentType = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="")]
+	public partial class LoadExtra : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private long _ID;
+		
+		private System.Nullable<long> _LoadID;
+		
+		private System.Nullable<long> _ExtraEquipmentTypeID;
+		
+		private System.Nullable<int> _Quantity;
+		
+		private string _Comments;
+		
+		private EntityRef<ExtraEquipmentType> _ExtraEquipmentType;
+		
+		private EntityRef<Load> _Load;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDChanging(long value);
+    partial void OnIDChanged();
+    partial void OnLoadIDChanging(System.Nullable<long> value);
+    partial void OnLoadIDChanged();
+    partial void OnExtraEquipmentTypeIDChanging(System.Nullable<long> value);
+    partial void OnExtraEquipmentTypeIDChanged();
+    partial void OnQuantityChanging(System.Nullable<int> value);
+    partial void OnQuantityChanged();
+    partial void OnCommentsChanging(string value);
+    partial void OnCommentsChanged();
+    #endregion
+		
+		public LoadExtra()
+		{
+			this._ExtraEquipmentType = default(EntityRef<ExtraEquipmentType>);
+			this._Load = default(EntityRef<Load>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, IsPrimaryKey=true, IsDbGenerated=true)]
+		public long ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this.OnIDChanging(value);
+					this.SendPropertyChanging();
+					this._ID = value;
+					this.SendPropertyChanged("ID");
+					this.OnIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LoadID")]
+		public System.Nullable<long> LoadID
+		{
+			get
+			{
+				return this._LoadID;
+			}
+			set
+			{
+				if ((this._LoadID != value))
+				{
+					if (this._Load.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnLoadIDChanging(value);
+					this.SendPropertyChanging();
+					this._LoadID = value;
+					this.SendPropertyChanged("LoadID");
+					this.OnLoadIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ExtraEquipmentTypeID")]
+		public System.Nullable<long> ExtraEquipmentTypeID
+		{
+			get
+			{
+				return this._ExtraEquipmentTypeID;
+			}
+			set
+			{
+				if ((this._ExtraEquipmentTypeID != value))
+				{
+					if (this._ExtraEquipmentType.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnExtraEquipmentTypeIDChanging(value);
+					this.SendPropertyChanging();
+					this._ExtraEquipmentTypeID = value;
+					this.SendPropertyChanged("ExtraEquipmentTypeID");
+					this.OnExtraEquipmentTypeIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Quantity")]
+		public System.Nullable<int> Quantity
+		{
+			get
+			{
+				return this._Quantity;
+			}
+			set
+			{
+				if ((this._Quantity != value))
+				{
+					this.OnQuantityChanging(value);
+					this.SendPropertyChanging();
+					this._Quantity = value;
+					this.SendPropertyChanged("Quantity");
+					this.OnQuantityChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Comments")]
+		public string Comments
+		{
+			get
+			{
+				return this._Comments;
+			}
+			set
+			{
+				if ((this._Comments != value))
+				{
+					this.OnCommentsChanging(value);
+					this.SendPropertyChanging();
+					this._Comments = value;
+					this.SendPropertyChanged("Comments");
+					this.OnCommentsChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ExtraEquipmentType_LoadExtra", Storage="_ExtraEquipmentType", ThisKey="ExtraEquipmentTypeID", OtherKey="ID", IsForeignKey=true)]
+		public ExtraEquipmentType ExtraEquipmentType
+		{
+			get
+			{
+				return this._ExtraEquipmentType.Entity;
+			}
+			set
+			{
+				ExtraEquipmentType previousValue = this._ExtraEquipmentType.Entity;
+				if (((previousValue != value) 
+							|| (this._ExtraEquipmentType.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._ExtraEquipmentType.Entity = null;
+						previousValue.LoadExtras.Remove(this);
+					}
+					this._ExtraEquipmentType.Entity = value;
+					if ((value != null))
+					{
+						value.LoadExtras.Add(this);
+						this._ExtraEquipmentTypeID = value.ID;
+					}
+					else
+					{
+						this._ExtraEquipmentTypeID = default(Nullable<long>);
+					}
+					this.SendPropertyChanged("ExtraEquipmentType");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Load_LoadExtra", Storage="_Load", ThisKey="LoadID", OtherKey="ID", IsForeignKey=true)]
+		public Load Load
+		{
+			get
+			{
+				return this._Load.Entity;
+			}
+			set
+			{
+				if ((this._Load.Entity != value))
+				{
+					this.SendPropertyChanging();
+					this._Load.Entity = value;
+					this.SendPropertyChanged("Load");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="")]
 	public partial class Permit : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
@@ -12804,7 +13164,9 @@ namespace SingerDispatch
 		
 		private System.Nullable<System.DateTime> _MeetingTime;
 		
-		private string _Location;
+		private string _DepartingUnits;
+		
+		private string _DepartingLocation;
 		
 		private string _Notes;
 		
@@ -12842,8 +13204,10 @@ namespace SingerDispatch
     partial void OnScheduleChanged();
     partial void OnMeetingTimeChanging(System.Nullable<System.DateTime> value);
     partial void OnMeetingTimeChanged();
-    partial void OnLocationChanging(string value);
-    partial void OnLocationChanged();
+    partial void OnDepartingUnitsChanging(string value);
+    partial void OnDepartingUnitsChanged();
+    partial void OnDepartingLocationChanging(string value);
+    partial void OnDepartingLocationChanged();
     partial void OnNotesChanging(string value);
     partial void OnNotesChanged();
     partial void OnRateIDChanging(System.Nullable<long> value);
@@ -13056,22 +13420,42 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Location")]
-		public string Location
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DepartingUnits")]
+		public string DepartingUnits
 		{
 			get
 			{
-				return this._Location;
+				return this._DepartingUnits;
 			}
 			set
 			{
-				if ((this._Location != value))
+				if ((this._DepartingUnits != value))
 				{
-					this.OnLocationChanging(value);
+					this.OnDepartingUnitsChanging(value);
 					this.SendPropertyChanging();
-					this._Location = value;
-					this.SendPropertyChanged("Location");
-					this.OnLocationChanged();
+					this._DepartingUnits = value;
+					this.SendPropertyChanged("DepartingUnits");
+					this.OnDepartingUnitsChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DepartingLocation")]
+		public string DepartingLocation
+		{
+			get
+			{
+				return this._DepartingLocation;
+			}
+			set
+			{
+				if ((this._DepartingLocation != value))
+				{
+					this.OnDepartingLocationChanging(value);
+					this.SendPropertyChanging();
+					this._DepartingLocation = value;
+					this.SendPropertyChanged("DepartingLocation");
+					this.OnDepartingLocationChanged();
 				}
 			}
 		}
