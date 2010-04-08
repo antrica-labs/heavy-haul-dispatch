@@ -6102,6 +6102,8 @@ namespace SingerDispatch
 		
 		private string _ServiceDescription;
 		
+		private string _Schedule;
+		
 		private string _Notes;
 		
 		private System.Nullable<double> _EWeightSteer;
@@ -6206,6 +6208,8 @@ namespace SingerDispatch
     partial void OnBanChanged();
     partial void OnServiceDescriptionChanging(string value);
     partial void OnServiceDescriptionChanged();
+    partial void OnScheduleChanging(string value);
+    partial void OnScheduleChanged();
     partial void OnNotesChanging(string value);
     partial void OnNotesChanged();
     partial void OnEWeightSteerChanging(System.Nullable<double> value);
@@ -6536,6 +6540,26 @@ namespace SingerDispatch
 					this._ServiceDescription = value;
 					this.SendPropertyChanged("ServiceDescription");
 					this.OnServiceDescriptionChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Schedule")]
+		public string Schedule
+		{
+			get
+			{
+				return this._Schedule;
+			}
+			set
+			{
+				if ((this._Schedule != value))
+				{
+					this.OnScheduleChanging(value);
+					this.SendPropertyChanging();
+					this._Schedule = value;
+					this.SendPropertyChanged("Schedule");
+					this.OnScheduleChanged();
 				}
 			}
 		}

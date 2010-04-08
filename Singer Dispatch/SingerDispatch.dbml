@@ -261,6 +261,7 @@
       <Column Name="EndDate" Type="System.DateTime" CanBeNull="true" />
       <Column Name="Ban" Type="System.String" CanBeNull="true" />
       <Column Name="ServiceDescription" Type="System.String" CanBeNull="true" />
+      <Column Name="Schedule" Type="System.String" CanBeNull="true" />
       <Column Name="Notes" Type="System.String" CanBeNull="true" UpdateCheck="Never" />
       <Column Name="EWeightSteer" Type="System.Double" CanBeNull="true" />
       <Column Name="EWeightDrive" Type="System.Double" CanBeNull="true" />

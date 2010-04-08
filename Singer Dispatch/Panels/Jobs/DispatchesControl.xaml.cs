@@ -112,5 +112,14 @@ namespace SingerDispatch.Panels.Jobs
             SelectedJob.Dispatches.Remove(dispatch);
             ((ObservableCollection<Dispatch>)dgDispatches.ItemsSource).Remove(dispatch);
         }
+
+        private void cmbLoads_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            var load = (Load)cmbLoads.SelectedItem;
+
+            if (load == null || String.IsNullOrEmpty(load.Schedule)) return;
+
+            ((Dispatch)dgDispatches.SelectedItem).Schedule = load.Schedule;
+        }
     }
 }
