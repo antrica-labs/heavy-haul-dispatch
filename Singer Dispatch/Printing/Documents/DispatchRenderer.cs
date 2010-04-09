@@ -97,7 +97,7 @@ namespace SingerDispatch.Printing.Documents
             output.Append(GetDetails(dispatch));
             output.Append(GetDescription(dispatch.Description));
             output.Append(GetEquipment());
-            output.Append(GetSchedule());
+            output.Append(GetSchedule(dispatch));
             output.Append(GetLoadInstructions());
             output.Append(GetDimensions(dispatch.Load));
             output.Append(GetTractors());
@@ -106,7 +106,7 @@ namespace SingerDispatch.Printing.Documents
             output.Append(GetThridPartyServices());
             output.Append(GetWireLiftInfo());
             output.Append(GetPermits());
-            output.Append(GetOtherInfo());
+            output.Append(GetOtherInfo(dispatch));
 
             return output.ToString();
         }
@@ -552,36 +552,36 @@ namespace SingerDispatch.Printing.Documents
                     <table class=""dispatch_info"">
                         <tr>
                             <td class=""field_name col1_4"">Date:</td>
-                            <td class=""value col2_4"">%CURRENT_DATE%</td>
+                            <td class=""value col2_4"">{0}</td>
                             <td class=""field_name col3_4"">Customer:</td>
-                            <td class=""value col4_4"">%CUSTOMER%</td>
+                            <td class=""value col4_4"">{1}</td>
                         </tr>
                         <tr>
                             <td class=""field_name"">Unit #:</td>
-                            <td class=""value"">%UNIT%</td>
+                            <td class=""value"">{2}</td>
                             <td class=""field_name"">Trailer #:</td>
-                            <td class=""value"">%TRAILER%</td>
+                            <td class=""value"">{3}</td>
                         </tr>
                         <tr>
                             <td class=""field_name"">Driver:</td>
-                            <td class=""value"">%DRIVER%</td>
+                            <td class=""value"">{4}</td>
                             <td class=""field_name"">Swampers:</td>
-                            <td class=""value""></td>
+                            <td class=""value"">{5}</td>
                         </tr>
                     </table>
                     
                     <table class=""departure_info"">
                         <tr>
                             <td class=""field_name col1_2"">Depart Date:</td>
-                            <td class=""value col2_2"">%DISPATCH_DATE%</td>
+                            <td class=""value col2_2"">{6}</td>
                         </tr>                
                         <tr>                    
                             <td class=""field_name"">Depart From:</td>
-                            <td class=""value"">%DEPART_FROM%</td>
+                            <td class=""value"">{7}</td>
                         </tr>
                         <tr>
                             <td class=""field_name"">Depart Units:</td>
-                            <td class=""value"">%DEPARTING_UNITS%</td>
+                            <td class=""value"">{8}</td>
                         </tr>
                     </table>
                    
@@ -589,27 +589,26 @@ namespace SingerDispatch.Printing.Documents
                         <tr>
                             <td class=""field_name col1_2"">Customer References:</td>
                             <td class=""value col2_2"">
-                                %REFERENCE_NUMBERS%                                
+                                {9}                               
                             </td>
                         </tr>
                     </table>
                 </div>
             ";
 
-            var date = DateTime.Now;
-            var dispatchDate = dispatch.MeetingTime;
-            var customer = dispatch.Job.Company.Name;
-            var unit = (dispatch.Equipment != null) ? dispatch.Equipment.UnitNumber : "";
-            var driver = (dispatch.Employee != null) ? dispatch.Employee.Name : "";
-            var trailer = (dispatch.Load != null && dispatch.Load.Rate != null) ? dispatch.Load.Rate.Name + " - " : "";
+            var replacements = new string[10];
+
+            replacements[0] = Convert.ToString(DateTime.Now);
+            replacements[1] = Convert.ToString(dispatch.MeetingTime);
+            replacements[2] = dispatch.Job.Company.Name;
+            replacements[3] = (dispatch.Equipment != null) ? dispatch.Equipment.UnitNumber : "";
+            replacements[4] = (dispatch.Employee != null) ? dispatch.Employee.Name : "";
+            replacements[5] = "-- not implemented --";
+            replacements[6] = (dispatch.Load != null && dispatch.Load.Rate != null) ? dispatch.Load.Rate.Name + " - " : "";            
 
             if (dispatch.Load != null && dispatch.Load.TrailerCombination != null)
-                trailer += dispatch.Load.TrailerCombination.Combination;
-
-            var output = html.Replace("%CURRENT_DATE%", date.ToShortDateString()).Replace("%CUSTOMER%", customer).Replace("%UNIT%", unit)
-                .Replace("%DRIVER%", driver).Replace("%TRAILER%", trailer).Replace("%DISPATCH_DATE%", dispatchDate.ToString())
-                .Replace("%DEPART_FROM%", dispatch.DepartingLocation).Replace("%DEPARTING_UNITS%", dispatch.DepartingUnits);
-
+                replacements[6] += dispatch.Load.TrailerCombination.Combination;
+            
             var references = new StringBuilder();
             
             for (var i = 0; i < dispatch.Job.ReferenceNumbers.Count; i++) 
@@ -622,29 +621,30 @@ namespace SingerDispatch.Printing.Documents
                     references.Append(", ");
             }
 
-            if (references.Length > 0)
-                output = output.Replace("%REFERENCE_NUMBERS%", references.ToString());
-            else
-                output = output.Replace("%REFERENCE_NUMBERS%", "");
+            replacements[7] = dispatch.DepartingLocation;
+            replacements[8] = dispatch.DepartingUnits;
+            replacements[9] = references.ToString();
 
-            return output;
+            return string.Format(html, replacements);
         }
 
         private static string GetDescription(string description)
         {
-            const string content = @"
+            const string html = @"
                 <div class=""description section"">
                     <span class=""heading"">Dispatch Description</span>
                     
-                    <p>%DESCRIPTION%</p>
+                    <p>{0}</p>
                 </div>
             ";
 
-            return content.Replace("%DESCRIPTION%", description);
+            return string.Format(html, description);
         }
 
         private static string GetEquipment()
         {
+            // Fill this section with all of the ExtraEquipement entities attached to the dispatch's load.
+
             const string content = @"
                 <div class=""equipment_requirements section"">
                     <span class=""heading"">Equipment Required Information</span>
@@ -655,224 +655,153 @@ namespace SingerDispatch.Printing.Documents
             return content;
         }
 
-        private static string GetSchedule()
+        private static string GetSchedule(Dispatch dispatch)
         {
             const string content = @"
                 <div class=""schuedule section"">
                     <span class=""heading"">Dispatch Schedule</span>
                     
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce quis est sapien. Donec tempor, tortor at auctor scelerisque, justo elit condimentum enim, ac tristique nunc risus eu neque. Nam scelerisque nulla vel sapien facilisis ut commodo velit feugiat. Phasellus non mi ullamcorper neque porttitor semper at at dolor. Nullam ut erat at ipsum molestie tempus in nec lectus. Morbi risus ipsum, consectetur id laoreet ut, ullamcorper id urna. Duis a iaculis quam. Donec tempor, arcu eu cursus egestas, purus purus mattis velit, in suscipit neque metus nec augue. Nunc id justo vitae massa porta placerat sed vitae tellus. Aliquam erat.</p>
+                    <p>{0}</p>
                 </div>
             ";
 
-            return content;
+            var schedule = dispatch.Schedule ?? "";
+
+            return string.Format(content, schedule);
         }
 
         private static string GetLoadInstructions()
         {
-            const string content = @"
-                <div class=""load_and_unload section"">
-                    <span class=""heading"">Load/Unload Information</span>
+            const string head = @"<div class=""load_and_unload section""><span class=""heading"">Load/Unload Information</span>";
+            const string divider = "<hr>";
+            const string foot = "</div>";
+            const string content = @"                            
+                <div class=""commodity"">
+                    <span class=""commodity_name"">{0}{1}</span>
                     
-                    <div class=""commodity"">
-                        <span class=""commodity_name"">1450 HP Compressor Package Skid</span>
-                        
-                        <div class=""dimensions"">
-                            <span class=""weight"">74843kg</span>
-                            <span class=""size"">11.8m x 7.24m x 6.25m (L x W x H)</span>                    
-                        </div>
-                        
-                        <div class=""loading"">
-                            <span class=""subheading"">Load Information</span>
-                            
-                            <table class=""details"">
-                                <thead>
-                                    <tr>
-                                        <th>Date</th>
-                                        <th>Time</th>
-                                        <th>Load Location</th>
-                                        <th>Load Site Contact</th>
-                                        <th>Load By</th>
-                                        <th>Loading Contact</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td class=""date"">Jan 07, 2009</td>
-                                        <td class=""time"">10:00</td>
-                                        <td class=""location"">Propak Systems - 404 East Lake Rd, Airdrie</td>
-                                        <td class=""contact""><span>Rob Ogle</span><span>(403) 333 - 5369</span></td>
-                                        <td class=""company"">Singer Specialized</td>
-                                        <td class=""contact""><span>Jordy Cropley</span><span>(403) 816 - 1645</span></td>                                        
-                                    </tr>
-                                </tbody>                        
-                            </table>
-                            
-                            <table class=""instructions"">
-                                <thead>
-                                    <tr>
-                                        <th>Load Route</th>
-                                        <th>Load Instruction</th>
-                                        <th>Load Placement/Orientation</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>84st-16ave-Deerfoot-2-567 east-right onto Eastlake rd to Propak</td>
-                                        <td>Travel to Propack and load compressor by J&amp;R and load cooler with pickers</td>
-                                        <td>Load compressor evenly between necks</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>                  
-
-                        <div class=""unloading"">
-                            <span class=""subheading"">Unload Information</span>
-                            
-                            <table class=""details"">
-                                <thead>
-                                    <tr>
-                                        <th>Date</th>
-                                        <th>Time</th>
-                                        <th>Load Location</th>
-                                        <th>Load Site Contact</th>
-                                        <th>Load By</th>
-                                        <th>Loading Contact</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td class=""date"">Jan 7, 2009</td>
-                                        <td class=""time"">14:00</td>
-                                        <td class=""location"">Harmattan Gas Processiong Parnership - Harmatton-9-27-31-4-W4M</td>
-                                        <td class=""contact""><span>Gord Fox</span><span>(403) 335 - 7528</span></td>
-                                        <td class=""company"">Singer Specialized</td>
-                                        <td class=""contact""><span>Jordy Cropley</span><span>(403) 816 - 1645</span></td>
-                                    </tr>
-                                </tbody>                        
-                            </table>
-                            
-                            <table class=""instructions"">
-                                <thead>
-                                    <tr>
-                                        <th>Unload Route</th>
-                                        <th>Unload Instruction</th>
-                                        <th>Unload Placement/Orientation</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>Eastlake Rd north-567 west-772 south-567 west-22 north-Twp320(Bergen Rd) eas-RR402 south to site-Enter thru the Pipe yard</td>
-                                        <td>Deliver both loads to Harmatton site in convoy and offload as directed</td>
-                                        <td>See Gord Fox onsite for direction</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
+                    <div class=""dimensions"">
+                        <span class=""weight"">{2}</span>
+                        <span class=""size"">{3}/span>                    
                     </div>
+                    
+                    <div class=""loading"">
+                        <span class=""subheading"">Load Information</span>
+                        
+                        <table class=""details"">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Time</th>
+                                    <th>Load Location</th>
+                                    <th>Load Site Contact</th>
+                                    <th>Load By</th>
+                                    <th>Loading Contact</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class=""date"">{4}</td>
+                                    <td class=""time"">{5}</td>
+                                    <td class=""location"">{6}</td>
+                                    <td class=""contact"">{7}</td>
+                                    <td class=""company"">{8}</td>
+                                    <td class=""contact"">{9}</td>
+                                </tr>
+                            </tbody>                        
+                        </table>
+                        
+                        <table class=""instructions"">
+                            <thead>
+                                <tr>
+                                    <th>Load Route</th>
+                                    <th>Load Instruction</th>
+                                    <th>Load Placement/Orientation</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>{10}</td>
+                                    <td>{11}</td>
+                                    <td>{12}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>                  
 
-                    <hr>
-
-                    <div class=""commodity"">
-                        <span class=""commodity_name"">1450 HP Compressor Package Skid</span>
-
-                        <div class=""dimensions"">
-                            <span class=""weight"">74843kg</span>
-                            <span class=""size"">11.8m x 7.24m x 6.25m (L x W x H)</span>
-                        </div>
-
-                        <div class=""loading"">
-                            <span class=""subheading"">Load Information</span>
-
-                            <table class=""details"">
-                                <thead>
-                                    <tr>
-                                        <th>Date</th>
-                                        <th>Time</th>
-                                        <th>Load Location</th>
-                                        <th>Load Site Contact</th>
-                                        <th>Load By</th>
-                                        <th>Loading Contact</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td class=""date"">Jan 7, 2009</td>
-                                        <td class=""time"">14:00</td>
-                                        <td class=""location"">Harmattan Gas Processiong Parnership - Harmatton-9-27-31-4-W4M</td>
-                                        <td class=""contact""><span>Gord Fox</span><span>(403) 335 - 7528</span></td>
-                                        <td class=""company"">Singer Specialized</td>
-                                        <td class=""contact""><span>Jordy Cropley</span><span>(403) 816 - 1645</span></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-
-                            <table class=""instructions"">
-                                <thead>
-                                    <tr>
-                                        <th>Unload Route</th>
-                                        <th>Unload Instruction</th>
-                                        <th>Unload Placement/Orientation</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>Eastlake Rd north-567 west-772 south-567 west-22 north-Twp320(Bergen Rd) eas-RR402 south to site-Enter thru the Pipe yard</td>
-                                        <td>Deliver both loads to Harmatton site in convoy and offload as directed</td>
-                                        <td>See Gord Fox onsite for direction</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-
-                        <div class=""unloading"">
-                            <span class=""subheading"">Unload Information</span>
-
-                            <table class=""details"">
-                                <thead>
-                                    <tr>
-                                        <th>Date</th>
-                                        <th>Time</th>
-                                        <th>Load Location</th>
-                                        <th>Load Site Contact</th>
-                                        <th>Load By</th>
-                                        <th>Loading Contact</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td class=""date"">Jan 07, 2009</td>
-                                        <td class=""time"">10:00</td>
-                                        <td class=""location"">Propak Systems - 404 East Lake Rd, Airdrie</td>
-                                        <td class=""contact""><span>Rob Ogle</span><span>(403) 333 - 5369</span></td>
-                                        <td class=""company"">Singer Specialized</td>
-                                        <td class=""contact""><span>Jordy Cropley</span><span>(403) 816 - 1645</span></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-
-                            <table class=""instructions"">
-                                <thead>
-                                    <tr>
-                                        <th>Load Route</th>
-                                        <th>Load Instruction</th>
-                                        <th>Load Placement/Orientation</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>84st-16ave-Deerfoot-2-567 east-right onto Eastlake rd to Propak</td>
-                                        <td>Travel to Propack and load compressor by J&amp;R and load cooler with pickers</td>
-                                        <td>Load compressor evenly between necks</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
+                    <div class=""unloading"">
+                        <span class=""subheading"">Unload Information</span>
+                        
+                        <table class=""details"">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Time</th>
+                                    <th>Load Location</th>
+                                    <th>Load Site Contact</th>
+                                    <th>Load By</th>
+                                    <th>Loading Contact</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class=""date"">{13}</td>
+                                    <td class=""time"">{14}</td>
+                                    <td class=""location"">{15}</td>
+                                    <td class=""contact"">{16}</td>
+                                    <td class=""company"">{17}</td>
+                                    <td class=""contact"">{18}</td>
+                                </tr>
+                            </tbody>                        
+                        </table>
+                        
+                        <table class=""instructions"">
+                            <thead>
+                                <tr>
+                                    <th>Unload Route</th>
+                                    <th>Unload Instruction</th>
+                                    <th>Unload Placement/Orientation</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>{19}</td>
+                                    <td>{20}</td>
+                                    <td>{21}</td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             ";
 
-            return content;
+            /*
+            0 - Commodity name
+            1 - Unit number
+            2 - Weight
+            3 - Dimmensions
+            4 - Load date (eg: Jan 07, 2009)
+            5 - Load time (eg: 10:00)
+            6 - Load location
+            7 - Load site contact (eg: <span>Rob Ogle</span><span>(403) 333 - 5369</span>)
+            8 - Load by company
+            9 - Loading contact
+            10 - Load route
+            11 - Load instructions
+            12 - Load placement/orientation
+            13 - Unload date (eg: Jan 07, 2009)
+            14 - Unload time (eg: 10:00)
+            15 - Unload location
+            16 - Unload site contact (eg: <span>Rob Ogle</span><span>(403) 333 - 5369</span>)
+            17 - Unload by company
+            18 - Unloading contact
+            19 - Unload route
+            20 - Unload instructions
+            21 - Unload placement/orientation
+
+            Notes: In order to have all of the columns line up properly, contacts should be divided up like '<span>Gord Fox</span><span>(403) 335 - 7528</span>'
+            */
+
+            return "";
         }
 
         private static string GetDimensions(Load load)
@@ -883,10 +812,10 @@ namespace SingerDispatch.Printing.Documents
                     
                     <table class=""dimensions"">
                         <tr>
-                            <td><span class=""field_name"">Loaded Length</span>: <span class=""value"">40.00</span></td>
-                            <td><span class=""field_name"">Loaded Width</span>: <span class=""value"">7.16</span></td>                    
-                            <td><span class=""field_name"">Loaded Height</span>: <span class=""value"">6.82</span></td>
-                            <td><span class=""field_name"">Gross Weight</span>: <span class=""value"">128,393</span></td>
+                            <td><span class=""field_name"">Loaded Length</span>: <span class=""value"">{0}</span></td>
+                            <td><span class=""field_name"">Loaded Width</span>: <span class=""value"">{1}</span></td>                    
+                            <td><span class=""field_name"">Loaded Height</span>: <span class=""value"">{2}</span></td>
+                            <td><span class=""field_name"">Gross Weight</span>: <span class=""value"">{3}</span></td>
                         </tr>
                     </table>
                     
@@ -909,40 +838,71 @@ namespace SingerDispatch.Printing.Documents
                             <th>Group 10</th>                    
                         </tr>
                         <tr>
-                            <th class=""row_name"">Estimated</th>
-                            <td>7300</td>
-                            <td>21000</td>
-                            <td>28000</td>
-                            <td>28000</td>
-                            <td>28000</td>
-                            <td>28000</td>
-                            <td>&nbsp;</td>
-                            <td>&nbsp;</td>
-                            <td>&nbsp;</td>
-                            <td>&nbsp;</td>
-                            <td>&nbsp;</td>
-                            <td>&nbsp;</td>
+                            <td class=""row_name"">Estimated</th>                            
+                            <td><span>{4}</span></td>
+                            <td><span>{5}</span></td>
+                            <td><span>{6}</span></td>
+                            <td><span>{7}</span></td>
+                            <td><span>{8}</span></td>
+                            <td><span>{9}</span></td>
+                            <td><span>{10}</span></td>
+                            <td><span>{11}</span></td>
+                            <td><span>{12}</span></td>
+                            <td><span>{13}</span></td>
+                            <td><span>{14}</span></td>
+                            <td><span>{15}</span></td>
                         </tr>
                         <tr>
-                            <th class=""vertical"">Scaled</th>
-                            <td>7300</td>
-                            <td>&nbsp;</td>
-                            <td>&nbsp;</td>
-                            <td>&nbsp;</td>
-                            <td>&nbsp;</td>
-                            <td>&nbsp;</td>
-                            <td>&nbsp;</td>
-                            <td>&nbsp;</td>
-                            <td>&nbsp;</td>
-                            <td>&nbsp;</td>
-                            <td>&nbsp;</td>
-                            <td>&nbsp;</td>
+                            <td class=""row_name"">Scaled</th>                            
+                            <td><span>{16}</span></td>
+                            <td><span>{17}</span></td>
+                            <td><span>{18}</span></td>
+                            <td><span>{19}</span></td>
+                            <td><span>{20}</span></td>
+                            <td><span>{21}</span></td>
+                            <td><span>{22}</span></td>
+                            <td><span>{23}</span></td>
+                            <td><span>{24}</span></td>
+                            <td><span>{25}</span></td>
+                            <td><span>{26}</span></td>
+                            <td><span>{27}</span></td>
                         </tr>
                     </table>
                 </div>
             ";
 
-            return content;
+            var replacements = new String[28];
+
+            replacements[0] = Convert.ToString(load.LoadedLength);
+            replacements[1] = Convert.ToString(load.LoadedWidth);
+            replacements[2] = Convert.ToString(load.LoadedHeight);
+            replacements[3] = Convert.ToString(load.GrossWeight);
+            replacements[4] = Convert.ToString(load.EWeightSteer);
+            replacements[5] = Convert.ToString(load.EWeightDrive);
+            replacements[6] = Convert.ToString(load.EWeightGroup1);
+            replacements[7] = Convert.ToString(load.EWeightGroup2);
+            replacements[8] = Convert.ToString(load.EWeightGroup3);
+            replacements[9] = Convert.ToString(load.EWeightGroup4);
+            replacements[10] = Convert.ToString(load.EWeightGroup5);
+            replacements[11] = Convert.ToString(load.EWeightGroup6);
+            replacements[12] = Convert.ToString(load.EWeightGroup7);
+            replacements[13] = Convert.ToString(load.EWeightGroup8);
+            replacements[14] = Convert.ToString(load.EWeightGroup9);
+            replacements[15] = Convert.ToString(load.EWeightGroup10);
+            replacements[16] = Convert.ToString(load.SWeightSteer);
+            replacements[17] = Convert.ToString(load.SWeightDrive);
+            replacements[18] = Convert.ToString(load.SWeightGroup1);
+            replacements[19] = Convert.ToString(load.SWeightGroup2);
+            replacements[20] = Convert.ToString(load.SWeightGroup3);
+            replacements[21] = Convert.ToString(load.SWeightGroup4);
+            replacements[22] = Convert.ToString(load.SWeightGroup5);
+            replacements[23] = Convert.ToString(load.SWeightGroup6);
+            replacements[24] = Convert.ToString(load.SWeightGroup7);
+            replacements[25] = Convert.ToString(load.SWeightGroup8);
+            replacements[26] = Convert.ToString(load.SWeightGroup9);
+            replacements[27] = Convert.ToString(load.SWeightGroup10);
+
+            return string.Format(content, replacements);
         }
 
         private static string GetTractors()
@@ -1220,17 +1180,17 @@ namespace SingerDispatch.Printing.Documents
             return content;
         }
 
-        private static string GetOtherInfo()
+        private static string GetOtherInfo(Dispatch dispatch)
         {
             const string content = @"
                 <div class=""other_info section"">
                     <span class=""heading"">Other Information</span>
 
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce quis est sapien. Donec tempor, tortor at auctor scelerisque, justo elit condimentum enim, ac tristique nunc risus eu neque. Nam scelerisque nulla vel sapien facilisis ut commodo velit feugiat. Phasellus non mi ullamcorper neque porttitor semper at at dolor. Nullam ut erat at ipsum molestie tempus in nec lectus. Morbi risus ipsum, consectetur id laoreet ut, ullamcorper id urna. Duis a iaculis quam. Donec tempor, arcu eu cursus egestas, purus purus mattis velit, in suscipit neque metus nec augue. Nunc id justo vitae massa porta placerat sed vitae tellus. Aliquam erat.</p>
+                    <p>{0}</p>
                 </div>
             ";
 
-            return content;
+            return string.Format(content, dispatch.Notes);
         }
     }
 }

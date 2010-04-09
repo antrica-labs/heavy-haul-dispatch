@@ -40,7 +40,7 @@ namespace SingerDispatch.Windows
         {
             var pdf = new PDFizer();
 
-            Dispatcher.Invoke(DispatcherPriority.Normal, new Action<string>(UpdateStatus), "Creating PDF...");
+            Dispatcher.Invoke(DispatcherPriority.Normal, new Action<string>(UpdateStatus), "Generating PDF output...");
                 
             pdf.SaveHTMLToPDF(HTML, Filename);
 
