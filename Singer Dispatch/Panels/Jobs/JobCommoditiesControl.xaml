@@ -135,7 +135,7 @@
                         <GroupBox Header="Load" Grid.Column="0">
                             <Grid>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="105" />
+                                    <ColumnDefinition Width="95" />
                                     <ColumnDefinition />
                                 </Grid.ColumnDefinitions>
                                 <Grid.RowDefinitions>
@@ -152,26 +152,26 @@
                                 <Label Grid.Column="0" Grid.Row="0">Loading date:</Label>
                                 <DatePicker Grid.Column="1" Grid.Row="0" SelectedDate="{Binding LoadDate}" />
 
-                                <Label Grid.Column="0" Grid.Row="1">Site name:</Label>
-                                <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding LoadSiteName}"/>
+                                <Label Grid.Column="0" Grid.Row="1">Location:</Label>
+                                <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding LoadLocation}"/>
 
-                                <Label Grid.Column="0" Grid.Row="2">Address/LSD:</Label>
-                                <TextBox Grid.Column="1" Grid.Row="2" Text="{Binding LoadAddress}"/>
+                                <Label Grid.Column="0" Grid.Row="2">Site contact:</Label>
+                                <ComboBox Name="cmbLoadingContacts" Grid.Column="1" Grid.Row="2" SelectedItem="{Binding LoadContact}" TextSearch.TextPath="Name" ItemTemplate="{StaticResource ContactTemplate}" />
 
-                                <Label Grid.Column="0" Grid.Row="3">Site contact:</Label>
-                                <TextBox Grid.Column="1" Grid.Row="3" />
+                                <Label Grid.Column="0" Grid.Row="3">Load by:</Label>
+                                <TextBox Grid.Column="1" Grid.Row="3" Text="{Binding LoadBy}" />
 
-                                <Label Grid.Column="0" Grid.Row="4">Load by:</Label>
-                                <TextBox Grid.Column="1" Grid.Row="4" Text="{Binding LoadBy}"/>
+                                <Label Grid.Column="0" Grid.Row="4">Method:</Label>
+                                <ComboBox Name="cmbLoadMethods" Grid.Column="1" Grid.Row="4" SelectedItem="{Binding LoadMethod}" ItemTemplate="{StaticResource SimpleNameTemplate}" TextSearch.TextPath="Name" />
 
-                                <Label Grid.Column="0" Grid.Row="5">Load method:</Label>
-                                <ComboBox Name="cmbLoadMethods" Grid.Column="1" Grid.Row="5" SelectedItem="{Binding LoadMethod}" ItemTemplate="{StaticResource SimpleNameTemplate}" IsEditable="True" TextSearch.TextPath="Name" />                                
+                                <Label Grid.Column="0" Grid.Row="5">Route:</Label>
+                                <TextBox Grid.Column="1" Grid.Row="5" Style="{StaticResource MultiLine}" Text="{Binding LoadRoute}"/>
 
-                                <Label Grid.Column="0" Grid.Row="6">Load instructions</Label>
+                                <Label Grid.Column="0" Grid.Row="6">Instructions:</Label>
                                 <TextBox Grid.Column="1" Grid.Row="6" Style="{StaticResource MultiLine}" Text="{Binding LoadInstructions}" />
 
-                                <Label Grid.Column="0" Grid.Row="7">Load route:</Label>
-                                <TextBox Grid.Column="1" Grid.Row="7" Style="{StaticResource MultiLine}" Text="{Binding LoadRoute}"/>
+                                <Label Grid.Column="0" Grid.Row="7">Orientation:</Label>
+                                <TextBox Grid.Column="1" Grid.Row="7" Text="{Binding LoadOrientation}" />
                             </Grid>
                         </GroupBox>
 
@@ -195,32 +195,30 @@
                                 <Label Grid.Column="0" Grid.Row="0">Unloading date:</Label>
                                 <DatePicker Grid.Column="1" Grid.Row="0" SelectedDate="{Binding UnloadDate}"  />
 
-                                <Label Grid.Column="0" Grid.Row="1">Site name:</Label>
-                                <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding UnloadSiteName}"/>
+                                <Label Grid.Column="0" Grid.Row="1">Location:</Label>
+                                <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding UnloadLocation}"/>
 
-                                <Label Grid.Column="0" Grid.Row="2">Address/LSD:</Label>
-                                <TextBox Grid.Column="1" Grid.Row="2" Text="{Binding UnloadAddress}" />
+                                <Label Grid.Column="0" Grid.Row="2">Site contact:</Label>
+                                <ComboBox Name="cmbUnloadingContacts" Grid.Column="1" Grid.Row="2" SelectedItem="{Binding UnloadContact}" TextSearch.TextPath="Name" ItemTemplate="{StaticResource ContactTemplate}" />
 
-                                <Label Grid.Column="0" Grid.Row="3">Site contact:</Label>
-                                <TextBox Grid.Column="1" Grid.Row="3"  />
+                                <Label Grid.Column="0" Grid.Row="3">Unload by:</Label>
+                                <TextBox Grid.Column="1" Grid.Row="3" Text="{Binding UnloadBy}" />
 
-                                <Label Grid.Column="0" Grid.Row="4">Unload by:</Label>
-                                <TextBox Grid.Column="1" Grid.Row="4" Text="{Binding UnloadBy}" />
+                                <Label Grid.Column="0" Grid.Row="4">Method:</Label>
+                                <ComboBox Name="cmbUnloadMethods" Grid.Column="1" Grid.Row="4" SelectedItem="{Binding UnloadMethod}" ItemTemplate="{StaticResource SimpleNameTemplate}" TextSearch.TextPath="Name" />
 
-                                <Label Grid.Column="0" Grid.Row="5">Unload method:</Label>
-                                <ComboBox Name="cmbUnloadMethods" Grid.Column="1" Grid.Row="5" SelectedItem="{Binding UnloadMethod}" ItemTemplate="{StaticResource SimpleNameTemplate}" IsEditable="True" TextSearch.TextPath="Name" />
-
-                                <Label Grid.Column="0" Grid.Row="6">Unload instructions</Label>
+                                <Label Grid.Column="0" Grid.Row="5">Route:</Label>
+                                <TextBox Grid.Column="1" Grid.Row="5" Style="{StaticResource MultiLine}" Text="{Binding UnloadRoute}" />
+                                
+                                <Label Grid.Column="0" Grid.Row="6">Instructions:</Label>
                                 <TextBox  Grid.Column="1" Grid.Row="6" Style="{StaticResource MultiLine}" Text="{Binding UnloadInstructions}" />
 
-                                <Label Grid.Column="0" Grid.Row="7">Unload route:</Label>
-                                <TextBox Grid.Column="1" Grid.Row="7" Style="{StaticResource MultiLine}" Text="{Binding UnloadRoute}" />
+                                <Label Grid.Column="0" Grid.Row="7">Orientation:</Label>
+                                <TextBox Grid.Column="1" Grid.Row="7" Text="{Binding UnloadOrientation}" />                                
                             </Grid>
                         </GroupBox>
                     </Grid>
                 </TabItem>
-
-                
             </TabControl>
         </StackPanel>
 

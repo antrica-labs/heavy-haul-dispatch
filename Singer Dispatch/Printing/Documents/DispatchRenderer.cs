@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Data.Linq;
 
 namespace SingerDispatch.Printing.Documents
 {
@@ -98,7 +99,7 @@ namespace SingerDispatch.Printing.Documents
             output.Append(GetDescription(dispatch.Description));
             output.Append(GetEquipment());
             output.Append(GetSchedule(dispatch));
-            output.Append(GetLoadInstructions());
+            output.Append(GetLoadCommodities(dispatch.Load.JobCommodities));
             output.Append(GetDimensions(dispatch.Load));
             output.Append(GetTractors());
             output.Append(GetSingerPilots());
@@ -262,7 +263,7 @@ namespace SingerDispatch.Printing.Documents
                     }            
                     
                     div.details table.dispatch_info, div.details table.departure_info
-                    {
+                    {   
                         margin-bottom: 10px;
                     }
                     
@@ -277,6 +278,11 @@ namespace SingerDispatch.Printing.Documents
                     div.details td.value
                     {
                         padding-right: 15px;
+                    }
+
+                    div.details table.dispatch_info td.value
+                    {
+                        padding-right: 35px;
                     }
                     
                     div.section
@@ -315,7 +321,8 @@ namespace SingerDispatch.Printing.Documents
 
                     div.load_and_unload span.commodity_name
                     {
-                        font-weight: bold;                
+                        font-weight: bold;
+                        padding-bottom: 5px;          
                     }
 
                     div.load_and_unload div.loading, div.load_and_unload div.unloading
@@ -378,6 +385,11 @@ namespace SingerDispatch.Printing.Documents
                     div.load_and_unload table.instructions td
                     {
                         width: 33%;
+                    }
+
+                    div.dimensions span
+                    {
+                        padding-right: 15px;
                     }
 
                     div.dimensions table.dimensions
@@ -598,16 +610,19 @@ namespace SingerDispatch.Printing.Documents
 
             var replacements = new string[10];
 
-            replacements[0] = Convert.ToString(DateTime.Now);
-            replacements[1] = Convert.ToString(dispatch.MeetingTime);
-            replacements[2] = dispatch.Job.Company.Name;
-            replacements[3] = (dispatch.Equipment != null) ? dispatch.Equipment.UnitNumber : "";
-            replacements[4] = (dispatch.Employee != null) ? dispatch.Employee.Name : "";
-            replacements[5] = "-- not implemented --";
-            replacements[6] = (dispatch.Load != null && dispatch.Load.Rate != null) ? dispatch.Load.Rate.Name + " - " : "";            
+            replacements[0] = DateTime.Now.ToString(SingerConstants.PrintedDateFormatString);
+            replacements[1] = dispatch.Job.Company.Name;
+            replacements[2] = (dispatch.Equipment != null) ? dispatch.Equipment.UnitNumber : "";
+            replacements[3] = (dispatch.Load != null && dispatch.Load.Rate != null) ? dispatch.Load.Rate.Name + " - " : "";
 
             if (dispatch.Load != null && dispatch.Load.TrailerCombination != null)
-                replacements[6] += dispatch.Load.TrailerCombination.Combination;
+                replacements[3] += dispatch.Load.TrailerCombination.Combination;
+
+            replacements[4] = (dispatch.Employee != null) ? dispatch.Employee.Name : "";
+            replacements[5] = "-- not implemented --";
+            replacements[6] = (dispatch.MeetingTime != null) ? dispatch.MeetingTime.Value.ToString(SingerConstants.PrintedDateFormatString) + " " + dispatch.MeetingTime.Value.ToString(SingerConstants.PrintedTimeFormatString) : "";
+            replacements[7] = dispatch.DepartingLocation;
+            replacements[8] = dispatch.DepartingUnits;            
             
             var references = new StringBuilder();
             
@@ -620,9 +635,7 @@ namespace SingerDispatch.Printing.Documents
                 if ((i + 1) != dispatch.Job.ReferenceNumbers.Count)
                     references.Append(", ");
             }
-
-            replacements[7] = dispatch.DepartingLocation;
-            replacements[8] = dispatch.DepartingUnits;
+            
             replacements[9] = references.ToString();
 
             return string.Format(html, replacements);
@@ -670,18 +683,19 @@ namespace SingerDispatch.Printing.Documents
             return string.Format(content, schedule);
         }
 
-        private static string GetLoadInstructions()
+        private static string GetLoadCommodities(EntitySet<JobCommodity> commodities)
         {
             const string head = @"<div class=""load_and_unload section""><span class=""heading"">Load/Unload Information</span>";
             const string divider = "<hr>";
             const string foot = "</div>";
-            const string content = @"                            
+            const string commodityHtml = @"                            
                 <div class=""commodity"">
-                    <span class=""commodity_name"">{0}{1}</span>
-                    
+                    <span class=""commodity_name"">{0}</span> 
+                    <span class=""unit"">{1}</span>
+
                     <div class=""dimensions"">
                         <span class=""weight"">{2}</span>
-                        <span class=""size"">{3}/span>                    
+                        <span class=""size"">{3}</span>                    
                     </div>
                     
                     <div class=""loading"">
@@ -774,34 +788,73 @@ namespace SingerDispatch.Printing.Documents
                 </div>
             ";
 
-            /*
-            0 - Commodity name
-            1 - Unit number
-            2 - Weight
-            3 - Dimmensions
-            4 - Load date (eg: Jan 07, 2009)
-            5 - Load time (eg: 10:00)
-            6 - Load location
-            7 - Load site contact (eg: <span>Rob Ogle</span><span>(403) 333 - 5369</span>)
-            8 - Load by company
-            9 - Loading contact
-            10 - Load route
-            11 - Load instructions
-            12 - Load placement/orientation
-            13 - Unload date (eg: Jan 07, 2009)
-            14 - Unload time (eg: 10:00)
-            15 - Unload location
-            16 - Unload site contact (eg: <span>Rob Ogle</span><span>(403) 333 - 5369</span>)
-            17 - Unload by company
-            18 - Unloading contact
-            19 - Unload route
-            20 - Unload instructions
-            21 - Unload placement/orientation
+            var html = new StringBuilder();
 
-            Notes: In order to have all of the columns line up properly, contacts should be divided up like '<span>Gord Fox</span><span>(403) 335 - 7528</span>'
-            */
+            html.Append(head);
 
-            return "";
+            for (var i = 0; i < commodities.Count; i++)
+            {
+                var item = commodities[i];
+                var reps = new string[22];
+
+                var length = (item.Length != null) ? item.Length.Value : 0.00;
+                var width = (item.Width != null) ? item.Width.Value : 0.00;
+                var height = (item.Height != null) ? item.Height.Value : 0.00;
+                
+                reps[0] = item.Name;
+                reps[1] = (item.Unit != null) ? string.Format("Unit {0}", item.Unit) : "";
+                reps[2] = string.Format("{0:0,0.00}kg", item.Weight);
+                reps[3] = string.Format("{0:0,0.00}m x {1:0,0.00}m x {2:0,0.00}m (LxWxH)", item.Length, item.Width, item.Height);
+
+                if (item.LoadDate != null)
+                {
+                    reps[4] = item.LoadDate.Value.ToString(SingerConstants.PrintedDateFormatString);
+                    reps[5] = item.LoadDate.Value.ToString(SingerConstants.PrintedTimeFormatString);
+                }
+                else
+                {
+                    reps[4] = "";
+                    reps[5] = "";
+                }
+
+                reps[6] = item.LoadLocation;
+                reps[7] = (item.LoadContact != null) ? string.Format("<span>{0}</span><span>{1}</span>", item.LoadContact.Name, item.LoadContact.PrimaryPhone) : "";
+                reps[8] = item.LoadBy;
+                reps[9] = "N\\A";
+                reps[10] = item.LoadRoute;
+                reps[11] = item.LoadInstructions;
+                reps[12] = item.LoadOrientation;
+
+
+                if (item.LoadDate != null)
+                {
+                    reps[13] = item.UnloadDate.Value.ToString(SingerConstants.PrintedDateFormatString);
+                    reps[14] = item.UnloadDate.Value.ToString(SingerConstants.PrintedTimeFormatString);
+                }
+                else
+                {
+                    reps[13] = "";
+                    reps[14] = "";
+                }
+
+                reps[15] = item.UnloadLocation;
+                reps[16] = (item.UnloadContact != null) ? string.Format("<span>{0}</span><span>{1}</span>", item.UnloadContact.Name, item.UnloadContact.PrimaryPhone) : "";
+                reps[17] = item.UnloadBy;
+                reps[18] = "N\\A";
+                reps[19] = item.UnloadRoute;
+                reps[20] = item.UnloadInstructions;
+                reps[21] = item.UnloadOrientation;
+                
+
+                html.Append(string.Format(commodityHtml, reps));
+
+                if ((i + 1) != commodities.Count)
+                    html.Append(divider);
+            }
+
+            html.Append(foot);
+
+            return html.ToString();
         }
 
         private static string GetDimensions(Load load)
@@ -812,10 +865,10 @@ namespace SingerDispatch.Printing.Documents
                     
                     <table class=""dimensions"">
                         <tr>
-                            <td><span class=""field_name"">Loaded Length</span>: <span class=""value"">{0}</span></td>
-                            <td><span class=""field_name"">Loaded Width</span>: <span class=""value"">{1}</span></td>                    
-                            <td><span class=""field_name"">Loaded Height</span>: <span class=""value"">{2}</span></td>
-                            <td><span class=""field_name"">Gross Weight</span>: <span class=""value"">{3}</span></td>
+                            <td><span class=""field_name"">Loaded Length:</span> <span class=""value"">{0}</span></td>
+                            <td><span class=""field_name"">Loaded Width:</span> <span class=""value"">{1}</span></td>                    
+                            <td><span class=""field_name"">Loaded Height:</span> <span class=""value"">{2}</span></td>
+                            <td><span class=""field_name"">Gross Weight:</span> <span class=""value"">{3}</span></td>
                         </tr>
                     </table>
                     

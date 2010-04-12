@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Collections.ObjectModel;
+using System.Collections.Generic;
 
 namespace SingerDispatch.Panels.Jobs
 {
@@ -28,6 +29,20 @@ namespace SingerDispatch.Panels.Jobs
 
             cmbLoadMethods.ItemsSource = methods;
             cmbUnloadMethods.ItemsSource = methods;
+
+            List<Contact> contacts = null;
+
+            if (SelectedJob != null && SelectedJob.CareOfCompanyID != null)
+            {
+                contacts = (from c in Database.Contacts where c.Address.CompanyID == SelectedCompany.ID || c.Address.CompanyID == SelectedJob.CareOfCompanyID select c).ToList();
+            }
+            else if (SelectedJob != null)
+            {
+                contacts = (from c in Database.Contacts where c.Address.CompanyID == SelectedCompany.ID select c).ToList();
+            }
+
+            cmbLoadingContacts.ItemsSource = contacts;
+            cmbUnloadingContacts.ItemsSource = contacts;
         }
 
         protected override void SelectedJobChanged(Job newValue, Job oldValue)
@@ -84,9 +99,7 @@ namespace SingerDispatch.Panels.Jobs
             var original = (Commodity)cmbCommodityName.SelectedItem;
             var commodity = (JobCommodity)dgCommodities.SelectedItem;
 
-            if (commodity == null)            
-                return;
-            
+            if (commodity == null || commodity.OriginalCommodity == original) return;            
 
             if (original != null)
             {
@@ -105,8 +118,7 @@ namespace SingerDispatch.Panels.Jobs
                 commodity.Notes = original.Notes;
                 commodity.LastAddress = original.LastAddress;
                 commodity.LastLocation = original.LastLocation;
-                commodity.LoadAddress = original.LastAddress;
-                commodity.LoadSiteName = original.LastLocation;
+                commodity.LoadLocation = original.LastAddress;                
             }
             else
             {
@@ -125,8 +137,7 @@ namespace SingerDispatch.Panels.Jobs
                 commodity.Notes = null;
                 commodity.LastAddress = null;
                 commodity.LastLocation = null;
-                commodity.LoadAddress = null;
-                commodity.LoadSiteName = null;
+                commodity.LoadLocation = null;                
             }
         }
     }

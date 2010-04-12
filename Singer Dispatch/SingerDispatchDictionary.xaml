@@ -21,6 +21,17 @@
         <TextBlock Text="{Binding FriendlyName}" />
     </DataTemplate>
     
+    <DataTemplate x:Key="ContactTemplate">
+        <TextBlock>
+            <TextBlock.Text>
+                <MultiBinding StringFormat="{}{0} - {1}">
+                    <Binding Path="Name" />
+                    <Binding Path="PrimaryPhone" />
+                </MultiBinding>
+            </TextBlock.Text>
+        </TextBlock>
+    </DataTemplate>
+    
     <Style TargetType="{x:Type Controls:TabIndexHyperlink}">
         <Setter Property="TextDecorations" Value="None" />
         <Setter Property="Foreground" Value="Black" />

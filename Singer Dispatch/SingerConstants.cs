@@ -41,6 +41,14 @@ namespace SingerDispatch
                 return GetConfig("PrintedDateFormatString") ?? "MMMM d, yyyy";
             }
         }
+
+        public static string PrintedTimeFormatString
+        {
+            get
+            {
+                return GetConfig("PrintedTimeFormatString") ?? "HH:mm";
+            }
+        }
         
         public static decimal GST
         {

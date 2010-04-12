@@ -219,10 +219,8 @@ namespace SingerDispatch
             jc.WeightEstimated = WeightEstimated;
             jc.Cost = Cost;
             jc.Notes = Notes;
-            jc.LoadAddress = DepartureAddress;
-            jc.LoadSiteName = DepartureSiteName;
-            jc.UnloadAddress = ArrivalAddress;
-            jc.UnloadSiteName = ArrivalSiteName;
+            jc.LoadLocation = DepartureSiteName + " " + DepartureAddress;
+            jc.UnloadLocation = ArrivalSiteName + " " + ArrivalAddress;            
 
             return jc;
         }
@@ -339,15 +337,13 @@ namespace SingerDispatch
             copy.SizeEstimated = SizeEstimated;
             copy.WeightEstimated = WeightEstimated;
             copy.Cost = Cost;
-            copy.LoadSiteName = LoadSiteName;
-            copy.LoadAddress = LoadAddress;
+            copy.LoadLocation = LoadLocation;
             copy.LoadBy = LoadBy;
             copy.LoadMethod = LoadMethod;
             copy.LoadDate = LoadDate;
             copy.LoadInstructions = LoadInstructions;
             copy.LoadRoute = LoadRoute;
-            copy.UnloadSiteName = UnloadSiteName;
-            copy.UnloadAddress = UnloadAddress;
+            copy.UnloadLocation = UnloadLocation;
             copy.UnloadBy = UnloadBy;
             copy.UnloadMethod = UnloadMethod;
             copy.UnloadDate = UnloadDate;

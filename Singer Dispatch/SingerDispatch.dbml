@@ -1,4 +1,5 @@
-﻿<?xml version="1.0" encoding="utf-8"?><Database Class="SingerDispatchDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Database Class="SingerDispatchDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
   <Table Name="" Member="Addresses">
     <Type Name="Address">
       <Column Name="ID" Type="System.Int64" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -109,6 +110,8 @@
       <Association Name="Address_Contact" Member="Address" ThisKey="AddressID" OtherKey="ID" Type="Address" IsForeignKey="true" />
       <Association Name="Contact_ContactRole" Member="ContactRoles" ThisKey="ID" OtherKey="ContactID" Type="ContactRole" />
       <Association Name="ContactMethod_Contact" Member="PreferedContactMethod" ThisKey="ContactMethodID" OtherKey="ID" Type="ContactMethod" IsForeignKey="true" />
+      <Association Name="LoadContact_JobCommodity" Member="LoadingJobCommodities" OtherKey="LoadContactID" ThisKey="ID" Type="JobCommodity" />
+      <Association Name="UnloadContact_JobCommodity" Member="UnloadingJobCommodities" OtherKey="UnloadContactID" ThisKey="ID" Type="JobCommodity" />
     </Type>
   </Table>
   <Table Name="" Member="ContactRoles">
@@ -182,26 +185,30 @@
       <Column Name="SizeEstimated" Type="System.Boolean" CanBeNull="true" />
       <Column Name="WeightEstimated" Type="System.Boolean" CanBeNull="true" />
       <Column Name="Cost" Type="System.Decimal" CanBeNull="true" />
-      <Column Name="LoadSiteName" Type="System.String" CanBeNull="true" />
-      <Column Name="LoadAddress" Type="System.String" CanBeNull="true" />
+      <Column Name="LoadContactID" Type="System.Int64" CanBeNull="true" />
+      <Column Name="LoadLocation" Type="System.String" CanBeNull="true" />
       <Column Name="LoadBy" Type="System.String" CanBeNull="true" />
       <Column Name="LoadMethodID" Type="System.Int64" CanBeNull="true" />
       <Column Name="LoadDate" Type="System.DateTime" CanBeNull="true" />
       <Column Name="LoadInstructions" Type="System.String" CanBeNull="true" />
       <Column Name="LoadRoute" Type="System.String" CanBeNull="true" />
-      <Column Name="UnloadSiteName" Type="System.String" CanBeNull="true" />
-      <Column Name="UnloadAddress" Type="System.String" CanBeNull="true" />
+      <Column Name="LoadOrientation" Type="System.String" CanBeNull="true" />
+      <Column Name="UnloadContactID" Type="System.Int64" CanBeNull="true" />
+      <Column Name="UnloadLocation" Type="System.String" CanBeNull="true" />
       <Column Name="UnloadBy" Type="System.String" CanBeNull="true" />
       <Column Name="UnloadMethodID" Type="System.Int64" CanBeNull="true" />
       <Column Name="UnloadDate" Type="System.DateTime" CanBeNull="true" />
       <Column Name="UnloadInstructions" Type="System.String" CanBeNull="true" />
       <Column Name="UnloadRoute" Type="System.String" CanBeNull="true" />
+      <Column Name="UnloadOrientation" Type="System.String" CanBeNull="true" />
       <Column Name="Notes" Type="System.String" CanBeNull="true" UpdateCheck="Never" />
       <Association Name="Commodity_JobCommodity" Member="OriginalCommodity" ThisKey="OriginalCommodityID" OtherKey="ID" Type="Commodity" IsForeignKey="true" />
       <Association Name="Job_JobCommodity" Member="Job" ThisKey="JobID" OtherKey="ID" Type="Job" IsForeignKey="true" />
       <Association Name="Load_JobCommodity" Member="Load" ThisKey="LoadID" OtherKey="ID" Type="Load" IsForeignKey="true" />
       <Association Name="LoadUnloadMethod_JobCommodity" Member="LoadMethod" ThisKey="LoadMethodID" OtherKey="ID" Type="LoadUnloadMethod" IsForeignKey="true" />
       <Association Name="LoadUnloadMethod_JobCommodity1" Member="UnloadMethod" ThisKey="UnloadMethodID" OtherKey="ID" Type="LoadUnloadMethod" IsForeignKey="true" />
+      <Association Name="LoadContact_JobCommodity" Member="LoadContact" ThisKey="LoadContactID" OtherKey="ID" Type="Contact" IsForeignKey="true" />
+      <Association Name="UnloadContact_JobCommodity" Member="UnloadContact" ThisKey="UnloadContactID" OtherKey="ID" Type="Contact" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="" Member="Jobs">
