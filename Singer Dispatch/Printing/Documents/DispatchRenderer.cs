@@ -511,23 +511,23 @@ namespace SingerDispatch.Printing.Documents
 
         private static string GetHeader(Dispatch dispatch, string copyType)
         {           
-            var content = @"
+            var html = @"
                 <div class=""header"">
                     <table>
                         <tr>
                             <td class=""logo_col"">
-                                <span class=""logo""><img src=""%HEADER_IMG%"" alt=""Singer Specialized""></span>
+                                <span class=""logo""><img src=""{0}"" alt=""Singer Specialized""></span>
                             </td>
                             <td class=""address_col"">
-                                <span>%COMPANY_NAME%</span>
-                                <span>%STREET_ADDRESS%</span>
-                                <span>%CITY%</span>
-                                <span>Phone: %PHONE%</span>
+                                <span>{1}</span>
+                                <span>{2}</span>
+                                <span>{3}</span>
+                                <span>Phone: {4}</span>
                             </td>
                             <td class=""id_col"">
-                                <span class=""copy_type"">%COPY%</span>
+                                <span class=""copy_type"">{5}</span>
                                 <span>Dispatch #:</span>
-                                <span class=""number"">%DISPATCH_NUMBER%</span>
+                                <span class=""number"">{6}</span>
                             </td>
                         </tr>
                     </table>
@@ -536,10 +536,7 @@ namespace SingerDispatch.Printing.Documents
                 </div>
             ";
 
-            var company = SingerConstants.GetConfig("SingerName");
-            var address = SingerConstants.GetConfig("SingerAddress-StreetAddress");
-            var city = SingerConstants.GetConfig("SingerAddress-City");
-            var phone = SingerConstants.GetConfig("SingerAddress-Phone");
+            var replacements = new object[7];
 
             var process = System.Diagnostics.Process.GetCurrentProcess();
             var img = SingerConstants.GetConfig("Documents-HeaderImg");
@@ -549,12 +546,15 @@ namespace SingerDispatch.Printing.Documents
                 img = "file:///" + System.IO.Path.Combine(System.IO.Path.GetDirectoryName(process.MainModule.FileName), @"Images\Header.png");
             }
 
-            var name = (dispatch != null) ? dispatch.Name : "UNKNOWN";
-            
-            content = content.Replace("%HEADER_IMG%", img).Replace("%COPY%", copyType).Replace("%DISPATCH_NUMBER%", name);
-            content = content.Replace("%COMPANY_NAME%", company).Replace("%STREET_ADDRESS%", address).Replace("%CITY%", city).Replace("%PHONE%", phone);
+            replacements[0] = img;
+            replacements[1] = SingerConstants.GetConfig("SingerName") ?? "Singer Specialized";
+            replacements[2] = SingerConstants.GetConfig("SingerAddress-StreetAddress");
+            replacements[3] = SingerConstants.GetConfig("SingerAddress-City");
+            replacements[4] = SingerConstants.GetConfig("SingerAddress-Phone");
+            replacements[5] = copyType;
+            replacements[6] = (dispatch != null) ? dispatch.Name : "UNKNOWN";
 
-            return content;
+            return string.Format(html, replacements);
         }
 
         private static string GetDetails(Dispatch dispatch)
@@ -608,7 +608,7 @@ namespace SingerDispatch.Printing.Documents
                 </div>
             ";
 
-            var replacements = new string[10];
+            var replacements = new object[10];
 
             replacements[0] = DateTime.Now.ToString(SingerConstants.PrintedDateFormatString);
             replacements[1] = dispatch.Job.Company.Name;
@@ -795,7 +795,7 @@ namespace SingerDispatch.Printing.Documents
             for (var i = 0; i < commodities.Count; i++)
             {
                 var item = commodities[i];
-                var reps = new string[22];
+                var reps = new object[22];
 
                 var length = (item.Length != null) ? item.Length.Value : 0.00;
                 var width = (item.Width != null) ? item.Width.Value : 0.00;
@@ -924,36 +924,36 @@ namespace SingerDispatch.Printing.Documents
                 </div>
             ";
 
-            var replacements = new String[28];
+            var replacements = new object[28];
 
-            replacements[0] = Convert.ToString(load.LoadedLength);
-            replacements[1] = Convert.ToString(load.LoadedWidth);
-            replacements[2] = Convert.ToString(load.LoadedHeight);
-            replacements[3] = Convert.ToString(load.GrossWeight);
-            replacements[4] = Convert.ToString(load.EWeightSteer);
-            replacements[5] = Convert.ToString(load.EWeightDrive);
-            replacements[6] = Convert.ToString(load.EWeightGroup1);
-            replacements[7] = Convert.ToString(load.EWeightGroup2);
-            replacements[8] = Convert.ToString(load.EWeightGroup3);
-            replacements[9] = Convert.ToString(load.EWeightGroup4);
-            replacements[10] = Convert.ToString(load.EWeightGroup5);
-            replacements[11] = Convert.ToString(load.EWeightGroup6);
-            replacements[12] = Convert.ToString(load.EWeightGroup7);
-            replacements[13] = Convert.ToString(load.EWeightGroup8);
-            replacements[14] = Convert.ToString(load.EWeightGroup9);
-            replacements[15] = Convert.ToString(load.EWeightGroup10);
-            replacements[16] = Convert.ToString(load.SWeightSteer);
-            replacements[17] = Convert.ToString(load.SWeightDrive);
-            replacements[18] = Convert.ToString(load.SWeightGroup1);
-            replacements[19] = Convert.ToString(load.SWeightGroup2);
-            replacements[20] = Convert.ToString(load.SWeightGroup3);
-            replacements[21] = Convert.ToString(load.SWeightGroup4);
-            replacements[22] = Convert.ToString(load.SWeightGroup5);
-            replacements[23] = Convert.ToString(load.SWeightGroup6);
-            replacements[24] = Convert.ToString(load.SWeightGroup7);
-            replacements[25] = Convert.ToString(load.SWeightGroup8);
-            replacements[26] = Convert.ToString(load.SWeightGroup9);
-            replacements[27] = Convert.ToString(load.SWeightGroup10);
+            replacements[0] = load.LoadedLength;
+            replacements[1] = load.LoadedWidth;
+            replacements[2] = load.LoadedHeight;
+            replacements[3] = load.GrossWeight;
+            replacements[4] = load.EWeightSteer;
+            replacements[5] = load.EWeightDrive;
+            replacements[6] = load.EWeightGroup1;
+            replacements[7] = load.EWeightGroup2;
+            replacements[8] = load.EWeightGroup3;
+            replacements[9] = load.EWeightGroup4;
+            replacements[10] = load.EWeightGroup5;
+            replacements[11] = load.EWeightGroup6;
+            replacements[12] = load.EWeightGroup7;
+            replacements[13] = load.EWeightGroup8;
+            replacements[14] = load.EWeightGroup9;
+            replacements[15] = load.EWeightGroup10;
+            replacements[16] = load.SWeightSteer;
+            replacements[17] = load.SWeightDrive;
+            replacements[18] = load.SWeightGroup1;
+            replacements[19] = load.SWeightGroup2;
+            replacements[20] = load.SWeightGroup3;
+            replacements[21] = load.SWeightGroup4;
+            replacements[22] = load.SWeightGroup5;
+            replacements[23] = load.SWeightGroup6;
+            replacements[24] = load.SWeightGroup7;
+            replacements[25] = load.SWeightGroup8;
+            replacements[26] = load.SWeightGroup9;
+            replacements[27] = load.SWeightGroup10;
 
             return string.Format(content, replacements);
         }

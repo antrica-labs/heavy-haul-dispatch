@@ -187,6 +187,7 @@ namespace SingerDispatch.Importer
             context.ContactTypes.InsertAllOnSubmit(contactTypes);
             context.Inclusions.InsertAllOnSubmit(inclusions);
             context.Conditions.InsertAllOnSubmit(conditions);
+            context.ExtraEquipmentTypes.InsertAllOnSubmit(extraEquipmentTypes);
             context.Companies.InsertAllOnSubmit(companies);
 
             context.SubmitChanges();

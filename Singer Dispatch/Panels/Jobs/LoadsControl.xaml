@@ -34,160 +34,173 @@
                 <Button Style="{StaticResource HorizontalEnd}" Grid.Column="3" Click="RemoveLoad_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgLoads, Path=SelectedItem}">Remove load</Button>
             </Grid>
 
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition />
-                    <ColumnDefinition Width="280" />
-                </Grid.ColumnDefinitions>
+            <TabControl>
+                <TabItem Header="Trailer Details">
+                    <StackPanel>
+                        <GroupBox Grid.Column="0" Header="Instruction" DataContext="{Binding ElementName=dgLoads, Path=SelectedItem}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgLoads, Path=SelectedItem}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
 
-                <GroupBox Grid.Column="0" Header="Instruction" DataContext="{Binding ElementName=dgLoads, Path=SelectedItem}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgLoads, Path=SelectedItem}">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                        </Grid.RowDefinitions>
+                                <Label Grid.Row="0" Grid.ColumnSpan="2">Description of service:</Label>
+                                <TextBox Grid.Row="1" Grid.ColumnSpan="2" Name="txtServiceDescription" Text="{Binding ServiceDescription}"/>
 
-                        <Label Grid.Row="0" Grid.ColumnSpan="2">Description of service:</Label>
-                        <TextBox Grid.Row="1" Grid.ColumnSpan="2" Name="txtServiceDescription" Text="{Binding ServiceDescription}"/>
+                                <Label Grid.Row="2" Grid.Column="0">Schedule:</Label>
+                                <TextBox Grid.Row="3" Grid.Column="0" Text="{Binding Schedule}" Style="{StaticResource MultiLine}" />
 
-                        <Label Grid.Row="2" Grid.Column="0">Schedule:</Label>
-                        <TextBox Grid.Row="3" Grid.Column="0" Text="{Binding Schedule}" Style="{StaticResource MultiLine}" />
+                                <Label Grid.Row="2" Grid.Column="1">Additional notes:</Label>
+                                <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Notes}" Height="40" Style="{StaticResource MultiLine}"/>
+                            </Grid>
+                        </GroupBox>
 
-                        <Label Grid.Row="2" Grid.Column="1">Additional notes:</Label>
-                        <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Notes}" Height="40" Style="{StaticResource MultiLine}"/>
-                    </Grid>                    
-                </GroupBox>
+                        <GroupBox Header="Vehicle" DataContext="{Binding ElementName=dgLoads, Path=SelectedItem}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgLoads, Path=SelectedItem}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition Width="1.5*" />
+                                    <ColumnDefinition />
+                                    <ColumnDefinition Width="2*" />
+                                    <ColumnDefinition Width="2*" />
+                                    <ColumnDefinition Width="0.6*" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
 
-                <GroupBox Grid.Column="1" Header="Commodities" Margin="3,0,0,0" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgLoads, Path=SelectedItem}">
-                    <ListBox Name="lbCommodities" />
-                </GroupBox>                
-            </Grid>
+                                <Label Grid.Column="0" Grid.Row="0">Unit:</Label>
+                                <ComboBox Name="cmbUnits" Grid.Column="0" Grid.Row="1" SelectedItem="{Binding Equipment}" ItemTemplate="{StaticResource EquipmentNameTemplate}" IsEditable="True" TextSearch.TextPath="UnitNumber"></ComboBox>
 
+                                <Label Grid.Column="1" Grid.Row="0">Wheel type:</Label>
+                                <ComboBox Name="cmbRates" Grid.Column="1" Grid.Row="1" SelectedItem="{Binding Rate}" SelectionChanged="cmbRates_SelectionChanged" ItemTemplate="{StaticResource SimpleNameTemplate}" IsEditable="True" TextSearch.TextPath="Name"></ComboBox>
 
-            <GroupBox Header="Vehicle" DataContext="{Binding ElementName=dgLoads, Path=SelectedItem}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgLoads, Path=SelectedItem}">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition />
-                        <ColumnDefinition Width="1.5*" />
-                        <ColumnDefinition />
-                        <ColumnDefinition Width="2*" />
-                        <ColumnDefinition Width="2*" />
-                        <ColumnDefinition Width="0.6*" />
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition />
-                        <RowDefinition />
-                    </Grid.RowDefinitions>
-                    
-                    <Label Grid.Column="0" Grid.Row="0">Unit:</Label>
-                    <ComboBox Name="cmbUnits" Grid.Column="0" Grid.Row="1" SelectedItem="{Binding Equipment}" ItemTemplate="{StaticResource EquipmentNameTemplate}" IsEditable="True" TextSearch.TextPath="UnitNumber"></ComboBox>
-                    
-                    <Label Grid.Column="1" Grid.Row="0">Wheel type:</Label>
-                    <ComboBox Name="cmbRates" Grid.Column="1" Grid.Row="1" SelectedItem="{Binding Rate}" SelectionChanged="cmbRates_SelectionChanged" ItemTemplate="{StaticResource SimpleNameTemplate}" IsEditable="True" TextSearch.TextPath="Name"></ComboBox>                
-                    
-                    <Label Grid.Column="2" Grid.Row="0">Rate:</Label>
-                    <TextBox Grid.Column="2" Grid.Row="1" Text="{Binding ElementName=cmbRates, Path=SelectedItem.Adjusted, StringFormat=c}" IsReadOnly="True" Style="{StaticResource ReadOnly}" />                
-                    
-                    <Label Grid.Column="3" Grid.Row="0">Combination:</Label>
-                    <ComboBox Name="cmbTrailerCombinations" Grid.Column="3" Grid.Row="1" SelectedItem="{Binding TrailerCombination}" ItemTemplate="{StaticResource TrailerCombinationTemplate}" />
+                                <Label Grid.Column="2" Grid.Row="0">Rate:</Label>
+                                <TextBox Grid.Column="2" Grid.Row="1" Text="{Binding ElementName=cmbRates, Path=SelectedItem.Adjusted, StringFormat=c}" IsReadOnly="True" Style="{StaticResource ReadOnly}" />
 
-                    <Label Grid.Row="0" Grid.Column="4">Season</Label>
-                    <ComboBox Name="cmbSeasons" Grid.Row="1" Grid.Column="4" SelectedItem="{Binding Season}" ItemTemplate="{StaticResource SimpleNameTemplate}" IsEditable="True" TextSearch.TextPath="Name" />
+                                <Label Grid.Column="3" Grid.Row="0">Combination:</Label>
+                                <ComboBox Name="cmbTrailerCombinations" Grid.Column="3" Grid.Row="1" SelectedItem="{Binding TrailerCombination}" ItemTemplate="{StaticResource TrailerCombinationTemplate}" />
 
-                    <Label Grid.Row="0" Grid.Column="5">Ban (%)</Label>
-                    <TextBox Grid.Row="1" Grid.Column="5" Text="{Binding Ban}"/>
-                </Grid>    
-            </GroupBox>
-            
-            <GroupBox Header="Dimentions" DataContext="{Binding ElementName=dgLoads, Path=SelectedItem}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgLoads, Path=SelectedItem}">
-                <StackPanel>
-                    <Grid>
-                        <Grid.ColumnDefinitions>                        
-                            <ColumnDefinition Width="85"/>
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                            <ColumnDefinition />                            
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                        </Grid.RowDefinitions>
-                                                
-                        <Label Grid.Column="0" Grid.Row="1">Est. weight:</Label>
-                        <Label Grid.Column="0" Grid.Row="2">Scale weight:</Label>
-                        
-                        <Label Grid.Column="1" Grid.Row="0">Steer:</Label>
-                        <Label Grid.Column="2" Grid.Row="0">Drive:</Label>
-                        <Label Grid.Column="3" Grid.Row="0">Group 1:</Label>
-                        <Label Grid.Column="4" Grid.Row="0">Group 2:</Label>
-                        <Label Grid.Column="5" Grid.Row="0">Group 3:</Label>
-                        <Label Grid.Column="6" Grid.Row="0">Group 4:</Label>
-                        <Label Grid.Column="7" Grid.Row="0">Group 5:</Label>
-                        <Label Grid.Column="8" Grid.Row="0">Group 6:</Label>
-                        <Label Grid.Column="9" Grid.Row="0">Group 7:</Label>
-                        <Label Grid.Column="10" Grid.Row="0">Group 8:</Label>
-                        <Label Grid.Column="11" Grid.Row="0">Group 9:</Label>
-                        <Label Grid.Column="12" Grid.Row="0">Group 10:</Label>                        
-                        
-                        <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding EWeightSteer}"  />
-                        <TextBox Grid.Column="2" Grid.Row="1" Text="{Binding EWeightDrive}"  />
-                        <TextBox Grid.Column="3" Grid.Row="1" Text="{Binding EWeightGroup1}"  />
-                        <TextBox Grid.Column="4" Grid.Row="1" Text="{Binding EWeightGroup2}"  />
-                        <TextBox Grid.Column="5" Grid.Row="1" Text="{Binding EWeightGroup3}"  />
-                        <TextBox Grid.Column="6" Grid.Row="1" Text="{Binding EWeightGroup4}"  />
-                        <TextBox Grid.Column="7" Grid.Row="1" Text="{Binding EWeightGroup5}"  />
-                        <TextBox Grid.Column="8" Grid.Row="1" Text="{Binding EWeightGroup6}"  />
-                        <TextBox Grid.Column="9" Grid.Row="1" Text="{Binding EWeightGroup7}"  />
-                        <TextBox Grid.Column="10" Grid.Row="1" Text="{Binding EWeightGroup8}"  />
-                        <TextBox Grid.Column="11" Grid.Row="1" Text="{Binding EWeightGroup9}"  />
-                        <TextBox Grid.Column="12" Grid.Row="1" Text="{Binding EWeightGroup10}"  />
-                        
-                        <TextBox Grid.Column="1" Grid.Row="2" Text="{Binding SWeightSteer}"  />
-                        <TextBox Grid.Column="2" Grid.Row="2" Text="{Binding SWeightDrive}"  />
-                        <TextBox Grid.Column="3" Grid.Row="2" Text="{Binding SWeightGroup1}"  />
-                        <TextBox Grid.Column="4" Grid.Row="2" Text="{Binding SWeightGroup2}"  />
-                        <TextBox Grid.Column="5" Grid.Row="2" Text="{Binding SWeightGroup3}"  />
-                        <TextBox Grid.Column="6" Grid.Row="2" Text="{Binding SWeightGroup4}"  />
-                        <TextBox Grid.Column="7" Grid.Row="2" Text="{Binding SWeightGroup5}"  />
-                        <TextBox Grid.Column="8" Grid.Row="2" Text="{Binding SWeightGroup6}"  />
-                        <TextBox Grid.Column="9" Grid.Row="2" Text="{Binding SWeightGroup7}"  />
-                        <TextBox Grid.Column="10" Grid.Row="2" Text="{Binding SWeightGroup8}"  />
-                        <TextBox Grid.Column="11" Grid.Row="2" Text="{Binding SWeightGroup9}"  />
-                        <TextBox Grid.Column="12" Grid.Row="2" Text="{Binding SWeightGroup10}"  />                        
-                        
-                        <Label Grid.Column="0" Grid.Row="3">Gross weight:</Label>
-                        <TextBox Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="2" Text="{Binding GrossWeight}" />
+                                <Label Grid.Row="0" Grid.Column="4">Season</Label>
+                                <ComboBox Name="cmbSeasons" Grid.Row="1" Grid.Column="4" SelectedItem="{Binding Season}" ItemTemplate="{StaticResource SimpleNameTemplate}" IsEditable="True" TextSearch.TextPath="Name" />
 
-                        <Label Grid.Column="4" Grid.Row="3">Length:</Label>
-                        <TextBox Grid.Column="5" Grid.Row="3" Grid.ColumnSpan="2" Text="{Binding LoadedLength}" />
+                                <Label Grid.Row="0" Grid.Column="5">Ban (%)</Label>
+                                <TextBox Grid.Row="1" Grid.Column="5" Text="{Binding Ban}"/>
+                            </Grid>
+                        </GroupBox>
 
-                        <Label Grid.Column="7" Grid.Row="3">Width:</Label>
-                        <TextBox Grid.Column="8" Grid.Row="3" Grid.ColumnSpan="2" Text="{Binding LoadedWidth}" />
+                        <GroupBox Header="Dimentions" DataContext="{Binding ElementName=dgLoads, Path=SelectedItem}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgLoads, Path=SelectedItem}">
+                            <StackPanel>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="85"/>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                    </Grid.RowDefinitions>
 
-                        <Label Grid.Column="10" Grid.Row="3">Height:</Label>
-                        <TextBox Grid.Column="11" Grid.Row="3" Grid.ColumnSpan="2" Text="{Binding LoadedHeight}" />
-                    </Grid>
-                </StackPanel>    
-            </GroupBox>
+                                    <Label Grid.Column="0" Grid.Row="1">Est. weight:</Label>
+                                    <Label Grid.Column="0" Grid.Row="2">Scale weight:</Label>
+
+                                    <Label Grid.Column="1" Grid.Row="0">Steer:</Label>
+                                    <Label Grid.Column="2" Grid.Row="0">Drive:</Label>
+                                    <Label Grid.Column="3" Grid.Row="0">Group 1:</Label>
+                                    <Label Grid.Column="4" Grid.Row="0">Group 2:</Label>
+                                    <Label Grid.Column="5" Grid.Row="0">Group 3:</Label>
+                                    <Label Grid.Column="6" Grid.Row="0">Group 4:</Label>
+                                    <Label Grid.Column="7" Grid.Row="0">Group 5:</Label>
+                                    <Label Grid.Column="8" Grid.Row="0">Group 6:</Label>
+                                    <Label Grid.Column="9" Grid.Row="0">Group 7:</Label>
+                                    <Label Grid.Column="10" Grid.Row="0">Group 8:</Label>
+                                    <Label Grid.Column="11" Grid.Row="0">Group 9:</Label>
+                                    <Label Grid.Column="12" Grid.Row="0">Group 10:</Label>
+
+                                    <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding EWeightSteer}"  />
+                                    <TextBox Grid.Column="2" Grid.Row="1" Text="{Binding EWeightDrive}"  />
+                                    <TextBox Grid.Column="3" Grid.Row="1" Text="{Binding EWeightGroup1}"  />
+                                    <TextBox Grid.Column="4" Grid.Row="1" Text="{Binding EWeightGroup2}"  />
+                                    <TextBox Grid.Column="5" Grid.Row="1" Text="{Binding EWeightGroup3}"  />
+                                    <TextBox Grid.Column="6" Grid.Row="1" Text="{Binding EWeightGroup4}"  />
+                                    <TextBox Grid.Column="7" Grid.Row="1" Text="{Binding EWeightGroup5}"  />
+                                    <TextBox Grid.Column="8" Grid.Row="1" Text="{Binding EWeightGroup6}"  />
+                                    <TextBox Grid.Column="9" Grid.Row="1" Text="{Binding EWeightGroup7}"  />
+                                    <TextBox Grid.Column="10" Grid.Row="1" Text="{Binding EWeightGroup8}"  />
+                                    <TextBox Grid.Column="11" Grid.Row="1" Text="{Binding EWeightGroup9}"  />
+                                    <TextBox Grid.Column="12" Grid.Row="1" Text="{Binding EWeightGroup10}"  />
+
+                                    <TextBox Grid.Column="1" Grid.Row="2" Text="{Binding SWeightSteer}"  />
+                                    <TextBox Grid.Column="2" Grid.Row="2" Text="{Binding SWeightDrive}"  />
+                                    <TextBox Grid.Column="3" Grid.Row="2" Text="{Binding SWeightGroup1}"  />
+                                    <TextBox Grid.Column="4" Grid.Row="2" Text="{Binding SWeightGroup2}"  />
+                                    <TextBox Grid.Column="5" Grid.Row="2" Text="{Binding SWeightGroup3}"  />
+                                    <TextBox Grid.Column="6" Grid.Row="2" Text="{Binding SWeightGroup4}"  />
+                                    <TextBox Grid.Column="7" Grid.Row="2" Text="{Binding SWeightGroup5}"  />
+                                    <TextBox Grid.Column="8" Grid.Row="2" Text="{Binding SWeightGroup6}"  />
+                                    <TextBox Grid.Column="9" Grid.Row="2" Text="{Binding SWeightGroup7}"  />
+                                    <TextBox Grid.Column="10" Grid.Row="2" Text="{Binding SWeightGroup8}"  />
+                                    <TextBox Grid.Column="11" Grid.Row="2" Text="{Binding SWeightGroup9}"  />
+                                    <TextBox Grid.Column="12" Grid.Row="2" Text="{Binding SWeightGroup10}"  />
+
+                                    <Label Grid.Column="0" Grid.Row="3">Gross weight:</Label>
+                                    <TextBox Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="2" Text="{Binding GrossWeight}" />
+
+                                    <Label Grid.Column="4" Grid.Row="3">Length:</Label>
+                                    <TextBox Grid.Column="5" Grid.Row="3" Grid.ColumnSpan="2" Text="{Binding LoadedLength}" />
+
+                                    <Label Grid.Column="7" Grid.Row="3">Width:</Label>
+                                    <TextBox Grid.Column="8" Grid.Row="3" Grid.ColumnSpan="2" Text="{Binding LoadedWidth}" />
+
+                                    <Label Grid.Column="10" Grid.Row="3">Height:</Label>
+                                    <TextBox Grid.Column="11" Grid.Row="3" Grid.ColumnSpan="2" Text="{Binding LoadedHeight}" />
+                                </Grid>
+                            </StackPanel>
+                        </GroupBox>
+                    </StackPanel>
+                </TabItem>
+                <TabItem Header="Commodities &amp; Extras">
+                    <StackPanel>
+                        <GroupBox Header="Commodities" Margin="3,0,0,0" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgLoads, Path=SelectedItem}">
+                            <ListBox Name="lbCommodities" Height="100" />
+                        </GroupBox>
+
+                        <GroupBox Header="Extra Equipment">
+                            <StackPanel>
+                                <DataGrid Height="100">
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Header="Type" Width="150" />
+                                        <DataGridTextColumn Header="Quantity" Width="70" />
+                                        <DataGridTextColumn Header="Comments" Width="*" />
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                            </StackPanel>
+                        </GroupBox>
+                    </StackPanel>
+                </TabItem>
+            </TabControl>
         </StackPanel>        
 
         <DataGrid Name="dgLoads" Style="{StaticResource ListDisplay}" SelectionChanged="dgLoads_SelectionChanged">
