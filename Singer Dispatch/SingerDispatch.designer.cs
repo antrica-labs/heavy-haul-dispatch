@@ -83,9 +83,9 @@ namespace SingerDispatch
     partial void InsertExtraEquipmentType(ExtraEquipmentType instance);
     partial void UpdateExtraEquipmentType(ExtraEquipmentType instance);
     partial void DeleteExtraEquipmentType(ExtraEquipmentType instance);
-    partial void InsertLoadExtra(LoadExtra instance);
-    partial void UpdateLoadExtra(LoadExtra instance);
-    partial void DeleteLoadExtra(LoadExtra instance);
+    partial void InsertExtraEquipment(ExtraEquipment instance);
+    partial void UpdateExtraEquipment(ExtraEquipment instance);
+    partial void DeleteExtraEquipment(ExtraEquipment instance);
     partial void InsertPermit(Permit instance);
     partial void UpdatePermit(Permit instance);
     partial void DeletePermit(Permit instance);
@@ -340,11 +340,11 @@ namespace SingerDispatch
 			}
 		}
 		
-		public System.Data.Linq.Table<LoadExtra> LoadExtras
+		public System.Data.Linq.Table<ExtraEquipment> ExtraEquipment
 		{
 			get
 			{
-				return this.GetTable<LoadExtra>();
+				return this.GetTable<ExtraEquipment>();
 			}
 		}
 		
@@ -6372,6 +6372,8 @@ namespace SingerDispatch
 		
 		private EntitySet<JobCommodity> _JobCommodities;
 		
+		private EntitySet<ExtraEquipment> _ExtraEquipment;
+		
 		private EntitySet<Permit> _Permits;
 		
 		private EntitySet<ThirdPartyService> _ThirdPartyServices;
@@ -6481,6 +6483,7 @@ namespace SingerDispatch
 		public Load()
 		{
 			this._JobCommodities = new EntitySet<JobCommodity>(new Action<JobCommodity>(this.attach_JobCommodities), new Action<JobCommodity>(this.detach_JobCommodities));
+			this._ExtraEquipment = new EntitySet<ExtraEquipment>(new Action<ExtraEquipment>(this.attach_ExtraEquipment), new Action<ExtraEquipment>(this.detach_ExtraEquipment));
 			this._Permits = new EntitySet<Permit>(new Action<Permit>(this.attach_Permits), new Action<Permit>(this.detach_Permits));
 			this._ThirdPartyServices = new EntitySet<ThirdPartyService>(new Action<ThirdPartyService>(this.attach_ThirdPartyServices), new Action<ThirdPartyService>(this.detach_ThirdPartyServices));
 			this._Dispatches = new EntitySet<Dispatch>(new Action<Dispatch>(this.attach_Dispatches), new Action<Dispatch>(this.detach_Dispatches));
@@ -7365,6 +7368,19 @@ namespace SingerDispatch
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Load_ExtraEquipment", Storage="_ExtraEquipment", ThisKey="ID", OtherKey="LoadID")]
+		public EntitySet<ExtraEquipment> ExtraEquipment
+		{
+			get
+			{
+				return this._ExtraEquipment;
+			}
+			set
+			{
+				this._ExtraEquipment.Assign(value);
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Load_Permit", Storage="_Permits", ThisKey="ID", OtherKey="LoadID")]
 		public EntitySet<Permit> Permits
 		{
@@ -7606,6 +7622,18 @@ namespace SingerDispatch
 			entity.Load = null;
 		}
 		
+		private void attach_ExtraEquipment(ExtraEquipment entity)
+		{
+			this.SendPropertyChanging();
+			entity.Load = this;
+		}
+		
+		private void detach_ExtraEquipment(ExtraEquipment entity)
+		{
+			this.SendPropertyChanging();
+			entity.Load = null;
+		}
+		
 		private void attach_Permits(Permit entity)
 		{
 			this.SendPropertyChanging();
@@ -7653,7 +7681,7 @@ namespace SingerDispatch
 		
 		private string _Name;
 		
-		private EntitySet<LoadExtra> _LoadExtras;
+		private EntitySet<ExtraEquipment> _LoadExtras;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -7667,7 +7695,7 @@ namespace SingerDispatch
 		
 		public ExtraEquipmentType()
 		{
-			this._LoadExtras = new EntitySet<LoadExtra>(new Action<LoadExtra>(this.attach_LoadExtras), new Action<LoadExtra>(this.detach_LoadExtras));
+			this._LoadExtras = new EntitySet<ExtraEquipment>(new Action<ExtraEquipment>(this.attach_LoadExtras), new Action<ExtraEquipment>(this.detach_LoadExtras));
 			OnCreated();
 		}
 		
@@ -7711,8 +7739,8 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ExtraEquipmentType_LoadExtra", Storage="_LoadExtras", ThisKey="ID", OtherKey="ExtraEquipmentTypeID")]
-		public EntitySet<LoadExtra> LoadExtras
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ExtraEquipmentType_ExtraEquipment", Storage="_LoadExtras", ThisKey="ID", OtherKey="ExtraEquipmentTypeID")]
+		public EntitySet<ExtraEquipment> LoadExtras
 		{
 			get
 			{
@@ -7744,13 +7772,13 @@ namespace SingerDispatch
 			}
 		}
 		
-		private void attach_LoadExtras(LoadExtra entity)
+		private void attach_LoadExtras(ExtraEquipment entity)
 		{
 			this.SendPropertyChanging();
 			entity.ExtraEquipmentType = this;
 		}
 		
-		private void detach_LoadExtras(LoadExtra entity)
+		private void detach_LoadExtras(ExtraEquipment entity)
 		{
 			this.SendPropertyChanging();
 			entity.ExtraEquipmentType = null;
@@ -7758,7 +7786,7 @@ namespace SingerDispatch
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="")]
-	public partial class LoadExtra : INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class ExtraEquipment : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -7793,7 +7821,7 @@ namespace SingerDispatch
     partial void OnCommentsChanged();
     #endregion
 		
-		public LoadExtra()
+		public ExtraEquipment()
 		{
 			this._ExtraEquipmentType = default(EntityRef<ExtraEquipmentType>);
 			this._Load = default(EntityRef<Load>);
@@ -7908,7 +7936,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ExtraEquipmentType_LoadExtra", Storage="_ExtraEquipmentType", ThisKey="ExtraEquipmentTypeID", OtherKey="ID", IsForeignKey=true)]
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ExtraEquipmentType_ExtraEquipment", Storage="_ExtraEquipmentType", ThisKey="ExtraEquipmentTypeID", OtherKey="ID", IsForeignKey=true)]
 		public ExtraEquipmentType ExtraEquipmentType
 		{
 			get
@@ -7942,7 +7970,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Load_LoadExtra", Storage="_Load", ThisKey="LoadID", OtherKey="ID", IsForeignKey=true)]
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Load_ExtraEquipment", Storage="_Load", ThisKey="LoadID", OtherKey="ID", IsForeignKey=true)]
 		public Load Load
 		{
 			get
@@ -7951,10 +7979,26 @@ namespace SingerDispatch
 			}
 			set
 			{
-				if ((this._Load.Entity != value))
+				Load previousValue = this._Load.Entity;
+				if (((previousValue != value) 
+							|| (this._Load.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Load.Entity = null;
+						previousValue.ExtraEquipment.Remove(this);
+					}
 					this._Load.Entity = value;
+					if ((value != null))
+					{
+						value.ExtraEquipment.Add(this);
+						this._LoadID = value.ID;
+					}
+					else
+					{
+						this._LoadID = default(Nullable<long>);
+					}
 					this.SendPropertyChanged("Load");
 				}
 			}

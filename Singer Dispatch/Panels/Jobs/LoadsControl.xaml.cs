@@ -29,9 +29,9 @@ namespace SingerDispatch.Panels.Jobs
             cmbRates.ItemsSource = GetCompanyRates(SelectedCompany);
             cmbUnits.ItemsSource = (SelectedJob == null) ? null : from u in Database.Equipment where u.EquipmentClass.Name == "Tractor" || u.EquipmentClass.Name == "Trailor" select u;
 
+            UpdateExtras();
             UpdateCommodityList();
         }
-
         protected override void SelectedJobChanged(Job newValue, Job oldValue)
         {
             base.SelectedJobChanged(newValue, oldValue);
@@ -144,8 +144,26 @@ namespace SingerDispatch.Panels.Jobs
         }
 
         private void dgLoads_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
+        {            
+            UpdateExtras();
             UpdateCommodityList();
+        }
+
+        private void UpdateExtras()
+        {
+            lbExtraEquipmentTypes.ItemsSource = null;
+            lbExtraEquipmentTypes.UpdateLayout();
+
+            if (dgLoads.SelectedItem == null) return;
+
+            var load = (Load)dgLoads.SelectedItem;
+            var types = (from et in Database.ExtraEquipmentTypes orderby et.Name select et).ToList();
+            var list = new ObservableCollection<ExtraEquipment>(load.ExtraEquipment);
+
+            lbExtraEquipmentTypes.MaxHeight = lbExtraEquipmentTypes.ActualHeight;
+            lbExtraEquipmentTypes.ItemsSource = types;
+
+            dgExtraEquipment.ItemsSource = list;
         }
 
         private void UpdateCommodityList()
@@ -243,6 +261,13 @@ namespace SingerDispatch.Panels.Jobs
         {
             cmbTrailerCombinations.ItemsSource = from tc in Database.TrailerCombinations where tc.Rate == cmbRates.SelectedItem select tc;
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show(lbExtraEquipmentTypes.ActualHeight.ToString());
+        }
+
+        
 
         
     }

@@ -184,18 +184,50 @@
                 <TabItem Header="Commodities &amp; Extras">
                     <StackPanel>
                         <GroupBox Header="Commodities" Margin="3,0,0,0" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgLoads, Path=SelectedItem}">
-                            <ListBox Name="lbCommodities" Height="100" />
+                            <ListBox Name="lbCommodities" Height="90" />
                         </GroupBox>
 
                         <GroupBox Header="Extra Equipment">
                             <StackPanel>
-                                <DataGrid Height="100">
+                                <DataGrid Name="dgExtraEquipment" Height="100" Style="{StaticResource ListDisplay}">
                                     <DataGrid.Columns>
                                         <DataGridTextColumn Header="Type" Width="150" />
                                         <DataGridTextColumn Header="Quantity" Width="70" />
                                         <DataGridTextColumn Header="Comments" Width="*" />
                                     </DataGrid.Columns>
                                 </DataGrid>
+                                
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+
+                                    <Button Grid.Column="0" Style="{StaticResource Horizontal}" Click="Button_Click">Add equipment</Button>
+                                    <Button Grid.Column="3" Style="{StaticResource HorizontalEnd}">Remove equipment</Button>
+                                </Grid>
+                                
+                                <Grid DataContext="{Binding ElementName=dgExtraEquipment, Path=SelectedItem}">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition Width="80" />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition />
+                                        <RowDefinition />                                        
+                                    </Grid.RowDefinitions>
+
+                                    <ListBox Name="lbExtraEquipmentTypes" Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Margin="3,3,6,3" SelectedItem="{Binding ExtraEquipmentType}" ItemTemplate="{StaticResource SimpleNameTemplate}" />
+                                    
+                                    <Label Grid.Column="1" Grid.Row="0">Quantity:</Label>
+                                    <TextBox Grid.Column="2" Grid.Row="0" Text="{Binding Quantity}" />
+
+                                    <Label Grid.Column="1" Grid.Row="1">Comments:</Label>
+                                    <TextBox Grid.Column="2" Grid.Row="1" Style="{StaticResource MultiLine}" Height="60" Text="{Binding Comments}" />
+                                </Grid>
                             </StackPanel>
                         </GroupBox>
                     </StackPanel>
