@@ -167,7 +167,7 @@
             </Grid>
         </StackPanel>
 
-        <DataGrid Name="DgInvoices" Style="{StaticResource ListDisplay}" SelectedItem="{Binding SelectedInvoice}">
+        <DataGrid Name="DgInvoices" Style="{StaticResource ListDisplay}" SelectedItem="{Binding SelectedInvoice}" SelectionChanged="DgInvoices_SelectionChanged">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Number" Binding="{Binding Number}" />
                 <DataGridTextColumn Header="Revision" Binding="{Binding Revision}" />

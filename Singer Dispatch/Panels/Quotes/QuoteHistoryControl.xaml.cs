@@ -247,5 +247,13 @@ namespace SingerDispatch.Panels.Quotes
                     SelectedQuote.Price += item.CostPerItem;
             }
         }
+
+        private void dgQuotes_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var grid = (DataGrid)sender;
+
+            grid.ScrollIntoView(grid.SelectedItem);
+            grid.UpdateLayout();
+        }
     }
 }

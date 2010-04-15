@@ -151,16 +151,12 @@ namespace SingerDispatch.Panels.Jobs
 
         private void UpdateExtras()
         {
-            lbExtraEquipmentTypes.ItemsSource = null;
-            lbExtraEquipmentTypes.UpdateLayout();
-
             if (dgLoads.SelectedItem == null) return;
 
             var load = (Load)dgLoads.SelectedItem;
             var types = (from et in Database.ExtraEquipmentTypes orderby et.Name select et).ToList();
             var list = new ObservableCollection<ExtraEquipment>(load.ExtraEquipment);
-
-            lbExtraEquipmentTypes.MaxHeight = lbExtraEquipmentTypes.ActualHeight;
+                        
             lbExtraEquipmentTypes.ItemsSource = types;
 
             dgExtraEquipment.ItemsSource = list;
@@ -262,13 +258,28 @@ namespace SingerDispatch.Panels.Jobs
             cmbTrailerCombinations.ItemsSource = from tc in Database.TrailerCombinations where tc.Rate == cmbRates.SelectedItem select tc;
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void AddEquipment_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show(lbExtraEquipmentTypes.ActualHeight.ToString());
+            var load = (Load)dgLoads.SelectedItem;
+
+            if (load == null) return;
+
+            var equipment = new ExtraEquipment();
+
+            load.ExtraEquipment.Add(equipment);
+            ((ObservableCollection<ExtraEquipment>)dgExtraEquipment.ItemsSource).Add(equipment);
+            dgExtraEquipment.ScrollIntoView(equipment);
+            dgExtraEquipment.SelectedItem = equipment;
+
+            lbExtraEquipmentTypes.Focus();
         }
 
-        
-
-        
+        private void RemoveEquipment_Click(object sender, RoutedEventArgs e)
+        {
+            var equipment = (ExtraEquipment)dgExtraEquipment.SelectedItem;
+            
+            ((Load)dgLoads.SelectedItem).ExtraEquipment.Remove(equipment);
+            ((ObservableCollection<ExtraEquipment>)dgExtraEquipment.ItemsSource).Remove(equipment);
+        }
     }
 }

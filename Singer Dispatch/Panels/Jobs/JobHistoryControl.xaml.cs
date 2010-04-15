@@ -7,6 +7,7 @@ using System.Collections.ObjectModel;
 using SingerDispatch.Database;
 using SingerDispatch.Windows;
 using SingerDispatch.Controls;
+using System.Windows.Controls.Primitives;
 
 namespace SingerDispatch.Panels.Jobs
 {
@@ -72,6 +73,14 @@ namespace SingerDispatch.Panels.Jobs
             UpdateContactList();
         }
 
+        private void DgJobs_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var grid = (DataGrid)sender;
+
+            grid.ScrollIntoView(grid.SelectedItem);
+            grid.UpdateLayout();
+        }
+
         private void CmbCareOfCompanies_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {           
             UpdateContactList();
@@ -107,7 +116,6 @@ namespace SingerDispatch.Panels.Jobs
 
             list.Insert(0, job);
             DgJobs.SelectedItem = job;
-            DgJobs.ScrollIntoView(job);
             SelectedCompany.Jobs.Add(SelectedJob);
 
             try
@@ -178,5 +186,7 @@ namespace SingerDispatch.Panels.Jobs
                 Windows.ErrorNoticeWindow.ShowError("Error while attempting write changes to database", ex.Message);
             }
         }
+
+        
     }
 }

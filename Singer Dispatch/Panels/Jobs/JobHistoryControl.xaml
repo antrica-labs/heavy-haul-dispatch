@@ -168,7 +168,7 @@
             </Grid>
         </StackPanel>
 
-        <DataGrid Name="DgJobs" Style="{StaticResource ListDisplay}" SelectedItem="{Binding SelectedJob}">
+        <DataGrid Name="DgJobs" Style="{StaticResource ListDisplay}" SelectedItem="{Binding SelectedJob}" SelectionChanged="DgJobs_SelectionChanged">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Number" Width="0.15*" Binding="{Binding Number}"/>
                 <DataGridTextColumn Header="Quote" Width="0.15*">

@@ -85,8 +85,8 @@
 			                <Label Grid.Row="7" Grid.Column="2">Fax:</Label>
 			                <TextBox Name="txtSiteFax" Grid.Row="8" Grid.Column="2" Text="{Binding Fax}" />
 
-			                <Label Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="3" Margin="0,26,0,0">Address notes:</Label>
-			                <TextBox Name="txtAddressNotes" Grid.Row="10" Grid.Column="0" Grid.ColumnSpan="3" Style="{StaticResource MultiLine}" Text="{Binding Notes}"/>
+			                <Label Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="3">Address notes:</Label>
+			                <TextBox Name="txtAddressNotes" Grid.Row="10" Grid.Column="0" Grid.ColumnSpan="3" Height="67" Style="{StaticResource MultiLine}" Text="{Binding Notes}" />
 			            </Grid>
 					</StackPanel>
 				</GroupBox>

@@ -117,7 +117,6 @@ namespace SingerDispatch.Panels.Invoicing
 
             list.Insert(0, invoice);
             DgInvoices.SelectedItem = invoice;
-            DgInvoices.ScrollIntoView(invoice);
             SelectedJob.Invoices.Add(SelectedInvoice);
 
             try
@@ -144,7 +143,6 @@ namespace SingerDispatch.Panels.Invoicing
             SelectedJob.Invoices.Add(invoice);
             list.Insert(0, invoice);
             DgInvoices.SelectedItem = invoice;
-            DgInvoices.ScrollIntoView(invoice);
             SelectedJob.Invoices.Add(SelectedInvoice);
 
             try
@@ -208,6 +206,14 @@ namespace SingerDispatch.Panels.Invoicing
 
             SelectedInvoice.ReferenceNumbers.Remove(selected);
             ((ObservableCollection<InvoiceReferenceNumber>)DgReferenceNumbers.ItemsSource).Remove(selected);
+        }
+
+        private void DgInvoices_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var grid = (DataGrid)sender;
+
+            grid.ScrollIntoView(grid.SelectedItem);
+            grid.UpdateLayout();
         }
     }
 }
