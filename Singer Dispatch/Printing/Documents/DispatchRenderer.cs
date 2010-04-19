@@ -97,7 +97,7 @@ namespace SingerDispatch.Printing.Documents
             output.Append(GetHeader(dispatch, copyType));
             output.Append(GetDetails(dispatch));
             output.Append(GetDescription(dispatch.Description));
-            output.Append(GetEquipment());
+            output.Append(GetEquipment(dispatch.Load.ExtraEquipment));
             output.Append(GetSchedule(dispatch));
             output.Append(GetLoadCommodities(dispatch.Load.JobCommodities));
             output.Append(GetDimensions(dispatch.Load));
@@ -111,7 +111,7 @@ namespace SingerDispatch.Printing.Documents
 
             return output.ToString();
         }
-
+        
         private static string GetTitle(string title)
         {
             return "<title>" + title + "</title>";
@@ -424,58 +424,50 @@ namespace SingerDispatch.Printing.Documents
                         padding-right: 3px;
                     }
                                         
-                    div.tractors td, div.other_equipment td
+                    table.simple_breakdown th
+                    {
+                    	padding-right: 10px;
+                    }                    
+                                        
+                    table.simple_breakdown td
                     {
                         padding-right: 10px;
                         padding-bottom: 5px;
                     }
 
-                    div.third_party_pilot table,
-                    div.thid_party_services table,
-                    div.wire_lifts table,
-                    div.permits table
+                    table.simple_breakdown td.quantity
+                    {
+                    	text-align: center;
+                    }
+
+                    table.commented_breakdown
                     {
                         width: 100%;
                         border-collapse: collapse;
                     }
 
-                    div.third_party_pilot th, 
-                    div.thid_party_services th,
-                    div.wire_lifts th,
-                    div.permits th
+                    table.commented_breakdown th
                     {
                         padding-bottom: 10px;
                     }
                     
-                    div.third_party_pilot tr, 
-                    div.thid_party_services tr,
-                    div.wire_lifts tr,
-                    div.permits tr
+                    table.commented_breakdown tr
                     {
                     	
                     }
 
-                    div.third_party_pilot td, 
-                    div.thid_party_services td,
-                    div.wire_lifts td,
-                    div.permits td
+                    table.commented_breakdown td
                     {
                     	
                     }
 
-                    div.third_party_pilot tr.details td, 
-                    div.thid_party_services tr.details td,
-                    div.wire_lifts tr.details td,
-                    div.permits tr.details td
+                    table.commented_breakdown tr.details td
                     {
                     	border-top: 1px solid #E9E9E9;  
                     	padding-top: 10px;                  	
                     }
 
-                    div.third_party_pilot tr.comments td, 
-                    div.thid_party_services tr.comments td,
-                    div.wire_lifts tr.comments td,
-                    div.permits tr.comments td
+                    table.commented_breakdown tr.comments td
                     {
                         padding: 5px 10px;
                         padding-bottom: 10px;                        
@@ -654,18 +646,56 @@ namespace SingerDispatch.Printing.Documents
             return string.Format(html, description);
         }
 
-        private static string GetEquipment()
+        private static string GetEquipment(EntitySet<ExtraEquipment> equipment)
         {
             // Fill this section with all of the ExtraEquipement entities attached to the dispatch's load.
 
-            const string content = @"
+            const string html = @"
                 <div class=""equipment_requirements section"">
-                    <span class=""heading"">Equipment Required Information</span>
+                    <span class=""heading"">Required Equipment</span>
                     
+                    {0}
                 </div>
             ";
+            const string table = @"
+                <table class=""simple_breakdown"">
+                    <thead>
+                        <tr>
+                            <th>Equipment</th>
+                            <th>Quantity</th>
+                            <th>Comments</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {0}
+                    </tbody>
+                </table>
+            ";
+            const string row = @"
+                <tr>
+                    <td>{0}</td>
+                    <td class=""quantity"">{1}</td>
+                    <td>{2}</td>
+                </tr>
+            ";
 
-            return content;
+            if (equipment.Count == 0)
+                return string.Format(html, "N/A");
+
+            var rows = new StringBuilder();
+
+            foreach (var item in equipment)
+            {
+                var replacements = new object[3];
+
+                replacements[0] = (item.ExtraEquipmentType != null) ? item.ExtraEquipmentType.Name : "";
+                replacements[1] = item.Quantity;
+                replacements[2] = item.Comments;
+
+                rows.Append(string.Format(row, replacements));
+            }
+
+            return string.Format(html, string.Format(table, rows.ToString()));
         }
 
         private static string GetSchedule(Dispatch dispatch)
@@ -891,7 +921,7 @@ namespace SingerDispatch.Printing.Documents
                             <th>Group 10</th>                    
                         </tr>
                         <tr>
-                            <td class=""row_name"">Estimated</th>                            
+                            <td class=""row_name"">Estimated</td>                            
                             <td><span>{4}</span></td>
                             <td><span>{5}</span></td>
                             <td><span>{6}</span></td>
@@ -906,7 +936,7 @@ namespace SingerDispatch.Printing.Documents
                             <td><span>{15}</span></td>
                         </tr>
                         <tr>
-                            <td class=""row_name"">Scaled</th>                            
+                            <td class=""row_name"">Scaled</td>                            
                             <td><span>{16}</span></td>
                             <td><span>{17}</span></td>
                             <td><span>{18}</span></td>
@@ -964,7 +994,7 @@ namespace SingerDispatch.Printing.Documents
                 <div class=""tractors section"">
                     <span class=""heading"">Tractors (Singer Service)</span>
                     
-                    <table>
+                    <table class=""simple_breakdown"">
                         <thead>
                             <tr>
                                 <th>Unit</th>
@@ -1007,7 +1037,7 @@ namespace SingerDispatch.Printing.Documents
                 <div class=""other_equipment section"">
                     <span class=""heading"">Pilot Car and Other Equipment (Singer Service)</span>
                     
-                    <table>
+                    <table class=""simple_breakdown"">
                         <thead>
                             <tr>
                                 <th>Unit</th>
@@ -1052,7 +1082,7 @@ namespace SingerDispatch.Printing.Documents
                 <div class=""thid_party_services section"">
                     <span class=""heading"">Third Party Services</span>
                     
-                    <table>
+                    <table class=""commented_breakdown"">
                         <thead>
                             <tr>
                                 <th>Date &amp Time</th>
@@ -1093,7 +1123,7 @@ namespace SingerDispatch.Printing.Documents
                 <div class=""wire_lifts section"">
                     <span class=""heading"">Wire Lift Information</span>
                     
-                    <table>
+                    <table class=""commented_breakdown"">
                         <thead>
                             <tr>
                                 <th>Date &amp; Time</th>
@@ -1171,7 +1201,7 @@ namespace SingerDispatch.Printing.Documents
                 <div class=""permits section"">
                     <span class=""heading"">Permit Information</span>
                     
-                    <table>
+                    <table class=""commented_breakdown"">
                         <thead>
                             <tr>
                                 <th>Date</th>
