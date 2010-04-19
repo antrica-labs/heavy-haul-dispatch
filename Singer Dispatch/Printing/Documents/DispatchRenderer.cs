@@ -104,7 +104,7 @@ namespace SingerDispatch.Printing.Documents
             output.Append(GetLoadCommodities(dispatch.Load.JobCommodities));
             output.Append(GetDimensions(dispatch.Load));
             output.Append(GetTractors(dispatch.Load));
-            output.Append(GetSingerPilots(dispatch.Load));
+            output.Append(GetSingerPilots(from p in dispatch.Load.Dispatches where p.Rate != null && p.Rate.Name.Contains("Pilot") select p));
             //output.Append(GetThirdPartyPilots());
             output.Append(GetThridPartyServices(from s in dispatch.Load.ThirdPartyServices where s.ServiceType == null || s.ServiceType.Name != "Wirelift" select s));
             output.Append(GetWireLiftInfo(from wl in dispatch.Load.ThirdPartyServices where wl.ServiceType != null && wl.ServiceType.Name == "Wirelift" select wl));
@@ -1020,7 +1020,7 @@ namespace SingerDispatch.Printing.Documents
                                 <td>Chris Beutler (403) 852-9726</td>
                                 <td>26-77</td>
                             </tr>
-                            <tr>                    
+                            <tr>
                                 <td>03-12</td>
                                 <td>John Hall - (403) 861-7568</td>
                                 <td>35-81,35-67,29-67</td>
@@ -1033,38 +1033,54 @@ namespace SingerDispatch.Printing.Documents
             return content;
         }
 
-        private static string GetSingerPilots(Load load)
+        private static string GetSingerPilots(IEnumerable<Dispatch> dispatches)
         {
-            const string content = @"
+            const string html = @"
                 <div class=""other_equipment section"">
                     <span class=""heading"">Pilot Car and Other Equipment (Singer Service)</span>
                     
-                    <table class=""simple_breakdown"">
-                        <thead>
-                            <tr>
-                                <th>Unit</th>
-                                <th>Contact</th>                        
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>01-47</td>
-                                <td>Cody LaFrance - (403) 796-3636</td>                        
-                            </tr>
-                            <tr>
-                                <td>01-55</td>
-                                <td>Jordy Cropley - (403) 816-1645 - Supervisor</td>
-                            </tr>
-                            <tr>
-                                <td>99-09</td>
-                                <td>Wyatt Singer - (403) 816-1640</td>
-                            </tr>
-                        </tbody>
-                   </table>
+                    {0}
                 </div>
             ";
+            const string table = @"
+                <table class=""simple_breakdown"">
+                    <thead>
+                        <tr>
+                            <th>Unit</th>
+                            <th>Contact</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {0}
+                    </tbody>
+                </table>
+            ";
+            const string row = @"
+                <tr>
+                    <td>{0}</td>
+                    <td>{1}</td>
+                </tr>
+            ";
 
-            return content;
+            if (dispatches.Count() == 0)
+                return string.Format(html, "");
+
+            var rows = new StringBuilder();
+            foreach (var item in dispatches)
+            {
+                var replacements = new object[2];
+                var contact = (item.Employee == null) ? "" : item.Employee.Name;
+
+                if (item.Employee != null && !string.IsNullOrEmpty(item.Employee.Phone))
+                    contact += " - " + item.Employee.Phone;
+
+                replacements[0] = (item.Equipment == null) ? "" : item.Equipment.UnitNumber;
+                replacements[1] = contact;
+
+                rows.Append(string.Format(row, replacements));
+            }
+
+            return string.Format(html, string.Format(table, rows.ToString()));
         }
 
         private static string GetThirdPartyPilots()
