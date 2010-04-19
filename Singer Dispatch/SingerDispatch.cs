@@ -385,7 +385,8 @@ namespace SingerDispatch
             cp.PermitType = PermitType;
             cp.Conditions = Conditions;
             cp.Cost = Cost;
-            cp.PermitDate = PermitDate;
+            cp.StartDate = StartDate;
+            cp.EndDate = EndDate;
 
             return cp;
         }

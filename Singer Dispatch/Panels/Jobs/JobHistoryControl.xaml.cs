@@ -77,6 +77,8 @@ namespace SingerDispatch.Panels.Jobs
         {
             var grid = (DataGrid)sender;
 
+            if (grid.SelectedItem == null) return;
+
             grid.ScrollIntoView(grid.SelectedItem);
             grid.UpdateLayout();
         }

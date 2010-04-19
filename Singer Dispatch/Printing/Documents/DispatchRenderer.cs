@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
 using System.Data.Linq;
 
 namespace SingerDispatch.Printing.Documents
@@ -8,6 +9,7 @@ namespace SingerDispatch.Printing.Documents
     class DispatchRenderer : IRenderer
     {
         private const string PageBreak = @"<div class=""page_break""></div>";
+        
         private bool IncludeFileCopy { get; set; }
 
         public DispatchRenderer()
@@ -101,12 +103,12 @@ namespace SingerDispatch.Printing.Documents
             output.Append(GetSchedule(dispatch));
             output.Append(GetLoadCommodities(dispatch.Load.JobCommodities));
             output.Append(GetDimensions(dispatch.Load));
-            output.Append(GetTractors());
-            output.Append(GetSingerPilots());
-            output.Append(GetThirdPartyPilots());
-            output.Append(GetThridPartyServices());
-            output.Append(GetWireLiftInfo());
-            output.Append(GetPermits());
+            output.Append(GetTractors(dispatch.Load));
+            output.Append(GetSingerPilots(dispatch.Load));
+            //output.Append(GetThirdPartyPilots());
+            output.Append(GetThridPartyServices(from s in dispatch.Load.ThirdPartyServices where s.ServiceType == null || s.ServiceType.Name != "Wirelift" select s));
+            output.Append(GetWireLiftInfo(from wl in dispatch.Load.ThirdPartyServices where wl.ServiceType != null && wl.ServiceType.Name == "Wirelift" select wl));
+            output.Append(GetPermits(dispatch.Load.Permits));
             output.Append(GetOtherInfo(dispatch));
 
             return output.ToString();
@@ -988,7 +990,7 @@ namespace SingerDispatch.Printing.Documents
             return string.Format(content, replacements);
         }
 
-        private static string GetTractors()
+        private static string GetTractors(Load load)
         {
             const string content = @"
                 <div class=""tractors section"">
@@ -1031,7 +1033,7 @@ namespace SingerDispatch.Printing.Documents
             return content;
         }
 
-        private static string GetSingerPilots()
+        private static string GetSingerPilots(Load load)
         {
             const string content = @"
                 <div class=""other_equipment section"">
@@ -1076,191 +1078,209 @@ namespace SingerDispatch.Printing.Documents
             return content;
         }
 
-        private static string GetThridPartyServices()
+        private static string GetThridPartyServices(IEnumerable<ThirdPartyService> services)
         {
-            const string content = @"
+            const string html = @"
                 <div class=""thid_party_services section"">
                     <span class=""heading"">Third Party Services</span>
                     
-                    <table class=""commented_breakdown"">
-                        <thead>
-                            <tr>
-                                <th>Date &amp Time</th>
-                                <th>Service Type</th>
-                                <th>Company</th>
-                                <th>Contact</th>
-                                <th>Location</th>
-                                <th>Phone</th>
-                                <th>Confirmation #</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr class=""details"">
-                                <td>Jan 7, 2009 09:00</td>
-                                <td>Light Swinging</td>
-                                <td>City of Airdrie</td>
-                                <td>Gayle</td>
-                                <td>404 East Lake Rd, Airdrie</td>
-                                <td>(403) 948-8415</td>
-                                <td>Booked</td>
-                            </tr>
-                            <tr class=""comments"">
-                                <td colspan=""7"">
-                                    <span class=""field_name"">Comments:</span> Booked by Gayle for escort and light swinging
-                                </td>
-                            </tr>
-                        </tbody>                
-                    </table>
+                    {0}
                 </div>
             ";
+            const string table = @"
+                <table class=""commented_breakdown"">
+                    <thead>
+                        <tr>
+                            <th>Date &amp Time</th>
+                            <th>Service Type</th>
+                            <th>Company</th>
+                            <th>Contact</th>
+                            <th>Location</th>
+                            <th>Phone</th>
+                            <th>Confirmation #</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {0}
+                    </tbody>                
+                </table>
+            ";
+            const string row = @"
+                <tr class=""details"">
+                    <td>{0}</td>
+                    <td>{1}</td>
+                    <td>{2}</td>
+                    <td>{3}</td>
+                    <td>{4}</td>
+                    <td>{5}</td>
+                    <td>{6}</td>
+                </tr>
+            ";
+            const string commentRow = @"
+                <tr class=""comments"">
+                    <td colspan=""7"">
+                        <span><span class=""field_name"">Comments:</span> {0}</span>
+                    </td>
+                </tr>
+            ";
 
-            return content;
+            if (services.Count() == 0)
+                return string.Format(html, "");
+
+            var rows = new StringBuilder();
+            foreach (var item in services)
+            {
+                var replacements = new object[7];
+
+                replacements[0] = (item.ServiceDate == null) ? "" : item.ServiceDate.Value.ToString(SingerConstants.PrintedDateFormatString) + " " + item.ServiceDate.Value.ToString(SingerConstants.PrintedTimeFormatString);
+                replacements[1] = (item.ServiceType == null) ? "" : item.ServiceType.Name;
+                replacements[2] = (item.Company == null) ? "" : item.Company.Name;
+                replacements[3] = (item.Contact == null) ? "" : item.Contact.Name;
+                replacements[4] = item.Location;
+                replacements[5] = (item.Contact == null) ? "" : item.Contact.PrimaryPhone;
+                replacements[6] = item.Reference;
+
+                rows.Append(string.Format(row, replacements));
+
+                if (!string.IsNullOrEmpty(item.Notes))
+                    rows.Append(string.Format(commentRow, item.Notes));
+            }
+
+            return string.Format(html, string.Format(table, rows.ToString()));
         }
 
-        private static string GetWireLiftInfo()
+        private static string GetWireLiftInfo(IEnumerable<ThirdPartyService> wirelifts)
         {
-            const string content = @"
+            const string html = @"
                 <div class=""wire_lifts section"">
                     <span class=""heading"">Wire Lift Information</span>
                     
-                    <table class=""commented_breakdown"">
-                        <thead>
-                            <tr>
-                                <th>Date &amp; Time</th>
-                                <th>Company</th>
-                                <th>Contact</th>
-                                <th>Location</th>
-                                <th>Phone</th>
-                                <th>Confirmation #</th>                        
-                            </tr>                    
-                        </thead>
-                        <tbody>
-                            <tr class=""details"">
-                                <td>Jan 7, 2009 08:00</td>
-                                <td>Fortis Alberta</td>
-                                <td>24 Hour Dispatch</td>
-                                <td>404 East Lake Rd, Airdrie</td>
-                                <td>(888) 251-3907</td>
-                                <td>60066597</td>
-                            </tr>
-                            <tr class=""comments"">
-                                <td colspan=""6"">
-                                    <span class=""field_name"">Comments: </span> Fortis to meet, measure, and escort in Airdrie, and then escort in Sundre area
-                                </td>
-                            </tr>
-                            <tr class=""details"">
-                                <td>Jan 7, 2009 9:51</td>
-                                <td>Telus Communications</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr class=""comments"">
-                                <td colspan=""6"">
-                                    <span class=""field_name"">Comments: </span> Cleared by Trevor
-                                </td>
-                            </tr>
-                            <tr class=""details"">
-                                <td>Jan 7, 2009 09:52</td>
-                                <td>Shaw Cable</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr class=""comments"">
-                                <td colspan=""6"">
-                                    <span class=""field_name"">Comments: </span> Cleared by Earl
-                                </td>
-                            </tr>
-                            <tr class=""details"">
-                                <td>Jan 7, 2009</td>
-                                <td>Central Alberta REA</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr class=""comments"">
-                                <td colspan=""6"">
-                                    <span class=""field_name"">Comments: </span> Cleared by CAREA
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    {0}
                 </div>
             ";
+            const string table = @"                
+                <table class=""commented_breakdown"">
+                    <thead>
+                        <tr>
+                            <th>Date &amp; Time</th>
+                            <th>Company</th>
+                            <th>Contact</th>
+                            <th>Location</th>
+                            <th>Phone</th>
+                            <th>Confirmation #</th>                        
+                        </tr>                    
+                    </thead>
+                    <tbody>
+                        {0}
+                    </tbody>
+                </table>
+            ";
+            const string row = @"
+                <tr class=""details"">
+                    <td>{0}</td>
+                    <td>{1}</td>
+                    <td>{2}</td>
+                    <td>{3}</td>
+                    <td>{4}</td>
+                    <td>{5}</td>
+                </tr>
+            ";
+            const string commentRow = @"
+                <tr class=""comments"">
+                    <td colspan=""6"">
+                        <span><span class=""field_name"">Comments: </span> {0}</span>
+                    </td>
+                </tr>
+            ";
 
-            return content;
+            if (wirelifts.Count() == 0)
+                return string.Format(html, "");
+
+            var rows = new StringBuilder();
+            foreach (var item in wirelifts)
+            {
+                var replacements = new object[6];
+
+                replacements[0] = (item.ServiceDate == null) ? "" : item.ServiceDate.Value.ToString(SingerConstants.PrintedDateFormatString) + " " + item.ServiceDate.Value.ToString(SingerConstants.PrintedTimeFormatString);
+                replacements[1] = (item.Company == null)  ? "" : item.Company.Name;
+                replacements[2] = (item.Contact == null) ? "" : item.Contact.Name;
+                replacements[3] = item.Location;
+                replacements[4] = (item.Contact == null) ? "" : item.Contact.PrimaryPhone;
+                replacements[5] = item.Reference;
+
+                rows.Append(string.Format(row, replacements));
+
+                if (!string.IsNullOrEmpty(item.Notes))
+                    rows.Append(string.Format(commentRow, item.Notes));
+            }
+
+            return string.Format(html, string.Format(table, rows.ToString()));
         }
 
-        private static string GetPermits()
+        private static string GetPermits(EntitySet<Permit> permits)
         {
-            const string content = @"
+            const string html = @"
                 <div class=""permits section"">
                     <span class=""heading"">Permit Information</span>
                     
-                    <table class=""commented_breakdown"">
-                        <thead>
-                            <tr>
-                                <th>Date</th>
-                                <th>Issuer</th>
-                                <th>Type</th>
-                                <th>Number</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr class=""details"">
-                                <td>Jan 7, 2009 to Jan 13, 2009</td>
-                                <td>Alberta Transportation</td>
-                                <td>Empty Trailer - Overweight and Overdimensional</td>
-                                <td>08-162-4298 - To Aidrie</td>
-                            </tr>
-                            <tr class=""comments"">
-                                <td colspan=""4"">
-                                    <span class=""field_name"">Conditions:</span> See permit
-                                </td>
-                            </tr>
-                            <tr class=""details"">
-                                <td>Jan 7, 2009 to Jan 13, 2009</td>
-                                <td>Alberta Transport</td>
-                                <td>Overweight and Overdimensional</td>
-                                <td>08-162-8380 - Loaded</td>
-                            </tr>
-                            <tr class=""comments"">
-                                <td colspan=""4"">
-                                    <span class=""field_name"">Conditions:</span> See permit
-                                </td>
-                            </tr>
-                            <tr class=""details"">
-                                <td>Jan 7, 2009 to Jan 13, 2009</td>
-                                <td>Alberta Transportation</td>
-                                <td>Empty Trailer - Overweight and Overdimensional</td>
-                                <td>08-162-4397 - Return</td>
-                            </tr>
-                            <tr class=""comments"">
-                                <td colspan=""4"">
-                                    <span class=""field_name"">Conditions:</span> See permit
-                                </td>
-                            </tr>
-                            <tr class=""details"">
-                                <td>Jan 7, 2009 to Jan 13, 2009</td>
-                                <td>County 17 Mountainview</td>
-                                <td>Overweight and Overdimensional</td>
-                                <td>PENDING</td>
-                            </tr>
-                            <tr class=""comments"">
-                                <td colspan=""4"">
-                                    <span class=""field_name"">Conditions:</span> For use of Twp320 and RR402
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    {0}
                 </div>
             ";
+            const string table = @"
+                <table class=""commented_breakdown"">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Issuer</th>
+                            <th>Type</th>
+                            <th>Number</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {0}
+                    </tbody>
+                </table>
+            ";
+            const string row = @"
+                <tr class=""details"">
+                    <td>{0}</td>
+                    <td>{1}</td>
+                    <td>{2}</td>
+                    <td>{3}</td>
+                </tr>
+            ";
+            const string commentRow = @"
+                <tr class=""comments"">
+                    <td colspan=""4"">
+                        <span><span class=""field_name"">Conditions:</span> {0}</span>
+                    </td>
+                </tr>
+            ";
 
-            return content;
+            if (permits.Count == 0)
+                return string.Format(html, "");
+
+            var rows = new StringBuilder();
+
+            foreach (var item in permits)
+            {
+                var replacements = new object[4];
+
+                var start = (item.StartDate != null) ? item.StartDate.Value.ToString(SingerConstants.PrintedDateFormatString) : "--";
+                var end = (item.EndDate != null) ? item.EndDate.Value.ToString(SingerConstants.PrintedDateFormatString) : "--";
+
+                replacements[0] = start + " to " + end;
+                replacements[1] = item.Issuer;
+                replacements[2] = item.PermitType;
+                replacements[3] = item.Reference;
+
+                rows.Append(string.Format(row, replacements));
+
+                if (!string.IsNullOrEmpty(item.Conditions))
+                    rows.Append(string.Format(commentRow, item.Conditions));
+            }            
+                
+            return string.Format(html, string.Format(table, rows.ToString()));
         }
 
         private static string GetOtherInfo(Dispatch dispatch)

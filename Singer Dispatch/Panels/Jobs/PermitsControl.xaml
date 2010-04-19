@@ -28,7 +28,7 @@
                 <Button Style="{StaticResource HorizontalEnd}" Grid.Column="3" Click="RemovePermit_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgPermits, Path=SelectedItem}">Remove permit</Button>
             </Grid>
      
-            <GroupBox Header="Service Details" DataContext="{Binding ElementName=dgPermits, Path=SelectedItem}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgPermits, Path=SelectedItem}">
+            <GroupBox Header="Permit Details" DataContext="{Binding ElementName=dgPermits, Path=SelectedItem}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgPermits, Path=SelectedItem}">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="90" />
@@ -63,7 +63,7 @@
                     <GroupBox Grid.Column="2" Grid.Row="0" Grid.RowSpan="4" Header="Departure" Margin="5,0,0,0">
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="60" />
+                                <ColumnDefinition Width="70" />
                                 <ColumnDefinition />
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
@@ -72,11 +72,11 @@
                                 <RowDefinition />
                             </Grid.RowDefinitions>
 
-                            <Label Grid.Row="0" Grid.Column="0">Date:</Label>
-                            <DatePicker Grid.Row="0" Grid.Column="1" SelectedDate="{Binding PermitDate}" />
+                            <Label Grid.Row="0" Grid.Column="0">Start date:</Label>
+                            <DatePicker Grid.Row="0" Grid.Column="1" SelectedDate="{Binding StartDate}" />
 
-                            <Label Grid.Row="1" Grid.Column="0">Time:</Label>
-                            <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding PermitDate, StringFormat=T}" />
+                            <Label Grid.Row="1" Grid.Column="0">End date:</Label>
+                            <DatePicker Grid.Row="1" Grid.Column="1" SelectedDate="{Binding EndDate}" />
                             
                             <Label Grid.Row="2" Grid.Column="0">Cost:</Label>
                             <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Cost, StringFormat=c}" Controls:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" />

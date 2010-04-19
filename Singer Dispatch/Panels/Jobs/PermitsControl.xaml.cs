@@ -35,7 +35,7 @@ namespace SingerDispatch.Panels.Jobs
             if (SelectedJob == null) return;
 
             var list = (ObservableCollection<Permit>)dgPermits.ItemsSource;
-            var permit = new Permit { JobID = SelectedJob.ID, PermitDate = SelectedJob.StartDate };
+            var permit = new Permit { JobID = SelectedJob.ID, StartDate = SelectedJob.StartDate, EndDate = SelectedJob.EndDate };
 
             SelectedJob.Permits.Add(permit);
             list.Add(permit);

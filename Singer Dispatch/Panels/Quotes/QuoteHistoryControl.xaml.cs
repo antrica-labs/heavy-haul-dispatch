@@ -252,6 +252,8 @@ namespace SingerDispatch.Panels.Quotes
         {
             var grid = (DataGrid)sender;
 
+            if (grid.SelectedItem == null) return;
+
             grid.ScrollIntoView(grid.SelectedItem);
             grid.UpdateLayout();
         }

@@ -34,12 +34,24 @@ namespace SingerDispatch.Panels.Companies
         {
             SaveCommand.Executed += CommitChanges_Executed;
 
+            RefreshServiceList();
+        }
+
+        protected override void SelectedCompanyChanged(Company newValue, Company oldValue)
+        {
+            base.SelectedCompanyChanged(newValue, oldValue);
+
+            RefreshServiceList();
+        }
+
+        private void RefreshServiceList()
+        {
             var list = (ObservableCollection<CheckBox>)TheList.ItemsSource;
 
             if (SelectedCompany == null) return;
 
             var types = from t in Database.ServiceTypes select t;
-            var selected = from s in SelectedCompany.Services select s.ServiceType;            
+            var selected = from s in SelectedCompany.Services select s.ServiceType;
 
             list.Clear();
 
@@ -53,6 +65,7 @@ namespace SingerDispatch.Panels.Companies
                 list.Add(cb);
             }
         }
+
 
         private void CheckBox_Checked(object sender, RoutedEventArgs e)
         {
