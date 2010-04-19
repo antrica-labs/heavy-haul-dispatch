@@ -351,9 +351,9 @@ namespace SingerDispatch.Printing.Documents
                     	border: solid 1px #A9A9A9;
                     }
 
-                    div.load_and_unload table.details td span
+                    div.load_and_unload table.details td span.contact
                     {
-                    	display: block;
+                        display: block;
                     }
 
                     div.load_and_unload table.details td.date
@@ -714,12 +714,12 @@ namespace SingerDispatch.Printing.Documents
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td class=""date"">{4}</td>
-                                    <td class=""time"">{5}</td>
-                                    <td class=""location"">{6}</td>
-                                    <td class=""contact"">{7}</td>
-                                    <td class=""company"">{8}</td>
-                                    <td class=""contact"">{9}</td>
+                                    <td class=""date""><span>{4}</span></td>
+                                    <td class=""time""><span>{5}</span></td>
+                                    <td class=""location""><span>{6}</span></td>
+                                    <td class=""contact""><span>{7}</span></td>
+                                    <td class=""company""><span>{8}</span></td>
+                                    <td class=""contact""><span>{9}</span></td>
                                 </tr>
                             </tbody>                        
                         </table>
@@ -758,12 +758,12 @@ namespace SingerDispatch.Printing.Documents
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td class=""date"">{13}</td>
-                                    <td class=""time"">{14}</td>
-                                    <td class=""location"">{15}</td>
-                                    <td class=""contact"">{16}</td>
-                                    <td class=""company"">{17}</td>
-                                    <td class=""contact"">{18}</td>
+                                    <td class=""date""><span>{13}</span></td>
+                                    <td class=""time""><span>{14}</span></td>
+                                    <td class=""location""><span>{15}</span></td>
+                                    <td class=""contact""><span>{16}</span></td>
+                                    <td class=""company""><span>{17}</span></td>
+                                    <td class=""contact""><span>{18}</span></td>
                                 </tr>
                             </tbody>                        
                         </table>
@@ -778,9 +778,9 @@ namespace SingerDispatch.Printing.Documents
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>{19}</td>
-                                    <td>{20}</td>
-                                    <td>{21}</td>
+                                    <td><span>{19}</span></td>
+                                    <td><span>{20}</span></td>
+                                    <td><span>{21}</span></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -818,7 +818,7 @@ namespace SingerDispatch.Printing.Documents
                 }
 
                 reps[6] = item.LoadLocation;
-                reps[7] = (item.LoadContact != null) ? string.Format("<span>{0}</span><span>{1}</span>", item.LoadContact.Name, item.LoadContact.PrimaryPhone) : "";
+                reps[7] = (item.LoadContact != null) ? string.Format(@"<span class=""contact"">{0}</span><span class=""contact"">{1}</span>", item.LoadContact.Name, item.LoadContact.PrimaryPhone) : "";
                 reps[8] = item.LoadBy;
                 reps[9] = "N\\A";
                 reps[10] = item.LoadRoute;
