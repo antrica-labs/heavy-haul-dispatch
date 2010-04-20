@@ -94,6 +94,9 @@ namespace SingerDispatch.Printing.Documents
 
         private static string FillDispatchBody(Dispatch dispatch, string copyType)
         {
+            if (dispatch.Load == null)
+                return @"<span class=""error"">Dispatches must be attached to loads before they can be printed.</span>";
+
             var output = new StringBuilder();
 
             output.Append(GetHeader(dispatch, copyType));
@@ -191,6 +194,13 @@ namespace SingerDispatch.Printing.Documents
                         font-size: 10pt;
                         font-family: Verdana, Arial, Helvetica, sans-serif;
                         padding: 10px;
+                    }
+                    
+                    span.error
+                    {
+                        display: block;
+                        font-weight; bold;
+                        text-align: center;
                     }
 
                     th
@@ -693,7 +703,7 @@ namespace SingerDispatch.Printing.Documents
             ";
 
             if (equipment.Count == 0)
-                return string.Format(html, "N/A");
+                return string.Format(html, "");
 
             var rows = new StringBuilder();
 
