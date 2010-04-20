@@ -103,11 +103,11 @@ namespace SingerDispatch.Printing.Documents
             output.Append(GetSchedule(dispatch));
             output.Append(GetLoadCommodities(dispatch.Load.JobCommodities));
             output.Append(GetDimensions(dispatch.Load));
-            output.Append(GetTractors(dispatch.Load));
+            output.Append(GetTractors(from d in dispatch.Load.Dispatches where d.Rate != null && d.Rate.Name.Contains("Tractor") select d));
             output.Append(GetSingerPilots(from p in dispatch.Load.Dispatches where p.Rate != null && p.Rate.Name.Contains("Pilot") select p));
-            //output.Append(GetThirdPartyPilots());
-            output.Append(GetThridPartyServices(from s in dispatch.Load.ThirdPartyServices where s.ServiceType == null || s.ServiceType.Name != "Wirelift" select s));
-            output.Append(GetWireLiftInfo(from wl in dispatch.Load.ThirdPartyServices where wl.ServiceType != null && wl.ServiceType.Name == "Wirelift" select wl));
+            output.Append(GetThirdPartyPilots(from s in dispatch.Load.ThirdPartyServices where s.ServiceType != null && s.ServiceType.Name.Contains("Pilot") select s));
+            output.Append(GetThridPartyServices(from s in dispatch.Load.ThirdPartyServices where s.ServiceType == null || (!s.ServiceType.Name.Contains("Pilot") && !s.ServiceType.Name.Contains("Wirelift")) select s));
+            output.Append(GetWireLiftInfo(from wl in dispatch.Load.ThirdPartyServices where wl.ServiceType != null && wl.ServiceType.Name.Contains("Wirelift") select wl));
             output.Append(GetPermits(dispatch.Load.Permits));
             output.Append(GetOtherInfo(dispatch));
 
@@ -426,14 +426,9 @@ namespace SingerDispatch.Printing.Documents
                         padding-right: 3px;
                     }
                                         
-                    table.simple_breakdown th
+                    table.simple_breakdown th, table.simple_breakdown td
                     {
-                    	padding-right: 10px;
-                    }                    
-                                        
-                    table.simple_breakdown td
-                    {
-                        padding-right: 10px;
+                        padding-right: 20px;
                         padding-bottom: 5px;
                     }
 
@@ -613,11 +608,27 @@ namespace SingerDispatch.Printing.Documents
                 replacements[3] += dispatch.Load.TrailerCombination.Combination;
 
             replacements[4] = (dispatch.Employee != null) ? dispatch.Employee.Name : "";
-            replacements[5] = "-- not implemented --";
+            
+
+            // Find list all of the swampers
+            var swamperDispatches = from s in dispatch.Load.Dispatches where s.Rate != null && s.Rate.Name.Contains("Swamper") select s;
+            var swampers = new StringBuilder();
+            foreach (var item in swamperDispatches)
+            {
+                if (item.Employee != null)
+                {
+                    swampers.Append(item.Employee.Name);
+                    swampers.Append("; ");
+                }
+            }
+
+            replacements[5] = swampers.ToString();
             replacements[6] = (dispatch.MeetingTime != null) ? dispatch.MeetingTime.Value.ToString(SingerConstants.PrintedDateFormatString) + " " + dispatch.MeetingTime.Value.ToString(SingerConstants.PrintedTimeFormatString) : "";
             replacements[7] = dispatch.DepartingLocation;
-            replacements[8] = dispatch.DepartingUnits;            
+            replacements[8] = dispatch.DepartingUnits;     
+       
             
+            // List any reference numbers given to this job
             var references = new StringBuilder();
             
             for (var i = 0; i < dispatch.Job.ReferenceNumbers.Count; i++) 
@@ -990,47 +1001,53 @@ namespace SingerDispatch.Printing.Documents
             return string.Format(content, replacements);
         }
 
-        private static string GetTractors(Load load)
+        private static string GetTractors(IEnumerable<Dispatch> dispatches)
         {
-            const string content = @"
+            const string html = @"
                 <div class=""tractors section"">
                     <span class=""heading"">Tractors (Singer Service)</span>
                     
-                    <table class=""simple_breakdown"">
-                        <thead>
-                            <tr>
-                                <th>Unit</th>
-                                <th>Contact</th>
-                                <th>Trailer Combination</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>03-27</td>
-                                <td>Chad Congdon (403) 863-7209</td>
-                                <td>18-76</td>
-                            </tr>
-                            <tr>
-                                <td>03-22</td>
-                                <td>Corey Cuthill (403) 999-5859</td>
-                                <td>26-77</td>
-                            </tr>
-                            <tr>
-                                <td>03-08</td>
-                                <td>Chris Beutler (403) 852-9726</td>
-                                <td>26-77</td>
-                            </tr>
-                            <tr>
-                                <td>03-12</td>
-                                <td>John Hall - (403) 861-7568</td>
-                                <td>35-81,35-67,29-67</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    {0}
                 </div>
             ";
+            const string table = @"
+                <table class=""simple_breakdown"">
+                    <thead>
+                        <tr>
+                            <th>Unit</th>
+                            <th>Contact</th>
+                            <th>Trailer Combination</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {0}
+                    </tbody>
+                </table>
+            ";
+            const string row = @"
+                <tr>
+                    <td>{0}</td>
+                    <td>{1}</td>
+                    <td>{2}</td>
+                </tr>
+            ";
 
-            return content;
+            if (dispatches.Count() == 0)
+                return string.Format(html, "");
+
+            var rows = new StringBuilder();
+            foreach (var item in dispatches)
+            {
+                var replacements = new object[3];
+
+                replacements[0] = (item.Equipment != null) ? item.Equipment.UnitNumber : "";
+                replacements[1] = (item.Employee == null) ? "" : item.Employee.Name + " " + item.Employee.Phone;
+                replacements[2] = (item.Load != null && item.Load.TrailerCombination != null) ? item.Load.TrailerCombination.Combination : "";
+
+                rows.Append(string.Format(row, replacements));
+            }
+
+            return string.Format(html, string.Format(table, rows.ToString()));
         }
 
         private static string GetSingerPilots(IEnumerable<Dispatch> dispatches)
@@ -1072,7 +1089,7 @@ namespace SingerDispatch.Printing.Documents
                 var contact = (item.Employee == null) ? "" : item.Employee.Name;
 
                 if (item.Employee != null && !string.IsNullOrEmpty(item.Employee.Phone))
-                    contact += " - " + item.Employee.Phone;
+                    contact += " " + item.Employee.Phone;
 
                 replacements[0] = (item.Equipment == null) ? "" : item.Equipment.UnitNumber;
                 replacements[1] = contact;
@@ -1083,15 +1100,70 @@ namespace SingerDispatch.Printing.Documents
             return string.Format(html, string.Format(table, rows.ToString()));
         }
 
-        private static string GetThirdPartyPilots()
+        private static string GetThirdPartyPilots(IEnumerable<ThirdPartyService> pilots)
         {
-            const string content = @"
+            const string html = @"
                 <div class=""third_party_pilot section"">
                     <span class=""heading"">Pilot Car (Thrid Party)</span>
+                
+                    {0}
                 </div>
             ";
+            const string table = @"
+                <table class=""commented_breakdown"">
+                    <thead>
+                        <tr>
+                            <th>Date &amp Time</th>
+                            <th>Company</th>
+                            <th>Contact</th>
+                            <th>Location</th>
+                            <th>Phone</th>
+                            <th>Confirmation #</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {0}
+                    </tbody>                
+                </table>
+            ";
+            const string row = @"
+                <tr class=""details"">
+                    <td>{0}</td>
+                    <td>{1}</td>
+                    <td>{2}</td>
+                    <td>{3}</td>
+                    <td>{4}</td>
+                    <td>{5}</td>
+                </tr>
+            ";
+            const string commentRow = @"
+                <tr class=""comments"">
+                    <td colspan=""7"">
+                        <span><span class=""field_name"">Comments:</span> {0}</span>
+                    </td>
+                </tr>
+            ";
 
-            return content;
+            if (pilots.Count() == 0)
+                return string.Format(html, "");
+
+            var rows = new StringBuilder();
+            foreach (var item in pilots)
+            {
+                var replacements = new object[7];
+
+                replacements[0] = (item.ServiceDate == null) ? "" : item.ServiceDate.Value.ToString(SingerConstants.PrintedDateFormatString) + " " + item.ServiceDate.Value.ToString(SingerConstants.PrintedTimeFormatString);                
+                replacements[1] = (item.Company == null) ? "" : item.Company.Name;
+                replacements[2] = (item.Contact == null) ? "" : item.Contact.Name;
+                replacements[3] = item.Location;
+                replacements[4] = (item.Contact == null) ? "" : item.Contact.PrimaryPhone;
+                replacements[5] = item.Reference;
+
+                rows.Append(string.Format(row, replacements));
+                rows.Append(string.Format(commentRow, item.Notes));
+            }
+
+            return string.Format(html, string.Format(table, rows.ToString()));
         }
 
         private static string GetThridPartyServices(IEnumerable<ThirdPartyService> services)
@@ -1157,9 +1229,7 @@ namespace SingerDispatch.Printing.Documents
                 replacements[6] = item.Reference;
 
                 rows.Append(string.Format(row, replacements));
-
-                if (!string.IsNullOrEmpty(item.Notes))
-                    rows.Append(string.Format(commentRow, item.Notes));
+                rows.Append(string.Format(commentRow, item.Notes));
             }
 
             return string.Format(html, string.Format(table, rows.ToString()));
@@ -1225,9 +1295,7 @@ namespace SingerDispatch.Printing.Documents
                 replacements[5] = item.Reference;
 
                 rows.Append(string.Format(row, replacements));
-
-                if (!string.IsNullOrEmpty(item.Notes))
-                    rows.Append(string.Format(commentRow, item.Notes));
+                rows.Append(string.Format(commentRow, item.Notes));
             }
 
             return string.Format(html, string.Format(table, rows.ToString()));
@@ -1291,9 +1359,7 @@ namespace SingerDispatch.Printing.Documents
                 replacements[3] = item.Reference;
 
                 rows.Append(string.Format(row, replacements));
-
-                if (!string.IsNullOrEmpty(item.Conditions))
-                    rows.Append(string.Format(commentRow, item.Conditions));
+                rows.Append(string.Format(commentRow, item.Conditions));
             }            
                 
             return string.Format(html, string.Format(table, rows.ToString()));

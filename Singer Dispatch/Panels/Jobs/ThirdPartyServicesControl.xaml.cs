@@ -67,6 +67,7 @@ namespace SingerDispatch.Panels.Jobs
 
         private void DuplicateService_Click(object sender, RoutedEventArgs e)
         {
+            var list = (ObservableCollection<ThirdPartyService>)dgServices.ItemsSource;
             var service = (ThirdPartyService)dgServices.SelectedItem;
 
             if (service == null)
@@ -75,7 +76,9 @@ namespace SingerDispatch.Panels.Jobs
             service = service.Duplicate();
 
             SelectedJob.ThirdPartyServices.Add(service);
-            ((ObservableCollection<ThirdPartyService>)dgServices.ItemsSource).Insert(0, service);
+            list.Add(service);
+            dgServices.SelectedItem = service;
+            dgServices.ScrollIntoView(service);
         }
 
         private void RemoveService_Click(object sender, RoutedEventArgs e)
