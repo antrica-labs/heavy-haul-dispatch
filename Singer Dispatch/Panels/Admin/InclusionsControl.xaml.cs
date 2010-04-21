@@ -5,6 +5,7 @@ using System.Windows.Input;
 using SingerDispatch.Controls;
 using System.Collections.ObjectModel;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 
 namespace SingerDispatch.Panels.Admin
 {
@@ -25,21 +26,6 @@ namespace SingerDispatch.Panels.Admin
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             TheGrid.ItemsSource = new ObservableCollection<Inclusion>(from i in Database.Inclusions orderby i.Line select i);
-        }
-
-        private void RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
-        {
-            if (e.EditAction == DataGridEditAction.Commit)
-            {
-                try
-                {
-                    Database.SubmitChanges();
-                }
-                catch (Exception ex)
-                {
-                    Windows.ErrorNoticeWindow.ShowError("Error while attempting write changes to database", ex.Message);
-                }
-            }
         }
 
         private void NewInclusion_Click(object sender, RoutedEventArgs e)
@@ -74,6 +60,27 @@ namespace SingerDispatch.Panels.Admin
             catch (Exception ex)
             {
                 Windows.ErrorNoticeWindow.ShowError("Error while attempting write changes to database", ex.Message);
+            }
+        }
+
+        private void CommitChanges_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                ((ButtonBase)sender).Focus();
+                Database.SubmitChanges();
+            }
+            catch (System.Exception ex)
+            {
+                Windows.ErrorNoticeWindow.ShowError("Error while attempting write changes to database", ex.Message);
+            }
+        }
+
+        private void RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
+        {
+            if (e.EditAction == DataGridEditAction.Commit)
+            {
+                CommitChangesButton.RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent, CommitChangesButton));
             }
         }
     }

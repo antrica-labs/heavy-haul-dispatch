@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using System.Windows.Input;
 using SingerDispatch.Controls;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 
 namespace SingerDispatch.Panels.Admin
 {
@@ -77,20 +78,26 @@ namespace SingerDispatch.Panels.Admin
             }
         }
 
+        private void CommitChanges_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                ((ButtonBase)sender).Focus();
+                Database.SubmitChanges();
+            }
+            catch (System.Exception ex)
+            {
+                Windows.ErrorNoticeWindow.ShowError("Error while attempting write changes to database", ex.Message);
+            }
+        }
+
         private void RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
         {
             if (e.EditAction == DataGridEditAction.Commit)
             {
-                try
-                {
-                    Database.SubmitChanges();
-                }
-                catch (System.Exception ex)
-                {
-                    Windows.ErrorNoticeWindow.ShowError("Error while attempting write changes to database", ex.Message);
-                }
+                CommitChangesButton.RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent, CommitChangesButton));
             }
-        }        
+        }      
     }
 
     public class RateTypesDropList : ObservableCollection<RateType>

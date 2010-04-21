@@ -21,10 +21,11 @@
             </Grid.ColumnDefinitions>
 
             <Button Style="{StaticResource Horizontal}" Grid.Column="0" Click="NewCondition_Click">New condition</Button>
+            <Button Style="{StaticResource Horizontal}" Name="CommitChangesButton" Grid.Column="1" Click="CommitChanges_Click">Save changes</Button>
             <Button Style="{StaticResource HorizontalEnd}" Grid.Column="2" Click="RemoveCondition_Click">Remove condition</Button>
         </Grid>
 
-        <DataGrid Name="TheGrid" Style="{StaticResource ListDisplay}" IsReadOnly="False" RowEditEnding="RowEditEnding" SelectionChanged="TheGrid_SelectionChanged">
+        <DataGrid Name="TheGrid" Style="{StaticResource ListDisplay}" IsReadOnly="False" RowEditEnding="RowEditEnding">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Condition" Binding="{Binding Line}" />
             </DataGrid.Columns>

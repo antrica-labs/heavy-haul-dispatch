@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Windows.Input;
 using SingerDispatch.Controls;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 
 namespace SingerDispatch.Panels.Admin
 {
@@ -24,21 +25,6 @@ namespace SingerDispatch.Panels.Admin
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             TheGrid.ItemsSource = new ObservableCollection<Condition>(from c in Database.Conditions orderby c.ID select c);
-        }
-
-        private void RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
-        {
-            if (e.EditAction == DataGridEditAction.Commit)
-            {
-                try
-                {
-                    Database.SubmitChanges();
-                }
-                catch (System.Exception ex)
-                {
-                    Windows.ErrorNoticeWindow.ShowError("Error while attempting write changes to database", ex.Message);
-                }
-            }
         }
 
         private void NewCondition_Click(object sender, RoutedEventArgs e)
@@ -76,15 +62,11 @@ namespace SingerDispatch.Panels.Admin
             }
         }
 
-        private void TheGrid_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
-        {
-            SaveChanges();
-        }
-
-        private void SaveChanges()
+        private void CommitChanges_Click(object sender, RoutedEventArgs e)
         {
             try
             {
+                ((ButtonBase)sender).Focus();
                 Database.SubmitChanges();
             }
             catch (System.Exception ex)
@@ -92,5 +74,14 @@ namespace SingerDispatch.Panels.Admin
                 Windows.ErrorNoticeWindow.ShowError("Error while attempting write changes to database", ex.Message);
             }
         }
+
+        private void RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
+        {
+            if (e.EditAction == DataGridEditAction.Commit)
+            {
+                CommitChangesButton.RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent, CommitChangesButton));
+            }
+        }
+        
     }
 }

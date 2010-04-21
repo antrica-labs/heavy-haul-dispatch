@@ -29,6 +29,11 @@ namespace SingerDispatch.Panels.Jobs
             cmbRates.ItemsSource = GetCompanyRates(SelectedCompany);
             cmbUnits.ItemsSource = (SelectedJob == null) ? null : from u in Database.Equipment where u.EquipmentClass.Name == "Tractor" || u.EquipmentClass.Name == "Trailor" select u;
 
+            if (cmbRates.SelectedItem != null)
+            {
+                cmbTrailerCombinations.ItemsSource = (from tc in Database.TrailerCombinations where tc.Rate == cmbRates.SelectedItem select tc).ToList();
+            }
+
             UpdateExtras();
             UpdateCommodityList();
         }
