@@ -34,7 +34,7 @@ namespace SingerDispatch.Panels.Companies
         {
             base.SelectedCompanyChanged(newValue, oldValue);
                         
-            dgCommodities.ItemsSource = (newValue == null) ? null : new ObservableCollection<Commodity>(from c in Database.Commodities where c.CompanyID == newValue.ID select c);
+            dgCommodities.ItemsSource = (newValue == null) ? null : new ObservableCollection<Commodity>(from c in Database.Commodities where c.CompanyID == newValue.ID orderby c.Name, c.Unit select c);
         }
 
         private void NewCommodity_Click(object sender, RoutedEventArgs e)
