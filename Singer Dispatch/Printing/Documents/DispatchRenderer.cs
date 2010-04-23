@@ -891,7 +891,7 @@ namespace SingerDispatch.Printing.Documents
                 }
 
                 reps[15] = item.UnloadLocation;
-                reps[16] = (item.UnloadContact != null) ? string.Format("<span>{0}</span><span>{1}</span>", item.UnloadContact.Name, item.UnloadContact.PrimaryPhone) : "";
+                reps[16] = (item.UnloadContact != null) ? string.Format(@"<span class=""contact"">{0}</span><span class=""contact"">{1}</span>", item.UnloadContact.Name, item.UnloadContact.PrimaryPhone) : "";
                 reps[17] = item.UnloadBy;
                 reps[18] = "N\\A";
                 reps[19] = item.UnloadRoute;
