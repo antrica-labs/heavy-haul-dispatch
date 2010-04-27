@@ -98,6 +98,9 @@ namespace SingerDispatch
     partial void InsertQuote(Quote instance);
     partial void UpdateQuote(Quote instance);
     partial void DeleteQuote(Quote instance);
+    partial void InsertQuoteNote(QuoteNote instance);
+    partial void UpdateQuoteNote(QuoteNote instance);
+    partial void DeleteQuoteNote(QuoteNote instance);
     partial void InsertQuoteSupplement(QuoteSupplement instance);
     partial void UpdateQuoteSupplement(QuoteSupplement instance);
     partial void DeleteQuoteSupplement(QuoteSupplement instance);
@@ -377,6 +380,14 @@ namespace SingerDispatch
 			get
 			{
 				return this.GetTable<Quote>();
+			}
+		}
+		
+		public System.Data.Linq.Table<QuoteNote> QuoteNotes
+		{
+			get
+			{
+				return this.GetTable<QuoteNote>();
 			}
 		}
 		
@@ -9254,6 +9265,8 @@ namespace SingerDispatch
 		
 		private EntitySet<QuoteCommodity> _QuoteCommodities;
 		
+		private EntitySet<QuoteNote> _QuoteNotes;
+		
 		private EntitySet<QuoteSupplement> _QuoteSupplements;
 		
 		private EntitySet<QuoteStorageItem> _QuoteStorageItems;
@@ -9314,6 +9327,7 @@ namespace SingerDispatch
 		{
 			this._Jobs = new EntitySet<Job>(new Action<Job>(this.attach_Jobs), new Action<Job>(this.detach_Jobs));
 			this._QuoteCommodities = new EntitySet<QuoteCommodity>(new Action<QuoteCommodity>(this.attach_QuoteCommodities), new Action<QuoteCommodity>(this.detach_QuoteCommodities));
+			this._QuoteNotes = new EntitySet<QuoteNote>(new Action<QuoteNote>(this.attach_QuoteNotes), new Action<QuoteNote>(this.detach_QuoteNotes));
 			this._QuoteSupplements = new EntitySet<QuoteSupplement>(new Action<QuoteSupplement>(this.attach_QuoteSupplements), new Action<QuoteSupplement>(this.detach_QuoteSupplements));
 			this._QuoteStorageItems = new EntitySet<QuoteStorageItem>(new Action<QuoteStorageItem>(this.attach_QuoteStorageItems), new Action<QuoteStorageItem>(this.detach_QuoteStorageItems));
 			this._QuoteInclusions = new EntitySet<QuoteInclusion>(new Action<QuoteInclusion>(this.attach_QuoteInclusions), new Action<QuoteInclusion>(this.detach_QuoteInclusions));
@@ -9692,6 +9706,19 @@ namespace SingerDispatch
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Quote_QuoteNote", Storage="_QuoteNotes", ThisKey="ID", OtherKey="QuoteID")]
+		public EntitySet<QuoteNote> QuoteNotes
+		{
+			get
+			{
+				return this._QuoteNotes;
+			}
+			set
+			{
+				this._QuoteNotes.Assign(value);
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Quote_QuoteSupplement", Storage="_QuoteSupplements", ThisKey="ID", OtherKey="QuoteID")]
 		public EntitySet<QuoteSupplement> QuoteSupplements
 		{
@@ -9958,6 +9985,18 @@ namespace SingerDispatch
 			entity.Quote = null;
 		}
 		
+		private void attach_QuoteNotes(QuoteNote entity)
+		{
+			this.SendPropertyChanging();
+			entity.Quote = this;
+		}
+		
+		private void detach_QuoteNotes(QuoteNote entity)
+		{
+			this.SendPropertyChanging();
+			entity.Quote = null;
+		}
+		
 		private void attach_QuoteSupplements(QuoteSupplement entity)
 		{
 			this.SendPropertyChanging();
@@ -10004,6 +10043,157 @@ namespace SingerDispatch
 		{
 			this.SendPropertyChanging();
 			entity.Quote = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="")]
+	public partial class QuoteNote : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private long _ID;
+		
+		private System.Nullable<long> _QuoteID;
+		
+		private string _Note;
+		
+		private EntityRef<Quote> _Quote;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDChanging(long value);
+    partial void OnIDChanged();
+    partial void OnQuoteIDChanging(System.Nullable<long> value);
+    partial void OnQuoteIDChanged();
+    partial void OnNoteChanging(string value);
+    partial void OnNoteChanged();
+    #endregion
+		
+		public QuoteNote()
+		{
+			this._Quote = default(EntityRef<Quote>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, IsPrimaryKey=true, IsDbGenerated=true)]
+		public long ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this.OnIDChanging(value);
+					this.SendPropertyChanging();
+					this._ID = value;
+					this.SendPropertyChanged("ID");
+					this.OnIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_QuoteID")]
+		public System.Nullable<long> QuoteID
+		{
+			get
+			{
+				return this._QuoteID;
+			}
+			set
+			{
+				if ((this._QuoteID != value))
+				{
+					if (this._Quote.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnQuoteIDChanging(value);
+					this.SendPropertyChanging();
+					this._QuoteID = value;
+					this.SendPropertyChanged("QuoteID");
+					this.OnQuoteIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Note")]
+		public string Note
+		{
+			get
+			{
+				return this._Note;
+			}
+			set
+			{
+				if ((this._Note != value))
+				{
+					this.OnNoteChanging(value);
+					this.SendPropertyChanging();
+					this._Note = value;
+					this.SendPropertyChanged("Note");
+					this.OnNoteChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Quote_QuoteNote", Storage="_Quote", ThisKey="QuoteID", OtherKey="ID", IsForeignKey=true)]
+		public Quote Quote
+		{
+			get
+			{
+				return this._Quote.Entity;
+			}
+			set
+			{
+				Quote previousValue = this._Quote.Entity;
+				if (((previousValue != value) 
+							|| (this._Quote.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Quote.Entity = null;
+						previousValue.QuoteNotes.Remove(this);
+					}
+					this._Quote.Entity = value;
+					if ((value != null))
+					{
+						value.QuoteNotes.Add(this);
+						this._QuoteID = value.ID;
+					}
+					else
+					{
+						this._QuoteID = default(Nullable<long>);
+					}
+					this.SendPropertyChanged("Quote");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
 		}
 	}
 	

@@ -48,14 +48,14 @@
                     <Label Grid.Row="0" Grid.Column="0">Load:</Label>
                     <ComboBox Name="cmbLoads" Grid.Column="1" SelectedItem="{Binding Load}" ItemTemplate="{StaticResource SimpleNameTemplate}" Margin="4,3,2,3" />
 
-                    <Label Grid.Row="1" Grid.Column="0">Permit #:</Label>
-                    <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Reference}" />
-                    
+                    <Label Grid.Row="1" Grid.Column="0">Issuer:</Label>
+                    <ComboBox Name="cmbCompanies" Grid.Row="1" Grid.Column="1" SelectedItem="{Binding IssuingCompany}" IsEditable="True" TextSearch.TextPath="Name" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectionChanged="IssuingCompany_SelectionChanged" />
+
                     <Label Grid.Row="2" Grid.Column="0">Permit type:</Label>
-                    <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding PermitType}" />
+                    <ComboBox Name="cmbPermitTypes" Grid.Row="2" Grid.Column="1" SelectedItem="{Binding PermitType}" ItemTemplate="{StaticResource SimpleNameTemplate}" IsEditable="True" TextSearch.TextPath="Name" />
                     
-                    <Label Grid.Row="3" Grid.Column="0">Issuer:</Label>
-                    <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Issuer}" />
+                    <Label Grid.Row="3" Grid.Column="0">Permit #:</Label>
+                    <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Reference}" />
 
                     <Label Grid.Row="4" Grid.Column="0">Conditions:</Label>
                     <TextBox Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Conditions}" />

@@ -61,6 +61,9 @@
             <TabItem Header="Conditions" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, Path=SelectedQuote}">
                 <Quotes:QuoteConditionsControl SelectedCompany="{Binding SelectedCompany}" SelectedQuote="{Binding SelectedQuote}" />                
             </TabItem>
+            <TabItem Header="Additional Notes" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, Path=SelectedQuote}">
+                <Quotes:QuoteNotesControl SelectedCompany="{Binding SelectedCompany}" SelectedQuote="{Binding SelectedQuote}" />
+            </TabItem>
         </TabControl>
     </DockPanel>
 </Panels:QuoteUserControl>

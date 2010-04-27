@@ -405,11 +405,20 @@
       <Association Name="Quote_QuoteStorageItem" Member="QuoteStorageItems" ThisKey="ID" OtherKey="QuoteID" Type="QuoteStorageItem" />
       <Association Name="Quote_QuoteInclusion" Member="QuoteInclusions" ThisKey="ID" OtherKey="QuoteID" Type="QuoteInclusion" />
       <Association Name="Quote_QuoteCondition" Member="QuoteConditions" ThisKey="ID" OtherKey="QuoteID" Type="QuoteCondition" />
+      <Association Name="Quote_QuoteNote" Member="QuoteNotes" ThisKey="ID" OtherKey="QuoteID" Type="QuoteNote" />
       <Association Name="Employee_Quote" Member="Employee" ThisKey="EmployeeID" OtherKey="ID" Type="Employee" IsForeignKey="true" />
       <Association Name="Company_Quote" Member="Company" ThisKey="CompanyID" OtherKey="ID" Type="Company" IsForeignKey="true" />
       <Association Name="Company_Quote1" Member="CareOfCompany" ThisKey="CareOfCompanyID" OtherKey="ID" Type="Company" IsForeignKey="true" />
       <Association Name="Address_Quote" Member="BillingAddress" ThisKey="AddressID" OtherKey="ID" Type="Address" IsForeignKey="true" />
-      <Association Name="Contact_Quote" Member="Contact" ThisKey="ContactID" OtherKey="ID" Type="Contact" IsForeignKey="true" />
+      <Association Name="Contact_Quote" Member="Contact" ThisKey="ContactID" OtherKey="ID" Type="Contact" IsForeignKey="true" />      
+    </Type>
+  </Table>
+  <Table Name="" Member="QuoteNotes">
+    <Type Name="QuoteNote">
+      <Column Name="ID" Type="System.Int64" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="QuoteID" Type="System.Int64" CanBeNull="true" />
+      <Column Name="Note" Type="System.String" CanBeNull="true" />
+      <Association Name="Quote_QuoteNote" Member="Quote" ThisKey="QuoteID" OtherKey="ID" IsForeignKey="true" Type="Quote" />
     </Type>
   </Table>
   <Table Name="" Member="QuoteSupplements">

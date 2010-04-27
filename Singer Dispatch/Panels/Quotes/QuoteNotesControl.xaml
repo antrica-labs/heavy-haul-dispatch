@@ -1,0 +1,44 @@
+﻿<Panels:QuoteUserControl x:Class="SingerDispatch.Panels.Quotes.QuoteNotesControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:Panels="clr-namespace:SingerDispatch.Panels"
+             mc:Ignorable="d" d:DesignHeight="650" d:DesignWidth="780">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/SingerDispatchDictionary.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <DockPanel>
+        <StackPanel DockPanel.Dock="Bottom">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+
+                <Button Style="{StaticResource Horizontal}" Grid.Column="0" Click="NewNote_Click">New note</Button>
+                <Button Style="{StaticResource Horizontal}" Grid.Column="1" Click="DuplicateNote_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgNotes, Path=SelectedItem}">Duplicate note</Button>
+                <Button Style="{StaticResource HorizontalEnd}" Grid.Column="3" Click="RemoveNote_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgNotes, Path=SelectedItem}">Remove note</Button>
+            </Grid>
+
+            <GroupBox Header="Note Details" DataContext="{Binding ElementName=dgNotes, Path=SelectedItem}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgNotes, Path=SelectedItem}">
+                <StackPanel>
+                    <Label>Note:</Label>
+                    <TextBox Name="txtNote" Style="{StaticResource MultiLine}" Text="{Binding Note}" />
+                </StackPanel>                    
+            </GroupBox>
+        </StackPanel>
+
+        <DataGrid Name="dgNotes" Style="{StaticResource ListDisplay}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Note" Binding="{Binding Note}"/>                
+            </DataGrid.Columns>
+        </DataGrid>
+    </DockPanel>    
+</Panels:QuoteUserControl>

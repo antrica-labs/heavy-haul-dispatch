@@ -73,5 +73,10 @@ namespace SingerDispatch.Panels.Jobs
 
             dgPermits.SelectedItem = null;
         }
+
+        private void IssuingCompany_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }

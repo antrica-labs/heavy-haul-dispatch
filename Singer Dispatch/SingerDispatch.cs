@@ -139,6 +139,11 @@ namespace SingerDispatch
                 copy.QuoteConditions.Add(item.Duplicate());
             }
 
+            foreach (var item in QuoteNotes)
+            {
+                copy.QuoteNotes.Add(item.Duplicate());
+            }
+
             return copy;
         }
 
@@ -252,6 +257,14 @@ namespace SingerDispatch
             copy.CostPerItem = CostPerItem;
 
             return copy;
+        }
+    }
+
+    partial class QuoteNote
+    {
+        public QuoteNote Duplicate()
+        {           
+            return new QuoteNote { Note = this.Note };
         }
     }
 
