@@ -622,7 +622,7 @@ namespace SingerDispatch.Printing.Documents
             var rows = new StringBuilder();
             foreach (var item in quote.QuoteNotes)
             {
-                rows.Append(string.Format(line, item.Note.Replace("\n", "<br>")));
+                rows.Append(string.Format(line, item.Note.Replace("\n", "<br>").Replace("  ", "&nbsp;")));
             }            
 
             return string.Format(html, rows.ToString());
