@@ -47,7 +47,7 @@
                         <TextBox Name="txtName" Text="{Binding Name}" />
                         
                         <Label>Project description:</Label>
-                        <TextBox Style="{StaticResource MultiLine}" VerticalScrollBarVisibility="Hidden" Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}"/>
+                        <TextBox Style="{StaticResource MultiLine}" VerticalScrollBarVisibility="Hidden" Text="{Binding Description}"/>
 
                         <Label>Care of:</Label>
                         <ComboBox Name="CmbCareOfCompanies" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectedItem="{Binding CareOfCompany}" TextSearch.TextPath="Name" IsEditable="True" SelectionChanged="CmbCareOfCompanies_SelectionChanged" />

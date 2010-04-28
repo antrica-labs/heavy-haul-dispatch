@@ -33,6 +33,7 @@ namespace SingerDispatch.Printing.Documents
             if (quote.QuoteSupplements.Count > 0)
                 content.Append(GetSuppluments(quote.QuoteSupplements.ToList()));
 
+            content.Append(GetNotes(quote));
             content.Append(GetConditions(quote));
             content.Append(GetSignoff(quote));
             content.Append("</body>");
@@ -212,9 +213,20 @@ namespace SingerDispatch.Printing.Documents
                     {
                         margin-bottom: 20px;
                     }
+                   
+                    div#notes
+                    {
+                        margin-bottom: 20px;
+                    }
 
 
                     /****** GENERAL STYLES *****/
+                    span.heading
+                    {
+                        font-weight: bold;
+                        display: block;
+                    }
+
                     p
                     {
                         margin-bottom: 15px;
@@ -428,7 +440,7 @@ namespace SingerDispatch.Printing.Documents
                         <tr><td class=""fieldname"">Re:</td><td>%SUBJECT%</td></tr>
                     </table>
 
-                    <p>As per your quotation of %OPEN_DATE% we are pleased to submit the following proposal, valid until %CLOSING_DATE%:</p>
+                    <p>As per your quotation request we are pleased to submit the following proposal, valid until %CLOSING_DATE%:</p>
                 </div>
             ";
 
@@ -589,6 +601,31 @@ namespace SingerDispatch.Printing.Documents
             content = content.Replace("%TABLE_BODY%", count > 0 ? rows.ToString() : "");
 
             return content;
+        }
+
+        private static string GetNotes(Quote quote)
+        {
+            if (quote.QuoteNotes.Count < 1)
+                return "";
+
+            const string html = @"
+                <div id=""notes"">
+                    <span>Notes:</span>
+
+                    <ol class=""conditions"">
+                        {0}
+                    </ol>
+                </div>
+            ";
+            const string line = "<li>{0}</li>";
+
+            var rows = new StringBuilder();
+            foreach (var item in quote.QuoteNotes)
+            {
+                rows.Append(string.Format(line, item.Note.Replace("\n", "<br>")));
+            }            
+
+            return string.Format(html, rows.ToString());
         }
 
         private static string GetConditions(Quote quote)

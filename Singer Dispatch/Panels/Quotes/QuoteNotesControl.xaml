@@ -30,14 +30,14 @@
             <GroupBox Header="Note Details" DataContext="{Binding ElementName=dgNotes, Path=SelectedItem}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgNotes, Path=SelectedItem}">
                 <StackPanel>
                     <Label>Note:</Label>
-                    <TextBox Name="txtNote" Style="{StaticResource MultiLine}" Text="{Binding Note}" />
+                    <TextBox Name="txtNote" Style="{StaticResource MultiLine}" Height="60" Text="{Binding Note, UpdateSourceTrigger=PropertyChanged}" />
                 </StackPanel>                    
             </GroupBox>
         </StackPanel>
 
         <DataGrid Name="dgNotes" Style="{StaticResource ListDisplay}">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Note" Binding="{Binding Note}"/>                
+                <DataGridTextColumn Header="Note" Binding="{Binding Note}" />                
             </DataGrid.Columns>
         </DataGrid>
     </DockPanel>    
