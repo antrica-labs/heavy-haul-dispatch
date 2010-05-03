@@ -143,6 +143,13 @@ namespace SingerDispatch
                 return;               
             }
             
+            // Attempt to save anything in the common data context
+            try
+            {
+                SingerConstants.CommonDataContext.SubmitChanges();
+            }
+            catch { }
+
             CollapseAllOtherNavigationExpanders(expander);
 
             UserControl panel;
