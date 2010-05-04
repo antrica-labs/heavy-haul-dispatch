@@ -76,7 +76,16 @@ namespace SingerDispatch.Panels.Jobs
 
         private void IssuingCompany_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
+            if (e.AddedItems.Count > 0)
+            {
+                var company = (Company)e.AddedItems[0];
 
+                cmbPermitTypes.ItemsSource = from st in Database.Services where st.Company == company select st.ServiceType;
+            }
+            else
+            {
+                cmbPermitTypes.ItemsSource = null;
+            }
         }
     }
 }

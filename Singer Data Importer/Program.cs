@@ -160,7 +160,8 @@ namespace SingerDispatch.Importer
             List<Condition> conditions;
             List<ContactType> contactTypes;
             List<ExtraEquipmentType> extraEquipmentTypes;
-            
+            List<PermitType> permitTypes;
+                        
             var datasource = ConfigurationManager.ConnectionStrings["OldDBConnectionParameters"].ConnectionString;
             var provider = ConfigurationManager.ConnectionStrings["OldDBConnectionParameters"].ProviderName;
             var connectionString = String.Format("Provider={0};{1}", provider, datasource);
@@ -174,6 +175,7 @@ namespace SingerDispatch.Importer
                 inclusions = ImportInclusions(connection);
                 conditions = ImportConditions(connection);
                 extraEquipmentTypes = ImportExtraEquipmentTypes(connection);
+                permitTypes = ImportPermitTypes(connection);
 
                 Console.Write("Importing companies");
                 companies = ImportCompanies(connection);                
@@ -188,6 +190,7 @@ namespace SingerDispatch.Importer
             context.Inclusions.InsertAllOnSubmit(inclusions);
             context.Conditions.InsertAllOnSubmit(conditions);
             context.ExtraEquipmentTypes.InsertAllOnSubmit(extraEquipmentTypes);
+            context.PermitTypes.InsertAllOnSubmit(permitTypes);
             context.Companies.InsertAllOnSubmit(companies);
 
             context.SubmitChanges();
@@ -275,6 +278,27 @@ namespace SingerDispatch.Importer
                         var name = reader["dispatchExtraItemType"] == DBNull.Value ? null : (string)reader["dispatchExtraItemType"];
 
                         types.Add(new ExtraEquipmentType { Name = name });
+                    }
+                }
+            }
+
+            return types;
+        }
+
+        private List<PermitType> ImportPermitTypes(OleDbConnection connection)
+        {
+            var types = new List<PermitType>();
+
+            const string select = "SELECT * FROM tbl_PermitType";
+            using (var command = new OleDbCommand(select, connection))
+            {
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        var name = reader["permitType"] == DBNull.Value ? null : (string)reader["permitType"];
+
+                        types.Add(new PermitType { Name = name });
                     }
                 }
             }

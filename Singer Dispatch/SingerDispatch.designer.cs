@@ -89,6 +89,9 @@ namespace SingerDispatch
     partial void InsertPermit(Permit instance);
     partial void UpdatePermit(Permit instance);
     partial void DeletePermit(Permit instance);
+    partial void InsertPermitType(PermitType instance);
+    partial void UpdatePermitType(PermitType instance);
+    partial void DeletePermitType(PermitType instance);
     partial void InsertProvincesAndState(ProvincesAndState instance);
     partial void UpdateProvincesAndState(ProvincesAndState instance);
     partial void DeleteProvincesAndState(ProvincesAndState instance);
@@ -356,6 +359,14 @@ namespace SingerDispatch
 			get
 			{
 				return this.GetTable<Permit>();
+			}
+		}
+		
+		public System.Data.Linq.Table<PermitType> PermitTypes
+		{
+			get
+			{
+				return this.GetTable<PermitType>();
 			}
 		}
 		
@@ -8048,9 +8059,9 @@ namespace SingerDispatch
 		
 		private System.Nullable<long> _LoadID;
 		
-		private string _Issuer;
+		private System.Nullable<long> _PermitTypeID;
 		
-		private string _PermitType;
+		private string _Issuer;
 		
 		private string _Reference;
 		
@@ -8066,6 +8077,8 @@ namespace SingerDispatch
 		
 		private EntityRef<Load> _Load;
 		
+		private EntityRef<PermitType> _PermitType;
+		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -8076,10 +8089,10 @@ namespace SingerDispatch
     partial void OnJobIDChanged();
     partial void OnLoadIDChanging(System.Nullable<long> value);
     partial void OnLoadIDChanged();
+    partial void OnPermitTypeIDChanging(System.Nullable<long> value);
+    partial void OnPermitTypeIDChanged();
     partial void OnIssuerChanging(string value);
     partial void OnIssuerChanged();
-    partial void OnPermitTypeChanging(string value);
-    partial void OnPermitTypeChanged();
     partial void OnReferenceChanging(string value);
     partial void OnReferenceChanged();
     partial void OnConditionsChanging(string value);
@@ -8096,6 +8109,7 @@ namespace SingerDispatch
 		{
 			this._Job = default(EntityRef<Job>);
 			this._Load = default(EntityRef<Load>);
+			this._PermitType = default(EntityRef<PermitType>);
 			OnCreated();
 		}
 		
@@ -8167,6 +8181,30 @@ namespace SingerDispatch
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PermitTypeID")]
+		public System.Nullable<long> PermitTypeID
+		{
+			get
+			{
+				return this._PermitTypeID;
+			}
+			set
+			{
+				if ((this._PermitTypeID != value))
+				{
+					if (this._PermitType.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnPermitTypeIDChanging(value);
+					this.SendPropertyChanging();
+					this._PermitTypeID = value;
+					this.SendPropertyChanged("PermitTypeID");
+					this.OnPermitTypeIDChanged();
+				}
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Issuer")]
 		public string Issuer
 		{
@@ -8183,26 +8221,6 @@ namespace SingerDispatch
 					this._Issuer = value;
 					this.SendPropertyChanged("Issuer");
 					this.OnIssuerChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PermitType")]
-		public string PermitType
-		{
-			get
-			{
-				return this._PermitType;
-			}
-			set
-			{
-				if ((this._PermitType != value))
-				{
-					this.OnPermitTypeChanging(value);
-					this.SendPropertyChanging();
-					this._PermitType = value;
-					this.SendPropertyChanged("PermitType");
-					this.OnPermitTypeChanged();
 				}
 			}
 		}
@@ -8375,6 +8393,40 @@ namespace SingerDispatch
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="PermitType_Permit", Storage="_PermitType", ThisKey="PermitTypeID", OtherKey="ID", IsForeignKey=true)]
+		public PermitType PermitType
+		{
+			get
+			{
+				return this._PermitType.Entity;
+			}
+			set
+			{
+				PermitType previousValue = this._PermitType.Entity;
+				if (((previousValue != value) 
+							|| (this._PermitType.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._PermitType.Entity = null;
+						previousValue.Permits.Remove(this);
+					}
+					this._PermitType.Entity = value;
+					if ((value != null))
+					{
+						value.Permits.Add(this);
+						this._PermitTypeID = value.ID;
+					}
+					else
+					{
+						this._PermitTypeID = default(Nullable<long>);
+					}
+					this.SendPropertyChanged("PermitType");
+				}
+			}
+		}
+		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -8393,6 +8445,120 @@ namespace SingerDispatch
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="")]
+	public partial class PermitType : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private long _ID;
+		
+		private string _Name;
+		
+		private EntitySet<Permit> _Permits;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDChanging(long value);
+    partial void OnIDChanged();
+    partial void OnNameChanging(string value);
+    partial void OnNameChanged();
+    #endregion
+		
+		public PermitType()
+		{
+			this._Permits = new EntitySet<Permit>(new Action<Permit>(this.attach_Permits), new Action<Permit>(this.detach_Permits));
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, IsPrimaryKey=true, IsDbGenerated=true)]
+		public long ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this.OnIDChanging(value);
+					this.SendPropertyChanging();
+					this._ID = value;
+					this.SendPropertyChanged("ID");
+					this.OnIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name")]
+		public string Name
+		{
+			get
+			{
+				return this._Name;
+			}
+			set
+			{
+				if ((this._Name != value))
+				{
+					this.OnNameChanging(value);
+					this.SendPropertyChanging();
+					this._Name = value;
+					this.SendPropertyChanged("Name");
+					this.OnNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="PermitType_Permit", Storage="_Permits", ThisKey="ID", OtherKey="PermitTypeID")]
+		public EntitySet<Permit> Permits
+		{
+			get
+			{
+				return this._Permits;
+			}
+			set
+			{
+				this._Permits.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_Permits(Permit entity)
+		{
+			this.SendPropertyChanging();
+			entity.PermitType = this;
+		}
+		
+		private void detach_Permits(Permit entity)
+		{
+			this.SendPropertyChanging();
+			entity.PermitType = null;
 		}
 	}
 	

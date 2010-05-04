@@ -333,8 +333,8 @@
       <Column Name="ID" Type="System.Int64" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="JobID" Type="System.Int64" CanBeNull="true" />
       <Column Name="LoadID" Type="System.Int64" CanBeNull="true" />
-      <Column Name="Issuer" Type="System.String" CanBeNull="true" />
-      <Column Name="PermitType" Type="System.String" CanBeNull="true" />
+      <Column Name="PermitTypeID" Type="System.Int64" CanBeNull="true" />
+      <Column Name="Issuer" Type="System.String" CanBeNull="true" />      
       <Column Name="Reference" Type="System.String" CanBeNull="true" />
       <Column Name="Conditions" Type="System.String" CanBeNull="true" />
       <Column Name="StartDate" Type="System.DateTime" CanBeNull="true" />
@@ -342,6 +342,14 @@
       <Column Name="Cost" Type="System.Decimal" CanBeNull="true" />      
       <Association Name="Job_Permit" Member="Job" ThisKey="JobID" OtherKey="ID" Type="Job" IsForeignKey="true" />
       <Association Name="Load_Permit" Member="Load" ThisKey="LoadID" OtherKey="ID" Type="Load" IsForeignKey="true" />
+      <Association Name="PermitType_Permit" Member="PermitType" ThisKey="PermitTypeID" OtherKey="ID" Type="PermitType" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="" Member="PermitTypes">
+    <Type Name="PermitType">
+      <Column Name="ID" Type="System.Int64" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" CanBeNull="true" />
+      <Association Name="PermitType_Permit" Member="Permits" ThisKey="ID" OtherKey="PermitTypeID" Type="Permit" />
     </Type>
   </Table>
   <Table Name="" Member="ProvincesAndStates">
