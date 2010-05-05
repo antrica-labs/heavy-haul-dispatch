@@ -51,7 +51,7 @@ namespace SingerDispatch.Panels.Companies
             if (newValue != null)
             {
                 var addressQuery = from a in Database.Addresses where a.Company == newValue select a;
-                var contactQuery = from c in Database.Contacts where addressQuery.Contains(c.Address) select c;
+                var contactQuery = from c in Database.Contacts where addressQuery.Contains(c.Address) orderby c.FirstName, c.LastName select c;
 
                 dgAddresses.ItemsSource = new ObservableCollection<Address>(addressQuery);
                 //dgContacts.ItemsSource = new ObservableCollection<Contact>(contactQuery);
@@ -91,7 +91,7 @@ namespace SingerDispatch.Panels.Companies
             var control = (DataGrid)sender;
             var address = (Address)control.SelectedItem;
 
-            dgContacts.ItemsSource = (address == null) ? null : new ObservableCollection<Contact>(from c in Database.Contacts where c.AddressID == address.ID orderby c.LastName select c);
+            dgContacts.ItemsSource = (address == null) ? null : new ObservableCollection<Contact>(from c in Database.Contacts where c.Address == address orderby c.FirstName, c.LastName select c);
         }
 
         private void Contact_SelectionChanged(object sender, SelectionChangedEventArgs e)

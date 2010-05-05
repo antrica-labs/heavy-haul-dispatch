@@ -34,11 +34,11 @@ namespace SingerDispatch.Panels.Jobs
 
             if (SelectedJob != null && SelectedJob.CareOfCompanyID != null)
             {
-                contacts = (from c in Database.Contacts where c.Address.CompanyID == SelectedCompany.ID || c.Address.CompanyID == SelectedJob.CareOfCompanyID select c).ToList();
+                contacts = (from c in Database.Contacts where c.Address.CompanyID == SelectedCompany.ID || c.Address.CompanyID == SelectedJob.CareOfCompanyID orderby c.FirstName, c.LastName select c).ToList();
             }
             else if (SelectedJob != null)
             {
-                contacts = (from c in Database.Contacts where c.Address.CompanyID == SelectedCompany.ID select c).ToList();
+                contacts = (from c in Database.Contacts where c.Address.CompanyID == SelectedCompany.ID orderby c.FirstName, c.LastName select c).ToList();
             }
 
             cmbLoadingContacts.ItemsSource = contacts;

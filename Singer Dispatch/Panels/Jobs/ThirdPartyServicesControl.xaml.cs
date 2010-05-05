@@ -41,7 +41,7 @@ namespace SingerDispatch.Panels.Jobs
                 cmbServiceTypes.ItemsSource = from st in Database.Services where st.Company == company select st.ServiceType;
 
                 var addressQuery = from a in Database.Addresses where a.Company == company select a;                
-                cmbContacts.ItemsSource = from c in Database.Contacts where addressQuery.Contains(c.Address) select c;
+                cmbContacts.ItemsSource = from c in Database.Contacts where addressQuery.Contains(c.Address) orderby c.FirstName, c.LastName select c;
             }
             else
             {

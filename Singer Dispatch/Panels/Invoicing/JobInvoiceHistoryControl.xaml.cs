@@ -92,7 +92,7 @@ namespace SingerDispatch.Panels.Invoicing
                 var addressQuery = from a in Database.Addresses where a.Company == SelectedJob.Company || a.Company == SelectedJob.CareOfCompany select a;
 
                 CmbAddresses.ItemsSource = addressQuery.ToList();
-                CmbContacts.ItemsSource = (from c in Database.Contacts where addressQuery.Contains(c.Address) select c).ToList();
+                CmbContacts.ItemsSource = (from c in Database.Contacts where addressQuery.Contains(c.Address) orderby c.FirstName, c.LastName select c).ToList();
             }
             else
             {

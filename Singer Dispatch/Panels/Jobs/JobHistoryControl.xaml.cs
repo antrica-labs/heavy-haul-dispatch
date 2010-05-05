@@ -98,11 +98,11 @@ namespace SingerDispatch.Panels.Jobs
             }
             else if (SelectedJob.CareOfCompanyID != null)
             {
-                contacts = (from c in Database.Contacts where c.Address.CompanyID == SelectedCompany.ID || c.Address.CompanyID == SelectedJob.CareOfCompanyID select c).ToList();
+                contacts = (from c in Database.Contacts where c.Address.CompanyID == SelectedCompany.ID || c.Address.CompanyID == SelectedJob.CareOfCompanyID orderby c.FirstName, c.LastName select c).ToList();
             }
             else
             {
-                contacts = (from c in Database.Contacts where c.Address.CompanyID == SelectedCompany.ID select c).ToList();
+                contacts = (from c in Database.Contacts where c.Address.CompanyID == SelectedCompany.ID orderby c.FirstName, c.LastName select c).ToList();
             }
 
             DgJobContacts.ItemsSource = null;
