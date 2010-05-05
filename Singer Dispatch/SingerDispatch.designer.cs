@@ -149,6 +149,9 @@ namespace SingerDispatch
     partial void InsertDispatch(Dispatch instance);
     partial void UpdateDispatch(Dispatch instance);
     partial void DeleteDispatch(Dispatch instance);
+    partial void InsertOutOfProvinceTravel(OutOfProvinceTravel instance);
+    partial void UpdateOutOfProvinceTravel(OutOfProvinceTravel instance);
+    partial void DeleteOutOfProvinceTravel(OutOfProvinceTravel instance);
     partial void InsertTrailerCombination(TrailerCombination instance);
     partial void UpdateTrailerCombination(TrailerCombination instance);
     partial void DeleteTrailerCombination(TrailerCombination instance);
@@ -519,6 +522,14 @@ namespace SingerDispatch
 			get
 			{
 				return this.GetTable<Dispatch>();
+			}
+		}
+		
+		public System.Data.Linq.Table<OutOfProvinceTravel> OutOfProvinceTravels
+		{
+			get
+			{
+				return this.GetTable<OutOfProvinceTravel>();
 			}
 		}
 		
@@ -13851,6 +13862,8 @@ namespace SingerDispatch
 		
 		private System.Nullable<long> _RateID;
 		
+		private EntitySet<OutOfProvinceTravel> _OutOfProvinceTravels;
+		
 		private EntityRef<Equipment> _Equipment;
 		
 		private EntityRef<Job> _Job;
@@ -13895,6 +13908,7 @@ namespace SingerDispatch
 		
 		public Dispatch()
 		{
+			this._OutOfProvinceTravels = new EntitySet<OutOfProvinceTravel>(new Action<OutOfProvinceTravel>(this.attach_OutOfProvinceTravels), new Action<OutOfProvinceTravel>(this.detach_OutOfProvinceTravels));
 			this._Equipment = default(EntityRef<Equipment>);
 			this._Job = default(EntityRef<Job>);
 			this._Load = default(EntityRef<Load>);
@@ -14183,6 +14197,19 @@ namespace SingerDispatch
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Dispatch_OutOfProvinceTravel", Storage="_OutOfProvinceTravels", ThisKey="ID", OtherKey="DispatchID")]
+		public EntitySet<OutOfProvinceTravel> OutOfProvinceTravels
+		{
+			get
+			{
+				return this._OutOfProvinceTravels;
+			}
+			set
+			{
+				this._OutOfProvinceTravels.Assign(value);
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Equipment_Dispatch", Storage="_Equipment", ThisKey="EquipmentID", OtherKey="ID", IsForeignKey=true)]
 		public Equipment Equipment
 		{
@@ -14349,6 +14376,193 @@ namespace SingerDispatch
 						this._EmployeeID = default(Nullable<long>);
 					}
 					this.SendPropertyChanged("Employee");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_OutOfProvinceTravels(OutOfProvinceTravel entity)
+		{
+			this.SendPropertyChanging();
+			entity.Dispatch = this;
+		}
+		
+		private void detach_OutOfProvinceTravels(OutOfProvinceTravel entity)
+		{
+			this.SendPropertyChanging();
+			entity.Dispatch = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="")]
+	public partial class OutOfProvinceTravel : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private long _ID;
+		
+		private System.Nullable<long> _DispatchID;
+		
+		private System.Nullable<long> _ProvinceStateID;
+		
+		private System.Nullable<double> _Distance;
+		
+		private EntityRef<Dispatch> _Dispatch;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDChanging(long value);
+    partial void OnIDChanged();
+    partial void OnDispatchIDChanging(System.Nullable<long> value);
+    partial void OnDispatchIDChanged();
+    partial void OnProvinceStateIDChanging(System.Nullable<long> value);
+    partial void OnProvinceStateIDChanged();
+    partial void OnDistanceChanging(System.Nullable<double> value);
+    partial void OnDistanceChanged();
+    #endregion
+		
+		public OutOfProvinceTravel()
+		{
+			this._Dispatch = default(EntityRef<Dispatch>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, IsPrimaryKey=true, IsDbGenerated=true)]
+		public long ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this.OnIDChanging(value);
+					this.SendPropertyChanging();
+					this._ID = value;
+					this.SendPropertyChanged("ID");
+					this.OnIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DispatchID")]
+		public System.Nullable<long> DispatchID
+		{
+			get
+			{
+				return this._DispatchID;
+			}
+			set
+			{
+				if ((this._DispatchID != value))
+				{
+					if (this._Dispatch.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnDispatchIDChanging(value);
+					this.SendPropertyChanging();
+					this._DispatchID = value;
+					this.SendPropertyChanged("DispatchID");
+					this.OnDispatchIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ProvinceStateID")]
+		public System.Nullable<long> ProvinceStateID
+		{
+			get
+			{
+				return this._ProvinceStateID;
+			}
+			set
+			{
+				if ((this._ProvinceStateID != value))
+				{
+					this.OnProvinceStateIDChanging(value);
+					this.SendPropertyChanging();
+					this._ProvinceStateID = value;
+					this.SendPropertyChanged("ProvinceStateID");
+					this.OnProvinceStateIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Distance")]
+		public System.Nullable<double> Distance
+		{
+			get
+			{
+				return this._Distance;
+			}
+			set
+			{
+				if ((this._Distance != value))
+				{
+					this.OnDistanceChanging(value);
+					this.SendPropertyChanging();
+					this._Distance = value;
+					this.SendPropertyChanged("Distance");
+					this.OnDistanceChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Dispatch_OutOfProvinceTravel", Storage="_Dispatch", ThisKey="DispatchID", OtherKey="ID", IsForeignKey=true)]
+		public Dispatch Dispatch
+		{
+			get
+			{
+				return this._Dispatch.Entity;
+			}
+			set
+			{
+				Dispatch previousValue = this._Dispatch.Entity;
+				if (((previousValue != value) 
+							|| (this._Dispatch.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Dispatch.Entity = null;
+						previousValue.OutOfProvinceTravels.Remove(this);
+					}
+					this._Dispatch.Entity = value;
+					if ((value != null))
+					{
+						value.OutOfProvinceTravels.Add(this);
+						this._DispatchID = value.ID;
+					}
+					else
+					{
+						this._DispatchID = default(Nullable<long>);
+					}
+					this.SendPropertyChanged("Dispatch");
 				}
 			}
 		}

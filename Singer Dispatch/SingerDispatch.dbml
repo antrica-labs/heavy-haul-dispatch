@@ -612,8 +612,18 @@
       <Association Name="Load_Dispatch" Member="Load" ThisKey="LoadID" OtherKey="ID" Type="Load" IsForeignKey="true" />
       <Association Name="Rate_Dispatch" Member="Rate" ThisKey="RateID" OtherKey="ID" Type="Rate" IsForeignKey="true" />
       <Association Name="Employee_Dispatch" Member="Employee" ThisKey="EmployeeID" OtherKey="ID" Type="Employee" IsForeignKey="true" />
+      <Association Name="Dispatch_OutOfProvinceTravel" Member="OutOfProvinceTravels" ThisKey="ID" OtherKey="DispatchID" Type="OutOfProvinceTravel" />
     </Type>
-  </Table> 
+  </Table>
+  <Table Name="" Member="OutOfProvinceTravels">
+    <Type Name="OutOfProvinceTravel">
+      <Column Name="ID" Type="System.Int64" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="DispatchID" Type="System.Int64" CanBeNull="true" />
+      <Column Name="ProvinceStateID" Type="System.Int64" CanBeNull="true" />
+      <Column Name="Distance" Type="System.Double" CanBeNull="true" />
+      <Association Name="Dispatch_OutOfProvinceTravel" Member="Dispatch" ThisKey="DispatchID" OtherKey="ID" Type="Dispatch" IsForeignKey="true" />
+    </Type>
+  </Table>
   <Table Name="" Member="TrailerCombinations">
     <Type Name="TrailerCombination">
       <Column Name="ID" Type="System.Int64" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
