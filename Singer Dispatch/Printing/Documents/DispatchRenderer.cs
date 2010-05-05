@@ -1364,8 +1364,8 @@ namespace SingerDispatch.Printing.Documents
                 var end = (item.EndDate != null) ? item.EndDate.Value.ToString(SingerConstants.PrintedDateFormatString) : "--";
 
                 replacements[0] = start + " to " + end;
-                replacements[1] = item.Issuer;
-                replacements[2] = item.PermitType;
+                replacements[1] = (item.IssuingCompany == null) ? "" : item.IssuingCompany.Name;
+                replacements[2] = (item.PermitType == null) ? "" : item.PermitType.Name;
                 replacements[3] = item.Reference;
 
                 rows.Append(string.Format(row, replacements));

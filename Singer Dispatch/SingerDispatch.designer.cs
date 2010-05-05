@@ -1939,6 +1939,8 @@ namespace SingerDispatch
 		
 		private EntitySet<Job> _CareOfJobs;
 		
+		private EntitySet<Permit> _Permits;
+		
 		private EntitySet<Quote> _Quotes;
 		
 		private EntitySet<Quote> _CareOfQuotes;
@@ -1985,6 +1987,7 @@ namespace SingerDispatch
 			this._Commodities = new EntitySet<Commodity>(new Action<Commodity>(this.attach_Commodities), new Action<Commodity>(this.detach_Commodities));
 			this._Jobs = new EntitySet<Job>(new Action<Job>(this.attach_Jobs), new Action<Job>(this.detach_Jobs));
 			this._CareOfJobs = new EntitySet<Job>(new Action<Job>(this.attach_CareOfJobs), new Action<Job>(this.detach_CareOfJobs));
+			this._Permits = new EntitySet<Permit>(new Action<Permit>(this.attach_Permits), new Action<Permit>(this.detach_Permits));
 			this._Quotes = new EntitySet<Quote>(new Action<Quote>(this.attach_Quotes), new Action<Quote>(this.detach_Quotes));
 			this._CareOfQuotes = new EntitySet<Quote>(new Action<Quote>(this.attach_CareOfQuotes), new Action<Quote>(this.detach_CareOfQuotes));
 			this._Services = new EntitySet<Service>(new Action<Service>(this.attach_Services), new Action<Service>(this.detach_Services));
@@ -2274,6 +2277,19 @@ namespace SingerDispatch
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Company_Permit", Storage="_Permits", ThisKey="ID", OtherKey="CompanyID")]
+		public EntitySet<Permit> Permits
+		{
+			get
+			{
+				return this._Permits;
+			}
+			set
+			{
+				this._Permits.Assign(value);
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Company_Quote", Storage="_Quotes", ThisKey="ID", OtherKey="CompanyID")]
 		public EntitySet<Quote> Quotes
 		{
@@ -2460,6 +2476,18 @@ namespace SingerDispatch
 		{
 			this.SendPropertyChanging();
 			entity.CareOfCompany = null;
+		}
+		
+		private void attach_Permits(Permit entity)
+		{
+			this.SendPropertyChanging();
+			entity.IssuingCompany = this;
+		}
+		
+		private void detach_Permits(Permit entity)
+		{
+			this.SendPropertyChanging();
+			entity.IssuingCompany = null;
 		}
 		
 		private void attach_Quotes(Quote entity)
@@ -8061,7 +8089,7 @@ namespace SingerDispatch
 		
 		private System.Nullable<long> _PermitTypeID;
 		
-		private string _Issuer;
+		private System.Nullable<long> _CompanyID;
 		
 		private string _Reference;
 		
@@ -8079,6 +8107,8 @@ namespace SingerDispatch
 		
 		private EntityRef<PermitType> _PermitType;
 		
+		private EntityRef<Company> _IssuingCompany;
+		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -8091,8 +8121,8 @@ namespace SingerDispatch
     partial void OnLoadIDChanged();
     partial void OnPermitTypeIDChanging(System.Nullable<long> value);
     partial void OnPermitTypeIDChanged();
-    partial void OnIssuerChanging(string value);
-    partial void OnIssuerChanged();
+    partial void OnCompanyIDChanging(System.Nullable<long> value);
+    partial void OnCompanyIDChanged();
     partial void OnReferenceChanging(string value);
     partial void OnReferenceChanged();
     partial void OnConditionsChanging(string value);
@@ -8110,6 +8140,7 @@ namespace SingerDispatch
 			this._Job = default(EntityRef<Job>);
 			this._Load = default(EntityRef<Load>);
 			this._PermitType = default(EntityRef<PermitType>);
+			this._IssuingCompany = default(EntityRef<Company>);
 			OnCreated();
 		}
 		
@@ -8205,22 +8236,26 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Issuer")]
-		public string Issuer
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CompanyID")]
+		public System.Nullable<long> CompanyID
 		{
 			get
 			{
-				return this._Issuer;
+				return this._CompanyID;
 			}
 			set
 			{
-				if ((this._Issuer != value))
+				if ((this._CompanyID != value))
 				{
-					this.OnIssuerChanging(value);
+					if (this._IssuingCompany.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnCompanyIDChanging(value);
 					this.SendPropertyChanging();
-					this._Issuer = value;
-					this.SendPropertyChanged("Issuer");
-					this.OnIssuerChanged();
+					this._CompanyID = value;
+					this.SendPropertyChanged("CompanyID");
+					this.OnCompanyIDChanged();
 				}
 			}
 		}
@@ -8423,6 +8458,40 @@ namespace SingerDispatch
 						this._PermitTypeID = default(Nullable<long>);
 					}
 					this.SendPropertyChanged("PermitType");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Company_Permit", Storage="_IssuingCompany", ThisKey="CompanyID", OtherKey="ID", IsForeignKey=true)]
+		public Company IssuingCompany
+		{
+			get
+			{
+				return this._IssuingCompany.Entity;
+			}
+			set
+			{
+				Company previousValue = this._IssuingCompany.Entity;
+				if (((previousValue != value) 
+							|| (this._IssuingCompany.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._IssuingCompany.Entity = null;
+						previousValue.Permits.Remove(this);
+					}
+					this._IssuingCompany.Entity = value;
+					if ((value != null))
+					{
+						value.Permits.Add(this);
+						this._CompanyID = value.ID;
+					}
+					else
+					{
+						this._CompanyID = default(Nullable<long>);
+					}
+					this.SendPropertyChanged("IssuingCompany");
 				}
 			}
 		}

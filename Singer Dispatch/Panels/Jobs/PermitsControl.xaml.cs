@@ -21,6 +21,8 @@ namespace SingerDispatch.Panels.Jobs
         private void ControlLoaded(object sender, RoutedEventArgs e)
         {            
             cmbLoads.ItemsSource = (SelectedJob == null) ? null : SelectedJob.Loads.ToList();
+            cmbCompanies.ItemsSource = (SelectedJob == null) ? null : from c in Database.Companies where c.IsVisible == true orderby c.Name select c;
+            cmbPermitTypes.ItemsSource = (SelectedJob == null) ? null : from pt in Database.PermitTypes select pt;
         }
 
         protected override void SelectedJobChanged(Job newValue, Job oldValue)
@@ -72,20 +74,6 @@ namespace SingerDispatch.Panels.Jobs
             ((ObservableCollection<Permit>)dgPermits.ItemsSource).Remove(permit);
 
             dgPermits.SelectedItem = null;
-        }
-
-        private void IssuingCompany_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
-        {
-            if (e.AddedItems.Count > 0)
-            {
-                var company = (Company)e.AddedItems[0];
-
-                cmbPermitTypes.ItemsSource = from st in Database.Services where st.Company == company select st.ServiceType;
-            }
-            else
-            {
-                cmbPermitTypes.ItemsSource = null;
-            }
         }
     }
 }

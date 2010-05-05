@@ -394,7 +394,7 @@ namespace SingerDispatch
             var cp = new Permit();
 
             cp.Load = Load;
-            cp.Issuer = Issuer;
+            cp.IssuingCompany = IssuingCompany;
             cp.PermitType = PermitType;
             cp.Conditions = Conditions;
             cp.Cost = Cost;
