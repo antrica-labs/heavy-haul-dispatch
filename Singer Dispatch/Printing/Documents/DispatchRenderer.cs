@@ -583,9 +583,13 @@ namespace SingerDispatch.Printing.Documents
                     
                     <table class=""departure_info"">
                         <tr>
+                            <td class=""field_name col1_2"">Dispatched By:</td>
+                            <td class=""value col2_2"">{10}</td>
+                        </tr>
+                        <tr>
                             <td class=""field_name col1_2"">Depart Date:</td>
                             <td class=""value col2_2"">{6}</td>
-                        </tr>                
+                        </tr>
                         <tr>                    
                             <td class=""field_name"">Depart From:</td>
                             <td class=""value"">{7}</td>
@@ -607,7 +611,7 @@ namespace SingerDispatch.Printing.Documents
                 </div>
             ";
 
-            var replacements = new object[10];
+            var replacements = new object[11];
 
             replacements[0] = DateTime.Now.ToString(SingerConstants.PrintedDateFormatString);
             replacements[1] = dispatch.Job.Company.Name;
@@ -635,8 +639,8 @@ namespace SingerDispatch.Printing.Documents
             replacements[5] = swampers.ToString();
             replacements[6] = (dispatch.MeetingTime != null) ? dispatch.MeetingTime.Value.ToString(SingerConstants.PrintedDateFormatString) + " " + dispatch.MeetingTime.Value.ToString(SingerConstants.PrintedTimeFormatString) : "";
             replacements[7] = dispatch.DepartingLocation;
-            replacements[8] = dispatch.DepartingUnits;     
-       
+            replacements[8] = dispatch.DepartingUnits;
+            replacements[10] = (dispatch.Job.Employee != null) ? dispatch.Job.Employee.Name : "";
             
             // List any reference numbers given to this job
             var references = new StringBuilder();
