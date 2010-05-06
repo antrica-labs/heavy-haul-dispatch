@@ -3,6 +3,7 @@
                        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
                        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                       xmlns:Local="clr-namespace:SingerDispatch.Panels.Jobs"
                        xmlns:Panels="clr-namespace:SingerDispatch.Panels"
                        Loaded="ControlLoaded" mc:Ignorable="d" d:DesignWidth="780" d:DesignHeight="500">
     <UserControl.Resources>
@@ -14,6 +15,8 @@
             <DataTemplate x:Key="EquipmentNameTemplate">
                 <TextBlock Text="{Binding UnitNumber}" />
             </DataTemplate>
+
+            <ObjectDataProvider ObjectType="{x:Type Local:ProvStateDropList}" x:Key="ProvStateDropList" />
         </ResourceDictionary>
     </UserControl.Resources>
     <DockPanel>
@@ -63,16 +66,16 @@
                     <ComboBox Name="cmbUnits" Grid.Row="3" Grid.Column="1" SelectedItem="{Binding Equipment}" ItemTemplate="{StaticResource EquipmentNameTemplate}" IsEditable="True" TextSearch.TextPath="UnitNumber" />
 
                     <Label Grid.Row="4" Grid.Column="0">Departing units:</Label>
-                    <TextBox Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding DepartingUnits}" />
+                    <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding DepartingUnits}" />
                     
                     <Label Grid.Row="5" Grid.Column="0">Description:</Label>
-                    <TextBox Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Description}" Style="{StaticResource AutoFilled}"/>
+                    <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding Description}" Style="{StaticResource AutoFilled}"/>
 
                     <Label Grid.Row="6" Grid.Column="0">Schedule:</Label>
-                    <TextBox Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Schedule}" Style="{StaticResource MultiLine}" />
+                    <TextBox Grid.Row="6" Grid.Column="1" Text="{Binding Schedule}" Style="{StaticResource MultiLine}" />
 
                     <Label Grid.Row="7" Grid.Column="0">Notes:</Label>
-                    <TextBox Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Notes}" Style="{StaticResource MultiLine}" />
+                    <TextBox Grid.Row="7" Grid.Column="1" Text="{Binding Notes}" Style="{StaticResource MultiLine}" />
 
                     <GroupBox Grid.Column="2" Grid.Row="0" Grid.RowSpan="4" Header="Departure" DataContext="{Binding ElementName=dgDispatches, Path=SelectedItem}" Margin="5,0,0,0">
                         <Grid>
@@ -96,11 +99,32 @@
                             <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding DepartingLocation}" />
                         </Grid>
                     </GroupBox>
+
+                    <GroupBox Grid.Column="2" Grid.Row="4" Grid.RowSpan="4" Header="Out of Province Travel" Margin="5,0,0,0">
+                        <DockPanel>
+                            <Grid DockPanel.Dock="Bottom">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+
+                                <Button Style="{StaticResource Horizontal}" Grid.Column="0" Click="AddTravel_Click">Add</Button>
+                                <Button Style="{StaticResource HorizontalEnd}" Grid.Column="1" Click="RemoveTravel_Click">Remove</Button>
+                            </Grid>
+
+                            <DataGrid Name="dgOutOfProvince" Style="{StaticResource ListDisplay}" IsReadOnly="False">
+                                <DataGrid.Columns>
+                                    <DataGridComboBoxColumn Header="Province" ItemsSource="{Binding Source={StaticResource ProvStateDropList}}" DisplayMemberPath="Name" SelectedItemBinding="{Binding ProvinceOrState}" />                                    
+                                    <DataGridTextColumn Header="Distance" Binding="{Binding Distance, StringFormat={}{0:F2}km}" />
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </DockPanel>
+                    </GroupBox>
                 </Grid>
             </GroupBox>
         </StackPanel>
         
-        <DataGrid Name="dgDispatches" Style="{StaticResource ListDisplay}">
+        <DataGrid Name="dgDispatches" Style="{StaticResource ListDisplay}" SelectionChanged="dgDispatches_SelectionChanged">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Number" Binding="{Binding Number, StringFormat={}{0:D2}}" Width="0.2*" />
                 <DataGridTextColumn Header="Load" Binding="{Binding Load.Name}" Width="0.2*" />

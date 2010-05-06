@@ -17,7 +17,6 @@ namespace SingerDispatch.Panels.Admin
     public partial class TrailerCombinationsControl
     {
         public SingerDispatchDataContext Database { get; set; }
-        public IEnumerable<Rate> Rates { get; set; }
 
         public TrailerCombinationsControl()
         {

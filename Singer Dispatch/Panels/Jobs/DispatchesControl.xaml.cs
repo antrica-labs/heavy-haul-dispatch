@@ -4,6 +4,9 @@ using System.Windows;
 using System.Collections.ObjectModel;
 using SingerDispatch.Database;
 using SingerDispatch.Windows;
+using System.Collections.Generic;
+using System.Windows.Data;
+using SingerDispatch.Controls;
 
 namespace SingerDispatch.Panels.Jobs
 {
@@ -18,7 +21,22 @@ namespace SingerDispatch.Panels.Jobs
         {
             InitializeComponent();
 
-            Database = SingerConstants.CommonDataContext;            
+            Database = SingerConstants.CommonDataContext;
+
+            var provider = (ObjectDataProvider)FindResource("ProvStateDropList");
+
+            if (provider != null)
+            {
+                var regions = from ps in Database.ProvincesAndStates orderby ps.Name select ps;
+                var list = (ProvStateDropList)provider.Data;
+
+                list.Clear();
+
+                foreach (var item in regions)
+                {
+                    list.Add(item);
+                }
+            }
         }
 
         private void ControlLoaded(object sender, RoutedEventArgs e)
@@ -121,5 +139,55 @@ namespace SingerDispatch.Panels.Jobs
 
             ((Dispatch)dgDispatches.SelectedItem).Schedule = load.Schedule;
         }
+
+        private void AddTravel_Click(object sender, RoutedEventArgs e)
+        {
+            var dispatch = (Dispatch)dgDispatches.SelectedItem;
+
+            if (dispatch == null) return;
+
+            var travel = new OutOfProvinceTravel { Dispatch = dispatch };
+            
+            var provider = (ObjectDataProvider)FindResource("ProvStateDropList");
+            if (provider != null)
+            {
+                var list = (ProvStateDropList)provider.Data;
+                travel.ProvinceOrState = list.First();
+            }
+
+            dispatch.OutOfProvinceTravels.Add(travel);
+            ((ObservableCollection<OutOfProvinceTravel>)dgOutOfProvince.ItemsSource).Add(travel);
+
+            dgOutOfProvince.ScrollIntoView(travel);
+            dgOutOfProvince.SelectedItem = travel;
+
+            DataGridHelper.EditFirstColumn(dgOutOfProvince, travel);
+        }
+
+        private void RemoveTravel_Click(object sender, RoutedEventArgs e)
+        {
+            var travel = (OutOfProvinceTravel)dgOutOfProvince.SelectedItem;
+            var dispatch = (Dispatch)dgDispatches.SelectedItem;
+
+            if (travel == null || dispatch == null) return;
+
+            var confirmation = MessageBox.Show(SingerConstants.DefaultRemoveItemMessage, "Delete confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+            if (confirmation != MessageBoxResult.Yes) return;
+
+            dispatch.OutOfProvinceTravels.Remove(travel);
+            ((ObservableCollection<OutOfProvinceTravel>)dgOutOfProvince.ItemsSource).Remove(travel);
+        }
+
+        private void dgDispatches_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {            
+            var dispatch = (Dispatch)dgDispatches.SelectedItem;
+
+            dgOutOfProvince.ItemsSource = (dispatch == null) ? null : new ObservableCollection<OutOfProvinceTravel>(dispatch.OutOfProvinceTravels);
+        }
+    }
+
+    public class ProvStateDropList : ObservableCollection<ProvincesAndState>
+    {
     }
 }

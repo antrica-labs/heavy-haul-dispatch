@@ -14429,6 +14429,8 @@ namespace SingerDispatch
 		
 		private EntityRef<Dispatch> _Dispatch;
 		
+		private EntityRef<ProvincesAndState> _ProvinceOrState;
+		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -14446,6 +14448,7 @@ namespace SingerDispatch
 		public OutOfProvinceTravel()
 		{
 			this._Dispatch = default(EntityRef<Dispatch>);
+			this._ProvinceOrState = default(EntityRef<ProvincesAndState>);
 			OnCreated();
 		}
 		
@@ -14504,6 +14507,10 @@ namespace SingerDispatch
 			{
 				if ((this._ProvinceStateID != value))
 				{
+					if (this._ProvinceOrState.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
 					this.OnProvinceStateIDChanging(value);
 					this.SendPropertyChanging();
 					this._ProvinceStateID = value;
@@ -14563,6 +14570,24 @@ namespace SingerDispatch
 						this._DispatchID = default(Nullable<long>);
 					}
 					this.SendPropertyChanged("Dispatch");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ProvincesAndState_OutOfProvinceTravel", Storage="_ProvinceOrState", ThisKey="ProvinceStateID", OtherKey="ID", IsForeignKey=true)]
+		public ProvincesAndState ProvinceOrState
+		{
+			get
+			{
+				return this._ProvinceOrState.Entity;
+			}
+			set
+			{
+				if ((this._ProvinceOrState.Entity != value))
+				{
+					this.SendPropertyChanging();
+					this._ProvinceOrState.Entity = value;
+					this.SendPropertyChanged("ProvinceOrState");
 				}
 			}
 		}

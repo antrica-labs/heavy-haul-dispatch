@@ -361,6 +361,7 @@
       <Column Name="Name" Type="System.String" CanBeNull="true" />
       <Association Name="ProvincesAndState_Address" Member="Addresses" ThisKey="ID" OtherKey="ProvinceStateID" Type="Address" />
       <Association Name="Country_ProvincesAndState" Member="Country" ThisKey="CountryID" OtherKey="ID" Type="Country" IsForeignKey="true" />
+      <Association Name="ProvinceAndState_OutOfProvinceTravel" Member="OutOfProvinceTravels" ThisKey="ID" OtherKey="ProvinceStateID" Type="OutOfProvinceTravel" />
     </Type>
   </Table>
   <Table Name="" Member="QuoteCommodities">
@@ -622,6 +623,7 @@
       <Column Name="ProvinceStateID" Type="System.Int64" CanBeNull="true" />
       <Column Name="Distance" Type="System.Double" CanBeNull="true" />
       <Association Name="Dispatch_OutOfProvinceTravel" Member="Dispatch" ThisKey="DispatchID" OtherKey="ID" Type="Dispatch" IsForeignKey="true" />
+      <Association Name="ProvincesAndState_OutOfProvinceTravel" Member="ProvinceOrState" ThisKey="ProvinceStateID" OtherKey="ID" Type="ProvincesAndState" IsForeignKey="true" />      
     </Type>
   </Table>
   <Table Name="" Member="TrailerCombinations">
