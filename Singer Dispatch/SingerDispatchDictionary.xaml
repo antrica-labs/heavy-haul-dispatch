@@ -61,7 +61,8 @@
     </Style>
 
     <Style TargetType="TextBox" x:Key="LongText">
-        <Setter Property="Margin" Value="3" />        
+        <Setter Property="Margin" Value="3" />
+        <Setter Property="TextWrapping" Value="Wrap" />
     </Style>
 
     <Style TargetType="TextBox" x:Key="AutoFilled">

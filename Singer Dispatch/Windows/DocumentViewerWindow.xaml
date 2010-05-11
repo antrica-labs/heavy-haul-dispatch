@@ -17,8 +17,9 @@
                     <ColumnDefinition />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
-                
+                                
                 <Button Grid.Column="1" Margin="4" Click="PDF_Click">Save to PDF</Button>
+                <CheckBox Grid.Column="2" HorizontalAlignment="Right" Margin="0,7,6,-1" Checked="ApplyMetric_Checked" Unchecked="ApplyMetric_Unchecked" IsChecked="True">Metric units</CheckBox>
             </Grid>
         </Border>
 

@@ -78,5 +78,15 @@ namespace SingerDispatch.Windows
                 ErrorNoticeWindow.ShowError("Problem saving to PDF", ex.ToString());
             }
         }
+
+        private void ApplyMetric_Checked(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ApplyMetric_Unchecked(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
