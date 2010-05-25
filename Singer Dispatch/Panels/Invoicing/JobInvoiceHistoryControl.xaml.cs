@@ -73,15 +73,15 @@ namespace SingerDispatch.Panels.Invoicing
 
                 if (item.Cost != null)
                     SelectedInvoice.TotalCost += item.Cost;
-            }
 
-            foreach (var item in SelectedInvoice.InvoiceExtras)
-            {
-                if (item.Hours != null)
-                    SelectedInvoice.TotalHours += item.Hours;
+                foreach (var extra in item.Extras)
+                {
+                    if (extra.Hours != null)
+                        SelectedInvoice.TotalHours += extra.Hours;
 
-                if (item.Cost != null)
-                    SelectedInvoice.TotalCost += item.Cost;
+                    if (extra.Cost != null)
+                        SelectedInvoice.TotalCost += extra.Cost;
+                }
             }
         }
 

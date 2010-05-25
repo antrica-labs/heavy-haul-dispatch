@@ -84,8 +84,6 @@
                         <Label Grid.Row="7" Grid.Column="0">Notes:</Label>
                         <TextBox Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="2" Style="{StaticResource MultiLine}" Text="{Binding Notes}" Height="83" />
 
-                        <!-- <TextBox Visibility="Hidden" Grid.Row="8" Grid.Column="1" Text="Padding box for fixing the height of this tab..." Height="38" /> -->
-
                         <GroupBox Header="Dimentions (meters/kg)" Grid.Row="0" Grid.Column="2" Grid.RowSpan="7" Margin="5,0,0,0">
                             <StackPanel>
                                 <Grid>

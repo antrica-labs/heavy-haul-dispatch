@@ -568,11 +568,15 @@ namespace SingerDispatch
             copy.InvoiceDate = InvoiceDate;
 
             foreach (var item in InvoiceLineItems)
-                copy.InvoiceLineItems.Add(item.Duplicate());
+            {
+                var line = item.Duplicate();
 
-            foreach (var item in InvoiceExtras)
-                copy.InvoiceExtras.Add(item.Duplicate());
+                foreach (var extra in item.Extras)
+                    line.Extras.Add(extra.Duplicate());
 
+                copy.InvoiceLineItems.Add(line);
+            }
+            
             return copy;
         }
 
@@ -605,11 +609,7 @@ namespace SingerDispatch
         {
             var copy = new InvoiceExtra();
 
-            copy.Description = Description;
-            copy.StartDate = StartDate;
-            copy.EndDate = EndDate;
-            copy.Departure = Departure;
-            copy.Destination = Destination;
+            copy.Description = Description;            
             copy.Hours = Hours;
             copy.Cost = Cost;
 

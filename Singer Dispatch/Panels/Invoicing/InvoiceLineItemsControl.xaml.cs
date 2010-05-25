@@ -65,5 +65,11 @@ namespace SingerDispatch.Panels.Invoicing
             list.Remove(item);
             SelectedInvoice.InvoiceLineItems.Remove(item);
         }
+
+        private void NewLineExtra_Click(object sender, RoutedEventArgs e)
+        { }
+
+        private void RemoveLineExtra_Click(object sender, RoutedEventArgs e)
+        { }
     }
 }

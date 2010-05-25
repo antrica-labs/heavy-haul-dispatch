@@ -15110,8 +15110,6 @@ namespace SingerDispatch
 		
 		private EntitySet<InvoiceLineItem> _InvoiceLineItems;
 		
-		private EntitySet<InvoiceExtra> _InvoiceExtras;
-		
 		private EntityRef<Address> _BillingAddress;
 		
 		private EntityRef<Contact> _Contact;
@@ -15150,7 +15148,6 @@ namespace SingerDispatch
 		{
 			this._ReferenceNumbers = new EntitySet<InvoiceReferenceNumber>(new Action<InvoiceReferenceNumber>(this.attach_ReferenceNumbers), new Action<InvoiceReferenceNumber>(this.detach_ReferenceNumbers));
 			this._InvoiceLineItems = new EntitySet<InvoiceLineItem>(new Action<InvoiceLineItem>(this.attach_InvoiceLineItems), new Action<InvoiceLineItem>(this.detach_InvoiceLineItems));
-			this._InvoiceExtras = new EntitySet<InvoiceExtra>(new Action<InvoiceExtra>(this.attach_InvoiceExtras), new Action<InvoiceExtra>(this.detach_InvoiceExtras));
 			this._BillingAddress = default(EntityRef<Address>);
 			this._Contact = default(EntityRef<Contact>);
 			this._Job = default(EntityRef<Job>);
@@ -15415,19 +15412,6 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Invoice_InvoiceExtra", Storage="_InvoiceExtras", ThisKey="ID", OtherKey="InvoiceID")]
-		public EntitySet<InvoiceExtra> InvoiceExtras
-		{
-			get
-			{
-				return this._InvoiceExtras;
-			}
-			set
-			{
-				this._InvoiceExtras.Assign(value);
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Address_Invoice", Storage="_BillingAddress", ThisKey="AddressID", OtherKey="ID", IsForeignKey=true)]
 		public Address BillingAddress
 		{
@@ -15569,18 +15553,6 @@ namespace SingerDispatch
 		}
 		
 		private void detach_InvoiceLineItems(InvoiceLineItem entity)
-		{
-			this.SendPropertyChanging();
-			entity.Invoice = null;
-		}
-		
-		private void attach_InvoiceExtras(InvoiceExtra entity)
-		{
-			this.SendPropertyChanging();
-			entity.Invoice = this;
-		}
-		
-		private void detach_InvoiceExtras(InvoiceExtra entity)
 		{
 			this.SendPropertyChanging();
 			entity.Invoice = null;
@@ -15786,6 +15758,8 @@ namespace SingerDispatch
 		
 		private System.Nullable<decimal> _Cost;
 		
+		private EntitySet<InvoiceExtra> _Extras;
+		
 		private EntityRef<Invoice> _Invoice;
 		
     #region Extensibility Method Definitions
@@ -15814,6 +15788,7 @@ namespace SingerDispatch
 		
 		public InvoiceLineItem()
 		{
+			this._Extras = new EntitySet<InvoiceExtra>(new Action<InvoiceExtra>(this.attach_Extras), new Action<InvoiceExtra>(this.detach_Extras));
 			this._Invoice = default(EntityRef<Invoice>);
 			OnCreated();
 		}
@@ -15999,6 +15974,19 @@ namespace SingerDispatch
 					this.SendPropertyChanged("Cost");
 					this.OnCostChanged();
 				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="InvoiceLineItem_InvoiceExtra", Storage="_Extras", ThisKey="ID", OtherKey="InvoiceLineItemID")]
+		public EntitySet<InvoiceExtra> Extras
+		{
+			get
+			{
+				return this._Extras;
+			}
+			set
+			{
+				this._Extras.Assign(value);
 			}
 		}
 		
@@ -16055,6 +16043,18 @@ namespace SingerDispatch
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
 		}
+		
+		private void attach_Extras(InvoiceExtra entity)
+		{
+			this.SendPropertyChanging();
+			entity.LineItem = this;
+		}
+		
+		private void detach_Extras(InvoiceExtra entity)
+		{
+			this.SendPropertyChanging();
+			entity.LineItem = null;
+		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="")]
@@ -16065,23 +16065,15 @@ namespace SingerDispatch
 		
 		private long _ID;
 		
-		private System.Nullable<long> _InvoiceID;
+		private System.Nullable<long> _InvoiceLineItemID;
 		
 		private string _Description;
-		
-		private System.Nullable<System.DateTime> _StartDate;
-		
-		private System.Nullable<System.DateTime> _EndDate;
-		
-		private string _Departure;
-		
-		private string _Destination;
 		
 		private System.Nullable<double> _Hours;
 		
 		private System.Nullable<decimal> _Cost;
 		
-		private EntityRef<Invoice> _Invoice;
+		private EntityRef<InvoiceLineItem> _LineItem;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -16089,18 +16081,10 @@ namespace SingerDispatch
     partial void OnCreated();
     partial void OnIDChanging(long value);
     partial void OnIDChanged();
-    partial void OnInvoiceIDChanging(System.Nullable<long> value);
-    partial void OnInvoiceIDChanged();
+    partial void OnInvoiceLineItemIDChanging(System.Nullable<long> value);
+    partial void OnInvoiceLineItemIDChanged();
     partial void OnDescriptionChanging(string value);
     partial void OnDescriptionChanged();
-    partial void OnStartDateChanging(System.Nullable<System.DateTime> value);
-    partial void OnStartDateChanged();
-    partial void OnEndDateChanging(System.Nullable<System.DateTime> value);
-    partial void OnEndDateChanged();
-    partial void OnDepartureChanging(string value);
-    partial void OnDepartureChanged();
-    partial void OnDestinationChanging(string value);
-    partial void OnDestinationChanged();
     partial void OnHoursChanging(System.Nullable<double> value);
     partial void OnHoursChanged();
     partial void OnCostChanging(System.Nullable<decimal> value);
@@ -16109,7 +16093,7 @@ namespace SingerDispatch
 		
 		public InvoiceExtra()
 		{
-			this._Invoice = default(EntityRef<Invoice>);
+			this._LineItem = default(EntityRef<InvoiceLineItem>);
 			OnCreated();
 		}
 		
@@ -16133,26 +16117,26 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_InvoiceID")]
-		public System.Nullable<long> InvoiceID
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_InvoiceLineItemID")]
+		public System.Nullable<long> InvoiceLineItemID
 		{
 			get
 			{
-				return this._InvoiceID;
+				return this._InvoiceLineItemID;
 			}
 			set
 			{
-				if ((this._InvoiceID != value))
+				if ((this._InvoiceLineItemID != value))
 				{
-					if (this._Invoice.HasLoadedOrAssignedValue)
+					if (this._LineItem.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
-					this.OnInvoiceIDChanging(value);
+					this.OnInvoiceLineItemIDChanging(value);
 					this.SendPropertyChanging();
-					this._InvoiceID = value;
-					this.SendPropertyChanged("InvoiceID");
-					this.OnInvoiceIDChanged();
+					this._InvoiceLineItemID = value;
+					this.SendPropertyChanged("InvoiceLineItemID");
+					this.OnInvoiceLineItemIDChanged();
 				}
 			}
 		}
@@ -16173,86 +16157,6 @@ namespace SingerDispatch
 					this._Description = value;
 					this.SendPropertyChanged("Description");
 					this.OnDescriptionChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_StartDate")]
-		public System.Nullable<System.DateTime> StartDate
-		{
-			get
-			{
-				return this._StartDate;
-			}
-			set
-			{
-				if ((this._StartDate != value))
-				{
-					this.OnStartDateChanging(value);
-					this.SendPropertyChanging();
-					this._StartDate = value;
-					this.SendPropertyChanged("StartDate");
-					this.OnStartDateChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EndDate")]
-		public System.Nullable<System.DateTime> EndDate
-		{
-			get
-			{
-				return this._EndDate;
-			}
-			set
-			{
-				if ((this._EndDate != value))
-				{
-					this.OnEndDateChanging(value);
-					this.SendPropertyChanging();
-					this._EndDate = value;
-					this.SendPropertyChanged("EndDate");
-					this.OnEndDateChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Departure")]
-		public string Departure
-		{
-			get
-			{
-				return this._Departure;
-			}
-			set
-			{
-				if ((this._Departure != value))
-				{
-					this.OnDepartureChanging(value);
-					this.SendPropertyChanging();
-					this._Departure = value;
-					this.SendPropertyChanged("Departure");
-					this.OnDepartureChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Destination")]
-		public string Destination
-		{
-			get
-			{
-				return this._Destination;
-			}
-			set
-			{
-				if ((this._Destination != value))
-				{
-					this.OnDestinationChanging(value);
-					this.SendPropertyChanging();
-					this._Destination = value;
-					this.SendPropertyChanged("Destination");
-					this.OnDestinationChanged();
 				}
 			}
 		}
@@ -16297,36 +16201,36 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Invoice_InvoiceExtra", Storage="_Invoice", ThisKey="InvoiceID", OtherKey="ID", IsForeignKey=true)]
-		public Invoice Invoice
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="InvoiceLineItem_InvoiceExtra", Storage="_LineItem", ThisKey="InvoiceLineItemID", OtherKey="ID", IsForeignKey=true)]
+		public InvoiceLineItem LineItem
 		{
 			get
 			{
-				return this._Invoice.Entity;
+				return this._LineItem.Entity;
 			}
 			set
 			{
-				Invoice previousValue = this._Invoice.Entity;
+				InvoiceLineItem previousValue = this._LineItem.Entity;
 				if (((previousValue != value) 
-							|| (this._Invoice.HasLoadedOrAssignedValue == false)))
+							|| (this._LineItem.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._Invoice.Entity = null;
-						previousValue.InvoiceExtras.Remove(this);
+						this._LineItem.Entity = null;
+						previousValue.Extras.Remove(this);
 					}
-					this._Invoice.Entity = value;
+					this._LineItem.Entity = value;
 					if ((value != null))
 					{
-						value.InvoiceExtras.Add(this);
-						this._InvoiceID = value.ID;
+						value.Extras.Add(this);
+						this._InvoiceLineItemID = value.ID;
 					}
 					else
 					{
-						this._InvoiceID = default(Nullable<long>);
+						this._InvoiceLineItemID = default(Nullable<long>);
 					}
-					this.SendPropertyChanged("Invoice");
+					this.SendPropertyChanged("LineItem");
 				}
 			}
 		}

@@ -67,9 +67,6 @@
             <TabItem Header="Line Items" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, Path=SelectedInvoice}">
                 <Invoicing:InvoiceLineItemsControl SelectedInvoice="{Binding SelectedInvoice}" />
             </TabItem>
-            <TabItem Header="Extras" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, Path=SelectedInvoice}">
-                <Invoicing:InvoiceExtrasControl SelectedInvoice="{Binding SelectedInvoice}" />
-            </TabItem>
         </TabControl>
     </DockPanel>
 </Panels:InvoiceUserControl>

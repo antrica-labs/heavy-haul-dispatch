@@ -80,14 +80,14 @@ namespace SingerDispatch.Database
 
             foreach (var item in invoice.InvoiceLineItems.Where(item => item.ID != 0))
             {
+                foreach (var extra in item.Extras.Where(extra => extra.ID != 0))
+                {
+                    context.InvoiceExtras.DeleteOnSubmit(extra);
+                }
+
                 context.InvoiceLineItems.DeleteOnSubmit(item);
             }
-
-            foreach (var item in invoice.InvoiceExtras.Where(item => item.ID != 0))
-            {
-                context.InvoiceExtras.DeleteOnSubmit(item);
-            }
-
+            
             if (invoice.ID != 0)
                 context.Invoices.DeleteOnSubmit(invoice);
         }

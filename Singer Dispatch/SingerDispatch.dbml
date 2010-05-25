@@ -663,8 +663,7 @@
       <Column Name="HourlyRate" Type="System.Decimal" CanBeNull="true" />
       <Column Name="GSTExempt" Type="System.Boolean" CanBeNull="true" />
       <Association Name="Invoice_InvoiceReferenceNumber" Member="ReferenceNumbers" ThisKey="ID" OtherKey="InvoiceID" Type="InvoiceReferenceNumber" />
-      <Association Name="Invoice_InvoiceLineItem" Member="InvoiceLineItems" ThisKey="ID" OtherKey="InvoiceID" Type="InvoiceLineItem" />
-      <Association Name="Invoice_InvoiceExtra" Member="InvoiceExtras" ThisKey="ID" OtherKey="InvoiceID" Type="InvoiceExtra" />
+      <Association Name="Invoice_InvoiceLineItem" Member="InvoiceLineItems" ThisKey="ID" OtherKey="InvoiceID" Type="InvoiceLineItem" />      
       <Association Name="Address_Invoice" Member="BillingAddress" ThisKey="AddressID" OtherKey="ID" Type="Address" IsForeignKey="true" />
       <Association Name="Contact_Invoice" Member="Contact" ThisKey="ContactID" OtherKey="ID" Type="Contact" IsForeignKey="true" />
       <Association Name="Job_Invoice" Member="Job" ThisKey="JobID" OtherKey="ID" Type="Job" IsForeignKey="true" />
@@ -691,20 +690,17 @@
       <Column Name="Hours" Type="System.Double" CanBeNull="true" />
       <Column Name="Cost" Type="System.Decimal" CanBeNull="true" />
       <Association Name="Invoice_InvoiceLineItem" Member="Invoice" ThisKey="InvoiceID" OtherKey="ID" Type="Invoice" IsForeignKey="true" />
+      <Association Name="InvoiceLineItem_InvoiceExtra" Member="Extras" ThisKey="ID" OtherKey="InvoiceLineItemID" Type="InvoiceExtra" />
     </Type>
   </Table>
   <Table Name="" Member="InvoiceExtras">
     <Type Name="InvoiceExtra">
       <Column Name="ID" Type="System.Int64" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="InvoiceID" Type="System.Int64" CanBeNull="true" />
-      <Column Name="Description" Type="System.String" CanBeNull="true" />
-      <Column Name="StartDate" Type="System.DateTime" CanBeNull="true" />
-      <Column Name="EndDate" Type="System.DateTime" CanBeNull="true" />
-      <Column Name="Departure" Type="System.String" CanBeNull="true" />
-      <Column Name="Destination" Type="System.String" CanBeNull="true" />
+      <Column Name="InvoiceLineItemID" Type="System.Int64" CanBeNull="true" />
+      <Column Name="Description" Type="System.String" CanBeNull="true" />      
       <Column Name="Hours" Type="System.Double" CanBeNull="true" />
       <Column Name="Cost" Type="System.Decimal" CanBeNull="true" />
-      <Association Name="Invoice_InvoiceExtra" Member="Invoice" ThisKey="InvoiceID" OtherKey="ID" Type="Invoice" IsForeignKey="true" />
+      <Association Name="InvoiceLineItem_InvoiceExtra" Member="LineItem" ThisKey="InvoiceLineItemID" OtherKey="ID" Type="InvoiceLineItem" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="" Member="CustomerType">

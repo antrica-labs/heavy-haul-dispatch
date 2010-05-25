@@ -238,15 +238,15 @@ namespace SingerDispatch.Printing.Documents
 
                 if (item.Cost != null)
                     running += item.Cost;
-            }
 
-            foreach (var item in invoice.InvoiceExtras)
-            {
-                builder.Append(GetBreakdownExtra(item, tax));
+                foreach (var extra in item.Extras)
+                {
+                    builder.Append(GetBreakdownExtra(extra, tax));
 
-                if (item.Cost != null)
-                    running += item.Cost;
-            }
+                    if (item.Cost != null)
+                        running += extra.Cost;
+                }
+            }            
 
             builder.Append(subtotal.Replace("%SUBTOTAL%", String.Format("{0:C}", running)));
             builder.Append(fuelTax.Replace("%FUEL_TAX%", String.Format("{0:C}", running * SingerConstants.FuelTax)));
@@ -281,10 +281,10 @@ namespace SingerDispatch.Printing.Documents
             var builder = new StringBuilder();
 
             builder.Append("<tr>");
-            builder.Append(@"<td class=""dates"">%DATES%</td>".Replace("%DATES%", String.Format("{0:MMM d, yyyy}", item.StartDate)));
+            builder.Append(@"<td class=""dates""></td>");
             builder.Append(@"<td class=""description"">%DESCRIPTION%</td>".Replace("%DESCRIPTION%", item.Description));
-            builder.Append(@"<td class=""departure"">%DEPARTURE%</td>".Replace("%DEPARTURE%", item.Departure));
-            builder.Append(@"<td class=""destination"">%DESTINATION%</td>".Replace("%DESTINATION%", item.Destination));
+            builder.Append(@"<td class=""departure""></td>");
+            builder.Append(@"<td class=""destination""></td>");
             builder.Append(@"<td class=""hours"">%HOURS%</td>".Replace("%HOURS%", item.Hours.ToString()));
             builder.Append(@"<td class=""cost"">%COST%</td>".Replace("%COST%", String.Format("{0:C}", item.Cost)));
             builder.Append(@"<td class=""line_tax"">%LINE_TAX%</td>".Replace("%LINE_TAX%", String.Format("{0:C}", item.Cost * gst)));
@@ -293,8 +293,6 @@ namespace SingerDispatch.Printing.Documents
 
             return builder.ToString();
         }
-
-        
 
         private string GetStyles()
         {
