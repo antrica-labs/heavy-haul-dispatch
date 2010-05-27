@@ -29,93 +29,92 @@
                 <Button Grid.Column="3" Style="{StaticResource HorizontalEnd}" Click="RemoveLineItem_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgLineItems, Path=SelectedItem}">Delete line item</Button>
             </Grid>
 
-            <TabControl DataContext="{Binding ElementName=dgLineItems, Path=SelectedItem}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgLineItems, Path=SelectedItem}">
-                <TabItem Header="Item Details">
-                    <Grid>
+            <GroupBox Header="Item Details" DataContext="{Binding ElementName=dgLineItems, Path=SelectedItem}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgLineItems, Path=SelectedItem}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+
+                    <Label Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="4">Description:</Label>
+                    <TextBox Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="4" Name="txtDescription" Text="{Binding Description}" />
+
+                    <Grid Grid.Column="0" Grid.Row="2" Grid.RowSpan="2">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition />
-                            <ColumnDefinition />
                             <ColumnDefinition />
                             <ColumnDefinition />
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition />
                             <RowDefinition />
+                        </Grid.RowDefinitions>
+
+                        <Label Grid.Column="0" Grid.Row="0">Start:</Label>
+                        <DatePicker Grid.Column="0" Grid.Row="1" SelectedDate="{Binding StartDate}" />
+
+                        <Label Grid.Column="1" Grid.Row="0">End:</Label>
+                        <DatePicker Grid.Column="1" Grid.Row="1" SelectedDate="{Binding EndDate}" />
+                    </Grid>
+
+                    <Label Grid.Column="1" Grid.Row="2">From:</Label>
+                    <TextBox Grid.Column="1" Grid.Row="3" Text="{Binding Departure}" />
+
+                    <Label Grid.Column="2" Grid.Row="2">To:</Label>
+                    <TextBox Grid.Column="2" Grid.Row="3" Text="{Binding Destination}" />
+
+                    <Grid Grid.Column="3" Grid.Row="2" Grid.RowSpan="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
                             <RowDefinition />
                             <RowDefinition />
                         </Grid.RowDefinitions>
 
-                        <Label Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="4">Description:</Label>
-                        <TextBox Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="4" Name="txtDescription" Text="{Binding Description}" />
+                        <Label Grid.Column="0" Grid.Row="0">Hours:</Label>
+                        <TextBox Grid.Column="0" Grid.Row="1" Text="{Binding Hours}" />
 
-                        <Grid Grid.Column="0" Grid.Row="2" Grid.RowSpan="2">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition />
-                                <ColumnDefinition />
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition />
-                                <RowDefinition />
-                            </Grid.RowDefinitions>
-
-                            <Label Grid.Column="0" Grid.Row="0">Start:</Label>
-                            <DatePicker Grid.Column="0" Grid.Row="1" SelectedDate="{Binding StartDate}" />
-
-                            <Label Grid.Column="1" Grid.Row="0">End:</Label>
-                            <DatePicker Grid.Column="1" Grid.Row="1" SelectedDate="{Binding EndDate}" />
-                        </Grid>
-
-                        <Label Grid.Column="1" Grid.Row="2">From:</Label>
-                        <TextBox Grid.Column="1" Grid.Row="3" Text="{Binding Departure}" />
-
-                        <Label Grid.Column="2" Grid.Row="2">To:</Label>
-                        <TextBox Grid.Column="2" Grid.Row="3" Text="{Binding Destination}" />
-
-                        <Grid Grid.Column="3" Grid.Row="2" Grid.RowSpan="2">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition />
-                                <ColumnDefinition />
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition />
-                                <RowDefinition />
-                            </Grid.RowDefinitions>
-
-                            <Label Grid.Column="0" Grid.Row="0">Hours:</Label>
-                            <TextBox Grid.Column="0" Grid.Row="1" Text="{Binding Hours}" />
-
-                            <Label Grid.Column="1" Grid.Row="0">Cost:</Label>
-                            <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding Cost, StringFormat=c}" Controls:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" />
-                        </Grid>
+                        <Label Grid.Column="1" Grid.Row="0">Cost:</Label>
+                        <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding Cost, StringFormat=c}" Controls:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" />
                     </Grid>
-                </TabItem>
-                <TabItem Header="Extras">
-                    <DockPanel Height="109">
-                        <Grid DockPanel.Dock="Bottom">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition />
-                                <ColumnDefinition />
-                                <ColumnDefinition />
-                                <ColumnDefinition />
-                            </Grid.ColumnDefinitions>
+                </Grid>
+            </GroupBox>
 
-                            <Button Grid.Column="0" Style="{StaticResource Horizontal}" Click="NewLineExtra_Click">New line item</Button>                            
-                            <Button Grid.Column="3" Style="{StaticResource HorizontalEnd}" Click="RemoveLineExtra_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgLineItems, Path=SelectedItem}">Delete line item</Button>
-                        </Grid>
+            <GroupBox Header="Extras" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgLineItems, Path=SelectedItem}">
+                <DockPanel Height="109">
+                    <Grid DockPanel.Dock="Bottom">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
 
-                        <DataGrid Name="dgLineExtras" Style="{StaticResource ListDisplay}">
-                            <DataGrid.Columns>
-                                <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="*" />
-                                <DataGridTextColumn Header="Hours" Binding="{Binding Hours}" Width="75" />
-                                <DataGridTextColumn Header="Cost" Binding="{Binding Cost, StringFormat=c}" Width="100" />
-                            </DataGrid.Columns>
-                        </DataGrid>
-                    </DockPanel>
-                </TabItem>
-            </TabControl>
+                        <Button Grid.Column="0" Style="{StaticResource Horizontal}" Click="NewLineExtra_Click">Add extra</Button>
+                        <Button Grid.Column="3" Style="{StaticResource HorizontalEnd}" Click="RemoveLineExtra_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgLineExtras, Path=SelectedItem}">Remove extra</Button>
+                    </Grid>
+
+                    <DataGrid Name="dgLineExtras" Style="{StaticResource ListDisplay}" IsReadOnly="False">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="*" />
+                            <DataGridTextColumn Header="Hours" Binding="{Binding Hours}" Width="75" />
+                            <DataGridTextColumn Header="Cost" Binding="{Binding Cost, StringFormat=c}" Width="100" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </DockPanel>
+            </GroupBox>
         </StackPanel>
 
-        <DataGrid Name="dgLineItems" Style="{StaticResource ListDisplay}">
+        <DataGrid Name="dgLineItems" Style="{StaticResource ListDisplay}" SelectionChanged="dgLineItems_SelectionChanged">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Start" Binding="{Binding StartDate, StringFormat={}{0:MM/dd/yyyy}}" Width="0.5*" />
                 <DataGridTextColumn Header="End" Binding="{Binding EndDate, StringFormat={}{0:MM/dd/yyyy}}" Width="0.5*" />

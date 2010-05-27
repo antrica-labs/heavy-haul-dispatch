@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Collections.ObjectModel;
+using SingerDispatch.Controls;
 
 namespace SingerDispatch.Panels.Invoicing
 {
@@ -67,9 +68,41 @@ namespace SingerDispatch.Panels.Invoicing
         }
 
         private void NewLineExtra_Click(object sender, RoutedEventArgs e)
-        { }
+        {
+            var item = (InvoiceLineItem)dgLineItems.SelectedItem;
+            var extra = new InvoiceExtra { LineItem = item };
+
+            if (item == null) return;
+            
+            ((ObservableCollection<InvoiceExtra>)dgLineExtras.ItemsSource).Add(extra);
+            item.Extras.Add(extra);
+
+            DataGridHelper.EditFirstColumn(dgLineExtras, extra);
+        }
 
         private void RemoveLineExtra_Click(object sender, RoutedEventArgs e)
-        { }
+        {
+            var item = (InvoiceLineItem)dgLineItems.SelectedItem;
+            var extra = (InvoiceExtra)dgLineExtras.SelectedItem;
+
+            if (item == null || extra == null) return;
+
+            ((ObservableCollection<InvoiceExtra>)dgLineExtras.ItemsSource).Remove(extra);
+            item.Extras.Remove(extra);
+        }
+
+        private void dgLineItems_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            var item = (InvoiceLineItem)dgLineItems.SelectedItem;
+
+            if (item == null)
+            {
+                dgLineExtras.ItemsSource = null;
+            }
+            else
+            {
+                dgLineExtras.ItemsSource = new ObservableCollection<InvoiceExtra>(item.Extras);
+            }
+        }
     }
 }

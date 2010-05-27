@@ -296,6 +296,7 @@ namespace SingerDispatch
         {
             var cp = new Job();
 
+            cp.Name = Name;
             cp.CareOfCompany = CareOfCompany;
             cp.Company = Company;
             cp.Description = Description;
@@ -303,9 +304,36 @@ namespace SingerDispatch
             cp.EndDate = cp.EndDate;
             cp.Quote = Quote;
             cp.StartDate = StartDate;
+            cp.EndDate = EndDate;
             cp.JobStatusType = JobStatusType;
+            
+            foreach (var item in JobCommodities)
+                cp.JobCommodities.Add(item.Duplicate());
+
+            foreach (var item in Loads)
+                cp.Loads.Add(item.Duplicate());
+
+            foreach (var item in Permits)
+                cp.Permits.Add(item.Duplicate());
+
+            foreach (var item in ThirdPartyServices)
+                cp.ThirdPartyServices.Add(item.Duplicate());
+
+            foreach (var item in Dispatches)
+                cp.Dispatches.Add(item.Duplicate());
+
+            foreach (var item in ReferenceNumbers)
+                cp.ReferenceNumbers.Add(item.Duplicate());
 
             return cp;
+        }
+    }
+
+    partial class JobReferenceNumber
+    {
+        public JobReferenceNumber Duplicate()
+        {
+            return new JobReferenceNumber { Field = Field, Value = Value };
         }
     }
 
@@ -333,8 +361,7 @@ namespace SingerDispatch
         public JobCommodity Duplicate()
         {
             var copy = new JobCommodity();
-
-            copy.Load = Load;
+                        
             copy.OriginalCommodity = OriginalCommodity;
             copy.Name = Name;
             copy.Value = Value;
@@ -352,16 +379,20 @@ namespace SingerDispatch
             copy.Cost = Cost;
             copy.LoadLocation = LoadLocation;
             copy.LoadBy = LoadBy;
+            copy.LoadContact = copy.LoadContact;
             copy.LoadMethod = LoadMethod;
             copy.LoadDate = LoadDate;
             copy.LoadInstructions = LoadInstructions;
             copy.LoadRoute = LoadRoute;
+            copy.LoadOrientation = LoadOrientation;
             copy.UnloadLocation = UnloadLocation;
             copy.UnloadBy = UnloadBy;
+            copy.UnloadContact = UnloadContact;
             copy.UnloadMethod = UnloadMethod;
             copy.UnloadDate = UnloadDate;
             copy.UnloadInstructions = UnloadInstructions;
             copy.UnloadRoute = UnloadRoute;
+            copy.LoadOrientation = LoadOrientation;
             copy.Notes = Notes;
 
             return copy;
@@ -374,7 +405,6 @@ namespace SingerDispatch
         {
             var copy = new ThirdPartyService();
 
-            copy.Load = Load;
             copy.Company = Company;
             copy.ServiceType = ServiceType;
             copy.Contact = Contact;
@@ -392,10 +422,10 @@ namespace SingerDispatch
         public Permit Duplicate()
         {
             var cp = new Permit();
-
-            cp.Load = Load;
+                        
             cp.IssuingCompany = IssuingCompany;
             cp.PermitType = PermitType;
+            cp.Reference = Reference;
             cp.Conditions = Conditions;
             cp.Cost = Cost;
             cp.StartDate = StartDate;
@@ -411,7 +441,7 @@ namespace SingerDispatch
         {
             var cp = new Dispatch();
 
-            cp.Load = Load;
+            cp.MeetingTime = cp.MeetingTime;            
             cp.Employee = Employee;
             cp.Equipment = Equipment;
             cp.Description = Description;
@@ -420,6 +450,9 @@ namespace SingerDispatch
             cp.DepartingLocation = DepartingLocation;
             cp.Notes = Notes;
             cp.Rate = Rate;
+
+            foreach (var item in OutOfProvinceTravels)
+                cp.OutOfProvinceTravels.Add(item.Duplicate());
 
             return cp;
         }
@@ -456,6 +489,7 @@ namespace SingerDispatch
         {
             var cp = new Load();
 
+            cp.Schedule = Schedule;
             cp.Equipment = Equipment;
             cp.Rate = Rate;
             cp.Season = Season;
@@ -495,6 +529,7 @@ namespace SingerDispatch
             cp.LoadedWidth = LoadedWidth;
             cp.LoadedHeight = LoadedHeight;
 
+            
             return cp;
         }
 
@@ -614,6 +649,14 @@ namespace SingerDispatch
             copy.Cost = Cost;
 
             return copy;
+        }
+    }
+
+    partial class OutOfProvinceTravel
+    {
+        public OutOfProvinceTravel Duplicate()
+        {
+            return new OutOfProvinceTravel { ProvinceOrState = ProvinceOrState, Distance = Distance };
         }
     }
 }
