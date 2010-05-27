@@ -16,6 +16,7 @@ using System.Reflection;
 using SingerDispatch.Windows;
 using SingerDispatch.Panels.Admin;
 using System.Windows.Input;
+using SingerDispatch.Panels.Storage;
 
 namespace SingerDispatch
 {
@@ -212,6 +213,11 @@ namespace SingerDispatch
         private void ExpandInvoicing(object sender, RoutedEventArgs e)
         {
             ExpandSection(expanderInvoicing, typeof(JobInvoicingPanel));
+        }
+
+        private void ExpandStorage(object sender, RoutedEventArgs e)
+        {
+            ExpandSection(expanderStorage, typeof(StoragePanel));
         }
 
         private void ExpandAdmin(object sender, RoutedEventArgs e)
