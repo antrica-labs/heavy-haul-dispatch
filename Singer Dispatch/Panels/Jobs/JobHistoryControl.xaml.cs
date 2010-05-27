@@ -130,7 +130,28 @@ namespace SingerDispatch.Panels.Jobs
             {
                 ErrorNoticeWindow.ShowError("Error while attempting write changes to database", ex.Message);
             }
-            
+        }
+
+        private void DuplicateJob_Click(object sender, RoutedEventArgs e)
+        {
+            if (SelectedJob == null) return;
+
+            var copy = SelectedJob.Duplicate();
+
+            ((ObservableCollection<Job>)DgJobs.ItemsSource).Insert(0, copy);
+            DgJobs.SelectedItem = copy;
+            SelectedCompany.Jobs.Add(SelectedJob);
+
+            try
+            {
+                EntityHelper.SaveAsNewJob(copy, Database);
+
+                txtName.Focus();
+            }
+            catch (Exception ex)
+            {
+                ErrorNoticeWindow.ShowError("Error while attempting write changes to database", ex.Message);
+            }
         }
 
         private void AddReferenceNumber_Click(object sender, RoutedEventArgs e)
