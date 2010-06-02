@@ -79,9 +79,9 @@ namespace SingerDispatch.Printing.Documents
             var process = System.Diagnostics.Process.GetCurrentProcess();
             var img = SingerConstants.GetConfig("Documents-HeaderImg");
 
-            if (img == null && process.MainModule != null)
-            {
-                img = "file:///" + System.IO.Path.Combine(System.IO.Path.GetDirectoryName(process.MainModule.FileName), @"Images\Header.png");
+            if (string.IsNullOrEmpty(img) && process.MainModule != null)
+            {                
+                img = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(process.MainModule.FileName), @"Images\Header.png");
             }
 
             if (img != null)

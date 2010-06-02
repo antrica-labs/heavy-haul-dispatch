@@ -350,9 +350,9 @@ namespace SingerDispatch.Printing.Documents
             var process = System.Diagnostics.Process.GetCurrentProcess();
             var img = SingerConstants.GetConfig("Documents-HeaderImg");
 
-            if (img == null && process.MainModule != null)
+            if (string.IsNullOrEmpty(img) && process.MainModule != null)
             {
-                img = "file:///" + System.IO.Path.Combine(System.IO.Path.GetDirectoryName(process.MainModule.FileName), @"Images\Header.png");
+                img = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(process.MainModule.FileName), @"Images\Header.png");
             }
 
             return content.Replace("%HEADER_IMG%", img).Replace("%QUOTE_NUMBER%", quoteName).Replace("%STREET_ADDRESS%", address).Replace("%CITY%", city).Replace("%PHONE%", phone);
