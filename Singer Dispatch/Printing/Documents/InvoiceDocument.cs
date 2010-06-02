@@ -4,14 +4,14 @@ using System.Text;
 
 namespace SingerDispatch.Printing.Documents
 {
-    class InvoiceRenderer : IRenderer
+    class InvoiceDocument : IPrintDocument
     {
-        public string GenerateHTML(object invoice)
+        public string GenerateHTML(object invoice, bool metric)
         {
             return GenerateHTML((Invoice)invoice);
         }
 
-        public string GenerateHTML(Invoice invoice)
+        private string GenerateHTML(Invoice invoice)
         {
             var content = new StringBuilder();
 

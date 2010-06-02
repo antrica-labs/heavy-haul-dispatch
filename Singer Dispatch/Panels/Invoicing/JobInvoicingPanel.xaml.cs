@@ -4,6 +4,7 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using SingerDispatch.Controls;
 using System;
+using SingerDispatch.Printing.Documents;
 
 namespace SingerDispatch.Panels.Invoicing
 {
@@ -63,8 +64,8 @@ namespace SingerDispatch.Panels.Invoicing
 
             var title = String.Format("Invoice #{0}-{1}", SelectedInvoice.Number, SelectedInvoice.Revision);
 
-            var viewer = new Windows.DocumentViewerWindow();
-            viewer.DisplayPrintout(title, SelectedInvoice);
+            var viewer = new Windows.DocumentViewerWindow(new InvoiceDocument(), SelectedInvoice, title);
+            viewer.DisplayPrintout();
         }
 
         private void CommitInvoiceChanges_Click(object sender, RoutedEventArgs e)

@@ -6,6 +6,7 @@ using System.Collections.ObjectModel;
 using SingerDispatch.Database;
 using SingerDispatch.Windows;
 using System.Windows.Data;
+using SingerDispatch.Printing.Documents;
 
 namespace SingerDispatch.Panels.Quotes
 {
@@ -124,8 +125,8 @@ namespace SingerDispatch.Panels.Quotes
 
             var title = String.Format("Quote #{0}-{1}", SelectedQuote.Number, SelectedQuote.Revision);
 
-            var viewer = new Windows.DocumentViewerWindow();
-            viewer.DisplayPrintout(title, SelectedQuote);
+            var viewer = new Windows.DocumentViewerWindow(new QuoteDocument(), SelectedQuote, title);
+            viewer.DisplayPrintout();
         }
 
         private void CareOfCompanies_SelectionChanged(object sender, SelectionChangedEventArgs e)

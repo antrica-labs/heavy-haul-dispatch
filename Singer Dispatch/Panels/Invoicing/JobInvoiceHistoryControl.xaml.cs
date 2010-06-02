@@ -6,6 +6,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using SingerDispatch.Database;
 using SingerDispatch.Controls;
+using SingerDispatch.Printing.Documents;
 
 namespace SingerDispatch.Panels.Invoicing
 {
@@ -159,8 +160,8 @@ namespace SingerDispatch.Panels.Invoicing
         {
             if (SelectedInvoice == null) return;
 
-            var viewer = new Windows.DocumentViewerWindow();
-            viewer.DisplayPrintout(SelectedInvoice);
+            var viewer = new Windows.DocumentViewerWindow(new InvoiceDocument(), SelectedInvoice);
+            viewer.DisplayPrintout();
         }
 
         private void DeleteInvoice_Click(object sender, RoutedEventArgs e)

@@ -4,6 +4,7 @@ using SingerDispatch.Database;
 using System.Windows.Input;
 using SingerDispatch.Controls;
 using System;
+using SingerDispatch.Printing.Documents;
 
 namespace SingerDispatch.Panels.Quotes
 {
@@ -59,8 +60,8 @@ namespace SingerDispatch.Panels.Quotes
 
             var title = String.Format("Quote #{0}-{1}", SelectedQuote.Number, SelectedQuote.Revision);
 
-            var viewer = new Windows.DocumentViewerWindow();
-            viewer.DisplayPrintout(title, SelectedQuote);
+            var viewer = new Windows.DocumentViewerWindow(new QuoteDocument(), SelectedQuote, title);
+            viewer.DisplayPrintout();
         }
 
         private void CommitQuoteChanges_Click(object sender, RoutedEventArgs e)

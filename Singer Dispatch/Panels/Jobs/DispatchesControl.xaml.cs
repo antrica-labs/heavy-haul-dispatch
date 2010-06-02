@@ -7,6 +7,7 @@ using SingerDispatch.Windows;
 using System.Collections.Generic;
 using System.Windows.Data;
 using SingerDispatch.Controls;
+using SingerDispatch.Printing.Documents;
 
 namespace SingerDispatch.Panels.Jobs
 {
@@ -109,12 +110,14 @@ namespace SingerDispatch.Panels.Jobs
 
         private void ViewDispatch_Click(object sender, RoutedEventArgs e)
         {
-            if (dgDispatches.SelectedItem == null) return;
-
             var dispatch = (Dispatch)dgDispatches.SelectedItem;
 
-            var viewer = new DocumentViewerWindow();
-            viewer.DisplayPrintout(String.Format("Dispatch #{0}", dispatch.Name), dgDispatches.SelectedItem);
+            if (dispatch == null) return;
+
+            var result = MessageBox.Show("Do you wish to inlcude a file copy with this printout?", "Include drivers copy?", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+            var viewer = new DocumentViewerWindow(new DispatchDocument(result == MessageBoxResult.Yes), dgDispatches.SelectedItem, String.Format("Dispatch #{0}", dispatch.Name));
+            viewer.DisplayPrintout();
         }
 
         private void RemoveDispatch_Click(object sender, RoutedEventArgs e)

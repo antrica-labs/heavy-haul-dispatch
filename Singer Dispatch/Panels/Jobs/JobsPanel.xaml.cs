@@ -4,6 +4,7 @@ using System.Windows.Controls.Primitives;
 using SingerDispatch.Controls;
 using System.Windows.Input;
 using SingerDispatch.Windows;
+using SingerDispatch.Printing.Documents;
 
 namespace SingerDispatch.Panels.Jobs
 {
@@ -79,10 +80,11 @@ namespace SingerDispatch.Panels.Jobs
             if (SelectedJob == null) return;
 
             var dispatches = (from d in SelectedJob.Dispatches select d).ToList();
+            
+            var result = MessageBox.Show("Do you wish to inlcude a file copy with this printout?", "Include drivers copy?", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
-            var name = string.Format("Dispatches - Job #{0}", SelectedJob.Number);
-            var document = new DocumentViewerWindow();
-            document.DisplayPrintout(name, dispatches);
+            var viewer = new DocumentViewerWindow(new DispatchDocument(result == MessageBoxResult.Yes), dispatches, string.Format("Dispatches - Job #{0}", SelectedJob.Number));
+            viewer.DisplayPrintout();
         }
 
         

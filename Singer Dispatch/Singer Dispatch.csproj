@@ -219,12 +219,12 @@
     <Compile Include="Panels\Storage\StoragePanel.xaml.cs">
       <DependentUpon>StoragePanel.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Printing\Documents\DispatchRenderer.cs" />
+    <Compile Include="Printing\Documents\DispatchDocument.cs" />
     <Compile Include="Printing\FileUtils.cs" />
-    <Compile Include="Printing\Documents\InvoiceRenderer.cs" />
+    <Compile Include="Printing\Documents\InvoiceDocument.cs" />
     <Compile Include="Printing\PDFizer.cs" />
-    <Compile Include="Printing\Documents\QuoteRenderer.cs" />
-    <Compile Include="Printing\Documents\IRenderer.cs" />
+    <Compile Include="Printing\Documents\QuoteDocument.cs" />
+    <Compile Include="Printing\Documents\IPrintDocument.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

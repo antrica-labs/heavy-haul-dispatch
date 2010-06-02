@@ -16,44 +16,52 @@ namespace SingerDispatch.Windows
     /// </summary>
     public partial class DocumentViewerWindow
     {
+        private IPrintDocument Document { get; set; }
+        private object OriginalEntity { get; set; }
         private string Filename { get; set; }
-        private string SourceHTML { get; set; }
-        
-        public DocumentViewerWindow()
+       
+        public DocumentViewerWindow(IPrintDocument document, object entity)
         {
             InitializeComponent();
 
+            Document = document;
+            OriginalEntity = entity;
             Filename = "";
         }
 
-        public void DisplayPrintout(object obj)
+        public DocumentViewerWindow(IPrintDocument document, object entity, string filename)
         {
-            DisplayPrintout("", obj);
+            InitializeComponent();
+
+            Document = document;
+            OriginalEntity = entity;
+            Filename = filename;
         }
 
-        public void DisplayPrintout(string filename, object obj)
+        private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            IRenderer renderer;
+            if (Document == null) return;
 
-            if (obj is Quote)
-                renderer = new QuoteRenderer();
-            else if (obj is Invoice)
-                renderer = new InvoiceRenderer();
-            else if (obj is Dispatch || obj is List<Dispatch>)
-            {
-                var result = MessageBox.Show("Do you wish to inlcude a file copy with this printout?", "Include drivers copy?", MessageBoxButton.YesNo, MessageBoxImage.Question);
-                
-                renderer = new DispatchRenderer(result == MessageBoxResult.Yes);
-            }
-            else
-                return;
+            TheBrowser.NavigateToString(Document.GenerateHTML(OriginalEntity, IsMetricCB.IsChecked == true));
+        }
 
-            Filename = filename;
-            SourceHTML = renderer.GenerateHTML(obj);
-
-            TheBrowser.NavigateToString(SourceHTML);
-
+        public void DisplayPrintout()
+        {
             ShowDialog();
+        }
+
+        private void ApplyMetric_Checked(object sender, RoutedEventArgs e)
+        {
+            if (Document == null) return;
+                        
+            TheBrowser.NavigateToString(Document.GenerateHTML(OriginalEntity, true));            
+        }
+
+        private void ApplyMetric_Unchecked(object sender, RoutedEventArgs e)
+        {
+            if (Document == null)
+            
+            TheBrowser.NavigateToString(Document.GenerateHTML(OriginalEntity, false));            
         }
 
         private void PDF_Click(object sender, RoutedEventArgs e)
@@ -71,22 +79,12 @@ namespace SingerDispatch.Windows
             {
                 var outputFile = dialog.FileName;
 
-                new PdfCreationWindow(outputFile, SourceHTML).Run();
+                new PdfCreationWindow(outputFile, Document.GenerateHTML(OriginalEntity, IsMetricCB.IsChecked == true)).Run();
             }
             catch (Exception ex)
             {
                 ErrorNoticeWindow.ShowError("Problem saving to PDF", ex.ToString());
             }
-        }
-
-        private void ApplyMetric_Checked(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void ApplyMetric_Unchecked(object sender, RoutedEventArgs e)
-        {
-
-        }
+        }        
     }
 }

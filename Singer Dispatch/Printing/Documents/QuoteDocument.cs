@@ -5,14 +5,14 @@ using System.Collections.Generic;
 
 namespace SingerDispatch.Printing.Documents
 {
-    class QuoteRenderer : IRenderer
+    class QuoteDocument : IPrintDocument
     {
-        public string GenerateHTML(object quote)
+        public string GenerateHTML(object quote, bool metric)
         {
             return GenerateHTML((Quote)quote);
         }
 
-        public string GenerateHTML(Quote quote)
+        private string GenerateHTML(Quote quote)
         {
             var content = new StringBuilder();
 

@@ -6,23 +6,23 @@ using System.Data.Linq;
 
 namespace SingerDispatch.Printing.Documents
 {
-    class DispatchRenderer : IRenderer
+    class DispatchDocument : IPrintDocument
     {
         private const string PageBreak = @"<div class=""page_break""></div>";
         
         private bool IncludeFileCopy { get; set; }
 
-        public DispatchRenderer()
+        public DispatchDocument()
         {
             IncludeFileCopy = false;
         }
 
-        public DispatchRenderer(bool includeDriverCopy)
+        public DispatchDocument(bool includeDriverCopy)
         {
             IncludeFileCopy = includeDriverCopy;
         }
 
-        public string GenerateHTML(object dispatch)
+        public string GenerateHTML(object dispatch, bool metric)
         {
             if (dispatch is List<Dispatch>)
                 return GenerateHTML((List<Dispatch>)dispatch);
@@ -30,7 +30,7 @@ namespace SingerDispatch.Printing.Documents
             return GenerateHTML((Dispatch)dispatch);
         }
 
-        public string GenerateHTML(Dispatch dispatch)
+        private string GenerateHTML(Dispatch dispatch)
         {            
             var content = new StringBuilder();
 
@@ -57,7 +57,7 @@ namespace SingerDispatch.Printing.Documents
             return content.ToString();
         }
 
-        public string GenerateHTML(List<Dispatch> dispatches)
+        private string GenerateHTML(List<Dispatch> dispatches)
         {
             var content = new StringBuilder();
 
