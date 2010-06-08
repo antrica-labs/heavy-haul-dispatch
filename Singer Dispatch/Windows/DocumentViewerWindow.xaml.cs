@@ -8,6 +8,7 @@ using mshtml;
 using System;
 using System.Diagnostics;
 using SingerDispatch.Printing.Documents;
+using System.ComponentModel;
 
 namespace SingerDispatch.Windows
 {
@@ -16,6 +17,8 @@ namespace SingerDispatch.Windows
     /// </summary>
     public partial class DocumentViewerWindow
     {
+        private BackgroundWorker Backgrounder;
+
         private IPrintDocument Document { get; set; }
         private object OriginalEntity { get; set; }
         private string Filename { get; set; }
@@ -23,6 +26,8 @@ namespace SingerDispatch.Windows
         public DocumentViewerWindow(IPrintDocument document, object entity)
         {
             InitializeComponent();
+
+            Backgrounder = new BackgroundWorker();
 
             Document = document;
             OriginalEntity = entity;
@@ -33,6 +38,8 @@ namespace SingerDispatch.Windows
         {
             InitializeComponent();
 
+            Backgrounder = new BackgroundWorker();
+
             Document = document;
             OriginalEntity = entity;
             Filename = filename;
@@ -42,7 +49,15 @@ namespace SingerDispatch.Windows
         {
             if (Document == null) return;
 
-            TheBrowser.NavigateToString(Document.GenerateHTML(OriginalEntity, IsMetricCB.IsChecked == true));
+            var loading = new LoadingDocument();
+            
+            // Spawn a new thread to render the requested document and then display it when ready.
+            Backgrounder.DoWork += RenderDocument;
+            Backgrounder.RunWorkerCompleted += DisplayDocument;
+
+            Backgrounder.RunWorkerAsync();
+            
+            TheBrowser.NavigateToString(loading.GenerateHTML(null, true));
         }
 
         public void DisplayPrintout()
@@ -53,15 +68,39 @@ namespace SingerDispatch.Windows
         private void ApplyMetric_Checked(object sender, RoutedEventArgs e)
         {
             if (Document == null) return;
-                        
-            TheBrowser.NavigateToString(Document.GenerateHTML(OriginalEntity, true));            
+                       
+            Backgrounder.RunWorkerAsync();
         }
 
         private void ApplyMetric_Unchecked(object sender, RoutedEventArgs e)
         {
-            if (Document == null)
+            if (Document == null) return;
+                        
+            Backgrounder.RunWorkerAsync();
+        }
+
+        private void RenderDocument(object sender, DoWorkEventArgs e)
+        {            
+            string html;
+
+            html = Document.GenerateHTML(OriginalEntity, true);
+
+            Dispatcher.Invoke(DispatcherPriority.Normal, new Action<string>(ShowHTML), html);
+        }
+
+        private void DisplayDocument(object sender, RunWorkerCompletedEventArgs e)
+        {
             
-            TheBrowser.NavigateToString(Document.GenerateHTML(OriginalEntity, false));            
+        }
+
+        private void ShowHTML(string html)
+        {
+            TheBrowser.NavigateToString(html);
+        }
+
+        private bool IsMetric()
+        {
+            return IsMetricCB.IsChecked != false;
         }
 
         private void PDF_Click(object sender, RoutedEventArgs e)

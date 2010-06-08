@@ -220,6 +220,7 @@
       <DependentUpon>StoragePanel.xaml</DependentUpon>
     </Compile>
     <Compile Include="Printing\Documents\DispatchDocument.cs" />
+    <Compile Include="Printing\Documents\LoadingDocument.cs" />
     <Compile Include="Printing\FileUtils.cs" />
     <Compile Include="Printing\Documents\InvoiceDocument.cs" />
     <Compile Include="Printing\PDFizer.cs" />
@@ -565,7 +566,11 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Images\Loading.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="BeforeBuild">
   </Target>
