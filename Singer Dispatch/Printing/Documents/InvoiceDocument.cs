@@ -6,7 +6,9 @@ namespace SingerDispatch.Printing.Documents
 {
     class InvoiceDocument : IPrintDocument
     {
-        public string GenerateHTML(object invoice, bool metric)
+        public bool PrintMetric { get; set; }
+
+        public string GenerateHTML(object invoice)
         {
             return GenerateHTML((Invoice)invoice);
         }

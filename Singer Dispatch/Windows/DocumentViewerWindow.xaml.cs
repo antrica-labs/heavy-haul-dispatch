@@ -20,6 +20,7 @@ namespace SingerDispatch.Windows
         private BackgroundWorker Backgrounder;
 
         private IPrintDocument Document { get; set; }
+        private bool IsMetric { get; set; }
         private object OriginalEntity { get; set; }
         private string Filename { get; set; }
        
@@ -29,6 +30,7 @@ namespace SingerDispatch.Windows
 
             Backgrounder = new BackgroundWorker();
 
+            IsMetric = true;
             Document = document;
             OriginalEntity = entity;
             Filename = "";
@@ -40,6 +42,7 @@ namespace SingerDispatch.Windows
 
             Backgrounder = new BackgroundWorker();
 
+            IsMetric = true;
             Document = document;
             OriginalEntity = entity;
             Filename = filename;
@@ -54,10 +57,10 @@ namespace SingerDispatch.Windows
             // Spawn a new thread to render the requested document and then display it when ready.
             Backgrounder.DoWork += RenderDocument;
             Backgrounder.RunWorkerCompleted += DisplayDocument;
+            
+            TheBrowser.NavigateToString(loading.GenerateHTML(null));
 
             Backgrounder.RunWorkerAsync();
-            
-            TheBrowser.NavigateToString(loading.GenerateHTML(null, true));
         }
 
         public void DisplayPrintout()
@@ -68,14 +71,18 @@ namespace SingerDispatch.Windows
         private void ApplyMetric_Checked(object sender, RoutedEventArgs e)
         {
             if (Document == null) return;
-                       
+
+            IsMetric = true;
+
             Backgrounder.RunWorkerAsync();
         }
 
         private void ApplyMetric_Unchecked(object sender, RoutedEventArgs e)
         {
             if (Document == null) return;
-                        
+
+            IsMetric = false;
+
             Backgrounder.RunWorkerAsync();
         }
 
@@ -83,7 +90,8 @@ namespace SingerDispatch.Windows
         {            
             string html;
 
-            html = Document.GenerateHTML(OriginalEntity, true);
+            Document.PrintMetric = IsMetric;
+            html = Document.GenerateHTML(OriginalEntity);
 
             Dispatcher.Invoke(DispatcherPriority.Normal, new Action<string>(ShowHTML), html);
         }
@@ -96,11 +104,6 @@ namespace SingerDispatch.Windows
         private void ShowHTML(string html)
         {
             TheBrowser.NavigateToString(html);
-        }
-
-        private bool IsMetric()
-        {
-            return IsMetricCB.IsChecked != false;
         }
 
         private void PDF_Click(object sender, RoutedEventArgs e)
@@ -118,7 +121,9 @@ namespace SingerDispatch.Windows
             {
                 var outputFile = dialog.FileName;
 
-                new PdfCreationWindow(outputFile, Document.GenerateHTML(OriginalEntity, IsMetricCB.IsChecked == true)).Run();
+                Document.PrintMetric = IsMetricCB.IsChecked == true;
+
+                new PdfCreationWindow(outputFile, Document.GenerateHTML(OriginalEntity)).Run();
             }
             catch (Exception ex)
             {

@@ -10,7 +10,8 @@ namespace SingerDispatch.Printing.Documents
     {
         private const string PageBreak = @"<div class=""page_break""></div>";
         
-        private bool IncludeFileCopy { get; set; }
+        public bool IncludeFileCopy { get; set; }
+        public bool PrintMetric { get; set; }
 
         public DispatchDocument()
         {
@@ -22,7 +23,7 @@ namespace SingerDispatch.Printing.Documents
             IncludeFileCopy = includeDriverCopy;
         }
 
-        public string GenerateHTML(object dispatch, bool metric)
+        public string GenerateHTML(object dispatch)
         {
             if (dispatch is List<Dispatch>)
                 return GenerateHTML((List<Dispatch>)dispatch);

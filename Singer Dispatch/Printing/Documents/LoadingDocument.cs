@@ -6,8 +6,10 @@ using System.Text;
 namespace SingerDispatch.Printing.Documents
 {
     class LoadingDocument : IPrintDocument
-    {        
-        public string GenerateHTML(object entity, bool metric)
+    {
+        public bool PrintMetric { get; set; }
+
+        public string GenerateHTML(object entity)
         {
             var html = @"
             <!DOCTYPE HTML PUBLIC ""-//W3C//DTD HTML 4.01//EN"" ""http://www.w3.org/TR/html4/strict.dtd"">

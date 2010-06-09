@@ -7,7 +7,9 @@ namespace SingerDispatch.Printing.Documents
 {
     class QuoteDocument : IPrintDocument
     {
-        public string GenerateHTML(object quote, bool metric)
+        public bool PrintMetric { get; set; }
+
+        public string GenerateHTML(object quote)
         {
             return GenerateHTML((Quote)quote);
         }
