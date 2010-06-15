@@ -377,181 +377,181 @@ namespace SingerDispatch.Printing.Documents
 
                     h1
                     {
-	                    font-size: 2.0em;
-	                    text-transform: uppercase;
-	                    color: #8393C9;
-	                    text-align: center;
-	                    margin-bottom: 0.2em;
+                        font-size: 2.0em;
+                        text-transform: uppercase;
+                        color: #8393C9;
+                        text-align: center;
+                        margin-bottom: 0.2em;
                     }
 
                     span.logo 
                     {
-                    	display: block;
-                    	margin-bottom: 0.3em;
+                        display: block;
+                        margin-bottom: 0.3em;
                     }
 
                     h2
                     {
-	                    font-size: 1.5em;
-	                    font-weight: normal;
-	                    margin-bottom: 0.1em;
+                        font-size: 1.5em;
+                        font-weight: normal;
+                        margin-bottom: 0.1em;
                     }
 
                     h3
                     {
-	                    font-size: 1em;
-	                    font-weight: normal;
+                        font-size: 1em;
+                        font-weight: normal;
                     }
 
                     div#details
                     {
-	                    float: right;
+                        float: right;
                     }
 
 
                     div#details table.details 
                     {
-	                    border-collapse: collapse;
+                        border-collapse: collapse;
                     }
 
                     div#details table.details th
                     {
-	                    padding: 0.2em 0.9em 0.2em;
+                        padding: 0.2em 0.9em 0.2em;
                     }
 
                     div#details td
                     {
-	                    border-bottom: 1px #CACACA solid;
-	                    text-align: center;
+                        border-bottom: 1px #CACACA solid;
+                        text-align: center;
                         padding: 0 0.2em;
                     }
 
                     div.subsection 
                     {
-	                    width: 40%;	
-	                    margin: 2em 0;
+                        width: 40%;	
+                        margin: 2em 0;
                     }
 
                     div.subsection span
                     {
-	                    display: block;
+                        display: block;
                     }
 
                     div.subsection span.heading
                     {	
-	                    text-transform: uppercase;
+                        text-transform: uppercase;
                         border-bottom: 1px #CACACA solid;
-	                    font-weight: bold;
-	                    margin: -0.3em;
-	                    margin-bottom: 0.3em;
-	                    padding: 0.1em 0.3em;
-	                    font-weight: bold;
+                        font-weight: bold;
+                        margin: -0.3em;
+                        margin-bottom: 0.3em;
+                        padding: 0.1em 0.3em;
+                        font-weight: bold;
                     }
 
                     div#attention
                     {
-	                    margin-top: 1.5em;	
+                        margin-top: 1.5em;	
                     }
 
                     div#attention span.name
                     {
-	                    font-weight: bold;
+                        font-weight: bold;
                     }
 
 
                     div#breakdown
                     {
-	                    clear: both;
+                        clear: both;
                     }
 
                     div#breakdown table.breakdown
                     {
-	                    width: 100%;
-	                    border-collapse: collapse;
+                        width: 100%;
+                        border-collapse: collapse;
                     }
 
                     div#breakdown table.breakdown span
                     {
-	                    display: block;
+                        display: block;
                     }
 
                     div#breakdown table.breakdown th
                     {
-	                    text-align: center;
-	                    text-transform: uppercase;	
-	                    background-color: #3A4D86;
-	                    color: #FFFFFF;
-	                    font-weight: bold;
+                        text-align: center;
+                        text-transform: uppercase;	
+                        background-color: #3A4D86;
+                        color: #FFFFFF;
+                        font-weight: bold;
                     }
 
                     div#breakdown table.breakdown td
                     {
-	                    text-align: center;
-	                    padding: 0.6em 0.8em;
+                        text-align: center;
+                        padding: 0.6em 0.8em;
                     }
 
                     div#breakdown table.breakdown td.dates
                     {
-	                    text-align: left;
+                        text-align: left;
                     }
 
                     div#breakdown table.breakdown td.description
                     {
-	                    text-align: left;	
+                        text-align: left;	
                     }
 
                     div#breakdown table.breakdown td.amount
                     {
-	                    text-align: right;
+                        text-align: right;
                         background-color: #EDEDED;
                     }
 
                     div#breakdown table.breakdown tr.subtotal td, div#breakdown table.breakdown tr.subtotal th
                     {
-	                    border-top: 1px #CACACA solid;
+                        border-top: 1px #CACACA solid;
                     }
 
                     div#breakdown table.breakdown tr.summary th
                     {
-	                    color: #000000;
-	                    background-color: transparent;
-	                    text-align: left;
+                        color: #000000;
+                        background-color: transparent;
+                        text-align: left;
                     }
 
                     div#breakdown table.breakdown tr.summary td
                     {
-	                    padding: 0.2em 0.8em;
+                        padding: 0.2em 0.8em;
                         background-color: #EDEDED;
                     }
 
                     div#breakdown table.breakdown td.comments
                     {
-	                    text-align: left;
+                        text-align: left;
                         background-color: transparent !important;
                     }
 
                     div#breakdown table.breakdown td.comments span
                     {
-	                    font-size: 0.9em;
-	                    font-weight: bold;
-	                    margin: 0.4em 0;
+                        font-size: 0.9em;
+                        font-weight: bold;
+                        margin: 0.4em 0;
                     }
 
                     div#breakdown table.breakdown tr.summary td.dollars
                     {
-	                    text-align: right;
+                        text-align: right;
                     }
 
                     div#breakdown table.breakdown tr.total
                     {
-	                    border-top: 1px #CACACA solid;
-	                    font-weight: bold;
+                        border-top: 1px #CACACA solid;
+                        font-weight: bold;
                     }
                 </style>
                 <style type=""text/css"" media=""print"">
                     body
                     {
-                    	font-size: 12pt;
+                        font-size: 12pt;
                         padding: 0;
                     }
                 </style>

@@ -25,7 +25,7 @@ namespace SingerDispatch.Printing.Documents
             content.Append(GetStyles());
             content.Append("</head>");
             content.Append("<body>");
-            content.Append(GetHeader(quote.NumberAndRev));
+            content.Append(GetHeader("#" + quote.NumberAndRev));
             content.Append(GetRecipient(quote.BillingAddress, quote.Contact));
             content.Append(GetDescription(quote.Contact, "Transportation Quote", quote.CreationDate, quote.ExpirationDate));
 
@@ -325,29 +325,25 @@ namespace SingerDispatch.Printing.Documents
 
         private static string GetHeader(string quoteName)
         {
-            const string content = @"
+            const string html = @"
                 <div id=""header"">
                     <table>
                         <tr>
                             <td id=""logo"">
-                                <span class=""logo""><img src=""%HEADER_IMG%"" alt=""Singer Specialized""></span>                        
+                                <span class=""logo""><img src=""{0}"" alt=""Singer Specialized""></span>                        
                             </td>
                             <td id=""quote_name"">
-                                <span class=""title"">Quote #%QUOTE_NUMBER%</span>
+                                <span class=""title"">Quote {1}</span>
                             </td>
                             <td id=""hq_location"">
-                                <span class=""address"">%STREET_ADDRESS%</span>
-                                <span class=""phone"">%CITY%</span>
-                                <span class=""fax"">Phone: %PHONE%</span>                                
+                                <span class=""address"">{2}</span>
+                                <span class=""phone"">{3}</span>
+                                <span class=""fax"">Phone: {4}</span>                                
                             </td>
                         </tr>
                     </table>                        
                 </div>
             ";
-
-            var address = SingerConstants.GetConfig("SingerAddress-StreetAddress");
-            var city = SingerConstants.GetConfig("SingerAddress-City");
-            var phone = SingerConstants.GetConfig("SingerAddress-Phone");
 
             var process = System.Diagnostics.Process.GetCurrentProcess();
             var img = SingerConstants.GetConfig("Documents-HeaderImg");
@@ -357,7 +353,15 @@ namespace SingerDispatch.Printing.Documents
                 img = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(process.MainModule.FileName), @"Images\Header.png");
             }
 
-            return content.Replace("%HEADER_IMG%", img).Replace("%QUOTE_NUMBER%", quoteName).Replace("%STREET_ADDRESS%", address).Replace("%CITY%", city).Replace("%PHONE%", phone);
+            var replacements = new object[5];
+
+            replacements[0] = img;
+            replacements[1] = quoteName;
+            replacements[2] = SingerConstants.GetConfig("SingerAddress-StreetAddress");
+            replacements[3] = SingerConstants.GetConfig("SingerAddress-City");
+            replacements[4] = SingerConstants.GetConfig("SingerAddress-Phone");
+
+            return string.Format(html, replacements);
         }
 
         private static string GetRecipient(Address address, Contact contact)
@@ -366,7 +370,7 @@ namespace SingerDispatch.Printing.Documents
 
             const string header = @"
                 <div id=""recipient"">
-                    <span id=""quote_date"">%TODAY%</span>
+                    <span id=""quote_date"">{0}</span>
         
                     <table>
                         <tr>                    
@@ -383,7 +387,7 @@ namespace SingerDispatch.Printing.Documents
                 </div>
             ";
 
-            content.Append(header.Replace("%TODAY%", DateTime.Now.ToString(SingerConstants.PrintedDateFormatString)));
+            content.Append(string.Format(header, DateTime.Now.ToString(SingerConstants.PrintedDateFormatString)));
 
             if (address != null)
             {
@@ -435,18 +439,16 @@ namespace SingerDispatch.Printing.Documents
 
         private static string GetDescription(Contact recipient, string subject, DateTime? openDate, DateTime? closingDate)
         {
-            var content = @"
+            var html = @"
                 <div id=""description"">
                     <table>
-                        %ATTENTION%
-                        <tr><td class=""fieldname"">Re:</td><td>%SUBJECT%</td></tr>
+                        {0}
+                        <tr><td class=""fieldname"">Re:</td><td>{1}</td></tr>
                     </table>
 
-                    <p>As per your quotation request we are pleased to submit the following proposal, valid until %CLOSING_DATE%:</p>
+                    <p>As per your quotation request we are pleased to submit the following proposal, valid until {2}:</p>
                 </div>
             ";
-
-            var attention = (recipient != null) ? @"<tr><td class=""fieldname"">Attention:</td><td>" + recipient.Name + "</td></tr>" : "";
 
             if (openDate == null)
             {
@@ -459,12 +461,13 @@ namespace SingerDispatch.Printing.Documents
                 closingDate = openDate.Value.AddDays(30);
             }
 
-            content = content.Replace("%ATTENTION%", attention);
-            content = content.Replace("%SUBJECT%", subject);
-            content = content.Replace("%OPEN_DATE%", openDate.Value.ToString(SingerConstants.PrintedDateFormatString));
-            content = content.Replace("%CLOSING_DATE%", closingDate.Value.ToString(SingerConstants.PrintedDateFormatString));
+            var replacements = new object[3];
 
-            return content;
+            replacements[0] = (recipient != null) ? string.Format(@"<tr><td class=""fieldname"">Attention:</td><td>{0}</td></tr>", recipient.Name) : "";
+            replacements[1] = subject;
+            replacements[2] = closingDate.Value.ToString(SingerConstants.PrintedDateFormatString);
+
+            return string.Format(html, replacements);
         }
         
         private static string GetCommodities(IEnumerable<QuoteCommodity> commodities)
