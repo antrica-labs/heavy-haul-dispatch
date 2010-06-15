@@ -108,11 +108,11 @@
   <ItemGroup>
     <Compile Include="Controls\CustomCommands.cs" />
     <Compile Include="Controls\DataGridHelper.cs" />
-    <Compile Include="Controls\EmployeeFriendlyNameConverter.cs" />
-    <Compile Include="Controls\InvoiceFriendlyNameConverter.cs" />
-    <Compile Include="Controls\IsEnabledNullConverter.cs" />
-    <Compile Include="Controls\LoadCommoditiesStringConverter.cs" />
-    <Compile Include="Controls\QuoteFriendlyNameConverter.cs" />
+    <Compile Include="Controls\Converters\EmployeeFriendlyNameConverter.cs" />
+    <Compile Include="Controls\Converters\InvoiceFriendlyNameConverter.cs" />
+    <Compile Include="Controls\Converters\IsEnabledNullConverter.cs" />
+    <Compile Include="Controls\Converters\LoadCommoditiesStringConverter.cs" />
+    <Compile Include="Controls\Converters\QuoteFriendlyNameConverter.cs" />
     <Compile Include="Controls\TabIndexHyperlink.cs" />
     <Compile Include="Database\EntityHelper.cs" />
     <Compile Include="MainWindow.xaml.cs">
