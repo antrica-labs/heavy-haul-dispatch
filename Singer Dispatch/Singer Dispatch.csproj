@@ -572,10 +572,12 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Images\EnterprisesHeader.png">
+    <None Include="Images\SingerHeader.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Images\SingerHeader.png">
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\MEHeader.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

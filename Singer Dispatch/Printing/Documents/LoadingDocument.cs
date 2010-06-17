@@ -8,6 +8,7 @@ namespace SingerDispatch.Printing.Documents
     class LoadingDocument : IPrintDocument
     {
         public bool PrintMetric { get; set; }
+        public bool SpecializedDocument { get; set; }
 
         public string GenerateHTML(object entity)
         {

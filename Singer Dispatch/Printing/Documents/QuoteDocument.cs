@@ -8,6 +8,13 @@ namespace SingerDispatch.Printing.Documents
     class QuoteDocument : IPrintDocument
     {
         public bool PrintMetric { get; set; }
+        public bool SpecializedDocument { get; set; }
+
+        public QuoteDocument()
+        {
+            PrintMetric = true;
+            SpecializedDocument = true;
+        }
 
         public string GenerateHTML(object quote)
         {
@@ -323,7 +330,7 @@ namespace SingerDispatch.Printing.Documents
             return content;
         }
 
-        private static string GetHeader(string quoteName)
+        private string GetHeader(string quoteName)
         {
             const string html = @"
                 <div id=""header"">
@@ -346,7 +353,12 @@ namespace SingerDispatch.Printing.Documents
             ";
 
             var process = System.Diagnostics.Process.GetCurrentProcess();
-            var img = SingerConstants.GetConfig("Documents-SingerHeaderImg") ?? @"Images\SingerHeader.png";
+            string img;
+
+            if (SpecializedDocument)
+                img = SingerConstants.GetConfig("Documents-SingerHeaderImg") ?? @"Images\SingerHeader.png";
+            else
+                img = SingerConstants.GetConfig("Documents-MEHeaderImg") ?? @"Images\MEHeader.png";
 
             if (process.MainModule != null)
             {

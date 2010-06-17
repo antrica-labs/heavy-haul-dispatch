@@ -15,12 +15,22 @@
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />                    
-                    <ColumnDefinition />
+                    <ColumnDefinition Width="1.75*"/>
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
-                                
+
+                <ComboBox Grid.Column="0" Margin="4">
+                    <ComboBoxItem Selected="SingerSpecialized_Selected" IsSelected="True">Singer Specialized document</ComboBoxItem>
+                    <ComboBoxItem Selected="SingerEnterprises_Selected">M.E. Singer Enterprises document</ComboBoxItem>
+                </ComboBox>                
+
                 <Button Grid.Column="1" Margin="4" Click="PDF_Click">Save to PDF</Button>
-                <CheckBox Grid.Column="2" HorizontalAlignment="Right" Margin="0,7,6,-1" Name="IsMetricCB" Checked="ApplyMetric_Checked" Unchecked="ApplyMetric_Unchecked" IsChecked="True">Metric units</CheckBox>
+
+
+                <ComboBox Grid.Column="2" Margin="4">
+                    <ComboBoxItem Selected="MetricMeasurements_Selected" IsSelected="True">Metric measurements</ComboBoxItem>
+                    <ComboBoxItem Selected="ImperialMeasurements_Selected">Imperial measurements</ComboBoxItem>
+                </ComboBox>
             </Grid>
         </Border>
 

@@ -12,15 +12,20 @@ namespace SingerDispatch.Printing.Documents
         
         public bool IncludeFileCopy { get; set; }
         public bool PrintMetric { get; set; }
+        public bool SpecializedDocument { get; set; }
 
         public DispatchDocument()
         {
             IncludeFileCopy = false;
+            PrintMetric = true;
+            SpecializedDocument = true;
         }
 
         public DispatchDocument(bool includeDriverCopy)
         {
             IncludeFileCopy = includeDriverCopy;
+            PrintMetric = true;
+            SpecializedDocument = true;
         }
 
         public string GenerateHTML(object dispatch)

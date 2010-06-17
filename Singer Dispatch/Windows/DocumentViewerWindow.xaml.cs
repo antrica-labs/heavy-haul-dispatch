@@ -21,6 +21,7 @@ namespace SingerDispatch.Windows
 
         private IPrintDocument Document { get; set; }
         private bool IsMetric { get; set; }
+        private bool IsSpecializedDocument { get; set; }
         private object OriginalEntity { get; set; }
         private string Filename { get; set; }
        
@@ -30,6 +31,7 @@ namespace SingerDispatch.Windows
 
             Backgrounder = new BackgroundWorker();
 
+            IsSpecializedDocument = true;
             IsMetric = true;
             Document = document;
             OriginalEntity = entity;
@@ -43,9 +45,15 @@ namespace SingerDispatch.Windows
             Backgrounder = new BackgroundWorker();
 
             IsMetric = true;
+            IsSpecializedDocument = true;
             Document = document;
             OriginalEntity = entity;
             Filename = filename;
+        }
+
+        public void DisplayPrintout()
+        {
+            ShowDialog();
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -63,12 +71,7 @@ namespace SingerDispatch.Windows
             Backgrounder.RunWorkerAsync();
         }
 
-        public void DisplayPrintout()
-        {
-            ShowDialog();
-        }
-
-        private void ApplyMetric_Checked(object sender, RoutedEventArgs e)
+        private void MetricMeasurements_Selected(object sender, RoutedEventArgs e)
         {
             if (Document == null) return;
 
@@ -77,11 +80,29 @@ namespace SingerDispatch.Windows
             Backgrounder.RunWorkerAsync();
         }
 
-        private void ApplyMetric_Unchecked(object sender, RoutedEventArgs e)
+        private void ImperialMeasurements_Selected(object sender, RoutedEventArgs e)
         {
             if (Document == null) return;
 
             IsMetric = false;
+
+            Backgrounder.RunWorkerAsync();
+        }
+
+        private void SingerSpecialized_Selected(object sender, RoutedEventArgs e)
+        {
+            if (Document == null) return;
+
+            IsSpecializedDocument = true;
+
+            Backgrounder.RunWorkerAsync();
+        }
+
+        private void SingerEnterprises_Selected(object sender, RoutedEventArgs e)
+        {
+            if (Document == null) return;
+
+            IsSpecializedDocument = false;
 
             Backgrounder.RunWorkerAsync();
         }
@@ -91,6 +112,7 @@ namespace SingerDispatch.Windows
             string html;
 
             Document.PrintMetric = IsMetric;
+            Document.SpecializedDocument = IsSpecializedDocument;
             html = Document.GenerateHTML(OriginalEntity);
 
             Dispatcher.Invoke(DispatcherPriority.Normal, new Action<string>(ShowHTML), html);
@@ -98,7 +120,7 @@ namespace SingerDispatch.Windows
 
         private void DisplayDocument(object sender, RunWorkerCompletedEventArgs e)
         {
-            
+            // This function typically runs when RenderDocument completes 
         }
 
         private void ShowHTML(string html)
@@ -121,7 +143,7 @@ namespace SingerDispatch.Windows
             {
                 var outputFile = dialog.FileName;
 
-                Document.PrintMetric = IsMetricCB.IsChecked == true;
+                Document.PrintMetric = IsMetric == true;
 
                 new PdfCreationWindow(outputFile, Document.GenerateHTML(OriginalEntity)).Run();
             }
@@ -129,6 +151,6 @@ namespace SingerDispatch.Windows
             {
                 ErrorNoticeWindow.ShowError("Problem saving to PDF", ex.ToString());
             }
-        }        
+        }
     }
 }

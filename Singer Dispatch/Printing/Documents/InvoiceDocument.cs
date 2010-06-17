@@ -7,6 +7,13 @@ namespace SingerDispatch.Printing.Documents
     class InvoiceDocument : IPrintDocument
     {
         public bool PrintMetric { get; set; }
+        public bool SpecializedDocument { get; set; }
+
+        public InvoiceDocument()
+        {
+            PrintMetric = true;
+            SpecializedDocument = true;
+        }
 
         public string GenerateHTML(object invoice)
         {
