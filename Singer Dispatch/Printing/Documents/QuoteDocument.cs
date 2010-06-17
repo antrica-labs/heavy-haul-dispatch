@@ -330,7 +330,7 @@ namespace SingerDispatch.Printing.Documents
                     <table>
                         <tr>
                             <td id=""logo"">
-                                <span class=""logo""><img src=""{0}"" alt=""Singer Specialized""></span>                        
+                                <span class=""logo""><img src=""{0}"" alt=""Singer""></span>                        
                             </td>
                             <td id=""quote_name"">
                                 <span class=""title"">Quote {1}</span>
@@ -346,11 +346,11 @@ namespace SingerDispatch.Printing.Documents
             ";
 
             var process = System.Diagnostics.Process.GetCurrentProcess();
-            var img = SingerConstants.GetConfig("Documents-HeaderImg");
+            var img = SingerConstants.GetConfig("Documents-SingerHeaderImg") ?? @"Images\SingerHeader.png";
 
-            if (string.IsNullOrEmpty(img) && process.MainModule != null)
+            if (process.MainModule != null)
             {
-                img = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(process.MainModule.FileName), @"Images\Header.png");
+                img = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(process.MainModule.FileName), img);
             }
 
             var replacements = new object[5];
@@ -486,7 +486,7 @@ namespace SingerDispatch.Printing.Documents
                             </tr>
                         </thead>
                         <tbody>
-                            %TABLE_BODY%
+                            {0}
                         </tbody>
                     </table>
 
@@ -538,7 +538,7 @@ namespace SingerDispatch.Printing.Documents
                 count++;
             }
 
-            content = content.Replace("%TABLE_BODY%", count > 0 ? rows.ToString() : "");
+            content = string.Format(content, count > 0 ? rows.ToString() : "");
 
             return content;
         }
@@ -559,7 +559,7 @@ namespace SingerDispatch.Printing.Documents
                             </tr>
                         </thead>
                         <tbody>
-                            %TABLE_BODY%
+                            {0}
                         </tbody>
                     </table>
                 </div>
@@ -603,7 +603,7 @@ namespace SingerDispatch.Printing.Documents
                 count++;
             }
 
-            content = content.Replace("%TABLE_BODY%", count > 0 ? rows.ToString() : "");
+            content = string.Format(content, count > 0 ? rows.ToString() : "");
 
             return content;
         }
@@ -646,7 +646,7 @@ namespace SingerDispatch.Printing.Documents
 
                     <ol class=""conditions"">
             ";
-            const string line = "<li>%CONDITION%</li>";
+            const string line = "<li>{0}</li>";
             const string footer = @"
                      </ol>
                 </div>
@@ -661,7 +661,7 @@ namespace SingerDispatch.Printing.Documents
             {
                 try
                 {
-                    builder.Append(line.Replace("%CONDITION%", condition.Line));
+                    builder.Append(string.Format(line, condition.Line));
                 }
                 catch (Exception ex)
                 {
@@ -679,17 +679,17 @@ namespace SingerDispatch.Printing.Documents
         {
             var content = @"
                 <div id=""signoff"">
-                    <p>%SIGNOFF%</p>
+                    <p>{0}</p>
 
                     <p>Sincerely,</p>
 
                     <p class=""author"">
-                        %AUTHOR%
+                        {1}
                     </p>
                 </div>
             ";
 
-            content = content.Replace("%SIGNOFF%", SingerConstants.GetConfig("Quote-DefaultSignoff") ?? "").Replace("%AUTHOR%", quote.Employee != null ? quote.Employee.Name : "Dan Klassen");
+            content = string.Format(content, SingerConstants.GetConfig("Quote-DefaultSignoff") ?? "", quote.Employee != null ? quote.Employee.Name : "Dan Klassen");
 
             return content;
         }

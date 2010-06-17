@@ -539,11 +539,11 @@ namespace SingerDispatch.Printing.Documents
             var replacements = new object[7];
 
             var process = System.Diagnostics.Process.GetCurrentProcess();
-            var img = SingerConstants.GetConfig("Documents-HeaderImg");
+            var img = SingerConstants.GetConfig("Documents-SingerHeaderImg") ?? @"Images\SingerHeader.png";
 
-            if (string.IsNullOrEmpty(img) && process.MainModule != null)
+            if (process.MainModule != null)
             {
-                img = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(process.MainModule.FileName), @"Images\Header.png");
+                img = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(process.MainModule.FileName), img);
             }
 
             replacements[0] = img;

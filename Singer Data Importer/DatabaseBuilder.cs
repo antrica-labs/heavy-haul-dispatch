@@ -691,7 +691,8 @@ namespace SingerDispatch.Importer
             Database.Configurations.InsertOnSubmit(new Configuration { Name = "Quote-DefaultSignoff", Value = "We appreciate the opportunity to supply a quotation for your project.  Should you have any questions, concerns, or  comments, please feel free to contact me at your convenience." });
             Database.Configurations.InsertOnSubmit(new Configuration { Name = "PDF-ExecutablePath", Value = "wkhtmltopdf.exe" });
             Database.Configurations.InsertOnSubmit(new Configuration { Name = "PDF-Arguments", Value = @"--print-media-type --page-size Letter ""%HTML_FILE%"" ""%PDF_FILE%""" });
-            Database.Configurations.InsertOnSubmit(new Configuration { Name = "Documents-HeaderImg", Value = "" });
+            Database.Configurations.InsertOnSubmit(new Configuration { Name = "Documents-SingerHeaderImg", Value = @"Images\SingerHeader.png" });
+            Database.Configurations.InsertOnSubmit(new Configuration { Name = "Documents-MEHeaderImg", Value = @"Images\MEHeader.png" });
             Database.Configurations.InsertOnSubmit(new Configuration { Name = "GenericRemoveItemConfirmation", Value = "Are you sure you want to remove this item?" });
             Database.Configurations.InsertOnSubmit(new Configuration { Name = "", Value = "" });
 

@@ -79,11 +79,11 @@ namespace SingerDispatch.Printing.Documents
         private string GetHeaderLogo()
         {
             var process = System.Diagnostics.Process.GetCurrentProcess();
-            var img = SingerConstants.GetConfig("Documents-HeaderImg");
+            var img = SingerConstants.GetConfig("Documents-SingerHeaderImg") ?? @"Images\SingerHeader.png";
 
-            if (string.IsNullOrEmpty(img) && process.MainModule != null)
-            {                
-                img = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(process.MainModule.FileName), @"Images\Header.png");
+            if (process.MainModule != null)
+            {
+                img = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(process.MainModule.FileName), img);
             }
 
             if (img != null)
