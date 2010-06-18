@@ -250,6 +250,7 @@
       <DependentUpon>SingerDispatch.dbml</DependentUpon>
     </Compile>
     <Compile Include="SingerDispatchDictionary.xaml.cs" />
+    <Compile Include="Utils\MeasurementFormater.cs" />
     <Compile Include="Windows\CreateCompanyWindow.xaml.cs">
       <DependentUpon>CreateCompanyWindow.xaml</DependentUpon>
     </Compile>
