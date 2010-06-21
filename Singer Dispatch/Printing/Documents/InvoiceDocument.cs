@@ -84,9 +84,15 @@ namespace SingerDispatch.Printing.Documents
         }
 
         private string GetHeaderLogo()
-        {
+        {            
+            var html = @"<span class=""logo""><img src=""{0}"" alt=""Singer Specialized""></span>";
             var process = System.Diagnostics.Process.GetCurrentProcess();
-            var img = SingerConstants.GetConfig("Documents-SingerHeaderImg") ?? @"Images\SingerHeader.png";
+            string img;
+
+            if (SpecializedDocument)
+                img = SingerConstants.GetConfig("Documents-SingerHeaderImg") ?? @"Images\SingerHeader.png";
+            else
+                img = SingerConstants.GetConfig("Documents-MEHeaderImg") ?? @"Images\MEHeader.png";
 
             if (process.MainModule != null)
             {
@@ -94,9 +100,9 @@ namespace SingerDispatch.Printing.Documents
             }
 
             if (img != null)
-                img = @"<span class=""logo""><img src=""" + img + @""" alt=""Singer Specialized""></span>";
-
-            return img ?? "<h2>Singer Specialized</h2>";
+                return string.Format(html, img);
+            else
+                return "<h2>Singer Specialized</h2>";
         }
 
         private string GetBillFrom(Invoice invoice)

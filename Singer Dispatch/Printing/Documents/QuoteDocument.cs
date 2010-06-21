@@ -2,6 +2,7 @@
 using System.Text;
 using System.Linq;
 using System.Collections.Generic;
+using SingerDispatch.Utils;
 
 namespace SingerDispatch.Printing.Documents
 {
@@ -482,7 +483,7 @@ namespace SingerDispatch.Printing.Documents
             return string.Format(html, replacements);
         }
         
-        private static string GetCommodities(IEnumerable<QuoteCommodity> commodities)
+        private string GetCommodities(IEnumerable<QuoteCommodity> commodities)
         {
             var content = @"
                 <div id=""commodities"">
@@ -494,7 +495,7 @@ namespace SingerDispatch.Printing.Documents
                                 <th>From</th>
                                 <th>To</th>
                                 <th>Dimensions (LxWxH)</th>
-                                <th>Weight (kg)</th>                                
+                                <th>Weight</th>                                
                             </tr>
                         </thead>
                         <tbody>
@@ -511,6 +512,19 @@ namespace SingerDispatch.Printing.Documents
 
             foreach (var commodity in commodities)
             {
+                string length, width, height, weight;
+
+                if (PrintMetric != true)
+                {
+                    length = width = height = MeasurementFormater.UFeet;
+                    weight = MeasurementFormater.UPounds;
+                }
+                else
+                {
+                    length = width = height = MeasurementFormater.UMetres;
+                    weight = MeasurementFormater.UKilograms;
+                }
+
                 rows.Append(@"<tr class=""details"">");
                 rows.Append("<td>");
                 rows.Append(count);
@@ -525,14 +539,14 @@ namespace SingerDispatch.Printing.Documents
                 rows.Append(commodity.ArrivalSiteName);
                 rows.Append("</td>");
                 rows.Append("<td>");
-                rows.Append(commodity.Length);
-                rows.Append("x");
-                rows.Append(commodity.Width);
-                rows.Append("x");
-                rows.Append(commodity.Height);
+                rows.Append(MeasurementFormater.FromMetres(commodity.Length ?? 0.0, length));
+                rows.Append(" x ");
+                rows.Append(MeasurementFormater.FromMetres(commodity.Width ?? 0.0, width));
+                rows.Append(" x ");
+                rows.Append(MeasurementFormater.FromMetres(commodity.Height ?? 0.0, height));
                 rows.Append("</td>");
                 rows.Append("<td>");
-                rows.Append(commodity.Weight);
+                rows.Append(MeasurementFormater.FromKilograms(commodity.Weight ?? 0.0, weight));
                 rows.Append("</td>");
                 rows.Append("</tr>");
 

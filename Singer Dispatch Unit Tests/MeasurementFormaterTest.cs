@@ -65,16 +65,16 @@ namespace Singer_Dispatch_Unit_Tests
 
 
         /// <summary>
-        ///A test for CentimetersToFeet
+        ///A test for MetresToFeet
         ///</summary>
         [TestMethod()]
-        public void CentimetersToFeetTest()
+        public void MetresToFeetTest()
         {
-            double cm = 198.00; // TODO: Initialize to an appropriate value
-            string expected = "6'6\""; // TODO: Initialize to an appropriate value
+            double m = 1.98;
+            string expected = "6'6\"";
             string actual;
 
-            actual = MeasurementFormater.CentimetersToFeet(cm);
+            actual = MeasurementFormater.MetresToFeet(m);
             
             Assert.AreEqual(expected, actual);            
         }
