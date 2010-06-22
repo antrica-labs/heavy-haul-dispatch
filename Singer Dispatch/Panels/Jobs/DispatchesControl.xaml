@@ -90,13 +90,10 @@
                             </Grid.RowDefinitions>
 
                             <Label Grid.Row="0" Grid.Column="0">Date:</Label>
-                            <DatePicker Grid.Row="0" Grid.Column="1" SelectedDate="{Binding MeetingTime}" />
+                            <DatePicker Grid.Row="0" Grid.Column="1" SelectedDate="{Binding MeetingTime}" SelectedDateFormat="Long"  />
 
-                            <Label Grid.Row="1" Grid.Column="0">Time:</Label>
-                            <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding MeetingTime, StringFormat=T}" />
-
-                            <Label Grid.Row="2" Grid.Column="0">Location:</Label>
-                            <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding DepartingLocation}" />
+                            <Label Grid.Row="1" Grid.Column="0">Location:</Label>
+                            <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding DepartingLocation}" />
                         </Grid>
                     </GroupBox>
 

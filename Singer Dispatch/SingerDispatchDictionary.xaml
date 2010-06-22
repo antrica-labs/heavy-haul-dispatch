@@ -176,9 +176,5 @@
     <Style TargetType="{x:Type DatePicker}">
         <Setter Property="Margin" Value="3" />
         <Setter Property="Background" Value="White" />
-    </Style>
-    
-    <Style TargetType="{x:Type DatePickerTextBox}">
-        <Setter Property="IsReadOnly" Value="True" />        
-    </Style>
+    </Style>    
 </ResourceDictionary>

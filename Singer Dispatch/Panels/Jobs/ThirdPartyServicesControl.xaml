@@ -65,7 +65,7 @@
                     <Label Grid.Row="6" Grid.Column="0">Notes:</Label>
                     <TextBox Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Notes}" Style="{StaticResource MultiLine}" Height="40" />
 
-                    <GroupBox Grid.Column="2" Grid.Row="0" Grid.RowSpan="3" Header="Departure" Margin="5,0,0,0">
+                    <GroupBox Grid.Column="2" Grid.Row="0" Grid.RowSpan="4" Header="Departure" Margin="5,0,0,0">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="60" />
@@ -74,13 +74,11 @@
                             <Grid.RowDefinitions>
                                 <RowDefinition />
                                 <RowDefinition />
+                                <RowDefinition />
                             </Grid.RowDefinitions>
 
                             <Label Grid.Row="0" Grid.Column="0">Date:</Label>
-                            <DatePicker Grid.Row="0" Grid.Column="1" SelectedDate="{Binding ServiceDate}" />
-
-                            <Label Grid.Row="1" Grid.Column="0">Time:</Label>
-                            <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding ServiceDate, StringFormat=T}" />
+                            <DatePicker Grid.Row="0" Grid.Column="1" SelectedDate="{Binding ServiceDate}" SelectedDateFormat="Long" />
                         </Grid>
                     </GroupBox>
                 </Grid>
