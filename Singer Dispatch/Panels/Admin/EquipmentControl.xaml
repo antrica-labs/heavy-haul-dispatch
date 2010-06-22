@@ -12,127 +12,127 @@
         </ResourceDictionary>
     </UserControl.Resources>
     <DockPanel>
-		<Grid DockPanel.Dock="Bottom">
+        <Grid DockPanel.Dock="Bottom">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
                 <ColumnDefinition />
-				<ColumnDefinition />
-				<ColumnDefinition Width="285" />
+                <ColumnDefinition />
+                <ColumnDefinition Width="285" />
             </Grid.ColumnDefinitions>
 
             <Button Style="{StaticResource Horizontal}" Grid.Column="0" Click="NewEquipment_Click">New equipment</Button>
             <Button Style="{StaticResource Horizontal}" Grid.Column="2" Click="RemoveEquipment_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgEquipment, Path=SelectedItem}">Remove equipment</Button>
-			<Button Style="{StaticResource HorizontalEnd}" Grid.Column="3" Name="CommitChangesButton" Click="SaveEquipment_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgEquipment, Path=SelectedItem}">Save equipment</Button>
+            <Button Style="{StaticResource HorizontalEnd}" Grid.Column="3" Name="CommitChangesButton" Click="SaveEquipment_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgEquipment, Path=SelectedItem}">Save equipment</Button>
         </Grid>
-	
-		<StackPanel DockPanel.Dock="Right" Width="285" Margin="3,0,0,0">
-			<GroupBox Header="Equipment details" DataContext="{Binding ElementName=dgEquipment, Path=SelectedItem}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgEquipment, Path=SelectedItem}">
-	            <Grid>
-	                <Grid.ColumnDefinitions>
-	                    <ColumnDefinition />
-	                    <ColumnDefinition Width="2*"/>
-	                </Grid.ColumnDefinitions>
-	                <Grid.RowDefinitions>
-	                    <RowDefinition />
-	                    <RowDefinition />
-	                    <RowDefinition />
-	                    <RowDefinition />
-	                    <RowDefinition />
-	                    <RowDefinition />
-	                    <RowDefinition />
-	                    <RowDefinition />
-	                    <RowDefinition />
-	                    <RowDefinition />
-	                    <RowDefinition />
-	                    <RowDefinition />
-	                    <RowDefinition />
-	                </Grid.RowDefinitions>
+    
+        <StackPanel DockPanel.Dock="Right" Width="285" Margin="3,0,0,0">
+            <GroupBox Header="Equipment details" DataContext="{Binding ElementName=dgEquipment, Path=SelectedItem}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgEquipment, Path=SelectedItem}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
 
-	                <Label Grid.Row="0" Grid.Column="0">Unit #:</Label>
-	                <TextBox Name="txtUnitNumber" Grid.Row="0" Grid.Column="1" Text="{Binding UnitNumber}" />
+                    <Label Grid.Row="0" Grid.Column="0">Unit #:</Label>
+                    <TextBox Name="txtUnitNumber" Grid.Row="0" Grid.Column="1" Text="{Binding UnitNumber}" />
 
-	                <Label Grid.Row="1" Grid.Column="0">Default Driver:</Label>
-	                <ComboBox Name="cmbEmployees" Grid.Row="1" Grid.Column="1" SelectedItem="{Binding Employee}" ItemTemplate="{StaticResource SimpleNameTemplate}" IsEditable="True" TextSearch.TextPath="Name" />
+                    <Label Grid.Row="1" Grid.Column="0">Default Driver:</Label>
+                    <ComboBox Name="cmbEmployees" Grid.Row="1" Grid.Column="1" SelectedItem="{Binding Employee}" ItemTemplate="{StaticResource SimpleNameTemplate}" IsEditable="True" TextSearch.TextPath="Name" />
 
-	                <Label Grid.Row="2" Grid.Column="0">Serial</Label>
-	                <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Serial}" />
+                    <Label Grid.Row="2" Grid.Column="0">Serial</Label>
+                    <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Serial}" />
 
-	                <Label Grid.Row="3" Grid.Column="0">Year:</Label>
-	                <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Year}" />
+                    <Label Grid.Row="3" Grid.Column="0">Year:</Label>
+                    <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Year}" />
 
-	                <Label Grid.Row="4" Grid.Column="0">Make:</Label>
-	                <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Make}" />
+                    <Label Grid.Row="4" Grid.Column="0">Make:</Label>
+                    <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Make}" />
 
-	                <Label Grid.Row="5" Grid.Column="0">Model:</Label>
-	                <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding Model}" />
+                    <Label Grid.Row="5" Grid.Column="0">Model:</Label>
+                    <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding Model}" />
 
-	                <Label Grid.Row="6" Grid.Column="0">Licence:</Label>
-	                <TextBox Grid.Row="6" Grid.Column="1" Text="{Binding LicencePlate}" />
+                    <Label Grid.Row="6" Grid.Column="0">Licence:</Label>
+                    <TextBox Grid.Row="6" Grid.Column="1" Text="{Binding LicencePlate}" />
 
-	                <Label Grid.Row="7" Grid.Column="0">Engine make:</Label>
-	                <TextBox Grid.Row="7" Grid.Column="1" Text="{Binding EngineMake}" />
+                    <Label Grid.Row="7" Grid.Column="0">Engine make:</Label>
+                    <TextBox Grid.Row="7" Grid.Column="1" Text="{Binding EngineMake}" />
 
-	                <Label Grid.Row="8" Grid.Column="0">Engine model</Label>
-	                <TextBox Grid.Row="8" Grid.Column="1" Text="{Binding EngineModel}" />
+                    <Label Grid.Row="8" Grid.Column="0">Engine model</Label>
+                    <TextBox Grid.Row="8" Grid.Column="1" Text="{Binding EngineModel}" />
 
-	                <Label Grid.Row="9" Grid.Column="0">Engine type:</Label>
-	                <TextBox Grid.Row="9" Grid.Column="1" Text="{Binding EngineType}" />
+                    <Label Grid.Row="9" Grid.Column="0">Engine type:</Label>
+                    <TextBox Grid.Row="9" Grid.Column="1" Text="{Binding EngineType}" />
 
-	                <Label Grid.Row="10" Grid.Column="0">Is dispatchable:</Label>
-	                <CheckBox Grid.Row="10" Grid.Column="1" IsChecked="{Binding IsDispatchable}" />
+                    <Label Grid.Row="10" Grid.Column="0">Is dispatchable:</Label>
+                    <CheckBox Grid.Row="10" Grid.Column="1" IsChecked="{Binding IsDispatchable}" />
 
-	                <Label Grid.Row="11" Grid.Column="0">Class:</Label>
-	                <ComboBox Name="cmbEquipmentClasses" Grid.Row="11" Grid.Column="1" SelectedItem="{Binding EquipmentClass}" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectionChanged="EquipmentClass_SelectionChanged"/>
+                    <Label Grid.Row="11" Grid.Column="0">Class:</Label>
+                    <ComboBox Name="cmbEquipmentClasses" Grid.Row="11" Grid.Column="1" SelectedItem="{Binding EquipmentClass}" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectionChanged="EquipmentClass_SelectionChanged"/>
 
-	                <GroupBox Header="Tractor info" Name="gbTractorInfo" Grid.Row="12" Grid.ColumnSpan="2" IsEnabled="False">
-	                    <Grid>
-	                        <Grid.ColumnDefinitions>
-	                            <ColumnDefinition />
-	                            <ColumnDefinition />
-	                        </Grid.ColumnDefinitions>
-	                        <Grid.RowDefinitions>
-	                            <RowDefinition />
-	                            <RowDefinition />
-	                            <RowDefinition />
-	                            <RowDefinition />
-	                            <RowDefinition />
-	                            <RowDefinition />
-	                            <RowDefinition />
-	                            <RowDefinition />
-	                            <RowDefinition />
-	                        </Grid.RowDefinitions>
+                    <GroupBox Header="Tractor info" Name="gbTractorInfo" Grid.Row="12" Grid.ColumnSpan="2" IsEnabled="False">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
 
-	                        <Label Grid.Row="0" Grid.Column="0">Tare weight:</Label>
-	                        <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Tare}" />
+                            <Label Grid.Row="0" Grid.Column="0">Tare weight:</Label>
+                            <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Tare}" />
 
-	                        <Label Grid.Row="1" Grid.Column="0">Height</Label>
-	                        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Height}" />
+                            <Label Grid.Row="1" Grid.Column="0">Height</Label>
+                            <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Height}" />
 
-	                        <Label Grid.Row="2" Grid.Column="0">Axle config:</Label>
-	                        <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding AxleConfig}" />
+                            <Label Grid.Row="2" Grid.Column="0">Axle config:</Label>
+                            <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding AxleConfig}" />
 
-	                        <Label Grid.Row="3" Grid.Column="0">Steer tire size:</Label>
-	                        <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding SteerTireSize}" />
+                            <Label Grid.Row="3" Grid.Column="0">Steer tire size:</Label>
+                            <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding SteerTireSize}" />
 
-	                        <Label Grid.Row="4" Grid.Column="0">Drive tire size:</Label>
-	                        <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding DriveTireSize}" />
+                            <Label Grid.Row="4" Grid.Column="0">Drive tire size:</Label>
+                            <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding DriveTireSize}" />
 
-	                        <Label Grid.Row="5" Grid.Column="0">Has winch:</Label>
-	                        <CheckBox Grid.Row="5" Grid.Column="1" IsChecked="{Binding HasWinch}" />
+                            <Label Grid.Row="5" Grid.Column="0">Has winch:</Label>
+                            <CheckBox Grid.Row="5" Grid.Column="1" IsChecked="{Binding HasWinch}" />
 
-	                        <Label Grid.Row="6" Grid.Column="0">Is prorated:</Label>
-	                        <CheckBox Grid.Row="6" Grid.Column="1" IsChecked="{Binding IsProrated}" />
+                            <Label Grid.Row="6" Grid.Column="0">Is prorated:</Label>
+                            <CheckBox Grid.Row="6" Grid.Column="1" IsChecked="{Binding IsProrated}" />
 
-	                        <Label Grid.Row="7" Grid.Column="0">Only for Scheuerle:</Label>
-	                        <CheckBox Grid.Row="7" Grid.Column="1" IsChecked="{Binding IsOnlyForScheuerle}" />
+                            <Label Grid.Row="7" Grid.Column="0">Only for Scheuerle:</Label>
+                            <CheckBox Grid.Row="7" Grid.Column="1" IsChecked="{Binding IsOnlyForScheuerle}" />
 
-	                        <Label Grid.Row="8" Grid.Column="0">For pushing:</Label>
-	                        <CheckBox Grid.Row="8" Grid.Column="1" IsChecked="{Binding IsOnlyForPushing}" />
-	                    </Grid>
-	                </GroupBox>
-	            </Grid>
-	        </GroupBox>
-		</StackPanel>
+                            <Label Grid.Row="8" Grid.Column="0">For pushing:</Label>
+                            <CheckBox Grid.Row="8" Grid.Column="1" IsChecked="{Binding IsOnlyForPushing}" />
+                        </Grid>
+                    </GroupBox>
+                </Grid>
+            </GroupBox>
+        </StackPanel>
 
         <DataGrid Name="dgEquipment" Style="{StaticResource ListDisplay}">
             <DataGrid.Columns>

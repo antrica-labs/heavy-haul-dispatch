@@ -13,7 +13,7 @@
         </ResourceDictionary>
     </UserControl.Resources>
     <DockPanel>
-		<Grid DockPanel.Dock="Bottom">
+        <Grid DockPanel.Dock="Bottom">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
                 <ColumnDefinition />

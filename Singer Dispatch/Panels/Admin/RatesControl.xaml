@@ -15,7 +15,7 @@
         </ResourceDictionary>
     </UserControl.Resources>
     <DockPanel>
-		<Grid DockPanel.Dock="Bottom">
+        <Grid DockPanel.Dock="Bottom">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
                 <ColumnDefinition />
@@ -26,7 +26,7 @@
             <Button Style="{StaticResource Horizontal}" Name="CommitChangesButton" Grid.Column="1" Click="CommitChanges_Click">Save changes</Button>
             <Button Style="{StaticResource HorizontalEnd}" Grid.Column="2" Click="RemoveRate_Click">Remove rate</Button>
         </Grid>
-	
+    
         <DataGrid Name="dgRates" VerticalContentAlignment="Stretch" Style="{StaticResource ListDisplay}" IsReadOnly="False" RowEditEnding="RowEditEnding">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="2*" />

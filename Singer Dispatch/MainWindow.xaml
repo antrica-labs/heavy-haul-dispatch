@@ -43,7 +43,7 @@
             <Border Style="{StaticResource MainNavigation}" DockPanel.Dock="Left">
                 <StackPanel Name="altNavigationStack">
                     <Label Style="{StaticResource Heading}">Singer Specialized</Label>
-					
+                    
                     <Expander Name="expanderCompanies"  Header="Companies" Style="{StaticResource SectionExpander}" Expanded="ExpandCompanies">
                         <StackPanel Name="linksCompanies" Style="{StaticResource SectionExpanderContent}" VerticalAlignment="Top"></StackPanel>
                     </Expander>
@@ -65,7 +65,7 @@
                 </StackPanel>
             </Border>
             
-			<Border Style="{StaticResource CompanySelection}" DockPanel.Dock="Top">
+            <Border Style="{StaticResource CompanySelection}" DockPanel.Dock="Top">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition />

@@ -22,152 +22,152 @@
             </Style>
         </ResourceDictionary>
     </UserControl.Resources>    
-	<DockPanel>
-		<Button DockPanel.Dock="Bottom" Style="{StaticResource Bottom}" Name="CommitChangesButton" Click="Save_Click">Save changes</Button>
-	
-		<StackPanel DockPanel.Dock="Bottom">
-			<Grid>
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition />
-					<ColumnDefinition />
-				</Grid.ColumnDefinitions>
-								
-				<GroupBox Grid.Column="0" Grid.Row="0" Margin="0,0,3,0" Header="Address Details" DataContext="{Binding ElementName=dgAddresses, Path=SelectedItem}">
-		            <GroupBox.IsEnabled>
-		                <Binding Converter="{StaticResource IsEnabledNullConverter}" ElementName="dgAddresses" Path="SelectedItem" />
-		            </GroupBox.IsEnabled>
-					<StackPanel>					
-			            <Grid>
-			                <Grid.ColumnDefinitions>
-			                    <ColumnDefinition />
-			                    <ColumnDefinition />
-			                    <ColumnDefinition />
-			                </Grid.ColumnDefinitions>
-			                <Grid.RowDefinitions>
-			                    <RowDefinition />
-			                    <RowDefinition />
-			                    <RowDefinition />
-			                    <RowDefinition />
-			                    <RowDefinition />
-			                    <RowDefinition />
-			                    <RowDefinition />
-			                    <RowDefinition />
-			                    <RowDefinition />
-			                    <RowDefinition />
-			                    <RowDefinition />			                    
-			                </Grid.RowDefinitions>
-
-			                <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3">Address:</Label>
-			                <TextBox Name="txtAddress1" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Text="{Binding Line1}" />
-			                <TextBox Name="txtAddress2" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Text="{Binding Line2}" />
-
-			                <Label Grid.Row="3" Grid.Column="0">City:</Label>
-			                <TextBox Name="txtCity" Grid.Row="4" Grid.Column="0" Text="{Binding City}" />
-			                                
-			                <Label Grid.Row="3" Grid.Column="1">Province/State:</Label>
-			                <ComboBox Name="cmbProvinceOrState" Grid.Row="4" Grid.Column="1" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectedItem="{Binding ProvincesAndState}" TextSearch.TextPath="Name" />
-
-			                <Label Grid.Row="3" Grid.Column="2">Country:</Label>
-			                <TextBox Name="txtCountry" Grid.Row="4" Grid.Column="2" IsEnabled="False" Text="{Binding ElementName=cmbProvinceOrState, Path=SelectedItem.Country.Name}" TextSearch.TextPath="Name" />
-
-			                <Label Grid.Row="5" Grid.Column="0">Postal/Zip code:</Label>
-			                <TextBox Name="txtPostalZip" Grid.Row="6" Grid.Column="0" Text="{Binding PostalZip}" />
-
-			                <Label Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2">Address type:</Label>                            
-			                <ComboBox Name="cmbAddressType" Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectedItem="{Binding AddressType}" TextSearch.TextPath="Name" />
-
-			                <Label Grid.Row="7" Grid.Column="0">Primary phone:</Label>
-			                <TextBox Name="txtSiteMainPhone" Grid.Row="8" Grid.Column="0" Text="{Binding PrimaryPhone}" />
-
-			                <Label Grid.Row="7" Grid.Column="1">Secondary phone:</Label>
-			                <TextBox Name="txtSiteSecondaryPhone" Grid.Row="8" Grid.Column="1" Text="{Binding SecondaryPhone}" />
-
-			                <Label Grid.Row="7" Grid.Column="2">Fax:</Label>
-			                <TextBox Name="txtSiteFax" Grid.Row="8" Grid.Column="2" Text="{Binding Fax}" />
-
-			                <Label Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="3">Address notes:</Label>
-			                <TextBox Name="txtAddressNotes" Grid.Row="10" Grid.Column="0" Grid.ColumnSpan="3" Height="67" Style="{StaticResource MultiLine}" Text="{Binding Notes}" />
-			            </Grid>
-					</StackPanel>
-				</GroupBox>
-				
-				<GroupBox Grid.Column="1" Grid.Row="0" Margin="3,0,0,0" Header="Contact Details" DataContext="{Binding ElementName=dgContacts, Path=SelectedItem}">
-					<GroupBox.IsEnabled>
-			        	<Binding Converter="{StaticResource IsEnabledNullConverter}" ElementName="dgContacts" Path="SelectedItem" />
-			        </GroupBox.IsEnabled>
-					<StackPanel>			            
-			            <Grid>
-			                <Grid.ColumnDefinitions>
-			                    <ColumnDefinition />
-			                    <ColumnDefinition />
-			                </Grid.ColumnDefinitions>
-			                <Grid.RowDefinitions>
-			                    <RowDefinition />
-			                    <RowDefinition />
-			                    <RowDefinition />
-			                    <RowDefinition />
-			                    <RowDefinition />
-			                    <RowDefinition />
-			                    <RowDefinition />
-			                    <RowDefinition />
-			                    <RowDefinition />
-			                    <RowDefinition />
-			                    <RowDefinition />
+    <DockPanel>
+        <Button DockPanel.Dock="Bottom" Style="{StaticResource Bottom}" Name="CommitChangesButton" Click="Save_Click">Save changes</Button>
+    
+        <StackPanel DockPanel.Dock="Bottom">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                                
+                <GroupBox Grid.Column="0" Grid.Row="0" Margin="0,0,3,0" Header="Address Details" DataContext="{Binding ElementName=dgAddresses, Path=SelectedItem}">
+                    <GroupBox.IsEnabled>
+                        <Binding Converter="{StaticResource IsEnabledNullConverter}" ElementName="dgAddresses" Path="SelectedItem" />
+                    </GroupBox.IsEnabled>
+                    <StackPanel>					
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
                                 <RowDefinition />
-			                </Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />			                    
+                            </Grid.RowDefinitions>
 
-			                <Label Grid.Column="0" Grid.Row="0">First name:</Label>
-			                <TextBox Name="txtContactFirstName" Grid.Column="0" Grid.Row="1" Text="{Binding FirstName}" />
+                            <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3">Address:</Label>
+                            <TextBox Name="txtAddress1" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Text="{Binding Line1}" />
+                            <TextBox Name="txtAddress2" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Text="{Binding Line2}" />
 
-			                <Label Grid.Column="1" Grid.Row="0">Last name:</Label>
-			                <TextBox Name="txtContactLastName" Grid.Column="1" Grid.Row="1" Text="{Binding LastName}" />
+                            <Label Grid.Row="3" Grid.Column="0">City:</Label>
+                            <TextBox Name="txtCity" Grid.Row="4" Grid.Column="0" Text="{Binding City}" />
+                                            
+                            <Label Grid.Row="3" Grid.Column="1">Province/State:</Label>
+                            <ComboBox Name="cmbProvinceOrState" Grid.Row="4" Grid.Column="1" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectedItem="{Binding ProvincesAndState}" TextSearch.TextPath="Name" />
 
-							<Label Grid.Column="0" Grid.Row="2">Email address:</Label>
-			                <TextBox Name="txtContactEmail" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="3" Text="{Binding Email}" />
+                            <Label Grid.Row="3" Grid.Column="2">Country:</Label>
+                            <TextBox Name="txtCountry" Grid.Row="4" Grid.Column="2" IsEnabled="False" Text="{Binding ElementName=cmbProvinceOrState, Path=SelectedItem.Country.Name}" TextSearch.TextPath="Name" />
 
-			                <Label Grid.Row="4" Grid.Column="0">Primary phone:</Label>
-			                <TextBox Name="txtContactPrimaryPhone" Grid.Column="0" Grid.Row="5" Text="{Binding PrimaryPhone}"/>
+                            <Label Grid.Row="5" Grid.Column="0">Postal/Zip code:</Label>
+                            <TextBox Name="txtPostalZip" Grid.Row="6" Grid.Column="0" Text="{Binding PostalZip}" />
+
+                            <Label Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2">Address type:</Label>                            
+                            <ComboBox Name="cmbAddressType" Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectedItem="{Binding AddressType}" TextSearch.TextPath="Name" />
+
+                            <Label Grid.Row="7" Grid.Column="0">Primary phone:</Label>
+                            <TextBox Name="txtSiteMainPhone" Grid.Row="8" Grid.Column="0" Text="{Binding PrimaryPhone}" />
+
+                            <Label Grid.Row="7" Grid.Column="1">Secondary phone:</Label>
+                            <TextBox Name="txtSiteSecondaryPhone" Grid.Row="8" Grid.Column="1" Text="{Binding SecondaryPhone}" />
+
+                            <Label Grid.Row="7" Grid.Column="2">Fax:</Label>
+                            <TextBox Name="txtSiteFax" Grid.Row="8" Grid.Column="2" Text="{Binding Fax}" />
+
+                            <Label Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="3">Address notes:</Label>
+                            <TextBox Name="txtAddressNotes" Grid.Row="10" Grid.Column="0" Grid.ColumnSpan="3" Height="67" Style="{StaticResource MultiLine}" Text="{Binding Notes}" />
+                        </Grid>
+                    </StackPanel>
+                </GroupBox>
+                
+                <GroupBox Grid.Column="1" Grid.Row="0" Margin="3,0,0,0" Header="Contact Details" DataContext="{Binding ElementName=dgContacts, Path=SelectedItem}">
+                    <GroupBox.IsEnabled>
+                        <Binding Converter="{StaticResource IsEnabledNullConverter}" ElementName="dgContacts" Path="SelectedItem" />
+                    </GroupBox.IsEnabled>
+                    <StackPanel>			            
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+
+                            <Label Grid.Column="0" Grid.Row="0">First name:</Label>
+                            <TextBox Name="txtContactFirstName" Grid.Column="0" Grid.Row="1" Text="{Binding FirstName}" />
+
+                            <Label Grid.Column="1" Grid.Row="0">Last name:</Label>
+                            <TextBox Name="txtContactLastName" Grid.Column="1" Grid.Row="1" Text="{Binding LastName}" />
+
+                            <Label Grid.Column="0" Grid.Row="2">Email address:</Label>
+                            <TextBox Name="txtContactEmail" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="3" Text="{Binding Email}" />
+
+                            <Label Grid.Row="4" Grid.Column="0">Primary phone:</Label>
+                            <TextBox Name="txtContactPrimaryPhone" Grid.Column="0" Grid.Row="5" Text="{Binding PrimaryPhone}"/>
 
                             <Label Grid.Row="4" Grid.Column="1">Contact type:</Label>
                             <ListBox Name="lbContactTypes" Grid.Row="5" Grid.Column="1" Grid.RowSpan="5" Style="{StaticResource MultiSelect}" />
 
                             <Label Grid.Row="6" Grid.Column="0">Secondary phone:</Label>
-			                <TextBox Name="txtContactSecondaryPhone" Grid.Row="7" Grid.Column="0" Text="{Binding SecondaryPhone}" />
+                            <TextBox Name="txtContactSecondaryPhone" Grid.Row="7" Grid.Column="0" Text="{Binding SecondaryPhone}" />
 
                             <Label Grid.Row="8" Grid.Column="0">Preferred contact method:</Label>
                             <ComboBox Name="cmbContactPreferedContactMethod" Grid.Row="9" Grid.Column="0" SelectedItem="{Binding PreferedContactMethod}" ItemTemplate="{StaticResource SimpleNameTemplate}" />
 
-			                <Label Grid.Row="10" Grid.Column="0" Grid.ColumnSpan="2">Contact notes:</Label>
-			                <TextBox Name="txtContactNotes" Grid.Row="11" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource MultiLine}" Text="{Binding Notes}" />
-			            </Grid>			        	
-					</StackPanel>
-				</GroupBox>
-			</Grid>		
-		</StackPanel>
-	
-		<StackPanel DockPanel.Dock="Bottom">
-			<Grid>
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition />
+                            <Label Grid.Row="10" Grid.Column="0" Grid.ColumnSpan="2">Contact notes:</Label>
+                            <TextBox Name="txtContactNotes" Grid.Row="11" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource MultiLine}" Text="{Binding Notes}" />
+                        </Grid>			        	
+                    </StackPanel>
+                </GroupBox>
+            </Grid>		
+        </StackPanel>
+    
+        <StackPanel DockPanel.Dock="Bottom">
+            <Grid>
+                <Grid.ColumnDefinitions>
                     <ColumnDefinition />
-					<ColumnDefinition />
-					<ColumnDefinition />
-				</Grid.ColumnDefinitions>
-				
-				<Button Style="{StaticResource Horizontal}" Grid.Column="0" Click="NewAddress_Click">New address</Button>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                
+                <Button Style="{StaticResource Horizontal}" Grid.Column="0" Click="NewAddress_Click">New address</Button>
                 <Button Style="{StaticResource Horizontal}" Grid.Column="1" Click="RemoveAddress_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgAddresses, Path=SelectedItem}">Remove address</Button>
-				<Button Style="{StaticResource Horizontal}" Margin="3" Grid.Column="2" Click="NewContact_Click">New contact</Button>
+                <Button Style="{StaticResource Horizontal}" Margin="3" Grid.Column="2" Click="NewContact_Click">New contact</Button>
                 <Button Style="{StaticResource HorizontalEnd}" Grid.Column="3" Click="RemoveContact_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgContacts, Path=SelectedItem}">Remove contact</Button>                
-			</Grid>
-		</StackPanel>
-			
-		<Grid>
-			<Grid.ColumnDefinitions>
-				<ColumnDefinition />
-				<ColumnDefinition />
-			</Grid.ColumnDefinitions>
-						
-			<DataGrid Name="dgAddresses" Grid.Column="0" Margin="0,0,3,0" Style="{StaticResource ListDisplay}" SelectionChanged="Addresses_SelectionChanged">
+            </Grid>
+        </StackPanel>
+            
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+                        
+            <DataGrid Name="dgAddresses" Grid.Column="0" Margin="0,0,3,0" Style="{StaticResource ListDisplay}" SelectionChanged="Addresses_SelectionChanged">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Type" Binding="{Binding AddressType.Name}" IsReadOnly="True" />
                     <DataGridTextColumn Header="Address" Width="1.5*" Binding="{Binding Line1}" />
@@ -176,8 +176,8 @@
                     <DataGridTextColumn Header="Country" Binding="{Binding ProvincesAndState.Country.Name}" IsReadOnly="True" />
                 </DataGrid.Columns>
             </DataGrid>
-			
-			<DataGrid Name="dgContacts" Grid.Column="1" Margin="3,0,0,0" Style="{StaticResource ListDisplay}" ItemsSource="{Binding ElementName=dgAddresses, Path=SelectedItem.Contacts}" SelectionChanged="Contact_SelectionChanged">
+            
+            <DataGrid Name="dgContacts" Grid.Column="1" Margin="3,0,0,0" Style="{StaticResource ListDisplay}" ItemsSource="{Binding ElementName=dgAddresses, Path=SelectedItem.Contacts}" SelectionChanged="Contact_SelectionChanged">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="First name" Binding="{Binding FirstName}" />
                     <DataGridTextColumn Header="Last name" Binding="{Binding LastName}" />
@@ -185,6 +185,6 @@
                     <DataGridTextColumn Header="Email" Binding="{Binding Email}" />                    
                 </DataGrid.Columns>
             </DataGrid>
-		</Grid>	
-	</DockPanel>
+        </Grid>	
+    </DockPanel>
 </Panels:CompanyUserControl>
