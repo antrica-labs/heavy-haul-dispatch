@@ -139,6 +139,7 @@
     <Compile Include="Panels\Admin\TrailerCombinationsControl.xaml.cs">
       <DependentUpon>TrailerCombinationsControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Panels\BaseUserControl.cs" />
     <Compile Include="Panels\Companies\AddressesAndContactsControl.xaml.cs">
       <DependentUpon>AddressesAndContactsControl.xaml</DependentUpon>
     </Compile>

@@ -1,9 +1,10 @@
-﻿using System.Windows.Controls;
+﻿using System;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace SingerDispatch.Panels
 {
-    public class CompanyUserControl : UserControl
+    public class CompanyUserControl : BaseUserControl
     {
         public static DependencyProperty SelectedCompanyProperty = DependencyProperty.Register("SelectedCompany", typeof(Company), typeof(CompanyUserControl), new PropertyMetadata(null, SelectedCompanyPropertyChanged));
 
@@ -28,6 +29,7 @@ namespace SingerDispatch.Panels
 
         protected virtual void SelectedCompanyChanged(Company newValue, Company oldValue)
         {
+            
         }
     }
 }
