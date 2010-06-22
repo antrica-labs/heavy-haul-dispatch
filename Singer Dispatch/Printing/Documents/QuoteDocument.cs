@@ -539,14 +539,14 @@ namespace SingerDispatch.Printing.Documents
                 rows.Append(commodity.ArrivalSiteName);
                 rows.Append("</td>");
                 rows.Append("<td>");
-                rows.Append(MeasurementFormater.FromMetres(commodity.Length ?? 0.0, length));
+                rows.Append(MeasurementFormater.FromMetres(commodity.Length, length));
                 rows.Append(" x ");
-                rows.Append(MeasurementFormater.FromMetres(commodity.Width ?? 0.0, width));
+                rows.Append(MeasurementFormater.FromMetres(commodity.Width, width));
                 rows.Append(" x ");
-                rows.Append(MeasurementFormater.FromMetres(commodity.Height ?? 0.0, height));
+                rows.Append(MeasurementFormater.FromMetres(commodity.Height, height));
                 rows.Append("</td>");
                 rows.Append("<td>");
-                rows.Append(MeasurementFormater.FromKilograms(commodity.Weight ?? 0.0, weight));
+                rows.Append(MeasurementFormater.FromKilograms(commodity.Weight, weight));
                 rows.Append("</td>");
                 rows.Append("</tr>");
 

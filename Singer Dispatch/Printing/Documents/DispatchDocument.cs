@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Text;
 using System.Linq;
 using System.Data.Linq;
+using SingerDispatch.Utils;
+
+// 
 
 namespace SingerDispatch.Printing.Documents
 {
@@ -98,7 +101,7 @@ namespace SingerDispatch.Printing.Documents
             return content.ToString();
         }
 
-        private static string FillDispatchBody(Dispatch dispatch, string copyType)
+        private string FillDispatchBody(Dispatch dispatch, string copyType)
         {
             if (dispatch.Load == null)
                 return @"<span class=""error"">Dispatches must be attached to loads before they can be printed.</span>";
@@ -514,7 +517,7 @@ namespace SingerDispatch.Printing.Documents
             return content;
         }
 
-        private static string GetHeader(Dispatch dispatch, string copyType)
+        private string GetHeader(Dispatch dispatch, string copyType)
         {           
             var html = @"
                 <div class=""header"">
@@ -544,7 +547,12 @@ namespace SingerDispatch.Printing.Documents
             var replacements = new object[7];
 
             var process = System.Diagnostics.Process.GetCurrentProcess();
-            var img = SingerConstants.GetConfig("Documents-SingerHeaderImg") ?? @"Images\SingerHeader.png";
+            string img;
+
+            if (SpecializedDocument)
+                img = SingerConstants.GetConfig("Documents-SingerHeaderImg") ?? @"Images\SingerHeader.png";
+            else
+                img = SingerConstants.GetConfig("Documents-MEHeaderImg") ?? @"Images\MEHeader.png";
 
             if (process.MainModule != null)
             {
@@ -746,7 +754,7 @@ namespace SingerDispatch.Printing.Documents
             return string.Format(content, schedule);
         }
 
-        private static string GetLoadCommodities(EntitySet<JobCommodity> commodities)
+        private string GetLoadCommodities(EntitySet<JobCommodity> commodities)
         {
             const string head = @"<div class=""load_and_unload section""><span class=""heading"">Load/Unload Information</span>";
             const string divider = "<hr>";
@@ -855,19 +863,28 @@ namespace SingerDispatch.Printing.Documents
 
             html.Append(head);
 
+            string lengthUnit, weightUnit;
+
+            if (PrintMetric != true)
+            {
+                lengthUnit = MeasurementFormater.UFeet;
+                weightUnit = MeasurementFormater.UPounds;
+            }
+            else
+            {
+                lengthUnit = MeasurementFormater.UMetres;
+                weightUnit = MeasurementFormater.UKilograms;
+            }
+
             for (var i = 0; i < commodities.Count; i++)
             {
                 var item = commodities[i];
                 var reps = new object[22];
 
-                var length = (item.Length != null) ? item.Length.Value : 0.00;
-                var width = (item.Width != null) ? item.Width.Value : 0.00;
-                var height = (item.Height != null) ? item.Height.Value : 0.00;
-                
                 reps[0] = item.Name;
                 reps[1] = (item.Unit != null) ? string.Format("Unit {0}", item.Unit) : "";
-                reps[2] = string.Format("{0:0,0.00}kg", item.Weight);
-                reps[3] = string.Format("{0:0,0.00}m x {1:0,0.00}m x {2:0,0.00}m (LxWxH)", item.Length, item.Width, item.Height);
+                reps[2] = string.Format("{0}", MeasurementFormater.FromKilograms(item.Weight, weightUnit));
+                reps[3] = string.Format("{0} x {1} x {2} (LxWxH)", MeasurementFormater.FromMetres(item.Length, lengthUnit), MeasurementFormater.FromMetres(item.Width, lengthUnit), MeasurementFormater.FromMetres(item.Height, lengthUnit));
 
                 if (item.LoadDate != null)
                 {
@@ -920,7 +937,7 @@ namespace SingerDispatch.Printing.Documents
             return html.ToString();
         }
 
-        private static string GetDimensions(Load load)
+        private string GetDimensions(Load load)
         {
             const string content = @"
                 <div class=""dimensions section"">
@@ -987,36 +1004,49 @@ namespace SingerDispatch.Printing.Documents
                 </div>
             ";
 
+            string lengthUnit, weightUnit;
+
+            if (PrintMetric != true)
+            {
+                lengthUnit = MeasurementFormater.UFeet;
+                weightUnit = MeasurementFormater.UPounds;
+            }
+            else
+            {
+                lengthUnit = MeasurementFormater.UMetres;
+                weightUnit = MeasurementFormater.UKilograms;
+            }
+
             var replacements = new object[28];
 
-            replacements[0] = load.LoadedLength;
-            replacements[1] = load.LoadedWidth;
-            replacements[2] = load.LoadedHeight;
-            replacements[3] = load.GrossWeight;
-            replacements[4] = load.EWeightSteer;
-            replacements[5] = load.EWeightDrive;
-            replacements[6] = load.EWeightGroup1;
-            replacements[7] = load.EWeightGroup2;
-            replacements[8] = load.EWeightGroup3;
-            replacements[9] = load.EWeightGroup4;
-            replacements[10] = load.EWeightGroup5;
-            replacements[11] = load.EWeightGroup6;
-            replacements[12] = load.EWeightGroup7;
-            replacements[13] = load.EWeightGroup8;
-            replacements[14] = load.EWeightGroup9;
-            replacements[15] = load.EWeightGroup10;
-            replacements[16] = load.SWeightSteer;
-            replacements[17] = load.SWeightDrive;
-            replacements[18] = load.SWeightGroup1;
-            replacements[19] = load.SWeightGroup2;
-            replacements[20] = load.SWeightGroup3;
-            replacements[21] = load.SWeightGroup4;
-            replacements[22] = load.SWeightGroup5;
-            replacements[23] = load.SWeightGroup6;
-            replacements[24] = load.SWeightGroup7;
-            replacements[25] = load.SWeightGroup8;
-            replacements[26] = load.SWeightGroup9;
-            replacements[27] = load.SWeightGroup10;
+            replacements[0] = MeasurementFormater.FromMetres(load.LoadedLength, lengthUnit);
+            replacements[1] = MeasurementFormater.FromMetres(load.LoadedWidth, lengthUnit);
+            replacements[2] = MeasurementFormater.FromMetres(load.LoadedHeight, lengthUnit);
+            replacements[3] = MeasurementFormater.FromKilograms(load.GrossWeight, weightUnit);
+            replacements[4] = MeasurementFormater.FromKilograms(load.EWeightSteer, weightUnit);
+            replacements[5] = MeasurementFormater.FromKilograms(load.EWeightDrive, weightUnit);
+            replacements[6] = MeasurementFormater.FromKilograms(load.EWeightGroup1, weightUnit);
+            replacements[7] = MeasurementFormater.FromKilograms(load.EWeightGroup2, weightUnit);
+            replacements[8] = MeasurementFormater.FromKilograms(load.EWeightGroup3, weightUnit);
+            replacements[9] = MeasurementFormater.FromKilograms(load.EWeightGroup4, weightUnit);
+            replacements[10] = MeasurementFormater.FromKilograms(load.EWeightGroup5, weightUnit);
+            replacements[11] = MeasurementFormater.FromKilograms(load.EWeightGroup6, weightUnit);
+            replacements[12] = MeasurementFormater.FromKilograms(load.EWeightGroup7, weightUnit);
+            replacements[13] = MeasurementFormater.FromKilograms(load.EWeightGroup8, weightUnit);
+            replacements[14] = MeasurementFormater.FromKilograms(load.EWeightGroup9, weightUnit);
+            replacements[15] = MeasurementFormater.FromKilograms(load.EWeightGroup10, weightUnit);
+            replacements[16] = MeasurementFormater.FromKilograms(load.SWeightSteer, weightUnit);
+            replacements[17] = MeasurementFormater.FromKilograms(load.SWeightDrive, weightUnit);
+            replacements[18] = MeasurementFormater.FromKilograms(load.SWeightGroup1, weightUnit);
+            replacements[19] = MeasurementFormater.FromKilograms(load.SWeightGroup2, weightUnit);
+            replacements[20] = MeasurementFormater.FromKilograms(load.SWeightGroup3, weightUnit);
+            replacements[21] = MeasurementFormater.FromKilograms(load.SWeightGroup4, weightUnit);
+            replacements[22] = MeasurementFormater.FromKilograms(load.SWeightGroup5, weightUnit);
+            replacements[23] = MeasurementFormater.FromKilograms(load.SWeightGroup6, weightUnit);
+            replacements[24] = MeasurementFormater.FromKilograms(load.SWeightGroup7, weightUnit);
+            replacements[25] = MeasurementFormater.FromKilograms(load.SWeightGroup8, weightUnit);
+            replacements[26] = MeasurementFormater.FromKilograms(load.SWeightGroup9, weightUnit);
+            replacements[27] = MeasurementFormater.FromKilograms(load.SWeightGroup10, weightUnit);
 
             return string.Format(content, replacements);
         }
