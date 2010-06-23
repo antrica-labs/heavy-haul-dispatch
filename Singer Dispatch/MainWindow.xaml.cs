@@ -25,10 +25,24 @@ namespace SingerDispatch
     /// </summary>
     public partial class MainWindow
     {
-        private Dictionary<Type, UserControl> Panels { get; set; }        
+        public static DependencyProperty UseImperialProperty = DependencyProperty.Register("UseMetric", typeof(Boolean), typeof(MainWindow), new PropertyMetadata(false));
+
+        public Boolean UseImperial
+        {
+            get
+            {
+                return (Boolean)GetValue(UseImperialProperty);
+            }
+            set
+            {
+                SetValue(UseImperialProperty, value);
+            }
+        }
+
+        private Dictionary<Type, BaseUserControl> Panels { get; set; }        
         private ObservableCollection<Company> Companies { get; set; }
         private SingerDispatchDataContext Database { get; set; }
-
+        
         public MainWindow()
         {
             InitializeComponent();
@@ -37,7 +51,7 @@ namespace SingerDispatch
 
             try
             {
-                Panels = new Dictionary<Type, UserControl>();
+                Panels = new Dictionary<Type, BaseUserControl>();
                 Database = SingerConstants.CommonDataContext;
                 Companies = new ObservableCollection<Company>();
 
@@ -117,8 +131,8 @@ namespace SingerDispatch
         {
             var link = (TabIndexHyperlink)e.Source;
 
-			if (link.Tab.IsEnabled)
-            	link.Tab.IsSelected = true;
+            if (link.Tab.IsEnabled)
+                link.Tab.IsSelected = true;
         }
 
         private void CollapseAllOtherNavigationExpanders(Expander self)
@@ -153,11 +167,11 @@ namespace SingerDispatch
 
             CollapseAllOtherNavigationExpanders(expander);
 
-            UserControl panel;
+            BaseUserControl panel;
 
             if (!Panels.ContainsKey(panelType))
             {
-                panel = (UserControl)Activator.CreateInstance(panelType);
+                panel = (BaseUserControl)Activator.CreateInstance(panelType);
                 
                 var fields = panel.GetType().GetFields(BindingFlags.Instance | BindingFlags.NonPublic);
 
@@ -172,9 +186,11 @@ namespace SingerDispatch
                     }
                 }
 
-                var binding = new Binding { ElementName = "cmbCompanies", Path = new PropertyPath(Selector.SelectedItemProperty) };
+                var companyBinding = new Binding { ElementName = "cmbCompanies", Path = new PropertyPath(Selector.SelectedItemProperty) };
+                var imperialBinding = new Binding { ElementName = "mainWindow", Path = new PropertyPath(MainWindow.UseImperialProperty) };
 
-                panel.SetBinding(CompanyUserControl.SelectedCompanyProperty, binding);
+                panel.SetBinding(CompanyUserControl.SelectedCompanyProperty, companyBinding);
+                panel.SetBinding(BaseUserControl.UseImperialMeasurementsProperty, imperialBinding);
 
                 Panels.Add(panel.GetType(), panel);
             }

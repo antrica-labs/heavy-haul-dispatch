@@ -8,3 +8,4 @@ _ReSharper.*
 Singer Dispatch/app.config
 Singer Data Importer/app.config
 Singer Dispatch.sln.cache
+TestResults/

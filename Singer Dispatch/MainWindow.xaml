@@ -38,6 +38,10 @@
                 <MenuItem Header="Invoicing">
                     <MenuItem Header="_View job invoices" Click="FindJobForInvoice_Click" InputGestureText="Ctrl+Shift+I" />
                 </MenuItem>
+                <MenuItem Header="Tools">
+                    <MenuItem Header="Global search" />
+                    <MenuItem Header="Use imperial measurements" IsCheckable="true" IsChecked="{Binding ElementName=mainWindow, Path=UseMetric}" />
+                </MenuItem>
             </Menu>
 
             <Border Style="{StaticResource MainNavigation}" DockPanel.Dock="Left">

@@ -6,7 +6,7 @@ namespace SingerDispatch.Panels
 {
     public class BaseUserControl : UserControl
     {
-        public static DependencyProperty UseImperialMeasurementsProperty = DependencyProperty.Register("UseImperialMeasurements", typeof(Boolean), typeof(BaseUserControl), new PropertyMetadata(null, UseImperialMeasurementsPropertyChanged));
+        public static DependencyProperty UseImperialMeasurementsProperty = DependencyProperty.Register("UseImperialMeasurements", typeof(Boolean), typeof(BaseUserControl), new PropertyMetadata(false, UseImperialMeasurementsPropertyChanged));
 
         public Boolean UseImperialMeasurements
         {
