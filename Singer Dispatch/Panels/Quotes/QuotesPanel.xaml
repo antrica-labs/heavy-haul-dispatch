@@ -44,25 +44,25 @@
         
         <TabControl Name="Tabs" DataContext="{Binding ElementName=ThePanel}">
             <TabItem Header="Quotes List">
-                <Quotes:QuoteHistoryControl SelectedCompany="{Binding SelectedCompany}" SelectedQuote="{Binding SelectedQuote}" />
+                <Quotes:QuoteHistoryControl SelectedCompany="{Binding SelectedCompany}" SelectedQuote="{Binding SelectedQuote}" UseImperialMeasurements="{Binding UseImperialMeasurements}" />
             </TabItem>
             <TabItem Header="Commodities" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, Path=SelectedQuote}">
-                <Quotes:QuoteCommoditiesControl SelectedCompany="{Binding SelectedCompany}" SelectedQuote="{Binding SelectedQuote}" />
+                <Quotes:QuoteCommoditiesControl SelectedCompany="{Binding SelectedCompany}" SelectedQuote="{Binding SelectedQuote}" UseImperialMeasurements="{Binding UseImperialMeasurements}" />
             </TabItem>
             <TabItem Header="Supplements" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, Path=SelectedQuote}">
-                <Quotes:QuoteSupplementsControl SelectedCompany="{Binding SelectedCompany}" SelectedQuote="{Binding SelectedQuote}" />
+                <Quotes:QuoteSupplementsControl SelectedCompany="{Binding SelectedCompany}" SelectedQuote="{Binding SelectedQuote}" UseImperialMeasurements="{Binding UseImperialMeasurements}" />
             </TabItem>            
             <TabItem Header="Storage Items" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, Path=SelectedQuote}">
-                <Quotes:QuoteStorageControl SelectedCompany="{Binding SelectedCompany}" SelectedQuote="{Binding SelectedQuote}" />
+                <Quotes:QuoteStorageControl SelectedCompany="{Binding SelectedCompany}" SelectedQuote="{Binding SelectedQuote}" UseImperialMeasurements="{Binding UseImperialMeasurements}" />
             </TabItem>
             <TabItem Header="Inclusions" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, Path=SelectedQuote}">
-                <Quotes:QuoteInclusionsControl SelectedCompany="{Binding SelectedCompany}" SelectedQuote="{Binding SelectedQuote}" />
+                <Quotes:QuoteInclusionsControl SelectedCompany="{Binding SelectedCompany}" SelectedQuote="{Binding SelectedQuote}" UseImperialMeasurements="{Binding UseImperialMeasurements}" />
             </TabItem>
             <TabItem Header="Conditions" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, Path=SelectedQuote}">
-                <Quotes:QuoteConditionsControl SelectedCompany="{Binding SelectedCompany}" SelectedQuote="{Binding SelectedQuote}" />                
+                <Quotes:QuoteConditionsControl SelectedCompany="{Binding SelectedCompany}" SelectedQuote="{Binding SelectedQuote}" UseImperialMeasurements="{Binding UseImperialMeasurements}" />                
             </TabItem>
             <TabItem Header="Additional Notes" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, Path=SelectedQuote}">
-                <Quotes:QuoteNotesControl SelectedCompany="{Binding SelectedCompany}" SelectedQuote="{Binding SelectedQuote}" />
+                <Quotes:QuoteNotesControl SelectedCompany="{Binding SelectedCompany}" SelectedQuote="{Binding SelectedQuote}" UseImperialMeasurements="{Binding UseImperialMeasurements}" />
             </TabItem>
         </TabControl>
     </DockPanel>

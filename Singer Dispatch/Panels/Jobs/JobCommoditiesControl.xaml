@@ -5,6 +5,7 @@
                        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                        xmlns:Panels="clr-namespace:SingerDispatch.Panels"
                        xmlns:Controls="clr-namespace:SingerDispatch.Controls"
+                       x:Name="ThisControl"
                        Loaded="ControlLoaded" mc:Ignorable="d" d:DesignWidth="780">
     <UserControl.Resources>
         <ResourceDictionary>
@@ -84,7 +85,7 @@
                         <Label Grid.Row="7" Grid.Column="0">Notes:</Label>
                         <TextBox Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="2" Style="{StaticResource MultiLine}" Text="{Binding Notes}" Height="83" />
 
-                        <GroupBox Header="Dimentions (meters/kg)" Grid.Row="0" Grid.Column="2" Grid.RowSpan="7" Margin="5,0,0,0">
+                        <GroupBox Header="Dimentions" Grid.Row="0" Grid.Column="2" Grid.RowSpan="7" Margin="5,0,0,0">
                             <StackPanel>
                                 <Grid>
                                     <Grid.ColumnDefinitions>

@@ -62,10 +62,10 @@
         
         <TabControl Name="Tabs" DataContext="{Binding ElementName=ThePanel}">
             <TabItem Header="Invoice List">
-                <Invoicing:JobInvoiceHistoryControl SelectedJob="{Binding SelectedJob}" SelectedInvoice="{Binding SelectedInvoice}" />
+                <Invoicing:JobInvoiceHistoryControl SelectedJob="{Binding SelectedJob}" SelectedInvoice="{Binding SelectedInvoice}" UseImperialMeasurements="{Binding UseImperialMeasurements}" />
             </TabItem>
             <TabItem Header="Line Items" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, Path=SelectedInvoice}">
-                <Invoicing:InvoiceLineItemsControl SelectedInvoice="{Binding SelectedInvoice}" />
+                <Invoicing:InvoiceLineItemsControl SelectedInvoice="{Binding SelectedInvoice}" UseImperialMeasurements="{Binding UseImperialMeasurements}" />
             </TabItem>
         </TabControl>
     </DockPanel>

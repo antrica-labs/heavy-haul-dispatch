@@ -37,22 +37,22 @@
 
         <TabControl Name="Tabs" DataContext="{Binding ElementName=ThePanel}">
             <TabItem Header="Jobs List">
-                <Jobs:JobHistoryControl SelectedCompany="{Binding SelectedCompany}" SelectedJob="{Binding SelectedJob}" />
+                <Jobs:JobHistoryControl SelectedCompany="{Binding SelectedCompany}" SelectedJob="{Binding SelectedJob}" UseImperialMeasurements="{Binding UseImperialMeasurements}" />
             </TabItem>
             <TabItem Header="Commodities" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, Path=SelectedJob}">
-                <Jobs:JobCommoditiesControl SelectedCompany="{Binding SelectedCompany}"  SelectedJob="{Binding SelectedJob}" />
+                <Jobs:JobCommoditiesControl SelectedCompany="{Binding SelectedCompany}"  SelectedJob="{Binding SelectedJob}" UseImperialMeasurements="{Binding UseImperialMeasurements}" />
             </TabItem>
             <TabItem Header="Loads" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, Path=SelectedJob}">
-                <Jobs:LoadsControl SelectedCompany="{Binding SelectedCompany}" SelectedJob="{Binding SelectedJob}" />
+                <Jobs:LoadsControl SelectedCompany="{Binding SelectedCompany}" SelectedJob="{Binding SelectedJob}" UseImperialMeasurements="{Binding UseImperialMeasurements}" />
             </TabItem>
             <TabItem Header="Dispatches" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, Path=SelectedJob}">
-                <Jobs:DispatchesControl SelectedCompany="{Binding SelectedCompany}" SelectedJob="{Binding SelectedJob}" />
+                <Jobs:DispatchesControl SelectedCompany="{Binding SelectedCompany}" SelectedJob="{Binding SelectedJob}" UseImperialMeasurements="{Binding UseImperialMeasurements}" />
             </TabItem>
             <TabItem Header="Permits" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, Path=SelectedJob}">
-                <Jobs:PermitsControl SelectedCompany="{Binding SelectedCompany}" SelectedJob="{Binding SelectedJob}" />
+                <Jobs:PermitsControl SelectedCompany="{Binding SelectedCompany}" SelectedJob="{Binding SelectedJob}" UseImperialMeasurements="{Binding UseImperialMeasurements}" />
             </TabItem>
             <TabItem Header="Third Party Services" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, Path=SelectedJob}">
-                <Jobs:ThirdPartyServicesControl SelectedCompany="{Binding SelectedCompany}" SelectedJob="{Binding SelectedJob}" />
+                <Jobs:ThirdPartyServicesControl SelectedCompany="{Binding SelectedCompany}" SelectedJob="{Binding SelectedJob}" UseImperialMeasurements="{Binding UseImperialMeasurements}" />
             </TabItem>
         </TabControl>
     </DockPanel>
