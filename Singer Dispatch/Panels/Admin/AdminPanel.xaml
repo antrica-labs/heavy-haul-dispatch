@@ -18,7 +18,7 @@
                 <Admin:EmployeesControl />    
             </TabItem>
             <TabItem Header="Equipment">
-                <Admin:EquipmentControl />
+                <Admin:EquipmentControl UseImperialMeasurements="{Binding UseImperialMeasurements}" />
             </TabItem>
             <TabItem Header="Inclusions">
                 <Admin:InclusionsControl />
@@ -30,7 +30,7 @@
                 <Admin:RatesControl />
             </TabItem>
             <TabItem Header="Trailer combinations">
-                <Admin:TrailerCombinationsControl Width="Auto" />
+                <Admin:TrailerCombinationsControl Width="Auto" UseImperialMeasurements="{Binding UseImperialMeasurements}" />
             </TabItem>
         </TabControl>
     </Grid>

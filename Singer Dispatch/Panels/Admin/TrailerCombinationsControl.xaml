@@ -1,11 +1,12 @@
-﻿<UserControl x:Class="SingerDispatch.Panels.Admin.TrailerCombinationsControl"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:Local="clr-namespace:SingerDispatch.Panels.Admin"
-             x:Name="trailerCombinationControl"
-             Loaded="Control_Loaded" mc:Ignorable="d" d:DesignWidth="780">
+﻿<Panels:CompanyUserControl x:Class="SingerDispatch.Panels.Admin.TrailerCombinationsControl"
+                           xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                           xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                           xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+                           xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                           xmlns:Panels="clr-namespace:SingerDispatch.Panels"
+                           xmlns:Local="clr-namespace:SingerDispatch.Panels.Admin"
+                           x:Name="trailerCombinationControl"
+                           Loaded="Control_Loaded" mc:Ignorable="d" d:DesignWidth="780">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -33,12 +34,12 @@
                 <DataGridComboBoxColumn Header="Wheel type" ItemsSource="{Binding Source={StaticResource RatesDropList}}" DisplayMemberPath="Name" SelectedItemBinding="{Binding Rate}" />
                 <DataGridTextColumn Header="Combination" Binding="{Binding Combination}" Width="2*" />
                 <DataGridTextColumn Header="Licence" Binding="{Binding LicencePlate}" />
-                <DataGridTextColumn Header="Deck Length" Binding="{Binding DeckLength}" Width="0.5*" />
-                <DataGridTextColumn Header="Length" Binding="{Binding Length}" Width="0.5*" />
-                <DataGridTextColumn Header="Width" Binding="{Binding Width}" Width="0.5*" />
-                <DataGridTextColumn Header="Height" Binding="{Binding Height}" Width="0.5*" />
-                <DataGridTextColumn Header="Tare" Binding="{Binding Tare}" Width="0.5*" />
+                <DataGridTextColumn Header="Deck Length" Binding="{Binding DeckLength, StringFormat={}{0}m}" Width="0.5*" />
+                <DataGridTextColumn Header="Length" Binding="{Binding Length, StringFormat={}{0}m}" Width="0.5*" />
+                <DataGridTextColumn Header="Width" Binding="{Binding Width, StringFormat={}{0}m}" Width="0.5*" />
+                <DataGridTextColumn Header="Height" Binding="{Binding Height, StringFormat={}{0}m}" Width="0.5*" />
+                <DataGridTextColumn Header="Tare" Binding="{Binding Tare, StringFormat={}{0}kg}" Width="0.5*" />
             </DataGrid.Columns>
         </DataGrid>
     </DockPanel>
-</UserControl>
+</Panels:CompanyUserControl>

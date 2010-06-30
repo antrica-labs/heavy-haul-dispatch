@@ -17,16 +17,16 @@
     <Grid DataContext="{Binding ElementName=companiesPanel}">
         <TabControl Name="Tabs">
             <TabItem Header="Addresses &amp; Contacts">
-                <Companies:AddressesAndContactsControl SelectedCompany="{Binding Path=SelectedCompany}" />
+                <Companies:AddressesAndContactsControl SelectedCompany="{Binding Path=SelectedCompany}" UseImperialMeasurements="{Binding Path=UseImperialMeasurements}" />
             </TabItem>
             <TabItem Header="Commodities">
-                <Companies:CommoditiesControl SelectedCompany="{Binding Path=SelectedCompany}" />
+                <Companies:CommoditiesControl SelectedCompany="{Binding Path=SelectedCompany}" UseImperialMeasurements="{Binding Path=UseImperialMeasurements}" />
             </TabItem>
             <TabItem Header="Services">
-                <Companies:ServicesControl SelectedCompany="{Binding Path=SelectedCompany}"  />
+                <Companies:ServicesControl SelectedCompany="{Binding Path=SelectedCompany}" UseImperialMeasurements="{Binding Path=UseImperialMeasurements}" />
             </TabItem>
             <TabItem Header="Credit &amp; Rates">
-                <Companies:CreditAndRatesControl SelectedCompany="{Binding Path=SelectedCompany}" />
+                <Companies:CreditAndRatesControl SelectedCompany="{Binding Path=SelectedCompany}" UseImperialMeasurements="{Binding Path=UseImperialMeasurements}" />
             </TabItem>
         </TabControl>
     </Grid>

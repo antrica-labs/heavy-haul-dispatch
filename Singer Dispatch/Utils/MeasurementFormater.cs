@@ -24,7 +24,7 @@ namespace SingerDispatch.Utils
         private const int MM_PER_CM = 10;
         private const int INCHES_PER_MILE = 63360;
 
-        private const string METRIC_L_SIGFIG = "#,0.##";
+        private const string METRIC_L_SIGFIG = "#,0.###";
         private const string METRIC_W_SIGFIG = "#,0";
         private const string DISTANCE_SIGFIG = "#,0";
         private const string FEET_AND_INCHES_SIGFIG = "0";

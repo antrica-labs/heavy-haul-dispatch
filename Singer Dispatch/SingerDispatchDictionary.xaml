@@ -12,6 +12,8 @@
     <Controls:InvoiceFriendlyNameConverter x:Key="InvoiceFriendlyNameConverter" />
     <Controls:EmployeeFriendlyNameConverter x:Key="EmployeeFriendlyNameConverter" />
     <Controls:LoadCommoditiesStringConverter x:Key="LoadCommoditiesStringConverter" />
+    <Controls:DistanceStringConverter x:Key="DistanceStringConverter" />
+    <Controls:WeightStringConverter x:Key="WeightStringConverter" />
     
     <DataTemplate x:Key="SimpleNameTemplate">
         <TextBlock Text="{Binding Name}" />
