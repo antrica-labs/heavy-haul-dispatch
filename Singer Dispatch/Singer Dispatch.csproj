@@ -106,8 +106,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controls\Converters\DistanceStringConverter.cs" />
-    <Compile Include="Controls\Converters\WeightStringConverter.cs" />
+    <Compile Include="Controls\Converters\LengthMeasurementConverter.cs" />
+    <Compile Include="Controls\Converters\WeightMeasurementConverter.cs" />
     <Compile Include="Controls\CustomCommands.cs" />
     <Compile Include="Controls\DataGridHelper.cs" />
     <Compile Include="Controls\Converters\EmployeeFriendlyNameConverter.cs" />

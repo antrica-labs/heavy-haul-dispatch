@@ -25,17 +25,17 @@ namespace SingerDispatch
     /// </summary>
     public partial class MainWindow
     {
-        public static DependencyProperty UseImperialProperty = DependencyProperty.Register("UseMetric", typeof(Boolean), typeof(MainWindow), new PropertyMetadata(false));
+        public static DependencyProperty UseImperialMeasurementsProperty = DependencyProperty.Register("UseImperialMeasurements", typeof(Boolean), typeof(MainWindow), new PropertyMetadata(false));
 
-        public Boolean UseImperial
+        public Boolean UseImperialMeasurements
         {
             get
             {
-                return (Boolean)GetValue(UseImperialProperty);
+                return (Boolean)GetValue(UseImperialMeasurementsProperty);
             }
             set
             {
-                SetValue(UseImperialProperty, value);
+                SetValue(UseImperialMeasurementsProperty, value);
             }
         }
 
@@ -187,7 +187,7 @@ namespace SingerDispatch
                 }
 
                 var companyBinding = new Binding { ElementName = "cmbCompanies", Path = new PropertyPath(Selector.SelectedItemProperty) };
-                var imperialBinding = new Binding { ElementName = "mainWindow", Path = new PropertyPath(MainWindow.UseImperialProperty) };
+                var imperialBinding = new Binding { ElementName = "mainWindow", Path = new PropertyPath(MainWindow.UseImperialMeasurementsProperty) };
 
                 panel.SetBinding(CompanyUserControl.SelectedCompanyProperty, companyBinding);
                 panel.SetBinding(BaseUserControl.UseImperialMeasurementsProperty, imperialBinding);

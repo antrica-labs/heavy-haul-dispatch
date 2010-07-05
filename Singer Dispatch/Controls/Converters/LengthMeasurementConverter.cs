@@ -8,7 +8,7 @@ using System.IO;
 
 namespace SingerDispatch.Controls
 {
-    class DistanceStringConverter : IMultiValueConverter
+    class LengthMeasurementConverter : IMultiValueConverter
     {
         public object Convert(object[] values, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
@@ -33,20 +33,17 @@ namespace SingerDispatch.Controls
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, System.Globalization.CultureInfo culture)
         {
             double meters;
-            bool isImperial;
             var measurement = (string)value;
 
             measurement = measurement.Trim();
 
             if (measurement.EndsWith(MeasurementFormater.UMetres))
             {
-                meters = Double.Parse(measurement.Replace(MeasurementFormater.UMetres, ""));
-                isImperial = false;
+                meters = Double.Parse(measurement.Replace(MeasurementFormater.UMetres, ""));                
             }
             else if (measurement.EndsWith(MeasurementFormater.UCentimetres))
             {
-                meters = Double.Parse(measurement.Replace(MeasurementFormater.UCentimetres, "")) / 100;                
-                isImperial = false;
+                meters = Double.Parse(measurement.Replace(MeasurementFormater.UCentimetres, "")) / 100;
             }
             else if (measurement.Contains(MeasurementFormater.UFeet) || measurement.Contains(MeasurementFormater.UInches))
             {
@@ -56,30 +53,27 @@ namespace SingerDispatch.Controls
                     measurement += "0";
 
                 var tokens = measurement.Split('-');
-                int inches;
+                double inches;
 
                 if (tokens.Length == 2)                
                 {
-                    inches = Int32.Parse(tokens[0]) * 12 + Int32.Parse(tokens[1]);
+                    inches = Double.Parse(tokens[0]) * 12 + Double.Parse(tokens[1]);
                 }
                 else
                 {
-                    inches = Int32.Parse(tokens[0]);
+                    inches = Double.Parse(tokens[0]);
                 }
 
                 meters = inches / 39.37;
-                isImperial = true;
             }
             else // Assume they are entering with no units and want meters
             {
                 meters = Double.Parse(measurement);
-                isImperial = false;
             }
             
-            var result = new object[2];
+            var result = new object[1];
             
-            result[0] = meters;
-            result[1] = isImperial;
+            result[0] = meters;            
 
             return result;                        
         }      

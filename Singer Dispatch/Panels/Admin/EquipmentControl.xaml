@@ -107,7 +107,7 @@
                             <Label Grid.Row="0" Grid.Column="0">Tare weight:</Label>
                             <TextBox Grid.Row="0" Grid.Column="1">
                                 <TextBox.Text>
-                                    <MultiBinding Converter="{StaticResource WeightStringConverter}">
+                                    <MultiBinding Converter="{StaticResource WeightMeasurementConverter}">
                                         <Binding Path="Tare" />
                                         <Binding ElementName="ThisControl" Path="UseImperialMeasurements" />
                                     </MultiBinding>
@@ -117,7 +117,7 @@
                             <Label Grid.Row="1" Grid.Column="0">Height</Label>
                             <TextBox Grid.Row="1" Grid.Column="1">
                                 <TextBox.Text>
-                                    <MultiBinding Converter="{StaticResource DistanceStringConverter}">
+                                    <MultiBinding Converter="{StaticResource LengthMeasurementConverter}">
                                         <Binding Path="Height" />
                                         <Binding ElementName="ThisControl" Path="UseImperialMeasurements" />
                                     </MultiBinding>

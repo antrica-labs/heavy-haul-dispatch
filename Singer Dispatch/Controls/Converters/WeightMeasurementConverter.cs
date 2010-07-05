@@ -7,7 +7,7 @@ using SingerDispatch.Utils;
 
 namespace SingerDispatch.Controls
 {
-    class WeightStringConverter : IMultiValueConverter
+    class WeightMeasurementConverter : IMultiValueConverter
     {
         public object Convert(object[] values, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
@@ -31,7 +31,27 @@ namespace SingerDispatch.Controls
 
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, System.Globalization.CultureInfo culture)
         {
-            throw new NotImplementedException();
+            double kg;
+            var measurement = (string)value;
+
+            measurement = measurement.Trim();
+
+            if (measurement.EndsWith(MeasurementFormater.UPounds))
+            {
+                double pounds = Double.Parse(measurement.Replace(MeasurementFormater.UPounds, ""));
+
+                kg = pounds * 0.45359237;
+            }
+            else
+            {
+                kg = Double.Parse(measurement.Replace(MeasurementFormater.UKilograms, ""));
+            }
+
+            var result = new object[2];
+
+            result[0] = kg;
+
+            return result;
         }
     }
 }

@@ -100,7 +100,7 @@
                                 <Label Grid.ColumnSpan="2">Length:</Label>
                                 <TextBox Name="txtCommodityLength" Grid.Column="2">
                                     <TextBox.Text>
-                                        <MultiBinding Converter="{StaticResource DistanceStringConverter}">
+                                        <MultiBinding Converter="{StaticResource LengthMeasurementConverter}">
                                             <Binding Path="Length" />
                                             <Binding ElementName="ThePanel" Path="UseImperialMeasurements" />
                                         </MultiBinding>
@@ -110,7 +110,7 @@
                                 <Label Grid.Row="1" Grid.ColumnSpan="2">Width:</Label>
                                 <TextBox Name="txtCommodityWidth" Grid.Row="1" Grid.Column="2" Height="22.96" Margin="3,0,3,3" VerticalAlignment="Bottom">
                                     <TextBox.Text>
-                                        <MultiBinding Converter="{StaticResource DistanceStringConverter}">
+                                        <MultiBinding Converter="{StaticResource LengthMeasurementConverter}">
                                             <Binding Path="Width" />
                                             <Binding ElementName="ThePanel" Path="UseImperialMeasurements" />
                                         </MultiBinding>
@@ -120,7 +120,7 @@
                                 <Label Grid.Row="2" Grid.ColumnSpan="2">Height:</Label>
                                 <TextBox Name="txtCommodityHeight" Grid.Row="2" Grid.Column="2">
                                     <TextBox.Text>
-                                        <MultiBinding Converter="{StaticResource DistanceStringConverter}">
+                                        <MultiBinding Converter="{StaticResource LengthMeasurementConverter}">
                                             <Binding Path="Height" />
                                             <Binding ElementName="ThePanel" Path="UseImperialMeasurements" />
                                         </MultiBinding>
@@ -133,7 +133,7 @@
                                 <Label Grid.Row="4" Grid.ColumnSpan="2">Weight:</Label>
                                 <TextBox Name="txtCommodityWeight" Grid.Row="4" Grid.Column="2">
                                     <TextBox.Text>
-                                        <MultiBinding Converter="{StaticResource WeightStringConverter}">
+                                        <MultiBinding Converter="{StaticResource WeightMeasurementConverter}">
                                             <Binding Path="Weight" />
                                             <Binding ElementName="ThePanel" Path="UseImperialMeasurements" />
                                         </MultiBinding>
@@ -199,10 +199,38 @@
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="2*" />
                 <DataGridTextColumn Header="Unit" Binding="{Binding Unit}" />
-                <DataGridTextColumn Header="Length" Binding="{Binding Length, StringFormat={}{0}m}" />
-                <DataGridTextColumn Header="Width" Binding="{Binding Width, StringFormat={}{0}m}" />
-                <DataGridTextColumn Header="Height" Binding="{Binding Height, StringFormat={}{0}m}" />
-                <DataGridTextColumn Header="Weight" Binding="{Binding Weight, StringFormat={}{0}kg}" />
+                <DataGridTextColumn Header="Length">
+                    <DataGridTextColumn.Binding>
+                        <MultiBinding Converter="{StaticResource LengthMeasurementConverter}">
+                            <Binding Path="Length" />
+                            <Binding Path="DataContext.UseImperialMeasurements" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type UserControl}}" />
+                        </MultiBinding>
+                    </DataGridTextColumn.Binding>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="Width">
+                    <DataGridTextColumn.Binding>
+                        <MultiBinding Converter="{StaticResource LengthMeasurementConverter}">
+                            <Binding Path="Width" />
+                            <Binding Path="DataContext.UseImperialMeasurements" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type UserControl}}" />
+                        </MultiBinding>
+                    </DataGridTextColumn.Binding>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="Height">
+                    <DataGridTextColumn.Binding>
+                        <MultiBinding Converter="{StaticResource LengthMeasurementConverter}">
+                            <Binding Path="Height" />
+                            <Binding Path="DataContext.UseImperialMeasurements" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type UserControl}}" />
+                        </MultiBinding>
+                    </DataGridTextColumn.Binding>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="Weight">
+                    <DataGridTextColumn.Binding>
+                        <MultiBinding Converter="{StaticResource WeightMeasurementConverter}">
+                            <Binding Path="Weight" />
+                            <Binding Path="DataContext.UseImperialMeasurements" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type UserControl}}" />
+                        </MultiBinding>
+                    </DataGridTextColumn.Binding>
+                </DataGridTextColumn>
                 <DataGridTextColumn Header="Cost" Binding="{Binding Cost, StringFormat=C}" />
             </DataGrid.Columns>
         </DataGrid>

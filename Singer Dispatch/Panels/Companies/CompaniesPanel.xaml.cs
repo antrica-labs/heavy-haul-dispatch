@@ -16,5 +16,10 @@
 
             IsEnabled = newValue != null;
         }
+
+        protected override void UseImperialMeasurementsChanged(bool value)
+        {
+            base.UseImperialMeasurementsChanged(value);
+        }
     }
 }

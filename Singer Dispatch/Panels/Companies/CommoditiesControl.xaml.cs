@@ -4,6 +4,7 @@ using System.Windows;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using SingerDispatch.Controls;
+using System.Windows.Media;
 
 namespace SingerDispatch.Panels.Companies
 {
@@ -28,6 +29,13 @@ namespace SingerDispatch.Panels.Companies
         private void Control_Loaded(object sender, RoutedEventArgs e)
         {
             SaveCommand.Executed += CommitChanges_Executed;
+        }
+
+        protected override void UseImperialMeasurementsChanged(bool value)
+        {
+            base.UseImperialMeasurementsChanged(value);                   
+
+            value = !!value;
         }
 
         protected override void SelectedCompanyChanged(Company newValue, Company oldValue)
@@ -79,6 +87,9 @@ namespace SingerDispatch.Panels.Companies
 
         private void SaveCommodity_Click(object sender, RoutedEventArgs e)
         {
+            SelectedCompany = null;
+
+            /*
             try
             {
                 Database.SubmitChanges();
@@ -89,6 +100,7 @@ namespace SingerDispatch.Panels.Companies
             {
                 Windows.ErrorNoticeWindow.ShowError("Error while attempting write changes to database", ex.Message);
             }
+             */ 
         }        
 
        

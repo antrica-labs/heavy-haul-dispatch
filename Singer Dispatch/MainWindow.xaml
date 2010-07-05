@@ -40,7 +40,7 @@
                 </MenuItem>
                 <MenuItem Header="Tools">
                     <MenuItem Header="Global search" />
-                    <MenuItem Header="Use imperial measurements" IsCheckable="true" IsChecked="{Binding ElementName=mainWindow, Path=UseMetric}" />
+                    <MenuItem Header="Use imperial measurements" IsCheckable="true" IsChecked="{Binding ElementName=mainWindow, Path=UseImperialMeasurements}" />
                 </MenuItem>
             </Menu>
 
