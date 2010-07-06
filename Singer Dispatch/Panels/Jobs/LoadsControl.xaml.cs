@@ -286,5 +286,31 @@ namespace SingerDispatch.Panels.Jobs
             ((Load)dgLoads.SelectedItem).ExtraEquipment.Remove(equipment);
             ((ObservableCollection<ExtraEquipment>)dgExtraEquipment.ItemsSource).Remove(equipment);
         }
+
+        private void GuessLoadWeights_Click(object sender, RoutedEventArgs e)
+        {
+            // Populate as many of the estimated weights and the dimensions as you can based on the tractor, trailer combo, and commodities.
+
+            var load = (Load)dgLoads.SelectedItem;
+
+            if (load == null) return;
+
+            load.GrossWeight = 0.0;
+
+            if (load.Equipment != null)
+            {
+                load.GrossWeight += load.Equipment.Tare ?? 0.0;
+            }
+
+            if (load.TrailerCombination != null)
+            {
+                load.GrossWeight += load.TrailerCombination.Tare ?? 0.0;
+            }
+
+            foreach (var commodity in load.JobCommodities)
+            {
+                load.GrossWeight += commodity.Weight ?? 0;
+            }
+        }
     }
 }

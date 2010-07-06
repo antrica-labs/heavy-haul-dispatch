@@ -39,7 +39,7 @@ namespace SingerDispatch
             }
         }
 
-        private Dictionary<Type, BaseUserControl> Panels { get; set; }        
+        private Dictionary<Type, UserControl> Panels { get; set; }        
         private ObservableCollection<Company> Companies { get; set; }
         private SingerDispatchDataContext Database { get; set; }
         
@@ -51,7 +51,7 @@ namespace SingerDispatch
 
             try
             {
-                Panels = new Dictionary<Type, BaseUserControl>();
+                Panels = new Dictionary<Type, UserControl>();
                 Database = SingerConstants.CommonDataContext;
                 Companies = new ObservableCollection<Company>();
 
@@ -167,11 +167,11 @@ namespace SingerDispatch
 
             CollapseAllOtherNavigationExpanders(expander);
 
-            BaseUserControl panel;
+            UserControl panel;
 
             if (!Panels.ContainsKey(panelType))
             {
-                panel = (BaseUserControl)Activator.CreateInstance(panelType);
+                panel = (UserControl)Activator.CreateInstance(panelType);
                 
                 var fields = panel.GetType().GetFields(BindingFlags.Instance | BindingFlags.NonPublic);
 

@@ -344,8 +344,8 @@
                                         </TextBox.Text>
                                     </TextBox>
 
-                                    <Label Grid.Column="4" Grid.Row="3">Length:</Label>
-                                    <TextBox Grid.Column="5" Grid.Row="3" Grid.ColumnSpan="2">
+                                    <Label Grid.Column="3" Grid.Row="3">Length:</Label>
+                                    <TextBox Grid.Column="4" Grid.Row="3" Grid.ColumnSpan="2">
                                         <TextBox.Text>
                                             <MultiBinding Converter="{StaticResource WeightMeasurementConverter}">
                                                 <Binding Path="LoadedLength" />
@@ -354,8 +354,8 @@
                                         </TextBox.Text>
                                     </TextBox> 
 
-                                    <Label Grid.Column="7" Grid.Row="3">Width:</Label>
-                                    <TextBox Grid.Column="8" Grid.Row="3" Grid.ColumnSpan="2">
+                                    <Label Grid.Column="6" Grid.Row="3">Width:</Label>
+                                    <TextBox Grid.Column="7" Grid.Row="3" Grid.ColumnSpan="2">
                                         <TextBox.Text>
                                             <MultiBinding Converter="{StaticResource WeightMeasurementConverter}">
                                                 <Binding Path="LoadedWidth" />
@@ -364,8 +364,8 @@
                                         </TextBox.Text>
                                     </TextBox>
 
-                                    <Label Grid.Column="10" Grid.Row="3">Height:</Label>
-                                    <TextBox Grid.Column="11" Grid.Row="3" Grid.ColumnSpan="2">
+                                    <Label Grid.Column="9" Grid.Row="3">Height:</Label>
+                                    <TextBox Grid.Column="10" Grid.Row="3" Grid.ColumnSpan="2">
                                         <TextBox.Text>
                                             <MultiBinding Converter="{StaticResource WeightMeasurementConverter}">
                                                 <Binding Path="LoadedHeight" />
@@ -373,6 +373,8 @@
                                             </MultiBinding>
                                         </TextBox.Text>
                                     </TextBox>
+
+                                    <Button Style="{StaticResource Horizontal}" Grid.Column="12" Grid.Row="3" Click="GuessLoadWeights_Click">Auto</Button>
                                 </Grid>
                             </StackPanel>
                         </GroupBox>

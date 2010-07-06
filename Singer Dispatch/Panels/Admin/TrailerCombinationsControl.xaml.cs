@@ -45,6 +45,11 @@ namespace SingerDispatch.Panels.Admin
             dgCombinations.ItemsSource = new ObservableCollection<TrailerCombination>(from tc in Database.TrailerCombinations select tc);         
         }
 
+        protected override void UseImperialMeasurementsChanged(bool value)
+        {
+            base.UseImperialMeasurementsChanged(value);
+        }
+
         private void NewCombination_Click(object sender, RoutedEventArgs e)
         {
             var list = (ObservableCollection<TrailerCombination>)dgCombinations.ItemsSource;

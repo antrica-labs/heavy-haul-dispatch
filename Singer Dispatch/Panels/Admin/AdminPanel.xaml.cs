@@ -10,5 +10,10 @@ namespace SingerDispatch.Panels.Admin
         {
             InitializeComponent();
         }
+
+        protected override void UseImperialMeasurementsChanged(bool value)
+        {
+            base.UseImperialMeasurementsChanged(value);
+        }
     }
 }

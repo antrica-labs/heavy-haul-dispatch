@@ -1,10 +1,12 @@
-﻿<UserControl x:Class="SingerDispatch.Panels.Admin.AdminPanel"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:Admin="clr-namespace:SingerDispatch.Panels.Admin"
-             mc:Ignorable="d">
+﻿<Panels:BaseUserControl x:Class="SingerDispatch.Panels.Admin.AdminPanel"
+                        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+                        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                        xmlns:Panels="clr-namespace:SingerDispatch.Panels"
+                        xmlns:Admin="clr-namespace:SingerDispatch.Panels.Admin"
+                        x:Name="ThisPanel"
+                        mc:Ignorable="d">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -30,8 +32,8 @@
                 <Admin:RatesControl />
             </TabItem>
             <TabItem Header="Trailer combinations">
-                <Admin:TrailerCombinationsControl Width="Auto" UseImperialMeasurements="{Binding UseImperialMeasurements}" />
+                <Admin:TrailerCombinationsControl Width="Auto" UseImperialMeasurements="{Binding ElementName=ThisPanel, Path=UseImperialMeasurements}" />
             </TabItem>
         </TabControl>
     </Grid>
-</UserControl>
+</Panels:BaseUserControl>
