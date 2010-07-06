@@ -12996,7 +12996,7 @@ namespace SingerDispatch
 		
 		private System.Nullable<bool> _IsDispatchable;
 		
-		private string _Tare;
+		private System.Nullable<double> _Tare;
 		
 		private System.Nullable<double> _Height;
 		
@@ -13056,7 +13056,7 @@ namespace SingerDispatch
     partial void OnEngineTypeChanged();
     partial void OnIsDispatchableChanging(System.Nullable<bool> value);
     partial void OnIsDispatchableChanged();
-    partial void OnTareChanging(string value);
+    partial void OnTareChanging(System.Nullable<double> value);
     partial void OnTareChanged();
     partial void OnHeightChanging(System.Nullable<double> value);
     partial void OnHeightChanged();
@@ -13358,7 +13358,7 @@ namespace SingerDispatch
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Tare")]
-		public string Tare
+		public System.Nullable<double> Tare
 		{
 			get
 			{

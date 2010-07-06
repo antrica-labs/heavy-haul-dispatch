@@ -569,7 +569,7 @@
       <Column Name="EngineModel" Type="System.String" CanBeNull="true" />
       <Column Name="EngineType" Type="System.String" CanBeNull="true" />
       <Column Name="IsDispatchable" Type="System.Boolean" CanBeNull="true" />
-      <Column Name="Tare" Type="System.String" CanBeNull="true" />
+      <Column Name="Tare" Type="System.Double" CanBeNull="true" />
       <Column Name="Height" Type="System.Double" CanBeNull="true" />
       <Column Name="AxleConfig" Type="System.String" CanBeNull="true" />
       <Column Name="HasWinch" Type="System.Boolean" CanBeNull="true" />
