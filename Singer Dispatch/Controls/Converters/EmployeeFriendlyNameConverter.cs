@@ -13,7 +13,7 @@ namespace SingerDispatch.Controls
             }
             catch
             {
-                return "something";
+                return "";
             }
         }
 

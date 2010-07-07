@@ -18,6 +18,8 @@ namespace SingerDispatch.Controls
             Boolean useImperial = (Boolean)values[1];
             string unit;
 
+            if (measurement == 0.0) return "";
+
             if (useImperial == true)
             {
                 unit = MeasurementFormater.UFeet;

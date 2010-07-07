@@ -17,6 +17,8 @@ namespace SingerDispatch.Controls
             Boolean imperial = (Boolean)values[1];
             string unit;
 
+            if (kg == 0.0) return "";
+
             if (imperial == true)
             {
                 unit = MeasurementFormater.UPounds;

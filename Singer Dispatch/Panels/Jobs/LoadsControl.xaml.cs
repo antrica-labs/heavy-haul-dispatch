@@ -299,18 +299,47 @@ namespace SingerDispatch.Panels.Jobs
 
             if (load.Equipment != null)
             {
-                load.GrossWeight += load.Equipment.Tare ?? 0.0;
+                load.GrossWeight += load.Equipment.Tare ?? 0.0;                
             }
 
             if (load.TrailerCombination != null)
             {
                 load.GrossWeight += load.TrailerCombination.Tare ?? 0.0;
+                load.LoadedWidth = load.TrailerCombination.Width ?? 0.0;
+                load.LoadedLength = load.TrailerCombination.Length ?? 0.0;
+                load.LoadedHeight = load.TrailerCombination.Height ?? 0.0;
             }
+
+            var widest = 0.0;
+            var longest = 0.0;
+            var highest = 0.0;
 
             foreach (var commodity in load.JobCommodities)
             {
-                load.GrossWeight += commodity.Weight ?? 0;
+                load.GrossWeight += commodity.Weight ?? 0.0;
+                
+                var length = commodity.Length ?? 0.0;
+                var height = commodity.Height ?? 0.0;
+                var width = commodity.Width ?? 0.0;
+
+                if (length > longest)
+                    longest = length;
+
+                if (height > highest)
+                    highest = height;
+
+                if (width > widest)
+                    widest = width;
             }
+
+
+            load.LoadedHeight += highest;
+
+            if (widest > load.LoadedWidth)
+                load.LoadedWidth = widest;
+
+            if (longest > load.LoadedLength)
+                load.LoadedLength = longest;
         }
     }
 }
