@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Data;
 using SingerDispatch.Utils;
+using System.Windows;
 
 namespace SingerDispatch.Controls
 {
@@ -33,26 +34,36 @@ namespace SingerDispatch.Controls
 
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, System.Globalization.CultureInfo culture)
         {
+            var result = new object[1];
             double kg;
             var measurement = (string)value;
 
             measurement = measurement.Trim();
 
-            if (measurement.EndsWith(MeasurementFormater.UPounds))
+            try
             {
-                double pounds = Double.Parse(measurement.Replace(MeasurementFormater.UPounds, ""));
+                if (measurement.Length == 0)
+                {
+                    kg = 0;
+                }
+                if (measurement.EndsWith(MeasurementFormater.UPounds))
+                {
+                    double pounds = Double.Parse(measurement.Replace(MeasurementFormater.UPounds, ""));
 
-                kg = pounds * 0.45359237;
+                    kg = pounds * 0.45359237;
+                }
+                else
+                {
+                    kg = Double.Parse(measurement.Replace(MeasurementFormater.UKilograms, ""));
+                }
+
+                result[0] = kg;
             }
-            else
+            catch
             {
-                kg = Double.Parse(measurement.Replace(MeasurementFormater.UKilograms, ""));
+                result[0] = DependencyProperty.UnsetValue;
             }
-
-            var result = new object[2];
-
-            result[0] = kg;
-
+            
             return result;
         }
     }

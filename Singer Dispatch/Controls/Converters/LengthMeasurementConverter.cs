@@ -5,6 +5,8 @@ using System.Text;
 using System.Windows.Data;
 using SingerDispatch.Utils;
 using System.IO;
+using System.Windows.Controls;
+using System.Windows;
 
 namespace SingerDispatch.Controls
 {
@@ -34,50 +36,60 @@ namespace SingerDispatch.Controls
 
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, System.Globalization.CultureInfo culture)
         {
+            var result = new object[1];
             double meters;
             var measurement = (string)value;
 
             measurement = measurement.Trim();
 
-            if (measurement.EndsWith(MeasurementFormater.UMetres))
+            try
             {
-                meters = Double.Parse(measurement.Replace(MeasurementFormater.UMetres, ""));                
-            }
-            else if (measurement.EndsWith(MeasurementFormater.UCentimetres))
-            {
-                meters = Double.Parse(measurement.Replace(MeasurementFormater.UCentimetres, "")) / 100;
-            }
-            else if (measurement.Contains(MeasurementFormater.UFeet) || measurement.Contains(MeasurementFormater.UInches))
-            {
-                measurement = measurement.Replace(MeasurementFormater.UInches, "").Replace(MeasurementFormater.UFeet, "-");
-
-                if (measurement.EndsWith("-"))
-                    measurement += "0";
-
-                var tokens = measurement.Split('-');
-                double inches;
-
-                if (tokens.Length == 2)                
+                if (measurement.Length == 0)
                 {
-                    inches = Double.Parse(tokens[0]) * 12 + Double.Parse(tokens[1]);
+                    meters = 0;
                 }
-                else
+                else if (measurement.EndsWith(MeasurementFormater.UMetres))
                 {
-                    inches = Double.Parse(tokens[0]);
+                    meters = Double.Parse(measurement.Replace(MeasurementFormater.UMetres, ""));
+                }
+                else if (measurement.EndsWith(MeasurementFormater.UCentimetres))
+                {
+                    meters = Double.Parse(measurement.Replace(MeasurementFormater.UCentimetres, "")) / 100;
+                }
+                else if (measurement.Contains(MeasurementFormater.UFeet) || measurement.Contains(MeasurementFormater.UInches))
+                {
+                    measurement = measurement.Replace(MeasurementFormater.UInches, "").Replace(MeasurementFormater.UFeet, "-");
+
+                    if (measurement.EndsWith("-"))
+                        measurement += "0";
+
+                    var tokens = measurement.Split('-');
+                    double inches;
+
+                    if (tokens.Length == 2)
+                    {
+                        inches = Double.Parse(tokens[0]) * 12 + Double.Parse(tokens[1]);
+                    }
+                    else
+                    {
+                        inches = Double.Parse(tokens[0]);
+                    }
+
+                    meters = inches / 39.37;
+                }
+                else // Assume they are entering with no units and want meters
+                {
+                    meters = Double.Parse(measurement);
                 }
 
-                meters = inches / 39.37;
+                result[0] = meters;
             }
-            else // Assume they are entering with no units and want meters
+            catch 
             {
-                meters = Double.Parse(measurement);
+                result[0] = DependencyProperty.UnsetValue;
             }
-            
-            var result = new object[1];
-            
-            result[0] = meters;            
 
-            return result;                        
-        }      
+            return result;
+        }
     }
 }

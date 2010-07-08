@@ -5,6 +5,7 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using SingerDispatch.Controls;
 using System.Windows.Media;
+using System.Windows.Controls;
 
 namespace SingerDispatch.Panels.Companies
 {
@@ -86,10 +87,7 @@ namespace SingerDispatch.Panels.Companies
         }
 
         private void SaveCommodity_Click(object sender, RoutedEventArgs e)
-        {
-            SelectedCompany = null;
-
-            /*
+        {         
             try
             {
                 Database.SubmitChanges();
@@ -100,9 +98,6 @@ namespace SingerDispatch.Panels.Companies
             {
                 Windows.ErrorNoticeWindow.ShowError("Error while attempting write changes to database", ex.Message);
             }
-             */ 
-        }        
-
-       
+        }
     }
 }
