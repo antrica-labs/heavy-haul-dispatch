@@ -222,7 +222,9 @@
     <Compile Include="Panels\Storage\StoragePanel.xaml.cs">
       <DependentUpon>StoragePanel.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Printing\Documents\BillOfLadingDocument.cs" />
     <Compile Include="Printing\Documents\DispatchDocument.cs" />
+    <Compile Include="Printing\Documents\FuelReportDocument.cs" />
     <Compile Include="Printing\Documents\LoadingDocument.cs" />
     <Compile Include="Printing\FileUtils.cs" />
     <Compile Include="Printing\Documents\InvoiceDocument.cs" />
