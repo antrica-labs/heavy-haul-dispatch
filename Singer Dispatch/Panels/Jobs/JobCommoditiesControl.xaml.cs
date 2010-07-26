@@ -3,6 +3,8 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Collections.ObjectModel;
 using System.Collections.Generic;
+using SingerDispatch.Windows;
+using SingerDispatch.Printing.Documents;
 
 namespace SingerDispatch.Panels.Jobs
 {
@@ -78,6 +80,13 @@ namespace SingerDispatch.Panels.Jobs
 
             SelectedJob.JobCommodities.Add(commodity);
             ((ObservableCollection<JobCommodity>)dgCommodities.ItemsSource).Insert(0, commodity);
+        }
+
+        private void PrintBillOfLading_Click(object sender, RoutedEventArgs e)
+        {
+            var commodity = (Commodity)dgCommodities.SelectedItem;
+            var viewer = new DocumentViewerWindow(new BillOfLadingDocument(), commodity, string.Format("Bill of Lading - ", commodity.NameAndUnit));
+            viewer.DisplayPrintout();
         }
 
         private void RemoveCommodity_Click(object sender, RoutedEventArgs e)
