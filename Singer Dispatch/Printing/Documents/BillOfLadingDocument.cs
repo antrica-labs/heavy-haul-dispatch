@@ -35,6 +35,8 @@ namespace SingerDispatch.Printing.Documents
             content.Append("<body>");
 
             // Fill document body...
+            content.Append(GetHeader("[document number]"));
+
 
             content.Append("</body>");
             content.Append("</html>");
@@ -494,6 +496,107 @@ namespace SingerDispatch.Printing.Documents
             ";
 
             return content;
+        }
+
+        private string GetHeader(string documentID)
+        {
+            var html = @"
+                <div class=""header"">
+                    <table>
+                        <tr>
+                            <td class=""logo_col"">
+                                <span class=""logo""><img src=""{0}"" alt=""Singer Specialized""></span>
+                            </td>
+                            <td class=""address_col"">
+                                <span>{1}</span>
+                                <span>{2}</span>
+                                <span>{3}</span>
+                                <span>Phone: {4}</span>
+                            </td>
+                            <td class=""id_col"">                                
+                                <span>Document #:</span>
+                                <span class=""number"">{5}</span>
+                            </td>
+                        </tr>
+                    </table>
+                    
+                    <span class=""title"">Bill of Lading - Non Negotiable</span>
+                </div>
+            ";
+
+            var replacements = new object[7];
+
+            var process = System.Diagnostics.Process.GetCurrentProcess();
+            string img;
+
+            if (SpecializedDocument)
+                img = SingerConstants.GetConfig("Documents-SingerHeaderImg") ?? @"Images\SingerHeader.png";
+            else
+                img = SingerConstants.GetConfig("Documents-MEHeaderImg") ?? @"Images\MEHeader.png";
+
+            if (process.MainModule != null)
+            {
+                img = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(process.MainModule.FileName), img);
+            }
+
+            replacements[0] = img;
+            replacements[1] = SingerConstants.GetConfig("SingerName") ?? "Singer Specialized";
+            replacements[2] = SingerConstants.GetConfig("SingerAddress-StreetAddress");
+            replacements[3] = SingerConstants.GetConfig("SingerAddress-City");
+            replacements[4] = SingerConstants.GetConfig("SingerAddress-Phone");
+            replacements[5] = documentID;            
+
+            return string.Format(html, replacements);
+        }
+
+        private string GetReferenceTable()
+        {
+            var html = @"
+                <div class=""reference"">
+                    <table>
+                        <tr>
+                            <td class=""recipient"">
+                                <div>
+                                    <span class=""date"">Date: <span>{0}July 08, 2010</span></span>
+
+                                    <span class=""customer"">Customer: <span>{1}Transtech Contracting Inc.</span></span>
+
+                                    <span class=""equipment""><span class=""unit"">Unit #: <span>{2}03-09</span></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class=""trailer"">Trailer #: <span>{3}18-01</span></span></span>
+
+                                    <div class=""shipper"">
+                                        <span class=""heading"">Shipper or Agent (Name Address)</span>
+
+                                        <span>{4}Transtech Contracting Inc.</span>
+                                        <span>{5}Suite 811 - 53016 Hwy 60</span>
+                                        <span>{6}Acheson, Alberta</span>
+                                        <span>{7}Canada</span>
+                                        <span>{8}T7X 5A7</span>
+                                    </div>
+
+                                    <div class=""consignee"">
+                                        <span class=""heading"">Consignee (Name Address)</span>
+
+                                        <span>{9}Transtech Contracting Inc.</span>
+                                        <span>{10}Suite 811 - 53016 Hwy 60</span>
+                                        <span>{11}Acheson, Alberta</span>
+                                        <span>{12}Canada</span>
+                                        <span>{13}T7X 5A7</span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class=""legal"">
+                                <div>
+                                    <p>COMBINATION SHORT FORM OF STRAIGHT BILL OF LADING - EXPRESS SHIPPING CONTRACT ADOPTED BY RAIL FREIGHT AND EXPRESS CARRIER'S SUBJECT TO THE JURISDICTION OF THE CANADIAN TRANSPORT COMMISION. ISSUED AT SHIPPER'S REQUEST.</p>
+
+                                    <p>RECIEVED AT THE POINT OF ORIGIN ON THE DATE SPECIFIED, FROM THE CONSIGNOR MENTIONED HEREIN, THE PROPERTY HEREIN DESCRIBED, IN APPARENT GOOD ORDER, EXCEPT AS NOTED (CONTENTS OF PACKAGES AND CONDITIONS OF CONTENTS ARE UNKNOWN) MARKED, CONSIGNED AND DESTINED AS INDICATED BELOW, WHICH THE CARRIER AGREES TO CARRY AND TO DELIVER TO THE CONSIGNEE AT THE SAID DESTINATION, IF ON ITS OWN AUTHORIZED ROUTE OR OTHERWISE TO CAUSE TO BE CARRIED BY ANOTHER CARRIER ON THE ROUTE TO SAID DESTINATION SUBJECT TO THE RATES AND CLASSIFICATION IN EFFECT ON THE DATE OF SHIPMENT. IT IS MUTUALLY AGREED, AS TO EACH CARRIER OF ALL OR ANY OF THE GOODS OVERALL OR ANY PORTION OF THE ROUTE TO DESTINATION; AND AS TO EACH PARTY OF ANY TIME INTERESTED IN ALL OR ANY OF THE GOODS, THAT EVERY SERVICE TO BE PERFORMED HEREUNDER SHALL BE SUBJECT TO ALL THE CONDITIONS NOTE PROHIBITED BY LAW, WHETHER PRINTED OR WRITTEN, INCLUDING CONDITIONS ON BACK HEREOF, WHICH ARE HEREBY AGREED BY THE CONSIGNOR ACCEPTED FOR HIMSELF AND HIS ASSIGNS.</p>                            
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            ";
+
+            return "";
         }
     }
 }
