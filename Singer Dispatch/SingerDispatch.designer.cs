@@ -638,6 +638,10 @@ namespace SingerDispatch
 		
 		private EntitySet<Contact> _Contacts;
 		
+		private EntitySet<JobCommodity> _ShipperCommodities;
+		
+		private EntitySet<JobCommodity> _ConsigneeCommodities;
+		
 		private EntitySet<Quote> _Quotes;
 		
 		private EntitySet<Invoice> _Invoices;
@@ -681,6 +685,8 @@ namespace SingerDispatch
 		public Address()
 		{
 			this._Contacts = new EntitySet<Contact>(new Action<Contact>(this.attach_Contacts), new Action<Contact>(this.detach_Contacts));
+			this._ShipperCommodities = new EntitySet<JobCommodity>(new Action<JobCommodity>(this.attach_ShipperCommodities), new Action<JobCommodity>(this.detach_ShipperCommodities));
+			this._ConsigneeCommodities = new EntitySet<JobCommodity>(new Action<JobCommodity>(this.attach_ConsigneeCommodities), new Action<JobCommodity>(this.detach_ConsigneeCommodities));
 			this._Quotes = new EntitySet<Quote>(new Action<Quote>(this.attach_Quotes), new Action<Quote>(this.detach_Quotes));
 			this._Invoices = new EntitySet<Invoice>(new Action<Invoice>(this.attach_Invoices), new Action<Invoice>(this.detach_Invoices));
 			this._AddressType = default(EntityRef<AddressType>);
@@ -954,6 +960,32 @@ namespace SingerDispatch
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Address_JobCommodity", Storage="_ShipperCommodities", ThisKey="ID", OtherKey="ShipperAddressID")]
+		public EntitySet<JobCommodity> ShipperCommodities
+		{
+			get
+			{
+				return this._ShipperCommodities;
+			}
+			set
+			{
+				this._ShipperCommodities.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Address_JobCommodity1", Storage="_ConsigneeCommodities", ThisKey="ID", OtherKey="ConsigneeAddressID")]
+		public EntitySet<JobCommodity> ConsigneeCommodities
+		{
+			get
+			{
+				return this._ConsigneeCommodities;
+			}
+			set
+			{
+				this._ConsigneeCommodities.Assign(value);
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Address_Quote", Storage="_Quotes", ThisKey="ID", OtherKey="AddressID")]
 		public EntitySet<Quote> Quotes
 		{
@@ -1112,6 +1144,30 @@ namespace SingerDispatch
 		{
 			this.SendPropertyChanging();
 			entity.Address = null;
+		}
+		
+		private void attach_ShipperCommodities(JobCommodity entity)
+		{
+			this.SendPropertyChanging();
+			entity.ShipperAddress = this;
+		}
+		
+		private void detach_ShipperCommodities(JobCommodity entity)
+		{
+			this.SendPropertyChanging();
+			entity.ShipperAddress = null;
+		}
+		
+		private void attach_ConsigneeCommodities(JobCommodity entity)
+		{
+			this.SendPropertyChanging();
+			entity.ConsigneeAddress = this;
+		}
+		
+		private void detach_ConsigneeCommodities(JobCommodity entity)
+		{
+			this.SendPropertyChanging();
+			entity.ConsigneeAddress = null;
 		}
 		
 		private void attach_Quotes(Quote entity)
@@ -1946,6 +2002,10 @@ namespace SingerDispatch
 		
 		private EntitySet<Commodity> _Commodities;
 		
+		private EntitySet<JobCommodity> _ShipperJobCommodities;
+		
+		private EntitySet<JobCommodity> _ConsigneeJobCommodities;
+		
 		private EntitySet<Job> _Jobs;
 		
 		private EntitySet<Job> _CareOfJobs;
@@ -1996,6 +2056,8 @@ namespace SingerDispatch
 		{
 			this._Addresses = new EntitySet<Address>(new Action<Address>(this.attach_Addresses), new Action<Address>(this.detach_Addresses));
 			this._Commodities = new EntitySet<Commodity>(new Action<Commodity>(this.attach_Commodities), new Action<Commodity>(this.detach_Commodities));
+			this._ShipperJobCommodities = new EntitySet<JobCommodity>(new Action<JobCommodity>(this.attach_ShipperJobCommodities), new Action<JobCommodity>(this.detach_ShipperJobCommodities));
+			this._ConsigneeJobCommodities = new EntitySet<JobCommodity>(new Action<JobCommodity>(this.attach_ConsigneeJobCommodities), new Action<JobCommodity>(this.detach_ConsigneeJobCommodities));
 			this._Jobs = new EntitySet<Job>(new Action<Job>(this.attach_Jobs), new Action<Job>(this.detach_Jobs));
 			this._CareOfJobs = new EntitySet<Job>(new Action<Job>(this.attach_CareOfJobs), new Action<Job>(this.detach_CareOfJobs));
 			this._Permits = new EntitySet<Permit>(new Action<Permit>(this.attach_Permits), new Action<Permit>(this.detach_Permits));
@@ -2262,6 +2324,32 @@ namespace SingerDispatch
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Company_JobCommodity", Storage="_ShipperJobCommodities", ThisKey="ID", OtherKey="ShipperCompanyID")]
+		public EntitySet<JobCommodity> ShipperJobCommodities
+		{
+			get
+			{
+				return this._ShipperJobCommodities;
+			}
+			set
+			{
+				this._ShipperJobCommodities.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Company_JobCommodity1", Storage="_ConsigneeJobCommodities", ThisKey="ID", OtherKey="ConsigneeCompanyID")]
+		public EntitySet<JobCommodity> ConsigneeJobCommodities
+		{
+			get
+			{
+				return this._ConsigneeJobCommodities;
+			}
+			set
+			{
+				this._ConsigneeJobCommodities.Assign(value);
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Company_Job", Storage="_Jobs", ThisKey="ID", OtherKey="CompanyID")]
 		public EntitySet<Job> Jobs
 		{
@@ -2463,6 +2551,30 @@ namespace SingerDispatch
 		{
 			this.SendPropertyChanging();
 			entity.Company = null;
+		}
+		
+		private void attach_ShipperJobCommodities(JobCommodity entity)
+		{
+			this.SendPropertyChanging();
+			entity.ShipperCompany = this;
+		}
+		
+		private void detach_ShipperJobCommodities(JobCommodity entity)
+		{
+			this.SendPropertyChanging();
+			entity.ShipperCompany = null;
+		}
+		
+		private void attach_ConsigneeJobCommodities(JobCommodity entity)
+		{
+			this.SendPropertyChanging();
+			entity.ConsigneeCompany = this;
+		}
+		
+		private void detach_ConsigneeJobCommodities(JobCommodity entity)
+		{
+			this.SendPropertyChanging();
+			entity.ConsigneeCompany = null;
 		}
 		
 		private void attach_Jobs(Job entity)
@@ -4260,6 +4372,14 @@ namespace SingerDispatch
 		
 		private string _Notes;
 		
+		private System.Nullable<long> _ShipperCompanyID;
+		
+		private System.Nullable<long> _ShipperAddressID;
+		
+		private System.Nullable<long> _ConsigneeCompanyID;
+		
+		private System.Nullable<long> _ConsigneeAddressID;
+		
 		private EntityRef<Commodity> _OriginalCommodity;
 		
 		private EntityRef<Job> _Job;
@@ -4273,6 +4393,14 @@ namespace SingerDispatch
 		private EntityRef<Contact> _LoadContact;
 		
 		private EntityRef<Contact> _UnloadContact;
+		
+		private EntityRef<Company> _ShipperCompany;
+		
+		private EntityRef<Address> _ShipperAddress;
+		
+		private EntityRef<Company> _ConsigneeCompany;
+		
+		private EntityRef<Address> _ConsigneeAddress;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -4348,6 +4476,14 @@ namespace SingerDispatch
     partial void OnUnloadOrientationChanged();
     partial void OnNotesChanging(string value);
     partial void OnNotesChanged();
+    partial void OnShipperCompanyIDChanging(System.Nullable<long> value);
+    partial void OnShipperCompanyIDChanged();
+    partial void OnShipperAddressIDChanging(System.Nullable<long> value);
+    partial void OnShipperAddressIDChanged();
+    partial void OnConsigneeCompanyIDChanging(System.Nullable<long> value);
+    partial void OnConsigneeCompanyIDChanged();
+    partial void OnConsigneeAddressIDChanging(System.Nullable<long> value);
+    partial void OnConsigneeAddressIDChanged();
     #endregion
 		
 		public JobCommodity()
@@ -4359,6 +4495,10 @@ namespace SingerDispatch
 			this._UnloadMethod = default(EntityRef<LoadUnloadMethod>);
 			this._LoadContact = default(EntityRef<Contact>);
 			this._UnloadContact = default(EntityRef<Contact>);
+			this._ShipperCompany = default(EntityRef<Company>);
+			this._ShipperAddress = default(EntityRef<Address>);
+			this._ConsigneeCompany = default(EntityRef<Company>);
+			this._ConsigneeAddress = default(EntityRef<Address>);
 			OnCreated();
 		}
 		
@@ -5090,6 +5230,102 @@ namespace SingerDispatch
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ShipperCompanyID")]
+		public System.Nullable<long> ShipperCompanyID
+		{
+			get
+			{
+				return this._ShipperCompanyID;
+			}
+			set
+			{
+				if ((this._ShipperCompanyID != value))
+				{
+					if (this._ShipperCompany.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnShipperCompanyIDChanging(value);
+					this.SendPropertyChanging();
+					this._ShipperCompanyID = value;
+					this.SendPropertyChanged("ShipperCompanyID");
+					this.OnShipperCompanyIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ShipperAddressID")]
+		public System.Nullable<long> ShipperAddressID
+		{
+			get
+			{
+				return this._ShipperAddressID;
+			}
+			set
+			{
+				if ((this._ShipperAddressID != value))
+				{
+					if (this._ShipperAddress.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnShipperAddressIDChanging(value);
+					this.SendPropertyChanging();
+					this._ShipperAddressID = value;
+					this.SendPropertyChanged("ShipperAddressID");
+					this.OnShipperAddressIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ConsigneeCompanyID")]
+		public System.Nullable<long> ConsigneeCompanyID
+		{
+			get
+			{
+				return this._ConsigneeCompanyID;
+			}
+			set
+			{
+				if ((this._ConsigneeCompanyID != value))
+				{
+					if (this._ConsigneeCompany.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnConsigneeCompanyIDChanging(value);
+					this.SendPropertyChanging();
+					this._ConsigneeCompanyID = value;
+					this.SendPropertyChanged("ConsigneeCompanyID");
+					this.OnConsigneeCompanyIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ConsigneeAddressID")]
+		public System.Nullable<long> ConsigneeAddressID
+		{
+			get
+			{
+				return this._ConsigneeAddressID;
+			}
+			set
+			{
+				if ((this._ConsigneeAddressID != value))
+				{
+					if (this._ConsigneeAddress.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnConsigneeAddressIDChanging(value);
+					this.SendPropertyChanging();
+					this._ConsigneeAddressID = value;
+					this.SendPropertyChanged("ConsigneeAddressID");
+					this.OnConsigneeAddressIDChanged();
+				}
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Commodity_JobCommodity", Storage="_OriginalCommodity", ThisKey="OriginalCommodityID", OtherKey="ID", IsForeignKey=true)]
 		public Commodity OriginalCommodity
 		{
@@ -5324,6 +5560,142 @@ namespace SingerDispatch
 						this._UnloadContactID = default(Nullable<long>);
 					}
 					this.SendPropertyChanged("UnloadContact");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Company_JobCommodity", Storage="_ShipperCompany", ThisKey="ShipperCompanyID", OtherKey="ID", IsForeignKey=true)]
+		public Company ShipperCompany
+		{
+			get
+			{
+				return this._ShipperCompany.Entity;
+			}
+			set
+			{
+				Company previousValue = this._ShipperCompany.Entity;
+				if (((previousValue != value) 
+							|| (this._ShipperCompany.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._ShipperCompany.Entity = null;
+						previousValue.ShipperJobCommodities.Remove(this);
+					}
+					this._ShipperCompany.Entity = value;
+					if ((value != null))
+					{
+						value.ShipperJobCommodities.Add(this);
+						this._ShipperCompanyID = value.ID;
+					}
+					else
+					{
+						this._ShipperCompanyID = default(Nullable<long>);
+					}
+					this.SendPropertyChanged("ShipperCompany");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Address_JobCommodity", Storage="_ShipperAddress", ThisKey="ShipperAddressID", OtherKey="ID", IsForeignKey=true)]
+		public Address ShipperAddress
+		{
+			get
+			{
+				return this._ShipperAddress.Entity;
+			}
+			set
+			{
+				Address previousValue = this._ShipperAddress.Entity;
+				if (((previousValue != value) 
+							|| (this._ShipperAddress.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._ShipperAddress.Entity = null;
+						previousValue.ShipperCommodities.Remove(this);
+					}
+					this._ShipperAddress.Entity = value;
+					if ((value != null))
+					{
+						value.ShipperCommodities.Add(this);
+						this._ShipperAddressID = value.ID;
+					}
+					else
+					{
+						this._ShipperAddressID = default(Nullable<long>);
+					}
+					this.SendPropertyChanged("ShipperAddress");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Company_JobCommodity1", Storage="_ConsigneeCompany", ThisKey="ConsigneeCompanyID", OtherKey="ID", IsForeignKey=true)]
+		public Company ConsigneeCompany
+		{
+			get
+			{
+				return this._ConsigneeCompany.Entity;
+			}
+			set
+			{
+				Company previousValue = this._ConsigneeCompany.Entity;
+				if (((previousValue != value) 
+							|| (this._ConsigneeCompany.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._ConsigneeCompany.Entity = null;
+						previousValue.ConsigneeJobCommodities.Remove(this);
+					}
+					this._ConsigneeCompany.Entity = value;
+					if ((value != null))
+					{
+						value.ConsigneeJobCommodities.Add(this);
+						this._ConsigneeCompanyID = value.ID;
+					}
+					else
+					{
+						this._ConsigneeCompanyID = default(Nullable<long>);
+					}
+					this.SendPropertyChanged("ConsigneeCompany");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Address_JobCommodity1", Storage="_ConsigneeAddress", ThisKey="ConsigneeAddressID", OtherKey="ID", IsForeignKey=true)]
+		public Address ConsigneeAddress
+		{
+			get
+			{
+				return this._ConsigneeAddress.Entity;
+			}
+			set
+			{
+				Address previousValue = this._ConsigneeAddress.Entity;
+				if (((previousValue != value) 
+							|| (this._ConsigneeAddress.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._ConsigneeAddress.Entity = null;
+						previousValue.ConsigneeCommodities.Remove(this);
+					}
+					this._ConsigneeAddress.Entity = value;
+					if ((value != null))
+					{
+						value.ConsigneeCommodities.Add(this);
+						this._ConsigneeAddressID = value.ID;
+					}
+					else
+					{
+						this._ConsigneeAddressID = default(Nullable<long>);
+					}
+					this.SendPropertyChanged("ConsigneeAddress");
 				}
 			}
 		}

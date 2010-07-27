@@ -20,6 +20,8 @@
       <Association Name="AddressType_Address" Member="AddressType" ThisKey="AddressTypeID" OtherKey="ID" Type="AddressType" IsForeignKey="true" />
       <Association Name="Company_Address" Member="Company" ThisKey="CompanyID" OtherKey="ID" Type="Company" IsForeignKey="true" />
       <Association Name="ProvincesAndState_Address" Member="ProvincesAndState" ThisKey="ProvinceStateID" OtherKey="ID" Type="ProvincesAndState" IsForeignKey="true" />
+      <Association Name="ShipperAddress_JobCommodity" Member="ShipperCommodities" ThisKey="ID" OtherKey="ShipperAddressID" Type="JobCommodity" />
+      <Association Name="ConsigneeAddress_JobCommodity" Member="ConsigneeCommodities" ThisKey="ID" OtherKey="ConsigneeAddressID" Type="JobCommodity" />
     </Type>
   </Table>
   <Table Name="" Member="AddressTypes">
@@ -84,6 +86,8 @@
       <Association Name="CompanyPriorityLevel_Company" Member="CompanyPriorityLevel" ThisKey="PriorityLevelID" OtherKey="ID" Type="CompanyPriorityLevel" IsForeignKey="true" />
       <Association Name="CustomerType_Company" Member="CustomerType" ThisKey="CustomerTypeID" OtherKey="ID" Type="CustomerType" IsForeignKey="true" />
       <Association Name="Company_Permit" Member="Permits" ThisKey="ID" OtherKey="CompanyID" Type="Permit"  />
+      <Association Name="ShipperCompany_JobCommodity" Member="ShipperJobCommodities" OtherKey="ShipperCompanyID" ThisKey="ID" Type="JobCommodity" />
+      <Association Name="ConsigneeCompany_JobCommodity" Member="ConsigneeJobCommodities" OtherKey="ConsigneeCompanyID" ThisKey="ID" Type="JobCommodity" />
     </Type>
   </Table>
   <Table Name="" Member="CompanyPriorityLevels">
@@ -112,7 +116,7 @@
       <Association Name="Contact_ContactRole" Member="ContactRoles" ThisKey="ID" OtherKey="ContactID" Type="ContactRole" />
       <Association Name="ContactMethod_Contact" Member="PreferedContactMethod" ThisKey="ContactMethodID" OtherKey="ID" Type="ContactMethod" IsForeignKey="true" />
       <Association Name="LoadContact_JobCommodity" Member="LoadingJobCommodities" OtherKey="LoadContactID" ThisKey="ID" Type="JobCommodity" />
-      <Association Name="UnloadContact_JobCommodity" Member="UnloadingJobCommodities" OtherKey="UnloadContactID" ThisKey="ID" Type="JobCommodity" />
+      <Association Name="UnloadContact_JobCommodity" Member="UnloadingJobCommodities" OtherKey="UnloadContactID" ThisKey="ID" Type="JobCommodity" />      
     </Type>
   </Table>
   <Table Name="" Member="ContactRoles">
@@ -203,6 +207,10 @@
       <Column Name="UnloadRoute" Type="System.String" CanBeNull="true" />
       <Column Name="UnloadOrientation" Type="System.String" CanBeNull="true" />
       <Column Name="Notes" Type="System.String" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="ShipperCompanyID" Type="System.Int64" CanBeNull="true" />
+      <Column Name="ShipperAddressID" Type="System.Int64" CanBeNull="true" />
+      <Column Name="ConsigneeCompanyID" Type="System.Int64" CanBeNull="true" />
+      <Column Name="ConsigneeAddressID" Type="System.Int64" CanBeNull="true" />
       <Association Name="Commodity_JobCommodity" Member="OriginalCommodity" ThisKey="OriginalCommodityID" OtherKey="ID" Type="Commodity" IsForeignKey="true" />
       <Association Name="Job_JobCommodity" Member="Job" ThisKey="JobID" OtherKey="ID" Type="Job" IsForeignKey="true" />
       <Association Name="Load_JobCommodity" Member="Load" ThisKey="LoadID" OtherKey="ID" Type="Load" IsForeignKey="true" />
@@ -210,6 +218,10 @@
       <Association Name="LoadUnloadMethod_JobCommodity1" Member="UnloadMethod" ThisKey="UnloadMethodID" OtherKey="ID" Type="LoadUnloadMethod" IsForeignKey="true" />
       <Association Name="LoadContact_JobCommodity" Member="LoadContact" ThisKey="LoadContactID" OtherKey="ID" Type="Contact" IsForeignKey="true" />
       <Association Name="UnloadContact_JobCommodity" Member="UnloadContact" ThisKey="UnloadContactID" OtherKey="ID" Type="Contact" IsForeignKey="true" />
+      <Association Name="ShipperCompany_JobCommodity" Member="ShipperCompany" ThisKey="ShipperCompanyID" OtherKey="ID" Type="Company" IsForeignKey="true" />
+      <Association Name="ShipperAddress_JobCommodity" Member="ShipperAddress" ThisKey="ShipperAddressID" OtherKey="ID" Type="Address" IsForeignKey="true" />
+      <Association Name="ConsigneeCompany_JobCommodity" Member="ConsigneeCompany" ThisKey="ConsigneeCompanyID" OtherKey="ID" Type="Company" IsForeignKey="true" />
+      <Association Name="ConsigneeAddress_JobCommodity" Member="ConsigneeAddress" ThisKey="ConsigneeAddressID" OtherKey="ID" Type="Address" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="" Member="Jobs">

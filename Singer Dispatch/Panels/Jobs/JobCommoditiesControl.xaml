@@ -247,6 +247,10 @@
                         </GroupBox>
                     </Grid>
                 </TabItem>
+                
+                <TabItem Header="Bill of Lading">
+                    
+                </TabItem>
             </TabControl>
         </StackPanel>
 
