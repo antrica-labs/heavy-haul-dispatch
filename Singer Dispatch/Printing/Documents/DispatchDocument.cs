@@ -91,6 +91,12 @@ namespace SingerDispatch.Printing.Documents
                     content.Append(FillDispatchBody(dispatch, "File Copy"));    
                 }
 
+                if (dispatch.Rate != null && dispatch.Rate.Name == "Pull Tractor")
+                {
+                    content.Append(PageBreak);
+                    content.Append(GetBillOfLadingDocs(dispatch));
+                }
+
                 if ((i + 1) != dispatches.Count)
                     content.Append(PageBreak);
             }
@@ -108,6 +114,7 @@ namespace SingerDispatch.Printing.Documents
 
             var output = new StringBuilder();
 
+            output.Append(@"<div class=""dispatch_doc"">");
             output.Append(GetHeader(dispatch, copyType));
             output.Append(GetDetails(dispatch));
             output.Append(GetDescription(dispatch.Description));
@@ -122,10 +129,33 @@ namespace SingerDispatch.Printing.Documents
             output.Append(GetWireLiftInfo(from wl in dispatch.Load.ThirdPartyServices where wl.ServiceType != null && wl.ServiceType.Name.Contains("Wirelift") select wl));
             output.Append(GetPermits(dispatch.Load.Permits));
             output.Append(GetOtherInfo(dispatch));
+            output.Append("</div>");
 
             return output.ToString();
         }
-        
+
+        private string GetBillOfLadingDocs(Dispatch dispatch)
+        {
+            if (dispatch.Load == null) return "";
+
+            var doc = new BillOfLadingDocument();
+            var content = new StringBuilder();
+
+            doc.PrintMetric = PrintMetric;
+
+            for (var i = 0; i < dispatch.Load.JobCommodities.Count; i++)
+            {
+                var commodity = dispatch.Load.JobCommodities[i];
+
+                content.Append(doc.GenerateBodyHTML(commodity));
+
+                if ((i + 1) != dispatch.Load.JobCommodities.Count)
+                    content.Append(PageBreak);
+            }
+
+            return content.ToString();
+        }
+
         private static string GetTitle(string title)
         {
             return "<title>" + title + "</title>";
@@ -133,7 +163,7 @@ namespace SingerDispatch.Printing.Documents
 
         private static string GetStyles()
         {
-            const string content = @"
+            var content = @"
                 <style type=""text/css"" media=""all"">
                     /***** RESET DEFAULT BROWSER STYLES *****/
                     html, body, div, span, applet, object, iframe,
@@ -194,80 +224,72 @@ namespace SingerDispatch.Printing.Documents
                     td
                     {
                     }
-                    
-                    
-                    /*******/
-                    
                     body
                     {                        
-                        font-size: 10pt;
+                        font-size: 8pt;
                         font-family: Verdana, Arial, Helvetica, sans-serif;
                         padding: 10px;
                     }
                     
-                    span.error
+                    /*******/                    
+                    div.dispatch_doc span.error
                     {
                         display: block;
                         font-weight; bold;
                         text-align: center;
                     }
 
-                    th
+                    div.dispatch_doc th
                     {
                         text-align: left;
                     }
 
-                    span.field_name
+                    div.dispatch_doc span.field_name
                     {
                         font-weight: bold;
                     }
-
-                    div.header
-                    {
-                        
-                    }
-                    
-                    div.header table 
+                                                            
+                    div.dispatch_doc div.header table 
                     {
                         width: 100%;
                         border-collapse: collapse;
                     }
                     
-                    div.header td
+                    div.dispatch_doc div.header td
                     {                
                         vertical-align: top;
                         padding: 10px;
                     }
                     
-                    div.header td.logo_col
+                    div.dispatch_doc div.header td.logo_col
                     {
                         width: 200px;
                         
                     }
                     
-                    div.header td.address_col
+                    div.dispatch_doc div.header td.address_col
                     {
                         
                     }
                     
-                    div.header td.id_col
+                    div.dispatch_doc div.header td.id_col
                     {             
                         text-align: center;
                         font-weight: bold;
                         line-height: 1.35em;                     
                     }
                     
-                    div.header td.id_col span.copy_type, div.header td.id_col span.number
+                    div.dispatch_doc div.header td.id_col span.copy_type, div.header td.id_col span.number
                     {
                     	font-size: 1.25em;
                     }
                     
-                    div.header span
+                    div.dispatch_doc div.header span
                     {
                         display: block;
                     }
                     
-                    div.header span.title
+                    div.dispatch_doc div.header span.title
                     {
                         display: block;
                         font-weight: bold;
@@ -278,17 +300,17 @@ namespace SingerDispatch.Printing.Documents
                         border-bottom: 2px #808080 solid;
                     }
                     
-                    div.details
+                    div.dispatch_doc div.details
                     {
                         padding: 10px;                
                     }            
                     
-                    div.details table.dispatch_info, div.details table.departure_info
+                    div.dispatch_doc div.details table.dispatch_info, div.details table.departure_info
                     {   
                         margin-bottom: 10px;
                     }
                     
-                    div.details td.field_name
+                    div.dispatch_doc div.details td.field_name
                     {
                         font-weight: bold;
                         white-space: nowrap;
@@ -296,24 +318,24 @@ namespace SingerDispatch.Printing.Documents
                         padding-right: 10px;
                     }
                     
-                    div.details td.value
+                    div.dispatch_doc div.details td.value
                     {
                         padding-right: 15px;
                     }
 
-                    div.details table.dispatch_info td.value
+                    div.dispatch_doc div.details table.dispatch_info td.value
                     {
                         padding-right: 35px;
                     }
                     
-                    div.section
+                    div.dispatch_doc div.section
                     {
                         padding: 10px;
                         margin-top: 2px;
                         border-top: 2px #808080 solid;
                     }
                     
-                    div.section span.heading
+                    div.dispatch_doc div.section span.heading
                     {
                     	text-decoration: underline;
                         font-weight: bold;
@@ -321,122 +343,122 @@ namespace SingerDispatch.Printing.Documents
                         margin-bottom: 10px;
                     }
 
-                    div.section span.subheading
+                    div.dispatch_doc div.section span.subheading
                     {
                         font-weight: bold;
                         display: block;
                     }
 
-                    div.load_and_unload div.commodity
+                    div.dispatch_doc div.load_and_unload div.commodity
                     {
                     	margin: 5px 0;
                     	padding: 15px;                    	
                     }
 
-                    hr
+                    div.dispatch_doc hr
                     {
                     	border: 0;
                     	height: 1px;
                     	background-color: #D9D9D9;
                     }
 
-                    div.load_and_unload span.commodity_name
+                    div.dispatch_doc div.load_and_unload span.commodity_name
                     {
                         font-weight: bold;
                         padding-bottom: 5px;          
                     }
 
-                    div.load_and_unload div.loading, div.load_and_unload div.unloading
+                    div.dispatch_doc div.load_and_unload div.loading, div.dispatch_doc div.load_and_unload div.unloading
                     {
                         margin-top: 15px;
                     }
                     
-                    div.load_and_unload div.loading span.subheading, div.load_and_unload div.unloading span.subheading
+                    div.dispatch_doc div.load_and_unload div.loading span.subheading, div.dispatch_doc div.load_and_unload div.unloading span.subheading
                     {
                         text-decoration: underline;
                         margin-bottom: 5px;
                     }
 
-                    div.load_and_unload td
+                    div.dispatch_doc div.load_and_unload td
                     {
                         padding: 3px 10px;
                     }
 
-                    div.load_and_unload table.details
+                    div.dispatch_doc div.load_and_unload table.details
                     {
                     	width: 100%;
                     }
                     
-                    div.load_and_unload table.details td
+                    div.dispatch_doc div.load_and_unload table.details td
                     {
                     	border: solid 1px #A9A9A9;
                     }
 
-                    div.load_and_unload table.details td span.contact
+                    div.dispatch_doc div.load_and_unload table.details td span.contact
                     {
                         display: block;
                     }
 
-                    div.load_and_unload table.details td.date
+                    div.dispatch_doc div.load_and_unload table.details td.date
                     {
                     	width: 60px;
                     }
                     
-                    div.load_and_unload table.details td.time
+                    div.dispatch_doc div.load_and_unload table.details td.time
                     {
                     	width: 45px;
                     }
 
-                    div.load_and_unload table.details td.contact
+                    div.dispatch_doc div.load_and_unload table.details td.contact
                     {
                     	width: 130px;
                     }
                     
-                    div.load_and_unload table.details td.company
+                    div.dispatch_doc div.load_and_unload table.details td.company
                     {
                     	width: 120px;
                     }
 
-                    div.load_and_unload table.instructions
+                    div.dispatch_doc div.load_and_unload table.instructions
                     {
                         margin-top: 10px;
                         width: 100%;
                     }
 
-                    div.load_and_unload table.instructions td
+                    div.dispatch_doc div.load_and_unload table.instructions td
                     {
                         width: 33%;
                     }
 
-                    div.dimensions span
+                    div.dispatch_doc div.dimensions span
                     {
                         padding-right: 15px;
                     }
 
-                    div.dimensions table.dimensions
+                    div.dispatch_doc div.dimensions table.dimensions
                     {
                         width: 100%;
                         margin-bottom: 10px;
                     }                    
                     
-                    div.dimensions table.weights th
+                    div.dispatch_doc div.dimensions table.weights th
                     {
                         text-align: center;
                     }
                     
-                    div.dimensions table.weights td
+                    div.dispatch_doc div.dimensions table.weights td
                     {
                         text-align: center;
                         border: solid 1px #A9A9A9;
                     }
                     
                     
-                    div.dimensions table.weights td
+                    div.dispatch_doc div.dimensions table.weights td
                     {
                     	width: 75px;
                     }
                     
-                    div.dimensions table.weights td.row_name
+                    div.dispatch_doc div.dimensions table.weights td.row_name
                     {
                         text-align: right;
                         width: auto;
@@ -445,50 +467,42 @@ namespace SingerDispatch.Printing.Documents
                         padding-right: 3px;
                     }
                                         
-                    table.simple_breakdown th, table.simple_breakdown td
+                    div.dispatch_doc table.simple_breakdown th, div.dispatch_doc table.simple_breakdown td
                     {
                         padding-right: 20px;
                         padding-bottom: 5px;
                     }
 
-                    table.simple_breakdown td.quantity
+                    div.dispatch_doc table.simple_breakdown td.quantity
                     {
                     	text-align: center;
                     }
 
-                    table.commented_breakdown
+                    div.dispatch_doc table.commented_breakdown
                     {
                         width: 100%;
                         border-collapse: collapse;
                     }
 
-                    table.commented_breakdown th
+                    div.dispatch_doc table.commented_breakdown th
                     {
                         padding-bottom: 10px;
                     }
-                    
-                    table.commented_breakdown tr
-                    {
-                    	
-                    }
 
-                    table.commented_breakdown td
-                    {
-                    	
-                    }
-
-                    table.commented_breakdown tr.details td
+                    div.dispatch_doc table.commented_breakdown tr.details td
                     {
                     	border-top: 1px solid #E9E9E9;  
                     	padding-top: 10px;                  	
                     }
 
-                    table.commented_breakdown tr.comments td
+                    div.dispatch_doc table.commented_breakdown tr.comments td
                     {
                         padding: 5px 10px;
                         padding-bottom: 10px;                        
                     }
                     
+                    %BOL_SCREEN%
+
                     div.page_break
                     {
                         display: block;
@@ -500,9 +514,11 @@ namespace SingerDispatch.Printing.Documents
                 <style type=""text/css"" media=""print"">
                     body
                     {
-                    	font-size: 12pt;
+                    	font-size: 10pt;
                         padding: 0;
                     }
+                    
+                    %BOL_PRINT%
 
                     div.page_break
                     {
@@ -513,6 +529,8 @@ namespace SingerDispatch.Printing.Documents
                     }
                 </style>
             ";
+
+            content = content.Replace("%BOL_SCREEN%", BillOfLadingDocument.GetDocSpecificScreenStyles()).Replace("%BOL_PRINT%", BillOfLadingDocument.GetDocSpecificPrintStyles());
 
             return content;
         }

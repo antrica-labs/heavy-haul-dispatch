@@ -39,7 +39,7 @@
                     <MenuItem Header="_View job invoices" Click="FindJobForInvoice_Click" InputGestureText="Ctrl+Shift+I" />
                 </MenuItem>
                 <MenuItem Header="Tools">
-                    <MenuItem Header="Global search" />
+                    <!-- <MenuItem Header="Global search" /> -->
                     <MenuItem Header="Use imperial measurements" IsCheckable="true" IsChecked="{Binding ElementName=mainWindow, Path=UseImperialMeasurements}" />
                 </MenuItem>
             </Menu>
@@ -60,9 +60,11 @@
                     <Expander Name="expanderInvoicing" Header="Invoicing" Style="{StaticResource SectionExpander}" Expanded="ExpandInvoicing">
                         <StackPanel Name="linksPricing" Style="{StaticResource SectionExpanderContent}" VerticalAlignment="Top"></StackPanel>
                     </Expander>
+                    <!--
                     <Expander Name="expanderStorage" Header="Storage" Style="{StaticResource SectionExpander}" Expanded="ExpandStorage">
                         <StackPanel Name="linksStorage" Style="{StaticResource SectionExpanderContent}" VerticalAlignment="Top"></StackPanel>
                     </Expander>
+                    -->
                     <Expander Name="expanderAdmin" Header="Admin" Style="{StaticResource SectionExpander}" Expanded="ExpandAdmin">
                         <StackPanel Name="linksAdmin" Style="{StaticResource SectionExpanderContent}" VerticalAlignment="Top"></StackPanel>
                     </Expander>

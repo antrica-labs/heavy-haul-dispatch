@@ -115,8 +115,7 @@
                                     <TextBox.Text>
                                         <MultiBinding Converter="{StaticResource LengthMeasurementConverter}">
                                             <Binding Path="Height" />
-                                            <Binding ElementName="ThisControl" Path="UseImperialMeasurements" />
-                                            <!-- <Binding Path="DataContext.UseImperialMeasurements" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type Window}}" /> -->
+                                            <Binding ElementName="ThisControl" Path="UseImperialMeasurements" />                                            
                                         </MultiBinding>
                                     </TextBox.Text>
                                 </TextBox>

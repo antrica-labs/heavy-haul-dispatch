@@ -233,7 +233,7 @@ namespace SingerDispatch
 
         private void ExpandStorage(object sender, RoutedEventArgs e)
         {
-            ExpandSection(expanderStorage, typeof(StoragePanel));
+            //ExpandSection(expanderStorage, typeof(StoragePanel));
         }
 
         private void ExpandAdmin(object sender, RoutedEventArgs e)

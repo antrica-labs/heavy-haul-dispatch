@@ -94,8 +94,8 @@ namespace SingerDispatch.Panels.Jobs
 
         private void PrintBillOfLading_Click(object sender, RoutedEventArgs e)
         {
-            var commodity = (Commodity)dgCommodities.SelectedItem;
-            var viewer = new DocumentViewerWindow(new BillOfLadingDocument(), commodity, string.Format("Bill of Lading - ", commodity.NameAndUnit));
+            var commodity = (JobCommodity)dgCommodities.SelectedItem;
+            var viewer = new DocumentViewerWindow(new BillOfLadingDocument(), commodity, string.Format("Bill of Lading - {0}", commodity.NameAndUnit));
             viewer.DisplayPrintout();
         }
 

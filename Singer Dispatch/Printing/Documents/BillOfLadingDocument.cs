@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using SingerDispatch.Utils;
 
 namespace SingerDispatch.Printing.Documents
 {
@@ -18,10 +19,10 @@ namespace SingerDispatch.Printing.Documents
         
         public string GenerateHTML(object entity)
         {
-            return GenerateHTML((Commodity)entity);
+            return GenerateHTML((JobCommodity)entity);
         }
 
-        public string GenerateHTML(Commodity commodity)
+        public string GenerateHTML(JobCommodity commodity)
         {
             var content = new StringBuilder();
 
@@ -33,13 +34,28 @@ namespace SingerDispatch.Printing.Documents
             content.Append(GetStyles());
             content.Append("</head>");
             content.Append("<body>");
-
+                        
             // Fill document body...
-            content.Append(GetHeader("[document number]"));
-
+            content.Append(GenerateBodyHTML(commodity));
 
             content.Append("</body>");
             content.Append("</html>");
+
+            return content.ToString();
+        }
+
+        public string GenerateBodyHTML(JobCommodity commodity)
+        {
+            var content = new StringBuilder();
+
+            content.Append(@"<div class=""bol_doc"">");
+            content.Append(GetHeader("[document number]"));
+            content.Append(GetReferenceTable(commodity));
+            content.Append(GetGlassLiability());
+            content.Append(GetCommodityDetails(commodity));
+            content.Append(GetAdditionalInfo(commodity));
+            content.Append(GetSignatures());
+            content.Append(@"</div>");
 
             return content.ToString();
         }
@@ -48,10 +64,10 @@ namespace SingerDispatch.Printing.Documents
         {
             return "<title>" + title + "</title>";
         }
-
+              
         private string GetStyles()
         {
-            const string content = @"
+            var content = @"
                 <style type=""text/css"">
                     /***** RESET DEFAULT BROWSER STYLES *****/
                     html, body, div, span, applet, object, iframe,
@@ -106,9 +122,7 @@ namespace SingerDispatch.Printing.Documents
                     {
                         text-decoration: line-through;
                     }
-            
-                    /*******/
-
+                    
                     body
                     {
                         font-size: 8pt;
@@ -116,54 +130,72 @@ namespace SingerDispatch.Printing.Documents
                         padding: 10px;
                     } 
             
-                    span.heading
+                    /*******/
+
+                    %BOL_SCREEN%
+                </style>
+                <style type=""text/css"" media=""print"">
+                    body
+                    {
+                    	font-size: 10pt;
+                        padding: 0;
+                    }
+
+                    %BOL_PRINT%
+                </style>
+            ";
+
+            content = content.Replace("%BOL_SCREEN%", GetDocSpecificScreenStyles()).Replace("%BOL_PRINT%", GetDocSpecificPrintStyles());
+
+            return content;
+        }
+
+        public static string GetDocSpecificScreenStyles()
+        {
+            var styles = @"                    
+                    div.bol_doc span.heading
                     {
                         display: block;
                         font-weight: bold;
                         text-decoration: underline;
                     }  
             
-                    p
+                    div.bol_doc p
                     {
                         margin-bottom: 5px;
                     }
             
-                    div.header table 
+                    div.bol_doc div.header table 
                     {
                         width: 100%;
                         border-collapse: collapse;
                     }
                     
-                    div.header td
+                    div.bol_doc div.header td
                     {                
                         vertical-align: top;
                         padding: 10px;
                     }
                     
-                    div.header td.logo_col
+                    div.bol_doc div.header td.logo_col
                     {
                         width: 200px;
                         
                     }
                     
-                    div.header td.address_col
-                    {                        
-                    }
-                    
-                    div.header td.id_col
+                    div.bol_doc div.header td.id_col
                     {             
                         text-align: center;
                         font-weight: bold;
-                        line-height: 1.35em;
-                        font-size: 1.3em;                     
+                        line-height: 1.35em;                  
                     }
                     
-                    div.header span
+                    div.bol_doc div.header span
                     {
                         display: block;
                     }
                     
-                    div.header span.title
+                    div.bol_doc div.header span.title
                     {
                         display: block;
                         font-weight: bold;
@@ -174,31 +206,33 @@ namespace SingerDispatch.Printing.Documents
                         border-bottom: 1px #000000 solid;
                     }
             
-                    div.reference
+                    div.bol_doc div.reference
                     {
                         border-left: 1px #000000 solid;
                         border-right: 1px #000000 solid;
                     }             
             
-                    div.reference table
+                    div.bol_doc div.reference table
                     {
                         width: 100%;
                         border-collapse: collapse;
                     }
                     
-                    div.reference td.legal
+                    div.bol_doc div.reference td.legal
                     {
                         width: 60%;
                         border-left: 1px #000000 solid;
-                        font-size: 0.9em;
                     }    
             
-                    div.reference td.recipient div.shipper span, div.reference td.recipient div.consignee span
+                    div.bol_doc div.reference td.recipient div.shipper span, 
+                   div.bol_doc  div.reference td.recipient div.consignee span
                     {
                         display: block;                
                     }
             
-                    div.reference td.recipient span.date, div.reference td.recipient span.customer, div.reference td.recipient span.equipment
+                    div.bol_doc div.reference td.recipient span.date, 
+                    div.bol_doc div.reference td.recipient span.customer, 
+                    div.bol_doc div.reference td.recipient span.equipment
                     {
                         display: block;
                         font-weight: bold;
@@ -206,35 +240,37 @@ namespace SingerDispatch.Printing.Documents
                         border-bottom: 1px #000000 solid;
                     }
             
-                    div.reference td.recipient span.date span, div.reference td.recipient span.customer span, div.reference td.recipient span.equipment span
+                    div.bol_doc div.reference td.recipient span.date span, 
+                    div.bol_doc div.reference td.recipient span.customer span, 
+                    div.bol_doc div.reference td.recipient span.equipment span
                     {
                         font-weight: normal;
                     }
             
-                    div.reference td.recipient span.unit, div.reference td.recipient span.trailer
+                    div.bol_doc div.reference td.recipient span.unit, 
+                    div.bol_doc div.reference td.recipient span.trailer
                     {
                         font-weight: bold !important;
                     }
             
-                    div.reference td.recipient div.shipper 
+                    div.bol_doc div.reference td.recipient div.shipper 
                     {
                         padding: 3px 7px;
                         border-bottom: 1px #000000 solid;
                     }
             
-                    div.reference td.recipient div.consignee
+                    div.bol_doc div.reference td.recipient div.consignee
                     {
                         padding: 3px 7px;
                     }
             
-                    div.reference td.legal div
+                    div.bol_doc div.reference td.legal div
                     {                
                         padding: 5px 7px;
                     }
             
-                    div.glass_damage span
+                    div.bol_doc div.glass_damage
                     {
-                        display: block;
                         clear: both;
                         text-align: center;
                         text-transform: uppercase;
@@ -242,7 +278,7 @@ namespace SingerDispatch.Printing.Documents
                         border: 1px #000000 solid;                
                     }
             
-                    div.commodity
+                    div.bol_doc div.commodity
                     {               
                 
                         border-left: 1px #000000 solid;
@@ -250,78 +286,78 @@ namespace SingerDispatch.Printing.Documents
                         border-bottom: 1px #000000 solid;
                     }
 
-                    div.commodity table.commodity_details
+                    div.bol_doc div.commodity table.commodity_details
                     {
                         width: 100%;
                         border-collapse: collapse;
                     }
             
-                    div.commodity table.commodity_details td.charges
+                    div.bol_doc div.commodity table.commodity_details td.charges
                     {
                         width: 33%;
                     }
             
-                    div.commodity div.identification,
-                    div.commodity div.service_description,
-                    div.commodity div.weight
+                    div.bol_doc div.commodity div.identification,
+                    div.bol_doc div.commodity div.service_description,
+                    div.bol_doc div.commodity div.weight
                     {
                         padding: 5px;                
                     }
 
-                    div.commodity div.identification,
-                    div.commodity div.service_description
+                    div.bol_doc div.commodity div.identification,
+                    div.bol_doc div.commodity div.service_description
                     {
                         border-bottom: 1px #000000 solid;
                     }
 
-                    div.commodity div.identification span.heading,
-                    div.commodity div.weight span.heading
+                    div.bol_doc div.commodity div.identification span.heading,
+                    div.bol_doc div.commodity div.weight span.heading
                     {
                         display: inline;
                     }
             
-                    div.commodity div.service_description p
+                    div.bol_doc div.commodity div.service_description p
                     {
                         font-weight: bold;
                         margin: 5px 0 15px 0;
                     }
             
-                    div.commodity table.dimensions
+                    div.bol_doc div.commodity table.dimensions
                     {
                         width: 100%;
                     }
             
-                    div.commodity table.dimensions td
+                    div.bol_doc div.commodity table.dimensions td
                     {
                         padding-bottom: 3px;
                     }
             
-                    div.commodity table.dimensions td.heading
+                    div.bol_doc div.commodity table.dimensions td.heading
                     {
                         width: 13%;
                     }
             
-                    div.commodity table.dimensions span.name,
-                    div.commodity table.dimensions span.length,
-                    div.commodity table.dimensions span.width,
-                    div.commodity table.dimensions span.height
+                    div.bol_doc div.commodity table.dimensions span.name,
+                    div.bol_doc div.commodity table.dimensions span.length,
+                    div.bol_doc div.commodity table.dimensions span.width,
+                    div.bol_doc div.commodity table.dimensions span.height
                     {
                         font-weight: bold;
                     }
             
-                    div.commodity td.charges
+                    div.bol_doc div.commodity td.charges
                     {
                         padding: 5px;
                         border-left: 1px #000000 solid;
                     }
             
-                    div.commodity table.payment_types
+                    div.bol_doc div.commodity table.payment_types
                     {
                         width: 100%;
                         margin-top: 3px;
                     }
             
-                    div.commodity table.payment_types span.checkbox span.box
+                    div.bol_doc div.commodity table.payment_types span.checkbox span.box
                     {
                         display: block;
                         height: 10px;
@@ -331,20 +367,20 @@ namespace SingerDispatch.Printing.Documents
                         margin-right: 5px;
                     }
             
-                    div.commodity span.disclaimer
+                    div.bol_doc div.commodity span.disclaimer
                     {
                         display: block;
                         font-size: 0.8em;
                         margin: 3px 0;
                     }
                        
-                    div.commodity table.amounts
+                    div.bol_doc div.commodity table.amounts
                     {
                         width: 100%;
                         border-collapse: collapse;
                     }
             
-                    div.commodity table.amounts th
+                    div.bol_doc div.commodity table.amounts th
                     {
                         text-decoration: underline;
                         width: 25%;
@@ -354,13 +390,13 @@ namespace SingerDispatch.Printing.Documents
                         font-weight: normal;
                     }
             
-                    div.commodity table.amounts td
+                    div.bol_doc div.commodity table.amounts td
                     {
                         border-top: 1px #000000 dotted;
                 
                     }
             
-                    table.additional_info
+                    div.bol_doc table.additional_info
                     {
                         width: 100%;
                         border-collapse: collapse;
@@ -369,62 +405,72 @@ namespace SingerDispatch.Printing.Documents
                         border-bottom: 1px #000000 solid;
                     }
             
-                    table.additional_info td
+                    div.bol_doc table.additional_info td
                     {                
                         vertical-align: top;
                     }
 
-                    table.additional_info td div.content
+                    div.bol_doc table.additional_info td div.content
                     {
                         padding: 5px;
                         min-height: 60px;
                     }
 
-                    td.dangerous_goods, td.shippers_weight, td.notice_of_claim, td.loading_declaration
+                    div.bol_doc td.dangerous_goods, 
+                    div.bol_doc td.shippers_weight, 
+                    div.bol_doc td.notice_of_claim, 
+                    div.bol_doc td.loading_declaration
                     {
                         border-right: 1px #000000 solid;
                     }
             
-                    td.dangerous_goods, td.comments_and_initials, td.shippers_weight, td.shipper_per, td.notice_of_claim,
-                    td.declared_value, td.shipper_originating
+                    div.bol_doc td.dangerous_goods, 
+                    div.bol_doc td.comments_and_initials, 
+                    div.bol_doc td.shippers_weight, 
+                    div.bol_doc td.shipper_per, 
+                    div.bol_doc td.notice_of_claim,
+                    div.bol_doc td.declared_value, 
+                    div.bol_doc td.shipper_originating
                     {
                         width: 50%;
                         border-bottom: 1px #000000 solid;
                     }
             
-                    td.shippers_weight p, td.notice_of_claim p, td.declared_value span.subtext
+                    div.bol_doc td.shippers_weight p,
+                    div.bol_doc td.notice_of_claim p,
+                    div.bol_doc td.declared_value span.subtext
                     {
                         font-size: 0.8em;
                     }
             
-                    td.declared_value span.value
+                    div.bol_doc td.declared_value span.value
                     {
                         float: right;
                         font-weight: bold;
                         font-size: 1.1em;
                     }
             
-                    td.declared_value span.subtext
+                    div.bol_doc td.declared_value span.subtext
                     {
                         display: block;
                         width: 70%;
                     }
             
-                    span.signline
+                    div.bol_doc span.signline
                     {
                         display: block;
                         border-bottom: 1px dotted #000000;
                         font-weight: bold;
                         padding: 5px 0;
-                        margin: 15px 5px;
+                        margin: 5px;
                     }
             
-                    div.declared_value
+                    div.bol_doc div.declared_value
                     {
                 
                     }
             
-                    span.signline span.subtext
+                    div.bol_doc span.signline span.subtext
                     {
                         font-size: 0.7em;
                         font-weight: normal;
@@ -432,70 +478,63 @@ namespace SingerDispatch.Printing.Documents
                         color: #676767;
                     }
 
-                    table.declaration
+                    div.bol_doc table.declaration
                     {
                         width: 100%;
                         margin-bottom: 10px;
                     }            
             
-                    table.declaration th.date, table.declaration th.time 
+                    div.bol_doc table.declaration th.date, 
+                    div.bol_doc table.declaration th.time 
                     {
                         width: 28%;
                         font-weight: normal;
                     }           
             
-                    table.declaration td span
+                    div.bol_doc table.declaration td span
                     {
                         display: block;
                         padding: 5px;
                     }
             
-                    table.declaration td.title
+                    div.bol_doc table.declaration td.title
                     {
                         border-bottom: 1px #000000 dotted;
                     }
             
             
-                    table.declaration td.date
+                    div.bol_doc table.declaration td.date
                     {
                         width: 200px;
                     }
             
-                    table.declaration td.fill
+                    div.bol_doc table.declaration td.fill
                     {                
                         border-left: 1px #000000 dotted; 
                         border-bottom: 1px #000000 dotted;
                     }
             
-                    table.declaration td.total
+                    div.bol_doc table.declaration td.total
                     {
                         text-align: right;
                     }
             
-                    table.signatures
+                    div.bol_doc table.signatures
                     {
                         width: 100%;
                         border: 1px #000000 solid;
                     }
-                </style>
-                <style type=""text/css"" media=""print"">
-                    body
-                    {
-                        font-size: 10pt;
-                        padding: 0;
-                    }
-
-                    div.page_break
-                    {
-                        border: none;
-                        display: block;
-                        page-break-before: always;
-                        margin: 0;
-                    }     
-                </style>
             ";
 
-            return content;
+            return styles;
+        }
+
+        public static string GetDocSpecificPrintStyles()
+        {
+            var styles = @"                    
+            ";
+
+            return styles;
         }
 
         private string GetHeader(string documentID)
@@ -549,7 +588,7 @@ namespace SingerDispatch.Printing.Documents
             return string.Format(html, replacements);
         }
 
-        private string GetReferenceTable()
+        private string GetReferenceTable(JobCommodity commodity)
         {
             var html = @"
                 <div class=""reference"">
@@ -557,39 +596,36 @@ namespace SingerDispatch.Printing.Documents
                         <tr>
                             <td class=""recipient"">
                                 <div>
-                                    <span class=""date"">Date: <span>{0}July 08, 2010</span></span>
+                                    <span class=""date"">Date: <span>{0}</span></span>
 
-                                    <span class=""customer"">Customer: <span>{1}Transtech Contracting Inc.</span></span>
+                                    <span class=""customer"">Customer: <span>{1}</span></span>
 
-                                    <span class=""equipment""><span class=""unit"">Unit #: <span>{2}03-09</span></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class=""trailer"">Trailer #: <span>{3}18-01</span></span></span>
+                                    <span class=""equipment""><span class=""unit"">Unit #: <span>{2}</span></span>&nbsp;&nbsp;&nbsp;&nbsp;<span class=""trailer"">Trailer #: <span>{3}</span></span></span>
 
                                     <div class=""shipper"">
                                         <span class=""heading"">Shipper or Agent (Name Address)</span>
 
-                                        <span>{4}Transtech Contracting Inc.</span>
-                                        <span>{5}Suite 811 - 53016 Hwy 60</span>
-                                        <span>{6}Acheson, Alberta</span>
-                                        <span>{7}Canada</span>
-                                        <span>{8}T7X 5A7</span>
+                                        <span>{4}</span>
+                                        <span>{5}</span>
+                                        <span>{6}</span>
+                                        <span>{7}</span>
+                                        <span>{8}</span>
                                     </div>
 
                                     <div class=""consignee"">
                                         <span class=""heading"">Consignee (Name Address)</span>
 
-                                        <span>{9}Transtech Contracting Inc.</span>
-                                        <span>{10}Suite 811 - 53016 Hwy 60</span>
-                                        <span>{11}Acheson, Alberta</span>
-                                        <span>{12}Canada</span>
-                                        <span>{13}T7X 5A7</span>
+                                        <span>{9}</span>
+                                        <span>{10}</span>
+                                        <span>{11}</span>
+                                        <span>{12}</span>
+                                        <span>{13}</span>
                                     </div>
                                 </div>
                             </td>
                             <td class=""legal"">
                                 <div>
-                                    {14}
-                                    <p>COMBINATION SHORT FORM OF STRAIGHT BILL OF LADING - EXPRESS SHIPPING CONTRACT ADOPTED BY RAIL FREIGHT AND EXPRESS CARRIER'S SUBJECT TO THE JURISDICTION OF THE CANADIAN TRANSPORT COMMISION. ISSUED AT SHIPPER'S REQUEST.</p>
-
-                                    <p>RECIEVED AT THE POINT OF ORIGIN ON THE DATE SPECIFIED, FROM THE CONSIGNOR MENTIONED HEREIN, THE PROPERTY HEREIN DESCRIBED, IN APPARENT GOOD ORDER, EXCEPT AS NOTED (CONTENTS OF PACKAGES AND CONDITIONS OF CONTENTS ARE UNKNOWN) MARKED, CONSIGNED AND DESTINED AS INDICATED BELOW, WHICH THE CARRIER AGREES TO CARRY AND TO DELIVER TO THE CONSIGNEE AT THE SAID DESTINATION, IF ON ITS OWN AUTHORIZED ROUTE OR OTHERWISE TO CAUSE TO BE CARRIED BY ANOTHER CARRIER ON THE ROUTE TO SAID DESTINATION SUBJECT TO THE RATES AND CLASSIFICATION IN EFFECT ON THE DATE OF SHIPMENT. IT IS MUTUALLY AGREED, AS TO EACH CARRIER OF ALL OR ANY OF THE GOODS OVERALL OR ANY PORTION OF THE ROUTE TO DESTINATION; AND AS TO EACH PARTY OF ANY TIME INTERESTED IN ALL OR ANY OF THE GOODS, THAT EVERY SERVICE TO BE PERFORMED HEREUNDER SHALL BE SUBJECT TO ALL THE CONDITIONS NOTE PROHIBITED BY LAW, WHETHER PRINTED OR WRITTEN, INCLUDING CONDITIONS ON BACK HEREOF, WHICH ARE HEREBY AGREED BY THE CONSIGNOR ACCEPTED FOR HIMSELF AND HIS ASSIGNS.</p>                            
+                                    {14}                                    
                                 </div>
                             </td>
                         </tr>
@@ -597,7 +633,325 @@ namespace SingerDispatch.Printing.Documents
                 </div>
             ";
 
-            return "";
+            var replacements = new object[15];
+
+            replacements[0] = DateTime.Now.ToString(SingerConstants.PrintedDateFormatString);
+            replacements[1] = commodity.Job.Company.Name;
+            replacements[2] = (commodity.Load != null && commodity.Load.Equipment != null) ? commodity.Load.Equipment.UnitNumber : "";
+            replacements[3] = (commodity.Load != null && commodity.Load.Rate != null) ? commodity.Load.Rate.Name + " - " : "";
+            
+            if (commodity.Load != null && commodity.Load.TrailerCombination != null)
+                replacements[3] += commodity.Load.TrailerCombination.Combination;
+
+            replacements[4] = (commodity.ShipperCompany != null) ? commodity.ShipperCompany.Name : "";
+            
+            if (commodity.ShipperAddress != null)
+            {
+                replacements[5] = commodity.ShipperAddress.Line1;
+                replacements[6] = commodity.ShipperAddress.City;
+
+                if (commodity.ShipperAddress.ProvincesAndState != null)
+                {
+                    replacements[6] += ", " + commodity.ShipperAddress.ProvincesAndState.Name;
+                    replacements[7] = commodity.ShipperAddress.ProvincesAndState.Country.Name;
+                }
+
+                replacements[8] = commodity.ShipperAddress.PostalZip;
+            }
+            
+            replacements[9] = (commodity.ConsigneeCompany != null) ? commodity.ConsigneeCompany.Name : "";
+            
+            if (commodity.ConsigneeAddress != null)
+            {
+                replacements[10] = commodity.ConsigneeAddress.Line1;
+                replacements[11] = commodity.ConsigneeAddress.City;
+
+                if (commodity.ConsigneeAddress.ProvincesAndState != null)
+                {
+                    replacements[11] += ", " + commodity.ConsigneeAddress.ProvincesAndState.Name;
+                    replacements[12] = commodity.ConsigneeAddress.ProvincesAndState.Country.Name;
+                }
+
+                replacements[13] = commodity.ConsigneeAddress.PostalZip;
+            }
+
+            replacements[14] =  SingerConstants.GetConfig("BillOfLading-MainLegal") ?? "";
+
+            return string.Format(html, replacements);
+        }
+
+        private string GetGlassLiability()
+        {
+            return @"<div class=""glass_damage"">Carrier not liable for glass damage in transit</div>";
+        }
+
+        private string GetCommodityDetails(JobCommodity commodity)
+        {
+            var html = @"
+                <div class=""commodity"">
+                    <table class=""commodity_details"">
+                        <tr>
+                            <td class=""details"">
+                                <div class=""identification"">
+                                    <table class=""dimensions"">
+                                        <tr>
+                                            <td class=""heading""><span class=""heading"">Commodity:</span></td>
+                                            <td colspan=""3""><span class=""name"">{0}</span></td>                                    
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td><span class=""field"">Length:</span> <span class=""length"">{1}</span></td>
+                                            <td><span class=""field"">Width:</span> <span class=""width"">{2}</span></td>
+                                            <td><span class=""field"">Height:</span> <span class=""height"">{3}</span></td>
+                                        </tr>
+                                    </table>
+                                </div>
+
+                                <div class=""service_description"">
+                                    <span class=""heading"">Description of Service</span>
+
+                                    <p>{4}</p>
+                                </div>
+
+                                <div class=""weight"">
+                                    <span class=""heading"">Net Weight of Shipment</span>
+
+                                    <span class=""weight"">{5}</span>
+                                </div>
+                            </td>
+                            <td class=""charges"">
+                                <span class=""heading"">Freight Charges</span>
+
+                                <table class=""payment_types"">
+                                    <tr>
+                                        <td><span class=""checkbox""><span class=""box""></span>COD</span></td>
+                                        <td><span class=""checkbox""><span class=""box""></span>Collect</span></td>
+                                        <td><span class=""checkbox""><span class=""box""></span>PrePaid</span></td>
+                                    </tr>
+                                </table>
+
+                                <span class=""disclaimer"">Freight charges will be collected unless marked prepaid.</span>
+
+                                <table class=""amounts"">
+                                    <tr>
+                                        <th>Amount</th>
+                                        <td><span></span></td>
+                                    </tr>
+                                    <tr>
+                                        <th>GST</th>
+                                        <td><span></span></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Total</th>
+                                        <td><span></span></td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            ";
+
+            string lengthUnit, weightUnit;
+
+            if (PrintMetric != true)
+            {
+                lengthUnit = MeasurementFormater.UFeet;
+                weightUnit = MeasurementFormater.UPounds;
+            }
+            else
+            {
+                lengthUnit = MeasurementFormater.UMetres;
+                weightUnit = MeasurementFormater.UKilograms;
+            }
+
+            var replacements = new object[6];
+
+            replacements[0] = commodity.Name;
+
+            replacements[1] = MeasurementFormater.FromMetres(commodity.Length, lengthUnit);
+            replacements[2] = MeasurementFormater.FromMetres(commodity.Width, lengthUnit);
+            replacements[3] = MeasurementFormater.FromMetres(commodity.Height, lengthUnit);
+
+            replacements[4] = (commodity.Load != null) ? commodity.Load.ServiceDescription : "";
+
+            replacements[5] = MeasurementFormater.FromKilograms(commodity.Weight, weightUnit);
+            
+            return string.Format(html, replacements);
+        }
+
+        private string GetAdditionalInfo(JobCommodity commodity)
+        {
+            var html = @"
+                <table class=""additional_info"">
+                    <tr>
+                        <td class=""dangerous_goods"">
+                            <div class=""dangerous_goods content"">
+                                <span class=""heading"">Dangerous Goods Information</span>
+
+                            </div>
+                        </td>
+                        <td class=""comments_and_initials"">
+                            <div class=""comments_and_initials content"">
+                                <span class=""heading"">Comments and Initials</span>
+
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class=""shippers_weight"">
+                            <div class=""shippers_weight content"">
+                                <span class=""heading"">Shipper's Weight</span>                    
+                                
+                                {0}
+                            </div>
+                        </td>
+                        <td class=""shipper_per"">
+                            <div class=""shipper_per content"">
+                                <span class=""signline"">Shipper: <span class=""subtext"">To be signed by shipper</span></span>
+                                <span class=""signline"">Per:</span>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class=""notice_of_claim"" rowspan=""2"">
+                            <div class=""notice_of_claim content"">
+                                <span class=""heading"">Notice of Claim</span>
+
+                                {1}
+                            </div>
+                        </td>
+                        <td class=""declared_value"">
+                            <div class=""declared_value content"">                    
+                                <span class=""heading"">Declared Valuation</span>
+
+                                <span class=""value"">{2}</span>
+
+                                <span class=""subtext"">{3}</span>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class=""shipper_originating"">
+                            <div class=""shipper_originating content"">
+                                <span class=""signline"">Shipper: <span class=""subtext"">To be signed by shipper</span></span>
+                                <span class=""signline"">Originating Carrier:</span>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class=""loading_declaration"">
+                            <div class=""loading_declaration content"">
+                                <span class=""heading"">Loading Declaration</span>
+
+                                <table class=""declaration"">
+                                    <tr>                            
+                                        <th class=""other""><span></span></th>
+                                        <th class=""date"">Date</th>
+                                        <th class=""time"">Time</th>                            
+                                    </tr>
+                                    <tr>
+                                        <td class=""title""><span>Departing for Load Location</span></td>
+                                        <td class=""fill""><span>&nbsp;</span></td>
+                                        <td class=""fill""><span>&nbsp;</span></td>                            
+                                    </tr>
+                                    <tr>
+                                        <td class=""title""><span>Arrived Load Loaction</span></td>
+                                        <td class=""fill""><span>&nbsp;</span></td>
+                                        <td class=""fill""><span>&nbsp;</span></td>                            
+                                    </tr>
+                                    <tr>
+                                        <td class=""title""><span>Departed Load Location</span></td>
+                                        <td class=""fill""><span>&nbsp;</span></td>
+                                        <td class=""fill""><span>&nbsp;</span></td>                            
+                                    </tr>
+                                    <tr>
+                                        <td class=""total""><span></span></td>
+                                        <td class=""total""><span>Total Hours</span></td>
+                                        <td class=""fill""><span>&nbsp;</span></td>                            
+                                    </tr>
+                                </table>
+
+                                <span class=""signatures"">Certification (Shipper Sign Print):</span>
+                            </div>
+                        </td>
+                        <td class=""unloading_declaration"">
+                            <div class=""unloading_declaration content"">
+                                <span class=""heading"">Unloading Declaration</span>
+
+                                <table class=""declaration"">
+                                    <tr>                            
+                                        <th class=""other""></th>
+                                        <th class=""date"">Date</th>
+                                        <th class=""time"">Time</th>                            
+                                    </tr>
+                                    <tr>
+                                        <td class=""title""><span>Arrived at Unload Location</span></td>
+                                        <td class=""fill""><span>&nbsp;</span></td>
+                                        <td class=""fill""><span>&nbsp;</span></td>                            
+                                    </tr>
+                                    <tr>
+                                        <td class=""title""><span>Departed Unload Loaction</span></td>
+                                        <td class=""fill""><span>&nbsp;</span></td>
+                                        <td class=""fill""><span>&nbsp;</span></td>                            
+                                    </tr>
+                                    <tr>
+                                        <td class=""title""><span>Arrived at Terminal</span></td>
+                                        <td class=""fill""><span>&nbsp;</span></td>
+                                        <td class=""fill""><span>&nbsp;</span></td>                            
+                                    </tr>
+                                    <tr>
+                                        <td class=""total""><span></span></td>
+                                        <td class=""total""><span>Total Hours</span></td>
+                                        <td class=""fill""><span>&nbsp;</span></td>                            
+                                    </tr>
+                                </table>    
+
+                                <span class=""signatures"">Certification (Consignee Sign Print):</span>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            ";
+            
+            var replacements = new object[4];
+
+            replacements[0] = SingerConstants.GetConfig("BillOfLading-ShippersWeight") ?? "";
+            replacements[1] = SingerConstants.GetConfig("BillOfLading-NoticeOfClaim") ?? "";
+            replacements[2] = string.Format("{0:C}", commodity.Value);
+            replacements[3] = SingerConstants.GetConfig("BillOfLading-MaxLiability") ?? "";
+
+            return string.Format(html, replacements);
+        }
+
+        private string GetSignatures()
+        {
+            var html = @"
+                <table class=""signatures"">
+                    <tr>
+                        <td>
+                            <div>
+                                <span class=""signline"">Carrier:</span>
+                                <span class=""signline"">Per:</span>
+                            </div>
+                        </td>
+                        <td> 
+                            <div>
+                                <span class=""signline"">Shipper:</span>
+                                <span class=""signline"">Per:</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <span class=""signline"">Consignee:</span>
+                                <span class=""signline"">Per:</span>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            ";
+
+            return html;
         }
     }
 }

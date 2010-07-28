@@ -9,6 +9,8 @@ using System;
 using System.Diagnostics;
 using SingerDispatch.Printing.Documents;
 using System.ComponentModel;
+using System.Text.RegularExpressions;
+using System.IO;
 
 namespace SingerDispatch.Windows
 {
@@ -23,8 +25,21 @@ namespace SingerDispatch.Windows
         private bool IsMetric { get; set; }
         private bool IsSpecializedDocument { get; set; }
         private object OriginalEntity { get; set; }
-        private string Filename { get; set; }
+
+        private string _filename;
+        private string Filename 
+        {
+            get
+            {
+                return _filename;
+            }
+            set
+            {
+                _filename = MakeValidFileName(value);
+            }
+        }
        
+
         public DocumentViewerWindow(IPrintDocument document, object entity)
         {
             InitializeComponent();
@@ -151,6 +166,13 @@ namespace SingerDispatch.Windows
             {
                 ErrorNoticeWindow.ShowError("Problem saving to PDF", ex.ToString());
             }
+        }
+
+        private static string MakeValidFileName( string name )
+        {
+           string invalidChars = Regex.Escape( new string( Path.GetInvalidFileNameChars() ) );
+           string invalidReStr = string.Format( @"[{0}]", invalidChars );
+           return Regex.Replace( name, invalidReStr, "_" );
         }
     }
 }
