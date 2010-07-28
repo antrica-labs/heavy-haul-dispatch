@@ -16,6 +16,18 @@
             <DataTemplate x:Key="NameAndUnitTemplate">
                 <TextBlock Text="{Binding NameAndUnit}" />
             </DataTemplate>
+            
+            <DataTemplate x:Key="AddressTemplate">
+                <TextBlock>
+                    <TextBlock.Text>
+                        <MultiBinding StringFormat="{}{0}, {1}, {2}">
+                            <Binding Path="Line1" />
+                            <Binding Path="City" />
+                            <Binding Path="PostalZip" />
+                        </MultiBinding>
+                    </TextBlock.Text>
+                </TextBlock>
+            </DataTemplate>
         </ResourceDictionary>
     </UserControl.Resources>
     <DockPanel>
@@ -249,7 +261,36 @@
                 </TabItem>
                 
                 <TabItem Header="Bill of Lading">
-                    
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+
+                        <GroupBox Header="Shipper" Grid.Column="0" Margin="0,0,2,0" DataContext="{Binding ElementName=dgCommodities, Path=SelectedItem}">
+                            <StackPanel>
+                                <Label>Company</Label>
+                                <ComboBox Name="cmbShipperCompanies" SelectedItem="{Binding ShipperCompany}" SelectionChanged="ShipperCompany_SelectionChanged" ItemTemplate="{StaticResource SimpleNameTemplate}" />
+                                
+                                <Label>Address</Label>
+                                <ComboBox Name="cmbShipperAddresses" SelectedItem="{Binding ShipperAddress}" ItemTemplate="{StaticResource AddressTemplate}" />
+                                
+                                <Label Height="154"></Label>
+                            </StackPanel>
+                        </GroupBox>
+
+                        <GroupBox Header="Consignee" Grid.Column="1" Margin="2,0,0,0" DataContext="{Binding ElementName=dgCommodities, Path=SelectedItem}">
+                            <StackPanel>
+                                <Label>Company</Label>
+                                <ComboBox Name="cmbConsigneeCompanies" SelectedItem="{Binding ConsigneeCompany}" SelectionChanged="ConsigneeCompany_SelectionChanged" ItemTemplate="{StaticResource SimpleNameTemplate}" />
+
+                                <Label>Address</Label>
+                                <ComboBox Name="cmbConsigneeAddresses" SelectedItem="{Binding ConsigneeAddress}" ItemTemplate="{StaticResource AddressTemplate}" />
+
+                                <Label Height="154"></Label>
+                            </StackPanel>
+                        </GroupBox>
+                    </Grid>
                 </TabItem>
             </TabControl>
         </StackPanel>

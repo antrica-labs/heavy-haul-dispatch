@@ -24,6 +24,11 @@ namespace SingerDispatch.Panels.Jobs
 
         private void ControlLoaded(object sender, RoutedEventArgs e)
         {
+            var companies = from c in Database.Companies select c;
+
+            cmbShipperCompanies.ItemsSource = companies;
+            cmbConsigneeCompanies.ItemsSource = companies;
+
             cmbLoads.ItemsSource = (SelectedJob == null) ? null : SelectedJob.Loads.ToList();
             cmbCommodityName.ItemsSource = (SelectedJob == null) ? null : from c in Database.Commodities where c.Company == SelectedJob.Company || c.Company == SelectedJob.CareOfCompany orderby c.Name, c.Unit select c;
 
@@ -60,6 +65,11 @@ namespace SingerDispatch.Panels.Jobs
 
             var commodity = new JobCommodity { JobID = SelectedJob.ID, LoadDate = SelectedJob.StartDate, UnloadDate = SelectedJob.EndDate };
             var list = (ObservableCollection<JobCommodity>)dgCommodities.ItemsSource;
+
+            commodity.ShipperCompany = SelectedCompany;
+            commodity.ShipperAddress = SelectedCompany.Addresses.First();
+            commodity.ConsigneeCompany = commodity.ShipperCompany;
+            commodity.ConsigneeAddress = commodity.ShipperAddress;
             
             SelectedJob.JobCommodities.Insert(0, commodity);
             list.Add(commodity);
@@ -148,6 +158,22 @@ namespace SingerDispatch.Panels.Jobs
                 commodity.LastLocation = null;
                 commodity.LoadLocation = null;                
             }
+        }
+
+        private void ShipperCompany_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var cmb = (ComboBox)sender;
+            var company = (Company)cmb.SelectedItem;
+
+            cmbShipperAddresses.ItemsSource = (company != null) ? company.Addresses : null;
+        }
+
+        private void ConsigneeCompany_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var cmb = (ComboBox)sender;
+            var company = (Company)cmb.SelectedItem;
+
+            cmbConsigneeAddresses.ItemsSource = (company != null) ? company.Addresses : null;
         }
     }
 }
