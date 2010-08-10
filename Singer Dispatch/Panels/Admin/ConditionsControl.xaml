@@ -28,6 +28,7 @@
         <DataGrid Name="TheGrid" Style="{StaticResource ListDisplay}" IsReadOnly="False" RowEditEnding="RowEditEnding">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Condition" Binding="{Binding Line}" />
+                <DataGridCheckBoxColumn Header="Default" Binding="{Binding AutoInclude}" Width="75" />
             </DataGrid.Columns>
         </DataGrid>
     </DockPanel>

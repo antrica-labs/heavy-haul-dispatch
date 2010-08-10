@@ -11688,6 +11688,8 @@ namespace SingerDispatch
 		
 		private string _Line;
 		
+		private System.Nullable<bool> _AutoInclude;
+		
 		private EntitySet<QuoteCondition> _QuoteConditions;
 		
     #region Extensibility Method Definitions
@@ -11698,6 +11700,8 @@ namespace SingerDispatch
     partial void OnIDChanged();
     partial void OnLineChanging(string value);
     partial void OnLineChanged();
+    partial void OnAutoIncludeChanging(System.Nullable<bool> value);
+    partial void OnAutoIncludeChanged();
     #endregion
 		
 		public Condition()
@@ -11742,6 +11746,26 @@ namespace SingerDispatch
 					this._Line = value;
 					this.SendPropertyChanged("Line");
 					this.OnLineChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AutoInclude")]
+		public System.Nullable<bool> AutoInclude
+		{
+			get
+			{
+				return this._AutoInclude;
+			}
+			set
+			{
+				if ((this._AutoInclude != value))
+				{
+					this.OnAutoIncludeChanging(value);
+					this.SendPropertyChanging();
+					this._AutoInclude = value;
+					this.SendPropertyChanged("AutoInclude");
+					this.OnAutoIncludeChanged();
 				}
 			}
 		}

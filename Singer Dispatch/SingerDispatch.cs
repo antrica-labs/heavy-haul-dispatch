@@ -231,6 +231,14 @@ namespace SingerDispatch
         }
     }
 
+    partial class Condition
+    {
+        partial void OnCreated()        
+        {
+            AutoInclude = AutoInclude ?? false;   
+        }
+    }
+
     partial class QuoteCondition
     {
         public QuoteCondition Duplicate()

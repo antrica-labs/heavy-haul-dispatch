@@ -85,6 +85,12 @@ namespace SingerDispatch.Panels.Quotes
             dgQuotes.ScrollIntoView(quote);
             SelectedCompany.Quotes.Add(quote);
 
+            // Add any of the default quote conditions            
+            foreach (var condition in (from c in Database.Conditions where c.AutoInclude == true select c))
+            {
+                quote.QuoteConditions.Add(new QuoteCondition { ConditionID = condition.ID, Line = condition.Line });
+            }
+
             try
             {
                 EntityHelper.SaveAsNewQuote(quote, Database);

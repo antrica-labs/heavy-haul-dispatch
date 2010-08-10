@@ -677,6 +677,9 @@ namespace SingerDispatch.Importer
             Database.LoadUnloadMethods.InsertAllOnSubmit(methods);
                         
 
+            // Add a note that was included in all previous quotes as a default condition...
+            Database.Conditions.InsertOnSubmit(new Condition { Line = "Cargo Insruance coverage subject to declared values supplied by shipper/owner.", AutoInclude = true });
+
             Database.SubmitChanges();
         }
 

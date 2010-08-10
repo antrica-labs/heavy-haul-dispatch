@@ -490,6 +490,7 @@
     <Type Name="Condition">
       <Column Name="ID" Type="System.Int64" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Line" Type="System.String" CanBeNull="true" />
+      <Column Name="AutoInclude" Type="System.Boolean" CanBeNull="true" />
       <Association Name="Condition_QuoteCondition" Member="QuoteConditions" ThisKey="ID" OtherKey="ConditionID" Type="QuoteCondition" />
     </Type>
   </Table>
@@ -538,7 +539,7 @@
       <Association Name="Company_Service" Member="Company" ThisKey="CompanyID" OtherKey="ID" Type="Company" IsForeignKey="true" />
       <Association Name="ServiceType_Service" Member="ServiceType" ThisKey="ServiceTypeID" OtherKey="ID" Type="ServiceType" IsForeignKey="true" />
     </Type>
-  </Table>
+  </Table> 
   <Table Name="" Member="ServiceTypes">
     <Type Name="ServiceType">
       <Column Name="ID" Type="System.Int64" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />

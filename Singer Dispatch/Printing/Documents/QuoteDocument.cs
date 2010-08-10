@@ -38,12 +38,14 @@ namespace SingerDispatch.Printing.Documents
             content.Append(GetDescription(quote.Contact, "Transportation Quote", quote.CreationDate, quote.ExpirationDate));
 
             if (quote.QuoteCommodities.Count > 0)
-                content.Append(GetCommodities(quote.QuoteCommodities.ToList()));
+                content.Append(GetCommodities(quote));
 
             if (quote.QuoteSupplements.Count > 0)
                 content.Append(GetSuppluments(quote.QuoteSupplements.ToList()));
 
             content.Append(GetNotes(quote));
+            content.Append(GetPrice(quote));
+            content.Append(GetInclusions(quote));            
             content.Append(GetConditions(quote));
             content.Append(GetSignoff(quote));
             content.Append("</body>");
@@ -305,7 +307,21 @@ namespace SingerDispatch.Printing.Documents
                     {
                         font-size: 0.8em;
                     }
+
+                    div#price
+                    {
+                        margin: 20px 0;
+                    }
                     
+                    div#price span.heading
+                    {
+                        font-size: 1.05em;
+                        display: inline;
+                        text-transform: uppercase;
+                        text-decoration: underline;
+                        padding-right: 15px;
+                    }                    
+
                     ol.conditions
                     {
                         list-style-type: decimal;
@@ -483,7 +499,7 @@ namespace SingerDispatch.Printing.Documents
             return string.Format(html, replacements);
         }
         
-        private string GetCommodities(IEnumerable<QuoteCommodity> commodities)
+        private string GetCommodities(Quote quote)
         {
             var content = @"
                 <div id=""commodities"">
@@ -496,21 +512,24 @@ namespace SingerDispatch.Printing.Documents
                                 <th>To</th>
                                 <th>Dimensions (LxWxH)</th>
                                 <th>Weight</th>                                
+                                {0}
                             </tr>
                         </thead>
                         <tbody>
-                            {0}
+                            {1}
                         </tbody>
                     </table>
 
                     <p class=""fine_print""><em>*</em> Dimensions or weights estimated. Actual values may impact quoted price.</p>
                 </div>
             ";
+            string costcol = (quote.IsItemizedBilling == true) ? "<th>Cost</th>" : null;
+
 
             var rows = new StringBuilder();
             int count = 1;
 
-            foreach (var commodity in commodities)
+            foreach (var commodity in quote.QuoteCommodities)
             {
                 string length, width, height, weight;
 
@@ -548,13 +567,26 @@ namespace SingerDispatch.Printing.Documents
                 rows.Append("<td>");
                 rows.Append(MeasurementFormater.FromKilograms(commodity.Weight, weight));
                 rows.Append("</td>");
+
+                if (costcol != null)
+                {
+                    rows.Append("<td>");
+                    rows.Append(string.Format("{0:C}", commodity.Cost));
+                    rows.Append("</td>");
+                }
+
                 rows.Append("</tr>");
 
                 if (!string.IsNullOrEmpty(commodity.Notes))
                 {
                     rows.Append(@"<tr class=""notes"">");
                     rows.Append("<td></td>");
-                    rows.Append(@"<td colspan=""4"">");
+
+                    if (costcol != null)
+                        rows.Append(@"<td colspan=""5"">");
+                    else
+                        rows.Append(@"<td colspan=""4"">");
+
                     rows.Append(commodity.Notes.Replace("\n", "<br>"));
                     rows.Append("</td>");
                     rows.Append("<td></td>");
@@ -563,8 +595,8 @@ namespace SingerDispatch.Printing.Documents
 
                 count++;
             }
-
-            content = string.Format(content, count > 0 ? rows.ToString() : "");
+            
+            content = string.Format(content, costcol, count > 0 ? rows.ToString() : "");
 
             return content;
         }
@@ -658,6 +690,42 @@ namespace SingerDispatch.Printing.Documents
 
             return string.Format(html, rows.ToString());
         }
+
+        private static string GetPrice(Quote quote)
+        {
+            var html = @"
+                <div id=""price"">
+                    <p><span class=""heading"">Quoted Price:</span><span class=""price"">{0}</span></p>
+                </div>
+            ";           
+
+            var price = (quote.IsItemizedBilling == true) ? "As listed" : string.Format("{0:C}", quote.Price);
+
+            return string.Format(html, price);
+        }
+
+        private static string GetInclusions(Quote quote)
+        {
+            var html = @"
+                <div id=""inclusions"">
+                    <p>The quoted price includes {0}.</p>
+                </div>
+            ";
+            var inclusionlist = new StringBuilder();
+
+            for (var i = 0; i < quote.QuoteInclusions.Count; i++)            
+            {
+                inclusionlist.Append(quote.QuoteInclusions[i].Inclusion.Line);
+
+                if (i + 1 != quote.QuoteInclusions.Count)
+                {
+                    inclusionlist.Append(", ");
+                }
+            }
+
+            return string.Format(html, inclusionlist.ToString());
+        }
+
 
         private static string GetConditions(Quote quote)
         {
