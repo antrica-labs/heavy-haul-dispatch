@@ -83,7 +83,7 @@ namespace SingerDispatch.Panels.Jobs
             
             var result = MessageBox.Show("Do you wish to inlcude a file copy with this printout?", "Include drivers copy?", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
-            var viewer = new DocumentViewerWindow(new DispatchDocument(result == MessageBoxResult.Yes), dispatches, string.Format("Dispatches - Job #{0}", SelectedJob.Number));
+            var viewer = new DocumentViewerWindow(new DispatchDocument(result == MessageBoxResult.Yes), dispatches, string.Format("Dispatches - Job #{0}", SelectedJob.Number)) { IsMetric = !UseImperialMeasurements };
             viewer.DisplayPrintout();
         }
 

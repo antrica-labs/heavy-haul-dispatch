@@ -64,7 +64,7 @@ namespace SingerDispatch.Panels.Invoicing
 
             var title = String.Format("Invoice #{0}-{1}", SelectedInvoice.Number, SelectedInvoice.Revision);
 
-            var viewer = new Windows.DocumentViewerWindow(new InvoiceDocument(), SelectedInvoice, title);
+            var viewer = new Windows.DocumentViewerWindow(new InvoiceDocument(), SelectedInvoice, title) { IsMetric = !UseImperialMeasurements };
             viewer.DisplayPrintout();
         }
 

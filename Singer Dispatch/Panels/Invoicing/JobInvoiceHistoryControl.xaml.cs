@@ -160,7 +160,7 @@ namespace SingerDispatch.Panels.Invoicing
         {
             if (SelectedInvoice == null) return;
 
-            var viewer = new Windows.DocumentViewerWindow(new InvoiceDocument(), SelectedInvoice);
+            var viewer = new Windows.DocumentViewerWindow(new InvoiceDocument(), SelectedInvoice) { IsMetric = !UseImperialMeasurements };
             viewer.DisplayPrintout();
         }
 

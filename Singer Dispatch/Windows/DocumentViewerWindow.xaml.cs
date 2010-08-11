@@ -11,6 +11,7 @@ using SingerDispatch.Printing.Documents;
 using System.ComponentModel;
 using System.Text.RegularExpressions;
 using System.IO;
+using System.Windows.Interop;
 
 namespace SingerDispatch.Windows
 {
@@ -19,11 +20,12 @@ namespace SingerDispatch.Windows
     /// </summary>
     public partial class DocumentViewerWindow
     {
-        private BackgroundWorker Backgrounder;
+        public bool IsMetric { get; set; }
+        public bool IsSpecializedDocument { get; set; }
 
-        private IPrintDocument Document { get; set; }
-        private bool IsMetric { get; set; }
-        private bool IsSpecializedDocument { get; set; }
+        private UserSettings Settings { get; set; }
+        private BackgroundWorker Backgrounder;
+        private IPrintDocument Document { get; set; }        
         private object OriginalEntity { get; set; }
 
         private string _filename;
@@ -44,6 +46,7 @@ namespace SingerDispatch.Windows
         {
             InitializeComponent();
 
+            Settings = new UserSettings();
             Backgrounder = new BackgroundWorker();
 
             IsSpecializedDocument = true;
@@ -57,6 +60,7 @@ namespace SingerDispatch.Windows
         {
             InitializeComponent();
 
+            Settings = new UserSettings();
             Backgrounder = new BackgroundWorker();
 
             IsMetric = true;
@@ -71,6 +75,13 @@ namespace SingerDispatch.Windows
             ShowDialog();
         }
 
+        protected override void OnSourceInitialized(EventArgs e)
+        {
+            base.OnSourceInitialized(e);
+
+            WindowPlacement.SetPlacement(new WindowInteropHelper(this).Handle, Settings.DocumentViewerWindowPlacement);
+        }
+
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             if (Document == null) return;
@@ -80,10 +91,17 @@ namespace SingerDispatch.Windows
             // Spawn a new thread to render the requested document and then display it when ready.
             Backgrounder.DoWork += RenderDocument;
             Backgrounder.RunWorkerCompleted += DisplayDocument;
-            
-            TheBrowser.NavigateToString(loading.GenerateHTML(null));
 
-            Backgrounder.RunWorkerAsync();
+            cmbDisplayUnits.SelectedIndex = -1;
+            cmbDisplayUnits.SelectedIndex = IsMetric ? 0 : 1;
+
+            TheBrowser.NavigateToString(loading.GenerateHTML(null));
+        }
+
+        private void Window_Closing(object sender, CancelEventArgs e)
+        {
+            Settings.DocumentViewerWindowPlacement = WindowPlacement.GetPlacement(new WindowInteropHelper(this).Handle);
+            Settings.Save();
         }
 
         private void MetricMeasurements_Selected(object sender, RoutedEventArgs e)

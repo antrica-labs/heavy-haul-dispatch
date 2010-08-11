@@ -17,6 +17,8 @@ using SingerDispatch.Windows;
 using SingerDispatch.Panels.Admin;
 using System.Windows.Input;
 using SingerDispatch.Panels.Storage;
+using System.Windows.Interop;
+using System.ComponentModel;
 
 namespace SingerDispatch
 {
@@ -25,7 +27,12 @@ namespace SingerDispatch
     /// </summary>
     public partial class MainWindow
     {
-        public static DependencyProperty UseImperialMeasurementsProperty = DependencyProperty.Register("UseImperialMeasurements", typeof(Boolean), typeof(MainWindow), new PropertyMetadata(false));
+        private UserSettings Settings { get; set; }
+        private Dictionary<Type, UserControl> Panels { get; set; }
+        private ObservableCollection<Company> Companies { get; set; }
+        private SingerDispatchDataContext Database { get; set; }
+
+        public static DependencyProperty UseImperialMeasurementsProperty = DependencyProperty.Register("UseImperialMeasurements", typeof(Boolean), typeof(MainWindow), new PropertyMetadata(false, UseImperialMeasurementsPropertyChanged));
 
         public Boolean UseImperialMeasurements
         {
@@ -34,18 +41,25 @@ namespace SingerDispatch
                 return (Boolean)GetValue(UseImperialMeasurementsProperty);
             }
             set
-            {
-                SetValue(UseImperialMeasurementsProperty, value);
+            {                
+                SetValue(UseImperialMeasurementsProperty, value);                
             }
         }
 
-        private Dictionary<Type, UserControl> Panels { get; set; }        
-        private ObservableCollection<Company> Companies { get; set; }
-        private SingerDispatchDataContext Database { get; set; }
+        public static void UseImperialMeasurementsPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var control = (MainWindow)d;
+
+            control.UseImperialMeasurementsChanged((Boolean)e.NewValue);
+        }
         
         public MainWindow()
         {
             InitializeComponent();
+
+            Settings = new UserSettings();
+
+            UseImperialMeasurements = !Settings.MetricMeasurements;
 
             SetupKeyBindings();
 
@@ -64,6 +78,38 @@ namespace SingerDispatch
 
                 Application.Current.Shutdown();
             }
+        }
+        
+        protected override void OnSourceInitialized(EventArgs e)
+        {
+            base.OnSourceInitialized(e);
+
+            WindowPlacement.SetPlacement(new WindowInteropHelper(this).Handle, Settings.MainWindowPlacement);
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            Companies = new ObservableCollection<Company>(
+                from c in Database.Companies where c.IsVisible == true orderby c.Name select c
+            );
+
+            cmbCompanies.ItemsSource = Companies;
+            cmbOperators.ItemsSource = Companies;
+
+            expanderCompanies.IsExpanded = true;
+            cmbCompanies.Focus();
+        }
+
+        private void Window_Closing(object sender, CancelEventArgs e)
+        {
+            Settings.MainWindowPlacement = WindowPlacement.GetPlacement(new WindowInteropHelper(this).Handle);
+            Settings.Save();
+        }
+
+        public void UseImperialMeasurementsChanged(Boolean value)
+        {
+            Settings.MetricMeasurements = (value == false);
+            Settings.Save();
         }
 
         private void SetupKeyBindings()
@@ -87,19 +133,6 @@ namespace SingerDispatch
             var cb5 = new CommandBinding(CustomCommands.EditCompaniesCommand);
             cb5.Executed += EditCompaniesCommandHandler;
             CommandBindings.Add(cb5);
-        }
-
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-            Companies = new ObservableCollection<Company>(
-                from c in Database.Companies where c.IsVisible == true orderby c.Name select c
-            );
-
-            cmbCompanies.ItemsSource = Companies;
-            cmbOperators.ItemsSource = Companies;
-
-            expanderCompanies.IsExpanded = true;
-            cmbCompanies.Focus();
         }
 
         private void CreateCompanyMenuItem_Click(object sender, RoutedEventArgs e)

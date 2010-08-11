@@ -26,8 +26,8 @@
 
                 <Button Grid.Column="1" Margin="4" Click="PDF_Click">Save to PDF</Button>
                 
-                <ComboBox Grid.Column="2" Margin="4">
-                    <ComboBoxItem Selected="MetricMeasurements_Selected" IsSelected="True">Metric measurements</ComboBoxItem>
+                <ComboBox Name="cmbDisplayUnits" Grid.Column="2" Margin="4">
+                    <ComboBoxItem Selected="MetricMeasurements_Selected">Metric measurements</ComboBoxItem>
                     <ComboBoxItem Selected="ImperialMeasurements_Selected">Imperial measurements</ComboBoxItem>
                 </ComboBox>
             </Grid>
