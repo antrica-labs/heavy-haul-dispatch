@@ -447,17 +447,33 @@ namespace SingerDispatch.Printing.Documents
 
             if (contact != null)
             {
-                if (contact.PrimaryPhone != null)
-                    content.Append("<span>Telephone: " + contact.PrimaryPhone + "</span>");
+                var telephone = "<span>Telephone: {0}</span>";
+                var fax = "<span>Fax: {0}</span>";
+                var secondary = "<span>Telephone: {0}</span>";
+                var email = "<span>Email: {0}</span>";
 
-                if (contact.SecondaryPhone != null)
-                    content.Append("<span>Telephone: " + contact.SecondaryPhone + "</span>");
+                if (!string.IsNullOrEmpty(contact.PrimaryPhone))
+                    telephone = string.Format(telephone, contact.PrimaryPhone);
+                else
+                    telephone = (!string.IsNullOrEmpty(address.PrimaryPhone)) ? string.Format(telephone, address.PrimaryPhone) : "";                    
+                
+                if (!string.IsNullOrEmpty(contact.SecondaryPhone))
+                    secondary = string.Format(secondary, contact.SecondaryPhone);
+                else
+                    secondary = (!string.IsNullOrEmpty(address.SecondaryPhone)) ? string.Format(secondary, address.SecondaryPhone) : "";
 
-                if (contact.Fax != null)
-                    content.Append("<span>Fax: " + contact.Fax + "</span>");
+                if (!string.IsNullOrEmpty(contact.Fax))
+                    fax = string.Format(fax, contact.Fax);
+                else
+                    fax = (!string.IsNullOrEmpty(address.Fax)) ? string.Format(fax, address.Fax) : "";
+                
+                email = (!string.IsNullOrEmpty(contact.Email)) ? string.Format(email, contact.Email) : "";                
+                
 
-                if (contact.Email != null)
-                    content.Append("<span>Email: " + contact.Email + "</span>");
+                content.Append(telephone);
+                content.Append(secondary);
+                content.Append(fax);
+                content.Append(email);
             }
 
             content.Append(footer);
