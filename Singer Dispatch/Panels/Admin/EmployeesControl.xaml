@@ -57,10 +57,10 @@
                     <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Email}" />
                     
                     <Label Grid.Row="3" Grid.Column="0">Phone:</Label>
-                    <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Phone}" />
+                    <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Phone, Converter={StaticResource PhoneNumberConverter}}" />
                     
                     <Label Grid.Row="4" Grid.Column="0">Mobile:</Label>
-                    <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Mobile}" />
+                    <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Mobile, Converter={StaticResource PhoneNumberConverter}}" />
                     
                     <Label Grid.Row="5" Grid.Column="0">Available:</Label>
                     <CheckBox Grid.Row="5" Grid.Column="1" IsChecked="{Binding IsAvailable}" />                
@@ -90,8 +90,8 @@
             <DataGrid.Columns>
                 <DataGridTextColumn Header="First name" Binding="{Binding FirstName}" />
                 <DataGridTextColumn Header="Last name" Binding="{Binding LastName}" />
-                <DataGridTextColumn Header="Mobile" Binding="{Binding Mobile}" />
-                <DataGridTextColumn Header="Phone" Binding="{Binding Phone}" />
+                <DataGridTextColumn Header="Mobile" Binding="{Binding Mobile, Converter={StaticResource PhoneNumberConverter}}" />
+                <DataGridTextColumn Header="Phone" Binding="{Binding Phone, Converter={StaticResource PhoneNumberConverter}}" />
             </DataGrid.Columns>
         </DataGrid>
     </DockPanel>

@@ -5,8 +5,7 @@ using System.Data;
 using System.Data.OleDb;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Text;
-using SingerDispatch;
+using SingerDispatch.Utils;
 
 namespace SingerDispatch.Importer
 {
@@ -468,9 +467,9 @@ namespace SingerDispatch.Importer
             address.Line2 = reader["addressLine2"] == DBNull.Value ? null : (string)reader["addressLine2"];
             address.City = reader["cityName"] == DBNull.Value ? null : (string)reader["cityName"];
             address.PostalZip = reader["addressPostalCode"] == DBNull.Value ? null : (string)reader["addressPostalCode"];
-            address.PrimaryPhone = reader["addressPhone1"] == DBNull.Value ? null : (string)reader["addressPhone1"];
-            address.SecondaryPhone = reader["addressPhone2"] == DBNull.Value ? null : (string)reader["addressPhone2"];
-            address.Fax = reader["addressFax"] == DBNull.Value ? null : (string)reader["addressFax"];
+            address.PrimaryPhone = reader["addressPhone1"] == DBNull.Value ? null : PhoneNumberCleanup((string)reader["addressPhone1"]);
+            address.SecondaryPhone = reader["addressPhone2"] == DBNull.Value ? null : PhoneNumberCleanup((string)reader["addressPhone2"]);
+            address.Fax = reader["addressFax"] == DBNull.Value ? null : PhoneNumberCleanup((string)reader["addressFax"]);
             address.Notes = reader["addressNote"] == DBNull.Value ? null : (string)reader["addressNote"];
 
             var provinceAbbr = (reader["cityProvinceAbr"] == DBNull.Value ? null : (string)reader["cityProvinceAbr"]) ??
@@ -526,9 +525,9 @@ namespace SingerDispatch.Importer
             contact.ArchiveID = (int)reader["contactId"];
             contact.FirstName = reader["contactFirstName"] == DBNull.Value ? null : (string)reader["contactFirstName"];
             contact.LastName = reader["contactLastName"] == DBNull.Value ? null : (string)reader["contactLastName"];
-            contact.PrimaryPhone = reader["contactPrimaryPhone"] == DBNull.Value ? null : (string)reader["contactPrimaryPhone"];
-            contact.SecondaryPhone = reader["contactSecondaryPhone"] == DBNull.Value ? null : (string)reader["contactSecondaryPhone"];
-            contact.Fax = reader["contactFax"] == DBNull.Value ? null : (string)reader["contactFax"];
+            contact.PrimaryPhone = reader["contactPrimaryPhone"] == DBNull.Value ? null : PhoneNumberCleanup((string)reader["contactPrimaryPhone"]);
+            contact.SecondaryPhone = reader["contactSecondaryPhone"] == DBNull.Value ? null : PhoneNumberCleanup((string)reader["contactSecondaryPhone"]);
+            contact.Fax = reader["contactFax"] == DBNull.Value ? null : PhoneNumberCleanup((string)reader["contactFax"]);
             contact.Email = reader["contactEmail"] == DBNull.Value ? null : (string)reader["contactEmail"];
             contact.Notes = reader["contactNote"] == DBNull.Value ? null : (string)reader["contactNote"];
 
@@ -542,15 +541,15 @@ namespace SingerDispatch.Importer
             
             var pext = reader["contactPrimaryPhoneExt"] == DBNull.Value ? null : (string)reader["contactPrimaryPhoneExt"];
             if (pext != null)
-                contact.PrimaryPhone += " ext. " + pext;
+                contact.PrimaryPhone += " ext " + pext;
 
             var sext = reader["contactSecondaryPhoneExt"] == DBNull.Value ? null : (string)reader["contactSecondaryPhoneExt"];
             if (sext != null)
-                contact.SecondaryPhone += " ext. " + sext;
+                contact.SecondaryPhone += " ext " + sext;
 
             var fext = reader["contactFaxExt"] == DBNull.Value ? null : (string)reader["contactFaxExt"];
             if (fext != null)
-                contact.Fax += " ext. " + fext;            
+                contact.Fax += " ext " + fext;            
 
             return contact;
         }
@@ -592,5 +591,9 @@ namespace SingerDispatch.Importer
             return commodity;
         }
 
+        private static string PhoneNumberCleanup(string number)
+        {
+            return string.Format(new LafiPhoneFormatProvider(), "{0:de}", number);
+        }
     }
 }

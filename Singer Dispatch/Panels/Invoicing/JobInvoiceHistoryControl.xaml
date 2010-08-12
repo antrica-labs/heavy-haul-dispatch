@@ -133,10 +133,10 @@
                             <Label Grid.Column="1" Grid.Row="2" Content="{Binding Email}" />
 
                             <Label Grid.Column="3" Grid.Row="0">Phone:</Label>
-                            <Label Grid.Column="4" Grid.Row="0" Content="{Binding PrimaryPhone}" />
+                            <Label Grid.Column="4" Grid.Row="0" Content="{Binding PrimaryPhone, Converter={StaticResource PhoneNumberConverter}}" />
 
                             <Label Grid.Column="3" Grid.Row="1">Fax:</Label>
-                            <Label Grid.Column="4" Grid.Row="1" Content="{Binding Fax}" />
+                            <Label Grid.Column="4" Grid.Row="1" Content="{Binding Fax, Converter={StaticResource PhoneNumberConverter}}" />
 
                             <Label Grid.Column="3" Grid.Row="2">Preferred:</Label>
                             <Label Grid.Column="4" Grid.Row="2" Content="{Binding PreferedContactMethod}" />

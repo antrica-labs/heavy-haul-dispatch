@@ -107,6 +107,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controls\Converters\LengthMeasurementConverter.cs" />
+    <Compile Include="Controls\Converters\PhoneNumberConverter.cs" />
     <Compile Include="Controls\Converters\WeightMeasurementConverter.cs" />
     <Compile Include="Controls\CustomCommands.cs" />
     <Compile Include="Controls\DataGridHelper.cs" />
@@ -256,6 +257,7 @@
     </Compile>
     <Compile Include="SingerDispatchDictionary.xaml.cs" />
     <Compile Include="UserSettings.cs" />
+    <Compile Include="Utils\LafiPhoneFormatProvider.cs" />
     <Compile Include="Utils\MeasurementFormater.cs" />
     <Compile Include="WindowPlacement.cs" />
     <Compile Include="Windows\CreateCompanyWindow.xaml.cs">

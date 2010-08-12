@@ -100,5 +100,13 @@ namespace SingerDispatch
                 return message;
             }
         }
+
+        public static string PhoneFormat
+        {
+            get
+            {
+                return "{0:de}";
+            }
+        }
     }
 }

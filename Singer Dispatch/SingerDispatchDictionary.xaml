@@ -14,6 +14,7 @@
     <Controls:LoadCommoditiesStringConverter x:Key="LoadCommoditiesStringConverter" />
     <Controls:LengthMeasurementConverter x:Key="LengthMeasurementConverter" />    
     <Controls:WeightMeasurementConverter x:Key="WeightMeasurementConverter" />
+    <Controls:PhoneNumberConverter x:Key="PhoneNumberConverter" />
     
     <DataTemplate x:Key="SimpleNameTemplate">
         <TextBlock Text="{Binding Name}" />
@@ -28,7 +29,7 @@
             <TextBlock.Text>
                 <MultiBinding StringFormat="{}{0} - {1}">
                     <Binding Path="Name" />
-                    <Binding Path="PrimaryPhone" />
+                    <Binding Path="PrimaryPhone" Converter="PhoneNumberConverter" />
                 </MultiBinding>
             </TextBlock.Text>
         </TextBlock>

@@ -68,13 +68,13 @@
                 <ComboBox Name="cmbAddressType" Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectedItem="{Binding AddressType}" TextSearch.TextPath="Name" />
 
                 <Label Grid.Row="7" Grid.Column="0">Site Main Phone:</Label>
-                <TextBox Name="txtSiteMainPhone" Grid.Row="8" Grid.Column="0" Text="{Binding Path=PrimaryPhone}" />
+                <TextBox Name="txtSiteMainPhone" Grid.Row="8" Grid.Column="0" Text="{Binding Path=PrimaryPhone, Converter={StaticResource PhoneNumberConverter}}" />
 
                 <Label Grid.Row="7" Grid.Column="1">Site Secondary:</Label>
-                <TextBox Name="txtSiteSecondaryPhone" Grid.Row="8" Grid.Column="1" Text="{Binding Path=SecondaryPhone}" />
+                <TextBox Name="txtSiteSecondaryPhone" Grid.Row="8" Grid.Column="1" Text="{Binding Path=SecondaryPhone, Converter={StaticResource PhoneNumberConverter}}" />
 
                 <Label Grid.Row="7" Grid.Column="2">Site Fax:</Label>
-                <TextBox Name="txtSiteFax" Grid.Row="8" Grid.Column="2" Text="{Binding Path=Fax}" />
+                <TextBox Name="txtSiteFax" Grid.Row="8" Grid.Column="2" Text="{Binding Path=Fax, Converter={StaticResource PhoneNumberConverter}}" />
 
                 <Label Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="3">Address Notes:</Label>
                 <TextBox Name="txtAddressNotes" Grid.Row="10" Grid.Column="0" Grid.ColumnSpan="3" Height="60" Style="{StaticResource MultiLine}" Text="{Binding Path=Notes}" />
