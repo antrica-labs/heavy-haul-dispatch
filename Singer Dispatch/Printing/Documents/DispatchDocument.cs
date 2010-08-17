@@ -91,7 +91,7 @@ namespace SingerDispatch.Printing.Documents
                     content.Append(FillDispatchBody(dispatch, "File Copy"));    
                 }
 
-                if (dispatch.Rate != null && dispatch.Rate.Name == "Pull Tractor")
+                if (dispatch.Load != null && dispatch.Equipment != null && dispatch.Equipment == dispatch.Load.Equipment)
                 {
                     content.Append(PageBreak);
                     content.Append(GetBillOfLadingDocs(dispatch));
@@ -449,6 +449,7 @@ namespace SingerDispatch.Printing.Documents
                     div.dispatch_doc div.dimensions table.weights td
                     {
                         text-align: center;
+                        padding: 5px;
                         border: solid 1px #A9A9A9;
                     }
                     
@@ -924,7 +925,7 @@ namespace SingerDispatch.Printing.Documents
                 reps[12] = item.LoadOrientation;
 
 
-                if (item.LoadDate != null)
+                if (item.UnloadDate != null)
                 {
                     reps[13] = item.UnloadDate.Value.ToString(SingerConstants.PrintedDateFormatString);
                     reps[14] = item.UnloadDate.Value.ToString(SingerConstants.PrintedTimeFormatString);

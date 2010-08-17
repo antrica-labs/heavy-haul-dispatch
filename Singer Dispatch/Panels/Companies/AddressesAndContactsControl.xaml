@@ -167,7 +167,7 @@
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
                         
-            <DataGrid Name="dgAddresses" Grid.Column="0" Margin="0,0,3,0" Style="{StaticResource ListDisplay}" SelectionChanged="Addresses_SelectionChanged">
+            <DataGrid Name="dgAddresses" Grid.Column="0" Margin="0,0,3,0" Style="{StaticResource ListDisplay}" SelectionChanged="Addresses_SelectionChanged" AllowDrop="True">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Type" Binding="{Binding AddressType.Name}" IsReadOnly="True" />
                     <DataGridTextColumn Header="Address" Width="1.5*" Binding="{Binding Line1}" />

@@ -225,7 +225,7 @@ namespace SingerDispatch.Printing.Documents
                     }    
             
                     div.bol_doc div.reference td.recipient div.shipper span, 
-                   div.bol_doc  div.reference td.recipient div.consignee span
+                    div.bol_doc  div.reference td.recipient div.consignee span
                     {
                         display: block;                
                     }
