@@ -108,5 +108,13 @@ namespace SingerDispatch
                 return "{0:de}";
             }
         }
+
+        public static double MinLoadHeight
+        {
+            get
+            {
+                return 4.1; // In metres
+            }
+        }
     }
 }

@@ -29,7 +29,19 @@
             <TextBlock.Text>
                 <MultiBinding StringFormat="{}{0} - {1}">
                     <Binding Path="Name" />
-                    <Binding Path="PrimaryPhone" Converter="PhoneNumberConverter" />
+                    <Binding Path="PrimaryPhone" Converter="{StaticResource PhoneNumberConverter}" />
+                </MultiBinding>
+            </TextBlock.Text>
+        </TextBlock>
+    </DataTemplate>
+    
+    
+    <DataTemplate x:Key="LoadTemplate">
+        <TextBlock>
+            <TextBlock.Text>
+                <MultiBinding StringFormat="{}{0} - {1}">
+                    <Binding Path="Name" />
+                    <Binding Path="JobCommodities" Converter="{StaticResource LoadCommoditiesStringConverter}" />
                 </MultiBinding>
             </TextBlock.Text>
         </TextBlock>

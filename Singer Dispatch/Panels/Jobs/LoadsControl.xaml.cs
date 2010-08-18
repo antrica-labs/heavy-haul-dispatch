@@ -335,6 +335,9 @@ namespace SingerDispatch.Panels.Jobs
 
             load.LoadedHeight += highest;
 
+            if (load.LoadedHeight < SingerConstants.MinLoadHeight)
+                load.LoadedHeight = SingerConstants.MinLoadHeight;
+
             if (widest > load.LoadedWidth)
                 load.LoadedWidth = widest;
 

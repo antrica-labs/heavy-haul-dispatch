@@ -29,7 +29,7 @@ namespace SingerDispatch.Panels.Jobs
             cmbShipperCompanies.ItemsSource = companies;
             cmbConsigneeCompanies.ItemsSource = companies;
 
-            cmbLoads.ItemsSource = (SelectedJob == null) ? null : SelectedJob.Loads.ToList();
+            //cmbLoads.ItemsSource = (SelectedJob == null) ? null : SelectedJob.Loads.ToList();
             cmbCommodityName.ItemsSource = (SelectedJob == null) ? null : from c in Database.Commodities where c.Company == SelectedJob.Company || c.Company == SelectedJob.CareOfCompany orderby c.Name, c.Unit select c;
 
             var methods = (SelectedJob == null) ? null : (from m in Database.LoadUnloadMethods select m).ToList();

@@ -46,13 +46,14 @@
                 <Button Style="{StaticResource HorizontalEnd}" Grid.Column="3" Click="RemoveCommodity_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgCommodities, Path=SelectedItem}">Remove commodity</Button>
             </Grid>
             
+            <!--
             <Border Visibility="Collapsed" BorderBrush="LightGray" BorderThickness="1" Margin="0,3" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgCommodities, Path=SelectedItem}">
                 <StackPanel Orientation="Horizontal" Margin="3" DataContext="{Binding ElementName=dgCommodities, Path=SelectedItem}">
                     <Label>Assign to load:</Label>
-                    <ComboBox Name="cmbLoads" MinWidth="300" SelectedItem="{Binding Load}" ItemTemplate="{StaticResource SimpleNameTemplate}" />
+                    <ComboBox Name="cmbLoads" MinWidth="300" SelectedItem="{Binding Load}" ItemTemplate="{StaticResource LoadTemplate}" />
                 </StackPanel>
             </Border>
-
+            -->
             <TabControl IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgCommodities, Path=SelectedItem}">
                 <TabItem Header="Commodity" DataContext="{Binding ElementName=dgCommodities, Path=SelectedItem}">
                     <Grid>
@@ -83,7 +84,7 @@
                         <Label Grid.Row="2" Grid.Column="0">Serial number:</Label>
                         <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Serial}" />
 
-                        <Label Grid.Row="3" Grid.Column="0" Style="{StaticResource Important}">Unit number:</Label>
+                        <Label Grid.Row="3" Grid.Column="0">Unit number:</Label>
                         <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Unit}" />
 
                         <Label Grid.Row="4" Grid.Column="0">Owner:</Label>
@@ -114,7 +115,7 @@
                                         <RowDefinition />
                                     </Grid.RowDefinitions>
 
-                                    <Label Grid.Row="0" Grid.Column="0">Length:</Label>
+                                    <Label Grid.Row="0" Grid.Column="0" Style="{StaticResource Important}">Length:</Label>
                                     <TextBox Name="txtCommodityLength" Grid.Row="0" Grid.Column="1">
                                         <TextBox.Text>
                                             <MultiBinding Converter="{StaticResource LengthMeasurementConverter}">
@@ -123,8 +124,8 @@
                                             </MultiBinding>
                                         </TextBox.Text>
                                     </TextBox>
-                                    
-                                    <Label Grid.Row="1" Grid.Column="0">Width:</Label>
+
+                                    <Label Grid.Row="1" Grid.Column="0" Style="{StaticResource Important}">Width:</Label>
                                     <TextBox Name="txtCommodityWidth" Grid.Row="1" Grid.Column="1" Height="22.96" Margin="3,0,3,3" VerticalAlignment="Bottom">
                                         <TextBox.Text>
                                             <MultiBinding Converter="{StaticResource LengthMeasurementConverter}">
@@ -134,7 +135,7 @@
                                         </TextBox.Text>
                                     </TextBox>
 
-                                    <Label Grid.Row="2" Grid.Column="0">Height:</Label>
+                                    <Label Grid.Row="2" Grid.Column="0" Style="{StaticResource Important}">Height:</Label>
                                     <TextBox Name="txtCommodityHeight" Grid.Row="2" Grid.Column="1">
                                         <TextBox.Text>
                                             <MultiBinding Converter="{StaticResource LengthMeasurementConverter}">
@@ -147,7 +148,7 @@
                                     <Label Grid.Row="3" Grid.Column="0">Estimated:</Label>
                                     <CheckBox Name="chbCommoditySizeEstimated" Grid.Row="3" Grid.Column="1" IsChecked="{Binding SizeEstimated}" />
 
-                                    <Label Grid.Row="4" Grid.Column="0">Weight:</Label>
+                                    <Label Grid.Row="4" Grid.Column="0" Style="{StaticResource Important}">Weight:</Label>
                                     <TextBox Name="txtCommodityWeight" Grid.Row="4" Grid.Column="1">
                                         <TextBox.Text>
                                             <MultiBinding Converter="{StaticResource WeightMeasurementConverter}">

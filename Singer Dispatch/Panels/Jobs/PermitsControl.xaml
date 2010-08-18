@@ -46,7 +46,7 @@
                     </Grid.RowDefinitions>
 
                     <Label Grid.Row="0" Grid.Column="0">Load:</Label>
-                    <ComboBox Name="cmbLoads" Grid.Column="1" SelectedItem="{Binding Load}" ItemTemplate="{StaticResource SimpleNameTemplate}" Margin="4,3,2,3" />
+                    <ComboBox Name="cmbLoads" Grid.Column="1" SelectedItem="{Binding Load}" ItemTemplate="{StaticResource LoadTemplate}" Margin="4,3,2,3" />
 
                     <Label Grid.Row="1" Grid.Column="0">Issuer:</Label>
                     <ComboBox Name="cmbCompanies" Grid.Row="1" Grid.Column="1" SelectedItem="{Binding IssuingCompany}" IsEditable="True" TextSearch.TextPath="Name" ItemTemplate="{StaticResource SimpleNameTemplate}" />
