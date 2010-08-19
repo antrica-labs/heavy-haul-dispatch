@@ -298,14 +298,14 @@ namespace SingerDispatch.Printing.Documents
                     }
             
                     div.bol_doc div.commodity div.identification,
-                    div.bol_doc div.commodity div.service_description,
+                    div.bol_doc div.commodity div.dangerous_goods,
                     div.bol_doc div.commodity div.weight
                     {
                         padding: 5px;                
                     }
 
                     div.bol_doc div.commodity div.identification,
-                    div.bol_doc div.commodity div.service_description
+                    div.bol_doc div.commodity div.weight
                     {
                         border-bottom: 1px #000000 solid;
                     }
@@ -316,7 +316,7 @@ namespace SingerDispatch.Printing.Documents
                         display: inline;
                     }
             
-                    div.bol_doc div.commodity div.service_description p
+                    div.bol_doc div.commodity div.dangerous_goods p
                     {
                         font-weight: bold;
                         margin: 5px 0 15px 0;
@@ -435,6 +435,15 @@ namespace SingerDispatch.Printing.Documents
                         width: 50%;
                         border-bottom: 1px #000000 solid;
                     }
+                    
+                    div.bol_doc td.comments_and_initials div.initials
+                    {
+                        float:right;
+                        padding: 20px 0;
+                        width: 15%;
+                        border: 1px #000000 solid;
+                    }
+                   
             
                     div.bol_doc td.shippers_weight p,
                     div.bol_doc td.notice_of_claim p,
@@ -523,6 +532,15 @@ namespace SingerDispatch.Printing.Documents
                     {
                         width: 100%;
                         border: 1px #000000 solid;
+                    }
+            
+
+                    div.page_break
+                    {
+                        display: block;
+                        margin: 35px;
+                        height: 1px;
+                        border-top: 1px #454545 solid;
                     }
             ";
 
@@ -707,16 +725,15 @@ namespace SingerDispatch.Printing.Documents
                                     </table>
                                 </div>
 
-                                <div class=""service_description"">
-                                    <span class=""heading"">Description of Service</span>
-
-                                    <p>{4}</p>
-                                </div>
-
                                 <div class=""weight"">
                                     <span class=""heading"">Net Weight of Shipment</span>
 
-                                    <span class=""weight"">{5}</span>
+                                    <span class=""weight"">{4}</span>
+                                </div>
+                                
+                                <div class=""dangerous_goods"">
+                                    <span class=""heading"">Dangerous Goods Information</span>
+                                    
                                 </div>
                             </td>
                             <td class=""charges"">
@@ -772,10 +789,7 @@ namespace SingerDispatch.Printing.Documents
             replacements[1] = MeasurementFormater.FromMetres(commodity.Length, lengthUnit);
             replacements[2] = MeasurementFormater.FromMetres(commodity.Width, lengthUnit);
             replacements[3] = MeasurementFormater.FromMetres(commodity.Height, lengthUnit);
-
-            replacements[4] = (commodity.Load != null) ? commodity.Load.ServiceDescription : "";
-
-            replacements[5] = MeasurementFormater.FromKilograms(commodity.Weight, weightUnit);
+            replacements[4] = MeasurementFormater.FromKilograms(commodity.Weight, weightUnit);
             
             return string.Format(html, replacements);
         }
@@ -785,16 +799,11 @@ namespace SingerDispatch.Printing.Documents
             var html = @"
                 <table class=""additional_info"">
                     <tr>
-                        <td class=""dangerous_goods"">
-                            <div class=""dangerous_goods content"">
-                                <span class=""heading"">Dangerous Goods Information</span>
-
-                            </div>
-                        </td>
-                        <td class=""comments_and_initials"">
+                        <td colspan=""2"" class=""comments_and_initials"">
                             <div class=""comments_and_initials content"">
                                 <span class=""heading"">Comments and Initials</span>
 
+                                <div class=""initials""><span></span></div>
                             </div>
                         </td>
                     </tr>

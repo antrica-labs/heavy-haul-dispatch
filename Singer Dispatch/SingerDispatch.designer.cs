@@ -6741,8 +6741,6 @@ namespace SingerDispatch
 		
 		private string _Ban;
 		
-		private string _ServiceDescription;
-		
 		private string _Schedule;
 		
 		private string _Notes;
@@ -6849,8 +6847,6 @@ namespace SingerDispatch
     partial void OnEndDateChanged();
     partial void OnBanChanging(string value);
     partial void OnBanChanged();
-    partial void OnServiceDescriptionChanging(string value);
-    partial void OnServiceDescriptionChanged();
     partial void OnScheduleChanging(string value);
     partial void OnScheduleChanged();
     partial void OnNotesChanging(string value);
@@ -7164,26 +7160,6 @@ namespace SingerDispatch
 					this._Ban = value;
 					this.SendPropertyChanged("Ban");
 					this.OnBanChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ServiceDescription")]
-		public string ServiceDescription
-		{
-			get
-			{
-				return this._ServiceDescription;
-			}
-			set
-			{
-				if ((this._ServiceDescription != value))
-				{
-					this.OnServiceDescriptionChanging(value);
-					this.SendPropertyChanging();
-					this._ServiceDescription = value;
-					this.SendPropertyChanged("ServiceDescription");
-					this.OnServiceDescriptionChanged();
 				}
 			}
 		}

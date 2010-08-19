@@ -57,8 +57,7 @@ namespace SingerDispatch.Panels.Jobs
 
             try
             {
-                EntityHelper.SaveAsNewLoad(load, Database);
-                txtServiceDescription.Focus();
+                EntityHelper.SaveAsNewLoad(load, Database);                
             }
             catch (Exception ex)
             {
@@ -84,8 +83,7 @@ namespace SingerDispatch.Panels.Jobs
 
             try
             {
-                EntityHelper.SaveAsNewLoad(load, Database);
-                txtServiceDescription.Focus();
+                EntityHelper.SaveAsNewLoad(load, Database);                
             }
             catch (Exception ex)
             {

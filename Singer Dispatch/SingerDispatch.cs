@@ -506,8 +506,7 @@ namespace SingerDispatch
             cp.Info = Info;
             cp.StartDate = StartDate;
             cp.EndDate = EndDate;
-            cp.Ban = Ban;
-            cp.ServiceDescription = ServiceDescription;
+            cp.Ban = Ban;            
             cp.Notes = Notes;
             cp.EWeightSteer = EWeightSteer;
             cp.EWeightDrive = EWeightDrive;
