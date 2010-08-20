@@ -116,5 +116,13 @@ namespace SingerDispatch
                 return 4.1; // In metres
             }
         }
+
+        public static string DefaultDispatchDescription
+        {
+            get
+            {
+                return "Supply men and equipment to transport {0}";
+            }
+        }
     }
 }

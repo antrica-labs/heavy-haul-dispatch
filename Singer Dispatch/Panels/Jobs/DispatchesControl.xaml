@@ -59,11 +59,11 @@
                     <Label Grid.Row="1" Grid.Column="0">Service type:</Label>
                     <ComboBox Name="cmbServiceTypes" Grid.Row="1" Grid.Column="1" SelectedItem="{Binding Rate}" ItemTemplate="{StaticResource SimpleNameTemplate}" IsEditable="True" TextSearch.TextPath="Name" />
 
-                    <Label Grid.Row="2" Grid.Column="0">Employee:</Label>
-                    <ComboBox Name="cmbEmployees" Grid.Row="2" Grid.Column="1" SelectedItem="{Binding Employee}" ItemTemplate="{StaticResource SimpleNameTemplate}" IsEditable="True" TextSearch.TextPath="Name" />
-
-                    <Label Grid.Row="3" Grid.Column="0">Unit:</Label>
-                    <ComboBox Name="cmbUnits" Grid.Row="3" Grid.Column="1" SelectedItem="{Binding Equipment}" ItemTemplate="{StaticResource EquipmentNameTemplate}" IsEditable="True" TextSearch.TextPath="UnitNumber" />
+                    <Label Grid.Row="2" Grid.Column="0">Unit:</Label>
+                    <ComboBox Name="cmbUnits" Grid.Row="2" Grid.Column="1" SelectedItem="{Binding Equipment}" ItemTemplate="{StaticResource EquipmentNameTemplate}" IsEditable="True" TextSearch.TextPath="UnitNumber" />
+                    
+                    <Label Grid.Row="3" Grid.Column="0">Employee:</Label>
+                    <ComboBox Name="cmbEmployees" Grid.Row="3" Grid.Column="1" SelectedItem="{Binding Employee}" ItemTemplate="{StaticResource SimpleNameTemplate}" IsEditable="True" TextSearch.TextPath="Name" />
 
                     <Label Grid.Row="4" Grid.Column="0">Departing units:</Label>
                     <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding DepartingUnits}" />

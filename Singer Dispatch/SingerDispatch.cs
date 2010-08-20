@@ -550,6 +550,22 @@ namespace SingerDispatch
                 return name;
             }
         }
+
+        public static string PrintCommodityList(Load load)
+        {
+            var list = load.JobCommodities;
+            var output = new StringBuilder();
+
+            for (var i = 0; i < list.Count; i++)
+            {
+                output.Append(list[i].Name);
+
+                if ((i + 1) != list.Count)
+                    output.Append(", ");
+            }
+
+            return output.ToString();
+        }
     }
 
     partial class Condition

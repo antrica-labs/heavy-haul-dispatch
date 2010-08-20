@@ -60,7 +60,7 @@ namespace SingerDispatch.Panels.Jobs
             if (SelectedJob == null) return;
 
             var list = (ObservableCollection<Dispatch>)dgDispatches.ItemsSource;
-            var dispatch = new Dispatch { JobID = SelectedJob.ID, MeetingTime = SelectedJob.StartDate, Description = "Supply men and equipment to transport " };
+            var dispatch = new Dispatch { JobID = SelectedJob.ID };
 
             SelectedJob.Dispatches.Add(dispatch);
             list.Add(dispatch);
@@ -76,8 +76,7 @@ namespace SingerDispatch.Panels.Jobs
             catch (Exception ex)
             {
                 ErrorNoticeWindow.ShowError("Error while attempting write changes to database", ex.Message);
-            }
-            
+            }            
         }
 
         private void DuplicateDispatch_Click(object sender, RoutedEventArgs e)
@@ -140,7 +139,10 @@ namespace SingerDispatch.Panels.Jobs
 
             if (load == null || String.IsNullOrEmpty(load.Schedule)) return;
 
-            ((Dispatch)dgDispatches.SelectedItem).Schedule = load.Schedule;
+            var dispatch = (Dispatch)dgDispatches.SelectedItem;
+
+            dispatch.Description = string.Format(SingerConstants.DefaultDispatchDescription, Load.PrintCommodityList(load));
+            dispatch.Schedule = load.Schedule;
         }
 
         private void AddTravel_Click(object sender, RoutedEventArgs e)

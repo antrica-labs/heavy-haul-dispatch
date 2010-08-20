@@ -10,27 +10,25 @@ namespace SingerDispatch.Controls
     class LoadCommoditiesStringConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
-        {
-            string output = "";
+        {   try
+            {
+                var list = (EntitySet<JobCommodity>)value;
+                var output = new StringBuilder();
 
-            try
-            {                
-                var list = ((EntitySet<JobCommodity>)value).ToList();
-
-                for (var i = 0; i < list.Count(); i++)
+                for (var i = 0; i < list.Count; i++)
                 {
-                    output += list[i].Name;
+                    output.Append(list[i].Name);
 
-                    if ((i + 1) != list.Count())
-                        output += ", ";
+                    if ((i + 1) != list.Count)
+                        output.Append(", ");
                 }
+
+                return output.ToString();
             }
             catch (Exception)
             {
-                output = "";
+                return "";
             }
-
-            return output;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
