@@ -79,8 +79,8 @@ namespace SingerDispatch.Panels.Quotes
             {
                 Console.Error.WriteLine(ex);
             }
-
-            list.Insert(0, quote);
+                        
+            list.Add(quote);
             dgQuotes.SelectedItem = quote;
             dgQuotes.ScrollIntoView(quote);
             SelectedCompany.Quotes.Add(quote);
@@ -109,8 +109,8 @@ namespace SingerDispatch.Panels.Quotes
 
             var quote = SelectedQuote.Duplicate();
             var list = (ObservableCollection<Quote>)dgQuotes.ItemsSource;
-
-            list.Insert(0, quote);
+                        
+            list.Add(quote);
             dgQuotes.SelectedItem = quote;
             dgQuotes.ScrollIntoView(quote);
             SelectedCompany.Quotes.Add(quote);
@@ -155,7 +155,7 @@ namespace SingerDispatch.Panels.Quotes
 
             try
             {
-                job.JobStatusType = (from s in Database.JobStatusTypes where s.Name == "Pending" select s).First();
+                job.Status = (from s in Database.Statuses where s.Name == "Pending" select s).First();
             }
             catch (Exception ex)
             {

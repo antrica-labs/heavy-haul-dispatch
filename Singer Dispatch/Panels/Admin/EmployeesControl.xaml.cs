@@ -36,7 +36,7 @@ namespace SingerDispatch.Panels.Admin
             var employees = (ObservableCollection<Employee>)dgEmployees.ItemsSource;
             var employee = new Employee();
 
-            employees.Insert(0, employee);
+            employees.Add(employee);
             Database.Employees.InsertOnSubmit(employee);
             dgEmployees.SelectedItem = employee;
             dgEmployees.ScrollIntoView(employee);

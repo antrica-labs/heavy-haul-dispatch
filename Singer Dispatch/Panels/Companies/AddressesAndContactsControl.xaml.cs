@@ -168,7 +168,7 @@ namespace SingerDispatch.Panels.Companies
             var address = new Address();
             
             SelectedCompany.Addresses.Add(address);
-            ((ObservableCollection<Address>)dgAddresses.ItemsSource).Insert(0, address);
+            ((ObservableCollection<Address>)dgAddresses.ItemsSource).Add(address);
             dgAddresses.SelectedItem = address;
             dgAddresses.ScrollIntoView(address);
 
@@ -188,7 +188,7 @@ namespace SingerDispatch.Panels.Companies
             var contact = new Contact();
 
             address.Contacts.Add(contact);
-            ((ObservableCollection<Contact>)dgContacts.ItemsSource).Insert(0, contact);
+            ((ObservableCollection<Contact>)dgContacts.ItemsSource).Add(contact);
             dgContacts.SelectedItem = contact;
             dgContacts.ScrollIntoView(contact);
 

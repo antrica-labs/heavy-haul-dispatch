@@ -17,7 +17,7 @@ namespace SingerDispatch.Panels.Jobs
     public partial class JobHistoryControl
     {
         public SingerDispatchDataContext Database { get; set; }
-        public JobStatusType DefaultJobStatus { get; set; }
+        public Status DefaultJobStatus { get; set; }
 
         public JobHistoryControl()
         {
@@ -25,13 +25,13 @@ namespace SingerDispatch.Panels.Jobs
 
             Database = SingerConstants.CommonDataContext;
 
-            DefaultJobStatus = (from s in Database.JobStatusTypes where s.Name == "Pending" select s).First();            
+            DefaultJobStatus = (from s in Database.Statuses where s.Name == "Pending" select s).First();            
         }
 
         private void ControlLoaded(object sender, RoutedEventArgs e)
         {
             CmbCreatedBy.ItemsSource = from emp in Database.Employees orderby emp.FirstName, emp.LastName select emp;
-            CmbStausTypes.ItemsSource = from s in Database.JobStatusTypes select s;
+            CmbStausTypes.ItemsSource = from s in Database.Statuses select s;
 
             CmbQuotes.ItemsSource = (SelectedCompany == null) ? null : from q in Database.Quotes where q.Company == SelectedCompany select q;
             CmbCareOfCompanies.ItemsSource = (SelectedCompany == null) ? null : from c in Database.Companies where c != SelectedCompany && c.IsVisible == true select c;
@@ -114,10 +114,11 @@ namespace SingerDispatch.Panels.Jobs
         private void NewJob_Click(object sender, RoutedEventArgs e)
         {
             var list = (ObservableCollection<Job>)DgJobs.ItemsSource;
-            var job = new Job { JobStatusType = DefaultJobStatus, Company = SelectedCompany };
-
-            list.Insert(0, job);
+            var job = new Job { Status = DefaultJobStatus, Company = SelectedCompany };
+                        
+            list.Add(job);
             DgJobs.SelectedItem = job;
+            DgJobs.ScrollIntoView(job);
             SelectedCompany.Jobs.Add(SelectedJob);
 
             try
@@ -136,15 +137,18 @@ namespace SingerDispatch.Panels.Jobs
         {
             if (SelectedJob == null) return;
 
-            var copy = SelectedJob.Duplicate();
+            var job = SelectedJob.Duplicate();
+            var list = (ObservableCollection<Job>)DgJobs.ItemsSource;            
 
-            ((ObservableCollection<Job>)DgJobs.ItemsSource).Insert(0, copy);
-            DgJobs.SelectedItem = copy;
+            
+            list.Add(job);
+            DgJobs.SelectedItem = job;
+            DgJobs.ScrollIntoView(job);
             SelectedCompany.Jobs.Add(SelectedJob);
 
             try
             {
-                EntityHelper.SaveAsNewJob(copy, Database);
+                EntityHelper.SaveAsNewJob(job, Database);
 
                 txtName.Focus();
             }

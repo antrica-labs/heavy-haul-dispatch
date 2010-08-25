@@ -121,15 +121,21 @@ namespace SingerDispatch.Printing.Documents
             output.Append(GetEquipment(dispatch.Load.ExtraEquipment));
             output.Append(GetSchedule(dispatch));
             output.Append(GetLoadCommodities(dispatch.Load.JobCommodities));
-            output.Append(GetDimensions(dispatch.Load));
-            output.Append(GetTractors(from d in dispatch.Load.Dispatches where d.Rate != null && d.Rate.Name.Contains("Tractor") select d));
-            output.Append(GetSingerPilots(from p in dispatch.Load.Dispatches where p.Rate != null && p.Rate.Name.Contains("Pilot") select p));
+            output.Append(GetDimensions(dispatch.Load));            
+            output.Append(GetTractors(from t in dispatch.Load.Dispatches where t.Equipment != null && t.Equipment.EquipmentClass != null && t.Equipment.EquipmentClass.Name == "Tractor" select t));
+            output.Append(GetSingerPilots(from p in dispatch.Load.Dispatches where p.Equipment != null && p.Equipment.EquipmentClass != null && p.Equipment.EquipmentClass.Name == "Pilot" select p));
             output.Append(GetThirdPartyPilots(from s in dispatch.Load.ThirdPartyServices where s.ServiceType != null && s.ServiceType.Name.Contains("Pilot") select s));
             output.Append(GetThridPartyServices(from s in dispatch.Load.ThirdPartyServices where s.ServiceType == null || (!s.ServiceType.Name.Contains("Pilot") && !s.ServiceType.Name.Contains("Wirelift")) select s));
             output.Append(GetWireLiftInfo(from wl in dispatch.Load.ThirdPartyServices where wl.ServiceType != null && wl.ServiceType.Name.Contains("Wirelift") select wl));
             output.Append(GetPermits(dispatch.Load.Permits));
             output.Append(GetOtherInfo(dispatch));
             output.Append("</div>");
+
+            if (dispatch.Load != null && dispatch.Equipment != null && dispatch.Equipment == dispatch.Load.Equipment)
+            {
+                output.Append(PageBreak);
+                output.Append(GetBillOfLadingDocs(dispatch));
+            }
 
             return output.ToString();
         }
@@ -147,7 +153,7 @@ namespace SingerDispatch.Printing.Documents
             {
                 var commodity = dispatch.Load.JobCommodities[i];
 
-                content.Append(doc.GenerateBodyHTML(commodity));
+                content.Append(doc.GenerateBodyHTML(dispatch, commodity));
 
                 if ((i + 1) != dispatch.Load.JobCommodities.Count)
                     content.Append(PageBreak);
@@ -595,29 +601,27 @@ namespace SingerDispatch.Printing.Documents
                 <div class=""details"">
                     <table class=""dispatch_info"">
                         <tr>
-                            <td class=""field_name col1_4"">Date:</td>
-                            <td class=""value col2_4"">{0}</td>
-                            <td class=""field_name col3_4"">Customer:</td>
-                            <td class=""value col4_4"">{1}</td>
+                            <td class=""field_name col1_4"">Customer:</td>
+                            <td class=""value col2_4"" colspan=""3"">{0}</td>                            
                         </tr>
                         <tr>
                             <td class=""field_name"">Unit #:</td>
-                            <td class=""value"">{2}</td>
+                            <td class=""value"">{1}</td>
                             <td class=""field_name"">Trailer #:</td>
-                            <td class=""value"">{3}</td>
+                            <td class=""value"">{2}</td>
                         </tr>
                         <tr>
                             <td class=""field_name"">Driver:</td>
-                            <td class=""value"">{4}</td>
+                            <td class=""value"">{3}</td>
                             <td class=""field_name"">Swampers:</td>
-                            <td class=""value"">{5}</td>
+                            <td class=""value"">{4}</td>
                         </tr>
                     </table>
                     
                     <table class=""departure_info"">
                         <tr>
                             <td class=""field_name col1_2"">Dispatched By:</td>
-                            <td class=""value col2_2"">{10}</td>
+                            <td class=""value col2_2"">{5}</td>
                         </tr>
                         <tr>
                             <td class=""field_name col1_2"">Depart Date:</td>
@@ -645,19 +649,20 @@ namespace SingerDispatch.Printing.Documents
             ";
 
             var replacements = new object[11];
-
-            replacements[0] = DateTime.Now.ToString(SingerConstants.PrintedDateFormatString);
-            replacements[1] = dispatch.Job.Company.Name;
-            replacements[2] = (dispatch.Equipment != null) ? dispatch.Equipment.UnitNumber : "";
-            replacements[3] = (dispatch.Load != null && dispatch.Load.Rate != null) ? dispatch.Load.Rate.Name + " - " : "";
+                        
+            replacements[0] = dispatch.Job.Company.Name;
+            replacements[1] = (dispatch.Equipment != null) ? dispatch.Equipment.UnitNumber : "";
+            replacements[2] = (dispatch.Load != null && dispatch.Load.Rate != null) ? dispatch.Load.Rate.Name + " - " : "";
 
             if (dispatch.Load != null && dispatch.Load.TrailerCombination != null)
-                replacements[3] += dispatch.Load.TrailerCombination.Combination;
+                replacements[2] += dispatch.Load.TrailerCombination.Combination;
 
-            replacements[4] = (dispatch.Employee != null) ? dispatch.Employee.Name : "";
+            replacements[3] = (dispatch.Employee != null) ? dispatch.Employee.Name : "";
             
 
             // Find list all of the swampers
+            // TODO: Figure out a better way to handle swampers
+            /*
             var swamperDispatches = from s in dispatch.Load.Dispatches where s.Rate != null && s.Rate.Name.Contains("Swamper") select s;
             var swampers = new StringBuilder();
             foreach (var item in swamperDispatches)
@@ -669,11 +674,12 @@ namespace SingerDispatch.Printing.Documents
                 }
             }
 
-            replacements[5] = swampers.ToString();
+            replacements[4] = swampers.ToString();
+            */
+            replacements[5] = (dispatch.Job.Employee != null) ? dispatch.Job.Employee.Name : "";
             replacements[6] = (dispatch.MeetingTime != null) ? dispatch.MeetingTime.Value.ToString(SingerConstants.PrintedDateFormatString) + " " + dispatch.MeetingTime.Value.ToString(SingerConstants.PrintedTimeFormatString) : "";
             replacements[7] = dispatch.DepartingLocation;
             replacements[8] = dispatch.DepartingUnits;
-            replacements[10] = (dispatch.Job.Employee != null) ? dispatch.Job.Employee.Name : "";
             
             // List any reference numbers given to this job
             var references = new StringBuilder();
@@ -919,7 +925,7 @@ namespace SingerDispatch.Printing.Documents
                 reps[6] = item.LoadLocation;
                 reps[7] = (item.LoadContact != null) ? string.Format(@"<span class=""contact"">{0}</span><span class=""contact"">{1}</span>", item.LoadContact.Name, item.LoadContact.PrimaryPhone) : "";
                 reps[8] = item.LoadBy;
-                reps[9] = "N\\A";
+                reps[9] = "";
                 reps[10] = item.LoadRoute;
                 reps[11] = item.LoadInstructions;
                 reps[12] = item.LoadOrientation;
@@ -939,7 +945,7 @@ namespace SingerDispatch.Printing.Documents
                 reps[15] = item.UnloadLocation;
                 reps[16] = (item.UnloadContact != null) ? string.Format(@"<span class=""contact"">{0}</span><span class=""contact"">{1}</span>", item.UnloadContact.Name, item.UnloadContact.PrimaryPhone) : "";
                 reps[17] = item.UnloadBy;
-                reps[18] = "N\\A";
+                reps[18] = "";
                 reps[19] = item.UnloadRoute;
                 reps[20] = item.UnloadInstructions;
                 reps[21] = item.UnloadOrientation;
@@ -1382,8 +1388,7 @@ namespace SingerDispatch.Printing.Documents
             const string table = @"
                 <table class=""commented_breakdown"">
                     <thead>
-                        <tr>
-                            <th>Date</th>
+                        <tr>                            
                             <th>Issuer</th>
                             <th>Type</th>
                             <th>Number</th>
@@ -1395,17 +1400,16 @@ namespace SingerDispatch.Printing.Documents
                 </table>
             ";
             const string row = @"
-                <tr class=""details"">
+                <tr class=""details"">                    
                     <td>{0}</td>
                     <td>{1}</td>
                     <td>{2}</td>
-                    <td>{3}</td>
                 </tr>
             ";
             const string commentRow = @"
                 <tr class=""comments"">
                     <td colspan=""4"">
-                        <span><span class=""field_name"">Conditions:</span> {0}</span>
+                        <span><span class=""field_name"">{0}</span> {1}</span>
                     </td>
                 </tr>
             ";
@@ -1418,17 +1422,17 @@ namespace SingerDispatch.Printing.Documents
             foreach (var item in permits)
             {
                 var replacements = new object[4];
-
-                var start = (item.StartDate != null) ? item.StartDate.Value.ToString(SingerConstants.PrintedDateFormatString) : "--";
-                var end = (item.EndDate != null) ? item.EndDate.Value.ToString(SingerConstants.PrintedDateFormatString) : "--";
-
-                replacements[0] = start + " to " + end;
-                replacements[1] = (item.IssuingCompany == null) ? "" : item.IssuingCompany.Name;
-                replacements[2] = (item.PermitType == null) ? "" : item.PermitType.Name;
-                replacements[3] = item.Reference;
+                
+                replacements[0] = (item.IssuingCompany == null) ? "" : item.IssuingCompany.Name;
+                replacements[1] = (item.PermitType == null) ? "" : item.PermitType.Name;
+                replacements[2] = item.Reference;
 
                 rows.Append(string.Format(row, replacements));
-                rows.Append(string.Format(commentRow, item.Conditions));
+
+                if (!string.IsNullOrEmpty(item.Conditions))
+                    rows.Append(string.Format(commentRow, "Comments:", item.Conditions));
+                else
+                    rows.Append(string.Format(commentRow, "", ""));
             }            
                 
             return string.Format(html, string.Format(table, rows.ToString()));

@@ -48,6 +48,7 @@ namespace SingerDispatch.Panels.Quotes
         private void DuplicateSupplement_Click(object sender, RoutedEventArgs e)
         {
             var supplement = (QuoteSupplement)dgSupplements.SelectedItem;
+            var list = (ObservableCollection<QuoteSupplement>)dgSupplements.ItemsSource;
 
             if (supplement == null)
                 return;
@@ -55,7 +56,9 @@ namespace SingerDispatch.Panels.Quotes
             supplement = supplement.Duplicate();
 
             SelectedQuote.QuoteSupplements.Add(supplement);
-            ((ObservableCollection<QuoteSupplement>)dgSupplements.ItemsSource).Insert(0, supplement);
+            list.Add(supplement);
+            dgSupplements.SelectedItem = supplement;
+            dgSupplements.ScrollIntoView(supplement);
         }
 
         private void RemoveSupplement_Click(object sender, RoutedEventArgs e)

@@ -267,17 +267,17 @@ namespace SingerDispatch.Importer
 
             // Job status types
 
-            var jobstatustypes = new List<JobStatusType>();
+            var jobstatustypes = new List<Status>();
 
-            jobstatustypes.Add(new JobStatusType { Name = "Billed" });
-            jobstatustypes.Add(new JobStatusType { Name = "Cancelled" });
-            jobstatustypes.Add(new JobStatusType { Name = "Completed" });
-            jobstatustypes.Add(new JobStatusType { Name = "Delayed" });
-            jobstatustypes.Add(new JobStatusType { Name = "In Process" });
-            jobstatustypes.Add(new JobStatusType { Name = "Pending" });
-            jobstatustypes.Add(new JobStatusType { Name = "Storage" });
+            jobstatustypes.Add(new Status { Name = "Billed" });
+            jobstatustypes.Add(new Status { Name = "Cancelled" });
+            jobstatustypes.Add(new Status { Name = "Completed" });
+            jobstatustypes.Add(new Status { Name = "Delayed" });
+            jobstatustypes.Add(new Status { Name = "In Process" });
+            jobstatustypes.Add(new Status { Name = "Pending" });
+            jobstatustypes.Add(new Status { Name = "Storage" });
 
-            Database.JobStatusTypes.InsertAllOnSubmit(jobstatustypes);
+            Database.Statuses.InsertAllOnSubmit(jobstatustypes);
 
 
             // Fill employees table

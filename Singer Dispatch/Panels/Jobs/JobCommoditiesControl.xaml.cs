@@ -71,7 +71,7 @@ namespace SingerDispatch.Panels.Jobs
             commodity.ConsigneeCompany = commodity.ShipperCompany;
             commodity.ConsigneeAddress = commodity.ShipperAddress;
             
-            SelectedJob.JobCommodities.Insert(0, commodity);
+            SelectedJob.JobCommodities.Add(commodity);
             list.Add(commodity);
             dgCommodities.SelectedItem = commodity;
             dgCommodities.ScrollIntoView(commodity);
@@ -82,6 +82,7 @@ namespace SingerDispatch.Panels.Jobs
         private void DuplicateCommodity_Click(object sender, RoutedEventArgs e)
         {
             var commodity = (JobCommodity)dgCommodities.SelectedItem;
+            var list = (ObservableCollection<JobCommodity>)dgCommodities.ItemsSource;
 
             if (commodity == null)
                 return;
@@ -89,7 +90,9 @@ namespace SingerDispatch.Panels.Jobs
             commodity = commodity.Duplicate();
 
             SelectedJob.JobCommodities.Add(commodity);
-            ((ObservableCollection<JobCommodity>)dgCommodities.ItemsSource).Insert(0, commodity);
+            list.Add(commodity);
+            dgCommodities.SelectedItem = commodity;
+            dgCommodities.ScrollIntoView(commodity);
         }
 
         private void PrintBillOfLading_Click(object sender, RoutedEventArgs e)
@@ -137,7 +140,7 @@ namespace SingerDispatch.Panels.Jobs
                 commodity.Notes = original.Notes;
                 commodity.LastAddress = original.LastAddress;
                 commodity.LastLocation = original.LastLocation;
-                commodity.LoadLocation = original.LastAddress;                
+                commodity.LoadLocation = string.Format("{0} - {1}", commodity.LastLocation, commodity.LastAddress);                
             }
             else
             {

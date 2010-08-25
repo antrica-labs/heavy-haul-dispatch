@@ -15,19 +15,23 @@ namespace SingerDispatch.Panels.Jobs
     public partial class LoadsControl
     {
         public SingerDispatchDataContext Database { get; set; }
+        public Status DefaultLoadStatus { get; set; }
 
         public LoadsControl()
         {
             InitializeComponent();
 
             Database = SingerConstants.CommonDataContext;
+
+            DefaultLoadStatus = (from s in Database.Statuses where s.Name == "Pending" select s).First();
         }
 
         private void ControlLoaded(object sender, RoutedEventArgs e)
         {            
             cmbSeasons.ItemsSource = from s in Database.Seasons select s;
             cmbRates.ItemsSource = GetCompanyRates(SelectedCompany);
-            cmbUnits.ItemsSource = (SelectedJob == null) ? null : from u in Database.Equipment where u.EquipmentClass.Name == "Tractor" || u.EquipmentClass.Name == "Trailor" select u;
+            cmbUnits.ItemsSource = (SelectedJob == null) ? null : from u in Database.Equipment where u.EquipmentClass.Name == "Tractor" || u.EquipmentClass.Name == "Trailor" orderby u.UnitNumber select u;
+            cmbStatuses.ItemsSource = from s in Database.Statuses select s;
 
             if (cmbRates.SelectedItem != null)
             {
@@ -37,6 +41,7 @@ namespace SingerDispatch.Panels.Jobs
             UpdateExtras();
             UpdateCommodityList();
         }
+
         protected override void SelectedJobChanged(Job newValue, Job oldValue)
         {
             base.SelectedJobChanged(newValue, oldValue);
@@ -47,7 +52,7 @@ namespace SingerDispatch.Panels.Jobs
         private void NewLoad_Click(object sender, RoutedEventArgs e)
         {
             var list = (ObservableCollection<Load>)dgLoads.ItemsSource;
-            var load = new Load { Job = SelectedJob, StartDate = SelectedJob.StartDate, EndDate = SelectedJob.EndDate };
+            var load = new Load { Job = SelectedJob, StartDate = SelectedJob.StartDate, EndDate = SelectedJob.EndDate, Status = DefaultLoadStatus };
 
             SelectedJob.Loads.Add(load);
             list.Add(load);

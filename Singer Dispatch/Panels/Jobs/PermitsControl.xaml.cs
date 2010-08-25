@@ -37,7 +37,7 @@ namespace SingerDispatch.Panels.Jobs
             if (SelectedJob == null) return;
 
             var list = (ObservableCollection<Permit>)dgPermits.ItemsSource;
-            var permit = new Permit { JobID = SelectedJob.ID, StartDate = SelectedJob.StartDate };
+            var permit = new Permit { JobID = SelectedJob.ID };
 
             SelectedJob.Permits.Add(permit);
             list.Add(permit);
@@ -50,6 +50,7 @@ namespace SingerDispatch.Panels.Jobs
         private void DuplicatePermit_Click(object sender, RoutedEventArgs e)
         {
             var permit = (Permit)dgPermits.SelectedItem;
+            var list = (ObservableCollection<Permit>)dgPermits.ItemsSource;
 
             if (permit == null)
                 return;
@@ -57,7 +58,10 @@ namespace SingerDispatch.Panels.Jobs
             permit = permit.Duplicate();
 
             SelectedJob.Permits.Add(permit);
-            ((ObservableCollection<Permit>)dgPermits.ItemsSource).Insert(0, permit);
+            list.Add(permit);
+            dgPermits.SelectedItem = permit;
+            dgPermits.ScrollIntoView(permit);                
+
         }
 
         private void RemovePermit_Click(object sender, RoutedEventArgs e)

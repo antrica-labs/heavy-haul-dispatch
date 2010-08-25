@@ -50,6 +50,7 @@ namespace SingerDispatch.Panels.Quotes
         private void DuplicateStorageItem_Click(object sender, RoutedEventArgs e)
         {
             var item = (QuoteStorageItem)dgStorageList.SelectedItem;
+            var list = (ObservableCollection<QuoteStorageItem>)dgStorageList.ItemsSource;
 
             if (item == null)
                 return;
@@ -57,7 +58,9 @@ namespace SingerDispatch.Panels.Quotes
             item = item.Duplicate();
 
             SelectedQuote.QuoteStorageItems.Add(item);
-            ((ObservableCollection<QuoteStorageItem>)dgStorageList.ItemsSource).Insert(0, item);
+            list.Add(item);
+            dgStorageList.SelectedItem = item;
+            dgStorageList.ScrollIntoView(item);
         }
 
         private void RemoveStorageItem_Click(object sender, RoutedEventArgs e)

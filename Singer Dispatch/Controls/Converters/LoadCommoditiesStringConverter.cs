@@ -10,10 +10,13 @@ namespace SingerDispatch.Controls
     class LoadCommoditiesStringConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
-        {   try
+        {   
+            try
             {
                 var list = (EntitySet<JobCommodity>)value;
                 var output = new StringBuilder();
+
+                if (list.Count == 0) return "[Empty]";
 
                 for (var i = 0; i < list.Count; i++)
                 {

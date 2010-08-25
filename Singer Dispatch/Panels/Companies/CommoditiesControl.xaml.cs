@@ -51,7 +51,7 @@ namespace SingerDispatch.Panels.Companies
             var commodity = new Commodity();
 
             SelectedCompany.Commodities.Add(commodity);
-            ((ObservableCollection<Commodity>)dgCommodities.ItemsSource).Insert(0, commodity);
+            ((ObservableCollection<Commodity>)dgCommodities.ItemsSource).Add(commodity);
             dgCommodities.SelectedItem = commodity;
             dgCommodities.ScrollIntoView(commodity);
 

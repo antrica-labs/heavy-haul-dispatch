@@ -48,13 +48,13 @@
                     <ComboBox Name="cmbLoads"  Grid.Row="0" Grid.Column="1" SelectedItem="{Binding Load}" ItemTemplate="{StaticResource LoadTemplate}" />
 
                     <Label Grid.Row="1" Grid.Column="0">Company:</Label>
-                    <ComboBox Name="cmbCompanies" Grid.Row="1" Grid.Column="1" SelectedItem="{Binding Company}" IsEditable="True" TextSearch.TextPath="Name" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectionChanged="ServiceCompany_SelectionChanged" />
+                    <ComboBox Name="cmbCompanies" Grid.Row="1" Grid.Column="1" SelectedItem="{Binding Company}" TextSearch.TextPath="Name" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectionChanged="ServiceCompany_SelectionChanged" />
 
                     <Label Grid.Row="2" Grid.Column="0">Service type:</Label>
-                    <ComboBox Name="cmbServiceTypes" Grid.Row="2" Grid.Column="1" SelectedItem="{Binding ServiceType}" ItemTemplate="{StaticResource SimpleNameTemplate}" IsEditable="True" TextSearch.TextPath="Name" />
+                    <ComboBox Name="cmbServiceTypes" Grid.Row="2" Grid.Column="1" SelectedItem="{Binding ServiceType}" ItemTemplate="{StaticResource SimpleNameTemplate}" TextSearch.TextPath="Name" />
 
                     <Label Grid.Row="3" Grid.Column="0">Contact:</Label>
-                    <ComboBox Name="cmbContacts" Grid.Row="3" Grid.Column="1" SelectedItem="{Binding Contact}" ItemTemplate="{StaticResource SimpleNameTemplate}" IsEditable="True" TextSearch.TextPath="Name" />
+                    <ComboBox Name="cmbContacts" Grid.Row="3" Grid.Column="1" SelectedItem="{Binding Contact}" ItemTemplate="{StaticResource SimpleNameTemplate}" TextSearch.TextPath="Name" />
 
                     <Label Grid.Row="4" Grid.Column="0">Location:</Label>
                     <TextBox Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Location}" />

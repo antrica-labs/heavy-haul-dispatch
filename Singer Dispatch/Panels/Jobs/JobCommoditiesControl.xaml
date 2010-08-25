@@ -191,10 +191,10 @@
                                 </Grid.RowDefinitions>
 
                                 <Label Grid.Column="0" Grid.Row="0">Loading date:</Label>
-                                <DatePicker Grid.Column="1" Grid.Row="0" SelectedDate="{Binding LoadDate}" />
+                                <DatePicker Grid.Column="1" Grid.Row="0" SelectedDate="{Binding LoadDate}" SelectedDateFormat="Long" />
 
                                 <Label Grid.Column="0" Grid.Row="1">Location:</Label>
-                                <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding LoadLocation}"/>
+                                <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding LoadLocation}" />
 
                                 <Label Grid.Column="0" Grid.Row="2">Site contact:</Label>
                                 <ComboBox Name="cmbLoadingContacts" Grid.Column="1" Grid.Row="2" SelectedItem="{Binding LoadContact}" TextSearch.TextPath="Name" ItemTemplate="{StaticResource ContactTemplate}" />
@@ -234,7 +234,7 @@
                                 </Grid.RowDefinitions>
 
                                 <Label Grid.Column="0" Grid.Row="0">Unloading date:</Label>
-                                <DatePicker Grid.Column="1" Grid.Row="0" SelectedDate="{Binding UnloadDate}"  />
+                                <DatePicker Grid.Column="1" Grid.Row="0" SelectedDate="{Binding UnloadDate}" SelectedDateFormat="Long"  />
 
                                 <Label Grid.Column="0" Grid.Row="1">Location:</Label>
                                 <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding UnloadLocation}"/>

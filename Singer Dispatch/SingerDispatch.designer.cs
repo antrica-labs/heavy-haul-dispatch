@@ -74,9 +74,9 @@ namespace SingerDispatch
     partial void InsertJobReferenceNumber(JobReferenceNumber instance);
     partial void UpdateJobReferenceNumber(JobReferenceNumber instance);
     partial void DeleteJobReferenceNumber(JobReferenceNumber instance);
-    partial void InsertJobStatusType(JobStatusType instance);
-    partial void UpdateJobStatusType(JobStatusType instance);
-    partial void DeleteJobStatusType(JobStatusType instance);
+    partial void InsertStatus(Status instance);
+    partial void UpdateStatus(Status instance);
+    partial void DeleteStatus(Status instance);
     partial void InsertLoad(Load instance);
     partial void UpdateLoad(Load instance);
     partial void DeleteLoad(Load instance);
@@ -325,11 +325,11 @@ namespace SingerDispatch
 			}
 		}
 		
-		public System.Data.Linq.Table<JobStatusType> JobStatusTypes
+		public System.Data.Linq.Table<Status> Statuses
 		{
 			get
 			{
-				return this.GetTable<JobStatusType>();
+				return this.GetTable<Status>();
 			}
 		}
 		
@@ -4342,6 +4342,8 @@ namespace SingerDispatch
 		
 		private string _LoadLocation;
 		
+		private string _LoadAddress;
+		
 		private string _LoadBy;
 		
 		private System.Nullable<long> _LoadMethodID;
@@ -4357,6 +4359,8 @@ namespace SingerDispatch
 		private System.Nullable<long> _UnloadContactID;
 		
 		private string _UnloadLocation;
+		
+		private string _UnloadAddress;
 		
 		private string _UnloadBy;
 		
@@ -4446,6 +4450,8 @@ namespace SingerDispatch
     partial void OnLoadContactIDChanged();
     partial void OnLoadLocationChanging(string value);
     partial void OnLoadLocationChanged();
+    partial void OnLoadAddressChanging(string value);
+    partial void OnLoadAddressChanged();
     partial void OnLoadByChanging(string value);
     partial void OnLoadByChanged();
     partial void OnLoadMethodIDChanging(System.Nullable<long> value);
@@ -4462,6 +4468,8 @@ namespace SingerDispatch
     partial void OnUnloadContactIDChanged();
     partial void OnUnloadLocationChanging(string value);
     partial void OnUnloadLocationChanged();
+    partial void OnUnloadAddressChanging(string value);
+    partial void OnUnloadAddressChanged();
     partial void OnUnloadByChanging(string value);
     partial void OnUnloadByChanged();
     partial void OnUnloadMethodIDChanging(System.Nullable<long> value);
@@ -4918,6 +4926,26 @@ namespace SingerDispatch
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LoadAddress")]
+		public string LoadAddress
+		{
+			get
+			{
+				return this._LoadAddress;
+			}
+			set
+			{
+				if ((this._LoadAddress != value))
+				{
+					this.OnLoadAddressChanging(value);
+					this.SendPropertyChanging();
+					this._LoadAddress = value;
+					this.SendPropertyChanged("LoadAddress");
+					this.OnLoadAddressChanged();
+				}
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LoadBy")]
 		public string LoadBy
 		{
@@ -5082,6 +5110,26 @@ namespace SingerDispatch
 					this._UnloadLocation = value;
 					this.SendPropertyChanged("UnloadLocation");
 					this.OnUnloadLocationChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UnloadAddress")]
+		public string UnloadAddress
+		{
+			get
+			{
+				return this._UnloadAddress;
+			}
+			set
+			{
+				if ((this._UnloadAddress != value))
+				{
+					this.OnUnloadAddressChanging(value);
+					this.SendPropertyChanging();
+					this._UnloadAddress = value;
+					this.SendPropertyChanged("UnloadAddress");
+					this.OnUnloadAddressChanged();
 				}
 			}
 		}
@@ -5737,7 +5785,7 @@ namespace SingerDispatch
 		
 		private System.Nullable<long> _CareOfCompanyID;
 		
-		private System.Nullable<long> _StatusTypeID;
+		private System.Nullable<long> _StatusID;
 		
 		private System.Nullable<int> _Number;
 		
@@ -5769,7 +5817,7 @@ namespace SingerDispatch
 		
 		private EntityRef<Company> _CareOfCompany;
 		
-		private EntityRef<JobStatusType> _JobStatusType;
+		private EntityRef<Status> _Status;
 		
 		private EntityRef<Quote> _Quote;
 		
@@ -5787,8 +5835,8 @@ namespace SingerDispatch
     partial void OnEmployeeIDChanged();
     partial void OnCareOfCompanyIDChanging(System.Nullable<long> value);
     partial void OnCareOfCompanyIDChanged();
-    partial void OnStatusTypeIDChanging(System.Nullable<long> value);
-    partial void OnStatusTypeIDChanged();
+    partial void OnStatusIDChanging(System.Nullable<long> value);
+    partial void OnStatusIDChanged();
     partial void OnNumberChanging(System.Nullable<int> value);
     partial void OnNumberChanged();
     partial void OnNameChanging(string value);
@@ -5813,7 +5861,7 @@ namespace SingerDispatch
 			this._Employee = default(EntityRef<Employee>);
 			this._Company = default(EntityRef<Company>);
 			this._CareOfCompany = default(EntityRef<Company>);
-			this._JobStatusType = default(EntityRef<JobStatusType>);
+			this._Status = default(EntityRef<Status>);
 			this._Quote = default(EntityRef<Quote>);
 			OnCreated();
 		}
@@ -5934,26 +5982,26 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_StatusTypeID")]
-		public System.Nullable<long> StatusTypeID
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_StatusID")]
+		public System.Nullable<long> StatusID
 		{
 			get
 			{
-				return this._StatusTypeID;
+				return this._StatusID;
 			}
 			set
 			{
-				if ((this._StatusTypeID != value))
+				if ((this._StatusID != value))
 				{
-					if (this._JobStatusType.HasLoadedOrAssignedValue)
+					if (this._Status.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
-					this.OnStatusTypeIDChanging(value);
+					this.OnStatusIDChanging(value);
 					this.SendPropertyChanging();
-					this._StatusTypeID = value;
-					this.SendPropertyChanged("StatusTypeID");
-					this.OnStatusTypeIDChanged();
+					this._StatusID = value;
+					this.SendPropertyChanged("StatusID");
+					this.OnStatusIDChanged();
 				}
 			}
 		}
@@ -6251,36 +6299,36 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="JobStatusType_Job", Storage="_JobStatusType", ThisKey="StatusTypeID", OtherKey="ID", IsForeignKey=true)]
-		public JobStatusType JobStatusType
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Status_Job", Storage="_Status", ThisKey="StatusID", OtherKey="ID", IsForeignKey=true)]
+		public Status Status
 		{
 			get
 			{
-				return this._JobStatusType.Entity;
+				return this._Status.Entity;
 			}
 			set
 			{
-				JobStatusType previousValue = this._JobStatusType.Entity;
+				Status previousValue = this._Status.Entity;
 				if (((previousValue != value) 
-							|| (this._JobStatusType.HasLoadedOrAssignedValue == false)))
+							|| (this._Status.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._JobStatusType.Entity = null;
+						this._Status.Entity = null;
 						previousValue.Jobs.Remove(this);
 					}
-					this._JobStatusType.Entity = value;
+					this._Status.Entity = value;
 					if ((value != null))
 					{
 						value.Jobs.Add(this);
-						this._StatusTypeID = value.ID;
+						this._StatusID = value.ID;
 					}
 					else
 					{
-						this._StatusTypeID = default(Nullable<long>);
+						this._StatusID = default(Nullable<long>);
 					}
-					this.SendPropertyChanged("JobStatusType");
+					this.SendPropertyChanged("Status");
 				}
 			}
 		}
@@ -6600,7 +6648,7 @@ namespace SingerDispatch
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="")]
-	public partial class JobStatusType : INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class Status : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -6610,6 +6658,8 @@ namespace SingerDispatch
 		private string _Name;
 		
 		private EntitySet<Job> _Jobs;
+		
+		private EntitySet<Load> _Loads;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -6621,9 +6671,10 @@ namespace SingerDispatch
     partial void OnNameChanged();
     #endregion
 		
-		public JobStatusType()
+		public Status()
 		{
 			this._Jobs = new EntitySet<Job>(new Action<Job>(this.attach_Jobs), new Action<Job>(this.detach_Jobs));
+			this._Loads = new EntitySet<Load>(new Action<Load>(this.attach_Loads), new Action<Load>(this.detach_Loads));
 			OnCreated();
 		}
 		
@@ -6667,7 +6718,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="JobStatusType_Job", Storage="_Jobs", ThisKey="ID", OtherKey="StatusTypeID")]
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Status_Job", Storage="_Jobs", ThisKey="ID", OtherKey="StatusID")]
 		public EntitySet<Job> Jobs
 		{
 			get
@@ -6677,6 +6728,19 @@ namespace SingerDispatch
 			set
 			{
 				this._Jobs.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Status_Load", Storage="_Loads", ThisKey="ID", OtherKey="StatusID")]
+		public EntitySet<Load> Loads
+		{
+			get
+			{
+				return this._Loads;
+			}
+			set
+			{
+				this._Loads.Assign(value);
 			}
 		}
 		
@@ -6703,13 +6767,25 @@ namespace SingerDispatch
 		private void attach_Jobs(Job entity)
 		{
 			this.SendPropertyChanging();
-			entity.JobStatusType = this;
+			entity.Status = this;
 		}
 		
 		private void detach_Jobs(Job entity)
 		{
 			this.SendPropertyChanging();
-			entity.JobStatusType = null;
+			entity.Status = null;
+		}
+		
+		private void attach_Loads(Load entity)
+		{
+			this.SendPropertyChanging();
+			entity.Status = this;
+		}
+		
+		private void detach_Loads(Load entity)
+		{
+			this.SendPropertyChanging();
+			entity.Status = null;
 		}
 	}
 	
@@ -6730,6 +6806,8 @@ namespace SingerDispatch
 		private System.Nullable<long> _SeasonID;
 		
 		private System.Nullable<long> _TrailerCombinationID;
+		
+		private System.Nullable<long> _StatusID;
 		
 		private System.Nullable<int> _Number;
 		
@@ -6811,6 +6889,8 @@ namespace SingerDispatch
 		
 		private EntitySet<Dispatch> _Dispatches;
 		
+		private EntityRef<Status> _Status;
+		
 		private EntityRef<Job> _Job;
 		
 		private EntityRef<Season> _Season;
@@ -6837,6 +6917,8 @@ namespace SingerDispatch
     partial void OnSeasonIDChanged();
     partial void OnTrailerCombinationIDChanging(System.Nullable<long> value);
     partial void OnTrailerCombinationIDChanged();
+    partial void OnStatusIDChanging(System.Nullable<long> value);
+    partial void OnStatusIDChanged();
     partial void OnNumberChanging(System.Nullable<int> value);
     partial void OnNumberChanged();
     partial void OnInfoChanging(string value);
@@ -6916,6 +6998,7 @@ namespace SingerDispatch
 			this._Permits = new EntitySet<Permit>(new Action<Permit>(this.attach_Permits), new Action<Permit>(this.detach_Permits));
 			this._ThirdPartyServices = new EntitySet<ThirdPartyService>(new Action<ThirdPartyService>(this.attach_ThirdPartyServices), new Action<ThirdPartyService>(this.detach_ThirdPartyServices));
 			this._Dispatches = new EntitySet<Dispatch>(new Action<Dispatch>(this.attach_Dispatches), new Action<Dispatch>(this.detach_Dispatches));
+			this._Status = default(EntityRef<Status>);
 			this._Job = default(EntityRef<Job>);
 			this._Season = default(EntityRef<Season>);
 			this._Equipment = default(EntityRef<Equipment>);
@@ -7060,6 +7143,30 @@ namespace SingerDispatch
 					this._TrailerCombinationID = value;
 					this.SendPropertyChanged("TrailerCombinationID");
 					this.OnTrailerCombinationIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_StatusID")]
+		public System.Nullable<long> StatusID
+		{
+			get
+			{
+				return this._StatusID;
+			}
+			set
+			{
+				if ((this._StatusID != value))
+				{
+					if (this._Status.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnStatusIDChanging(value);
+					this.SendPropertyChanging();
+					this._StatusID = value;
+					this.SendPropertyChanged("StatusID");
+					this.OnStatusIDChanged();
 				}
 			}
 		}
@@ -7829,6 +7936,40 @@ namespace SingerDispatch
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Status_Load", Storage="_Status", ThisKey="StatusID", OtherKey="ID", IsForeignKey=true)]
+		public Status Status
+		{
+			get
+			{
+				return this._Status.Entity;
+			}
+			set
+			{
+				Status previousValue = this._Status.Entity;
+				if (((previousValue != value) 
+							|| (this._Status.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Status.Entity = null;
+						previousValue.Loads.Remove(this);
+					}
+					this._Status.Entity = value;
+					if ((value != null))
+					{
+						value.Loads.Add(this);
+						this._StatusID = value.ID;
+					}
+					else
+					{
+						this._StatusID = default(Nullable<long>);
+					}
+					this.SendPropertyChanged("Status");
+				}
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Job_Load", Storage="_Job", ThisKey="JobID", OtherKey="ID", IsForeignKey=true)]
 		public Job Job
 		{
@@ -8454,10 +8595,6 @@ namespace SingerDispatch
 		
 		private string _Conditions;
 		
-		private System.Nullable<System.DateTime> _StartDate;
-		
-		private System.Nullable<System.DateTime> _EndDate;
-		
 		private System.Nullable<decimal> _Cost;
 		
 		private EntityRef<Job> _Job;
@@ -8486,10 +8623,6 @@ namespace SingerDispatch
     partial void OnReferenceChanged();
     partial void OnConditionsChanging(string value);
     partial void OnConditionsChanged();
-    partial void OnStartDateChanging(System.Nullable<System.DateTime> value);
-    partial void OnStartDateChanged();
-    partial void OnEndDateChanging(System.Nullable<System.DateTime> value);
-    partial void OnEndDateChanged();
     partial void OnCostChanging(System.Nullable<decimal> value);
     partial void OnCostChanged();
     #endregion
@@ -8655,46 +8788,6 @@ namespace SingerDispatch
 					this._Conditions = value;
 					this.SendPropertyChanged("Conditions");
 					this.OnConditionsChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_StartDate")]
-		public System.Nullable<System.DateTime> StartDate
-		{
-			get
-			{
-				return this._StartDate;
-			}
-			set
-			{
-				if ((this._StartDate != value))
-				{
-					this.OnStartDateChanging(value);
-					this.SendPropertyChanging();
-					this._StartDate = value;
-					this.SendPropertyChanged("StartDate");
-					this.OnStartDateChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EndDate")]
-		public System.Nullable<System.DateTime> EndDate
-		{
-			get
-			{
-				return this._EndDate;
-			}
-			set
-			{
-				if ((this._EndDate != value))
-				{
-					this.OnEndDateChanging(value);
-					this.SendPropertyChanging();
-					this._EndDate = value;
-					this.SendPropertyChanged("EndDate");
-					this.OnEndDateChanged();
 				}
 			}
 		}
@@ -12026,8 +12119,6 @@ namespace SingerDispatch
 		
 		private EntitySet<Load> _Loads;
 		
-		private EntitySet<Dispatch> _Dispatches;
-		
 		private EntitySet<TrailerCombination> _TrailerCombinations;
 		
 		private EntityRef<RateType> _RateType;
@@ -12051,7 +12142,6 @@ namespace SingerDispatch
 		public Rate()
 		{
 			this._Loads = new EntitySet<Load>(new Action<Load>(this.attach_Loads), new Action<Load>(this.detach_Loads));
-			this._Dispatches = new EntitySet<Dispatch>(new Action<Dispatch>(this.attach_Dispatches), new Action<Dispatch>(this.detach_Dispatches));
 			this._TrailerCombinations = new EntitySet<TrailerCombination>(new Action<TrailerCombination>(this.attach_TrailerCombinations), new Action<TrailerCombination>(this.detach_TrailerCombinations));
 			this._RateType = default(EntityRef<RateType>);
 			OnCreated();
@@ -12174,19 +12264,6 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Rate_Dispatch", Storage="_Dispatches", ThisKey="ID", OtherKey="RateID")]
-		public EntitySet<Dispatch> Dispatches
-		{
-			get
-			{
-				return this._Dispatches;
-			}
-			set
-			{
-				this._Dispatches.Assign(value);
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Rate_TrailerCombination", Storage="_TrailerCombinations", ThisKey="ID", OtherKey="RateID")]
 		public EntitySet<TrailerCombination> TrailerCombinations
 		{
@@ -12261,18 +12338,6 @@ namespace SingerDispatch
 		}
 		
 		private void detach_Loads(Load entity)
-		{
-			this.SendPropertyChanging();
-			entity.Rate = null;
-		}
-		
-		private void attach_Dispatches(Dispatch entity)
-		{
-			this.SendPropertyChanging();
-			entity.Rate = this;
-		}
-		
-		private void detach_Dispatches(Dispatch entity)
 		{
 			this.SendPropertyChanging();
 			entity.Rate = null;
@@ -14216,6 +14281,8 @@ namespace SingerDispatch
 		
 		private System.Nullable<long> _EmployeeID;
 		
+		private System.Nullable<long> _EquipmentTypeID;
+		
 		private System.Nullable<long> _EquipmentID;
 		
 		private System.Nullable<int> _Number;
@@ -14232,17 +14299,15 @@ namespace SingerDispatch
 		
 		private string _Notes;
 		
-		private System.Nullable<long> _RateID;
-		
 		private EntitySet<OutOfProvinceTravel> _OutOfProvinceTravels;
+		
+		private EntityRef<EquipmentType> _EquipmentType;
 		
 		private EntityRef<Equipment> _Equipment;
 		
 		private EntityRef<Job> _Job;
 		
 		private EntityRef<Load> _Load;
-		
-		private EntityRef<Rate> _Rate;
 		
 		private EntityRef<Employee> _Employee;
 		
@@ -14258,6 +14323,8 @@ namespace SingerDispatch
     partial void OnLoadIDChanged();
     partial void OnEmployeeIDChanging(System.Nullable<long> value);
     partial void OnEmployeeIDChanged();
+    partial void OnEquipmentTypeIDChanging(System.Nullable<long> value);
+    partial void OnEquipmentTypeIDChanged();
     partial void OnEquipmentIDChanging(System.Nullable<long> value);
     partial void OnEquipmentIDChanged();
     partial void OnNumberChanging(System.Nullable<int> value);
@@ -14274,17 +14341,15 @@ namespace SingerDispatch
     partial void OnDepartingLocationChanged();
     partial void OnNotesChanging(string value);
     partial void OnNotesChanged();
-    partial void OnRateIDChanging(System.Nullable<long> value);
-    partial void OnRateIDChanged();
     #endregion
 		
 		public Dispatch()
 		{
 			this._OutOfProvinceTravels = new EntitySet<OutOfProvinceTravel>(new Action<OutOfProvinceTravel>(this.attach_OutOfProvinceTravels), new Action<OutOfProvinceTravel>(this.detach_OutOfProvinceTravels));
+			this._EquipmentType = default(EntityRef<EquipmentType>);
 			this._Equipment = default(EntityRef<Equipment>);
 			this._Job = default(EntityRef<Job>);
 			this._Load = default(EntityRef<Load>);
-			this._Rate = default(EntityRef<Rate>);
 			this._Employee = default(EntityRef<Employee>);
 			OnCreated();
 		}
@@ -14377,6 +14442,30 @@ namespace SingerDispatch
 					this._EmployeeID = value;
 					this.SendPropertyChanged("EmployeeID");
 					this.OnEmployeeIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EquipmentTypeID")]
+		public System.Nullable<long> EquipmentTypeID
+		{
+			get
+			{
+				return this._EquipmentTypeID;
+			}
+			set
+			{
+				if ((this._EquipmentTypeID != value))
+				{
+					if (this._EquipmentType.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnEquipmentTypeIDChanging(value);
+					this.SendPropertyChanging();
+					this._EquipmentTypeID = value;
+					this.SendPropertyChanged("EquipmentTypeID");
+					this.OnEquipmentTypeIDChanged();
 				}
 			}
 		}
@@ -14545,30 +14634,6 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RateID")]
-		public System.Nullable<long> RateID
-		{
-			get
-			{
-				return this._RateID;
-			}
-			set
-			{
-				if ((this._RateID != value))
-				{
-					if (this._Rate.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnRateIDChanging(value);
-					this.SendPropertyChanging();
-					this._RateID = value;
-					this.SendPropertyChanged("RateID");
-					this.OnRateIDChanged();
-				}
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Dispatch_OutOfProvinceTravel", Storage="_OutOfProvinceTravels", ThisKey="ID", OtherKey="DispatchID")]
 		public EntitySet<OutOfProvinceTravel> OutOfProvinceTravels
 		{
@@ -14579,6 +14644,24 @@ namespace SingerDispatch
 			set
 			{
 				this._OutOfProvinceTravels.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="EquipmentType_Dispatch", Storage="_EquipmentType", ThisKey="EquipmentTypeID", OtherKey="ID", IsForeignKey=true)]
+		public EquipmentType EquipmentType
+		{
+			get
+			{
+				return this._EquipmentType.Entity;
+			}
+			set
+			{
+				if ((this._EquipmentType.Entity != value))
+				{
+					this.SendPropertyChanging();
+					this._EquipmentType.Entity = value;
+					this.SendPropertyChanged("EquipmentType");
+				}
 			}
 		}
 		
@@ -14680,40 +14763,6 @@ namespace SingerDispatch
 						this._LoadID = default(Nullable<long>);
 					}
 					this.SendPropertyChanged("Load");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Rate_Dispatch", Storage="_Rate", ThisKey="RateID", OtherKey="ID", IsForeignKey=true)]
-		public Rate Rate
-		{
-			get
-			{
-				return this._Rate.Entity;
-			}
-			set
-			{
-				Rate previousValue = this._Rate.Entity;
-				if (((previousValue != value) 
-							|| (this._Rate.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Rate.Entity = null;
-						previousValue.Dispatches.Remove(this);
-					}
-					this._Rate.Entity = value;
-					if ((value != null))
-					{
-						value.Dispatches.Add(this);
-						this._RateID = value.ID;
-					}
-					else
-					{
-						this._RateID = default(Nullable<long>);
-					}
-					this.SendPropertyChanged("Rate");
 				}
 			}
 		}

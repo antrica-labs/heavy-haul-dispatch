@@ -150,7 +150,7 @@ namespace SingerDispatch.Panels.Quotes
             SelectedQuote.QuoteCommodities.Add(commodity);
             list.Add(commodity);            
             dgQuoteCommodities.SelectedItem = commodity;
-            dgQuoteCommodities.ScrollIntoView(commodity);                
+            dgQuoteCommodities.ScrollIntoView(commodity);
 
             cmbCommodityName.Focus();
         }
@@ -158,6 +158,7 @@ namespace SingerDispatch.Panels.Quotes
         private void DuplicateCommodity_Click(object sender, RoutedEventArgs e)
         {
             var commodity = (QuoteCommodity)dgQuoteCommodities.SelectedItem;
+            var list = (ObservableCollection<QuoteCommodity>)dgQuoteCommodities.ItemsSource;
 
             if (commodity == null)
                 return;
@@ -165,7 +166,9 @@ namespace SingerDispatch.Panels.Quotes
             commodity = commodity.Duplicate();
 
             SelectedQuote.QuoteCommodities.Add(commodity);
-            ((ObservableCollection<QuoteCommodity>)dgQuoteCommodities.ItemsSource).Insert(0, commodity);
+            list.Add(commodity);
+            dgQuoteCommodities.SelectedItem = commodity;
+            dgQuoteCommodities.ScrollIntoView(commodity);
         }
 
         private void RemoveCommodity_Click(object sender, RoutedEventArgs e)

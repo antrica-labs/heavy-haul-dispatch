@@ -225,8 +225,10 @@ namespace SingerDispatch
             jc.WeightEstimated = WeightEstimated;
             jc.Cost = Cost;
             jc.Notes = Notes;
-            jc.LoadLocation = DepartureSiteName + " " + DepartureAddress;
-            jc.UnloadLocation = ArrivalSiteName + " " + ArrivalAddress;            
+            jc.LoadLocation = DepartureSiteName;
+            jc.LoadAddress = DepartureAddress;
+            jc.UnloadLocation = ArrivalSiteName;
+            jc.UnloadAddress = ArrivalAddress;
 
             return jc;
         }
@@ -314,7 +316,7 @@ namespace SingerDispatch
             cp.Quote = Quote;
             cp.StartDate = StartDate;
             cp.EndDate = EndDate;
-            cp.JobStatusType = JobStatusType;
+            cp.Status = Status;
             
             foreach (var item in JobCommodities)
                 cp.JobCommodities.Add(item.Duplicate());
@@ -437,8 +439,6 @@ namespace SingerDispatch
             cp.Reference = Reference;
             cp.Conditions = Conditions;
             cp.Cost = Cost;
-            cp.StartDate = StartDate;
-            cp.EndDate = EndDate;
 
             return cp;
         }
@@ -458,7 +458,7 @@ namespace SingerDispatch
             cp.DepartingUnits = DepartingUnits;
             cp.DepartingLocation = DepartingLocation;
             cp.Notes = Notes;
-            cp.Rate = Rate;
+            //cp.Rate = Rate;
 
             foreach (var item in OutOfProvinceTravels)
                 cp.OutOfProvinceTravels.Add(item.Duplicate());

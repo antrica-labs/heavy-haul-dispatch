@@ -95,7 +95,7 @@
                         <DatePicker Name="dpEndDate" Grid.Row="1" Grid.Column="1" Margin="2" SelectedDate="{Binding EndDate}" />
 
                         <Label Grid.Row="0" Grid.Column="2">Status</Label>
-                        <ComboBox Name="CmbStausTypes" Grid.Row="1" Grid.Column="2" SelectedItem="{Binding JobStatusType}" ItemTemplate="{StaticResource SimpleNameTemplate}" />
+                        <ComboBox Name="CmbStausTypes" Grid.Row="1" Grid.Column="2" SelectedItem="{Binding Status}" ItemTemplate="{StaticResource SimpleNameTemplate}" />
                     </Grid>
                 </GroupBox>
 

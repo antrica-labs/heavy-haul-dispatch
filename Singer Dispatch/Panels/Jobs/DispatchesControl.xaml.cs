@@ -42,9 +42,8 @@ namespace SingerDispatch.Panels.Jobs
 
         private void ControlLoaded(object sender, RoutedEventArgs e)
         {
-            cmbLoads.ItemsSource = (SelectedJob == null) ? null : SelectedJob.Loads.ToList();
-            cmbUnits.ItemsSource = (SelectedJob == null) ? null : from u in Database.Equipment select u;
-            cmbServiceTypes.ItemsSource = (SelectedJob == null) ? null : from r in Database.Rates where r.RateType.Name == "Service" select r;
+            cmbLoads.ItemsSource = (SelectedJob == null) ? null : SelectedJob.Loads.ToList();            
+            cmbEquipmentTypes.ItemsSource = (SelectedJob == null) ? null : from et in Database.EquipmentTypes orderby et.Prefix select et;
             cmbEmployees.ItemsSource = (SelectedJob == null) ? null : from emp in Database.Employees orderby emp.FirstName, emp.LastName select emp;
         }
 
@@ -145,6 +144,17 @@ namespace SingerDispatch.Panels.Jobs
             dispatch.Schedule = load.Schedule;
         }
 
+        private void cmbEquipmentTypes_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            var type = (EquipmentType)cmbEquipmentTypes.SelectedItem;
+
+            if (type == null) return;
+
+            var prefix = string.Format("{0}-", type.Prefix);
+
+            cmbUnits.ItemsSource = (SelectedJob == null) ? null : from u in Database.Equipment where u.IsDispatchable == true && u.UnitNumber.StartsWith(prefix) orderby u.UnitNumber select u;
+        }
+
         private void AddTravel_Click(object sender, RoutedEventArgs e)
         {
             var dispatch = (Dispatch)dgDispatches.SelectedItem;
@@ -190,6 +200,8 @@ namespace SingerDispatch.Panels.Jobs
 
             dgOutOfProvince.ItemsSource = (dispatch == null) ? null : new ObservableCollection<OutOfProvinceTravel>(dispatch.OutOfProvinceTravels);
         }
+
+        
     }
 
     public class ProvStateDropList : ObservableCollection<ProvincesAndState>

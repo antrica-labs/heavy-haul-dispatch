@@ -6,6 +6,18 @@ using SingerDispatch.Utils;
 
 namespace SingerDispatch.Printing.Documents
 {
+    class BillOfLadingEntity
+    {
+        public Dispatch Dispatch { get; set; }
+        public JobCommodity JobCommodity { get; set; }
+
+        public BillOfLadingEntity(Dispatch dispatch, JobCommodity commodity)
+        {
+            Dispatch = dispatch;
+            JobCommodity = commodity;
+        }
+    }
+
     class BillOfLadingDocument : IPrintDocument
     {
         public bool PrintMetric { get; set; }
@@ -19,10 +31,12 @@ namespace SingerDispatch.Printing.Documents
         
         public string GenerateHTML(object entity)
         {
-            return GenerateHTML((JobCommodity)entity);
+            var doc = (BillOfLadingEntity)entity;
+            
+            return GenerateHTML(doc.Dispatch, doc.JobCommodity);
         }
 
-        public string GenerateHTML(JobCommodity commodity)
+        public string GenerateHTML(Dispatch dispatch, JobCommodity commodity)
         {
             var content = new StringBuilder();
 
@@ -36,7 +50,7 @@ namespace SingerDispatch.Printing.Documents
             content.Append("<body>");
                         
             // Fill document body...
-            content.Append(GenerateBodyHTML(commodity));
+            content.Append(GenerateBodyHTML(dispatch, commodity));
 
             content.Append("</body>");
             content.Append("</html>");
@@ -44,13 +58,20 @@ namespace SingerDispatch.Printing.Documents
             return content.ToString();
         }
 
-        public string GenerateBodyHTML(JobCommodity commodity)
+        public string GenerateBodyHTML(Dispatch dispatch, JobCommodity commodity)
         {
             var content = new StringBuilder();
+            string documentNumber;
+
+            if (dispatch.Load != null)
+                documentNumber = string.Format("{0}-{1:D2}-{2}", dispatch.Load.Job.Number, dispatch.Load.Number, commodity.ID);
+            else
+                documentNumber = string.Format("{1}", commodity.ID);            
+
 
             content.Append(@"<div class=""bol_doc"">");
-            content.Append(GetHeader("[document number]"));
-            content.Append(GetReferenceTable(commodity));
+            content.Append(GetHeader(documentNumber));
+            content.Append(GetReferenceTable(dispatch, commodity));
             content.Append(GetGlassLiability());
             content.Append(GetCommodityDetails(commodity));
             content.Append(GetAdditionalInfo(commodity));
@@ -606,7 +627,7 @@ namespace SingerDispatch.Printing.Documents
             return string.Format(html, replacements);
         }
 
-        private string GetReferenceTable(JobCommodity commodity)
+        private string GetReferenceTable(Dispatch dispatch, JobCommodity commodity)
         {
             var html = @"
                 <div class=""reference"">
@@ -655,11 +676,11 @@ namespace SingerDispatch.Printing.Documents
 
             replacements[0] = DateTime.Now.ToString(SingerConstants.PrintedDateFormatString);
             replacements[1] = commodity.Job.Company.Name;
-            replacements[2] = (commodity.Load != null && commodity.Load.Equipment != null) ? commodity.Load.Equipment.UnitNumber : "";
-            replacements[3] = (commodity.Load != null && commodity.Load.Rate != null) ? commodity.Load.Rate.Name + " - " : "";
-            
-            if (commodity.Load != null && commodity.Load.TrailerCombination != null)
-                replacements[3] += commodity.Load.TrailerCombination.Combination;
+            replacements[2] = (dispatch.Load != null && dispatch.Load.Equipment != null) ? dispatch.Load.Equipment.UnitNumber : "";
+            replacements[3] = (dispatch.Load != null && dispatch.Load.Rate != null) ? dispatch.Load.Rate.Name + " - " : "";
+
+            if (dispatch.Load != null && dispatch.Load.TrailerCombination != null)
+                replacements[3] += dispatch.Load.TrailerCombination.Combination;
 
             replacements[4] = (commodity.ShipperCompany != null) ? commodity.ShipperCompany.Name : "";
             

@@ -32,14 +32,14 @@ namespace SingerDispatch.Panels.Admin
             SaveCommand.Executed += CommitChanges_Executed;
 
             cmbEmployees.ItemsSource = from emp in Database.Employees orderby emp.FirstName, emp.LastName select emp;            
-            dgEquipment.ItemsSource = new ObservableCollection<Equipment>(from equip in Database.Equipment select equip);            
+            dgEquipment.ItemsSource = new ObservableCollection<Equipment>(from equip in Database.Equipment orderby equip.UnitNumber select equip);            
         }
 
         private void NewEquipment_Click(object sender, RoutedEventArgs e)
         {
             var unit = new Equipment();
 
-            ((ObservableCollection<Equipment>)dgEquipment.ItemsSource).Insert(0, unit);
+            ((ObservableCollection<Equipment>)dgEquipment.ItemsSource).Add(unit);
             Database.Equipment.InsertOnSubmit(unit);
             dgEquipment.SelectedItem = unit;
             dgEquipment.ScrollIntoView(unit);
@@ -56,10 +56,6 @@ namespace SingerDispatch.Panels.Admin
             MessageBoxResult confirmation = MessageBox.Show("Are you sure you want to remove this unit?", "Delete confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
             if (confirmation != MessageBoxResult.Yes) return;
-
-            
-            
-            
 
             try
             {

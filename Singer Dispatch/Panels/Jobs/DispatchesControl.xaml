@@ -38,7 +38,7 @@
             <GroupBox Header="Dispatch Details" DataContext="{Binding ElementName=dgDispatches, Path=SelectedItem}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgDispatches, Path=SelectedItem}">
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="95" />
+                        <ColumnDefinition Width="100" />
                         <ColumnDefinition />
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
@@ -56,14 +56,14 @@
                     <Label Grid.Row="0" Grid.Column="0">Load:</Label>
                     <ComboBox Name="cmbLoads" Grid.Row="0" Grid.Column="1" SelectedItem="{Binding Load}" ItemTemplate="{StaticResource LoadTemplate}" SelectionChanged="cmbLoads_SelectionChanged"></ComboBox>
 
-                    <Label Grid.Row="1" Grid.Column="0">Service type:</Label>
-                    <ComboBox Name="cmbServiceTypes" Grid.Row="1" Grid.Column="1" SelectedItem="{Binding Rate}" ItemTemplate="{StaticResource SimpleNameTemplate}" IsEditable="True" TextSearch.TextPath="Name" />
+                    <Label Grid.Row="1" Grid.Column="0">Equipment type:</Label>
+                    <ComboBox Name="cmbEquipmentTypes" Grid.Row="1" Grid.Column="1" SelectedItem="{Binding EquipmentType}" ItemTemplate="{StaticResource SimpleNameTemplate}" TextSearch.TextPath="Name" SelectionChanged="cmbEquipmentTypes_SelectionChanged" />
 
                     <Label Grid.Row="2" Grid.Column="0">Unit:</Label>
-                    <ComboBox Name="cmbUnits" Grid.Row="2" Grid.Column="1" SelectedItem="{Binding Equipment}" ItemTemplate="{StaticResource EquipmentNameTemplate}" IsEditable="True" TextSearch.TextPath="UnitNumber" />
+                    <ComboBox Name="cmbUnits" Grid.Row="2" Grid.Column="1" SelectedItem="{Binding Equipment}" ItemTemplate="{StaticResource EquipmentNameTemplate}" TextSearch.TextPath="UnitNumber" />
                     
                     <Label Grid.Row="3" Grid.Column="0">Employee:</Label>
-                    <ComboBox Name="cmbEmployees" Grid.Row="3" Grid.Column="1" SelectedItem="{Binding Employee}" ItemTemplate="{StaticResource SimpleNameTemplate}" IsEditable="True" TextSearch.TextPath="Name" />
+                    <ComboBox Name="cmbEmployees" Grid.Row="3" Grid.Column="1" SelectedItem="{Binding Employee}" ItemTemplate="{StaticResource SimpleNameTemplate}" TextSearch.TextPath="Name" />
 
                     <Label Grid.Row="4" Grid.Column="0">Departing units:</Label>
                     <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding DepartingUnits}" />

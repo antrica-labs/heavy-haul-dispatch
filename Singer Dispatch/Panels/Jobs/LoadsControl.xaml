@@ -5,7 +5,7 @@
                        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                        xmlns:Panels="clr-namespace:SingerDispatch.Panels" 
                        x:Name="ThisControl"
-                       Loaded="ControlLoaded" mc:Ignorable="d" d:DesignWidth="780" d:DesignHeight="500">
+                       Loaded="ControlLoaded" mc:Ignorable="d" d:DesignWidth="833" d:DesignHeight="500">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -20,7 +20,7 @@
             </DataTemplate>
         </ResourceDictionary>
     </UserControl.Resources>
-    <DockPanel>        
+    <DockPanel>
         <StackPanel DockPanel.Dock="Bottom">
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -38,29 +38,34 @@
             <TabControl IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgLoads, Path=SelectedItem}">
                 <TabItem Header="Trailer Details">
                     <StackPanel>
-                        <GroupBox Grid.Column="0" Header="Instruction" DataContext="{Binding ElementName=dgLoads, Path=SelectedItem}">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition />
-                                    <ColumnDefinition />
-                                </Grid.ColumnDefinitions>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition />
-                                    <RowDefinition />
-                                    <RowDefinition />
-                                    <RowDefinition />
-                                </Grid.RowDefinitions>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="53" />
+                                <RowDefinition Height="114" />
+                            </Grid.RowDefinitions>
 
-                                <Label Grid.Row="0" Grid.Column="0">Schedule:</Label>
-                                <TextBox Grid.Row="1" Grid.Column="0" Text="{Binding Schedule}" Style="{StaticResource MultiLine}" />
+                            <GroupBox Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Margin="0,0,3,0" Header="Instruction" DataContext="{Binding ElementName=dgLoads, Path=SelectedItem}">
+                                <StackPanel>                                    
+                                    <Label>Schedule:</Label>
+                                    <TextBox Text="{Binding Schedule}" Style="{StaticResource MultiLine}" />
 
-                                <Label Grid.Row="2" Grid.Column="0">Additional notes:</Label>
-                                <TextBox Grid.Row="3" Grid.Column="0" Text="{Binding Notes}" Style="{StaticResource MultiLine}"/>
-                                
-                                <Label Grid.Row="0" Grid.Column="1">Commodities:</Label>
-                                <ListBox Grid.Row="1" Grid.Column="1" Grid.RowSpan="3"  Name="lbCommodities" Margin="3"/>
-                            </Grid>
-                        </GroupBox>
+                                    <Label>Additional notes:</Label>
+                                    <TextBox Text="{Binding Notes}" Style="{StaticResource MultiLine}"/>
+                                </StackPanel>
+                            </GroupBox>
+
+                            <GroupBox Grid.Column="1" Grid.Row="0" Header="Status" DataContext="{Binding ElementName=dgLoads, Path=SelectedItem}">
+                                <ComboBox Name="cmbStatuses" SelectedItem="{Binding Status}" ItemTemplate="{StaticResource SimpleNameTemplate}" />
+                            </GroupBox>
+
+                            <GroupBox Grid.Column="1" Grid.Row="1" Header="Commodities" DataContext="{Binding ElementName=dgLoads, Path=SelectedItem}">                                
+                                <ListBox Grid.RowSpan="3" Name="lbCommodities" />
+                            </GroupBox>
+                        </Grid>                        
 
                         <GroupBox Header="Vehicle" DataContext="{Binding ElementName=dgLoads, Path=SelectedItem}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgLoads, Path=SelectedItem}">
                             <Grid>
@@ -429,6 +434,7 @@
         <DataGrid Name="dgLoads" Style="{StaticResource ListDisplay}" IsSynchronizedWithCurrentItem="True" SelectionChanged="dgLoads_SelectionChanged">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Number" Width="0.15*" Binding="{Binding Number, StringFormat={}{0:D2}}" />
+                <DataGridTextColumn Header="Status" Width="0.20*" Binding="{Binding Status.Name}" />
                 <DataGridTextColumn Header="Unit" Width="0.15*" Binding="{Binding Equipment.UnitNumber}"/>
                 <DataGridTextColumn Header="Wheel type" Width="0.25*" Binding="{Binding Rate.Name}" />
                 <DataGridTextColumn Header="Trailer" Width="0.4*" Binding="{Binding TrailerCombination.Combination}" />

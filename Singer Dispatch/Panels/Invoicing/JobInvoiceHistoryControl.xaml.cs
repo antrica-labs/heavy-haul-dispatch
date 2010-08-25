@@ -116,9 +116,10 @@ namespace SingerDispatch.Panels.Invoicing
                 invoice.ReferenceNumbers.Add(reference);
             }
 
-            list.Insert(0, invoice);
-            DgInvoices.SelectedItem = invoice;
             SelectedJob.Invoices.Add(SelectedInvoice);
+            list.Add(invoice);            
+            DgInvoices.SelectedItem = invoice;
+            DgInvoices.ScrollIntoView(invoice);            
 
             try
             {
@@ -142,7 +143,7 @@ namespace SingerDispatch.Panels.Invoicing
             invoice = invoice.Duplicate();
 
             SelectedJob.Invoices.Add(invoice);
-            list.Insert(0, invoice);
+            list.Add(invoice);
             DgInvoices.SelectedItem = invoice;
             SelectedJob.Invoices.Add(SelectedInvoice);
 

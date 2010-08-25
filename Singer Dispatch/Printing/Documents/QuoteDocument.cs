@@ -35,7 +35,7 @@ namespace SingerDispatch.Printing.Documents
             content.Append("<body>");
             content.Append(GetHeader("#" + quote.NumberAndRev));
             content.Append(GetRecipient(quote.BillingAddress, quote.Contact));
-            content.Append(GetDescription(quote.Contact, "Transportation Quote", quote.CreationDate, quote.ExpirationDate));
+            content.Append(GetDescription(quote.Contact, quote.Description, quote.CreationDate, quote.ExpirationDate));
 
             if (quote.QuoteCommodities.Count > 0)
                 content.Append(GetCommodities(quote));
@@ -560,18 +560,35 @@ namespace SingerDispatch.Printing.Documents
                     weight = MeasurementFormater.UKilograms;
                 }
 
+                string depart, arrive, description;
+
+                if (string.IsNullOrEmpty(commodity.ArrivalAddress) || string.IsNullOrEmpty(commodity.ArrivalSiteName))
+                    arrive = string.Format("{0} {1}", commodity.ArrivalSiteName, commodity.ArrivalAddress);
+                else
+                    arrive = string.Format("{0} - {1}", commodity.ArrivalSiteName, commodity.ArrivalAddress);
+
+                if (string.IsNullOrEmpty(commodity.DepartureAddress) || string.IsNullOrEmpty(commodity.DepartureSiteName))
+                    depart = string.Format("{0} {1}", commodity.DepartureSiteName, commodity.DepartureAddress);
+                else
+                    depart = string.Format("{0} - {1}", commodity.DepartureAddress, commodity.DepartureSiteName);
+                
+                if (string.IsNullOrEmpty(commodity.Unit))
+                    description = commodity.Name;
+                else
+                    description = string.Format("{0} - {1}", commodity.Name, commodity.Unit);
+
                 rows.Append(@"<tr class=""details"">");
                 rows.Append("<td>");
                 rows.Append(count);
                 rows.Append("</td>");
                 rows.Append("<td>");
-                rows.Append(commodity.Name);
+                rows.Append(description);
                 rows.Append("</td>");
                 rows.Append("<td>");
-                rows.Append(commodity.DepartureSiteName);               
+                rows.Append(depart);               
                 rows.Append("</td>");
                 rows.Append("<td>");
-                rows.Append(commodity.ArrivalSiteName);
+                rows.Append(arrive);
                 rows.Append("</td>");
                 rows.Append("<td>");
                 rows.Append(MeasurementFormater.FromMetres(commodity.Length, length));
@@ -727,6 +744,9 @@ namespace SingerDispatch.Printing.Documents
                     <p>The quoted price includes {0}.</p>
                 </div>
             ";
+
+            if (quote.QuoteInclusions.Count == 0) return "";
+
             var inclusionlist = new StringBuilder();
 
             for (var i = 0; i < quote.QuoteInclusions.Count; i++)            
@@ -741,7 +761,6 @@ namespace SingerDispatch.Printing.Documents
 
             return string.Format(html, inclusionlist.ToString());
         }
-
 
         private static string GetConditions(Quote quote)
         {
@@ -804,8 +823,6 @@ namespace SingerDispatch.Printing.Documents
             return content;
         }
     }
-
-    
 }
 
 
