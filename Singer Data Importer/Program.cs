@@ -352,7 +352,7 @@ namespace SingerDispatch.Importer
             try
             {
                 company.PriorityLevelID = PriorityLevels[priorityLevel].ID;
-                company.CustomerTypeID = CompanyTypes[isSingerCustomer].ID;
+                company.CustomerTypeID = CompanyTypes[!isSingerCustomer].ID;
             }
             catch
             {

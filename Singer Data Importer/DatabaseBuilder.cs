@@ -107,7 +107,7 @@ namespace SingerDispatch.Importer
 
             // Populate customer types
             Database.CustomerType.InsertOnSubmit(new CustomerType { Name = "Singer Specialized", IsEnterprise = false });
-            Database.CustomerType.InsertOnSubmit(new CustomerType { Name = "M.E. Signer Enterprise", IsEnterprise = true });
+            Database.CustomerType.InsertOnSubmit(new CustomerType { Name = "M.E. Singer Enterprise", IsEnterprise = true });
 
             // Populate contact methods
             Database.ContactMethods.InsertOnSubmit(new ContactMethod { Name = "Email" });

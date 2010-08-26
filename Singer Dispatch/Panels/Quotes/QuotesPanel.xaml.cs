@@ -60,7 +60,7 @@ namespace SingerDispatch.Panels.Quotes
 
             var title = String.Format("Quote #{0}-{1}", SelectedQuote.Number, SelectedQuote.Revision);
 
-            var viewer = new Windows.DocumentViewerWindow(new QuoteDocument(), SelectedQuote, title) { IsMetric = !UseImperialMeasurements };
+            var viewer = new Windows.DocumentViewerWindow(new QuoteDocument(), SelectedQuote, title) { IsMetric = !UseImperialMeasurements, IsSpecializedDocument = SelectedCompany.CustomerType.IsEnterprise != true };
             viewer.DisplayPrintout();
         }
 

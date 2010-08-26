@@ -98,7 +98,7 @@ namespace SingerDispatch.Panels.Jobs
         private void PrintBillOfLading_Click(object sender, RoutedEventArgs e)
         {
             var commodity = (JobCommodity)dgCommodities.SelectedItem;
-            var viewer = new DocumentViewerWindow(new BillOfLadingDocument(), commodity, string.Format("Bill of Lading - {0}", commodity.NameAndUnit)) { IsMetric = !UseImperialMeasurements };
+            var viewer = new DocumentViewerWindow(new BillOfLadingDocument(), commodity, string.Format("Bill of Lading - {0}", commodity.NameAndUnit)) { IsMetric = !UseImperialMeasurements, IsSpecializedDocument = SelectedCompany.CustomerType.IsEnterprise != true };
             viewer.DisplayPrintout();
         }
 

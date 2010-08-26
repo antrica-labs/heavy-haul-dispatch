@@ -24,11 +24,13 @@ namespace SingerDispatch.Windows
             Database = database;
             Companies = companies;
             
-            Company = new Company();            
+            Company = new Company();
             companyDetails.DataContext = Company;
 
             Address = new Address();
             addressDetails.DataContext = Address;
+
+            Company.CustomerType = (from ct in Database.CustomerType where ct.IsEnterprise == false select ct).First();
         }
 
         public Company CreateCompany()

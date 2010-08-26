@@ -114,7 +114,7 @@ namespace SingerDispatch.Panels.Jobs
 
             var result = MessageBox.Show("Do you wish to inlcude a file copy with this printout?", "Include drivers copy?", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
-            var viewer = new DocumentViewerWindow(new DispatchDocument(result == MessageBoxResult.Yes), dgDispatches.SelectedItem, String.Format("Dispatch #{0}", dispatch.Name)) { IsMetric = !UseImperialMeasurements };
+            var viewer = new DocumentViewerWindow(new DispatchDocument(result == MessageBoxResult.Yes), dgDispatches.SelectedItem, String.Format("Dispatch #{0}", dispatch.Name)) { IsMetric = !UseImperialMeasurements, IsSpecializedDocument = SelectedCompany.CustomerType.IsEnterprise != true };
             viewer.DisplayPrintout();
         }
 
