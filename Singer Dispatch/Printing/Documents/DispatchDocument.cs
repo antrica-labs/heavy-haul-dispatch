@@ -90,13 +90,7 @@ namespace SingerDispatch.Printing.Documents
                     content.Append(PageBreak);
                     content.Append(FillDispatchBody(dispatch, "File Copy"));    
                 }
-
-                if (dispatch.Load != null && dispatch.Equipment != null && dispatch.Equipment == dispatch.Load.Equipment)
-                {
-                    content.Append(PageBreak);
-                    content.Append(GetBillOfLadingDocs(dispatch));
-                }
-
+                                
                 if ((i + 1) != dispatches.Count)
                     content.Append(PageBreak);
             }
@@ -229,6 +223,7 @@ namespace SingerDispatch.Printing.Documents
                     }
                     td
                     {
+                        vertical-align: middle;
                     }
                     body
                     {                        
@@ -276,6 +271,17 @@ namespace SingerDispatch.Printing.Documents
                     div.dispatch_doc div.header td.address_col
                     {
                         
+                    }
+                    
+                    div.dispatch_doc div.header td.cod_col span
+                    {
+                        display: block;
+                        text-align: center;
+                        font-weight: bold;
+                        font-size: 2.5em;                        
+                        line-height: 1.1em;
+                        padding: 15px 5px;
+                        border: 1px #565656 solid;
                     }
                     
                     div.dispatch_doc div.header td.id_col
@@ -397,7 +403,7 @@ namespace SingerDispatch.Printing.Documents
                     
                     div.dispatch_doc div.load_and_unload table.details td
                     {
-                        border: solid 1px #A9A9A9;                        
+                    	border: solid 1px #A9A9A9;
                     }
 
                     div.dispatch_doc div.load_and_unload table.details td span
@@ -439,7 +445,7 @@ namespace SingerDispatch.Printing.Documents
 
                     div.dispatch_doc div.load_and_unload table.instructions td
                     {
-                        width: 33%;                        
+                        width: 33%;                                               
                     }
 
                     div.dispatch_doc div.load_and_unload table.instructions td span
@@ -569,6 +575,9 @@ namespace SingerDispatch.Printing.Documents
                                 <span>{3}</span>
                                 <span>Phone: {4}</span>
                             </td>
+                            <td class=""cod_col"">
+                                {7}
+                            </td>
                             <td class=""id_col"">
                                 <span class=""copy_type"">{5}</span>
                                 <span>Dispatch #:</span>
@@ -581,7 +590,7 @@ namespace SingerDispatch.Printing.Documents
                 </div>
             ";
 
-            var replacements = new object[7];
+            var replacements = new object[8];
 
             var process = System.Diagnostics.Process.GetCurrentProcess();
             string img;
@@ -603,6 +612,9 @@ namespace SingerDispatch.Printing.Documents
             replacements[4] = SingerConstants.GetConfig("SingerAddress-Phone");
             replacements[5] = copyType;
             replacements[6] = (dispatch != null) ? dispatch.Name : "UNKNOWN";
+
+            if (dispatch.Job.Company.CompanyPriorityLevel.Name.EndsWith("Cash on Delivery"))
+                replacements[7] = "<span>C.O.D.<br>Collect</span>";            
 
             return string.Format(html, replacements);
         }

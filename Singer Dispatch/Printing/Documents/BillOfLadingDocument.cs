@@ -378,14 +378,9 @@ namespace SingerDispatch.Printing.Documents
                         margin-top: 3px;
                     }
             
-                    div.bol_doc div.commodity table.payment_types span.checkbox span.box
+                    div.bol_doc div.commodity table.payment_types span.checkbox span.ballet
                     {
-                        display: block;
-                        height: 10px;
-                        width: 10px;
-                        border: 1px #787878 solid;
-                        float: left;
-                        margin-right: 5px;
+                        font-size: 1.2em;
                     }
             
                     div.bol_doc div.commodity span.disclaimer
@@ -762,9 +757,9 @@ namespace SingerDispatch.Printing.Documents
 
                                 <table class=""payment_types"">
                                     <tr>
-                                        <td><span class=""checkbox""><span class=""box""></span>COD</span></td>
-                                        <td><span class=""checkbox""><span class=""box""></span>Collect</span></td>
-                                        <td><span class=""checkbox""><span class=""box""></span>PrePaid</span></td>
+                                        <td><span class=""checkbox""><span class=""ballet"">{5}</span> COD</span></td>
+                                        <td><span class=""checkbox""><span class=""ballet"">{6}</span> Collect</span></td>
+                                        <td><span class=""checkbox""><span class=""ballet"">{7}</span> PrePaid</span></td>
                                     </tr>
                                 </table>
 
@@ -803,7 +798,7 @@ namespace SingerDispatch.Printing.Documents
                 weightUnit = MeasurementFormater.UKilograms;
             }
 
-            var replacements = new object[6];
+            var replacements = new object[8];
 
             replacements[0] = commodity.Name;
 
@@ -811,7 +806,15 @@ namespace SingerDispatch.Printing.Documents
             replacements[2] = MeasurementFormater.FromMetres(commodity.Width, lengthUnit);
             replacements[3] = MeasurementFormater.FromMetres(commodity.Height, lengthUnit);
             replacements[4] = MeasurementFormater.FromKilograms(commodity.Weight, weightUnit);
-            
+
+            if (commodity.Load.Job.Company.CompanyPriorityLevel.Name.EndsWith("Cash on Delivery"))
+                replacements[5] = "&#9745;";
+            else
+                replacements[5] = "&#9744;";
+
+            replacements[6] = "&#9744;";
+            replacements[7] = "&#9744;";
+
             return string.Format(html, replacements);
         }
 
