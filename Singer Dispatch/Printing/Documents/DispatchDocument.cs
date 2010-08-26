@@ -397,7 +397,12 @@ namespace SingerDispatch.Printing.Documents
                     
                     div.dispatch_doc div.load_and_unload table.details td
                     {
-                        border: solid 1px #A9A9A9;
+                        border: solid 1px #A9A9A9;                        
+                    }
+
+                    div.dispatch_doc div.load_and_unload table.details td span
+                    {
+                        display: block;
                         min-height: 25px;
                     }
 
@@ -434,13 +439,13 @@ namespace SingerDispatch.Printing.Documents
 
                     div.dispatch_doc div.load_and_unload table.instructions td
                     {
-                        width: 33%;
-                        min-height: 25px;
+                        width: 33%;                        
                     }
 
                     div.dispatch_doc div.load_and_unload table.instructions td span
                     {
-                        
+                        display: block;
+                        min-height: 25px;
                     }
 
                     div.dispatch_doc div.dimensions span
@@ -837,9 +842,9 @@ namespace SingerDispatch.Printing.Documents
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>{10}</td>
-                                    <td>{11}</td>
-                                    <td>{12}</td>
+                                    <td><span>{10}</span></td>
+                                    <td><span>{11}</span></td>
+                                    <td><span>{12}</span></td>
                                 </tr>
                             </tbody>
                         </table>
