@@ -112,9 +112,18 @@ namespace SingerDispatch.Panels.Jobs
 
             if (dispatch == null) return;
 
-            var result = MessageBox.Show("Do you wish to inlcude a file copy with this printout?", "Include drivers copy?", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            bool printFileCopy;
 
-            var viewer = new DocumentViewerWindow(new DispatchDocument(result == MessageBoxResult.Yes), dgDispatches.SelectedItem, String.Format("Dispatch #{0}", dispatch.Name)) { IsMetric = !UseImperialMeasurements, IsSpecializedDocument = SelectedCompany.CustomerType.IsEnterprise != true };
+            if (SelectedCompany.CustomerType.IsEnterprise == true)
+            {
+                printFileCopy = Convert.ToBoolean(SingerConstants.GetConfig("Dispatch-EnterprisePrintFileCopy") ?? "false");
+            }
+            else
+            {
+                printFileCopy = Convert.ToBoolean(SingerConstants.GetConfig("Dispatch-SingerPrintFileCopy") ?? "false");
+            }
+
+            var viewer = new DocumentViewerWindow(new DispatchDocument(printFileCopy), dgDispatches.SelectedItem, String.Format("Dispatch #{0}", dispatch.Name)) { IsMetric = !UseImperialMeasurements, IsSpecializedDocument = SelectedCompany.CustomerType.IsEnterprise != true };
             viewer.DisplayPrintout();
         }
 

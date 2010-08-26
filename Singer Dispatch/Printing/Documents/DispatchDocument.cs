@@ -127,8 +127,28 @@ namespace SingerDispatch.Printing.Documents
 
             if (dispatch.Load != null && dispatch.Equipment != null && dispatch.Equipment == dispatch.Load.Equipment)
             {
-                output.Append(PageBreak);
-                output.Append(GetBillOfLadingDocs(dispatch));
+                int copies;
+
+                if (copyType == "Driver Copy")
+                {
+                    if (SpecializedDocument)
+                        copies = Convert.ToInt32(SingerConstants.GetConfig("Dispatch-SingerBoLDriverCopies") ?? "1");
+                    else
+                        copies = Convert.ToInt32(SingerConstants.GetConfig("Dispatch-EnterpriseBoLDriverCopies") ?? "1");
+                }
+                else
+                {
+                    if (SpecializedDocument)
+                        copies = Convert.ToInt32(SingerConstants.GetConfig("Dispatch-SingerBoLFileCopies") ?? "1");
+                    else
+                        copies = Convert.ToInt32(SingerConstants.GetConfig("Dispatch-EnterpriseBoLFileCopies") ?? "1");
+                }
+
+                for (var i = 0; i < copies; i++)
+                {
+                    output.Append(PageBreak);
+                    output.Append(GetBillOfLadingDocs(dispatch));
+                }
             }
 
             return output.ToString();
@@ -141,6 +161,7 @@ namespace SingerDispatch.Printing.Documents
             var doc = new BillOfLadingDocument();
             var content = new StringBuilder();
 
+            doc.SpecializedDocument = SpecializedDocument;
             doc.PrintMetric = PrintMetric;
 
             for (var i = 0; i < dispatch.Load.JobCommodities.Count; i++)
