@@ -421,7 +421,14 @@ namespace SingerDispatch.Panels.Jobs
 
         private void cmbLoadedCommodities_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            var commodity = (LoadedCommodity)cmbLoadedCommodities.SelectedItem;
 
+            if (commodity == null) return;
+
+            cmbLoadingSiteContactCompanies.SelectedItem = (commodity.LoadSiteContact != null) ? commodity.LoadSiteContact.Address.Company : null;
+            cmbLoadingContactCompanies.SelectedItem = (commodity.LoadContact != null) ? commodity.LoadContact.Address.Company : null;
+            cmbUnloadingSiteContactCompanies.SelectedItem = (commodity.UnloadSiteContact != null) ? commodity.UnloadSiteContact.Address.Company : null;
+            cmbUnloadingContactCompanies.SelectedItem = (commodity.UnloadContact != null) ? commodity.UnloadContact.Address.Company : null;
         }
 
         private void PrintBillOfLading_Click(object sender, RoutedEventArgs e)

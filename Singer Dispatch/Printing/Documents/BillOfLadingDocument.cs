@@ -31,9 +31,20 @@ namespace SingerDispatch.Printing.Documents
         
         public string GenerateHTML(object entity)
         {
-            var doc = (BillOfLadingEntity)entity;
-            
-            return GenerateHTML(doc.Dispatch, doc.LoadedCommodity);
+            if (entity is BillOfLadingEntity)
+            {
+                var bol = (BillOfLadingEntity)entity;
+
+                return GenerateHTML(bol.Dispatch, bol.LoadedCommodity);
+            }
+            else if (entity is LoadedCommodity)
+            {
+                var commodity = (LoadedCommodity)entity;
+
+                return GenerateHTML(null, commodity);
+            }
+            else
+                return "";
         }
 
         public string GenerateHTML(Dispatch dispatch, LoadedCommodity commodity)
@@ -63,10 +74,10 @@ namespace SingerDispatch.Printing.Documents
             var content = new StringBuilder();
             string documentNumber;
 
-            if (dispatch.Load != null)
+            if (dispatch != null && dispatch.Load != null)
                 documentNumber = string.Format("{0}-{1:D2}-{2}", dispatch.Load.Job.Number, dispatch.Load.Number, commodity.ID);
             else
-                documentNumber = string.Format("{1}", commodity.ID);            
+                documentNumber = string.Format("LC-{0:D2}", commodity.ID);            
 
 
             content.Append(@"<div class=""bol_doc"">");
@@ -451,6 +462,11 @@ namespace SingerDispatch.Printing.Documents
                         width: 50%;
                         border-bottom: 1px #000000 solid;
                     }
+
+                    div.bol_doc td.comments_and_initials p
+                    {
+                        margin-top: 5px;
+                    }
                     
                     div.bol_doc td.comments_and_initials div.initials
                     {
@@ -671,10 +687,10 @@ namespace SingerDispatch.Printing.Documents
 
             replacements[0] = DateTime.Now.ToString(SingerConstants.PrintedDateFormatString);
             replacements[1] = commodity.JobCommodity.Job.Company.Name;
-            replacements[2] = (dispatch.Load != null && dispatch.Load.Equipment != null) ? dispatch.Load.Equipment.UnitNumber : "";
-            replacements[3] = (dispatch.Load != null && dispatch.Load.Rate != null) ? dispatch.Load.Rate.Name + " - " : "";
+            replacements[2] = (dispatch != null && dispatch.Load != null && dispatch.Load.Equipment != null) ? dispatch.Load.Equipment.UnitNumber : "";
+            replacements[3] = (dispatch != null && dispatch.Load != null && dispatch.Load.Rate != null) ? dispatch.Load.Rate.Name + " - " : "";
 
-            if (dispatch.Load != null && dispatch.Load.TrailerCombination != null)
+            if (dispatch != null && dispatch.Load != null && dispatch.Load.TrailerCombination != null)
                 replacements[3] += dispatch.Load.TrailerCombination.Combination;
 
             replacements[4] = (commodity.ShipperCompany != null) ? commodity.ShipperCompany.Name : "";
@@ -750,6 +766,7 @@ namespace SingerDispatch.Printing.Documents
                                 <div class=""dangerous_goods"">
                                     <span class=""heading"">Dangerous Goods Information</span>
                                     
+                                    <p>{8}</p>
                                 </div>
                             </td>
                             <td class=""charges"">
@@ -798,7 +815,7 @@ namespace SingerDispatch.Printing.Documents
                 weightUnit = MeasurementFormater.UKilograms;
             }
 
-            var replacements = new object[8];
+            var replacements = new object[9];
 
             replacements[0] = commodity.JobCommodity.Name;
 
@@ -814,6 +831,7 @@ namespace SingerDispatch.Printing.Documents
 
             replacements[6] = "&#9744;";
             replacements[7] = "&#9744;";
+            replacements[8] = commodity.BoLDangerousGoodsInfo;
 
             return string.Format(html, replacements);
         }
@@ -828,6 +846,8 @@ namespace SingerDispatch.Printing.Documents
                                 <span class=""heading"">Comments and Initials</span>
 
                                 <div class=""initials""><span></span></div>
+
+                                <p>{4}</p>
                             </div>
                         </td>
                     </tr>
@@ -947,12 +967,13 @@ namespace SingerDispatch.Printing.Documents
                 </table>
             ";
             
-            var replacements = new object[4];
+            var replacements = new object[5];
 
             replacements[0] = SingerConstants.GetConfig("BillOfLading-ShippersWeight") ?? "";
             replacements[1] = SingerConstants.GetConfig("BillOfLading-NoticeOfClaim") ?? "";
             replacements[2] = string.Format("{0:C}", commodity.JobCommodity.Value);
             replacements[3] = SingerConstants.GetConfig("BillOfLading-MaxLiability") ?? "";
+            replacements[4] = commodity.BoLDescription;
 
             return string.Format(html, replacements);
         }
