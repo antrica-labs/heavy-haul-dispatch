@@ -12,7 +12,7 @@ namespace SingerDispatch
         public App()
         {
             Thread.CurrentThread.CurrentCulture = (CultureInfo)Thread.CurrentThread.CurrentCulture.Clone();
-            Thread.CurrentThread.CurrentCulture.DateTimeFormat.LongDatePattern = "d/M/yyyy HH:mm";
+            Thread.CurrentThread.CurrentCulture.DateTimeFormat.LongDatePattern = "g";
         }
     }
 }
