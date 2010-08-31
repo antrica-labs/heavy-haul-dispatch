@@ -410,7 +410,7 @@
                 </TabItem>
                 <TabItem Header="Loaded Commodities">
                     <StackPanel>
-                        <GroupBox Header="Loaded Commodities" DataContext="{Binding ElementName=dgLoads, Path=SelectedItem}">
+                        <GroupBox Header="Loaded Commodities" DataContext="{Binding ElementName=dgLoads, Path=SelectedItem}" Margin="0,0,0,3">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition />
@@ -424,140 +424,186 @@
                             </Grid>
                         </GroupBox>
 
-                        <TabControl Margin="0,10,0,0" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=cmbLoadedCommodities, Path=SelectedItem}">
+                        <TabControl IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=cmbLoadedCommodities, Path=SelectedItem}">
                             <TabItem Header="Loading Info" DataContext="{Binding ElementName=cmbLoadedCommodities, Path=SelectedItem}">
-                                <Grid Margin="0,0,0,86">
+                                <Grid>
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="100" />
                                         <ColumnDefinition />
                                         <ColumnDefinition />
                                     </Grid.ColumnDefinitions>
                                     <Grid.RowDefinitions>
                                         <RowDefinition />
-                                        <RowDefinition />
-                                        <RowDefinition />
-                                        <RowDefinition />
-                                        <RowDefinition />
-                                        <RowDefinition />
-                                        <RowDefinition />
-                                        <RowDefinition />
+                                        <RowDefinition />                                            
                                     </Grid.RowDefinitions>
-                                    
-                                    <Label Grid.Column="0" Grid.Row="0">Site name:</Label>
-                                    <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding LoadLocation}" />
 
-                                    <Label Grid.Column="0" Grid.Row="1">Address:</Label>
-                                    <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding LoadAddress}" />
+                                    <GroupBox Header="Site" Grid.Column="0">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="100" />
+                                                <ColumnDefinition />
+                                            </Grid.ColumnDefinitions>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition />
+                                                <RowDefinition />
+                                                <RowDefinition />
+                                            </Grid.RowDefinitions>
 
-                                    <Label Grid.Column="0" Grid.Row="2">Site contact:</Label>
-                                    <Grid Grid.Column="1" Grid.Row="2">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition />
-                                            <ColumnDefinition />
-                                        </Grid.ColumnDefinitions>
+                                            <Label Grid.Column="0" Grid.Row="0">Name:</Label>
+                                            <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding LoadLocation}" />
 
-                                        <ComboBox Name="cmbLoadingSiteContactCompanies" Grid.Column="0" TextSearch.TextPath="Name" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectionChanged="cmbLoadingSiteContactCompanies_SelectionChanged" />
-                                        <ComboBox Name="cmbLoadingSiteContacts" Grid.Column="1" SelectedItem="{Binding LoadSiteContact}" TextSearch.TextPath="Name" ItemTemplate="{StaticResource ContactTemplate}" SelectionChanged="cmbLoadingSiteContacts_SelectionChanged" />
-                                    </Grid>
+                                            <Label Grid.Column="0" Grid.Row="1">Address:</Label>
+                                            <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding LoadAddress}" />
 
-                                    <Label Grid.Column="0" Grid.Row="3">Loaded by:</Label>
-                                    <TextBox Grid.Column="1" Grid.Row="3" Text="{Binding LoadBy}" />
-                                    
-                                    <Label Grid.Column="0" Grid.Row="4">Loading contact:</Label>
-                                    <Grid Grid.Column="1" Grid.Row="4">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition />
-                                            <ColumnDefinition />
-                                        </Grid.ColumnDefinitions>
+                                            <Label Grid.Column="0" Grid.Row="2">Site contact:</Label>
+                                            <Grid Grid.Column="1" Grid.Row="2">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition />
+                                                    <ColumnDefinition />
+                                                </Grid.ColumnDefinitions>
 
-                                        <ComboBox Name="cmbLoadingContactCompanies" Grid.Column="0" TextSearch.TextPath="Name" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectionChanged="cmbLoadingContactCompanies_SelectionChanged" />
-                                        <ComboBox Name="cmbLoadingContacts" Grid.Column="1" SelectedItem="{Binding LoadContact}" TextSearch.TextPath="Name" ItemTemplate="{StaticResource ContactTemplate}" SelectionChanged="cmbLoadingContacts_SelectionChanged" />
-                                    </Grid>
+                                                <ComboBox Name="cmbLoadingSiteContactCompanies" Grid.Column="0" TextSearch.TextPath="Name" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectionChanged="cmbLoadingSiteContactCompanies_SelectionChanged" />
+                                                <ComboBox Name="cmbLoadingSiteContacts" Grid.Column="1" SelectedItem="{Binding LoadSiteContact}" TextSearch.TextPath="Name" ItemTemplate="{StaticResource ContactTemplate}" SelectionChanged="cmbLoadingSiteContacts_SelectionChanged" />
+                                            </Grid>
+                                        </Grid>
+                                    </GroupBox>
 
-                                    <Label Grid.Column="0" Grid.Row="5">Method:</Label>
-                                    <ComboBox Name="cmbLoadMethods" Grid.Column="1" Grid.Row="5" SelectedItem="{Binding LoadMethod}" ItemTemplate="{StaticResource SimpleNameTemplate}" TextSearch.TextPath="Name" />
+                                    <GroupBox Header="Details" Grid.Column="0" Grid.Row="1">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="100" />
+                                                <ColumnDefinition />
+                                            </Grid.ColumnDefinitions>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition />
+                                                <RowDefinition />
+                                                <RowDefinition />
+                                                <RowDefinition />                                                
+                                            </Grid.RowDefinitions>
 
-                                    <Label Grid.Column="0" Grid.Row="6">Loading date:</Label>
-                                    <DatePicker Grid.Column="1" Grid.Row="6" SelectedDate="{Binding LoadDate}" SelectedDateFormat="Long" />
-                                    
-                                    <Label Grid.Column="2" Grid.Row="0">Route:</Label>
-                                    <TextBox Grid.Column="2" Grid.Row="1" Grid.RowSpan="3" Style="{StaticResource MultiLine}" Text="{Binding LoadRoute}" Height="Auto"/>
+                                            <Label Grid.Column="0" Grid.Row="0">Loaded by:</Label>
+                                            <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding LoadBy}" />
 
-                                    <Label Grid.Column="2" Grid.Row="4">Instructions:</Label>
-                                    <TextBox Grid.Column="2" Grid.Row="5" Grid.RowSpan="2" Style="{StaticResource MultiLine}" Text="{Binding LoadInstructions}" Height="Auto" />                                    
+                                            <Label Grid.Column="0" Grid.Row="1">Loading contact:</Label>
+                                            <Grid Grid.Column="1" Grid.Row="1">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition />
+                                                    <ColumnDefinition />
+                                                </Grid.ColumnDefinitions>
+
+                                                <ComboBox Name="cmbLoadingContactCompanies" Grid.Column="0" TextSearch.TextPath="Name" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectionChanged="cmbLoadingContactCompanies_SelectionChanged" />
+                                                <ComboBox Name="cmbLoadingContacts" Grid.Column="1" SelectedItem="{Binding LoadContact}" TextSearch.TextPath="Name" ItemTemplate="{StaticResource ContactTemplate}" SelectionChanged="cmbLoadingContacts_SelectionChanged" />
+                                            </Grid>
+
+                                            <Label Grid.Column="0" Grid.Row="2">Method:</Label>
+                                            <ComboBox Name="cmbLoadMethods" Grid.Column="1" Grid.Row="2" SelectedItem="{Binding LoadMethod}" ItemTemplate="{StaticResource SimpleNameTemplate}" TextSearch.TextPath="Name" />
+
+                                            <Label Grid.Column="0" Grid.Row="3">Loading date:</Label>
+                                            <DatePicker Grid.Column="1" Grid.Row="3" SelectedDate="{Binding LoadDate}" SelectedDateFormat="Long" />
+                                        </Grid>
+                                    </GroupBox>
+
+                                    <GroupBox Header="Directions" Grid.Column="1" Grid.RowSpan="2" Margin="3,0,0,0">
+                                        <StackPanel>
+                                            <Label>Route:</Label>
+                                            <TextBox Style="{StaticResource MultiLine}" Text="{Binding LoadRoute}" Height="60" />
+
+                                            <Label>Instructions:</Label>
+                                            <TextBox Style="{StaticResource MultiLine}" Text="{Binding LoadInstructions}" Height="60" />
+                                        </StackPanel>
+                                    </GroupBox>
                                 </Grid>
                             </TabItem>
                             <TabItem Header="Unloading Info" DataContext="{Binding ElementName=cmbLoadedCommodities, Path=SelectedItem}">
-                                <Grid Margin="0,0,0,86">
+                                <Grid>
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="95" />
                                         <ColumnDefinition />
                                         <ColumnDefinition />
                                     </Grid.ColumnDefinitions>
                                     <Grid.RowDefinitions>
                                         <RowDefinition />
                                         <RowDefinition />
-                                        <RowDefinition />
-                                        <RowDefinition />
-                                        <RowDefinition />
-                                        <RowDefinition />
-                                        <RowDefinition />
-                                        <RowDefinition />
                                     </Grid.RowDefinitions>
 
-                                    <Label Grid.Column="0" Grid.Row="0">Site name:</Label>
-                                    <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding UnloadLocation}" />
+                                    <GroupBox Header="Site" Grid.Column="0">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="100" />
+                                                <ColumnDefinition />
+                                            </Grid.ColumnDefinitions>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition />
+                                                <RowDefinition />
+                                                <RowDefinition />                                                
+                                            </Grid.RowDefinitions>
 
-                                    <Label Grid.Column="0" Grid.Row="1">Address:</Label>
-                                    <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding UnloadAddress}" />
+                                            <Label Grid.Column="0" Grid.Row="0">Site name:</Label>
+                                            <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding UnloadLocation}" />
 
-                                    <Label Grid.Column="0" Grid.Row="2">Site contact:</Label>
-                                    <Grid Grid.Column="1" Grid.Row="2">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition />
-                                            <ColumnDefinition />
-                                        </Grid.ColumnDefinitions>
+                                            <Label Grid.Column="0" Grid.Row="1">Address:</Label>
+                                            <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding UnloadAddress}" />
 
-                                        <ComboBox Name="cmbUnloadingSiteContactCompanies" Grid.Column="0" TextSearch.TextPath="Name" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectionChanged="cmbUnloadingSiteContactCompanies_SelectionChanged" />
-                                        <ComboBox Name="cmbUnloadingSiteContacts" Grid.Column="1" SelectedItem="{Binding UnloadSiteContact}" TextSearch.TextPath="Name" ItemTemplate="{StaticResource ContactTemplate}" SelectionChanged="cmbUnloadingSiteContacts_SelectionChanged" />
-                                    </Grid>
+                                            <Label Grid.Column="0" Grid.Row="2">Site contact:</Label>
+                                            <Grid Grid.Column="1" Grid.Row="2">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition />
+                                                    <ColumnDefinition />
+                                                </Grid.ColumnDefinitions>
 
-                                    <Label Grid.Column="0" Grid.Row="3">Unloaded by:</Label>
-                                    <TextBox Grid.Column="1" Grid.Row="3" Text="{Binding UnloadBy}" />
+                                                <ComboBox Name="cmbUnloadingSiteContactCompanies" Grid.Column="0" TextSearch.TextPath="Name" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectionChanged="cmbUnloadingSiteContactCompanies_SelectionChanged" />
+                                                <ComboBox Name="cmbUnloadingSiteContacts" Grid.Column="1" SelectedItem="{Binding UnloadSiteContact}" TextSearch.TextPath="Name" ItemTemplate="{StaticResource ContactTemplate}" SelectionChanged="cmbUnloadingSiteContacts_SelectionChanged" />
+                                            </Grid>
+                                        </Grid>
+                                    </GroupBox>
 
-                                    <Label Grid.Column="0" Grid.Row="4">Unload contact:</Label>
-                                    <Grid Grid.Column="1" Grid.Row="4">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition />
-                                            <ColumnDefinition />
-                                        </Grid.ColumnDefinitions>
+                                    <GroupBox Header="Details" Grid.Column="0" Grid.Row="1">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="100" />
+                                                <ColumnDefinition />
+                                            </Grid.ColumnDefinitions>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition />
+                                                <RowDefinition />
+                                                <RowDefinition />
+                                                <RowDefinition />                                                
+                                            </Grid.RowDefinitions>
+                                            
+                                            <Label Grid.Column="0" Grid.Row="0">Unloaded by:</Label>
+                                            <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding UnloadBy}" />
 
-                                        <ComboBox Name="cmbUnloadingContactCompanies" Grid.Column="0" TextSearch.TextPath="Name" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectionChanged="cmbUnloadingContactCompanies_SelectionChanged" />
-                                        <ComboBox Name="cmbUnloadingContacts" Grid.Column="1" SelectedItem="{Binding UnloadContact}" TextSearch.TextPath="Name" ItemTemplate="{StaticResource ContactTemplate}" SelectionChanged="cmbUnloadingContacts_SelectionChanged" />
-                                    </Grid>
-                                    
-                                    <Label Grid.Column="0" Grid.Row="5">Method:</Label>
-                                    <ComboBox Name="cmbUnloadMethods" Grid.Column="1" Grid.Row="5" SelectedItem="{Binding UnloadMethod}" ItemTemplate="{StaticResource SimpleNameTemplate}" TextSearch.TextPath="Name" />
+                                            <Label Grid.Column="0" Grid.Row="1">Unload contact:</Label>
+                                            <Grid Grid.Column="1" Grid.Row="1">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition />
+                                                    <ColumnDefinition />
+                                                </Grid.ColumnDefinitions>
 
-                                    <Label Grid.Column="0" Grid.Row="6">Unload date:</Label>
-                                    <DatePicker Grid.Column="1" Grid.Row="6" SelectedDate="{Binding UnloadDate}" SelectedDateFormat="Long" />
+                                                <ComboBox Name="cmbUnloadingContactCompanies" Grid.Column="0" TextSearch.TextPath="Name" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectionChanged="cmbUnloadingContactCompanies_SelectionChanged" />
+                                                <ComboBox Name="cmbUnloadingContacts" Grid.Column="1" SelectedItem="{Binding UnloadContact}" TextSearch.TextPath="Name" ItemTemplate="{StaticResource ContactTemplate}" SelectionChanged="cmbUnloadingContacts_SelectionChanged" />
+                                            </Grid>
 
-                                    <Label Grid.Column="2" Grid.Row="0">Route:</Label>
-                                    <TextBox Grid.Column="2" Grid.Row="1" Grid.RowSpan="3" Style="{StaticResource MultiLine}" Text="{Binding UnloadRoute}" Height="Auto"/>
+                                            <Label Grid.Column="0" Grid.Row="2">Method:</Label>
+                                            <ComboBox Name="cmbUnloadMethods" Grid.Column="1" Grid.Row="2" SelectedItem="{Binding UnloadMethod}" ItemTemplate="{StaticResource SimpleNameTemplate}" TextSearch.TextPath="Name" />
 
-                                    <Label Grid.Column="2" Grid.Row="4">Instructions:</Label>
-                                    <TextBox Grid.Column="2" Grid.Row="5" Grid.RowSpan="2" Style="{StaticResource MultiLine}" Text="{Binding UnloadInstructions}" Height="Auto" />
+                                            <Label Grid.Column="0" Grid.Row="3">Unload date:</Label>
+                                            <DatePicker Grid.Column="1" Grid.Row="3" SelectedDate="{Binding UnloadDate}" SelectedDateFormat="Long" />
+                                        </Grid>
+                                    </GroupBox>
+
+                                    <GroupBox Header="Directions" Grid.Column="1" Grid.RowSpan="2">
+                                        <StackPanel>
+                                            <Label>Route:</Label>
+                                            <TextBox Style="{StaticResource MultiLine}" Text="{Binding UnloadRoute}" Height="60"/>
+
+                                            <Label>Instructions:</Label>
+                                            <TextBox Style="{StaticResource MultiLine}" Text="{Binding UnloadInstructions}" Height="60" />
+                                        </StackPanel>
+                                    </GroupBox>
                                 </Grid>
                             </TabItem>
                             <TabItem Header="Bill of Lading" DataContext="{Binding ElementName=cmbLoadedCommodities, Path=SelectedItem}">
-                                <StackPanel Margin="0,0,0,86">
-                                    <Label>Comments:</Label>
-                                    <TextBox Text="{Binding BoLComments}" />
-                                    
-                                    <Label>Dangerous goods info:</Label>                                    
-                                    <TextBox Text="{Binding BoLDangerousGoodsInfo}" />
-                                    
-                                    <Grid Margin="0,11,0,0">
+                                <StackPanel>
+                                    <Grid>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition />
                                             <ColumnDefinition />
@@ -600,7 +646,17 @@
                                                 <ComboBox Grid.Column="1" Grid.Row="1" Name="cmbConsigneeAddresses" SelectedItem="{Binding ConsigneeAddress}" ItemTemplate="{StaticResource AddressTemplate}" />
                                             </Grid>
                                         </GroupBox>
-                                    </Grid>                                    
+                                    </Grid>
+
+                                    <GroupBox Header="Optional Info" Margin="0,3,0,0">
+                                        <StackPanel>
+                                            <Label>Comments:</Label>
+                                            <TextBox Text="{Binding BoLComments}" Style="{StaticResource MultiLine}"  />
+
+                                            <Label>Dangerous goods info:</Label>
+                                            <TextBox Text="{Binding BoLDangerousGoodsInfo}" Style="{StaticResource MultiLine}"   />
+                                        </StackPanel>
+                                    </GroupBox>
                                 </StackPanel>
                             </TabItem>
                         </TabControl>
