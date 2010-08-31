@@ -3,7 +3,8 @@
                            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
                            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-                           xmlns:Panels="clr-namespace:SingerDispatch.Panels"    
+                           xmlns:Panels="clr-namespace:SingerDispatch.Panels"
+                           xmlns:Controls="clr-namespace:SingerDispatch.Controls"
                            x:Name="addressesAndContactsControl"
                            Loaded="Control_Loaded" mc:Ignorable="d" d:DesignWidth="780">
     <UserControl.Resources>
@@ -73,7 +74,7 @@
                             <Label Grid.Row="5" Grid.Column="0">Postal/Zip code:</Label>
                             <TextBox Name="txtPostalZip" Grid.Row="6" Grid.Column="0" Text="{Binding PostalZip}" />
 
-                            <Label Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2">Address type:</Label>                            
+                            <Label Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2">Address type:</Label>
                             <ComboBox Name="cmbAddressType" Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectedItem="{Binding AddressType}" TextSearch.TextPath="Name" />
 
                             <Label Grid.Row="7" Grid.Column="0">Primary phone:</Label>

@@ -106,6 +106,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\ComboUtil.cs" />
     <Compile Include="Controls\Converters\LengthMeasurementConverter.cs" />
     <Compile Include="Controls\Converters\NullableValueConverter.cs" />
     <Compile Include="Controls\Converters\PhoneNumberConverter.cs" />

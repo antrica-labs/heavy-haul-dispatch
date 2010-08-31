@@ -7,10 +7,8 @@ namespace SingerDispatch.Controls
 {
     public static class InputBindingsManager
     {
-        public static readonly DependencyProperty UpdatePropertySourceWhenEnterPressedProperty = DependencyProperty.RegisterAttached(
-            "UpdatePropertySourceWhenEnterPressed", typeof(DependencyProperty), typeof(InputBindingsManager), new PropertyMetadata(null, OnUpdatePropertySourceWhenEnterPressedPropertyChanged));
+        public static readonly DependencyProperty UpdatePropertySourceWhenEnterPressedProperty = DependencyProperty.RegisterAttached("UpdatePropertySourceWhenEnterPressed", typeof(DependencyProperty), typeof(InputBindingsManager), new PropertyMetadata(null, OnUpdatePropertySourceWhenEnterPressedPropertyChanged));
         
-
         public static void SetUpdatePropertySourceWhenEnterPressed(DependencyObject dp, DependencyProperty value)
         {
             dp.SetValue(UpdatePropertySourceWhenEnterPressedProperty, value);
