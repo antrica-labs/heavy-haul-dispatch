@@ -96,7 +96,7 @@
                                 <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding TotalHours}" IsReadOnly="True" Style="{StaticResource ReadOnly}" />
 
                                 <Label Grid.Row="0" Grid.Column="2">Cost:</Label>
-                                <TextBox Grid.Row="1" Grid.Column="2" Text="{Binding Path=TotalCost, StringFormat=c}" IsReadOnly="True" Style="{StaticResource ReadOnly}" />
+                                <TextBox Grid.Row="1" Grid.Column="2" Text="{Binding Path=TotalCost, StringFormat=c, Converter={StaticResource NullableValueConverter}}" IsReadOnly="True" Style="{StaticResource ReadOnly}" />
 
                                 <CheckBox Grid.Row="1" Grid.Column="3" IsChecked="{Binding GSTExempt}">GST Exempt</CheckBox>
                             </Grid>

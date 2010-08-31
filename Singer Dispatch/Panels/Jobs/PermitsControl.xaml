@@ -58,7 +58,7 @@
                     <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Reference}" />
 
                     <Label Grid.Row="4" Grid.Column="0">Cost:</Label>
-                    <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Cost, StringFormat=c}" Controls:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" />
+                    <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Cost, StringFormat=c, Converter={StaticResource NullableValueConverter}}" Controls:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" />
 
                     <Label Grid.Row="0" Grid.Column="2">Conditions:</Label>
                     <TextBox Grid.Row="1" Grid.Column="2" Grid.RowSpan="4" Text="{Binding Conditions}" />

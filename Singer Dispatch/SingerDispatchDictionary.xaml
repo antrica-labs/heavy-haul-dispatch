@@ -15,6 +15,7 @@
     <Controls:LengthMeasurementConverter x:Key="LengthMeasurementConverter" />    
     <Controls:WeightMeasurementConverter x:Key="WeightMeasurementConverter" />
     <Controls:PhoneNumberConverter x:Key="PhoneNumberConverter" />
+    <Controls:NullableValueConverter x:Key="NullableValueConverter" />
     
     <DataTemplate x:Key="SimpleNameTemplate">
         <TextBlock Text="{Binding Name}" />

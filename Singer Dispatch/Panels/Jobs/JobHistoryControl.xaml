@@ -180,7 +180,7 @@
                         </MultiBinding>
                     </DataGridTextColumn.Binding>
                 </DataGridTextColumn>
-                <DataGridTextColumn Header="Status" Width="0.2*" Binding="{Binding JobStatusType.Name}" />
+                <DataGridTextColumn Header="Status" Width="0.2*" Binding="{Binding Status.Name}" />
                 <DataGridTextColumn Header="Name" Binding="{Binding Name}" />
             </DataGrid.Columns>
         </DataGrid>

@@ -30,8 +30,8 @@
         <DataGrid Name="dgRates" VerticalContentAlignment="Stretch" Style="{StaticResource ListDisplay}" IsReadOnly="False" RowEditEnding="RowEditEnding">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="2*" />
-                <DataGridTextColumn Header="Specialized rate" Binding="{Binding HourlySpecialized, StringFormat=c}" />
-                <DataGridTextColumn Header="Enterprise rate" Binding="{Binding HourlyEnterprise, StringFormat=c}" />
+                <DataGridTextColumn Header="Specialized rate" Binding="{Binding HourlySpecialized, StringFormat=c, Converter={StaticResource NullableValueConverter}}" />
+                <DataGridTextColumn Header="Enterprise rate" Binding="{Binding HourlyEnterprise, StringFormat=c, Converter={StaticResource NullableValueConverter}}" />
                 <DataGridComboBoxColumn Header="Rate type" DisplayMemberPath="Name" ItemsSource="{Binding Source={StaticResource RateTypesDropList}}" SelectedItemBinding="{Binding RateType}" />
             </DataGrid.Columns>
         </DataGrid>        

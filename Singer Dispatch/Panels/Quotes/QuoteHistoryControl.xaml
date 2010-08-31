@@ -80,7 +80,7 @@
                                 </TextBox>                                
 
                                 <Label Grid.Row="0" Grid.Column="1">Quote price:</Label>
-                                <TextBox Name="txtPrice" Grid.Row="2" Grid.Column="1" Text="{Binding Price, StringFormat=c}" Controls:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" />
+                                <TextBox Name="txtPrice" Grid.Row="2" Grid.Column="1" Text="{Binding Price, StringFormat=c, Converter={StaticResource NullableValueConverter}}" Controls:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" />
 
                                 <CheckBox Grid.Row="1" Grid.Column="2" IsChecked="{Binding IsItemizedBilling}" Checked="ItemizedBilling_Checked" Unchecked="ItemizedBilling_Unchecked">Itemized billing</CheckBox>
                             </Grid>
