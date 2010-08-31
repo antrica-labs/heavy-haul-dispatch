@@ -323,7 +323,7 @@
       <Column Name="UnloadDate" Type="System.DateTime" CanBeNull="true" />
       <Column Name="UnloadInstructions" Type="System.String" CanBeNull="true" />
       <Column Name="UnloadRoute" Type="System.String" CanBeNull="true" />      
-      <Column Name="BoLDescription" Type="System.String" CanBeNull="true" />
+      <Column Name="BoLComments" Type="System.String" CanBeNull="true" />
       <Column Name="BoLDangerousGoodsInfo" Type="System.String" CanBeNull="true" />
       <Column Name="ShipperCompanyID" Type="System.Int64" CanBeNull="true" />
       <Column Name="ShipperAddressID" Type="System.Int64" CanBeNull="true" />

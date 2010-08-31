@@ -973,7 +973,7 @@ namespace SingerDispatch.Printing.Documents
             replacements[1] = SingerConstants.GetConfig("BillOfLading-NoticeOfClaim") ?? "";
             replacements[2] = string.Format("{0:C}", commodity.JobCommodity.Value);
             replacements[3] = SingerConstants.GetConfig("BillOfLading-MaxLiability") ?? "";
-            replacements[4] = commodity.BoLDescription;
+            replacements[4] = commodity.BoLComments;
 
             return string.Format(html, replacements);
         }

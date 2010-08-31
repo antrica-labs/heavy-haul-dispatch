@@ -32,6 +32,14 @@
             <DataTemplate x:Key="LoadedCommodityTemplate">
                 <TextBlock Text="{Binding JobCommodity.NameAndUnit}" />
             </DataTemplate>
+            <Style x:Key="CommodityList">
+                <Style.Resources>
+                    <!-- Background of selected item when focussed -->
+                    <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="White" />
+                    <!-- Background of selected item when not focussed -->
+                    <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="White" />
+                </Style.Resources>
+            </Style>
         </ResourceDictionary>
     </UserControl.Resources>
     <DockPanel>
@@ -77,7 +85,7 @@
                             </GroupBox>
 
                             <GroupBox Grid.Column="1" Grid.Row="1" Header="Commodities" Margin="3,0,0,0">
-                                <ListBox Name="lbCommodities" />
+                                <ListBox Name="lbCommodities" Style="{StaticResource CommodityList}" />
                             </GroupBox>
                         </Grid>
                         
@@ -394,7 +402,7 @@
                                         </TextBox.Text>
                                     </TextBox>
 
-                                    <Button Style="{StaticResource Horizontal}" Grid.Column="12" Grid.Row="3" Click="GuessLoadWeights_Click">Auto</Button>
+                                    <Button Style="{StaticResource Horizontal}" Grid.Column="12" Grid.Row="3" Click="GuessLoadWeights_Click">Estimate</Button>
                                 </Grid>
                             </StackPanel>
                         </GroupBox>
@@ -543,8 +551,8 @@
                             </TabItem>
                             <TabItem Header="Bill of Lading" DataContext="{Binding ElementName=cmbLoadedCommodities, Path=SelectedItem}">
                                 <StackPanel Margin="0,0,0,86">
-                                    <Label>Description of service:</Label>
-                                    <TextBox Text="{Binding BoLDescription}" />
+                                    <Label>Comments:</Label>
+                                    <TextBox Text="{Binding BoLComments}" />
                                     
                                     <Label>Dangerous goods info:</Label>                                    
                                     <TextBox Text="{Binding BoLDangerousGoodsInfo}" />
@@ -567,10 +575,10 @@
                                                 </Grid.RowDefinitions>
 
                                                 <Label Grid.Column="0" Grid.Row="0">Company</Label>
-                                                <ComboBox Grid.Column="1" Grid.Row="0" Name="cmbShipperCompanies" SelectedItem="{Binding ShipperCompany}" SelectionChanged="ShipperCompany_SelectionChanged" ItemTemplate="{StaticResource SimpleNameTemplate}" />
+                                                <ComboBox Grid.Column="1" Grid.Row="0" Name="cmbShipperCompanies" TextSearch.TextPath="Name" SelectedItem="{Binding ShipperCompany}" SelectionChanged="ShipperCompany_SelectionChanged" ItemTemplate="{StaticResource SimpleNameTemplate}" />
 
                                                 <Label Grid.Column="0" Grid.Row="1">Address</Label>
-                                                <ComboBox Grid.Column="1" Grid.Row="1" Name="cmbShipperAddresses" SelectedItem="{Binding ShipperAddress}" ItemTemplate="{StaticResource AddressTemplate}" />
+                                                <ComboBox Grid.Column="1" Grid.Row="1" Name="cmbShipperAddresses" TextSearch.TextPath="Name" SelectedItem="{Binding ShipperAddress}" ItemTemplate="{StaticResource AddressTemplate}" />
                                             </Grid>
                                         </GroupBox>
 

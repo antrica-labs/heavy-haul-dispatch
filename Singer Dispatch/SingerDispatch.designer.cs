@@ -7506,7 +7506,7 @@ namespace SingerDispatch
 		
 		private string _UnloadRoute;
 		
-		private string _BoLDescription;
+		private string _BoLComments;
 		
 		private string _BoLDangerousGoodsInfo;
 		
@@ -7588,8 +7588,8 @@ namespace SingerDispatch
     partial void OnUnloadInstructionsChanged();
     partial void OnUnloadRouteChanging(string value);
     partial void OnUnloadRouteChanged();
-    partial void OnBoLDescriptionChanging(string value);
-    partial void OnBoLDescriptionChanged();
+    partial void OnBoLCommentsChanging(string value);
+    partial void OnBoLCommentsChanged();
     partial void OnBoLDangerousGoodsInfoChanging(string value);
     partial void OnBoLDangerousGoodsInfoChanged();
     partial void OnShipperCompanyIDChanging(System.Nullable<long> value);
@@ -8071,22 +8071,22 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BoLDescription")]
-		public string BoLDescription
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BoLComments")]
+		public string BoLComments
 		{
 			get
 			{
-				return this._BoLDescription;
+				return this._BoLComments;
 			}
 			set
 			{
-				if ((this._BoLDescription != value))
+				if ((this._BoLComments != value))
 				{
-					this.OnBoLDescriptionChanging(value);
+					this.OnBoLCommentsChanging(value);
 					this.SendPropertyChanging();
-					this._BoLDescription = value;
-					this.SendPropertyChanged("BoLDescription");
-					this.OnBoLDescriptionChanged();
+					this._BoLComments = value;
+					this.SendPropertyChanged("BoLComments");
+					this.OnBoLCommentsChanged();
 				}
 			}
 		}

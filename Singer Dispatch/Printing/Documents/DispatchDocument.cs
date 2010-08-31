@@ -427,7 +427,7 @@ namespace SingerDispatch.Printing.Documents
                     	border: solid 1px #A9A9A9;
                     }
 
-                    div.dispatch_doc div.load_and_unload table.details td span
+                    div.dispatch_doc div.load_and_unload table.details td span.inner
                     {
                         display: block;
                         min-height: 25px;
@@ -469,7 +469,7 @@ namespace SingerDispatch.Printing.Documents
                         width: 33%;                                               
                     }
 
-                    div.dispatch_doc div.load_and_unload table.instructions td span
+                    div.dispatch_doc div.load_and_unload table.instructions td span.inner
                     {
                         display: block;
                         min-height: 25px;
@@ -863,12 +863,12 @@ namespace SingerDispatch.Printing.Documents
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td class=""date""><span>{4}</span></td>
-                                    <td class=""time""><span>{5}</span></td>
-                                    <td class=""location""><span>{6}</span></td>
-                                    <td class=""contact""><span>{7}</span></td>
-                                    <td class=""company""><span>{8}</span></td>
-                                    <td class=""contact""><span>{9}</span></td>
+                                    <td class=""date""><span class=""inner"">{4}</span></td>
+                                    <td class=""time""><span class=""inner"">{5}</span></td>
+                                    <td class=""location""><span class=""inner"">{6}</span></td>
+                                    <td class=""contact""><span class=""inner"">{7}</span></td>
+                                    <td class=""company""><span class=""inner"">{8}</span></td>
+                                    <td class=""contact""><span class=""inner"">{9}</span></td>
                                 </tr>
                             </tbody>                        
                         </table>
@@ -882,8 +882,8 @@ namespace SingerDispatch.Printing.Documents
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td><span>{10}</span></td>
-                                    <td><span>{11}</span></td>                                    
+                                    <td><span class=""inner"">{10}</span></td>
+                                    <td><span class=""inner"">{11}</span></td>                                    
                                 </tr>
                             </tbody>
                         </table>
@@ -905,12 +905,12 @@ namespace SingerDispatch.Printing.Documents
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td class=""date""><span>{12}</span></td>
-                                    <td class=""time""><span>{13}</span></td>
-                                    <td class=""location""><span>{14}</span></td>
-                                    <td class=""contact""><span>{15}</span></td>
-                                    <td class=""company""><span>{16}</span></td>
-                                    <td class=""contact""><span>{17}</span></td>
+                                    <td class=""date""><span class=""inner"">{12}</span></td>
+                                    <td class=""time""><span class=""inner"">{13}</span></td>
+                                    <td class=""location""><span class=""inner"">{14}</span></td>
+                                    <td class=""contact""><span class=""inner"">{15}</span></td>
+                                    <td class=""company""><span class=""inner"">{16}</span></td>
+                                    <td class=""contact""><span class=""inner"">{17}</span></td>
                                 </tr>
                             </tbody>                        
                         </table>
@@ -924,8 +924,8 @@ namespace SingerDispatch.Printing.Documents
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td><span>{18}</span></td>
-                                    <td><span>{19}</span></td>                                    
+                                    <td><span class=""inner"">{18}</span></td>
+                                    <td><span class=""inner"">{19}</span></td>                                    
                                 </tr>
                             </tbody>
                         </table>
@@ -953,7 +953,7 @@ namespace SingerDispatch.Printing.Documents
             for (var i = 0; i < commodities.Count; i++)
             {
                 var item = commodities[i];
-                var reps = new object[22];
+                var reps = new object[20];
 
                 reps[0] = item.JobCommodity.Name;
                 reps[1] = (item.JobCommodity.Unit != null) ? string.Format("Unit {0}", item.JobCommodity.Unit) : "";
@@ -972,9 +972,9 @@ namespace SingerDispatch.Printing.Documents
                 }
 
                 reps[6] = item.LoadLocation;
-                reps[7] = (item.LoadContact != null) ? string.Format(@"<span class=""contact"">{0}</span><span class=""contact"">{1}</span>", item.LoadContact.Name, item.LoadContact.PrimaryPhone) : "";
+                reps[7] = (item.LoadSiteContact != null) ? string.Format(@"<span class=""contact"">{0}</span><span class=""contact"">{1}</span>", item.LoadSiteContact.Name, item.LoadSiteContact.PrimaryPhone) : "";
                 reps[8] = item.LoadBy;
-                reps[9] = "";
+                reps[9] = (item.LoadContact != null) ? string.Format(@"<span class=""contact"">{0}</span><span class=""contact"">{1}</span>", item.LoadContact.Name, item.LoadContact.PrimaryPhone) : ""; ;
                 reps[10] = item.LoadRoute;
                 reps[11] = item.LoadInstructions;                
 
@@ -986,16 +986,16 @@ namespace SingerDispatch.Printing.Documents
                 }
                 else
                 {
-                    reps[14] = "";
-                    reps[15] = "";
+                    reps[12] = "";
+                    reps[13] = "";
                 }
 
-                reps[16] = item.UnloadLocation;
-                reps[17] = (item.UnloadContact != null) ? string.Format(@"<span class=""contact"">{0}</span><span class=""contact"">{1}</span>", item.UnloadContact.Name, item.UnloadContact.PrimaryPhone) : "";
-                reps[18] = item.UnloadBy;
-                reps[19] = "";
-                reps[20] = item.UnloadRoute;
-                reps[21] = item.UnloadInstructions;
+                reps[14] = item.UnloadLocation;
+                reps[15] = (item.UnloadSiteContact != null) ? string.Format(@"<span class=""contact"">{0}</span><span class=""contact"">{1}</span>", item.UnloadSiteContact.Name, item.UnloadSiteContact.PrimaryPhone) : "";
+                reps[16] = item.UnloadBy;
+                reps[17] = (item.UnloadContact != null) ? string.Format(@"<span class=""contact"">{0}</span><span class=""contact"">{1}</span>", item.UnloadContact.Name, item.UnloadContact.PrimaryPhone) : ""; ; ;
+                reps[18] = item.UnloadRoute;
+                reps[19] = item.UnloadInstructions;
                 
                 html.Append(string.Format(commodityHtml, reps));
 

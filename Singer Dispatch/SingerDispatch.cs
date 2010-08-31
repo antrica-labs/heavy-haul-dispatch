@@ -415,7 +415,7 @@ namespace SingerDispatch
             copy.ShipperAddress = ShipperAddress;
             copy.ConsigneeCompany = ConsigneeCompany;
             copy.ConsigneeAddress = ConsigneeAddress;
-            copy.BoLDescription = BoLDescription;
+            copy.BoLComments = BoLComments;
             copy.BoLDangerousGoodsInfo = BoLDangerousGoodsInfo;
 
             return copy;

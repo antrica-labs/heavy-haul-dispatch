@@ -52,7 +52,19 @@ namespace SingerDispatch.Panels.Jobs
 
             cmbLoadMethods.ItemsSource = methods;
             cmbUnloadMethods.ItemsSource = methods;
-            
+
+            if (cmbLoadingSiteContactCompanies.SelectedItem == null)
+                cmbLoadingSiteContactCompanies.SelectedItem = SelectedCompany;
+
+            if (cmbUnloadingSiteContactCompanies.SelectedItem == null)
+                cmbUnloadingSiteContactCompanies.SelectedItem = SelectedCompany;
+
+            if (cmbShipperCompanies.SelectedItem == null)
+                cmbShipperCompanies.SelectedItem = SelectedCompany;
+
+            if (cmbConsigneeCompanies.SelectedItem == null)
+                cmbConsigneeCompanies.SelectedItem = SelectedCompany;            
+
             UpdateExtras();
             UpdateCommodityList();
         }
@@ -375,7 +387,7 @@ namespace SingerDispatch.Panels.Jobs
         {
             var company = (Company)cmbLoadingSiteContactCompanies.SelectedItem;
 
-            cmbLoadingSiteContacts.ItemsSource = (from c in Database.Contacts where c.Address.CompanyID == company.ID orderby c.FirstName, c.LastName select c).ToList();
+            cmbLoadingSiteContacts.ItemsSource = (company == null) ? null : (from c in Database.Contacts where c.Address.CompanyID == company.ID orderby c.FirstName, c.LastName select c).ToList();
         }
 
         private void cmbLoadingSiteContacts_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -387,7 +399,7 @@ namespace SingerDispatch.Panels.Jobs
         {
             var company = (Company)cmbLoadingContactCompanies.SelectedItem;
 
-            cmbLoadingContacts.ItemsSource = (from c in Database.Contacts where c.Address.CompanyID == company.ID orderby c.FirstName, c.LastName select c).ToList();
+            cmbLoadingContacts.ItemsSource = (company == null) ? null : (from c in Database.Contacts where c.Address.CompanyID == company.ID orderby c.FirstName, c.LastName select c).ToList();
         }
 
         private void cmbLoadingContacts_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -399,7 +411,7 @@ namespace SingerDispatch.Panels.Jobs
         {
             var company = (Company)cmbUnloadingSiteContactCompanies.SelectedItem;
 
-            cmbUnloadingSiteContacts.ItemsSource = (from c in Database.Contacts where c.Address.CompanyID == company.ID orderby c.FirstName, c.LastName select c).ToList();
+            cmbUnloadingSiteContacts.ItemsSource = (company == null) ? null : (from c in Database.Contacts where c.Address.CompanyID == company.ID orderby c.FirstName, c.LastName select c).ToList();
         }
 
         private void cmbUnloadingSiteContacts_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -411,7 +423,7 @@ namespace SingerDispatch.Panels.Jobs
         {
             var company = (Company)cmbUnloadingContactCompanies.SelectedItem;
 
-            cmbUnloadingContacts.ItemsSource = (from c in Database.Contacts where c.Address.CompanyID == company.ID orderby c.FirstName, c.LastName select c).ToList();
+            cmbUnloadingContacts.ItemsSource = (company == null) ? null : (from c in Database.Contacts where c.Address.CompanyID == company.ID orderby c.FirstName, c.LastName select c).ToList();
         }
 
         private void cmbUnloadingContacts_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -425,10 +437,17 @@ namespace SingerDispatch.Panels.Jobs
 
             if (commodity == null) return;
 
-            cmbLoadingSiteContactCompanies.SelectedItem = (commodity.LoadSiteContact != null) ? commodity.LoadSiteContact.Address.Company : null;
-            cmbLoadingContactCompanies.SelectedItem = (commodity.LoadContact != null) ? commodity.LoadContact.Address.Company : null;
-            cmbUnloadingSiteContactCompanies.SelectedItem = (commodity.UnloadSiteContact != null) ? commodity.UnloadSiteContact.Address.Company : null;
-            cmbUnloadingContactCompanies.SelectedItem = (commodity.UnloadContact != null) ? commodity.UnloadContact.Address.Company : null;
+            if (commodity.LoadSiteContact != null)
+                cmbLoadingSiteContactCompanies.SelectedItem = commodity.LoadSiteContact.Address.Company;
+
+            if (commodity.LoadContact != null)
+                cmbLoadingContactCompanies.SelectedItem = commodity.LoadContact.Address.Company;
+
+            if (commodity.UnloadSiteContact != null)
+                cmbUnloadingSiteContactCompanies.SelectedItem = commodity.UnloadSiteContact.Address.Company;
+
+            if (commodity.UnloadContact != null)
+                cmbUnloadingContactCompanies.SelectedItem = commodity.UnloadContact.Address.Company;
         }
 
         private void PrintBillOfLading_Click(object sender, RoutedEventArgs e)
