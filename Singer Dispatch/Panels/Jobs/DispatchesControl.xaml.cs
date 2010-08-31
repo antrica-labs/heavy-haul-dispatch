@@ -45,6 +45,21 @@ namespace SingerDispatch.Panels.Jobs
             cmbLoads.ItemsSource = (SelectedJob == null) ? null : SelectedJob.Loads.ToList();            
             cmbEquipmentTypes.ItemsSource = (SelectedJob == null) ? null : from et in Database.EquipmentTypes orderby et.Prefix select et;
             cmbEmployees.ItemsSource = (SelectedJob == null) ? null : from emp in Database.Employees orderby emp.FirstName, emp.LastName select emp;
+
+            var provider = (ObjectDataProvider)FindResource("EmployeeDropList");
+
+            if (provider != null)
+            {
+                var employees = from emp in Database.Employees orderby emp.FirstName, emp.LastName select emp;
+                var list = (EmployeeDropList)provider.Data;
+
+                list.Clear();
+
+                foreach (var person in employees)
+                {
+                    list.Add(person);
+                }
+            }
         }
 
         protected override void SelectedJobChanged(Job newValue, Job oldValue)
@@ -112,9 +127,18 @@ namespace SingerDispatch.Panels.Jobs
 
             if (dispatch == null) return;
 
-            var result = MessageBox.Show("Do you wish to inlcude a file copy with this printout?", "Include drivers copy?", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            bool printFileCopy;
 
-            var viewer = new DocumentViewerWindow(new DispatchDocument(result == MessageBoxResult.Yes), dgDispatches.SelectedItem, String.Format("Dispatch #{0}", dispatch.Name)) { IsMetric = !UseImperialMeasurements };
+            if (SelectedCompany.CustomerType.IsEnterprise == true)
+            {
+                printFileCopy = Convert.ToBoolean(SingerConstants.GetConfig("Dispatch-EnterprisePrintFileCopy") ?? "false");
+            }
+            else
+            {
+                printFileCopy = Convert.ToBoolean(SingerConstants.GetConfig("Dispatch-SingerPrintFileCopy") ?? "false");
+            }
+
+            var viewer = new DocumentViewerWindow(new DispatchDocument(printFileCopy), dgDispatches.SelectedItem, String.Format("Dispatch #{0}", dispatch.Name)) { IsMetric = !UseImperialMeasurements, IsSpecializedDocument = SelectedCompany.CustomerType.IsEnterprise != true };
             viewer.DisplayPrintout();
         }
 
@@ -194,16 +218,60 @@ namespace SingerDispatch.Panels.Jobs
             ((ObservableCollection<OutOfProvinceTravel>)dgOutOfProvince.ItemsSource).Remove(travel);
         }
 
+        private void AddSwamper_Click(object sender, RoutedEventArgs e)
+        {
+            var dispatch = (Dispatch)dgDispatches.SelectedItem;
+
+            if (dispatch == null) return;
+
+            var swamper = new Swamper { Dispatch = dispatch };
+
+            var provider = (ObjectDataProvider)FindResource("EmployeeDropList");
+            if (provider != null)
+            {
+                var list = (EmployeeDropList)provider.Data;
+                swamper.Employee = list.First();
+            }
+
+            dispatch.Swampers.Add(swamper);
+            ((ObservableCollection<Swamper>)dgSwampers.ItemsSource).Add(swamper);
+
+            dgSwampers.ScrollIntoView(swamper);
+            dgSwampers.SelectedItem = swamper;
+
+            DataGridHelper.EditFirstColumn(dgSwampers, swamper);
+        }
+
+        private void RemoveSwamper_Click(object sender, RoutedEventArgs e)
+        {
+            var swamper = (Swamper)dgSwampers.SelectedItem;
+            var dispatch = (Dispatch)dgDispatches.SelectedItem;
+
+            if (swamper == null || dispatch == null) return;
+
+            var confirmation = MessageBox.Show(SingerConstants.DefaultRemoveItemMessage, "Delete confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+            if (confirmation != MessageBoxResult.Yes) return;
+
+            dispatch.Swampers.Remove(swamper);
+            ((ObservableCollection<Swamper>)dgSwampers.ItemsSource).Remove(swamper);
+        }
+
         private void dgDispatches_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {            
             var dispatch = (Dispatch)dgDispatches.SelectedItem;
 
             dgOutOfProvince.ItemsSource = (dispatch == null) ? null : new ObservableCollection<OutOfProvinceTravel>(dispatch.OutOfProvinceTravels);
+            dgSwampers.ItemsSource = (dispatch == null) ? null : new ObservableCollection<Swamper>(dispatch.Swampers);
         }
 
         
     }
 
+    public class EmployeeDropList : ObservableCollection<Employee>
+    {
+    }
+    
     public class ProvStateDropList : ObservableCollection<ProvincesAndState>
     {
     }

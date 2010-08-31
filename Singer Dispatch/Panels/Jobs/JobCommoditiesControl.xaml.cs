@@ -24,32 +24,7 @@ namespace SingerDispatch.Panels.Jobs
 
         private void ControlLoaded(object sender, RoutedEventArgs e)
         {
-            var companies = from c in Database.Companies select c;
-
-            cmbShipperCompanies.ItemsSource = companies;
-            cmbConsigneeCompanies.ItemsSource = companies;
-
-            //cmbLoads.ItemsSource = (SelectedJob == null) ? null : SelectedJob.Loads.ToList();
             cmbCommodityName.ItemsSource = (SelectedJob == null) ? null : from c in Database.Commodities where c.Company == SelectedJob.Company || c.Company == SelectedJob.CareOfCompany orderby c.Name, c.Unit select c;
-
-            var methods = (SelectedJob == null) ? null : (from m in Database.LoadUnloadMethods select m).ToList();
-
-            cmbLoadMethods.ItemsSource = methods;
-            cmbUnloadMethods.ItemsSource = methods;
-
-            List<Contact> contacts = null;
-
-            if (SelectedJob != null && SelectedJob.CareOfCompanyID != null)
-            {
-                contacts = (from c in Database.Contacts where c.Address.CompanyID == SelectedCompany.ID || c.Address.CompanyID == SelectedJob.CareOfCompanyID orderby c.FirstName, c.LastName select c).ToList();
-            }
-            else if (SelectedJob != null)
-            {
-                contacts = (from c in Database.Contacts where c.Address.CompanyID == SelectedCompany.ID orderby c.FirstName, c.LastName select c).ToList();
-            }
-
-            cmbLoadingContacts.ItemsSource = contacts;
-            cmbUnloadingContacts.ItemsSource = contacts;
         }
 
         protected override void SelectedJobChanged(Job newValue, Job oldValue)
@@ -63,14 +38,9 @@ namespace SingerDispatch.Panels.Jobs
         {
             if (SelectedJob == null) return;
 
-            var commodity = new JobCommodity { JobID = SelectedJob.ID, LoadDate = SelectedJob.StartDate, UnloadDate = SelectedJob.EndDate };
+            var commodity = new JobCommodity { JobID = SelectedJob.ID };
             var list = (ObservableCollection<JobCommodity>)dgCommodities.ItemsSource;
-
-            commodity.ShipperCompany = SelectedCompany;
-            commodity.ShipperAddress = SelectedCompany.Addresses.First();
-            commodity.ConsigneeCompany = commodity.ShipperCompany;
-            commodity.ConsigneeAddress = commodity.ShipperAddress;
-            
+                        
             SelectedJob.JobCommodities.Add(commodity);
             list.Add(commodity);
             dgCommodities.SelectedItem = commodity;
@@ -93,13 +63,6 @@ namespace SingerDispatch.Panels.Jobs
             list.Add(commodity);
             dgCommodities.SelectedItem = commodity;
             dgCommodities.ScrollIntoView(commodity);
-        }
-
-        private void PrintBillOfLading_Click(object sender, RoutedEventArgs e)
-        {
-            var commodity = (JobCommodity)dgCommodities.SelectedItem;
-            var viewer = new DocumentViewerWindow(new BillOfLadingDocument(), commodity, string.Format("Bill of Lading - {0}", commodity.NameAndUnit)) { IsMetric = !UseImperialMeasurements };
-            viewer.DisplayPrintout();
         }
 
         private void RemoveCommodity_Click(object sender, RoutedEventArgs e)
@@ -140,7 +103,6 @@ namespace SingerDispatch.Panels.Jobs
                 commodity.Notes = original.Notes;
                 commodity.LastAddress = original.LastAddress;
                 commodity.LastLocation = original.LastLocation;
-                commodity.LoadLocation = string.Format("{0} - {1}", commodity.LastLocation, commodity.LastAddress);                
             }
             else
             {
@@ -159,24 +121,9 @@ namespace SingerDispatch.Panels.Jobs
                 commodity.Notes = null;
                 commodity.LastAddress = null;
                 commodity.LastLocation = null;
-                commodity.LoadLocation = null;                
             }
         }
 
-        private void ShipperCompany_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            var cmb = (ComboBox)sender;
-            var company = (Company)cmb.SelectedItem;
-
-            cmbShipperAddresses.ItemsSource = (company != null) ? company.Addresses : null;
-        }
-
-        private void ConsigneeCompany_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            var cmb = (ComboBox)sender;
-            var company = (Company)cmb.SelectedItem;
-
-            cmbConsigneeAddresses.ItemsSource = (company != null) ? company.Addresses : null;
-        }
+        
     }
 }

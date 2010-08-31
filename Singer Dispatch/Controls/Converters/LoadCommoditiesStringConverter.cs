@@ -13,14 +13,14 @@ namespace SingerDispatch.Controls
         {   
             try
             {
-                var list = (EntitySet<JobCommodity>)value;
+                var list = (EntitySet<LoadedCommodity>)value;
                 var output = new StringBuilder();
 
                 if (list.Count == 0) return "[Empty]";
 
                 for (var i = 0; i < list.Count; i++)
                 {
-                    output.Append(list[i].Name);
+                    output.Append(list[i].JobCommodity.Name);
 
                     if ((i + 1) != list.Count)
                         output.Append(", ");

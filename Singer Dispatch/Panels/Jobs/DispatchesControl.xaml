@@ -5,7 +5,7 @@
                        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                        xmlns:Local="clr-namespace:SingerDispatch.Panels.Jobs"
                        xmlns:Panels="clr-namespace:SingerDispatch.Panels"
-                       Loaded="ControlLoaded" mc:Ignorable="d" d:DesignWidth="780" d:DesignHeight="500">
+                       Loaded="ControlLoaded" mc:Ignorable="d" d:DesignWidth="873" d:DesignHeight="500">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -16,6 +16,7 @@
                 <TextBlock Text="{Binding UnitNumber}" />
             </DataTemplate>
 
+            <ObjectDataProvider ObjectType="{x:Type Local:EmployeeDropList}" x:Key="EmployeeDropList" />
             <ObjectDataProvider ObjectType="{x:Type Local:ProvStateDropList}" x:Key="ProvStateDropList" />
         </ResourceDictionary>
     </UserControl.Resources>
@@ -62,22 +63,22 @@
                     <Label Grid.Row="2" Grid.Column="0">Unit:</Label>
                     <ComboBox Name="cmbUnits" Grid.Row="2" Grid.Column="1" SelectedItem="{Binding Equipment}" ItemTemplate="{StaticResource EquipmentNameTemplate}" TextSearch.TextPath="UnitNumber" />
                     
-                    <Label Grid.Row="3" Grid.Column="0">Employee:</Label>
+                    <Label Grid.Row="3" Grid.Column="0">Driver:</Label>
                     <ComboBox Name="cmbEmployees" Grid.Row="3" Grid.Column="1" SelectedItem="{Binding Employee}" ItemTemplate="{StaticResource SimpleNameTemplate}" TextSearch.TextPath="Name" />
 
                     <Label Grid.Row="4" Grid.Column="0">Departing units:</Label>
                     <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding DepartingUnits}" />
                     
                     <Label Grid.Row="5" Grid.Column="0">Description:</Label>
-                    <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding Description}" Style="{StaticResource AutoFilled}"/>
+                    <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding Description}" Style="{StaticResource AutoFilled}" Height="60"/>
 
                     <Label Grid.Row="6" Grid.Column="0">Schedule:</Label>
-                    <TextBox Grid.Row="6" Grid.Column="1" Text="{Binding Schedule}" Style="{StaticResource MultiLine}" />
+                    <TextBox Grid.Row="6" Grid.Column="1" Text="{Binding Schedule}" Style="{StaticResource MultiLine}" Height="60" />
 
                     <Label Grid.Row="7" Grid.Column="0">Notes:</Label>
-                    <TextBox Grid.Row="7" Grid.Column="1" Text="{Binding Notes}" Style="{StaticResource MultiLine}" />
+                    <TextBox Grid.Row="7" Grid.Column="1" Text="{Binding Notes}" Style="{StaticResource MultiLine}" Height="60" />
 
-                    <GroupBox Grid.Column="2" Grid.Row="0" Grid.RowSpan="4" Header="Departure" DataContext="{Binding ElementName=dgDispatches, Path=SelectedItem}" Margin="5,0,0,0">
+                    <GroupBox Grid.Column="2" Grid.Row="0" Grid.RowSpan="3" Header="Departure" DataContext="{Binding ElementName=dgDispatches, Path=SelectedItem}" Margin="5,0,0,0">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="60"/>
@@ -96,8 +97,28 @@
                             <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding DepartingLocation}" />
                         </Grid>
                     </GroupBox>
+                    
+                    <GroupBox Grid.Column="2" Grid.Row="3" Grid.RowSpan="3" Header="Swampers" Margin="5,0,0,0">
+                        <DockPanel>
+                            <Grid DockPanel.Dock="Bottom">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
 
-                    <GroupBox Grid.Column="2" Grid.Row="4" Grid.RowSpan="4" Header="Out of Province Travel" Margin="5,0,0,0">
+                                <Button Style="{StaticResource Horizontal}" Grid.Column="0" Click="AddSwamper_Click">Add</Button>
+                                <Button Style="{StaticResource HorizontalEnd}" Grid.Column="1" Click="RemoveSwamper_Click">Remove</Button>
+                            </Grid>
+
+                            <DataGrid Name="dgSwampers" Style="{StaticResource ListDisplay}" IsReadOnly="False">
+                                <DataGrid.Columns>
+                                    <DataGridComboBoxColumn Header="Employee" ItemsSource="{Binding Source={StaticResource EmployeeDropList}}" DisplayMemberPath="Name" SelectedItemBinding="{Binding Employee}" />                                    
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </DockPanel>
+                    </GroupBox>
+
+                    <GroupBox Grid.Column="2" Grid.Row="6" Grid.RowSpan="2" Header="Out of Province Travel" Margin="5,0,0,0">
                         <DockPanel>
                             <Grid DockPanel.Dock="Bottom">
                                 <Grid.ColumnDefinitions>

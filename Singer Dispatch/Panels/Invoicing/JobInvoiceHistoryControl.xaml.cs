@@ -161,7 +161,7 @@ namespace SingerDispatch.Panels.Invoicing
         {
             if (SelectedInvoice == null) return;
 
-            var viewer = new Windows.DocumentViewerWindow(new InvoiceDocument(), SelectedInvoice) { IsMetric = !UseImperialMeasurements };
+            var viewer = new Windows.DocumentViewerWindow(new InvoiceDocument(), SelectedInvoice) { IsMetric = !UseImperialMeasurements, IsSpecializedDocument = SelectedCompany.CustomerType.IsEnterprise != true };
             viewer.DisplayPrintout();
         }
 

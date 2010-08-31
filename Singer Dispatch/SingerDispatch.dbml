@@ -20,8 +20,8 @@
       <Association Name="AddressType_Address" Member="AddressType" ThisKey="AddressTypeID" OtherKey="ID" Type="AddressType" IsForeignKey="true" />
       <Association Name="Company_Address" Member="Company" ThisKey="CompanyID" OtherKey="ID" Type="Company" IsForeignKey="true" />
       <Association Name="ProvincesAndState_Address" Member="ProvincesAndState" ThisKey="ProvinceStateID" OtherKey="ID" Type="ProvincesAndState" IsForeignKey="true" />
-      <Association Name="ShipperAddress_JobCommodity" Member="ShipperCommodities" ThisKey="ID" OtherKey="ShipperAddressID" Type="JobCommodity" />
-      <Association Name="ConsigneeAddress_JobCommodity" Member="ConsigneeCommodities" ThisKey="ID" OtherKey="ConsigneeAddressID" Type="JobCommodity" />
+      <Association Name="ShipperAddress_LoadedCommodity" Member="ShipperLoadedCommodities" ThisKey="ID" OtherKey="ShipperAddressID" Type="LoadedCommodity" />
+      <Association Name="ConsigneeAddress_LoadedCommodity" Member="ConsigneeLoadedCommodities" ThisKey="ID" OtherKey="ConsigneeAddressID" Type="LoadedCommodity" />
     </Type>
   </Table>
   <Table Name="" Member="AddressTypes">
@@ -86,8 +86,8 @@
       <Association Name="CompanyPriorityLevel_Company" Member="CompanyPriorityLevel" ThisKey="PriorityLevelID" OtherKey="ID" Type="CompanyPriorityLevel" IsForeignKey="true" />
       <Association Name="CustomerType_Company" Member="CustomerType" ThisKey="CustomerTypeID" OtherKey="ID" Type="CustomerType" IsForeignKey="true" />
       <Association Name="Company_Permit" Member="Permits" ThisKey="ID" OtherKey="CompanyID" Type="Permit"  />
-      <Association Name="ShipperCompany_JobCommodity" Member="ShipperJobCommodities" OtherKey="ShipperCompanyID" ThisKey="ID" Type="JobCommodity" />
-      <Association Name="ConsigneeCompany_JobCommodity" Member="ConsigneeJobCommodities" OtherKey="ConsigneeCompanyID" ThisKey="ID" Type="JobCommodity" />
+      <Association Name="ShipperCompany_LoadedCommodity" Member="ShipperLoadedCommodities" OtherKey="ShipperCompanyID" ThisKey="ID" Type="LoadedCommodity" />
+      <Association Name="ConsigneeCompany_LoadedCommodity" Member="ConsigneeLoadedCommodities" OtherKey="ConsigneeCompanyID" ThisKey="ID" Type="LoadedCommodity" />
     </Type>
   </Table>
   <Table Name="" Member="CompanyPriorityLevels">
@@ -115,8 +115,10 @@
       <Association Name="Address_Contact" Member="Address" ThisKey="AddressID" OtherKey="ID" Type="Address" IsForeignKey="true" />
       <Association Name="Contact_ContactRole" Member="ContactRoles" ThisKey="ID" OtherKey="ContactID" Type="ContactRole" />
       <Association Name="ContactMethod_Contact" Member="PreferedContactMethod" ThisKey="ContactMethodID" OtherKey="ID" Type="ContactMethod" IsForeignKey="true" />
-      <Association Name="LoadContact_JobCommodity" Member="LoadingJobCommodities" OtherKey="LoadContactID" ThisKey="ID" Type="JobCommodity" />
-      <Association Name="UnloadContact_JobCommodity" Member="UnloadingJobCommodities" OtherKey="UnloadContactID" ThisKey="ID" Type="JobCommodity" />      
+      <Association Name="Contact_LoadedCommodity_LoadSite" Member="LoadSiteCommodities" OtherKey="LoadSiteContactID" ThisKey="ID" Type="LoadedCommodity" />
+      <Association Name="Contact_LoadedCommodity_UnloadSite" Member="UnloadSiteCommodities" OtherKey="UnloadSiteContactID" ThisKey="ID" Type="LoadedCommodity" />
+      <Association Name="Contact_LoadedCommodity_Load" Member="LoadedCommodities" OtherKey="LoadContactID" ThisKey="ID" Type="LoadedCommodity" />
+      <Association Name="Contact_LoadedCommodity_Unload" Member="UnloadedCommodities" OtherKey="UnloadContactID" ThisKey="ID" Type="LoadedCommodity" />      
     </Type>
   </Table>
   <Table Name="" Member="ContactRoles">
@@ -161,6 +163,7 @@
       <Association Name="Employee_Quote" Member="Quotes" ThisKey="ID" OtherKey="EmployeeID" Type="Quote" />
       <Association Name="Employee_Equipment" Member="Equipments" ThisKey="ID" OtherKey="DefaultDriverID" Type="Equipment" />
       <Association Name="Employee_Dispatch" Member="Dispatches" ThisKey="ID" OtherKey="EmployeeID" Type="Dispatch" />
+      <Association Name="Employee_Swamper" Member="Swampers" ThisKey="ID" OtherKey="EmployeeID" Type="Swamper" />
     </Type>
   </Table>
   <Table Name="" Member="EquipmentTypes">
@@ -189,41 +192,11 @@
       <Column Name="Weight" Type="System.Double" CanBeNull="true" />
       <Column Name="SizeEstimated" Type="System.Boolean" CanBeNull="true" />
       <Column Name="WeightEstimated" Type="System.Boolean" CanBeNull="true" />
-      <Column Name="Cost" Type="System.Decimal" CanBeNull="true" />
-      <Column Name="LoadContactID" Type="System.Int64" CanBeNull="true" />
-      <Column Name="LoadLocation" Type="System.String" CanBeNull="true" />
-      <Column Name="LoadAddress" Type="System.String" CanBeNull="true" />
-      <Column Name="LoadBy" Type="System.String" CanBeNull="true" />
-      <Column Name="LoadMethodID" Type="System.Int64" CanBeNull="true" />
-      <Column Name="LoadDate" Type="System.DateTime" CanBeNull="true" />
-      <Column Name="LoadInstructions" Type="System.String" CanBeNull="true" />
-      <Column Name="LoadRoute" Type="System.String" CanBeNull="true" />
-      <Column Name="LoadOrientation" Type="System.String" CanBeNull="true" />
-      <Column Name="UnloadContactID" Type="System.Int64" CanBeNull="true" />
-      <Column Name="UnloadLocation" Type="System.String" CanBeNull="true" />
-      <Column Name="UnloadAddress" Type="System.String" CanBeNull="true" />
-      <Column Name="UnloadBy" Type="System.String" CanBeNull="true" />
-      <Column Name="UnloadMethodID" Type="System.Int64" CanBeNull="true" />
-      <Column Name="UnloadDate" Type="System.DateTime" CanBeNull="true" />
-      <Column Name="UnloadInstructions" Type="System.String" CanBeNull="true" />
-      <Column Name="UnloadRoute" Type="System.String" CanBeNull="true" />
-      <Column Name="UnloadOrientation" Type="System.String" CanBeNull="true" />
-      <Column Name="Notes" Type="System.String" CanBeNull="true" UpdateCheck="Never" />
-      <Column Name="ShipperCompanyID" Type="System.Int64" CanBeNull="true" />
-      <Column Name="ShipperAddressID" Type="System.Int64" CanBeNull="true" />
-      <Column Name="ConsigneeCompanyID" Type="System.Int64" CanBeNull="true" />
-      <Column Name="ConsigneeAddressID" Type="System.Int64" CanBeNull="true" />
+      <Column Name="Cost" Type="System.Decimal" CanBeNull="true" />      
+      <Column Name="Notes" Type="System.String" CanBeNull="true" UpdateCheck="Never" />      
+      <Association Name="JobCommodity_LoadedCommodity" Member="LoadedCommodities" ThisKey="ID" OtherKey="JobCommodityID" Type="LoadedCommodity" />
       <Association Name="Commodity_JobCommodity" Member="OriginalCommodity" ThisKey="OriginalCommodityID" OtherKey="ID" Type="Commodity" IsForeignKey="true" />
       <Association Name="Job_JobCommodity" Member="Job" ThisKey="JobID" OtherKey="ID" Type="Job" IsForeignKey="true" />
-      <Association Name="Load_JobCommodity" Member="Load" ThisKey="LoadID" OtherKey="ID" Type="Load" IsForeignKey="true" />
-      <Association Name="LoadUnloadMethod_JobCommodity" Member="LoadMethod" ThisKey="LoadMethodID" OtherKey="ID" Type="LoadUnloadMethod" IsForeignKey="true" />
-      <Association Name="LoadUnloadMethod_JobCommodity1" Member="UnloadMethod" ThisKey="UnloadMethodID" OtherKey="ID" Type="LoadUnloadMethod" IsForeignKey="true" />
-      <Association Name="LoadContact_JobCommodity" Member="LoadContact" ThisKey="LoadContactID" OtherKey="ID" Type="Contact" IsForeignKey="true" />
-      <Association Name="UnloadContact_JobCommodity" Member="UnloadContact" ThisKey="UnloadContactID" OtherKey="ID" Type="Contact" IsForeignKey="true" />
-      <Association Name="ShipperCompany_JobCommodity" Member="ShipperCompany" ThisKey="ShipperCompanyID" OtherKey="ID" Type="Company" IsForeignKey="true" />
-      <Association Name="ShipperAddress_JobCommodity" Member="ShipperAddress" ThisKey="ShipperAddressID" OtherKey="ID" Type="Address" IsForeignKey="true" />
-      <Association Name="ConsigneeCompany_JobCommodity" Member="ConsigneeCompany" ThisKey="ConsigneeCompanyID" OtherKey="ID" Type="Company" IsForeignKey="true" />
-      <Association Name="ConsigneeAddress_JobCommodity" Member="ConsigneeAddress" ThisKey="ConsigneeAddressID" OtherKey="ID" Type="Address" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="" Member="Jobs">
@@ -314,7 +287,7 @@
       <Column Name="LoadedLength" Type="System.Double" CanBeNull="true" />
       <Column Name="LoadedWidth" Type="System.Double" CanBeNull="true" />
       <Column Name="LoadedHeight" Type="System.Double" CanBeNull="true" />      
-      <Association Name="Load_JobCommodity" Member="JobCommodities" ThisKey="ID" OtherKey="LoadID" Type="JobCommodity" />
+      <Association Name="Load_LoadedCommodity" Member="LoadedCommodities" ThisKey="ID" OtherKey="LoadID" Type="LoadedCommodity" />
       <Association Name="Load_Permit" Member="Permits" ThisKey="ID" OtherKey="LoadID" Type="Permit" />
       <Association Name="Load_ThirdPartyService" Member="ThirdPartyServices" ThisKey="ID" OtherKey="LoadID" Type="ThirdPartyService" />
       <Association Name="Load_Dispatch" Member="Dispatches" ThisKey="ID" OtherKey="LoadID" Type="Dispatch" />
@@ -324,7 +297,50 @@
       <Association Name="Equipment_Load" Member="Equipment" ThisKey="EquipmentID" OtherKey="ID" Type="Equipment" IsForeignKey="true" />
       <Association Name="Rate_Load" Member="Rate" ThisKey="RateID" OtherKey="ID" Type="Rate" IsForeignKey="true" />
       <Association Name="TrailerCombination_Load" Member="TrailerCombination" ThisKey="TrailerCombinationID" OtherKey="ID" Type="TrailerCombination" IsForeignKey="true" />
-      <Association Name="Load_ExtraEquipment" Member="ExtraEquipment" ThisKey="ID" OtherKey="LoadID" Type="ExtraEquipment" />
+      <Association Name="Load_ExtraEquipment" Member="ExtraEquipment" ThisKey="ID" OtherKey="LoadID" Type="ExtraEquipment" />      
+    </Type>
+  </Table>
+  <Table Name="" Member="LoadedCommodities">
+    <Type Name="LoadedCommodity">
+      <Column Name="ID" Type="System.Int64" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="JobCommodityID" Type="System.Int64" CanBeNull="true" />
+      <Column Name="LoadID" Type="System.Int64" CanBeNull="true" />
+      <Column Name="LoadSiteContactID" Type="System.Int64" CanBeNull="true" />
+      <Column Name="LoadContactID" Type="System.Int64" CanBeNull="true" />
+      <Column Name="LoadLocation" Type="System.String" CanBeNull="true" />
+      <Column Name="LoadAddress" Type="System.String" CanBeNull="true" />
+      <Column Name="LoadBy" Type="System.String" CanBeNull="true" />
+      <Column Name="LoadMethodID" Type="System.Int64" CanBeNull="true" />
+      <Column Name="LoadDate" Type="System.DateTime" CanBeNull="true" />
+      <Column Name="LoadInstructions" Type="System.String" CanBeNull="true" />
+      <Column Name="LoadRoute" Type="System.String" CanBeNull="true" />      
+      <Column Name="UnloadSiteContactID" Type="System.Int64" CanBeNull="true" />
+      <Column Name="UnloadContactID" Type="System.Int64" CanBeNull="true" />
+      <Column Name="UnloadLocation" Type="System.String" CanBeNull="true" />
+      <Column Name="UnloadAddress" Type="System.String" CanBeNull="true" />
+      <Column Name="UnloadBy" Type="System.String" CanBeNull="true" />
+      <Column Name="UnloadMethodID" Type="System.Int64" CanBeNull="true" />
+      <Column Name="UnloadDate" Type="System.DateTime" CanBeNull="true" />
+      <Column Name="UnloadInstructions" Type="System.String" CanBeNull="true" />
+      <Column Name="UnloadRoute" Type="System.String" CanBeNull="true" />      
+      <Column Name="BoLDescription" Type="System.String" CanBeNull="true" />
+      <Column Name="BoLDangerousGoodsInfo" Type="System.String" CanBeNull="true" />
+      <Column Name="ShipperCompanyID" Type="System.Int64" CanBeNull="true" />
+      <Column Name="ShipperAddressID" Type="System.Int64" CanBeNull="true" />
+      <Column Name="ConsigneeCompanyID" Type="System.Int64" CanBeNull="true" />
+      <Column Name="ConsigneeAddressID" Type="System.Int64" CanBeNull="true" />
+      <Association Name="Contact_LoadedCommodity_LoadSite" Member="LoadSiteContact" ThisKey="LoadSiteContactID" OtherKey="ID" Type="Contact" IsForeignKey="true" />
+      <Association Name="Contact_LoadedCommodity_UnloadSite" Member="UnloadSiteContact" ThisKey="UnloadSiteContactID" OtherKey="ID" Type="Contact" IsForeignKey="true" />
+      <Association Name="Contact_LoadedCommodity_Load" Member="LoadContact" ThisKey="LoadContactID" OtherKey="ID" Type="Contact" IsForeignKey="true" />
+      <Association Name="Contact_LoadedCommodity_Unload" Member="UnloadContact" ThisKey="UnloadContactID" OtherKey="ID" Type="Contact" IsForeignKey="true" />
+      <Association Name="Load_LoadedCommodity" Member="Load" ThisKey="LoadID" OtherKey="ID" Type="Load" IsForeignKey="true" />
+      <Association Name="JobCommodity_LoadedCommodity" Member="JobCommodity" ThisKey="JobCommodityID" OtherKey="ID" Type="JobCommodity" IsForeignKey="true" />
+      <Association Name="ShipperCompany_LoadedCommodity" Member="ShipperCompany" ThisKey="ShipperCompanyID" OtherKey="ID" Type="Company" IsForeignKey="true" />
+      <Association Name="ShipperAddress_LoadedCommodity" Member="ShipperAddress" ThisKey="ShipperAddressID" OtherKey="ID" Type="Address" IsForeignKey="true" />
+      <Association Name="ConsigneeCompany_LoadedCommodity" Member="ConsigneeCompany" ThisKey="ConsigneeCompanyID" OtherKey="ID" Type="Company" IsForeignKey="true" />
+      <Association Name="ConsigneeAddress_LoadedCommodity" Member="ConsigneeAddress" ThisKey="ConsigneeAddressID" OtherKey="ID" Type="Address" IsForeignKey="true" />
+      <Association Name="LoadUnloadMethod_LoadedCommodity_Load" Member="LoadMethod" ThisKey="LoadMethodID" OtherKey="ID" Type="LoadUnloadMethod" IsForeignKey="true" />
+      <Association Name="LoadUnloadMethod_LoadedCommodity_Unload" Member="UnloadMethod" ThisKey="UnloadMethodID" OtherKey="ID" Type="LoadUnloadMethod" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="" Member="ExtraEquipmentTypes">
@@ -622,15 +638,23 @@
       <Column Name="MeetingTime" Type="System.DateTime" CanBeNull="true" />
       <Column Name="DepartingUnits" Type="System.String" CanBeNull="true" />
       <Column Name="DepartingLocation" Type="System.String" CanBeNull="true" />
-      <Column Name="Notes" Type="System.String" CanBeNull="true" UpdateCheck="Never" />
-      <!-- <Column Name="RateID" Type="System.Int64" CanBeNull="true" /> -->
+      <Column Name="Notes" Type="System.String" CanBeNull="true" UpdateCheck="Never" />      
       <Association Name="EquipmentType_Dispatch" Member="EquipmentType" ThisKey="EquipmentTypeID" OtherKey="ID" Type="EquipmentType" IsForeignKey="true" />
       <Association Name="Equipment_Dispatch" Member="Equipment" ThisKey="EquipmentID" OtherKey="ID" Type="Equipment" IsForeignKey="true" />
       <Association Name="Job_Dispatch" Member="Job" ThisKey="JobID" OtherKey="ID" Type="Job" IsForeignKey="true" />
-      <Association Name="Load_Dispatch" Member="Load" ThisKey="LoadID" OtherKey="ID" Type="Load" IsForeignKey="true" />
-      <!-- <Association Name="Rate_Dispatch" Member="Rate" ThisKey="RateID" OtherKey="ID" Type="Rate" IsForeignKey="true" /> -->
+      <Association Name="Load_Dispatch" Member="Load" ThisKey="LoadID" OtherKey="ID" Type="Load" IsForeignKey="true" />      
       <Association Name="Employee_Dispatch" Member="Employee" ThisKey="EmployeeID" OtherKey="ID" Type="Employee" IsForeignKey="true" /> 
       <Association Name="Dispatch_OutOfProvinceTravel" Member="OutOfProvinceTravels" ThisKey="ID" OtherKey="DispatchID" Type="OutOfProvinceTravel" />
+      <Association Name="Dispatch_Swamper" Member="Swampers" ThisKey="ID" OtherKey="DispatchID" Type="Swamper" />
+    </Type>
+  </Table>
+  <Table Name="" Member="Swampers">
+    <Type Name="Swamper">
+      <Column Name="ID" Type="System.Int64" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="EmployeeID" Type="System.Int64" CanBeNull="true" />
+      <Column Name="DispatchID" Type="System.Int64" CanBeNull="true" />
+      <Association Name="Employee_Swamper" Member="Employee" ThisKey="EmployeeID" OtherKey="ID" Type="Employee" IsForeignKey="true" />
+      <Association Name="Dispatch_Swamper" Member="Dispatch" ThisKey="DispatchID" OtherKey="ID" Type="Dispatch" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="" Member="OutOfProvinceTravels">
@@ -662,8 +686,8 @@
     <Type Name="LoadUnloadMethod">
       <Column Name="ID" Type="System.Int64" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Name" Type="System.String" CanBeNull="true" />
-      <Association Name="LoadUnloadMethod_JobCommodity" Member="LoadedJobCommodities" ThisKey="ID" OtherKey="LoadMethodID" Type="JobCommodity" />
-      <Association Name="LoadUnloadMethod_JobCommodity1" Member="UnloadedJobCommodities" ThisKey="ID" OtherKey="UnloadMethodID" Type="JobCommodity" />
+      <Association Name="LoadUnloadMethod_LoadedCommodity_Load" Member="LoadedCommodities" ThisKey="ID" OtherKey="LoadMethodID" Type="LoadedCommodity" />
+      <Association Name="LoadUnloadMethod_LoadedCommodity_Unload" Member="UnloadedCommodities" ThisKey="ID" OtherKey="UnloadMethodID" Type="LoadedCommodity" />
     </Type>
   </Table>
   <Table Name="" Member="Invoices">

@@ -36,10 +36,10 @@
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
 
-                <Button Grid.Column="0" Style="{StaticResource Horizontal}" Click="NewInvoice_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, Path=SelectedJob}">New invoice</Button>
-                <Button Grid.Column="1" Style="{StaticResource Horizontal}" Click="CreateRevision_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, Path=SelectedInvoice}">Create revision</Button>
-                <Button Grid.Column="2" Style="{StaticResource Horizontal}" Click="ViewInvoice_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, Path=SelectedInvoice}">View invoice</Button>
-                <Button Grid.Column="3" Style="{StaticResource HorizontalEnd}" Click="DeleteInvoice_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, Path=SelectedInvoice}">Delete invoice</Button>
+                <Button Grid.Column="0" Style="{StaticResource Horizontal}" Click="NewInvoice_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=ThePanel, Path=SelectedJob}">New invoice</Button>
+                <Button Grid.Column="1" Style="{StaticResource Horizontal}" Click="CreateRevision_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=ThePanel, Path=SelectedInvoice}">Create revision</Button>
+                <Button Grid.Column="2" Style="{StaticResource Horizontal}" Click="ViewInvoice_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=ThePanel, Path=SelectedInvoice}">View invoice</Button>
+                <Button Grid.Column="3" Style="{StaticResource HorizontalEnd}" Click="DeleteInvoice_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=ThePanel, Path=SelectedInvoice}">Delete invoice</Button>
             </Grid>
 
             <Grid>
@@ -142,8 +142,8 @@
                             <Label Grid.Column="4" Grid.Row="2" Content="{Binding PreferedContactMethod}" />
                         </Grid>
                     </GroupBox>
-                    
-                    <GroupBox Header="Reference Numbers">
+
+                    <GroupBox Header="Reference Numbers" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=ThePanel, Path=SelectedInvoice}">
                         <StackPanel>
                             <DataGrid Name="DgReferenceNumbers" Style="{StaticResource ListDisplay}" IsReadOnly="False" Height="80">
                                 <DataGrid.Columns>

@@ -224,11 +224,7 @@ namespace SingerDispatch
             jc.SizeEstimated = SizeEstimated;
             jc.WeightEstimated = WeightEstimated;
             jc.Cost = Cost;
-            jc.Notes = Notes;
-            jc.LoadLocation = DepartureSiteName;
-            jc.LoadAddress = DepartureAddress;
-            jc.UnloadLocation = ArrivalSiteName;
-            jc.UnloadAddress = ArrivalAddress;
+            jc.Notes = Notes;            
 
             return jc;
         }
@@ -387,24 +383,40 @@ namespace SingerDispatch
             copy.Weight = Weight;
             copy.SizeEstimated = SizeEstimated;
             copy.WeightEstimated = WeightEstimated;
-            copy.Cost = Cost;
+            copy.Cost = Cost;            
+            copy.Notes = Notes;
+
+            return copy;
+        }
+    }
+
+    partial class LoadedCommodity
+    {
+        public LoadedCommodity Duplicate()
+        {
+            var copy = new LoadedCommodity();
+                        
+            copy.JobCommodity = JobCommodity;
             copy.LoadLocation = LoadLocation;
             copy.LoadBy = LoadBy;
             copy.LoadContact = copy.LoadContact;
             copy.LoadMethod = LoadMethod;
             copy.LoadDate = LoadDate;
             copy.LoadInstructions = LoadInstructions;
-            copy.LoadRoute = LoadRoute;
-            copy.LoadOrientation = LoadOrientation;
+            copy.LoadRoute = LoadRoute;            
             copy.UnloadLocation = UnloadLocation;
             copy.UnloadBy = UnloadBy;
             copy.UnloadContact = UnloadContact;
             copy.UnloadMethod = UnloadMethod;
             copy.UnloadDate = UnloadDate;
             copy.UnloadInstructions = UnloadInstructions;
-            copy.UnloadRoute = UnloadRoute;
-            copy.LoadOrientation = LoadOrientation;
-            copy.Notes = Notes;
+            copy.UnloadRoute = UnloadRoute;            
+            copy.ShipperCompany = ShipperCompany;
+            copy.ShipperAddress = ShipperAddress;
+            copy.ConsigneeCompany = ConsigneeCompany;
+            copy.ConsigneeAddress = ConsigneeAddress;
+            copy.BoLDescription = BoLDescription;
+            copy.BoLDangerousGoodsInfo = BoLDangerousGoodsInfo;
 
             return copy;
         }
@@ -537,6 +549,8 @@ namespace SingerDispatch
             cp.LoadedWidth = LoadedWidth;
             cp.LoadedHeight = LoadedHeight;
 
+            foreach (var item in LoadedCommodities)
+                cp.LoadedCommodities.Add(item.Duplicate());
             
             return cp;
         }
@@ -553,12 +567,12 @@ namespace SingerDispatch
 
         public static string PrintCommodityList(Load load)
         {
-            var list = load.JobCommodities;
+            var list = load.LoadedCommodities;
             var output = new StringBuilder();
 
             for (var i = 0; i < list.Count; i++)
             {
-                output.Append(list[i].Name);
+                output.Append(list[i].JobCommodity.Name);
 
                 if ((i + 1) != list.Count)
                     output.Append(", ");

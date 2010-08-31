@@ -90,13 +90,7 @@ namespace SingerDispatch.Printing.Documents
                     content.Append(PageBreak);
                     content.Append(FillDispatchBody(dispatch, "File Copy"));    
                 }
-
-                if (dispatch.Load != null && dispatch.Equipment != null && dispatch.Equipment == dispatch.Load.Equipment)
-                {
-                    content.Append(PageBreak);
-                    content.Append(GetBillOfLadingDocs(dispatch));
-                }
-
+                                
                 if ((i + 1) != dispatches.Count)
                     content.Append(PageBreak);
             }
@@ -120,7 +114,7 @@ namespace SingerDispatch.Printing.Documents
             output.Append(GetDescription(dispatch.Description));
             output.Append(GetEquipment(dispatch.Load.ExtraEquipment));
             output.Append(GetSchedule(dispatch));
-            output.Append(GetLoadCommodities(dispatch.Load.JobCommodities));
+            output.Append(GetLoadCommodities(dispatch.Load.LoadedCommodities));
             output.Append(GetDimensions(dispatch.Load));            
             output.Append(GetTractors(from t in dispatch.Load.Dispatches where t.Equipment != null && t.Equipment.EquipmentClass != null && t.Equipment.EquipmentClass.Name == "Tractor" select t));
             output.Append(GetSingerPilots(from p in dispatch.Load.Dispatches where p.Equipment != null && p.Equipment.EquipmentClass != null && p.Equipment.EquipmentClass.Name == "Pilot" select p));
@@ -133,8 +127,28 @@ namespace SingerDispatch.Printing.Documents
 
             if (dispatch.Load != null && dispatch.Equipment != null && dispatch.Equipment == dispatch.Load.Equipment)
             {
-                output.Append(PageBreak);
-                output.Append(GetBillOfLadingDocs(dispatch));
+                int copies;
+
+                if (copyType == "Driver Copy")
+                {
+                    if (SpecializedDocument)
+                        copies = Convert.ToInt32(SingerConstants.GetConfig("Dispatch-SingerBoLDriverCopies") ?? "1");
+                    else
+                        copies = Convert.ToInt32(SingerConstants.GetConfig("Dispatch-EnterpriseBoLDriverCopies") ?? "1");
+                }
+                else
+                {
+                    if (SpecializedDocument)
+                        copies = Convert.ToInt32(SingerConstants.GetConfig("Dispatch-SingerBoLFileCopies") ?? "1");
+                    else
+                        copies = Convert.ToInt32(SingerConstants.GetConfig("Dispatch-EnterpriseBoLFileCopies") ?? "1");
+                }
+
+                for (var i = 0; i < copies; i++)
+                {
+                    output.Append(PageBreak);
+                    output.Append(GetBillOfLadingDocs(dispatch));
+                }
             }
 
             return output.ToString();
@@ -147,15 +161,16 @@ namespace SingerDispatch.Printing.Documents
             var doc = new BillOfLadingDocument();
             var content = new StringBuilder();
 
+            doc.SpecializedDocument = SpecializedDocument;
             doc.PrintMetric = PrintMetric;
 
-            for (var i = 0; i < dispatch.Load.JobCommodities.Count; i++)
+            for (var i = 0; i < dispatch.Load.LoadedCommodities.Count; i++)
             {
-                var commodity = dispatch.Load.JobCommodities[i];
+                var commodity = dispatch.Load.LoadedCommodities[i];
 
                 content.Append(doc.GenerateBodyHTML(dispatch, commodity));
 
-                if ((i + 1) != dispatch.Load.JobCommodities.Count)
+                if ((i + 1) != dispatch.Load.LoadedCommodities.Count)
                     content.Append(PageBreak);
             }
 
@@ -229,6 +244,7 @@ namespace SingerDispatch.Printing.Documents
                     }
                     td
                     {
+                        vertical-align: top;
                     }
                     body
                     {                        
@@ -276,6 +292,17 @@ namespace SingerDispatch.Printing.Documents
                     div.dispatch_doc div.header td.address_col
                     {
                         
+                    }
+                    
+                    div.dispatch_doc div.header td.cod_col span
+                    {
+                        display: block;
+                        text-align: center;
+                        font-weight: bold;
+                        font-size: 2.5em;                        
+                        line-height: 1.1em;
+                        padding: 15px 5px;
+                        border: 1px #565656 solid;
                     }
                     
                     div.dispatch_doc div.header td.id_col
@@ -400,6 +427,12 @@ namespace SingerDispatch.Printing.Documents
                     	border: solid 1px #A9A9A9;
                     }
 
+                    div.dispatch_doc div.load_and_unload table.details td span
+                    {
+                        display: block;
+                        min-height: 25px;
+                    }
+
                     div.dispatch_doc div.load_and_unload table.details td span.contact
                     {
                         display: block;
@@ -433,7 +466,13 @@ namespace SingerDispatch.Printing.Documents
 
                     div.dispatch_doc div.load_and_unload table.instructions td
                     {
-                        width: 33%;
+                        width: 33%;                                               
+                    }
+
+                    div.dispatch_doc div.load_and_unload table.instructions td span
+                    {
+                        display: block;
+                        min-height: 25px;
                     }
 
                     div.dispatch_doc div.dimensions span
@@ -557,6 +596,9 @@ namespace SingerDispatch.Printing.Documents
                                 <span>{3}</span>
                                 <span>Phone: {4}</span>
                             </td>
+                            <td class=""cod_col"">
+                                {7}
+                            </td>
                             <td class=""id_col"">
                                 <span class=""copy_type"">{5}</span>
                                 <span>Dispatch #:</span>
@@ -569,7 +611,7 @@ namespace SingerDispatch.Printing.Documents
                 </div>
             ";
 
-            var replacements = new object[7];
+            var replacements = new object[8];
 
             var process = System.Diagnostics.Process.GetCurrentProcess();
             string img;
@@ -592,6 +634,9 @@ namespace SingerDispatch.Printing.Documents
             replacements[5] = copyType;
             replacements[6] = (dispatch != null) ? dispatch.Name : "UNKNOWN";
 
+            if (dispatch.Job.Company.CompanyPriorityLevel.Name.EndsWith("Cash on Delivery"))
+                replacements[7] = "<span>C.O.D.<br>Collect</span>";            
+
             return string.Format(html, replacements);
         }
 
@@ -599,10 +644,18 @@ namespace SingerDispatch.Printing.Documents
         {
             const string html = @"
                 <div class=""details"">
+                    {0}
+                    
+                    {1}
+                   
+                    {2}
+                </div>
+            ";
+            string dispatchInfo = @"
                     <table class=""dispatch_info"">
                         <tr>
-                            <td class=""field_name col1_4"">Customer:</td>
-                            <td class=""value col2_4"" colspan=""3"">{0}</td>                            
+                            <td class=""field_name"">Customer:</td>
+                            <td class=""value"" colspan=""3"">{0}</td>                            
                         </tr>
                         <tr>
                             <td class=""field_name"">Unit #:</td>
@@ -617,71 +670,66 @@ namespace SingerDispatch.Printing.Documents
                             <td class=""value"">{4}</td>
                         </tr>
                     </table>
-                    
+            ";
+            string departureInfo = @"
                     <table class=""departure_info"">
-                        <tr>
-                            <td class=""field_name col1_2"">Dispatched By:</td>
-                            <td class=""value col2_2"">{5}</td>
-                        </tr>
-                        <tr>
-                            <td class=""field_name col1_2"">Depart Date:</td>
-                            <td class=""value col2_2"">{6}</td>
-                        </tr>
-                        <tr>                    
-                            <td class=""field_name"">Depart From:</td>
-                            <td class=""value"">{7}</td>
-                        </tr>
-                        <tr>
-                            <td class=""field_name"">Depart Units:</td>
-                            <td class=""value"">{8}</td>
-                        </tr>
+                        {0}                        
                     </table>
-                   
+            ";
+            string referenceInfo = @"
                     <table class=""customer_references"">
-                        <tr>
-                            <td class=""field_name col1_2"">Customer References:</td>
-                            <td class=""value col2_2"">
-                                {9}                               
-                            </td>
-                        </tr>
+                        {0}
                     </table>
-                </div>
+            ";
+            string rowTemplate = @"
+                <tr>                    
+                    <td class=""field_name"">{0}:</td>
+                    <td class=""value"">{1}</td>
+                </tr>
             ";
 
-            var replacements = new object[11];
-                        
-            replacements[0] = dispatch.Job.Company.Name;
-            replacements[1] = (dispatch.Equipment != null) ? dispatch.Equipment.UnitNumber : "";
-            replacements[2] = (dispatch.Load != null && dispatch.Load.Rate != null) ? dispatch.Load.Rate.Name + " - " : "";
+            var dispatchReplacements = new object[5];
+
+            dispatchReplacements[0] = dispatch.Job.Company.Name;
+            dispatchReplacements[1] = (dispatch.Equipment != null) ? dispatch.Equipment.UnitNumber : "";
+            dispatchReplacements[2] = (dispatch.Load != null && dispatch.Load.Rate != null) ? dispatch.Load.Rate.Name + " - " : "";
 
             if (dispatch.Load != null && dispatch.Load.TrailerCombination != null)
-                replacements[2] += dispatch.Load.TrailerCombination.Combination;
+                dispatchReplacements[2] += dispatch.Load.TrailerCombination.Combination;
 
-            replacements[3] = (dispatch.Employee != null) ? dispatch.Employee.Name : "";
+            dispatchReplacements[3] = (dispatch.Employee != null) ? dispatch.Employee.Name : "";
+                        
             
-
-            // Find list all of the swampers
-            // TODO: Figure out a better way to handle swampers
-            /*
-            var swamperDispatches = from s in dispatch.Load.Dispatches where s.Rate != null && s.Rate.Name.Contains("Swamper") select s;
             var swampers = new StringBuilder();
-            foreach (var item in swamperDispatches)
+            foreach (var swamper in dispatch.Swampers)
             {
-                if (item.Employee != null)
+                if (swamper.Employee != null)
                 {
-                    swampers.Append(item.Employee.Name);
+                    swampers.Append(swamper.Employee.Name);
                     swampers.Append("; ");
                 }
             }
 
-            replacements[4] = swampers.ToString();
-            */
-            replacements[5] = (dispatch.Job.Employee != null) ? dispatch.Job.Employee.Name : "";
-            replacements[6] = (dispatch.MeetingTime != null) ? dispatch.MeetingTime.Value.ToString(SingerConstants.PrintedDateFormatString) + " " + dispatch.MeetingTime.Value.ToString(SingerConstants.PrintedTimeFormatString) : "";
-            replacements[7] = dispatch.DepartingLocation;
-            replacements[8] = dispatch.DepartingUnits;
+            dispatchReplacements[4] = swampers.ToString();
             
-            // List any reference numbers given to this job
+
+
+            var departureReplacement = new StringBuilder();
+
+            if (dispatch.Job.Employee != null)
+                departureReplacement.Append(string.Format(rowTemplate, "Dispatched By", dispatch.Job.Employee.Name));
+
+            if (dispatch.MeetingTime != null)
+                departureReplacement.Append(string.Format(rowTemplate, "Departing Date", dispatch.MeetingTime.Value.ToString(SingerConstants.PrintedDateFormatString) + " " + dispatch.MeetingTime.Value.ToString(SingerConstants.PrintedTimeFormatString)));
+            
+            if (!string.IsNullOrEmpty(dispatch.DepartingLocation))
+                departureReplacement.Append(string.Format(rowTemplate, "Departing Location", dispatch.DepartingLocation));
+
+            if (!string.IsNullOrEmpty(dispatch.DepartingUnits))
+                departureReplacement.Append(string.Format(rowTemplate, "Departing Units", dispatch.DepartingUnits));
+            
+
+            // List any reference numbers given to this job            
             var references = new StringBuilder();
             
             for (var i = 0; i < dispatch.Job.ReferenceNumbers.Count; i++) 
@@ -694,9 +742,10 @@ namespace SingerDispatch.Printing.Documents
                     references.Append(", ");
             }
             
-            replacements[9] = references.ToString();
+            var referenceReplacement = (references.Length > 0) ? string.Format(rowTemplate, "Customer References", references.ToString()) : "";
 
-            return string.Format(html, replacements);
+
+            return string.Format(html, string.Format(dispatchInfo, dispatchReplacements), string.Format(departureInfo, departureReplacement), string.Format(referenceInfo, referenceReplacement));
         }
 
         private static string GetDescription(string description)
@@ -708,6 +757,9 @@ namespace SingerDispatch.Printing.Documents
                     <p>{0}</p>
                 </div>
             ";
+
+            if (string.IsNullOrEmpty(description))
+                return "";
 
             return string.Format(html, description);
         }
@@ -746,7 +798,7 @@ namespace SingerDispatch.Printing.Documents
             ";
 
             if (equipment.Count == 0)
-                return string.Format(html, "");
+                return "";
 
             var rows = new StringBuilder();
 
@@ -774,12 +826,13 @@ namespace SingerDispatch.Printing.Documents
                 </div>
             ";
 
-            var schedule = dispatch.Schedule ?? "";
+            if (string.IsNullOrEmpty(dispatch.Schedule))
+                return "";
 
-            return string.Format(content, schedule);
+            return string.Format(content, dispatch.Schedule);
         }
 
-        private string GetLoadCommodities(EntitySet<JobCommodity> commodities)
+        private string GetLoadCommodities(EntitySet<LoadedCommodity> commodities)
         {
             const string head = @"<div class=""load_and_unload section""><span class=""heading"">Load/Unload Information</span>";
             const string divider = "<hr>";
@@ -824,15 +877,13 @@ namespace SingerDispatch.Printing.Documents
                             <thead>
                                 <tr>
                                     <th>Load Route</th>
-                                    <th>Load Instruction</th>
-                                    <th>Load Placement/Orientation</th>
+                                    <th>Load Instruction</th>                                    
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>{10}</td>
-                                    <td>{11}</td>
-                                    <td>{12}</td>
+                                    <td><span>{10}</span></td>
+                                    <td><span>{11}</span></td>                                    
                                 </tr>
                             </tbody>
                         </table>
@@ -846,20 +897,20 @@ namespace SingerDispatch.Printing.Documents
                                 <tr>
                                     <th>Date</th>
                                     <th>Time</th>
-                                    <th>Load Location</th>
-                                    <th>Load Site Contact</th>
-                                    <th>Load By</th>
-                                    <th>Loading Contact</th>
+                                    <th>Unload Location</th>
+                                    <th>Unload Site Contact</th>
+                                    <th>Unloaded By</th>
+                                    <th>Unloading Contact</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td class=""date""><span>{13}</span></td>
-                                    <td class=""time""><span>{14}</span></td>
-                                    <td class=""location""><span>{15}</span></td>
-                                    <td class=""contact""><span>{16}</span></td>
-                                    <td class=""company""><span>{17}</span></td>
-                                    <td class=""contact""><span>{18}</span></td>
+                                    <td class=""date""><span>{12}</span></td>
+                                    <td class=""time""><span>{13}</span></td>
+                                    <td class=""location""><span>{14}</span></td>
+                                    <td class=""contact""><span>{15}</span></td>
+                                    <td class=""company""><span>{16}</span></td>
+                                    <td class=""contact""><span>{17}</span></td>
                                 </tr>
                             </tbody>                        
                         </table>
@@ -868,15 +919,13 @@ namespace SingerDispatch.Printing.Documents
                             <thead>
                                 <tr>
                                     <th>Unload Route</th>
-                                    <th>Unload Instruction</th>
-                                    <th>Unload Placement/Orientation</th>
+                                    <th>Unload Instruction</th>                                    
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td><span>{19}</span></td>
-                                    <td><span>{20}</span></td>
-                                    <td><span>{21}</span></td>
+                                    <td><span>{18}</span></td>
+                                    <td><span>{19}</span></td>                                    
                                 </tr>
                             </tbody>
                         </table>
@@ -906,10 +955,10 @@ namespace SingerDispatch.Printing.Documents
                 var item = commodities[i];
                 var reps = new object[22];
 
-                reps[0] = item.Name;
-                reps[1] = (item.Unit != null) ? string.Format("Unit {0}", item.Unit) : "";
-                reps[2] = string.Format("{0}", MeasurementFormater.FromKilograms(item.Weight, weightUnit));
-                reps[3] = string.Format("{0} x {1} x {2} (LxWxH)", MeasurementFormater.FromMetres(item.Length, lengthUnit), MeasurementFormater.FromMetres(item.Width, lengthUnit), MeasurementFormater.FromMetres(item.Height, lengthUnit));
+                reps[0] = item.JobCommodity.Name;
+                reps[1] = (item.JobCommodity.Unit != null) ? string.Format("Unit {0}", item.JobCommodity.Unit) : "";
+                reps[2] = string.Format("{0}", MeasurementFormater.FromKilograms(item.JobCommodity.Weight, weightUnit));
+                reps[3] = string.Format("{0} x {1} x {2} (LxWxH)", MeasurementFormater.FromMetres(item.JobCommodity.Length, lengthUnit), MeasurementFormater.FromMetres(item.JobCommodity.Width, lengthUnit), MeasurementFormater.FromMetres(item.JobCommodity.Height, lengthUnit));
 
                 if (item.LoadDate != null)
                 {
@@ -927,30 +976,27 @@ namespace SingerDispatch.Printing.Documents
                 reps[8] = item.LoadBy;
                 reps[9] = "";
                 reps[10] = item.LoadRoute;
-                reps[11] = item.LoadInstructions;
-                reps[12] = item.LoadOrientation;
+                reps[11] = item.LoadInstructions;                
 
 
                 if (item.UnloadDate != null)
                 {
-                    reps[13] = item.UnloadDate.Value.ToString(SingerConstants.PrintedDateFormatString);
-                    reps[14] = item.UnloadDate.Value.ToString(SingerConstants.PrintedTimeFormatString);
+                    reps[12] = item.UnloadDate.Value.ToString(SingerConstants.PrintedDateFormatString);
+                    reps[13] = item.UnloadDate.Value.ToString(SingerConstants.PrintedTimeFormatString);
                 }
                 else
                 {
-                    reps[13] = "";
                     reps[14] = "";
+                    reps[15] = "";
                 }
 
-                reps[15] = item.UnloadLocation;
-                reps[16] = (item.UnloadContact != null) ? string.Format(@"<span class=""contact"">{0}</span><span class=""contact"">{1}</span>", item.UnloadContact.Name, item.UnloadContact.PrimaryPhone) : "";
-                reps[17] = item.UnloadBy;
-                reps[18] = "";
-                reps[19] = item.UnloadRoute;
-                reps[20] = item.UnloadInstructions;
-                reps[21] = item.UnloadOrientation;
+                reps[16] = item.UnloadLocation;
+                reps[17] = (item.UnloadContact != null) ? string.Format(@"<span class=""contact"">{0}</span><span class=""contact"">{1}</span>", item.UnloadContact.Name, item.UnloadContact.PrimaryPhone) : "";
+                reps[18] = item.UnloadBy;
+                reps[19] = "";
+                reps[20] = item.UnloadRoute;
+                reps[21] = item.UnloadInstructions;
                 
-
                 html.Append(string.Format(commodityHtml, reps));
 
                 if ((i + 1) != commodities.Count)
@@ -1108,7 +1154,7 @@ namespace SingerDispatch.Printing.Documents
             ";
 
             if (dispatches.Count() == 0)
-                return string.Format(html, "");
+                return "";
 
             var rows = new StringBuilder();
             foreach (var item in dispatches)
@@ -1155,7 +1201,7 @@ namespace SingerDispatch.Printing.Documents
             ";
 
             if (dispatches.Count() == 0)
-                return string.Format(html, "");
+                return "";
 
             var rows = new StringBuilder();
             foreach (var item in dispatches)
@@ -1220,7 +1266,7 @@ namespace SingerDispatch.Printing.Documents
             ";
 
             if (pilots.Count() == 0)
-                return string.Format(html, "");
+                return "";
 
             var rows = new StringBuilder();
             foreach (var item in pilots)
@@ -1288,7 +1334,7 @@ namespace SingerDispatch.Printing.Documents
             ";
 
             if (services.Count() == 0)
-                return string.Format(html, "");
+                return "";
 
             var rows = new StringBuilder();
             foreach (var item in services)
@@ -1355,7 +1401,7 @@ namespace SingerDispatch.Printing.Documents
             ";
 
             if (wirelifts.Count() == 0)
-                return string.Format(html, "");
+                return "";
 
             var rows = new StringBuilder();
             foreach (var item in wirelifts)
@@ -1415,7 +1461,7 @@ namespace SingerDispatch.Printing.Documents
             ";
 
             if (permits.Count == 0)
-                return string.Format(html, "");
+                return "";
 
             var rows = new StringBuilder();
 

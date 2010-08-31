@@ -6,6 +6,7 @@ using System.Collections.ObjectModel;
 using SingerDispatch.Database;
 using SingerDispatch.Windows;
 using System.Collections.Generic;
+using SingerDispatch.Printing.Documents;
 
 namespace SingerDispatch.Panels.Jobs
 {
@@ -27,7 +28,16 @@ namespace SingerDispatch.Panels.Jobs
         }
 
         private void ControlLoaded(object sender, RoutedEventArgs e)
-        {            
+        {
+            var companies = from c in Database.Companies select c;
+
+            cmbShipperCompanies.ItemsSource = companies;
+            cmbConsigneeCompanies.ItemsSource = companies;
+            cmbLoadingSiteContactCompanies.ItemsSource = companies;
+            cmbLoadingContactCompanies.ItemsSource = companies;
+            cmbUnloadingSiteContactCompanies.ItemsSource = companies;
+            cmbUnloadingContactCompanies.ItemsSource = companies;
+            
             cmbSeasons.ItemsSource = from s in Database.Seasons select s;
             cmbRates.ItemsSource = GetCompanyRates(SelectedCompany);
             cmbUnits.ItemsSource = (SelectedJob == null) ? null : from u in Database.Equipment where u.EquipmentClass.Name == "Tractor" || u.EquipmentClass.Name == "Trailor" orderby u.UnitNumber select u;
@@ -38,6 +48,11 @@ namespace SingerDispatch.Panels.Jobs
                 cmbTrailerCombinations.ItemsSource = (from tc in Database.TrailerCombinations where tc.Rate == cmbRates.SelectedItem select tc).ToList();
             }
 
+            var methods = (SelectedJob == null) ? null : (from m in Database.LoadUnloadMethods select m).ToList();
+
+            cmbLoadMethods.ItemsSource = methods;
+            cmbUnloadMethods.ItemsSource = methods;
+            
             UpdateExtras();
             UpdateCommodityList();
         }
@@ -110,7 +125,7 @@ namespace SingerDispatch.Panels.Jobs
             foreach (var item in load.Dispatches.ToList())
                 item.Load = null;
 
-            foreach (var item in load.JobCommodities.ToList())
+            foreach (var item in load.LoadedCommodities.ToList())
                 item.Load = null;
 
             foreach (var item in load.Permits.ToList())
@@ -152,7 +167,7 @@ namespace SingerDispatch.Panels.Jobs
         }
 
         private void dgLoads_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {            
+        {
             UpdateExtras();
             UpdateCommodityList();
         }
@@ -181,7 +196,8 @@ namespace SingerDispatch.Panels.Jobs
 
             foreach (var item in SelectedJob.JobCommodities)
             {
-                var cb = new CheckBox { Content = item.NameAndUnit, IsChecked = (item.Load == load), DataContext = item };
+                bool isLoaded = (from lc in load.LoadedCommodities where lc.JobCommodity == item select lc).Count() > 0;
+                var cb = new CheckBox { Content = item.NameAndUnit, DataContext = item, IsChecked = isLoaded };
 
                 cb.Checked += CommodityCheckBox_Checked;
                 cb.Unchecked += CommodityCheckBox_Unchecked;
@@ -191,46 +207,37 @@ namespace SingerDispatch.Panels.Jobs
 
             lbCommodities.ItemsSource = checkboxList;
         }
-
+        
         private void CommodityCheckBox_Checked(object sender, RoutedEventArgs e)
-        {
+        {            
             var cb = (CheckBox)sender;
             var commodity = (JobCommodity)cb.DataContext;
             var load = (Load)dgLoads.SelectedItem;
-
+            
             if (load == null || commodity == null) return;
 
-            if (commodity.Load != null && commodity.Load != load)
-            {
-                var message = string.Format("This commodity is already assigned to load #{0}. Would you like to reassign it?", commodity.Load.Name);
-                var confirmation = MessageBox.Show(message, "Commodity reassignment", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            var loaded = new LoadedCommodity { JobCommodity = commodity, Load = load };
 
-                if (confirmation == MessageBoxResult.Yes)
-                {
-                    var orig = commodity.Load;
-
-                    commodity.Load = load;
-
-                    orig.Notify("JobCommodities");
-                }
-            }
-            else
-                commodity.Load = load;
-
-            load.Notify("JobCommodities");
+            load.LoadedCommodities.Add(loaded);
+            cmbLoadedCommodities.ItemsSource = load.LoadedCommodities.GetNewBindingList();
+            load.Notify("LoadedCommodities");
         }
 
         private void CommodityCheckBox_Unchecked(object sender, RoutedEventArgs e)
-        {
+        {            
             var cb = (CheckBox)sender;
             var commodity = (JobCommodity)cb.DataContext;
             var load = (Load)dgLoads.SelectedItem;
 
             if (load == null || commodity == null) return;
 
-            commodity.Load = null;
+            foreach (var item in (from lc in load.LoadedCommodities where lc.JobCommodity == commodity select lc).ToList())
+            {
+                load.LoadedCommodities.Remove(item);
+            }
 
-            load.Notify("JobCommodities");
+            cmbLoadedCommodities.ItemsSource = load.LoadedCommodities.GetNewBindingList();
+            load.Notify("LoadedCommodities");           
         }
 
         private System.Collections.IEnumerable GetCompanyRates(Company company)
@@ -317,13 +324,13 @@ namespace SingerDispatch.Panels.Jobs
             var longest = 0.0;
             var highest = 0.0;
 
-            foreach (var commodity in load.JobCommodities)
+            foreach (var commodity in load.LoadedCommodities)
             {
-                load.GrossWeight += commodity.Weight ?? 0.0;
-                
-                var length = commodity.Length ?? 0.0;
-                var height = commodity.Height ?? 0.0;
-                var width = commodity.Width ?? 0.0;
+                load.GrossWeight += commodity.JobCommodity.Weight ?? 0.0;
+
+                var length = commodity.JobCommodity.Length ?? 0.0;
+                var height = commodity.JobCommodity.Height ?? 0.0;
+                var width = commodity.JobCommodity.Width ?? 0.0;
 
                 if (length > longest)
                     longest = length;
@@ -346,6 +353,85 @@ namespace SingerDispatch.Panels.Jobs
 
             if (longest > load.LoadedLength)
                 load.LoadedLength = longest;
+        }
+
+        private void ShipperCompany_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var cmb = (ComboBox)sender;
+            var company = (Company)cmb.SelectedItem;
+
+            cmbShipperAddresses.ItemsSource = (company != null) ? company.Addresses : null;
+        }
+
+        private void ConsigneeCompany_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var cmb = (ComboBox)sender;
+            var company = (Company)cmb.SelectedItem;
+
+            cmbConsigneeAddresses.ItemsSource = (company != null) ? company.Addresses : null;
+        }
+
+        private void cmbLoadingSiteContactCompanies_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var company = (Company)cmbLoadingSiteContactCompanies.SelectedItem;
+
+            cmbLoadingSiteContacts.ItemsSource = (from c in Database.Contacts where c.Address.CompanyID == company.ID orderby c.FirstName, c.LastName select c).ToList();
+        }
+
+        private void cmbLoadingSiteContacts_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void cmbLoadingContactCompanies_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var company = (Company)cmbLoadingContactCompanies.SelectedItem;
+
+            cmbLoadingContacts.ItemsSource = (from c in Database.Contacts where c.Address.CompanyID == company.ID orderby c.FirstName, c.LastName select c).ToList();
+        }
+
+        private void cmbLoadingContacts_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void cmbUnloadingSiteContactCompanies_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var company = (Company)cmbUnloadingSiteContactCompanies.SelectedItem;
+
+            cmbUnloadingSiteContacts.ItemsSource = (from c in Database.Contacts where c.Address.CompanyID == company.ID orderby c.FirstName, c.LastName select c).ToList();
+        }
+
+        private void cmbUnloadingSiteContacts_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void cmbUnloadingContactCompanies_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var company = (Company)cmbUnloadingContactCompanies.SelectedItem;
+
+            cmbUnloadingContacts.ItemsSource = (from c in Database.Contacts where c.Address.CompanyID == company.ID orderby c.FirstName, c.LastName select c).ToList();
+        }
+
+        private void cmbUnloadingContacts_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void cmbLoadedCommodities_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void PrintBillOfLading_Click(object sender, RoutedEventArgs e)
+        {
+            var commodity = (LoadedCommodity)cmbLoadedCommodities.SelectedItem;
+
+            if (commodity == null) return;
+
+            var viewer = new DocumentViewerWindow(new BillOfLadingDocument(), commodity, string.Format("Bill of Lading - {0}", commodity.JobCommodity.NameAndUnit)) { IsMetric = !UseImperialMeasurements, IsSpecializedDocument = SelectedCompany.CustomerType.IsEnterprise != true };
+            viewer.DisplayPrintout();
         }
     }
 }

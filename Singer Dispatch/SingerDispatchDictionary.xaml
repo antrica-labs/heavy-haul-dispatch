@@ -35,7 +35,6 @@
         </TextBlock>
     </DataTemplate>
     
-    
     <DataTemplate x:Key="LoadTemplate">
         <TextBlock>
             <TextBlock.Text>
@@ -65,7 +64,6 @@
     </Style>
     
     <Style TargetType="Label" x:Key="Important">
-        <!-- <Setter Property="Foreground" Value="Red" /> -->
         <Setter Property="FontWeight" Value="Bold" />
     </Style>
     

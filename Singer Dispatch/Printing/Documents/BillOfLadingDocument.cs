@@ -9,12 +9,12 @@ namespace SingerDispatch.Printing.Documents
     class BillOfLadingEntity
     {
         public Dispatch Dispatch { get; set; }
-        public JobCommodity JobCommodity { get; set; }
+        public LoadedCommodity LoadedCommodity { get; set; }
 
-        public BillOfLadingEntity(Dispatch dispatch, JobCommodity commodity)
+        public BillOfLadingEntity(Dispatch dispatch, LoadedCommodity commodity)
         {
             Dispatch = dispatch;
-            JobCommodity = commodity;
+            LoadedCommodity = commodity;
         }
     }
 
@@ -33,10 +33,10 @@ namespace SingerDispatch.Printing.Documents
         {
             var doc = (BillOfLadingEntity)entity;
             
-            return GenerateHTML(doc.Dispatch, doc.JobCommodity);
+            return GenerateHTML(doc.Dispatch, doc.LoadedCommodity);
         }
 
-        public string GenerateHTML(Dispatch dispatch, JobCommodity commodity)
+        public string GenerateHTML(Dispatch dispatch, LoadedCommodity commodity)
         {
             var content = new StringBuilder();
 
@@ -58,7 +58,7 @@ namespace SingerDispatch.Printing.Documents
             return content.ToString();
         }
 
-        public string GenerateBodyHTML(Dispatch dispatch, JobCommodity commodity)
+        public string GenerateBodyHTML(Dispatch dispatch, LoadedCommodity commodity)
         {
             var content = new StringBuilder();
             string documentNumber;
@@ -378,14 +378,9 @@ namespace SingerDispatch.Printing.Documents
                         margin-top: 3px;
                     }
             
-                    div.bol_doc div.commodity table.payment_types span.checkbox span.box
+                    div.bol_doc div.commodity table.payment_types span.checkbox span.ballet
                     {
-                        display: block;
-                        height: 10px;
-                        width: 10px;
-                        border: 1px #787878 solid;
-                        float: left;
-                        margin-right: 5px;
+                        font-size: 1.2em;
                     }
             
                     div.bol_doc div.commodity span.disclaimer
@@ -627,7 +622,7 @@ namespace SingerDispatch.Printing.Documents
             return string.Format(html, replacements);
         }
 
-        private string GetReferenceTable(Dispatch dispatch, JobCommodity commodity)
+        private string GetReferenceTable(Dispatch dispatch, LoadedCommodity commodity)
         {
             var html = @"
                 <div class=""reference"">
@@ -671,11 +666,11 @@ namespace SingerDispatch.Printing.Documents
                     </table>
                 </div>
             ";
-
+                        
             var replacements = new object[15];
 
             replacements[0] = DateTime.Now.ToString(SingerConstants.PrintedDateFormatString);
-            replacements[1] = commodity.Job.Company.Name;
+            replacements[1] = commodity.JobCommodity.Job.Company.Name;
             replacements[2] = (dispatch.Load != null && dispatch.Load.Equipment != null) ? dispatch.Load.Equipment.UnitNumber : "";
             replacements[3] = (dispatch.Load != null && dispatch.Load.Rate != null) ? dispatch.Load.Rate.Name + " - " : "";
 
@@ -724,7 +719,7 @@ namespace SingerDispatch.Printing.Documents
             return @"<div class=""glass_damage"">Carrier not liable for glass damage in transit</div>";
         }
 
-        private string GetCommodityDetails(JobCommodity commodity)
+        private string GetCommodityDetails(LoadedCommodity commodity)
         {
             var html = @"
                 <div class=""commodity"">
@@ -762,9 +757,9 @@ namespace SingerDispatch.Printing.Documents
 
                                 <table class=""payment_types"">
                                     <tr>
-                                        <td><span class=""checkbox""><span class=""box""></span>COD</span></td>
-                                        <td><span class=""checkbox""><span class=""box""></span>Collect</span></td>
-                                        <td><span class=""checkbox""><span class=""box""></span>PrePaid</span></td>
+                                        <td><span class=""checkbox""><span class=""ballet"">{5}</span> COD</span></td>
+                                        <td><span class=""checkbox""><span class=""ballet"">{6}</span> Collect</span></td>
+                                        <td><span class=""checkbox""><span class=""ballet"">{7}</span> PrePaid</span></td>
                                     </tr>
                                 </table>
 
@@ -803,19 +798,27 @@ namespace SingerDispatch.Printing.Documents
                 weightUnit = MeasurementFormater.UKilograms;
             }
 
-            var replacements = new object[6];
+            var replacements = new object[8];
 
-            replacements[0] = commodity.Name;
+            replacements[0] = commodity.JobCommodity.Name;
 
-            replacements[1] = MeasurementFormater.FromMetres(commodity.Length, lengthUnit);
-            replacements[2] = MeasurementFormater.FromMetres(commodity.Width, lengthUnit);
-            replacements[3] = MeasurementFormater.FromMetres(commodity.Height, lengthUnit);
-            replacements[4] = MeasurementFormater.FromKilograms(commodity.Weight, weightUnit);
-            
+            replacements[1] = MeasurementFormater.FromMetres(commodity.JobCommodity.Length, lengthUnit);
+            replacements[2] = MeasurementFormater.FromMetres(commodity.JobCommodity.Width, lengthUnit);
+            replacements[3] = MeasurementFormater.FromMetres(commodity.JobCommodity.Height, lengthUnit);
+            replacements[4] = MeasurementFormater.FromKilograms(commodity.JobCommodity.Weight, weightUnit);
+
+            if (commodity.Load.Job.Company.CompanyPriorityLevel.Name.EndsWith("Cash on Delivery"))
+                replacements[5] = "&#9745;";
+            else
+                replacements[5] = "&#9744;";
+
+            replacements[6] = "&#9744;";
+            replacements[7] = "&#9744;";
+
             return string.Format(html, replacements);
         }
 
-        private string GetAdditionalInfo(JobCommodity commodity)
+        private string GetAdditionalInfo(LoadedCommodity commodity)
         {
             var html = @"
                 <table class=""additional_info"">
@@ -948,7 +951,7 @@ namespace SingerDispatch.Printing.Documents
 
             replacements[0] = SingerConstants.GetConfig("BillOfLading-ShippersWeight") ?? "";
             replacements[1] = SingerConstants.GetConfig("BillOfLading-NoticeOfClaim") ?? "";
-            replacements[2] = string.Format("{0:C}", commodity.Value);
+            replacements[2] = string.Format("{0:C}", commodity.JobCommodity.Value);
             replacements[3] = SingerConstants.GetConfig("BillOfLading-MaxLiability") ?? "";
 
             return string.Format(html, replacements);
