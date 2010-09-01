@@ -4,6 +4,7 @@
                        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                        xmlns:Panels="clr-namespace:SingerDispatch.Panels"
+                       xmlns:Controls="clr-namespace:SingerDispatch.Controls"
                        Loaded="ControlLoaded" mc:Ignorable="d" d:DesignWidth="780">
     <UserControl.Resources>
         <ResourceDictionary>
@@ -45,13 +46,13 @@
                     </Grid.RowDefinitions>
 
                     <Label Grid.Row="0" Grid.Column="0">Load:</Label>
-                    <ComboBox Name="cmbLoads"  Grid.Row="0" Grid.Column="1" SelectedItem="{Binding Load}" ItemTemplate="{StaticResource LoadTemplate}" />
+                    <ComboBox Name="cmbLoads"  Grid.Row="0" Grid.Column="1" SelectedItem="{Binding Load}" ItemTemplate="{StaticResource LoadTemplate}" Controls:ComboUtil.AllowNull="True" />
 
                     <Label Grid.Row="1" Grid.Column="0">Company:</Label>
-                    <ComboBox Name="cmbCompanies" Grid.Row="1" Grid.Column="1" SelectedItem="{Binding Company}" TextSearch.TextPath="Name" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectionChanged="ServiceCompany_SelectionChanged" />
+                    <ComboBox Name="cmbCompanies" Grid.Row="1" Grid.Column="1" SelectedItem="{Binding Company}" TextSearch.TextPath="Name" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectionChanged="ServiceCompany_SelectionChanged" Controls:ComboUtil.AllowNull="True" />
 
                     <Label Grid.Row="2" Grid.Column="0">Service type:</Label>
-                    <ComboBox Name="cmbServiceTypes" Grid.Row="2" Grid.Column="1" SelectedItem="{Binding ServiceType}" ItemTemplate="{StaticResource SimpleNameTemplate}" TextSearch.TextPath="Name" />
+                    <ComboBox Name="cmbServiceTypes" Grid.Row="2" Grid.Column="1" SelectedItem="{Binding ServiceType}" ItemTemplate="{StaticResource SimpleNameTemplate}" TextSearch.TextPath="Name" Controls:ComboUtil.AllowNull="True" />
 
                     <Label Grid.Row="3" Grid.Column="0">Contact:</Label>
                     <ComboBox Name="cmbContacts" Grid.Row="3" Grid.Column="1" SelectedItem="{Binding Contact}" ItemTemplate="{StaticResource SimpleNameTemplate}" TextSearch.TextPath="Name" />

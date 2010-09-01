@@ -96,10 +96,10 @@
                                 </Grid.RowDefinitions>
 
                                 <Label Grid.Row="0" Grid.Column="0">Care of:</Label>
-                                <ComboBox Name="cmbCareOfCompanies" Grid.Row="1" Grid.Column="0" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectionChanged="CareOfCompanies_SelectionChanged" SelectedItem="{Binding CareOfCompany}" TextSearch.TextPath="Name" IsEditable="True" />
+                                <ComboBox Name="cmbCareOfCompanies" Grid.Row="1" Grid.Column="0" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectionChanged="CareOfCompanies_SelectionChanged" SelectedItem="{Binding CareOfCompany}" TextSearch.TextPath="Name" IsEditable="True" Controls:ComboUtil.AllowNull="True" />
 
                                 <Label Grid.Row="0" Grid.Column="1">Author:</Label>
-                                <ComboBox Name="cmbQuotedBy" Grid.Row="1" Grid.Column="1" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectedItem="{Binding Employee}" TextSearch.TextPath="Name" IsEditable="True"></ComboBox>
+                                <ComboBox Name="cmbQuotedBy" Grid.Row="1" Grid.Column="1" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectedItem="{Binding Employee}" TextSearch.TextPath="Name" IsEditable="True" Controls:ComboUtil.AllowNull="True"></ComboBox>
                             </Grid>
 
                             <Label>Project description</Label>
@@ -138,10 +138,10 @@
                             </Grid.RowDefinitions>
 
                             <Label Grid.Column="0" Grid.Row="0">Address:</Label>
-                            <ComboBox Grid.Column="1" Grid.Row="0" Name="cmbAddresses" SelectedItem="{Binding BillingAddress}" ItemTemplate="{StaticResource AddressTemplate}" />
+                            <ComboBox Grid.Column="1" Grid.Row="0" Name="cmbAddresses" SelectedItem="{Binding BillingAddress}" ItemTemplate="{StaticResource AddressTemplate}" Controls:ComboUtil.AllowNull="True" />
 
                             <Label Grid.Column="0" Grid.Row="1">Name:</Label>
-                            <ComboBox Grid.Column="1" Grid.Row="1" Name="cmbContacts" SelectedItem="{Binding Contact}" ItemTemplate="{StaticResource SimpleNameTemplate}" TextSearch.TextPath="Name" />
+                            <ComboBox Grid.Column="1" Grid.Row="1" Name="cmbContacts" SelectedItem="{Binding Contact}" ItemTemplate="{StaticResource SimpleNameTemplate}" TextSearch.TextPath="Name" Controls:ComboUtil.AllowNull="True" />
                         </Grid>
 
                         <Grid DataContext="{Binding Contact}">

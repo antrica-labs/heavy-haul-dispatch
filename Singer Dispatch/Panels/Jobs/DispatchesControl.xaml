@@ -5,6 +5,7 @@
                        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                        xmlns:Local="clr-namespace:SingerDispatch.Panels.Jobs"
                        xmlns:Panels="clr-namespace:SingerDispatch.Panels"
+                       xmlns:Controls="clr-namespace:SingerDispatch.Controls"
                        Loaded="ControlLoaded" mc:Ignorable="d" d:DesignWidth="873" d:DesignHeight="500">
     <UserControl.Resources>
         <ResourceDictionary>
@@ -55,16 +56,16 @@
                     </Grid.RowDefinitions>
 
                     <Label Grid.Row="0" Grid.Column="0">Load:</Label>
-                    <ComboBox Name="cmbLoads" Grid.Row="0" Grid.Column="1" SelectedItem="{Binding Load}" ItemTemplate="{StaticResource LoadTemplate}" SelectionChanged="cmbLoads_SelectionChanged"></ComboBox>
+                    <ComboBox Name="cmbLoads" Grid.Row="0" Grid.Column="1" SelectedItem="{Binding Load}" ItemTemplate="{StaticResource LoadTemplate}" SelectionChanged="cmbLoads_SelectionChanged" Controls:ComboUtil.AllowNull="True"></ComboBox>
 
                     <Label Grid.Row="1" Grid.Column="0">Equipment type:</Label>
-                    <ComboBox Name="cmbEquipmentTypes" Grid.Row="1" Grid.Column="1" SelectedItem="{Binding EquipmentType}" ItemTemplate="{StaticResource SimpleNameTemplate}" TextSearch.TextPath="Name" SelectionChanged="cmbEquipmentTypes_SelectionChanged" />
+                    <ComboBox Name="cmbEquipmentTypes" Grid.Row="1" Grid.Column="1" SelectedItem="{Binding EquipmentType}" ItemTemplate="{StaticResource SimpleNameTemplate}" TextSearch.TextPath="Name" SelectionChanged="cmbEquipmentTypes_SelectionChanged" Controls:ComboUtil.AllowNull="True" />
 
                     <Label Grid.Row="2" Grid.Column="0">Unit:</Label>
-                    <ComboBox Name="cmbUnits" Grid.Row="2" Grid.Column="1" SelectedItem="{Binding Equipment}" ItemTemplate="{StaticResource EquipmentNameTemplate}" TextSearch.TextPath="UnitNumber" />
+                    <ComboBox Name="cmbUnits" Grid.Row="2" Grid.Column="1" SelectedItem="{Binding Equipment}" ItemTemplate="{StaticResource EquipmentNameTemplate}" TextSearch.TextPath="UnitNumber" Controls:ComboUtil.AllowNull="True" />
                     
                     <Label Grid.Row="3" Grid.Column="0">Driver:</Label>
-                    <ComboBox Name="cmbEmployees" Grid.Row="3" Grid.Column="1" SelectedItem="{Binding Employee}" ItemTemplate="{StaticResource SimpleNameTemplate}" TextSearch.TextPath="Name" />
+                    <ComboBox Name="cmbEmployees" Grid.Row="3" Grid.Column="1" SelectedItem="{Binding Employee}" ItemTemplate="{StaticResource SimpleNameTemplate}" TextSearch.TextPath="Name" Controls:ComboUtil.AllowNull="True" />
 
                     <Label Grid.Row="4" Grid.Column="0">Departing units:</Label>
                     <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding DepartingUnits}" />

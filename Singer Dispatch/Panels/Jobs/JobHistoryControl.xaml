@@ -4,6 +4,7 @@
                        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
                        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                        xmlns:Panels="clr-namespace:SingerDispatch.Panels"
+                       xmlns:Controls="clr-namespace:SingerDispatch.Controls"
                        x:Name="panelJobHistory"
                        Loaded="ControlLoaded" mc:Ignorable="d" d:DesignWidth="780">
     <UserControl.Resources>
@@ -51,7 +52,7 @@
                         <TextBox Style="{StaticResource MultiLine}" VerticalScrollBarVisibility="Hidden" Text="{Binding Description}"/>
 
                         <Label>Care of:</Label>
-                        <ComboBox Name="CmbCareOfCompanies" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectedItem="{Binding CareOfCompany}" TextSearch.TextPath="Name" IsEditable="True" SelectionChanged="CmbCareOfCompanies_SelectionChanged" />
+                        <ComboBox Name="CmbCareOfCompanies" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectedItem="{Binding CareOfCompany}" TextSearch.TextPath="Name" IsEditable="True" SelectionChanged="CmbCareOfCompanies_SelectionChanged" Controls:ComboUtil.AllowNull="True" />
 
                         <Grid>
                             <Grid.ColumnDefinitions>
@@ -68,10 +69,10 @@
                             <TextBox Grid.Row="1" Grid.Column="0" IsReadOnly="True" Text="{Binding Number}" Style="{StaticResource ReadOnly}" />
 
                             <Label Grid.Row="0" Grid.Column="1">Quote #:</Label>
-                            <ComboBox Name="CmbQuotes" Grid.Row="1" Grid.Column="1" SelectedItem="{Binding Quote}" ItemTemplate="{StaticResource QuoteNameTemplate}" />
+                            <ComboBox Name="CmbQuotes" Grid.Row="1" Grid.Column="1" SelectedItem="{Binding Quote}" ItemTemplate="{StaticResource QuoteNameTemplate}" Controls:ComboUtil.AllowNull="True"  />
 
                             <Label Grid.Row="0" Grid.Column="2">Author:</Label>
-                            <ComboBox Name="CmbCreatedBy" Grid.Row="1" Grid.Column="2" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectedItem="{Binding Employee}" TextSearch.TextPath="Name" IsEditable="True"></ComboBox>
+                            <ComboBox Name="CmbCreatedBy" Grid.Row="1" Grid.Column="2" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectedItem="{Binding Employee}" TextSearch.TextPath="Name" IsEditable="True" Controls:ComboUtil.AllowNull="True" />
                         </Grid>
                     </StackPanel>
                 </GroupBox>

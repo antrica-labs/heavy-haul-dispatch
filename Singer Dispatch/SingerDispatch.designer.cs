@@ -7474,6 +7474,8 @@ namespace SingerDispatch
 		
 		private System.Nullable<long> _LoadContactID;
 		
+		private System.Nullable<long> _LoadingProvinceID;
+		
 		private string _LoadLocation;
 		
 		private string _LoadAddress;
@@ -7491,6 +7493,8 @@ namespace SingerDispatch
 		private System.Nullable<long> _UnloadSiteContactID;
 		
 		private System.Nullable<long> _UnloadContactID;
+		
+		private System.Nullable<long> _UnloadingProvinceID;
 		
 		private string _UnloadLocation;
 		
@@ -7542,6 +7546,10 @@ namespace SingerDispatch
 		
 		private EntityRef<LoadUnloadMethod> _UnloadMethod;
 		
+		private EntityRef<ProvincesAndState> _LoadingProvince;
+		
+		private EntityRef<ProvincesAndState> _UnloadingProvince;
+		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -7556,6 +7564,8 @@ namespace SingerDispatch
     partial void OnLoadSiteContactIDChanged();
     partial void OnLoadContactIDChanging(System.Nullable<long> value);
     partial void OnLoadContactIDChanged();
+    partial void OnLoadingProvinceIDChanging(System.Nullable<long> value);
+    partial void OnLoadingProvinceIDChanged();
     partial void OnLoadLocationChanging(string value);
     partial void OnLoadLocationChanged();
     partial void OnLoadAddressChanging(string value);
@@ -7574,6 +7584,8 @@ namespace SingerDispatch
     partial void OnUnloadSiteContactIDChanged();
     partial void OnUnloadContactIDChanging(System.Nullable<long> value);
     partial void OnUnloadContactIDChanged();
+    partial void OnUnloadingProvinceIDChanging(System.Nullable<long> value);
+    partial void OnUnloadingProvinceIDChanged();
     partial void OnUnloadLocationChanging(string value);
     partial void OnUnloadLocationChanged();
     partial void OnUnloadAddressChanging(string value);
@@ -7616,6 +7628,8 @@ namespace SingerDispatch
 			this._ConsigneeAddress = default(EntityRef<Address>);
 			this._LoadMethod = default(EntityRef<LoadUnloadMethod>);
 			this._UnloadMethod = default(EntityRef<LoadUnloadMethod>);
+			this._LoadingProvince = default(EntityRef<ProvincesAndState>);
+			this._UnloadingProvince = default(EntityRef<ProvincesAndState>);
 			OnCreated();
 		}
 		
@@ -7731,6 +7745,30 @@ namespace SingerDispatch
 					this._LoadContactID = value;
 					this.SendPropertyChanged("LoadContactID");
 					this.OnLoadContactIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LoadingProvinceID")]
+		public System.Nullable<long> LoadingProvinceID
+		{
+			get
+			{
+				return this._LoadingProvinceID;
+			}
+			set
+			{
+				if ((this._LoadingProvinceID != value))
+				{
+					if (this._LoadingProvince.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnLoadingProvinceIDChanging(value);
+					this.SendPropertyChanging();
+					this._LoadingProvinceID = value;
+					this.SendPropertyChanged("LoadingProvinceID");
+					this.OnLoadingProvinceIDChanged();
 				}
 			}
 		}
@@ -7923,6 +7961,30 @@ namespace SingerDispatch
 					this._UnloadContactID = value;
 					this.SendPropertyChanged("UnloadContactID");
 					this.OnUnloadContactIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UnloadingProvinceID")]
+		public System.Nullable<long> UnloadingProvinceID
+		{
+			get
+			{
+				return this._UnloadingProvinceID;
+			}
+			set
+			{
+				if ((this._UnloadingProvinceID != value))
+				{
+					if (this._UnloadingProvince.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnUnloadingProvinceIDChanging(value);
+					this.SendPropertyChanging();
+					this._UnloadingProvinceID = value;
+					this.SendPropertyChanged("UnloadingProvinceID");
+					this.OnUnloadingProvinceIDChanged();
 				}
 			}
 		}
@@ -8611,6 +8673,74 @@ namespace SingerDispatch
 						this._UnloadMethodID = default(Nullable<long>);
 					}
 					this.SendPropertyChanged("UnloadMethod");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ProvincesAndState_LoadedCommodity", Storage="_LoadingProvince", ThisKey="LoadingProvinceID", OtherKey="ID", IsForeignKey=true)]
+		public ProvincesAndState LoadingProvince
+		{
+			get
+			{
+				return this._LoadingProvince.Entity;
+			}
+			set
+			{
+				ProvincesAndState previousValue = this._LoadingProvince.Entity;
+				if (((previousValue != value) 
+							|| (this._LoadingProvince.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._LoadingProvince.Entity = null;
+						previousValue.LoadingProvinces.Remove(this);
+					}
+					this._LoadingProvince.Entity = value;
+					if ((value != null))
+					{
+						value.LoadingProvinces.Add(this);
+						this._LoadingProvinceID = value.ID;
+					}
+					else
+					{
+						this._LoadingProvinceID = default(Nullable<long>);
+					}
+					this.SendPropertyChanged("LoadingProvince");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ProvincesAndState_LoadedCommodity1", Storage="_UnloadingProvince", ThisKey="UnloadingProvinceID", OtherKey="ID", IsForeignKey=true)]
+		public ProvincesAndState UnloadingProvince
+		{
+			get
+			{
+				return this._UnloadingProvince.Entity;
+			}
+			set
+			{
+				ProvincesAndState previousValue = this._UnloadingProvince.Entity;
+				if (((previousValue != value) 
+							|| (this._UnloadingProvince.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._UnloadingProvince.Entity = null;
+						previousValue.UnloadingProvinces.Remove(this);
+					}
+					this._UnloadingProvince.Entity = value;
+					if ((value != null))
+					{
+						value.UnloadingProvinces.Add(this);
+						this._UnloadingProvinceID = value.ID;
+					}
+					else
+					{
+						this._UnloadingProvinceID = default(Nullable<long>);
+					}
+					this.SendPropertyChanged("UnloadingProvince");
 				}
 			}
 		}
@@ -9508,9 +9638,15 @@ namespace SingerDispatch
 		
 		private System.Nullable<long> _CountryID;
 		
+		private string _Abbreviation;
+		
 		private string _Name;
 		
 		private EntitySet<Address> _Addresses;
+		
+		private EntitySet<LoadedCommodity> _LoadingProvinces;
+		
+		private EntitySet<LoadedCommodity> _UnloadingProvinces;
 		
 		private EntityRef<Country> _Country;
 		
@@ -9522,6 +9658,8 @@ namespace SingerDispatch
     partial void OnIDChanged();
     partial void OnCountryIDChanging(System.Nullable<long> value);
     partial void OnCountryIDChanged();
+    partial void OnAbbreviationChanging(string value);
+    partial void OnAbbreviationChanged();
     partial void OnNameChanging(string value);
     partial void OnNameChanged();
     #endregion
@@ -9529,6 +9667,8 @@ namespace SingerDispatch
 		public ProvincesAndState()
 		{
 			this._Addresses = new EntitySet<Address>(new Action<Address>(this.attach_Addresses), new Action<Address>(this.detach_Addresses));
+			this._LoadingProvinces = new EntitySet<LoadedCommodity>(new Action<LoadedCommodity>(this.attach_LoadingProvinces), new Action<LoadedCommodity>(this.detach_LoadingProvinces));
+			this._UnloadingProvinces = new EntitySet<LoadedCommodity>(new Action<LoadedCommodity>(this.attach_UnloadingProvinces), new Action<LoadedCommodity>(this.detach_UnloadingProvinces));
 			this._Country = default(EntityRef<Country>);
 			OnCreated();
 		}
@@ -9577,6 +9717,26 @@ namespace SingerDispatch
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Abbreviation")]
+		public string Abbreviation
+		{
+			get
+			{
+				return this._Abbreviation;
+			}
+			set
+			{
+				if ((this._Abbreviation != value))
+				{
+					this.OnAbbreviationChanging(value);
+					this.SendPropertyChanging();
+					this._Abbreviation = value;
+					this.SendPropertyChanged("Abbreviation");
+					this.OnAbbreviationChanged();
+				}
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name")]
 		public string Name
 		{
@@ -9607,6 +9767,32 @@ namespace SingerDispatch
 			set
 			{
 				this._Addresses.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ProvincesAndState_LoadedCommodity", Storage="_LoadingProvinces", ThisKey="ID", OtherKey="LoadingProvinceID")]
+		public EntitySet<LoadedCommodity> LoadingProvinces
+		{
+			get
+			{
+				return this._LoadingProvinces;
+			}
+			set
+			{
+				this._LoadingProvinces.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ProvincesAndState_LoadedCommodity1", Storage="_UnloadingProvinces", ThisKey="ID", OtherKey="UnloadingProvinceID")]
+		public EntitySet<LoadedCommodity> UnloadingProvinces
+		{
+			get
+			{
+				return this._UnloadingProvinces;
+			}
+			set
+			{
+				this._UnloadingProvinces.Assign(value);
 			}
 		}
 		
@@ -9674,6 +9860,30 @@ namespace SingerDispatch
 		{
 			this.SendPropertyChanging();
 			entity.ProvincesAndState = null;
+		}
+		
+		private void attach_LoadingProvinces(LoadedCommodity entity)
+		{
+			this.SendPropertyChanging();
+			entity.LoadingProvince = this;
+		}
+		
+		private void detach_LoadingProvinces(LoadedCommodity entity)
+		{
+			this.SendPropertyChanging();
+			entity.LoadingProvince = null;
+		}
+		
+		private void attach_UnloadingProvinces(LoadedCommodity entity)
+		{
+			this.SendPropertyChanging();
+			entity.UnloadingProvince = this;
+		}
+		
+		private void detach_UnloadingProvinces(LoadedCommodity entity)
+		{
+			this.SendPropertyChanging();
+			entity.UnloadingProvince = null;
 		}
 	}
 	

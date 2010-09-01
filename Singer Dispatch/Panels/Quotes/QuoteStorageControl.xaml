@@ -43,13 +43,13 @@
                     </Grid.RowDefinitions>
 
                     <Label Grid.Row="0" Grid.Column="0">Commodity:</Label>
-                    <ComboBox Grid.Row="0" Grid.Column="1" Name="cmbCommodities" SelectedItem="{Binding Commodity}" ItemTemplate="{StaticResource SimpleNameTemplate}" IsEditable="True" TextSearch.TextPath="Name" />
+                    <ComboBox Grid.Row="0" Grid.Column="1" Name="cmbCommodities" SelectedItem="{Binding Commodity}" ItemTemplate="{StaticResource SimpleNameTemplate}" IsEditable="True" TextSearch.TextPath="Name" Controls:ComboUtil.AllowNull="True" />
 
                     <Label Grid.Row="1" Grid.Column="0">Details:</Label>
                     <TextBox Grid.Row="1" Grid.Column="1" Grid.RowSpan="2" Text="{Binding Details}" Style="{StaticResource MultiLine}" VerticalScrollBarVisibility="Hidden" />
 
                     <Label Grid.Row="0" Grid.Column="2">Billing type:</Label>
-                    <ComboBox Grid.Row="0" Grid.Column="3" Name="cmbBillingType" SelectedItem="{Binding BillingType}" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectionChanged="BillingType_SelectionChanged" />
+                    <ComboBox Grid.Row="0" Grid.Column="3" Name="cmbBillingType" SelectedItem="{Binding BillingType}" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectionChanged="BillingType_SelectionChanged" Controls:ComboUtil.AllowNull="True" />
 
                     <Label Grid.Row="1" Grid.Column="2">Quantity:</Label>
                     <TextBox Grid.Row="1" Grid.Column="3" Name="txtQuantity" Text="{Binding Quantity}" />

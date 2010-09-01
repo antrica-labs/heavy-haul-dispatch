@@ -4,6 +4,7 @@
                            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
                            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                            xmlns:Panels="clr-namespace:SingerDispatch.Panels"
+                           xmlns:Controls="clr-namespace:SingerDispatch.Controls"
                            Loaded="Control_Loaded"
                            x:Name="ThePanel"
                            d:DesignWidth="780" mc:Ignorable="d">
@@ -61,10 +62,10 @@
                             </Grid.RowDefinitions>
 
                             <Label Grid.Column="0" Grid.Row="0">Address:</Label>
-                            <ComboBox Grid.Column="1" Grid.Row="0" Name="CmbAddresses" SelectedItem="{Binding BillingAddress}" ItemTemplate="{StaticResource AddressTemplate}" />
+                            <ComboBox Grid.Column="1" Grid.Row="0" Name="CmbAddresses" SelectedItem="{Binding BillingAddress}" ItemTemplate="{StaticResource AddressTemplate}" Controls:ComboUtil.AllowNull="True" />
 
                             <Label Grid.Column="0" Grid.Row="1">Name:</Label>
-                            <ComboBox Grid.Column="1" Grid.Row="1" Name="CmbContacts" SelectedItem="{Binding Contact}" ItemTemplate="{StaticResource SimpleNameTemplate}" />
+                            <ComboBox Grid.Column="1" Grid.Row="1" Name="CmbContacts" SelectedItem="{Binding Contact}" ItemTemplate="{StaticResource SimpleNameTemplate}" Controls:ComboUtil.AllowNull="True" />
                         </Grid>
                     </GroupBox>
                     

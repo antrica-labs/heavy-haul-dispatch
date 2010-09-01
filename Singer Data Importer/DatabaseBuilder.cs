@@ -25,85 +25,7 @@ namespace SingerDispatch.Importer
             }
                        
             Database.CreateDatabase();
-           
-      
-            // Populate countries and provinces
-
-            var countries = new List<Country>();
-            var provinces = new List<ProvincesAndState>();
-
-            var canada = new Country { Name = "Canada" };
-            var usa = new Country { Name = "USA" };
-
-            countries.Add(canada);
-            countries.Add(usa);
-
-            provinces.Add(new ProvincesAndState { Name = "Ontario", Country = canada });
-            provinces.Add(new ProvincesAndState { Name = "Quebec", Country = canada });
-            provinces.Add(new ProvincesAndState { Name = "British Columbia", Country = canada });
-            provinces.Add(new ProvincesAndState { Name = "Alberta", Country = canada });
-            provinces.Add(new ProvincesAndState { Name = "Manitoba", Country = canada });
-            provinces.Add(new ProvincesAndState { Name = "Saskatchewan", Country = canada });
-            provinces.Add(new ProvincesAndState { Name = "Nova Scotia", Country = canada });
-            provinces.Add(new ProvincesAndState { Name = "New Brunswick", Country = canada });
-            provinces.Add(new ProvincesAndState { Name = "Newfoundland and Labrador", Country = canada });
-            provinces.Add(new ProvincesAndState { Name = "Prince Edward Island", Country = canada });
-            provinces.Add(new ProvincesAndState { Name = "Northwest Territories", Country = canada });
-            provinces.Add(new ProvincesAndState { Name = "Yukon", Country = canada });
-            provinces.Add(new ProvincesAndState { Name = "Nunavut", Country = canada });
-            provinces.Add(new ProvincesAndState { Name = "Delaware", Country = usa });
-            provinces.Add(new ProvincesAndState { Name = "Pennsylvania", Country = usa });
-            provinces.Add(new ProvincesAndState { Name = "New Jersey", Country = usa });
-            provinces.Add(new ProvincesAndState { Name = "Georgia", Country = usa });
-            provinces.Add(new ProvincesAndState { Name = "Connecticut", Country = usa });
-            provinces.Add(new ProvincesAndState { Name = "Massachusetts", Country = usa });
-            provinces.Add(new ProvincesAndState { Name = "Maryland", Country = usa });
-            provinces.Add(new ProvincesAndState { Name = "South Carolina", Country = usa });
-            provinces.Add(new ProvincesAndState { Name = "New Hampshire", Country = usa });
-            provinces.Add(new ProvincesAndState { Name = "Virginia", Country = usa });
-            provinces.Add(new ProvincesAndState { Name = "New York", Country = usa });
-            provinces.Add(new ProvincesAndState { Name = "North Carolina", Country = usa });
-            provinces.Add(new ProvincesAndState { Name = "Rhode Island", Country = usa });
-            provinces.Add(new ProvincesAndState { Name = "Vermont", Country = usa });
-            provinces.Add(new ProvincesAndState { Name = "Kentucky", Country = usa });
-            provinces.Add(new ProvincesAndState { Name = "Tennessee", Country = usa });
-            provinces.Add(new ProvincesAndState { Name = "Ohio", Country = usa });
-            provinces.Add(new ProvincesAndState { Name = "Louisiana", Country = usa });
-            provinces.Add(new ProvincesAndState { Name = "Indiana", Country = usa });
-            provinces.Add(new ProvincesAndState { Name = "Mississippi", Country = usa });
-            provinces.Add(new ProvincesAndState { Name = "Illinois", Country = usa });
-            provinces.Add(new ProvincesAndState { Name = "Alabama", Country = usa });
-            provinces.Add(new ProvincesAndState { Name = "Maine", Country = usa });
-            provinces.Add(new ProvincesAndState { Name = "Missouri", Country = usa });
-            provinces.Add(new ProvincesAndState { Name = "Arkansas", Country = usa });
-            provinces.Add(new ProvincesAndState { Name = "Michigan", Country = usa });
-            provinces.Add(new ProvincesAndState { Name = "Florida", Country = usa });
-            provinces.Add(new ProvincesAndState { Name = "Texas", Country = usa });
-            provinces.Add(new ProvincesAndState { Name = "Iowa", Country = usa });
-            provinces.Add(new ProvincesAndState { Name = "Wisconsin", Country = usa });
-            provinces.Add(new ProvincesAndState { Name = "California", Country = usa });
-            provinces.Add(new ProvincesAndState { Name = "Minnesota", Country = usa });
-            provinces.Add(new ProvincesAndState { Name = "Oregon", Country = usa });
-            provinces.Add(new ProvincesAndState { Name = "Kansas", Country = usa });
-            provinces.Add(new ProvincesAndState { Name = "West Virginia", Country = usa });
-            provinces.Add(new ProvincesAndState { Name = "Nevada", Country = usa });
-            provinces.Add(new ProvincesAndState { Name = "Nebraska", Country = usa });
-            provinces.Add(new ProvincesAndState { Name = "Colorado", Country = usa });
-            provinces.Add(new ProvincesAndState { Name = "North Dakota", Country = usa });
-            provinces.Add(new ProvincesAndState { Name = "South Dakota", Country = usa });
-            provinces.Add(new ProvincesAndState { Name = "Montana", Country = usa });
-            provinces.Add(new ProvincesAndState { Name = "Washington", Country = usa });
-            provinces.Add(new ProvincesAndState { Name = "Idaho", Country = usa });
-            provinces.Add(new ProvincesAndState { Name = "Wyoming", Country = usa });
-            provinces.Add(new ProvincesAndState { Name = "Utah", Country = usa });
-            provinces.Add(new ProvincesAndState { Name = "Oklahoma", Country = usa });
-            provinces.Add(new ProvincesAndState { Name = "New Mexico", Country = usa });
-            provinces.Add(new ProvincesAndState { Name = "Arizona", Country = usa });
-            provinces.Add(new ProvincesAndState { Name = "Alaska", Country = usa });
-            provinces.Add(new ProvincesAndState { Name = "Hawaii", Country = usa });
-
-            Database.Countries.InsertAllOnSubmit(countries);
-
+            
 
             // Populate customer types
             Database.CustomerType.InsertOnSubmit(new CustomerType { Name = "Singer Specialized", IsEnterprise = false });
@@ -113,34 +35,7 @@ namespace SingerDispatch.Importer
             Database.ContactMethods.InsertOnSubmit(new ContactMethod { Name = "Email" });
             Database.ContactMethods.InsertOnSubmit(new ContactMethod { Name = "Primary phone" });
             Database.ContactMethods.InsertOnSubmit(new ContactMethod { Name = "Secondary phone" });
-            
-
-            // Populate service types
-            var servicetypes = new List<ServiceType>();
-
-            servicetypes.Add(new ServiceType { Name = "Bed Truck" });
-            servicetypes.Add(new ServiceType { Name = "Bridge" });
-            servicetypes.Add(new ServiceType { Name = "Cats" });
-            servicetypes.Add(new ServiceType { Name = "Cranemats / Rigmats" });
-            servicetypes.Add(new ServiceType { Name = "Cranes" });
-            servicetypes.Add(new ServiceType { Name = "Equipment Rental" });
-            servicetypes.Add(new ServiceType { Name = "Hired Trucking" });
-            servicetypes.Add(new ServiceType { Name = "Hot Shot Service" });
-            servicetypes.Add(new ServiceType { Name = "Jack and Roll / Rigging" });
-            servicetypes.Add(new ServiceType { Name = "Light Swinging" });
-            servicetypes.Add(new ServiceType { Name = "Loading/Unloading" });
-            servicetypes.Add(new ServiceType { Name = "Pilot Cars" });
-            servicetypes.Add(new ServiceType { Name = "Police Escorts" });
-            servicetypes.Add(new ServiceType { Name = "Provide & Place no Parking signage" });
-            servicetypes.Add(new ServiceType { Name = "Railcar Tie Down" });
-            servicetypes.Add(new ServiceType { Name = "Railway Crossing Police" });
-            servicetypes.Add(new ServiceType { Name = "Rental Trailer" });
-            servicetypes.Add(new ServiceType { Name = "Repairs" });
-            servicetypes.Add(new ServiceType { Name = "Welders" });
-            servicetypes.Add(new ServiceType { Name = "Wirelift" });
-
-            Database.ServiceTypes.InsertAllOnSubmit(servicetypes);
-            
+                        
 
             // Populate address types
             var addresstypes = new List<AddressType>();
@@ -153,7 +48,7 @@ namespace SingerDispatch.Importer
             Database.AddressTypes.InsertAllOnSubmit(addresstypes);
 
             
-            // Populate priority levels            
+            // Populate priority levels
             var levels = new List<CompanyPriorityLevel>();
 
             levels.Add(new CompanyPriorityLevel { Name = "1. Elite" });
@@ -168,7 +63,8 @@ namespace SingerDispatch.Importer
 
             // Populate seasons
             var seasons = new List<Season>();
-                        
+
+            seasons.Add(new Season { Name = "%  Weight Restriction" });
             seasons.Add(new Season { Name = "Fall Weight Restriction" });
             seasons.Add(new Season { Name = "Post Weight Restriction" });
             seasons.Add(new Season { Name = "Spring Weight Restriction" });
@@ -178,8 +74,7 @@ namespace SingerDispatch.Importer
             Database.Seasons.InsertAllOnSubmit(seasons);
 
 
-            // Populate billing types            
-
+            // Populate billing types
             var billingtypes = new List<BillingType>();
 
             billingtypes.Add(new BillingType { Name = "Per Item" });
@@ -497,7 +392,7 @@ namespace SingerDispatch.Importer
             equipment.Add(new Equipment { UnitNumber = "04-18", Serial = "4VHSMCJH4WN518887", Make = "Volvo", Model = "ACL48D", Year = "1998", LicencePlate = "C59510", EngineMake = "Cummins", EngineModel = "N14", EngineType = "Picker Truck/w Weldco 30 Ton Crane", IsDispatchable = true, EquipmentClass = tractorClass, Tare = 24790, AxleConfig = "4/8", HasWinch = false, SteerTireSize = "16", DriveTireSize = null, IsProrated = true, IsOnlyForScheuerle = false, IsOnlyForPushing = false, Height = 4.11, InServiceDate = DateTime.ParseExact("1/1/2005", dateFormat, provider), OutOfServiceDate = null });
             equipment.Add(new Equipment { UnitNumber = "05-38", Serial = "2FDHF3795HCA57592", Make = "Ford", Model = "F350 Gas", Year = "1987", LicencePlate = "SNX990", EngineMake = "Ford", EngineModel = "5.7L", EngineType = "Service Truck", IsDispatchable = false, EquipmentClass = otherClass, Tare = null, AxleConfig = null, HasWinch = false, SteerTireSize = null, DriveTireSize = null, IsProrated = false, IsOnlyForScheuerle = false, IsOnlyForPushing = false, Height = null, InServiceDate = DateTime.ParseExact("1/1/2005", dateFormat, provider), OutOfServiceDate = null });
             equipment.Add(new Equipment { UnitNumber = "06-41", Serial = null, Make = "Fiat Allis", Model = "Grader", Year = null, LicencePlate = null, EngineMake = null, EngineModel = null, EngineType = null, IsDispatchable = false, EquipmentClass = otherClass, Tare = null, AxleConfig = null, HasWinch = false, SteerTireSize = null, DriveTireSize = null, IsProrated = false, IsOnlyForScheuerle = false, IsOnlyForPushing = false, Height = null, InServiceDate = DateTime.ParseExact("1/1/2005", dateFormat, provider), OutOfServiceDate = null });
-            equipment.Add(new Equipment { UnitNumber = "07-43", Serial = "B11L1956-D", Make = "Hyster", Model = "KE Karry Krane", Year = "1956", LicencePlate = null, EngineMake = null, EngineModel = null, EngineType = null, IsDispatchable = false, EquipmentClass = otherClass, Tare = null, AxleConfig = null, HasWinch = false, SteerTireSize = null, DriveTireSize = null, IsProrated = false, IsOnlyForScheuerle = false, IsOnlyForPushing = false, Height = null, InServiceDate = DateTime.ParseExact("1/1/2005", dateFormat, provider), OutOfServiceDate = null });
+            equipment.Add(new Equipment { UnitNumber = "07-43", Serial = "B11L1956-D", Make = "Hyste"r, Model = "KE Karry Krane", Year = "1956", LicencePlate = null, EngineMake = null, EngineModel = null, EngineType = null, IsDispatchable = false, EquipmentClass = otherClass, Tare = null, AxleConfig = null, HasWinch = false, SteerTireSize = null, DriveTireSize = null, IsProrated = false, IsOnlyForScheuerle = false, IsOnlyForPushing = false, Height = null, InServiceDate = DateTime.ParseExact("1/1/2005", dateFormat, provider), OutOfServiceDate = null });
             equipment.Add(new Equipment { UnitNumber = "07-44", Serial = "CD1179", Make = "Bullmoose", Model = "BHCP2036D", Year = "1971", LicencePlate = null, EngineMake = null, EngineModel = null, EngineType = null, IsDispatchable = false, EquipmentClass = otherClass, Tare = null, AxleConfig = null, HasWinch = false, SteerTireSize = null, DriveTireSize = null, IsProrated = false, IsOnlyForScheuerle = false, IsOnlyForPushing = false, Height = null, InServiceDate = DateTime.ParseExact("1/1/2005", dateFormat, provider), OutOfServiceDate = null });
             equipment.Add(new Equipment { UnitNumber = "08-45", Serial = "3363-10", Make = "Lima", Model = "Type 64 50 ton Crane", Year = null, LicencePlate = null, EngineMake = null, EngineModel = null, EngineType = null, IsDispatchable = true, EquipmentClass = otherClass, Tare = null, AxleConfig = null, HasWinch = false, SteerTireSize = null, DriveTireSize = null, IsProrated = false, IsOnlyForScheuerle = false, IsOnlyForPushing = false, Height = null, InServiceDate = DateTime.ParseExact("1/1/2005", dateFormat, provider), OutOfServiceDate = null });
             equipment.Add(new Equipment { UnitNumber = "08-46", Serial = "6222-0001", Make = "Lima", Model = "50 Ton Crane", Year = "1989", LicencePlate = null, EngineMake = null, EngineModel = null, EngineType = null, IsDispatchable = true, EquipmentClass = otherClass, Tare = null, AxleConfig = null, HasWinch = false, SteerTireSize = null, DriveTireSize = null, IsProrated = false, IsOnlyForScheuerle = false, IsOnlyForPushing = false, Height = null, InServiceDate = DateTime.ParseExact("1/1/2005", dateFormat, provider), OutOfServiceDate = null });

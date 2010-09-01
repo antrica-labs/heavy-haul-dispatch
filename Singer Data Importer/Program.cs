@@ -16,7 +16,7 @@ namespace SingerDispatch.Importer
         private Dictionary<string, ProvincesAndState> ProvincesAndStates { get; set; }
         private Dictionary<string, AddressType> AddressTypes { get; set; }
         private Dictionary<string, ContactType> ContactTypes { get; set; }
-
+        private Dictionary<string, Rate> Rates { get; set; }
         private Dictionary<int?, Address> NewAddresses { get; set; }
 
         static void Main(string[] args)
@@ -148,19 +148,29 @@ namespace SingerDispatch.Importer
             }
 
             ContactTypes = new Dictionary<string, ContactType>();
+
+            Rates = new Dictionary<string, Rate>();
+
+            foreach (var item in linq.Rates)
+            {
+                Rates.Add(item.Name, item);
+            }
         }
 
         private void ImportOldData()
         {
             NewAddresses = new Dictionary<int?, Address>();
 
+            List<Country> countries;
+            List<ServiceType> serviceTypes;
             List<Company> companies;
             List<Inclusion> inclusions;
             List<Condition> conditions;
             List<ContactType> contactTypes;
             List<ExtraEquipmentType> extraEquipmentTypes;
             List<PermitType> permitTypes;
-                        
+            
+            
             var datasource = ConfigurationManager.ConnectionStrings["OldDBConnectionParameters"].ConnectionString;
             var provider = ConfigurationManager.ConnectionStrings["OldDBConnectionParameters"].ProviderName;
             var connectionString = String.Format("Provider={0};{1}", provider, datasource);
@@ -170,6 +180,9 @@ namespace SingerDispatch.Importer
                 connection.Open();
 
                 Console.WriteLine("Importing support data...");
+
+                countries = ImportCountriesAndProvinces(connection);
+                serviceTypes = ImportServiceTypes(connection);
                 contactTypes = ImportContactTypes(connection);
                 inclusions = ImportInclusions(connection);
                 conditions = ImportConditions(connection);
@@ -185,6 +198,8 @@ namespace SingerDispatch.Importer
 
             var context = new SingerDispatchDataContext(ConfigurationManager.ConnectionStrings["NewDBConnectionParameters"].ConnectionString);
 
+            context.Countries.InsertAllOnSubmit(countries);
+            context.ServiceTypes.InsertAllOnSubmit(serviceTypes);
             context.ContactTypes.InsertAllOnSubmit(contactTypes);
             context.Inclusions.InsertAllOnSubmit(inclusions);
             context.Conditions.InsertAllOnSubmit(conditions);
@@ -193,6 +208,83 @@ namespace SingerDispatch.Importer
             context.Companies.InsertAllOnSubmit(companies);
 
             context.SubmitChanges();
+        }
+
+        private List<Country> ImportCountriesAndProvinces(OleDbConnection connection)
+        {
+            var countries = new Dictionary<string, Country>();
+
+            countries.Add("Canada", new Country { Name = "Canada" });
+            countries.Add("USA", new Country { Name = "USA" });
+
+            const string select = "SELECT * FROM tbl_Province";
+            using (var command = new OleDbCommand(select, connection))
+            {
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        var country = countries[reader["countryName"] == DBNull.Value ? "" : (string)reader["countryName"]];
+
+                        if (country == null) continue;
+
+                        var prov = new ProvincesAndState();
+
+                        prov.Name = reader["provinceName"] == DBNull.Value ? null : (string)reader["provinceName"];
+                        prov.Abbreviation = reader["provinceAbr"] == DBNull.Value ? null : (string)reader["provinceAbr"];
+
+                        country.ProvincesAndStates.Add(prov);
+                    }
+                }
+            }
+
+            return countries.Values.ToList();
+        }
+
+        private List<ServiceType> ImportServiceTypes(OleDbConnection connection)
+        {
+            var list = new List<ServiceType>();
+
+            const string select = "SELECT * FROM tbl_ServiceType";
+            using (var command = new OleDbCommand(select, connection))
+            {
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        var name = reader["serviceType"] == DBNull.Value ? null : (string)reader["serviceType"];
+
+                        if (name == null) continue;
+
+                        list.Add(new ServiceType { Name = name });
+                    }
+                }
+            }
+
+            return list;
+        }
+
+        private List<TrailerCombination> ImportTrailerCombinations(OleDbConnection connection)
+        {
+            var list = new List<TrailerCombination>();
+            
+            const string select = "SELECT * FROM join_tbl_TrailerCombination_WheelType";
+            using (var command = new OleDbCommand(select, connection))
+            {
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        var combo = new TrailerCombination();
+                        
+                        // rate - trailerUsedType, combination - trailerCombinationType, tare - trailerCombinationTare, height - trailerCombinationHeight, width - trailerCombinationWidth, length - trailerCombinationLengthWithTractor (feet)
+
+                        combo.Rate = Rates[""];
+                    }
+                }
+            }
+
+            return list;
         }
 
         private List<ContactType> ImportContactTypes(OleDbConnection connection)

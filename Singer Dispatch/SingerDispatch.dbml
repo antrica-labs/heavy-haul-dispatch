@@ -307,6 +307,7 @@
       <Column Name="LoadID" Type="System.Int64" CanBeNull="true" />
       <Column Name="LoadSiteContactID" Type="System.Int64" CanBeNull="true" />
       <Column Name="LoadContactID" Type="System.Int64" CanBeNull="true" />
+      <Column Name="LoadingProvinceID" Type="System.Int64" CanBeNull="true" />
       <Column Name="LoadLocation" Type="System.String" CanBeNull="true" />
       <Column Name="LoadAddress" Type="System.String" CanBeNull="true" />
       <Column Name="LoadBy" Type="System.String" CanBeNull="true" />
@@ -316,6 +317,7 @@
       <Column Name="LoadRoute" Type="System.String" CanBeNull="true" />      
       <Column Name="UnloadSiteContactID" Type="System.Int64" CanBeNull="true" />
       <Column Name="UnloadContactID" Type="System.Int64" CanBeNull="true" />
+      <Column Name="UnloadingProvinceID" Type="System.Int64" CanBeNull="true" />
       <Column Name="UnloadLocation" Type="System.String" CanBeNull="true" />
       <Column Name="UnloadAddress" Type="System.String" CanBeNull="true" />
       <Column Name="UnloadBy" Type="System.String" CanBeNull="true" />
@@ -341,6 +343,8 @@
       <Association Name="ConsigneeAddress_LoadedCommodity" Member="ConsigneeAddress" ThisKey="ConsigneeAddressID" OtherKey="ID" Type="Address" IsForeignKey="true" />
       <Association Name="LoadUnloadMethod_LoadedCommodity_Load" Member="LoadMethod" ThisKey="LoadMethodID" OtherKey="ID" Type="LoadUnloadMethod" IsForeignKey="true" />
       <Association Name="LoadUnloadMethod_LoadedCommodity_Unload" Member="UnloadMethod" ThisKey="UnloadMethodID" OtherKey="ID" Type="LoadUnloadMethod" IsForeignKey="true" />
+      <Association Name="ProvincesAndState_LoadedCommodity_Load" Member="LoadingProvince" ThisKey="LoadingProvinceID" OtherKey="ID" Type="ProvincesAndState" IsForeignKey="true" />
+      <Association Name="ProvincesAndState_LoadedCommodity_Unload" Member="UnloadingProvince" ThisKey="UnloadingProvinceID" OtherKey="ID" Type="ProvincesAndState" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="" Member="ExtraEquipmentTypes">
@@ -388,10 +392,13 @@
     <Type Name="ProvincesAndState">
       <Column Name="ID" Type="System.Int64" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="CountryID" Type="System.Int64" CanBeNull="true" />
+      <Column Name="Abbreviation" Type="System.String" CanBeNull="true" />
       <Column Name="Name" Type="System.String" CanBeNull="true" />
       <Association Name="ProvincesAndState_Address" Member="Addresses" ThisKey="ID" OtherKey="ProvinceStateID" Type="Address" />
       <Association Name="Country_ProvincesAndState" Member="Country" ThisKey="CountryID" OtherKey="ID" Type="Country" IsForeignKey="true" />
       <Association Name="ProvinceAndState_OutOfProvinceTravel" Member="OutOfProvinceTravels" ThisKey="ID" OtherKey="ProvinceStateID" Type="OutOfProvinceTravel" />
+      <Association Name="ProvincesAndState_LoadedCommodity_Load" Member="LoadingProvinces" ThisKey="ID" OtherKey="LoadingProvinceID" Type="ProvincesAndState" />
+      <Association Name="ProvincesAndState_LoadedCommodity_Unload" Member="UnloadingProvinces" ThisKey="ID" OtherKey="UnloadingProvinceID" Type="ProvincesAndState" />
     </Type>
   </Table>
   <Table Name="" Member="QuoteCommodities">

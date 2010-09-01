@@ -54,7 +54,7 @@
                     </Grid.RowDefinitions>
 
                     <Label Grid.Row="0" Grid.Column="0">Commodity name:</Label>
-                    <ComboBox Name="cmbCommodityName" Text="{Binding Name}" Grid.Row="0" Grid.Column="1" IsEditable="True" ItemTemplate="{StaticResource NameAndUnitTemplate}" TextSearch.TextPath="Name" SelectionChanged="CommodityName_SelectionChanged" />
+                    <ComboBox Name="cmbCommodityName" Text="{Binding Name}" Grid.Row="0" Grid.Column="1" IsEditable="True" ItemTemplate="{StaticResource NameAndUnitTemplate}" TextSearch.TextPath="Name" SelectionChanged="CommodityName_SelectionChanged" Controls:ComboUtil.AllowNull="True" />
 
                     <Label Grid.Row="1" Grid.Column="0">Hauling cost:</Label>
                     <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Cost, StringFormat=c, Converter={StaticResource NullableValueConverter}}" Controls:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" />
