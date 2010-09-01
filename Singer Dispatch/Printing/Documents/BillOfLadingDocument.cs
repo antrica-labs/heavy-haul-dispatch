@@ -833,6 +833,7 @@ namespace SingerDispatch.Printing.Documents
             replacements[7] = "&#9744;";
             replacements[8] = commodity.BoLDangerousGoodsInfo;
 
+
             return string.Format(html, replacements);
         }
 

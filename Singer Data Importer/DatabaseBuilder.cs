@@ -107,7 +107,7 @@ namespace SingerDispatch.Importer
 
             // Populate customer types
             Database.CustomerType.InsertOnSubmit(new CustomerType { Name = "Singer Specialized", IsEnterprise = false });
-            Database.CustomerType.InsertOnSubmit(new CustomerType { Name = "M.E. Signer Enterprise", IsEnterprise = true });
+            Database.CustomerType.InsertOnSubmit(new CustomerType { Name = "M.E. Singer Enterprise", IsEnterprise = true });
 
             // Populate contact methods
             Database.ContactMethods.InsertOnSubmit(new ContactMethod { Name = "Email" });
@@ -702,7 +702,12 @@ namespace SingerDispatch.Importer
             Database.Configurations.InsertOnSubmit(new Configuration { Name = "BillOfLading-ShippersWeight", Value = "<p>The shipper declares that the weight of this shipment does not exceed the maximum freight weight shown above; and agree to indemnify the carrier and to pay as part of the transportation charges in accordance with the carrier's filed tariffs, and fine or penalty incurred by the carrier by reason of a violation of any provision of the Transport Safety Act, arising from any error or misstatement, intensional or otherwise, in this weight declaration.</p>" });
             Database.Configurations.InsertOnSubmit(new Configuration { Name = "BillOfLading-NoticeOfClaim", Value = "<p>A) No carrier is liable for loss, damage or delay to any goods carried under the Bill of Lading unless notice thereof setting out particulars of the origin, detination and date of shipment of the goods and the estimated amount claimed in respect of such loss, damage or delay is given in writing to the originating carrier or the delievering carrier within seven (7) days after teh delievery of the goods, or, in the case of failure to make delivery, within nine (9) months from the date of shipment. B) The final statement of the claim must be filed within nine (9) months from the date of shipment together with a copy of the paid freight bill.</p>" });
             Database.Configurations.InsertOnSubmit(new Configuration { Name = "BillOfLading-MaxLiability", Value = "Maximum liability of $2.00 per lb/$4.41 per kg unless declared valuation states otherwise" });
-            Database.Configurations.InsertOnSubmit(new Configuration { Name = "", Value = "" });
+            Database.Configurations.InsertOnSubmit(new Configuration { Name = "Dispatch-EnterpriseBoLFileCopies", Value = 1.ToString() });
+            Database.Configurations.InsertOnSubmit(new Configuration { Name = "Dispatch-EnterpriseBoLDriverCopies", Value = 1.ToString() });
+            Database.Configurations.InsertOnSubmit(new Configuration { Name = "Dispatch-SingerBoLFileCopies", Value = 1.ToString() });
+            Database.Configurations.InsertOnSubmit(new Configuration { Name = "Dispatch-SingerBoLDriverCopies", Value = 3.ToString() });
+            Database.Configurations.InsertOnSubmit(new Configuration { Name = "Dispatch-EnterprisePrintFileCopy", Value = false.ToString() });
+            Database.Configurations.InsertOnSubmit(new Configuration { Name = "Dispatch-SingerPrintFileCopy", Value = true.ToString() });
 
             Database.SubmitChanges();
         }
@@ -713,3 +718,4 @@ namespace SingerDispatch.Importer
         }
     }
 }
+
