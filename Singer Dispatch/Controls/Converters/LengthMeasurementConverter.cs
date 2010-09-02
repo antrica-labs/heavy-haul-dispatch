@@ -14,13 +14,14 @@ namespace SingerDispatch.Controls
     {
         public object Convert(object[] values, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            if (values.Length != 2 || !(values[0] is Double) || !(values[1] is Boolean)) return "";
+            if (values.Length != 2 || !(values[0] is Double)) return "";
 
-            Double measurement = (Double)values[0]; // Always in meters
-            Boolean useImperial = (Boolean)values[1];
+            var measurement = (Double)values[0]; // Always in meters
+            var useImperial = false;
             string unit;
 
             if (measurement == 0.0) return "";
+            if (values[1] is Boolean) useImperial = (Boolean)values[1];
 
             if (useImperial == true)
             {
