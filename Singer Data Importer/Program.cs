@@ -133,14 +133,6 @@ namespace SingerDispatch.Importer
                     CompanyTypes.Add(item.IsEnterprise, item);
             }
             
-
-            ProvincesAndStates = new Dictionary<string, ProvincesAndState>();
-            foreach (var item in (from ps in linq.ProvincesAndStates select ps).ToList())
-            {
-                ProvincesAndStates[item.Name] = item;
-            }
-
-
             AddressTypes = new Dictionary<string, AddressType>();
             foreach (var item in (from at in linq.AddressTypes select at).ToList())
             {
@@ -155,6 +147,8 @@ namespace SingerDispatch.Importer
             {
                 Rates.Add(item.Name, item);
             }
+
+            ProvincesAndStates = new Dictionary<string, ProvincesAndState>();
         }
 
         private void ImportOldData()
@@ -169,7 +163,7 @@ namespace SingerDispatch.Importer
             List<ContactType> contactTypes;
             List<ExtraEquipmentType> extraEquipmentTypes;
             List<PermitType> permitTypes;
-            
+            List<TrailerCombination> trailerCombos;
             
             var datasource = ConfigurationManager.ConnectionStrings["OldDBConnectionParameters"].ConnectionString;
             var provider = ConfigurationManager.ConnectionStrings["OldDBConnectionParameters"].ProviderName;
@@ -181,14 +175,15 @@ namespace SingerDispatch.Importer
 
                 Console.WriteLine("Importing support data...");
 
-                countries = ImportCountriesAndProvinces(connection);
+                countries = ImportCountriesAndProvinces(connection);                
                 serviceTypes = ImportServiceTypes(connection);
                 contactTypes = ImportContactTypes(connection);
+                trailerCombos = ImportTrailerCombinations(connection);
                 inclusions = ImportInclusions(connection);
                 conditions = ImportConditions(connection);
                 extraEquipmentTypes = ImportExtraEquipmentTypes(connection);
                 permitTypes = ImportPermitTypes(connection);
-
+                
                 Console.Write("Importing companies");
                 companies = ImportCompanies(connection);                
             }
@@ -198,15 +193,16 @@ namespace SingerDispatch.Importer
 
             var context = new SingerDispatchDataContext(ConfigurationManager.ConnectionStrings["NewDBConnectionParameters"].ConnectionString);
 
-            context.Countries.InsertAllOnSubmit(countries);
+            context.Countries.InsertAllOnSubmit(countries);            
             context.ServiceTypes.InsertAllOnSubmit(serviceTypes);
             context.ContactTypes.InsertAllOnSubmit(contactTypes);
+            context.TrailerCombinations.InsertAllOnSubmit(trailerCombos);
             context.Inclusions.InsertAllOnSubmit(inclusions);
             context.Conditions.InsertAllOnSubmit(conditions);
             context.ExtraEquipmentTypes.InsertAllOnSubmit(extraEquipmentTypes);
             context.PermitTypes.InsertAllOnSubmit(permitTypes);
             context.Companies.InsertAllOnSubmit(companies);
-
+            
             context.SubmitChanges();
         }
 
@@ -224,16 +220,24 @@ namespace SingerDispatch.Importer
                 {
                     while (reader.Read())
                     {
-                        var country = countries[reader["countryName"] == DBNull.Value ? "" : (string)reader["countryName"]];
+                        try
+                        {
+                            var country = countries[reader["countryName"] == DBNull.Value ? "" : (string)reader["countryName"]];
 
-                        if (country == null) continue;
+                            if (country == null) continue;
 
-                        var prov = new ProvincesAndState();
+                            var prov = new ProvincesAndState();
 
-                        prov.Name = reader["provinceName"] == DBNull.Value ? null : (string)reader["provinceName"];
-                        prov.Abbreviation = reader["provinceAbr"] == DBNull.Value ? null : (string)reader["provinceAbr"];
+                            prov.Name = reader["provinceName"] == DBNull.Value ? null : (string)reader["provinceName"];
+                            prov.Abbreviation = reader["provinceAbr"] == DBNull.Value ? null : (string)reader["provinceAbr"];
 
-                        country.ProvincesAndStates.Add(prov);
+                            country.ProvincesAndStates.Add(prov);
+                            ProvincesAndStates.Add(prov.Abbreviation, prov);
+                        }
+                        catch (Exception e)
+                        {
+                            var message = e.Message;
+                        }
                     }
                 }
             }
@@ -275,11 +279,27 @@ namespace SingerDispatch.Importer
                 {
                     while (reader.Read())
                     {
-                        var combo = new TrailerCombination();
-                        
-                        // rate - trailerUsedType, combination - trailerCombinationType, tare - trailerCombinationTare, height - trailerCombinationHeight, width - trailerCombinationWidth, length - trailerCombinationLengthWithTractor (feet)
+                        try
+                        {
+                            var combo = new TrailerCombination();
 
-                        combo.Rate = Rates[""];
+                            var wheelType = reader["trailerUsedType"] == DBNull.Value ? null : (string)reader["trailerUsedType"];
+
+                            if (wheelType == null) continue;
+
+                            combo.RateID = Rates[wheelType].ID;
+                            combo.Combination = reader["trailerCombinationType"] == DBNull.Value ? null : (string)reader["trailerCombinationType"];
+                            combo.Height = reader["trailerCombinationHeight"] == DBNull.Value ? (double?)null : (double)reader["trailerCombinationHeight"];
+                            combo.Width = reader["trailerCombinationWidth"] == DBNull.Value ? (double?)null : (double)reader["trailerCombinationWidth"];
+                            combo.Tare = reader["trailerCombinationTare"] == DBNull.Value ? (double?)null : (double)reader["trailerCombinationTare"];
+                            combo.Length = reader["trailerCombinationLengthWithTractor"] == DBNull.Value ? (double?)null : (double)reader["trailerCombinationLengthWithTractor"];
+
+                            list.Add(combo);
+                        }
+                        catch (Exception e)
+                        {
+                            var message = e.Message;
+                        }
                     }
                 }
             }
@@ -567,23 +587,22 @@ namespace SingerDispatch.Importer
             var provinceAbbr = (reader["cityProvinceAbr"] == DBNull.Value ? null : (string)reader["cityProvinceAbr"]) ??
                                (reader["provinceAbr"] == DBNull.Value ? null : (string)reader["provinceAbr"]);
 
+            
             if (provinceAbbr != null)
             {
-                sql = String.Format("SELECT p.provinceName FROM tbl_Province p WHERE p.provinceAbr = '{0}'", provinceAbbr);
-
-                using (var command = new OleDbCommand(sql, connection))
+                try
                 {
-                    using (var innerReader = command.ExecuteReader())
-                    {
-                        if (innerReader.Read())
-                        {
-                            if (innerReader[0] != DBNull.Value && ProvincesAndStates[(string)innerReader[0]] != null)
-                                address.ProvinceStateID = ProvincesAndStates[(string)innerReader[0]].ID;
-                        }
-                    }
+                    address.ProvincesAndState= ProvincesAndStates[provinceAbbr];
+                }
+                catch (Exception e)
+                {
+                    var message = e.Message;
                 }
             }
-
+            else
+            {
+                provinceAbbr = "";
+            }
 
             sql = String.Format("SELECT addressType from join_tbl_Address_AddressType WHERE addressId = {0}", address.ArchiveID);
 
