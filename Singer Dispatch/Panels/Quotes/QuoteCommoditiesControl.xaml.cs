@@ -5,6 +5,7 @@ using System.Windows.Controls;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using System.Collections.Generic;
+using SingerDispatch.Controls;
 
 namespace SingerDispatch.Panels.Quotes
 {
@@ -63,7 +64,7 @@ namespace SingerDispatch.Panels.Quotes
         {
             base.SelectedQuoteChanged(newValue, oldValue);
 
-            dgQuoteCommodities.ItemsSource = newValue != null ? new ObservableCollection<QuoteCommodity>(newValue.QuoteCommodities) : null;
+            dgQuoteCommodities.ItemsSource = newValue != null ? new ObservableCollection<QuoteCommodity>(from qc in newValue.QuoteCommodities orderby qc.OrderIndex select qc) : null;
         }
 
         private void dgQuoteCommodities_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -152,6 +153,8 @@ namespace SingerDispatch.Panels.Quotes
             dgQuoteCommodities.SelectedItem = commodity;
             dgQuoteCommodities.ScrollIntoView(commodity);
 
+            ReindexCollection(list);
+
             cmbCommodityName.Focus();
         }
 
@@ -164,11 +167,13 @@ namespace SingerDispatch.Panels.Quotes
                 return;
 
             commodity = commodity.Duplicate();
-
+            
             SelectedQuote.QuoteCommodities.Add(commodity);
             list.Add(commodity);
             dgQuoteCommodities.SelectedItem = commodity;
             dgQuoteCommodities.ScrollIntoView(commodity);
+
+            ReindexCollection(list);
         }
 
         private void RemoveCommodity_Click(object sender, RoutedEventArgs e)
@@ -187,7 +192,165 @@ namespace SingerDispatch.Panels.Quotes
             dgQuoteCommodities.SelectedItem = null;
             SelectedQuote.QuoteCommodities.Remove(commodity);
             ((ObservableCollection<QuoteCommodity>)dgQuoteCommodities.ItemsSource).Remove(commodity);
+
+            ReindexCollection((ObservableCollection<QuoteCommodity>)dgQuoteCommodities.ItemsSource);
         }
+
+        private static void ReindexCollection(ObservableCollection<QuoteCommodity> list)
+        {
+            int index = 1;
+
+            foreach (var item in list)
+            {
+                item.OrderIndex = index;
+
+                index++;
+            }
+        }
+
+
+        #region DraggedItem
+
+        /// <summary>
+        /// DraggedItem Dependency Property
+        /// </summary>
+        public static readonly DependencyProperty DraggedItemProperty = DependencyProperty.Register("DraggedItem", typeof(QuoteCommodity), typeof(QuoteCommoditiesControl));
+
+        /// <summary>
+        /// Gets or sets the DraggedItem property.  This dependency property 
+        /// indicates ....
+        /// </summary>
+        public QuoteCommodity DraggedItem
+        {
+            get { return (QuoteCommodity)GetValue(DraggedItemProperty); }
+            set { SetValue(DraggedItemProperty, value); }
+        }
+
+        #endregion
+
+        #region edit mode monitoring
+
+        /// <summary>
+        /// State flag which indicates whether the grid is in edit
+        /// mode or not.
+        /// </summary>
+        public bool IsEditing { get; set; }
+
+        private void OnBeginEdit(object sender, DataGridBeginningEditEventArgs e)
+        {
+            IsEditing = true;
+            //in case we are in the middle of a drag/drop operation, cancel it...
+            if (IsDragging) ResetDragDrop();
+        }
+
+        private void OnEndEdit(object sender, DataGridCellEditEndingEventArgs e)
+        {
+            IsEditing = false;
+        }
+
+        #endregion
+
+        #region Drag and Drop Rows
+
+        /// <summary>
+        /// Keeps in mind whether
+        /// </summary>
+        public bool IsDragging { get; set; }
+
+        /// <summary>
+        /// Initiates a drag action if the grid is not in edit mode.
+        /// </summary>
+        private void OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (IsEditing) return;
+
+            var row = UIHelpers.TryFindFromPoint<DataGridRow>((UIElement)sender, e.GetPosition(dgQuoteCommodities));
+            if (row == null || row.IsEditing) return;
+
+            //set flag that indicates we're capturing mouse movements
+            IsDragging = true;
+            DraggedItem = (QuoteCommodity)row.Item;
+        }
+
+
+        /// <summary>
+        /// Completes a drag/drop operation.
+        /// </summary>
+        private void OnMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            if (!IsDragging || IsEditing)
+            {
+                return;
+            }
+
+            //get the target item
+            var targetItem = (QuoteCommodity)dgQuoteCommodities.SelectedItem;
+
+            if (targetItem == null || !ReferenceEquals(DraggedItem, targetItem))
+            {
+                var list = (ObservableCollection<QuoteCommodity>)dgQuoteCommodities.ItemsSource;
+
+                //remove the source from the list
+                list.Remove(DraggedItem);
+
+                //get target index
+                var targetIndex = list.IndexOf(targetItem);
+
+                //move source at the target's location
+                list.Insert(targetIndex, DraggedItem);
+
+                //select the dropped item
+                dgQuoteCommodities.SelectedItem = DraggedItem;
+
+                ReindexCollection((ObservableCollection<QuoteCommodity>)dgQuoteCommodities.ItemsSource);
+            }
+
+            //reset
+            ResetDragDrop();
+        }
+
+
+        /// <summary>
+        /// Closes the popup and resets the
+        /// grid to read-enabled mode.
+        /// </summary>
+        private void ResetDragDrop()
+        {
+            IsDragging = false;
+            popup.IsOpen = false;
+            dgQuoteCommodities.IsReadOnly = false;
+        }
+
+
+        /// <summary>
+        /// Updates the popup's position in case of a drag/drop operation.
+        /// </summary>
+        private void OnMouseMove(object sender, MouseEventArgs e)
+        {
+            if (!IsDragging || e.LeftButton != MouseButtonState.Pressed) return;
+
+            //display the popup if it hasn't been opened yet
+            if (!popup.IsOpen)
+            {
+                //switch to read-only mode
+                dgQuoteCommodities.IsReadOnly = true;
+
+                //make sure the popup is visible
+                popup.IsOpen = true;
+            }
+
+
+            Size popupSize = new Size(popup.ActualWidth, popup.ActualHeight);
+            popup.PlacementRectangle = new Rect(e.GetPosition(this), popupSize);
+
+            //make sure the row under the grid is being selected
+            Point position = e.GetPosition(dgQuoteCommodities);
+            var row = UIHelpers.TryFindFromPoint<DataGridRow>(dgQuoteCommodities, position);
+            if (row != null) dgQuoteCommodities.SelectedItem = row.Item;
+        }
+
+        #endregion
+
     }
 }
 

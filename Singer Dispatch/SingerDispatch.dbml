@@ -405,6 +405,7 @@
     <Type Name="QuoteCommodity">
       <Column Name="ID" Type="System.Int64" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="QuoteID" Type="System.Int64" CanBeNull="true" />
+      <Column Name="OrderIndex" Type="System.Int32" CanBeNull="false" />
       <Column Name="OriginalCommodityID" Type="System.Int64" CanBeNull="true" />
       <Column Name="DepartureSiteName" Type="System.String" CanBeNull="true" />
       <Column Name="DepartureAddress" Type="System.String" CanBeNull="true" />
@@ -446,6 +447,7 @@
       <Column Name="EndDate" Type="System.DateTime" CanBeNull="true" />
       <Column Name="Price" Type="System.Decimal" CanBeNull="true" />
       <Column Name="IsPrinted" Type="System.Boolean" CanBeNull="true" />
+      <Column Name="PrintoutCostHeading" Type="System.String" CanBeNull="true" />
       <Column Name="IsItemizedBilling" Type="System.Boolean" CanBeNull="true" />
       <Association Name="Quote_Job" Member="Jobs" ThisKey="ID" OtherKey="QuoteID" Type="Job" />
       <Association Name="Quote_QuoteCommodity" Member="QuoteCommodities" ThisKey="ID" OtherKey="QuoteID" Type="QuoteCommodity" />

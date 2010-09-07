@@ -173,6 +173,7 @@ namespace SingerDispatch
     {
         partial void OnCreated()
         {
+            OrderIndex = 1;
             WeightEstimated = WeightEstimated ?? false;
             SizeEstimated = SizeEstimated ?? false;
         }

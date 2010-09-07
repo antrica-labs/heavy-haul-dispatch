@@ -119,6 +119,7 @@
     <Compile Include="Controls\Converters\LoadCommoditiesStringConverter.cs" />
     <Compile Include="Controls\Converters\QuoteFriendlyNameConverter.cs" />
     <Compile Include="Controls\TabIndexHyperlink.cs" />
+    <Compile Include="Controls\UIHelper.cs" />
     <Compile Include="Database\EntityHelper.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -592,6 +593,9 @@
     <None Include="Images\MEHeader.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\DragInsert.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="BeforeBuild">

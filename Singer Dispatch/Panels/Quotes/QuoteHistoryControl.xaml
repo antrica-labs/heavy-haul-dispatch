@@ -67,22 +67,15 @@
                                 <Grid.RowDefinitions>
                                     <RowDefinition />
                                     <RowDefinition />
-                                </Grid.RowDefinitions>
+                                </Grid.RowDefinitions>         
 
-                                <Label Grid.Row="0" Grid.Column="0">Quote #:</Label>
-                                <TextBox Grid.Row="1" Grid.Column="0" IsReadOnly="True" Style="{StaticResource ReadOnly}">
-                                    <TextBox.Text>
-                                        <MultiBinding Converter="{StaticResource QuoteFriendlyNameConverter}">
-                                            <Binding Path="Number" />
-                                            <Binding Path="Revision" />
-                                        </MultiBinding>
-                                    </TextBox.Text>
-                                </TextBox>                                
+                                <Label Grid.Row="0" Grid.Column="0">Quote price:</Label>
+                                <TextBox Name="txtPrice" Grid.Row="2" Grid.Column="0" Text="{Binding Price, StringFormat=c, Converter={StaticResource NullableValueConverter}}" Controls:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" />
 
-                                <Label Grid.Row="0" Grid.Column="1">Quote price:</Label>
-                                <TextBox Name="txtPrice" Grid.Row="2" Grid.Column="1" Text="{Binding Price, StringFormat=c, Converter={StaticResource NullableValueConverter}}" Controls:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" />
-
-                                <CheckBox Grid.Row="1" Grid.Column="2" IsChecked="{Binding IsItemizedBilling}" Checked="ItemizedBilling_Checked" Unchecked="ItemizedBilling_Unchecked">Itemized billing</CheckBox>
+                                <Label Grid.Row="0" Grid.Column="1">Price breakdown:</Label>
+                                <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding PrintoutCostHeading}" IsEnabled="{Binding ElementName=cbItemized, Path=IsChecked}" />
+                                     
+                                <CheckBox Name="cbItemized" Grid.Row="1" Grid.Column="2" IsChecked="{Binding IsItemizedBilling}" Checked="ItemizedBilling_Checked" Unchecked="ItemizedBilling_Unchecked">Itemized billing</CheckBox>
                             </Grid>
 
                             <Grid>

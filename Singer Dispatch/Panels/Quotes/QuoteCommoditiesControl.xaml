@@ -195,45 +195,57 @@
             </Grid>
         </StackPanel>
 
-        <DataGrid Name="dgQuoteCommodities" Style="{StaticResource ListDisplay}" SelectionChanged="dgQuoteCommodities_SelectionChanged">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="2*" />
-                <DataGridTextColumn Header="Unit" Binding="{Binding Unit}" />
-                <DataGridTextColumn Header="Length">
-                    <DataGridTextColumn.Binding>
-                        <MultiBinding Converter="{StaticResource LengthMeasurementConverter}">
-                            <Binding Path="Length" />
-                            <Binding Path="DataContext.UseImperialMeasurements" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type UserControl}}" />
-                        </MultiBinding>
-                    </DataGridTextColumn.Binding>
-                </DataGridTextColumn>
-                <DataGridTextColumn Header="Width">
-                    <DataGridTextColumn.Binding>
-                        <MultiBinding Converter="{StaticResource LengthMeasurementConverter}">
-                            <Binding Path="Width" />
-                            <Binding Path="DataContext.UseImperialMeasurements" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type UserControl}}" />
-                        </MultiBinding>
-                    </DataGridTextColumn.Binding>
-                </DataGridTextColumn>
-                <DataGridTextColumn Header="Height">
-                    <DataGridTextColumn.Binding>
-                        <MultiBinding Converter="{StaticResource LengthMeasurementConverter}">
-                            <Binding Path="Height" />
-                            <Binding Path="DataContext.UseImperialMeasurements" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type UserControl}}" />
-                        </MultiBinding>
-                    </DataGridTextColumn.Binding>
-                </DataGridTextColumn>
-                <DataGridTextColumn Header="Weight">
-                    <DataGridTextColumn.Binding>
-                        <MultiBinding Converter="{StaticResource WeightMeasurementConverter}">
-                            <Binding Path="Weight" />
-                            <Binding Path="DataContext.UseImperialMeasurements" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type UserControl}}" />
-                        </MultiBinding>
-                    </DataGridTextColumn.Binding>
-                </DataGridTextColumn>
-                <DataGridTextColumn Header="Cost" Binding="{Binding Cost, StringFormat=C}" />
-            </DataGrid.Columns>
-        </DataGrid>
+        <Grid MouseLeftButtonUp="OnMouseLeftButtonUp" MouseMove="OnMouseMove">
+            <DataGrid Name="dgQuoteCommodities" Style="{StaticResource ListDisplay}" SelectionChanged="dgQuoteCommodities_SelectionChanged" PreviewMouseLeftButtonDown="OnMouseLeftButtonDown">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="#" Binding="{Binding OrderIndex}" Width="30" />
+                    <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="2*" />
+                    <DataGridTextColumn Header="Unit" Binding="{Binding Unit}" />
+                    <DataGridTextColumn Header="Length">
+                        <DataGridTextColumn.Binding>
+                            <MultiBinding Converter="{StaticResource LengthMeasurementConverter}">
+                                <Binding Path="Length" />
+                                <Binding Path="DataContext.UseImperialMeasurements" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type UserControl}}" />
+                            </MultiBinding>
+                        </DataGridTextColumn.Binding>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Header="Width">
+                        <DataGridTextColumn.Binding>
+                            <MultiBinding Converter="{StaticResource LengthMeasurementConverter}">
+                                <Binding Path="Width" />
+                                <Binding Path="DataContext.UseImperialMeasurements" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type UserControl}}" />
+                            </MultiBinding>
+                        </DataGridTextColumn.Binding>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Header="Height">
+                        <DataGridTextColumn.Binding>
+                            <MultiBinding Converter="{StaticResource LengthMeasurementConverter}">
+                                <Binding Path="Height" />
+                                <Binding Path="DataContext.UseImperialMeasurements" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type UserControl}}" />
+                            </MultiBinding>
+                        </DataGridTextColumn.Binding>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Header="Weight">
+                        <DataGridTextColumn.Binding>
+                            <MultiBinding Converter="{StaticResource WeightMeasurementConverter}">
+                                <Binding Path="Weight" />
+                                <Binding Path="DataContext.UseImperialMeasurements" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type UserControl}}" />
+                            </MultiBinding>
+                        </DataGridTextColumn.Binding>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Header="Cost" Binding="{Binding Cost, StringFormat=C}" />
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+
+        <Popup x:Name="popup" IsHitTestVisible="False" Placement="RelativePoint" PlacementTarget="{Binding ElementName=ThePanel}" AllowsTransparency="True">
+            <Border BorderBrush="LightSteelBlue" BorderThickness="2" Background="White" Opacity="0.75">
+                <StackPanel Orientation="Horizontal" Margin="4,3,8,3">
+                    <Image Source="{StaticResource DragInsertImage}" Width="16" Height="16" />
+                    <TextBlock FontSize="14" FontWeight="Bold" VerticalAlignment="Center" Text="{Binding ElementName=ThePanel, Path=DraggedItem.Name}" Margin="8,0,0,0" />
+                </StackPanel>
+            </Border>
+        </Popup>
     </DockPanel>
 </Panels:QuoteUserControl>
 

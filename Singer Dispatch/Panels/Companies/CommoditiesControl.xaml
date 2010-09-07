@@ -143,7 +143,8 @@
 
             <Button Style="{StaticResource Bottom}" Name="CommitChangesButton" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgCommodities, Path=SelectedItem}" Click="SaveCommodity_Click">Save commodity</Button>
         </StackPanel>
-        
+
+
         <DataGrid Name="dgCommodities" Style="{StaticResource ListDisplay}">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="2*" />
@@ -155,7 +156,7 @@
                             <Binding Path="DataContext.UseImperialMeasurements" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type UserControl}}" />
                         </MultiBinding>
                     </DataGridTextColumn.Binding>
-                </DataGridTextColumn>                                    
+                </DataGridTextColumn>
                 <DataGridTextColumn Header="Width">
                     <DataGridTextColumn.Binding>
                         <MultiBinding Converter="{StaticResource LengthMeasurementConverter}">
@@ -178,7 +179,7 @@
                             <Binding Path="Weight" />
                             <Binding Path="DataContext.UseImperialMeasurements" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type UserControl}}" />
                         </MultiBinding>
-                    </DataGridTextColumn.Binding>                    
+                    </DataGridTextColumn.Binding>
                 </DataGridTextColumn>
                 <DataGridTextColumn Header="Value" Binding="{Binding Value, StringFormat=c}" />
             </DataGrid.Columns>

@@ -9897,6 +9897,8 @@ namespace SingerDispatch
 		
 		private System.Nullable<long> _QuoteID;
 		
+		private int _OrderIndex;
+		
 		private System.Nullable<long> _OriginalCommodityID;
 		
 		private string _DepartureSiteName;
@@ -9949,6 +9951,8 @@ namespace SingerDispatch
     partial void OnIDChanged();
     partial void OnQuoteIDChanging(System.Nullable<long> value);
     partial void OnQuoteIDChanged();
+    partial void OnOrderIndexChanging(int value);
+    partial void OnOrderIndexChanged();
     partial void OnOriginalCommodityIDChanging(System.Nullable<long> value);
     partial void OnOriginalCommodityIDChanged();
     partial void OnDepartureSiteNameChanging(string value);
@@ -10038,6 +10042,26 @@ namespace SingerDispatch
 					this._QuoteID = value;
 					this.SendPropertyChanged("QuoteID");
 					this.OnQuoteIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OrderIndex")]
+		public int OrderIndex
+		{
+			get
+			{
+				return this._OrderIndex;
+			}
+			set
+			{
+				if ((this._OrderIndex != value))
+				{
+					this.OnOrderIndexChanging(value);
+					this.SendPropertyChanging();
+					this._OrderIndex = value;
+					this.SendPropertyChanged("OrderIndex");
+					this.OnOrderIndexChanged();
 				}
 			}
 		}
@@ -10571,6 +10595,8 @@ namespace SingerDispatch
 		
 		private System.Nullable<bool> _IsPrinted;
 		
+		private string _PrintoutCostHeading;
+		
 		private System.Nullable<bool> _IsItemizedBilling;
 		
 		private EntitySet<Job> _Jobs;
@@ -10631,6 +10657,8 @@ namespace SingerDispatch
     partial void OnPriceChanged();
     partial void OnIsPrintedChanging(System.Nullable<bool> value);
     partial void OnIsPrintedChanged();
+    partial void OnPrintoutCostHeadingChanging(string value);
+    partial void OnPrintoutCostHeadingChanged();
     partial void OnIsItemizedBillingChanging(System.Nullable<bool> value);
     partial void OnIsItemizedBillingChanged();
     #endregion
@@ -10968,6 +10996,26 @@ namespace SingerDispatch
 					this._IsPrinted = value;
 					this.SendPropertyChanged("IsPrinted");
 					this.OnIsPrintedChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PrintoutCostHeading")]
+		public string PrintoutCostHeading
+		{
+			get
+			{
+				return this._PrintoutCostHeading;
+			}
+			set
+			{
+				if ((this._PrintoutCostHeading != value))
+				{
+					this.OnPrintoutCostHeadingChanging(value);
+					this.SendPropertyChanging();
+					this._PrintoutCostHeading = value;
+					this.SendPropertyChanged("PrintoutCostHeading");
+					this.OnPrintoutCostHeadingChanged();
 				}
 			}
 		}

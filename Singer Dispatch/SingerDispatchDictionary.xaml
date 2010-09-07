@@ -190,5 +190,7 @@
     <Style TargetType="{x:Type DatePicker}">
         <Setter Property="Margin" Value="3" />
         <Setter Property="Background" Value="White" />
-    </Style>    
+    </Style>
+
+    <BitmapImage x:Key="DragInsertImage" UriSource="Images/DragInsert.png" />
 </ResourceDictionary>

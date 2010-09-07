@@ -36,9 +36,7 @@ namespace SingerDispatch.Printing.Documents
             content.Append(GetHeader("#" + quote.NumberAndRev));
             content.Append(GetRecipient(quote.BillingAddress, quote.Contact));
             content.Append(GetDescription(quote.Contact, quote.Description, quote.CreationDate, quote.ExpirationDate));
-
-            if (quote.QuoteCommodities.Count > 0)
-                content.Append(GetCommodities(quote));
+            content.Append(GetCommodities(quote));
 
             if (quote.QuoteSupplements.Count > 0)
                 content.Append(GetSuppluments(quote.QuoteSupplements.ToList()));
@@ -539,13 +537,12 @@ namespace SingerDispatch.Printing.Documents
                     <p class=""fine_print""><em>*</em> Dimensions or weights estimated. Actual values may impact quoted price.</p>
                 </div>
             ";
-            string costcol = (quote.IsItemizedBilling == true) ? "<th>Cost</th>" : null;
+            string costcol = (quote.IsItemizedBilling == true) ? string.Format("<th>{0}</th>", quote.PrintoutCostHeading) : null;
 
 
-            var rows = new StringBuilder();
-            int count = 1;
+            var rows = new StringBuilder();            
 
-            foreach (var commodity in quote.QuoteCommodities)
+            foreach (var commodity in (from qc in quote.QuoteCommodities orderby qc.OrderIndex select qc))
             {
                 string length, width, height, weight;
 
@@ -579,7 +576,7 @@ namespace SingerDispatch.Printing.Documents
 
                 rows.Append(@"<tr class=""details"">");
                 rows.Append("<td>");
-                rows.Append(count);
+                rows.Append(commodity.OrderIndex);
                 rows.Append("</td>");
                 rows.Append("<td>");
                 rows.Append(description);
@@ -625,11 +622,9 @@ namespace SingerDispatch.Printing.Documents
                     rows.Append("<td></td>");
                     rows.Append("</tr>");
                 }
-
-                count++;
             }
-            
-            content = string.Format(content, costcol, count > 0 ? rows.ToString() : "");
+
+            content = string.Format(content, costcol, quote.QuoteCommodities.Count > 0 ? rows.ToString() : "");
 
             return content;
         }
