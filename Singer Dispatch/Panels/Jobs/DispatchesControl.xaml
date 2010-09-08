@@ -60,7 +60,7 @@
                     <ComboBox Name="cmbLoads" Grid.Row="0" Grid.Column="1" SelectedItem="{Binding Load}" ItemTemplate="{StaticResource LoadTemplate}" SelectionChanged="cmbLoads_SelectionChanged" Controls:ComboUtil.AllowNull="True"></ComboBox>
 
                     <Label Grid.Row="1" Grid.Column="0">Dispatched by:</Label>
-                    <ComboBox Name="cmbDispatchedByEmployees" Grid.Row="1" Grid.Column="1" />
+                    <ComboBox Name="cmbDispatchedByEmployees" Grid.Row="1" Grid.Column="1" SelectedItem="{Binding DispatchedBy}" ItemTemplate="{StaticResource SimpleNameTemplate}" />
                     
                     <Label Grid.Row="2" Grid.Column="0">Equipment type:</Label>
                     <ComboBox Name="cmbEquipmentTypes" Grid.Row="2" Grid.Column="1" SelectedItem="{Binding EquipmentType}" ItemTemplate="{StaticResource SimpleNameTemplate}" TextSearch.TextPath="Name" SelectionChanged="cmbEquipmentTypes_SelectionChanged" Controls:ComboUtil.AllowNull="True" />
