@@ -3834,11 +3834,15 @@ namespace SingerDispatch
 		
 		private string _Email;
 		
+		private string _WindowsUserName;
+		
 		private EntitySet<Job> _Jobs;
 		
 		private EntitySet<Quote> _Quotes;
 		
 		private EntitySet<Equipment> _Equipments;
+		
+		private EntitySet<Dispatch> _DispatchedDispatches;
 		
 		private EntitySet<Dispatch> _Dispatches;
 		
@@ -3874,6 +3878,8 @@ namespace SingerDispatch
     partial void OnNotesChanged();
     partial void OnEmailChanging(string value);
     partial void OnEmailChanged();
+    partial void OnWindowsUserNameChanging(string value);
+    partial void OnWindowsUserNameChanged();
     #endregion
 		
 		public Employee()
@@ -3881,6 +3887,7 @@ namespace SingerDispatch
 			this._Jobs = new EntitySet<Job>(new Action<Job>(this.attach_Jobs), new Action<Job>(this.detach_Jobs));
 			this._Quotes = new EntitySet<Quote>(new Action<Quote>(this.attach_Quotes), new Action<Quote>(this.detach_Quotes));
 			this._Equipments = new EntitySet<Equipment>(new Action<Equipment>(this.attach_Equipments), new Action<Equipment>(this.detach_Equipments));
+			this._DispatchedDispatches = new EntitySet<Dispatch>(new Action<Dispatch>(this.attach_DispatchedDispatches), new Action<Dispatch>(this.detach_DispatchedDispatches));
 			this._Dispatches = new EntitySet<Dispatch>(new Action<Dispatch>(this.attach_Dispatches), new Action<Dispatch>(this.detach_Dispatches));
 			this._Swampers = new EntitySet<Swamper>(new Action<Swamper>(this.attach_Swampers), new Action<Swamper>(this.detach_Swampers));
 			OnCreated();
@@ -4146,6 +4153,26 @@ namespace SingerDispatch
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WindowsUserName")]
+		public string WindowsUserName
+		{
+			get
+			{
+				return this._WindowsUserName;
+			}
+			set
+			{
+				if ((this._WindowsUserName != value))
+				{
+					this.OnWindowsUserNameChanging(value);
+					this.SendPropertyChanging();
+					this._WindowsUserName = value;
+					this.SendPropertyChanged("WindowsUserName");
+					this.OnWindowsUserNameChanged();
+				}
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Employee_Job", Storage="_Jobs", ThisKey="ID", OtherKey="EmployeeID")]
 		public EntitySet<Job> Jobs
 		{
@@ -4185,7 +4212,20 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Employee_Dispatch", Storage="_Dispatches", ThisKey="ID", OtherKey="EmployeeID")]
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Employee_Dispatch", Storage="_DispatchedDispatches", ThisKey="ID", OtherKey="DispatchedByID")]
+		public EntitySet<Dispatch> DispatchedDispatches
+		{
+			get
+			{
+				return this._DispatchedDispatches;
+			}
+			set
+			{
+				this._DispatchedDispatches.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Employee_Dispatch1", Storage="_Dispatches", ThisKey="ID", OtherKey="EmployeeID")]
 		public EntitySet<Dispatch> Dispatches
 		{
 			get
@@ -4265,6 +4305,18 @@ namespace SingerDispatch
 		{
 			this.SendPropertyChanging();
 			entity.Employee = null;
+		}
+		
+		private void attach_DispatchedDispatches(Dispatch entity)
+		{
+			this.SendPropertyChanging();
+			entity.DispatchedBy = this;
+		}
+		
+		private void detach_DispatchedDispatches(Dispatch entity)
+		{
+			this.SendPropertyChanging();
+			entity.DispatchedBy = null;
 		}
 		
 		private void attach_Dispatches(Dispatch entity)
@@ -14952,6 +15004,8 @@ namespace SingerDispatch
 		
 		private System.Nullable<long> _LoadID;
 		
+		private System.Nullable<long> _DispatchedByID;
+		
 		private System.Nullable<long> _EmployeeID;
 		
 		private System.Nullable<long> _EquipmentTypeID;
@@ -14976,6 +15030,8 @@ namespace SingerDispatch
 		
 		private EntitySet<OutOfProvinceTravel> _OutOfProvinceTravels;
 		
+		private EntityRef<Employee> _DispatchedBy;
+		
 		private EntityRef<EquipmentType> _EquipmentType;
 		
 		private EntityRef<Equipment> _Equipment;
@@ -14996,6 +15052,8 @@ namespace SingerDispatch
     partial void OnJobIDChanged();
     partial void OnLoadIDChanging(System.Nullable<long> value);
     partial void OnLoadIDChanged();
+    partial void OnDispatchedByIDChanging(System.Nullable<long> value);
+    partial void OnDispatchedByIDChanged();
     partial void OnEmployeeIDChanging(System.Nullable<long> value);
     partial void OnEmployeeIDChanged();
     partial void OnEquipmentTypeIDChanging(System.Nullable<long> value);
@@ -15022,6 +15080,7 @@ namespace SingerDispatch
 		{
 			this._Swampers = new EntitySet<Swamper>(new Action<Swamper>(this.attach_Swampers), new Action<Swamper>(this.detach_Swampers));
 			this._OutOfProvinceTravels = new EntitySet<OutOfProvinceTravel>(new Action<OutOfProvinceTravel>(this.attach_OutOfProvinceTravels), new Action<OutOfProvinceTravel>(this.detach_OutOfProvinceTravels));
+			this._DispatchedBy = default(EntityRef<Employee>);
 			this._EquipmentType = default(EntityRef<EquipmentType>);
 			this._Equipment = default(EntityRef<Equipment>);
 			this._Job = default(EntityRef<Job>);
@@ -15094,6 +15153,30 @@ namespace SingerDispatch
 					this._LoadID = value;
 					this.SendPropertyChanged("LoadID");
 					this.OnLoadIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DispatchedByID")]
+		public System.Nullable<long> DispatchedByID
+		{
+			get
+			{
+				return this._DispatchedByID;
+			}
+			set
+			{
+				if ((this._DispatchedByID != value))
+				{
+					if (this._DispatchedBy.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnDispatchedByIDChanging(value);
+					this.SendPropertyChanging();
+					this._DispatchedByID = value;
+					this.SendPropertyChanged("DispatchedByID");
+					this.OnDispatchedByIDChanged();
 				}
 			}
 		}
@@ -15336,6 +15419,40 @@ namespace SingerDispatch
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Employee_Dispatch", Storage="_DispatchedBy", ThisKey="DispatchedByID", OtherKey="ID", IsForeignKey=true)]
+		public Employee DispatchedBy
+		{
+			get
+			{
+				return this._DispatchedBy.Entity;
+			}
+			set
+			{
+				Employee previousValue = this._DispatchedBy.Entity;
+				if (((previousValue != value) 
+							|| (this._DispatchedBy.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._DispatchedBy.Entity = null;
+						previousValue.DispatchedDispatches.Remove(this);
+					}
+					this._DispatchedBy.Entity = value;
+					if ((value != null))
+					{
+						value.DispatchedDispatches.Add(this);
+						this._DispatchedByID = value.ID;
+					}
+					else
+					{
+						this._DispatchedByID = default(Nullable<long>);
+					}
+					this.SendPropertyChanged("DispatchedBy");
+				}
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="EquipmentType_Dispatch", Storage="_EquipmentType", ThisKey="EquipmentTypeID", OtherKey="ID", IsForeignKey=true)]
 		public EquipmentType EquipmentType
 		{
@@ -15456,7 +15573,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Employee_Dispatch", Storage="_Employee", ThisKey="EmployeeID", OtherKey="ID", IsForeignKey=true)]
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Employee_Dispatch1", Storage="_Employee", ThisKey="EmployeeID", OtherKey="ID", IsForeignKey=true)]
 		public Employee Employee
 		{
 			get

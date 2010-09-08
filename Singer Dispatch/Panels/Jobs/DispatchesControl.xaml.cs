@@ -45,6 +45,7 @@ namespace SingerDispatch.Panels.Jobs
             cmbLoads.ItemsSource = (SelectedJob == null) ? null : SelectedJob.Loads.ToList();            
             cmbEquipmentTypes.ItemsSource = (SelectedJob == null) ? null : from et in Database.EquipmentTypes orderby et.Prefix select et;
             cmbEmployees.ItemsSource = (SelectedJob == null) ? null : from emp in Database.Employees orderby emp.FirstName, emp.LastName select emp;
+            cmbDispatchedByEmployees.ItemsSource = (SelectedJob == null) ? null : from emp in Database.Employees orderby emp.FirstName, emp.LastName select emp;
 
             var provider = (ObjectDataProvider)FindResource("EmployeeDropList");
 
@@ -74,7 +75,7 @@ namespace SingerDispatch.Panels.Jobs
             if (SelectedJob == null) return;
 
             var list = (ObservableCollection<Dispatch>)dgDispatches.ItemsSource;
-            var dispatch = new Dispatch { JobID = SelectedJob.ID };
+            var dispatch = new Dispatch { JobID = SelectedJob.ID, DispatchedBy = SingerConstants.OperatingEmployee };
 
             SelectedJob.Dispatches.Add(dispatch);
             list.Add(dispatch);

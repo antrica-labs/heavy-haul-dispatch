@@ -125,11 +125,11 @@
                     <DockPanel>
                         <Grid DockPanel.Dock="Bottom" DataContext="{Binding ElementName=DgJobContacts, Path=SelectedItem}">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="65"/>
-                                <ColumnDefinition Width="2*"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition />
                                 <ColumnDefinition Width="10"/>
-                                <ColumnDefinition Width="57"/>
-                                <ColumnDefinition Width="1.1*" />
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition />
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
                                 <RowDefinition />

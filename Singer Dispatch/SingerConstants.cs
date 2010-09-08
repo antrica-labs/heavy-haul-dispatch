@@ -16,6 +16,8 @@ namespace SingerDispatch
             }
         }
 
+        public static Employee OperatingEmployee = null;
+
         public static string GetConfig(string key)
         {
             string result;

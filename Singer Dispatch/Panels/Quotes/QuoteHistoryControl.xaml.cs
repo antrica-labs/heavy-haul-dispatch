@@ -69,8 +69,9 @@ namespace SingerDispatch.Panels.Quotes
         private void NewQuote_Click(object sender, RoutedEventArgs e)
         {
             var list = (ObservableCollection<Quote>)dgQuotes.ItemsSource;
-            var quote = new Quote { CreationDate = DateTime.Today, ExpirationDate = DateTime.Today.AddDays(30), Company = SelectedCompany };
+            var quote = new Quote { CreationDate = DateTime.Today, ExpirationDate = DateTime.Today.AddDays(30), Company = SelectedCompany, Employee = SingerConstants.OperatingEmployee };
 
+            /*
             try
             {
                 quote.Employee = (from emp in Database.Employees where emp.FirstName == "Dan" && emp.LastName == "Klassen" select emp).First();
@@ -79,7 +80,8 @@ namespace SingerDispatch.Panels.Quotes
             {
                 Console.Error.WriteLine(ex);
             }
-                        
+            */
+            
             list.Add(quote);
             dgQuotes.SelectedItem = quote;
             dgQuotes.ScrollIntoView(quote);

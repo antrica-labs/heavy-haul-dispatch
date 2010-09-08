@@ -36,7 +36,7 @@
             <GroupBox Name="gbDetails"  Header="Details" DataContext="{Binding ElementName=dgQuoteCommodities, Path=SelectedItem}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgQuoteCommodities, Path=SelectedItem}">
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="110" />
+                        <ColumnDefinition Width="Auto" />
                         <ColumnDefinition />
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
@@ -83,9 +83,8 @@
                     <GroupBox Header="Dimentions" Grid.Row="0" Grid.Column="2" Grid.RowSpan="8" Margin="5,0,0,0">
                         <StackPanel>
                             <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="30" />
-                                    <ColumnDefinition Width="40" />
+                                <Grid.ColumnDefinitions>                                    
+                                    <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition />
                                 </Grid.ColumnDefinitions>
                                 <Grid.RowDefinitions>
@@ -97,8 +96,8 @@
                                     <RowDefinition />
                                 </Grid.RowDefinitions>
 
-                                <Label Grid.ColumnSpan="2">Length:</Label>
-                                <TextBox Name="txtCommodityLength" Grid.Column="2">
+                                <Label Grid.Column="0" Grid.Row="0">Length:</Label>
+                                <TextBox Name="txtCommodityLength" Grid.Column="1">
                                     <TextBox.Text>
                                         <MultiBinding Converter="{StaticResource LengthMeasurementConverter}">
                                             <Binding Path="Length" />
@@ -107,8 +106,8 @@
                                     </TextBox.Text>
                                 </TextBox>
 
-                                <Label Grid.Row="1" Grid.ColumnSpan="2">Width:</Label>
-                                <TextBox Name="txtCommodityWidth" Grid.Row="1" Grid.Column="2" Height="22.96" Margin="3,0,3,3" VerticalAlignment="Bottom">
+                                <Label Grid.Column="0" Grid.Row="1">Width:</Label>
+                                <TextBox Name="txtCommodityWidth" Grid.Column="1" Grid.Row="1" VerticalAlignment="Bottom">
                                     <TextBox.Text>
                                         <MultiBinding Converter="{StaticResource LengthMeasurementConverter}">
                                             <Binding Path="Width" />
@@ -117,8 +116,8 @@
                                     </TextBox.Text>
                                 </TextBox>
 
-                                <Label Grid.Row="2" Grid.ColumnSpan="2">Height:</Label>
-                                <TextBox Name="txtCommodityHeight" Grid.Row="2" Grid.Column="2">
+                                <Label Grid.Row="2" Grid.Column="0">Height:</Label>
+                                <TextBox Name="txtCommodityHeight" Grid.Row="2" Grid.Column="1">
                                     <TextBox.Text>
                                         <MultiBinding Converter="{StaticResource LengthMeasurementConverter}">
                                             <Binding Path="Height" />
@@ -127,11 +126,11 @@
                                     </TextBox.Text>
                                 </TextBox>
 
-                                <Label Grid.Row="3" Grid.ColumnSpan="2">Estimated:</Label>
-                                <CheckBox Name="chbCommoditySizeEstimated" Grid.Row="3" Grid.Column="2" IsChecked="{Binding SizeEstimated}" />
+                                <Label Grid.Row="3" Grid.Column="0">Estimated:</Label>
+                                <CheckBox Name="chbCommoditySizeEstimated" Grid.Row="3" Grid.Column="1" IsChecked="{Binding SizeEstimated}" />
 
-                                <Label Grid.Row="4" Grid.ColumnSpan="2">Weight:</Label>
-                                <TextBox Name="txtCommodityWeight" Grid.Row="4" Grid.Column="2">
+                                <Label Grid.Row="4" Grid.Column="0">Weight:</Label>
+                                <TextBox Name="txtCommodityWeight" Grid.Row="4" Grid.Column="1">
                                     <TextBox.Text>
                                         <MultiBinding Converter="{StaticResource WeightMeasurementConverter}">
                                             <Binding Path="Weight" />
@@ -140,8 +139,8 @@
                                     </TextBox.Text>
                                 </TextBox>
 
-                                <Label Grid.Row="5" Grid.ColumnSpan="2">Estimated:</Label>
-                                <CheckBox Name="chbCommodityWeightEstimated" Grid.Row="5" Grid.Column="2" IsChecked="{Binding WeightEstimated}"/>
+                                <Label Grid.Row="5" Grid.Column="0">Estimated:</Label>
+                                <CheckBox Name="chbCommodityWeightEstimated" Grid.Row="5" Grid.Column="1" IsChecked="{Binding WeightEstimated}"/>
                             </Grid>
                         </StackPanel>
                     </GroupBox>
@@ -157,7 +156,7 @@
                 <GroupBox Name="gbDeparture" Header="Departure" Grid.Column="0" Margin="0,0,3,0" DataContext="{Binding ElementName=dgQuoteCommodities, Path=SelectedItem}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgQuoteCommodities, Path=SelectedItem}">
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="80"/>
+                            <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition />
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
@@ -176,7 +175,7 @@
                 <GroupBox Name="gbDestination" Header="Destination" Grid.Column="1" Margin="3,0,0,0" DataContext="{Binding ElementName=dgQuoteCommodities, Path=SelectedItem}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgQuoteCommodities, Path=SelectedItem}">
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="80"/>
+                            <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition />
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>

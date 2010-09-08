@@ -31,10 +31,10 @@
             <GroupBox Header="Storage Item Details" DataContext="{Binding ElementName=dgStorageList, Path=SelectedItem}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgStorageList, Path=SelectedItem}">
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="75" />
-                        <ColumnDefinition Width="1.5*"/>
-                        <ColumnDefinition Width="75" />
-                        <ColumnDefinition Width="0.5*"/>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="2.3*"/>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition />
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition />

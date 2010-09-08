@@ -114,7 +114,7 @@ namespace SingerDispatch.Panels.Jobs
         private void NewJob_Click(object sender, RoutedEventArgs e)
         {
             var list = (ObservableCollection<Job>)DgJobs.ItemsSource;
-            var job = new Job { Status = DefaultJobStatus, Company = SelectedCompany };
+            var job = new Job { Status = DefaultJobStatus, Company = SelectedCompany, Employee = SingerConstants.OperatingEmployee };
                         
             list.Add(job);
             DgJobs.SelectedItem = job;

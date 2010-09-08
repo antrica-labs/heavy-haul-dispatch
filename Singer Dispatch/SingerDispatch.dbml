@@ -159,11 +159,13 @@
       <Column Name="Responsibilities" Type="System.String" CanBeNull="true" />
       <Column Name="Notes" Type="System.String" CanBeNull="true" UpdateCheck="Never" />
       <Column Name="Email" Type="System.String" CanBeNull="true" />
+      <Column Name="WindowsUserName" Type="System.String" CanBeNull="true" />
       <Association Name="Employee_Job" Member="Jobs" ThisKey="ID" OtherKey="EmployeeID" Type="Job" />
       <Association Name="Employee_Quote" Member="Quotes" ThisKey="ID" OtherKey="EmployeeID" Type="Quote" />
       <Association Name="Employee_Equipment" Member="Equipments" ThisKey="ID" OtherKey="DefaultDriverID" Type="Equipment" />
       <Association Name="Employee_Dispatch" Member="Dispatches" ThisKey="ID" OtherKey="EmployeeID" Type="Dispatch" />
       <Association Name="Employee_Swamper" Member="Swampers" ThisKey="ID" OtherKey="EmployeeID" Type="Swamper" />
+      <Association Name="Employee_Dispatch_DispatchedBy" Member="DispatchedDispatches" ThisKey="ID" OtherKey="DispatchedByID" Type="Dispatch" />
     </Type>
   </Table>
   <Table Name="" Member="EquipmentTypes">
@@ -638,6 +640,7 @@
       <Column Name="ID" Type="System.Int64" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="JobID" Type="System.Int64" CanBeNull="true" />
       <Column Name="LoadID" Type="System.Int64" CanBeNull="true" />
+      <Column Name="DispatchedByID" Type="System.Int64" CanBeNull="true" />
       <Column Name="EmployeeID" Type="System.Int64" CanBeNull="true" />
       <Column Name="EquipmentTypeID" Type="System.Int64" CanBeNull="true" />
       <Column Name="EquipmentID" Type="System.Int64" CanBeNull="true" />
@@ -647,7 +650,8 @@
       <Column Name="MeetingTime" Type="System.DateTime" CanBeNull="true" />
       <Column Name="DepartingUnits" Type="System.String" CanBeNull="true" />
       <Column Name="DepartingLocation" Type="System.String" CanBeNull="true" />
-      <Column Name="Notes" Type="System.String" CanBeNull="true" UpdateCheck="Never" />      
+      <Column Name="Notes" Type="System.String" CanBeNull="true" UpdateCheck="Never" />
+      <Association Name="Employee_Dispatch_DispatchedBy" Member="DispatchedBy" ThisKey="DispatchedByID" OtherKey="ID" Type="Employee" IsForeignKey="true" />
       <Association Name="EquipmentType_Dispatch" Member="EquipmentType" ThisKey="EquipmentTypeID" OtherKey="ID" Type="EquipmentType" IsForeignKey="true" />
       <Association Name="Equipment_Dispatch" Member="Equipment" ThisKey="EquipmentID" OtherKey="ID" Type="Equipment" IsForeignKey="true" />
       <Association Name="Job_Dispatch" Member="Job" ThisKey="JobID" OtherKey="ID" Type="Job" IsForeignKey="true" />

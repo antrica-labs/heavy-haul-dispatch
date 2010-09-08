@@ -32,8 +32,8 @@
             <GroupBox Header="Equipment details" DataContext="{Binding ElementName=dgEquipment, Path=SelectedItem}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgEquipment, Path=SelectedItem}">
                 <Grid>
                     <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition />
-                        <ColumnDefinition Width="2*"/>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition />
@@ -90,7 +90,7 @@
                     <GroupBox Header="Tractor info" Name="gbTractorInfo" Grid.Row="12" Grid.ColumnSpan="2" IsEnabled="False">
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition />
+                                <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition />
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>

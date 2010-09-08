@@ -31,10 +31,10 @@
             <GroupBox Name="grpSupplementDetails" Header="Supplement Details" DataContext="{Binding ElementName=dgSupplements, Path=SelectedItem}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgSupplements, Path=SelectedItem}">
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="75" />
-                        <ColumnDefinition Width="1.5*"/>
-                        <ColumnDefinition Width="75" />
-                        <ColumnDefinition Width="0.5*"/>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="2.2*"/>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition />
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition />

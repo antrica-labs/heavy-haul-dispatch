@@ -53,7 +53,7 @@
                     <GroupBox Header="Billing Contact" DataContext="{Binding SelectedInvoice}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=ThePanel, Path=SelectedInvoice}">
                         <Grid Margin="0,0,0,5">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="65" />
+                                <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition />
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
@@ -112,10 +112,10 @@
                     <GroupBox Header="Customer Details" DataContext="{Binding SelectedInvoice}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=ThePanel, Path=SelectedInvoice}">
                         <Grid DataContext="{Binding Contact}">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="65" />
+                                <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition />
                                 <ColumnDefinition Width="10" />
-                                <ColumnDefinition Width="65" />
+                                <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition />
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>

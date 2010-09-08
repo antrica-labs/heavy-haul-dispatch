@@ -19,6 +19,7 @@ using System.Windows.Input;
 using SingerDispatch.Panels.Storage;
 using System.Windows.Interop;
 using System.ComponentModel;
+using SingerDispatch.Security;
 
 namespace SingerDispatch
 {
@@ -71,12 +72,29 @@ namespace SingerDispatch
 
                 if (!Database.DatabaseExists()) 
                     throw new Exception("Unable to connect to the required database!");
+
+                SingerConstants.OperatingEmployee = GetOperatingEmployee();
             }
             catch (Exception e)
             {
                 ErrorNoticeWindow.ShowError("Database Error", e.Message);                
 
                 Application.Current.Shutdown();
+            }
+        }
+
+        private Employee GetOperatingEmployee()
+        {
+            try
+            {
+                var username = AuthenticationService.GetCurrentUserName();
+                var employee = (from em in Database.Employees where em.WindowsUserName == username select em).First();
+
+                return employee;
+            }
+            catch
+            {
+                return null;
             }
         }
         

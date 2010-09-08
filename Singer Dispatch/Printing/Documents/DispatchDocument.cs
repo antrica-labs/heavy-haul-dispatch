@@ -713,11 +713,10 @@ namespace SingerDispatch.Printing.Documents
             dispatchReplacements[4] = swampers.ToString();
             
 
-
             var departureReplacement = new StringBuilder();
 
-            if (dispatch.Job.Employee != null)
-                departureReplacement.Append(string.Format(rowTemplate, "Dispatched By", dispatch.Job.Employee.Name));
+            if (dispatch.DispatchedBy != null)
+                departureReplacement.Append(string.Format(rowTemplate, "Dispatched By", dispatch.DispatchedBy.Name));
 
             if (dispatch.MeetingTime != null)
                 departureReplacement.Append(string.Format(rowTemplate, "Departing Date", dispatch.MeetingTime.Value.ToString(SingerConstants.PrintedDateFormatString) + " " + dispatch.MeetingTime.Value.ToString(SingerConstants.PrintedTimeFormatString)));
@@ -766,8 +765,6 @@ namespace SingerDispatch.Printing.Documents
 
         private static string GetEquipment(EntitySet<ExtraEquipment> equipment)
         {
-            // Fill this section with all of the ExtraEquipement entities attached to the dispatch's load.
-
             const string html = @"
                 <div class=""equipment_requirements section"">
                     <span class=""heading"">Required Equipment</span>
