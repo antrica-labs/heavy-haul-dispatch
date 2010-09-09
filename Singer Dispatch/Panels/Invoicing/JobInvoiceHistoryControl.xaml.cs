@@ -21,7 +21,7 @@ namespace SingerDispatch.Panels.Invoicing
         {
             InitializeComponent();
 
-            Database = SingerConstants.CommonDataContext;
+            Database = SingerConfigs.CommonDataContext;
             DgReferenceNumbers.ItemsSource = new ObservableCollection<InvoiceReferenceNumber>();
         }
 

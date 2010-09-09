@@ -210,6 +210,7 @@ namespace SingerDispatch
         {
             var jc = new JobCommodity();
 
+            jc.OrderIndex = OrderIndex;
             jc.OriginalCommodity = OriginalCommodity;
             jc.Name = Name;
             jc.Value = Value;
@@ -511,6 +512,7 @@ namespace SingerDispatch
         {
             var cp = new Load();
 
+            cp.Status = Status;
             cp.Schedule = Schedule;
             cp.Equipment = Equipment;
             cp.Rate = Rate;

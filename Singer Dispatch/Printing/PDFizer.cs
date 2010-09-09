@@ -16,8 +16,8 @@ namespace SingerDispatch.Printing
         
         public PDFizer()
         {
-            PdfCommand = SingerConstants.GetConfig("PDF-ExecutablePath") ?? DEFAULT_PDF_COMMAND;
-            PdfArgs = SingerConstants.GetConfig("PDF-Arguments") ?? DEFAULT_PDF_ARGS;
+            PdfCommand = SingerConfigs.GetConfig("PDF-ExecutablePath") ?? DEFAULT_PDF_COMMAND;
+            PdfArgs = SingerConfigs.GetConfig("PDF-Arguments") ?? DEFAULT_PDF_ARGS;
         }
         
         public void SaveHTMLToPDF(string html, string filename)

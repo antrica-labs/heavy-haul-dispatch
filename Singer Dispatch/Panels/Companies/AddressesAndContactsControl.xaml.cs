@@ -21,7 +21,7 @@ namespace SingerDispatch.Panels.Companies
         {
             InitializeComponent();
 
-            Database = SingerConstants.CommonDataContext;
+            Database = SingerConfigs.CommonDataContext;
 
             SaveCommand = new CommandBinding(CustomCommands.GenericSaveCommand);
             CommandBindings.Add(SaveCommand);

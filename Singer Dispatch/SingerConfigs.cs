@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Windows;
 
 namespace SingerDispatch
 {
-    public class SingerConstants
+    public class SingerConfigs
     {
         private static readonly SingerDispatchDataContext database = new SingerDispatchDataContext();
 

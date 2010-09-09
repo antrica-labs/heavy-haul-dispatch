@@ -110,6 +110,7 @@
       <Column Name="Fax" Type="System.String" CanBeNull="true" />      
       <Column Name="Notes" Type="System.String" CanBeNull="true" UpdateCheck="Never" />
       <Association Name="Contact_Quote" Member="Quotes" ThisKey="ID" OtherKey="ContactID" Type="Quote" />
+      <Association Name="Contact_Job" Member="Jobs" ThisKey="ID" OtherKey="ContactID" Type="Job" />
       <Association Name="Contact_ThirdPartyService" Member="ThirdPartyServices" ThisKey="ID" OtherKey="ContactID" Type="ThirdPartyService" />
       <Association Name="Contact_Invoice" Member="Invoices" ThisKey="ID" OtherKey="ContactID" Type="Invoice" />
       <Association Name="Address_Contact" Member="Address" ThisKey="AddressID" OtherKey="ID" Type="Address" IsForeignKey="true" />
@@ -177,7 +178,8 @@
   </Table>
   <Table Name="" Member="JobCommodities">
     <Type Name="JobCommodity">
-      <Column Name="ID" Type="System.Int64" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />      
+      <Column Name="ID" Type="System.Int64" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="OrderIndex" Type="System.Int32" CanBeNull="false" />
       <Column Name="JobID" Type="System.Int64" CanBeNull="true" />
       <Column Name="LoadID" Type="System.Int64" CanBeNull="true" />
       <Column Name="OriginalCommodityID" Type="System.Int64" CanBeNull="true" />
@@ -209,9 +211,11 @@
       <Column Name="EmployeeID" Type="System.Int64" CanBeNull="true" />
       <Column Name="CareOfCompanyID" Type="System.Int64" CanBeNull="true" />
       <Column Name="StatusID" Type="System.Int64" CanBeNull="true" />
+      <Column Name="ContactID" Type="System.Int64" CanBeNull="true" />
       <Column Name="Number" Type="System.Int32" CanBeNull="true" />
       <Column Name="Name" Type="System.String" CanBeNull="true" />
       <Column Name="Description" Type="System.String" CanBeNull="true" />
+      <Column Name="Notes" Type="System.String" CanBeNull="true" /> 
       <Column Name="StartDate" Type="System.DateTime" CanBeNull="true" />
       <Column Name="EndDate" Type="System.DateTime" CanBeNull="true" />
       <Association Name="Job_JobCommodity" Member="JobCommodities" ThisKey="ID" OtherKey="JobID" Type="JobCommodity" />
@@ -224,6 +228,7 @@
       <Association Name="Company_Job" Member="Company" ThisKey="CompanyID" OtherKey="ID" Type="Company" IsForeignKey="true" />
       <Association Name="Company_Job1" Member="CareOfCompany" ThisKey="CareOfCompanyID" OtherKey="ID" Type="Company" IsForeignKey="true" />
       <Association Name="Status_Job" Member="Status" ThisKey="StatusID" OtherKey="ID" Type="Status" IsForeignKey="true" />
+      <Association Name="Contact_Job" Member="Contact" ThisKey="ContactID" OtherKey="ID" Type="Contact" IsForeignKey="true" />
       <Association Name="Quote_Job" Member="Quote" ThisKey="QuoteID" OtherKey="ID" Type="Quote" IsForeignKey="true" />
       <Association Name="Job_JobReferenceNumber" Member="ReferenceNumbers" ThisKey="ID" OtherKey="JobID" Type="JobReferenceNumber" />
     </Type>

@@ -22,7 +22,7 @@ namespace SingerDispatch.Panels.Jobs
         {
             InitializeComponent();
 
-            Database = SingerConstants.CommonDataContext;
+            Database = SingerConfigs.CommonDataContext;
 
             SaveCommand = new CommandBinding(CustomCommands.GenericSaveCommand);
             CommandBindings.Add(SaveCommand);
@@ -86,17 +86,15 @@ namespace SingerDispatch.Panels.Jobs
 
             if (SelectedCompany.CustomerType.IsEnterprise == true)
             {
-                printFileCopy = Convert.ToBoolean(SingerConstants.GetConfig("Dispatch-EnterprisePrintFileCopy") ?? "false");                               
+                printFileCopy = Convert.ToBoolean(SingerConfigs.GetConfig("Dispatch-EnterprisePrintFileCopy") ?? "false");                               
             }
             else
             {
-                printFileCopy = Convert.ToBoolean(SingerConstants.GetConfig("Dispatch-SingerPrintFileCopy") ?? "false");                               
+                printFileCopy = Convert.ToBoolean(SingerConfigs.GetConfig("Dispatch-SingerPrintFileCopy") ?? "false");                               
             }
 
             var viewer = new DocumentViewerWindow(new DispatchDocument(printFileCopy), dispatches, string.Format("Dispatches - Job #{0}", SelectedJob.Number)) { IsMetric = !UseImperialMeasurements, IsSpecializedDocument = SelectedCompany.CustomerType.IsEnterprise != true };
             viewer.DisplayPrintout();
         }
-
-        
     }
 }

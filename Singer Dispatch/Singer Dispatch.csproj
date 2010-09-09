@@ -182,6 +182,9 @@
     <Compile Include="Panels\Jobs\JobHistoryControl.xaml.cs">
       <DependentUpon>JobHistoryControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Panels\Jobs\JobListControl.xaml.cs">
+      <DependentUpon>JobListControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Panels\Jobs\JobsPanel.xaml.cs">
       <DependentUpon>JobsPanel.xaml</DependentUpon>
     </Compile>
@@ -195,6 +198,9 @@
       <DependentUpon>ThirdPartyServicesControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Panels\JobUserControl.cs" />
+    <Compile Include="Panels\NewJobs\NewJobsPanel.xaml.cs">
+      <DependentUpon>NewJobsPanel.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Panels\Quotes\QuoteCommoditiesControl.xaml.cs">
       <DependentUpon>QuoteCommoditiesControl.xaml</DependentUpon>
     </Compile>
@@ -249,7 +255,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="Security\AuthenticationService.cs" />
-    <Compile Include="SingerConstants.cs" />
+    <Compile Include="SingerConfigs.cs" />
     <Compile Include="SingerDispatch.cs">
       <DependentUpon>SingerDispatch.dbml</DependentUpon>
     </Compile>
@@ -426,6 +432,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Panels\Jobs\JobListControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Panels\Jobs\JobsPanel.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -449,6 +459,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Panels\NewJobs\NewJobsPanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Panels\Quotes\QuoteCommoditiesControl.xaml">
       <Generator>MSBuild:Compile</Generator>

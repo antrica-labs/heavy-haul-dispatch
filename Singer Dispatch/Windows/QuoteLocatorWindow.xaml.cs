@@ -75,7 +75,7 @@ namespace SingerDispatch.Windows
         {
             try
             {
-                return (from q in SingerConstants.CommonDataContext.Quotes where q.Number == number select q).First();
+                return (from q in SingerConfigs.CommonDataContext.Quotes where q.Number == number select q).First();
             }
             catch
             {

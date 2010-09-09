@@ -31,5 +31,10 @@ namespace SingerDispatch.Panels
         {
 
         }
+
+        protected bool InDesignMode()
+        {   
+            return System.ComponentModel.DesignerProperties.GetIsInDesignMode(new DependencyObject());            
+        }
     }
 }

@@ -19,7 +19,7 @@ namespace SingerDispatch.Panels.Admin
         {
             InitializeComponent();
 
-            Database = SingerConstants.CommonDataContext;
+            Database = SingerConfigs.CommonDataContext;
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
@@ -45,7 +45,7 @@ namespace SingerDispatch.Panels.Admin
 
             if (condition == null) return;
 
-            var confirmation = MessageBox.Show(SingerConstants.DefaultRemoveItemMessage, "Delete confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            var confirmation = MessageBox.Show(SingerConfigs.DefaultRemoveItemMessage, "Delete confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
             if (confirmation != MessageBoxResult.Yes) return;
 

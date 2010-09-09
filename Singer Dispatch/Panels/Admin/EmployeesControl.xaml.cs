@@ -20,7 +20,7 @@ namespace SingerDispatch.Panels.Admin
         {
             InitializeComponent();
             
-            Database = SingerConstants.CommonDataContext;
+            Database = SingerConfigs.CommonDataContext;
             SaveCommand = new CommandBinding(CustomCommands.GenericSaveCommand);
         }
 

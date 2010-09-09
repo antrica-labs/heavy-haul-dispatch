@@ -26,7 +26,7 @@ namespace SingerDispatch.Panels.Quotes
         {
             InitializeComponent();
 
-            Database = SingerConstants.CommonDataContext;
+            Database = SingerConfigs.CommonDataContext;
         }
 
         protected override void SelectedQuoteChanged(Quote newValue, Quote oldValue)
@@ -76,7 +76,7 @@ namespace SingerDispatch.Panels.Quotes
 
             if (note == null) return;
 
-            var confirmation = MessageBox.Show(SingerConstants.DefaultRemoveItemMessage, "Delete confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            var confirmation = MessageBox.Show(SingerConfigs.DefaultRemoveItemMessage, "Delete confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
             if (confirmation != MessageBoxResult.Yes) return;
 

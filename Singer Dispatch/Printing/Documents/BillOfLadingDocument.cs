@@ -619,9 +619,9 @@ namespace SingerDispatch.Printing.Documents
             string img;
 
             if (SpecializedDocument)
-                img = SingerConstants.GetConfig("Documents-SingerHeaderImg") ?? @"Images\SingerHeader.png";
+                img = SingerConfigs.GetConfig("Documents-SingerHeaderImg") ?? @"Images\SingerHeader.png";
             else
-                img = SingerConstants.GetConfig("Documents-MEHeaderImg") ?? @"Images\MEHeader.png";
+                img = SingerConfigs.GetConfig("Documents-MEHeaderImg") ?? @"Images\MEHeader.png";
 
             if (process.MainModule != null)
             {
@@ -629,10 +629,10 @@ namespace SingerDispatch.Printing.Documents
             }
 
             replacements[0] = img;
-            replacements[1] = SingerConstants.GetConfig("SingerName") ?? "Singer Specialized";
-            replacements[2] = SingerConstants.GetConfig("SingerAddress-StreetAddress");
-            replacements[3] = SingerConstants.GetConfig("SingerAddress-City");
-            replacements[4] = SingerConstants.GetConfig("SingerAddress-Phone");
+            replacements[1] = SingerConfigs.GetConfig("SingerName") ?? "Singer Specialized";
+            replacements[2] = SingerConfigs.GetConfig("SingerAddress-StreetAddress");
+            replacements[3] = SingerConfigs.GetConfig("SingerAddress-City");
+            replacements[4] = SingerConfigs.GetConfig("SingerAddress-Phone");
             replacements[5] = documentID;            
 
             return string.Format(html, replacements);
@@ -685,7 +685,7 @@ namespace SingerDispatch.Printing.Documents
                         
             var replacements = new object[15];
 
-            replacements[0] = DateTime.Now.ToString(SingerConstants.PrintedDateFormatString);
+            replacements[0] = DateTime.Now.ToString(SingerConfigs.PrintedDateFormatString);
             replacements[1] = commodity.JobCommodity.Job.Company.Name;
             replacements[2] = (dispatch != null && dispatch.Load != null && dispatch.Load.Equipment != null) ? dispatch.Load.Equipment.UnitNumber : "";
             replacements[3] = (dispatch != null && dispatch.Load != null && dispatch.Load.Rate != null) ? dispatch.Load.Rate.Name + " - " : "";
@@ -725,7 +725,7 @@ namespace SingerDispatch.Printing.Documents
                 replacements[13] = commodity.ConsigneeAddress.PostalZip;
             }
 
-            replacements[14] =  SingerConstants.GetConfig("BillOfLading-MainLegal") ?? "";
+            replacements[14] =  SingerConfigs.GetConfig("BillOfLading-MainLegal") ?? "";
 
             return string.Format(html, replacements);
         }
@@ -970,10 +970,10 @@ namespace SingerDispatch.Printing.Documents
             
             var replacements = new object[5];
 
-            replacements[0] = SingerConstants.GetConfig("BillOfLading-ShippersWeight") ?? "";
-            replacements[1] = SingerConstants.GetConfig("BillOfLading-NoticeOfClaim") ?? "";
+            replacements[0] = SingerConfigs.GetConfig("BillOfLading-ShippersWeight") ?? "";
+            replacements[1] = SingerConfigs.GetConfig("BillOfLading-NoticeOfClaim") ?? "";
             replacements[2] = string.Format("{0:C}", commodity.JobCommodity.Value);
-            replacements[3] = SingerConstants.GetConfig("BillOfLading-MaxLiability") ?? "";
+            replacements[3] = SingerConfigs.GetConfig("BillOfLading-MaxLiability") ?? "";
             replacements[4] = commodity.BoLComments;
 
             return string.Format(html, replacements);

@@ -23,7 +23,7 @@ namespace SingerDispatch.Panels.Quotes
         {
             InitializeComponent();
 
-            Database = SingerConstants.CommonDataContext;
+            Database = SingerConfigs.CommonDataContext;
         }
 
         private void Control_Loaded(object sender, RoutedEventArgs e)
@@ -69,7 +69,7 @@ namespace SingerDispatch.Panels.Quotes
         private void NewQuote_Click(object sender, RoutedEventArgs e)
         {
             var list = (ObservableCollection<Quote>)dgQuotes.ItemsSource;
-            var quote = new Quote { CreationDate = DateTime.Today, ExpirationDate = DateTime.Today.AddDays(30), Company = SelectedCompany, Employee = SingerConstants.OperatingEmployee };
+            var quote = new Quote { CreationDate = DateTime.Today, ExpirationDate = DateTime.Today.AddDays(30), Company = SelectedCompany, Employee = SingerConfigs.OperatingEmployee };
 
             /*
             try

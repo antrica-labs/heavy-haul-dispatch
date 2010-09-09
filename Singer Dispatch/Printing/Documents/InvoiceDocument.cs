@@ -90,9 +90,9 @@ namespace SingerDispatch.Printing.Documents
             string img;
 
             if (SpecializedDocument)
-                img = SingerConstants.GetConfig("Documents-SingerHeaderImg") ?? @"Images\SingerHeader.png";
+                img = SingerConfigs.GetConfig("Documents-SingerHeaderImg") ?? @"Images\SingerHeader.png";
             else
-                img = SingerConstants.GetConfig("Documents-MEHeaderImg") ?? @"Images\MEHeader.png";
+                img = SingerConfigs.GetConfig("Documents-MEHeaderImg") ?? @"Images\MEHeader.png";
 
             if (process.MainModule != null)
             {
@@ -243,7 +243,7 @@ namespace SingerDispatch.Printing.Documents
                 </tr>
             ";
 
-            var tax = invoice.GSTExempt == true ? 0.00m : SingerConstants.GST;
+            var tax = invoice.GSTExempt == true ? 0.00m : SingerConfigs.GST;
 
             builder.Append(header);
 
@@ -264,9 +264,9 @@ namespace SingerDispatch.Printing.Documents
             }            
 
             builder.Append(subtotal.Replace("%SUBTOTAL%", String.Format("{0:C}", running)));
-            builder.Append(fuelTax.Replace("%FUEL_TAX%", String.Format("{0:C}", running * SingerConstants.FuelTax)));
-            builder.Append(gst.Replace("%GST%", String.Format("{0:C}", (running * (1 + SingerConstants.FuelTax)) * tax)));
-            builder.Append(total.Replace("%TOTAL%", String.Format("{0:C}", (running * (1 + SingerConstants.FuelTax)) * (1 + tax))));
+            builder.Append(fuelTax.Replace("%FUEL_TAX%", String.Format("{0:C}", running * SingerConfigs.FuelTax)));
+            builder.Append(gst.Replace("%GST%", String.Format("{0:C}", (running * (1 + SingerConfigs.FuelTax)) * tax)));
+            builder.Append(total.Replace("%TOTAL%", String.Format("{0:C}", (running * (1 + SingerConfigs.FuelTax)) * (1 + tax))));
 
             builder.Append(footer);
 

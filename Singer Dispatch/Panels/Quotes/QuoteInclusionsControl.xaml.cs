@@ -16,7 +16,7 @@ namespace SingerDispatch.Panels.Quotes
         {
             InitializeComponent();
 
-            Database = SingerConstants.CommonDataContext;
+            Database = SingerConfigs.CommonDataContext;
             TheList.ItemsSource = new ObservableCollection<CheckBox>();
         }
 

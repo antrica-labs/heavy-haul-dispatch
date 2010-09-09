@@ -67,13 +67,13 @@ namespace SingerDispatch
             try
             {
                 Panels = new Dictionary<Type, UserControl>();
-                Database = SingerConstants.CommonDataContext;
+                Database = SingerConfigs.CommonDataContext;
                 Companies = new ObservableCollection<Company>();
 
                 if (!Database.DatabaseExists()) 
                     throw new Exception("Unable to connect to the required database!");
 
-                SingerConstants.OperatingEmployee = GetOperatingEmployee();
+                SingerConfigs.OperatingEmployee = GetOperatingEmployee();
             }
             catch (Exception e)
             {
@@ -212,7 +212,7 @@ namespace SingerDispatch
             // Attempt to save anything in the common data context
             try
             {
-                SingerConstants.CommonDataContext.SubmitChanges();
+                SingerConfigs.CommonDataContext.SubmitChanges();
             }
             catch { }
 

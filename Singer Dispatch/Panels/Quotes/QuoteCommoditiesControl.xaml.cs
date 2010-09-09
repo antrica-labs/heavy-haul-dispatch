@@ -47,7 +47,7 @@ namespace SingerDispatch.Panels.Quotes
         {
             InitializeComponent();
 
-            Database = SingerConstants.CommonDataContext;
+            Database = SingerConfigs.CommonDataContext;
 
             CommonSiteNames = new ObservableCollection<string>();
             CommonSiteAddresses = new ObservableCollection<string>();
@@ -185,7 +185,7 @@ namespace SingerDispatch.Panels.Quotes
                 return;
             }
 
-            var confirmation = MessageBox.Show(SingerConstants.DefaultRemoveItemMessage, "Delete confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            var confirmation = MessageBox.Show(SingerConfigs.DefaultRemoveItemMessage, "Delete confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
             if (confirmation != MessageBoxResult.Yes) return;
 

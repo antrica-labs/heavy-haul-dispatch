@@ -33,6 +33,9 @@
             <DataTemplate x:Key="LoadedCommodityTemplate">
                 <TextBlock Text="{Binding JobCommodity.NameAndUnit}" />
             </DataTemplate>
+            <DataTemplate x:Key="AbbreviationTemplate">
+                <TextBlock Text="{Binding Abbreviation}" />
+            </DataTemplate>
             <Style x:Key="CommodityList">
                 <Style.Resources>
                     <!-- Background of selected item when focussed -->
@@ -458,8 +461,8 @@
                                                     <ColumnDefinition Width="70" />
                                                     <ColumnDefinition />
                                                 </Grid.ColumnDefinitions>
-                                                
-                                                <ComboBox Grid.Column="0" SelectedItem="{Binding LoadingProvince}" />
+
+                                                <ComboBox Name="cmbLoadingProvinces" Grid.Column="0" SelectedItem="{Binding LoadingProvince}" ItemTemplate="{StaticResource AbbreviationTemplate}" />
                                                 <TextBox Grid.Column="1" Text="{Binding LoadAddress}" />
                                             </Grid>
                                             
@@ -556,7 +559,7 @@
                                                     <ColumnDefinition />
                                                 </Grid.ColumnDefinitions>
 
-                                                <ComboBox Grid.Column="0" SelectedItem="{Binding UnloadAddress}" />
+                                                <ComboBox Name="cmbUnloadingProvinces" Grid.Column="0" SelectedItem="{Binding UnloadingProvince}" ItemTemplate="{StaticResource AbbreviationTemplate}" />
                                                 <TextBox Grid.Column="1" Text="{Binding UnloadAddress}" />
                                             </Grid>                                            
 
@@ -608,7 +611,7 @@
                                         </Grid>
                                     </GroupBox>
 
-                                    <GroupBox Header="Directions" Grid.Column="1" Grid.RowSpan="2">
+                                    <GroupBox Header="Directions" Grid.Column="1" Grid.RowSpan="2" Margin="3,0,0,0">
                                         <StackPanel>
                                             <Label>Route:</Label>
                                             <TextBox Style="{StaticResource MultiLine}" Text="{Binding UnloadRoute}" Height="60"/>

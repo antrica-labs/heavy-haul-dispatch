@@ -15,7 +15,7 @@ namespace SingerDispatch.Controls
             if (value == null)
                 return value;
             else
-                return string.Format(new LafiPhoneFormatProvider(), SingerConstants.PhoneFormat, (string)value);
+                return string.Format(new LafiPhoneFormatProvider(), SingerConfigs.PhoneFormat, (string)value);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
@@ -23,7 +23,7 @@ namespace SingerDispatch.Controls
             if (value == null)
                 return value;
             else
-                return string.Format(new LafiPhoneFormatProvider(), SingerConstants.PhoneFormat, (string)value);
+                return string.Format(new LafiPhoneFormatProvider(), SingerConfigs.PhoneFormat, (string)value);
         }
     }
 }

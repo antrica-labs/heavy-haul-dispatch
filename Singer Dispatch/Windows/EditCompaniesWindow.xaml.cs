@@ -15,7 +15,7 @@ namespace SingerDispatch.Windows
         {
             InitializeComponent();
 
-            Database = SingerConstants.CommonDataContext;
+            Database = SingerConfigs.CommonDataContext;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)

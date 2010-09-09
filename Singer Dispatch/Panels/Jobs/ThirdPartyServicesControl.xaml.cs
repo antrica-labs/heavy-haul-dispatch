@@ -16,7 +16,7 @@ namespace SingerDispatch.Panels.Jobs
         {
             InitializeComponent();
 
-            Database = SingerConstants.CommonDataContext;
+            Database = SingerConfigs.CommonDataContext;
         }
 
         private void ControlLoaded(object sender, RoutedEventArgs e)
@@ -87,7 +87,7 @@ namespace SingerDispatch.Panels.Jobs
 
             if (service == null) return;
 
-            var confirmation = MessageBox.Show(SingerConstants.DefaultRemoveItemMessage, "Delete confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            var confirmation = MessageBox.Show(SingerConfigs.DefaultRemoveItemMessage, "Delete confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
             if (confirmation != MessageBoxResult.Yes) return;
 

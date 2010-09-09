@@ -21,7 +21,7 @@ namespace SingerDispatch.Panels.Admin
         {
             InitializeComponent();
 
-            Database = SingerConstants.CommonDataContext;
+            Database = SingerConfigs.CommonDataContext;
             SaveCommand = new CommandBinding(CustomCommands.GenericSaveCommand);
 
             cmbEquipmentClasses.ItemsSource = from ec in Database.EquipmentClasses select ec;

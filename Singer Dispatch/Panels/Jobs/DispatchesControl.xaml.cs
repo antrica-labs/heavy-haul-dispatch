@@ -22,7 +22,7 @@ namespace SingerDispatch.Panels.Jobs
         {
             InitializeComponent();
 
-            Database = SingerConstants.CommonDataContext;
+            Database = SingerConfigs.CommonDataContext;
 
             var provider = (ObjectDataProvider)FindResource("ProvStateDropList");
 
@@ -75,7 +75,7 @@ namespace SingerDispatch.Panels.Jobs
             if (SelectedJob == null) return;
 
             var list = (ObservableCollection<Dispatch>)dgDispatches.ItemsSource;
-            var dispatch = new Dispatch { JobID = SelectedJob.ID, DispatchedBy = SingerConstants.OperatingEmployee };
+            var dispatch = new Dispatch { JobID = SelectedJob.ID, DispatchedBy = SingerConfigs.OperatingEmployee };
 
             SelectedJob.Dispatches.Add(dispatch);
             list.Add(dispatch);
@@ -132,11 +132,11 @@ namespace SingerDispatch.Panels.Jobs
 
             if (SelectedCompany.CustomerType.IsEnterprise == true)
             {
-                printFileCopy = Convert.ToBoolean(SingerConstants.GetConfig("Dispatch-EnterprisePrintFileCopy") ?? "false");
+                printFileCopy = Convert.ToBoolean(SingerConfigs.GetConfig("Dispatch-EnterprisePrintFileCopy") ?? "false");
             }
             else
             {
-                printFileCopy = Convert.ToBoolean(SingerConstants.GetConfig("Dispatch-SingerPrintFileCopy") ?? "false");
+                printFileCopy = Convert.ToBoolean(SingerConfigs.GetConfig("Dispatch-SingerPrintFileCopy") ?? "false");
             }
 
             var viewer = new DocumentViewerWindow(new DispatchDocument(printFileCopy), dgDispatches.SelectedItem, String.Format("Dispatch #{0}", dispatch.Name)) { IsMetric = !UseImperialMeasurements, IsSpecializedDocument = SelectedCompany.CustomerType.IsEnterprise != true };
@@ -147,7 +147,7 @@ namespace SingerDispatch.Panels.Jobs
         {
             if (dgDispatches.SelectedItem == null) return;
 
-            var confirmation = MessageBox.Show(SingerConstants.DefaultRemoveItemMessage, "Delete confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            var confirmation = MessageBox.Show(SingerConfigs.DefaultRemoveItemMessage, "Delete confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
             if (confirmation != MessageBoxResult.Yes) return;
 
@@ -165,7 +165,7 @@ namespace SingerDispatch.Panels.Jobs
 
             var dispatch = (Dispatch)dgDispatches.SelectedItem;
 
-            dispatch.Description = string.Format(SingerConstants.DefaultDispatchDescription, Load.PrintCommodityList(load));
+            dispatch.Description = string.Format(SingerConfigs.DefaultDispatchDescription, Load.PrintCommodityList(load));
             dispatch.Schedule = load.Schedule;
         }
 
@@ -211,7 +211,7 @@ namespace SingerDispatch.Panels.Jobs
 
             if (travel == null || dispatch == null) return;
 
-            var confirmation = MessageBox.Show(SingerConstants.DefaultRemoveItemMessage, "Delete confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            var confirmation = MessageBox.Show(SingerConfigs.DefaultRemoveItemMessage, "Delete confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
             if (confirmation != MessageBoxResult.Yes) return;
 
@@ -250,7 +250,7 @@ namespace SingerDispatch.Panels.Jobs
 
             if (swamper == null || dispatch == null) return;
 
-            var confirmation = MessageBox.Show(SingerConstants.DefaultRemoveItemMessage, "Delete confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            var confirmation = MessageBox.Show(SingerConfigs.DefaultRemoveItemMessage, "Delete confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
             if (confirmation != MessageBoxResult.Yes) return;
 

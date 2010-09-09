@@ -77,7 +77,7 @@ namespace SingerDispatch.Windows
         {
             try
             {
-                return (from j in SingerConstants.CommonDataContext.Jobs where j.Number == number select j).First();
+                return (from j in SingerConfigs.CommonDataContext.Jobs where j.Number == number select j).First();
             }
             catch
             {

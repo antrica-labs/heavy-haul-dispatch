@@ -19,11 +19,15 @@ namespace SingerDispatch.Panels.Jobs
         {
             InitializeComponent();
 
-            Database = SingerConstants.CommonDataContext;
+            if (InDesignMode()) return;
+            
+            Database = SingerConfigs.CommonDataContext;
         }
 
         private void ControlLoaded(object sender, RoutedEventArgs e)
         {
+            if (InDesignMode()) return;
+            
             cmbCommodityName.ItemsSource = (SelectedJob == null) ? null : from c in Database.Commodities where c.Company == SelectedJob.Company || c.Company == SelectedJob.CareOfCompany orderby c.Name, c.Unit select c;
         }
 
@@ -71,7 +75,7 @@ namespace SingerDispatch.Panels.Jobs
 
             if (commodity == null) return;
 
-            var confirmation = MessageBox.Show(SingerConstants.DefaultRemoveItemMessage, "Delete confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            var confirmation = MessageBox.Show(SingerConfigs.DefaultRemoveItemMessage, "Delete confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
             if (confirmation != MessageBoxResult.Yes) return;
 

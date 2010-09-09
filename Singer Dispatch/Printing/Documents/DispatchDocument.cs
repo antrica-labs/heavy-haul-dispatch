@@ -132,16 +132,16 @@ namespace SingerDispatch.Printing.Documents
                 if (copyType == "Driver Copy")
                 {
                     if (SpecializedDocument)
-                        copies = Convert.ToInt32(SingerConstants.GetConfig("Dispatch-SingerBoLDriverCopies") ?? "1");
+                        copies = Convert.ToInt32(SingerConfigs.GetConfig("Dispatch-SingerBoLDriverCopies") ?? "1");
                     else
-                        copies = Convert.ToInt32(SingerConstants.GetConfig("Dispatch-EnterpriseBoLDriverCopies") ?? "1");
+                        copies = Convert.ToInt32(SingerConfigs.GetConfig("Dispatch-EnterpriseBoLDriverCopies") ?? "1");
                 }
                 else
                 {
                     if (SpecializedDocument)
-                        copies = Convert.ToInt32(SingerConstants.GetConfig("Dispatch-SingerBoLFileCopies") ?? "1");
+                        copies = Convert.ToInt32(SingerConfigs.GetConfig("Dispatch-SingerBoLFileCopies") ?? "1");
                     else
-                        copies = Convert.ToInt32(SingerConstants.GetConfig("Dispatch-EnterpriseBoLFileCopies") ?? "1");
+                        copies = Convert.ToInt32(SingerConfigs.GetConfig("Dispatch-EnterpriseBoLFileCopies") ?? "1");
                 }
 
                 for (var i = 0; i < copies; i++)
@@ -617,9 +617,9 @@ namespace SingerDispatch.Printing.Documents
             string img;
 
             if (SpecializedDocument)
-                img = SingerConstants.GetConfig("Documents-SingerHeaderImg") ?? @"Images\SingerHeader.png";
+                img = SingerConfigs.GetConfig("Documents-SingerHeaderImg") ?? @"Images\SingerHeader.png";
             else
-                img = SingerConstants.GetConfig("Documents-MEHeaderImg") ?? @"Images\MEHeader.png";
+                img = SingerConfigs.GetConfig("Documents-MEHeaderImg") ?? @"Images\MEHeader.png";
 
             if (process.MainModule != null)
             {
@@ -627,10 +627,10 @@ namespace SingerDispatch.Printing.Documents
             }
 
             replacements[0] = img;
-            replacements[1] = SingerConstants.GetConfig("SingerName") ?? "Singer Specialized";
-            replacements[2] = SingerConstants.GetConfig("SingerAddress-StreetAddress");
-            replacements[3] = SingerConstants.GetConfig("SingerAddress-City");
-            replacements[4] = SingerConstants.GetConfig("SingerAddress-Phone");
+            replacements[1] = SingerConfigs.GetConfig("SingerName") ?? "Singer Specialized";
+            replacements[2] = SingerConfigs.GetConfig("SingerAddress-StreetAddress");
+            replacements[3] = SingerConfigs.GetConfig("SingerAddress-City");
+            replacements[4] = SingerConfigs.GetConfig("SingerAddress-Phone");
             replacements[5] = copyType;
             replacements[6] = (dispatch != null) ? dispatch.Name : "UNKNOWN";
 
@@ -719,7 +719,7 @@ namespace SingerDispatch.Printing.Documents
                 departureReplacement.Append(string.Format(rowTemplate, "Dispatched By", dispatch.DispatchedBy.Name));
 
             if (dispatch.MeetingTime != null)
-                departureReplacement.Append(string.Format(rowTemplate, "Departing Date", dispatch.MeetingTime.Value.ToString(SingerConstants.PrintedDateFormatString) + " " + dispatch.MeetingTime.Value.ToString(SingerConstants.PrintedTimeFormatString)));
+                departureReplacement.Append(string.Format(rowTemplate, "Departing Date", dispatch.MeetingTime.Value.ToString(SingerConfigs.PrintedDateFormatString) + " " + dispatch.MeetingTime.Value.ToString(SingerConfigs.PrintedTimeFormatString)));
             
             if (!string.IsNullOrEmpty(dispatch.DepartingLocation))
                 departureReplacement.Append(string.Format(rowTemplate, "Departing Location", dispatch.DepartingLocation));
@@ -959,8 +959,8 @@ namespace SingerDispatch.Printing.Documents
 
                 if (item.LoadDate != null)
                 {
-                    reps[4] = item.LoadDate.Value.ToString(SingerConstants.PrintedDateFormatString);
-                    reps[5] = item.LoadDate.Value.ToString(SingerConstants.PrintedTimeFormatString);
+                    reps[4] = item.LoadDate.Value.ToString(SingerConfigs.PrintedDateFormatString);
+                    reps[5] = item.LoadDate.Value.ToString(SingerConfigs.PrintedTimeFormatString);
                 }
                 else
                 {
@@ -978,8 +978,8 @@ namespace SingerDispatch.Printing.Documents
 
                 if (item.UnloadDate != null)
                 {
-                    reps[12] = item.UnloadDate.Value.ToString(SingerConstants.PrintedDateFormatString);
-                    reps[13] = item.UnloadDate.Value.ToString(SingerConstants.PrintedTimeFormatString);
+                    reps[12] = item.UnloadDate.Value.ToString(SingerConfigs.PrintedDateFormatString);
+                    reps[13] = item.UnloadDate.Value.ToString(SingerConfigs.PrintedTimeFormatString);
                 }
                 else
                 {
@@ -1270,7 +1270,7 @@ namespace SingerDispatch.Printing.Documents
             {
                 var replacements = new object[7];
 
-                replacements[0] = (item.ServiceDate == null) ? "" : item.ServiceDate.Value.ToString(SingerConstants.PrintedDateFormatString) + " " + item.ServiceDate.Value.ToString(SingerConstants.PrintedTimeFormatString);                
+                replacements[0] = (item.ServiceDate == null) ? "" : item.ServiceDate.Value.ToString(SingerConfigs.PrintedDateFormatString) + " " + item.ServiceDate.Value.ToString(SingerConfigs.PrintedTimeFormatString);                
                 replacements[1] = (item.Company == null) ? "" : item.Company.Name;
                 replacements[2] = (item.Contact == null) ? "" : item.Contact.Name;
                 replacements[3] = item.Location;
@@ -1338,7 +1338,7 @@ namespace SingerDispatch.Printing.Documents
             {
                 var replacements = new object[7];
 
-                replacements[0] = (item.ServiceDate == null) ? "" : item.ServiceDate.Value.ToString(SingerConstants.PrintedDateFormatString) + " " + item.ServiceDate.Value.ToString(SingerConstants.PrintedTimeFormatString);
+                replacements[0] = (item.ServiceDate == null) ? "" : item.ServiceDate.Value.ToString(SingerConfigs.PrintedDateFormatString) + " " + item.ServiceDate.Value.ToString(SingerConfigs.PrintedTimeFormatString);
                 replacements[1] = (item.ServiceType == null) ? "" : item.ServiceType.Name;
                 replacements[2] = (item.Company == null) ? "" : item.Company.Name;
                 replacements[3] = (item.Contact == null) ? "" : item.Contact.Name;
@@ -1405,7 +1405,7 @@ namespace SingerDispatch.Printing.Documents
             {
                 var replacements = new object[6];
 
-                replacements[0] = (item.ServiceDate == null) ? "" : item.ServiceDate.Value.ToString(SingerConstants.PrintedDateFormatString) + " " + item.ServiceDate.Value.ToString(SingerConstants.PrintedTimeFormatString);
+                replacements[0] = (item.ServiceDate == null) ? "" : item.ServiceDate.Value.ToString(SingerConfigs.PrintedDateFormatString) + " " + item.ServiceDate.Value.ToString(SingerConfigs.PrintedTimeFormatString);
                 replacements[1] = (item.Company == null)  ? "" : item.Company.Name;
                 replacements[2] = (item.Contact == null) ? "" : item.Contact.Name;
                 replacements[3] = item.Location;

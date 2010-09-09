@@ -371,9 +371,9 @@ namespace SingerDispatch.Printing.Documents
             string img;
 
             if (SpecializedDocument)
-                img = SingerConstants.GetConfig("Documents-SingerHeaderImg") ?? @"Images\SingerHeader.png";
+                img = SingerConfigs.GetConfig("Documents-SingerHeaderImg") ?? @"Images\SingerHeader.png";
             else
-                img = SingerConstants.GetConfig("Documents-MEHeaderImg") ?? @"Images\MEHeader.png";
+                img = SingerConfigs.GetConfig("Documents-MEHeaderImg") ?? @"Images\MEHeader.png";
 
             if (process.MainModule != null)
             {
@@ -384,9 +384,9 @@ namespace SingerDispatch.Printing.Documents
 
             replacements[0] = img;
             replacements[1] = quoteName;
-            replacements[2] = SingerConstants.GetConfig("SingerAddress-StreetAddress");
-            replacements[3] = SingerConstants.GetConfig("SingerAddress-City");
-            replacements[4] = SingerConstants.GetConfig("SingerAddress-Phone");
+            replacements[2] = SingerConfigs.GetConfig("SingerAddress-StreetAddress");
+            replacements[3] = SingerConfigs.GetConfig("SingerAddress-City");
+            replacements[4] = SingerConfigs.GetConfig("SingerAddress-Phone");
 
             return string.Format(html, replacements);
         }
@@ -414,7 +414,7 @@ namespace SingerDispatch.Printing.Documents
                 </div>
             ";
 
-            content.Append(string.Format(header, DateTime.Now.ToString(SingerConstants.PrintedDateFormatString)));
+            content.Append(string.Format(header, DateTime.Now.ToString(SingerConfigs.PrintedDateFormatString)));
 
             if (address != null)
             {
@@ -508,7 +508,7 @@ namespace SingerDispatch.Printing.Documents
 
             replacements[0] = (recipient != null) ? string.Format(@"<tr><td class=""fieldname"">Attention:</td><td>{0}</td></tr>", recipient.Name) : "";
             replacements[1] = subject;
-            replacements[2] = closingDate.Value.ToString(SingerConstants.PrintedDateFormatString);
+            replacements[2] = closingDate.Value.ToString(SingerConfigs.PrintedDateFormatString);
 
             return string.Format(html, replacements);
         }
@@ -813,7 +813,7 @@ namespace SingerDispatch.Printing.Documents
                 </div>
             ";
 
-            content = string.Format(content, SingerConstants.GetConfig("Quote-DefaultSignoff") ?? "", quote.Employee != null ? quote.Employee.Name : "Dan Klassen");
+            content = string.Format(content, SingerConfigs.GetConfig("Quote-DefaultSignoff") ?? "", quote.Employee != null ? quote.Employee.Name : "Dan Klassen");
 
             return content;
         }

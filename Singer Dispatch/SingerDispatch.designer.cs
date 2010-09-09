@@ -2826,6 +2826,8 @@ namespace SingerDispatch
 		
 		private EntitySet<ContactRoles> _ContactRoles;
 		
+		private EntitySet<Job> _Jobs;
+		
 		private EntitySet<LoadedCommodity> _LoadSiteCommodities;
 		
 		private EntitySet<LoadedCommodity> _UnloadSiteCommodities;
@@ -2873,6 +2875,7 @@ namespace SingerDispatch
 		public Contact()
 		{
 			this._ContactRoles = new EntitySet<ContactRoles>(new Action<ContactRoles>(this.attach_ContactRoles), new Action<ContactRoles>(this.detach_ContactRoles));
+			this._Jobs = new EntitySet<Job>(new Action<Job>(this.attach_Jobs), new Action<Job>(this.detach_Jobs));
 			this._LoadSiteCommodities = new EntitySet<LoadedCommodity>(new Action<LoadedCommodity>(this.attach_LoadSiteCommodities), new Action<LoadedCommodity>(this.detach_LoadSiteCommodities));
 			this._UnloadSiteCommodities = new EntitySet<LoadedCommodity>(new Action<LoadedCommodity>(this.attach_UnloadSiteCommodities), new Action<LoadedCommodity>(this.detach_UnloadSiteCommodities));
 			this._LoadedCommodities = new EntitySet<LoadedCommodity>(new Action<LoadedCommodity>(this.attach_LoadedCommodities), new Action<LoadedCommodity>(this.detach_LoadedCommodities));
@@ -3106,6 +3109,19 @@ namespace SingerDispatch
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Contact_Job", Storage="_Jobs", ThisKey="ID", OtherKey="ContactID")]
+		public EntitySet<Job> Jobs
+		{
+			get
+			{
+				return this._Jobs;
+			}
+			set
+			{
+				this._Jobs.Assign(value);
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Contact_LoadedCommodity", Storage="_LoadSiteCommodities", ThisKey="ID", OtherKey="LoadSiteContactID")]
 		public EntitySet<LoadedCommodity> LoadSiteCommodities
 		{
@@ -3292,6 +3308,18 @@ namespace SingerDispatch
 		}
 		
 		private void detach_ContactRoles(ContactRoles entity)
+		{
+			this.SendPropertyChanging();
+			entity.Contact = null;
+		}
+		
+		private void attach_Jobs(Job entity)
+		{
+			this.SendPropertyChanging();
+			entity.Contact = this;
+		}
+		
+		private void detach_Jobs(Job entity)
 		{
 			this.SendPropertyChanging();
 			entity.Contact = null;
@@ -4462,6 +4490,8 @@ namespace SingerDispatch
 		
 		private long _ID;
 		
+		private int _OrderIndex;
+		
 		private System.Nullable<long> _JobID;
 		
 		private System.Nullable<long> _LoadID;
@@ -4510,6 +4540,8 @@ namespace SingerDispatch
     partial void OnCreated();
     partial void OnIDChanging(long value);
     partial void OnIDChanged();
+    partial void OnOrderIndexChanging(int value);
+    partial void OnOrderIndexChanged();
     partial void OnJobIDChanging(System.Nullable<long> value);
     partial void OnJobIDChanged();
     partial void OnLoadIDChanging(System.Nullable<long> value);
@@ -4572,6 +4604,26 @@ namespace SingerDispatch
 					this._ID = value;
 					this.SendPropertyChanged("ID");
 					this.OnIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OrderIndex")]
+		public int OrderIndex
+		{
+			get
+			{
+				return this._OrderIndex;
+			}
+			set
+			{
+				if ((this._OrderIndex != value))
+				{
+					this.OnOrderIndexChanging(value);
+					this.SendPropertyChanging();
+					this._OrderIndex = value;
+					this.SendPropertyChanged("OrderIndex");
+					this.OnOrderIndexChanged();
 				}
 			}
 		}
@@ -5076,11 +5128,15 @@ namespace SingerDispatch
 		
 		private System.Nullable<long> _StatusID;
 		
+		private System.Nullable<long> _ContactID;
+		
 		private System.Nullable<int> _Number;
 		
 		private string _Name;
 		
 		private string _Description;
+		
+		private string _Notes;
 		
 		private System.Nullable<System.DateTime> _StartDate;
 		
@@ -5108,6 +5164,8 @@ namespace SingerDispatch
 		
 		private EntityRef<Status> _Status;
 		
+		private EntityRef<Contact> _Contact;
+		
 		private EntityRef<Quote> _Quote;
 		
     #region Extensibility Method Definitions
@@ -5126,12 +5184,16 @@ namespace SingerDispatch
     partial void OnCareOfCompanyIDChanged();
     partial void OnStatusIDChanging(System.Nullable<long> value);
     partial void OnStatusIDChanged();
+    partial void OnContactIDChanging(System.Nullable<long> value);
+    partial void OnContactIDChanged();
     partial void OnNumberChanging(System.Nullable<int> value);
     partial void OnNumberChanged();
     partial void OnNameChanging(string value);
     partial void OnNameChanged();
     partial void OnDescriptionChanging(string value);
     partial void OnDescriptionChanged();
+    partial void OnNotesChanging(string value);
+    partial void OnNotesChanged();
     partial void OnStartDateChanging(System.Nullable<System.DateTime> value);
     partial void OnStartDateChanged();
     partial void OnEndDateChanging(System.Nullable<System.DateTime> value);
@@ -5151,6 +5213,7 @@ namespace SingerDispatch
 			this._Company = default(EntityRef<Company>);
 			this._CareOfCompany = default(EntityRef<Company>);
 			this._Status = default(EntityRef<Status>);
+			this._Contact = default(EntityRef<Contact>);
 			this._Quote = default(EntityRef<Quote>);
 			OnCreated();
 		}
@@ -5295,6 +5358,30 @@ namespace SingerDispatch
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ContactID")]
+		public System.Nullable<long> ContactID
+		{
+			get
+			{
+				return this._ContactID;
+			}
+			set
+			{
+				if ((this._ContactID != value))
+				{
+					if (this._Contact.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnContactIDChanging(value);
+					this.SendPropertyChanging();
+					this._ContactID = value;
+					this.SendPropertyChanged("ContactID");
+					this.OnContactIDChanged();
+				}
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Number")]
 		public System.Nullable<int> Number
 		{
@@ -5351,6 +5438,26 @@ namespace SingerDispatch
 					this._Description = value;
 					this.SendPropertyChanged("Description");
 					this.OnDescriptionChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Notes")]
+		public string Notes
+		{
+			get
+			{
+				return this._Notes;
+			}
+			set
+			{
+				if ((this._Notes != value))
+				{
+					this.OnNotesChanging(value);
+					this.SendPropertyChanging();
+					this._Notes = value;
+					this.SendPropertyChanged("Notes");
+					this.OnNotesChanged();
 				}
 			}
 		}
@@ -5618,6 +5725,40 @@ namespace SingerDispatch
 						this._StatusID = default(Nullable<long>);
 					}
 					this.SendPropertyChanged("Status");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Contact_Job", Storage="_Contact", ThisKey="ContactID", OtherKey="ID", IsForeignKey=true)]
+		public Contact Contact
+		{
+			get
+			{
+				return this._Contact.Entity;
+			}
+			set
+			{
+				Contact previousValue = this._Contact.Entity;
+				if (((previousValue != value) 
+							|| (this._Contact.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Contact.Entity = null;
+						previousValue.Jobs.Remove(this);
+					}
+					this._Contact.Entity = value;
+					if ((value != null))
+					{
+						value.Jobs.Add(this);
+						this._ContactID = value.ID;
+					}
+					else
+					{
+						this._ContactID = default(Nullable<long>);
+					}
+					this.SendPropertyChanged("Contact");
 				}
 			}
 		}

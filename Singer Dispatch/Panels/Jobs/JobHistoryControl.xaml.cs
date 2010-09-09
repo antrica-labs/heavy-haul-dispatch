@@ -23,7 +23,7 @@ namespace SingerDispatch.Panels.Jobs
         {
             InitializeComponent();
 
-            Database = SingerConstants.CommonDataContext;
+            Database = SingerConfigs.CommonDataContext;
 
             DefaultJobStatus = (from s in Database.Statuses where s.Name == "Pending" select s).First();            
         }
@@ -114,7 +114,7 @@ namespace SingerDispatch.Panels.Jobs
         private void NewJob_Click(object sender, RoutedEventArgs e)
         {
             var list = (ObservableCollection<Job>)DgJobs.ItemsSource;
-            var job = new Job { Status = DefaultJobStatus, Company = SelectedCompany, Employee = SingerConstants.OperatingEmployee };
+            var job = new Job { Status = DefaultJobStatus, Company = SelectedCompany, Employee = SingerConfigs.OperatingEmployee };
                         
             list.Add(job);
             DgJobs.SelectedItem = job;

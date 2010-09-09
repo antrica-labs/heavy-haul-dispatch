@@ -16,7 +16,7 @@ namespace SingerDispatch.Panels.Quotes
         {
             InitializeComponent();
 
-            Database = SingerConstants.CommonDataContext;
+            Database = SingerConfigs.CommonDataContext;
 
             cmbBillingType.ItemsSource = from bt in Database.BillingTypes select bt;
         }
@@ -69,7 +69,7 @@ namespace SingerDispatch.Panels.Quotes
 
             if (item == null) return;
 
-            var confirmation = MessageBox.Show(SingerConstants.DefaultRemoveItemMessage, "Delete confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            var confirmation = MessageBox.Show(SingerConfigs.DefaultRemoveItemMessage, "Delete confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
             if (confirmation != MessageBoxResult.Yes) return;
             

@@ -22,7 +22,7 @@ namespace SingerDispatch.Panels.Jobs
         {
             InitializeComponent();
 
-            Database = SingerConstants.CommonDataContext;
+            Database = SingerConfigs.CommonDataContext;
 
             DefaultLoadStatus = (from s in Database.Statuses where s.Name == "Pending" select s).First();
         }
@@ -59,11 +59,10 @@ namespace SingerDispatch.Panels.Jobs
             if (cmbUnloadingSiteContactCompanies.SelectedItem == null)
                 cmbUnloadingSiteContactCompanies.SelectedItem = SelectedCompany;
 
-            if (cmbShipperCompanies.SelectedItem == null)
-                cmbShipperCompanies.SelectedItem = SelectedCompany;
+            var provinces = from p in Database.ProvincesAndStates select p;
 
-            if (cmbConsigneeCompanies.SelectedItem == null)
-                cmbConsigneeCompanies.SelectedItem = SelectedCompany;            
+            cmbLoadingProvinces.ItemsSource = provinces;
+            cmbUnloadingProvinces.ItemsSource = provinces;
 
             UpdateExtras();
             UpdateCommodityList();
@@ -130,7 +129,7 @@ namespace SingerDispatch.Panels.Jobs
 
             if (load == null) return;
 
-            var confirmation = MessageBox.Show(SingerConstants.DefaultRemoveItemMessage, "Delete confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            var confirmation = MessageBox.Show(SingerConfigs.DefaultRemoveItemMessage, "Delete confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
             if (confirmation != MessageBoxResult.Yes) return;
 
@@ -228,7 +227,13 @@ namespace SingerDispatch.Panels.Jobs
             
             if (load == null || commodity == null) return;
 
-            var loaded = new LoadedCommodity { JobCommodity = commodity, Load = load };
+            var loaded = new LoadedCommodity { JobCommodity = commodity, Load = load, ShipperCompany = SelectedCompany, ConsigneeCompany = SelectedCompany };
+
+            try
+            {
+                loaded.LoadingProvince = loaded.UnloadingProvince = (from p in Database.ProvincesAndStates where p.Abbreviation == "AB" select p).First();
+            }
+            catch { }
 
             load.LoadedCommodities.Add(loaded);
             cmbLoadedCommodities.ItemsSource = load.LoadedCommodities.GetNewBindingList();
@@ -357,8 +362,8 @@ namespace SingerDispatch.Panels.Jobs
 
             load.LoadedHeight += highest;
 
-            if (load.LoadedHeight < SingerConstants.MinLoadHeight)
-                load.LoadedHeight = SingerConstants.MinLoadHeight;
+            if (load.LoadedHeight < SingerConfigs.MinLoadHeight)
+                load.LoadedHeight = SingerConfigs.MinLoadHeight;
 
             if (widest > load.LoadedWidth)
                 load.LoadedWidth = widest;
