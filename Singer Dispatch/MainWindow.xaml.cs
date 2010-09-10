@@ -20,6 +20,7 @@ using SingerDispatch.Panels.Storage;
 using System.Windows.Interop;
 using System.ComponentModel;
 using SingerDispatch.Security;
+using SingerDispatch.Panels.Loads;
 
 namespace SingerDispatch
 {
@@ -269,12 +270,16 @@ namespace SingerDispatch
             {
                 ErrorNoticeWindow.ShowError(ex.Message, ex.ToString());
             }
-            
         }
 
         private void ExpandJobs(object sender, RoutedEventArgs e)
         {
             ExpandSection(expanderJobs, typeof(JobsPanel));
+        }
+
+        private void ExpandLoads(object sender, RoutedEventArgs e)
+        {
+            ExpandSection(expanderLoads, typeof(LoadsPanel));
         }
 
         private void ExpandInvoicing(object sender, RoutedEventArgs e)

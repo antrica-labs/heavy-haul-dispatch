@@ -160,8 +160,7 @@
       <Column Name="Responsibilities" Type="System.String" CanBeNull="true" />
       <Column Name="Notes" Type="System.String" CanBeNull="true" UpdateCheck="Never" />
       <Column Name="Email" Type="System.String" CanBeNull="true" />
-      <Column Name="WindowsUserName" Type="System.String" CanBeNull="true" />
-      <Association Name="Employee_Job" Member="Jobs" ThisKey="ID" OtherKey="EmployeeID" Type="Job" />
+      <Column Name="WindowsUserName" Type="System.String" CanBeNull="true" />      
       <Association Name="Employee_Quote" Member="Quotes" ThisKey="ID" OtherKey="EmployeeID" Type="Quote" />
       <Association Name="Employee_Equipment" Member="Equipments" ThisKey="ID" OtherKey="DefaultDriverID" Type="Equipment" />
       <Association Name="Employee_Dispatch" Member="Dispatches" ThisKey="ID" OtherKey="EmployeeID" Type="Dispatch" />
@@ -207,24 +206,16 @@
     <Type Name="Job">
       <Column Name="ID" Type="System.Int64" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="CompanyID" Type="System.Int64" CanBeNull="true" />
-      <Column Name="QuoteID" Type="System.Int64" CanBeNull="true" />
-      <Column Name="EmployeeID" Type="System.Int64" CanBeNull="true" />
+      <Column Name="QuoteID" Type="System.Int64" CanBeNull="true" />      
       <Column Name="CareOfCompanyID" Type="System.Int64" CanBeNull="true" />
       <Column Name="StatusID" Type="System.Int64" CanBeNull="true" />
       <Column Name="ContactID" Type="System.Int64" CanBeNull="true" />
       <Column Name="Number" Type="System.Int32" CanBeNull="true" />
-      <Column Name="Name" Type="System.String" CanBeNull="true" />
-      <Column Name="Description" Type="System.String" CanBeNull="true" />
-      <Column Name="Notes" Type="System.String" CanBeNull="true" /> 
-      <Column Name="StartDate" Type="System.DateTime" CanBeNull="true" />
-      <Column Name="EndDate" Type="System.DateTime" CanBeNull="true" />
-      <Association Name="Job_JobCommodity" Member="JobCommodities" ThisKey="ID" OtherKey="JobID" Type="JobCommodity" />
+      <Column Name="Name" Type="System.String" CanBeNull="true" />      
+      <Column Name="Notes" Type="System.String" CanBeNull="true" />
       <Association Name="Job_Load" Member="Loads" ThisKey="ID" OtherKey="JobID" Type="Load" />
-      <Association Name="Job_Permit" Member="Permits" ThisKey="ID" OtherKey="JobID" Type="Permit" />
-      <Association Name="Job_ThirdPartyService" Member="ThirdPartyServices" ThisKey="ID" OtherKey="JobID" Type="ThirdPartyService" />
-      <Association Name="Job_Dispatch" Member="Dispatches" ThisKey="ID" OtherKey="JobID" Type="Dispatch" />
-      <Association Name="Job_Invoice" Member="Invoices" ThisKey="ID" OtherKey="JobID" Type="Invoice" />
-      <Association Name="Employee_Job" Member="Employee" ThisKey="EmployeeID" OtherKey="ID" Type="Employee" IsForeignKey="true" />
+      <Association Name="Job_JobCommodity" Member="JobCommodities" ThisKey="ID" OtherKey="JobID" Type="JobCommodity" />      
+      <Association Name="Job_Invoice" Member="Invoices" ThisKey="ID" OtherKey="JobID" Type="Invoice" />      
       <Association Name="Company_Job" Member="Company" ThisKey="CompanyID" OtherKey="ID" Type="Company" IsForeignKey="true" />
       <Association Name="Company_Job1" Member="CareOfCompany" ThisKey="CareOfCompanyID" OtherKey="ID" Type="Company" IsForeignKey="true" />
       <Association Name="Status_Job" Member="Status" ThisKey="StatusID" OtherKey="ID" Type="Status" IsForeignKey="true" />
@@ -293,13 +284,13 @@
       <Column Name="GrossWeight" Type="System.Double" CanBeNull="true" />
       <Column Name="LoadedLength" Type="System.Double" CanBeNull="true" />
       <Column Name="LoadedWidth" Type="System.Double" CanBeNull="true" />
-      <Column Name="LoadedHeight" Type="System.Double" CanBeNull="true" />      
-      <Association Name="Load_LoadedCommodity" Member="LoadedCommodities" ThisKey="ID" OtherKey="LoadID" Type="LoadedCommodity" />
-      <Association Name="Load_Permit" Member="Permits" ThisKey="ID" OtherKey="LoadID" Type="Permit" />
-      <Association Name="Load_ThirdPartyService" Member="ThirdPartyServices" ThisKey="ID" OtherKey="LoadID" Type="ThirdPartyService" />
-      <Association Name="Load_Dispatch" Member="Dispatches" ThisKey="ID" OtherKey="LoadID" Type="Dispatch" />
-      <Association Name="Status_Load" Member="Status" ThisKey="StatusID" OtherKey="ID" Type="Status" IsForeignKey="true" />
+      <Column Name="LoadedHeight" Type="System.Double" CanBeNull="true" />
       <Association Name="Job_Load" Member="Job" ThisKey="JobID" OtherKey="ID" Type="Job" IsForeignKey="true" />
+      <Association Name="Load_LoadedCommodity" Member="LoadedCommodities" ThisKey="ID" OtherKey="LoadID" Type="LoadedCommodity" />
+      <Association Name="Load_Permit" Member="Permits" ThisKey="ID" OtherKey="LoadID" Type="Permit" />      
+      <Association Name="Load_Dispatch" Member="Dispatches" ThisKey="ID" OtherKey="LoadID" Type="Dispatch" />
+      <Association Name="Load_ThirdPartyService" Member="ThirdPartyServices" ThisKey="ID" OtherKey="LoadID" Type="ThirdPartyService" />
+      <Association Name="Status_Load" Member="Status" ThisKey="StatusID" OtherKey="ID" Type="Status" IsForeignKey="true" />      
       <Association Name="Season_Load" Member="Season" ThisKey="SeasonID" OtherKey="ID" Type="Season" IsForeignKey="true" />
       <Association Name="Equipment_Load" Member="Equipment" ThisKey="EquipmentID" OtherKey="ID" Type="Equipment" IsForeignKey="true" />
       <Association Name="Rate_Load" Member="Rate" ThisKey="RateID" OtherKey="ID" Type="Rate" IsForeignKey="true" />
@@ -374,15 +365,13 @@
   </Table>
   <Table Name="" Member="Permits">
     <Type Name="Permit">
-      <Column Name="ID" Type="System.Int64" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="JobID" Type="System.Int64" CanBeNull="true" />
+      <Column Name="ID" Type="System.Int64" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />      
       <Column Name="LoadID" Type="System.Int64" CanBeNull="true" />
       <Column Name="PermitTypeID" Type="System.Int64" CanBeNull="true" />
       <Column Name="CompanyID" Type="System.Int64" CanBeNull="true" />
       <Column Name="Reference" Type="System.String" CanBeNull="true" />
       <Column Name="Conditions" Type="System.String" CanBeNull="true" />      
-      <Column Name="Cost" Type="System.Decimal" CanBeNull="true" />      
-      <Association Name="Job_Permit" Member="Job" ThisKey="JobID" OtherKey="ID" Type="Job" IsForeignKey="true" />
+      <Column Name="Cost" Type="System.Decimal" CanBeNull="true" />            
       <Association Name="Load_Permit" Member="Load" ThisKey="LoadID" OtherKey="ID" Type="Load" IsForeignKey="true" />
       <Association Name="PermitType_Permit" Member="PermitType" ThisKey="PermitTypeID" OtherKey="ID" Type="PermitType" IsForeignKey="true" />
       <Association Name="Company_Permit" Member="IssuingCompany" ThisKey="CompanyID" OtherKey="ID" Type="Company" IsForeignKey="true" />
@@ -584,8 +573,7 @@
   </Table>
   <Table Name="" Member="ThirdPartyServices">
     <Type Name="ThirdPartyService">
-      <Column Name="ID" Type="System.Int64" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="JobID" Type="System.Int64" CanBeNull="true" />
+      <Column Name="ID" Type="System.Int64" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />      
       <Column Name="LoadID" Type="System.Int64" CanBeNull="true" />
       <Column Name="CompanyID" Type="System.Int64" CanBeNull="true" />
       <Column Name="ServiceTypeID" Type="System.Int64" CanBeNull="true" />
@@ -595,8 +583,7 @@
       <Column Name="Reference" Type="System.String" CanBeNull="true" />
       <Column Name="Notes" Type="System.String" CanBeNull="true" />
       <Association Name="Company_ThirdPartyService" Member="Company" ThisKey="CompanyID" OtherKey="ID" Type="Company" IsForeignKey="true" />
-      <Association Name="Contact_ThirdPartyService" Member="Contact" ThisKey="ContactID" OtherKey="ID" Type="Contact" IsForeignKey="true" />
-      <Association Name="Job_ThirdPartyService" Member="Job" ThisKey="JobID" OtherKey="ID" Type="Job" IsForeignKey="true" />
+      <Association Name="Contact_ThirdPartyService" Member="Contact" ThisKey="ContactID" OtherKey="ID" Type="Contact" IsForeignKey="true" />      
       <Association Name="Load_ThirdPartyService" Member="Load" ThisKey="LoadID" OtherKey="ID" Type="Load" IsForeignKey="true" />
       <Association Name="ServiceType_ThirdPartyService" Member="ServiceType" ThisKey="ServiceTypeID" OtherKey="ID" Type="ServiceType" IsForeignKey="true" />
     </Type>
@@ -642,8 +629,7 @@
   </Table>
   <Table Name="" Member="Dispatches">
     <Type Name="Dispatch">
-      <Column Name="ID" Type="System.Int64" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="JobID" Type="System.Int64" CanBeNull="true" />
+      <Column Name="ID" Type="System.Int64" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />      
       <Column Name="LoadID" Type="System.Int64" CanBeNull="true" />
       <Column Name="DispatchedByID" Type="System.Int64" CanBeNull="true" />
       <Column Name="EmployeeID" Type="System.Int64" CanBeNull="true" />
@@ -658,8 +644,7 @@
       <Column Name="Notes" Type="System.String" CanBeNull="true" UpdateCheck="Never" />
       <Association Name="Employee_Dispatch_DispatchedBy" Member="DispatchedBy" ThisKey="DispatchedByID" OtherKey="ID" Type="Employee" IsForeignKey="true" />
       <Association Name="EquipmentType_Dispatch" Member="EquipmentType" ThisKey="EquipmentTypeID" OtherKey="ID" Type="EquipmentType" IsForeignKey="true" />
-      <Association Name="Equipment_Dispatch" Member="Equipment" ThisKey="EquipmentID" OtherKey="ID" Type="Equipment" IsForeignKey="true" />
-      <Association Name="Job_Dispatch" Member="Job" ThisKey="JobID" OtherKey="ID" Type="Job" IsForeignKey="true" />
+      <Association Name="Equipment_Dispatch" Member="Equipment" ThisKey="EquipmentID" OtherKey="ID" Type="Equipment" IsForeignKey="true" />      
       <Association Name="Load_Dispatch" Member="Load" ThisKey="LoadID" OtherKey="ID" Type="Load" IsForeignKey="true" />      
       <Association Name="Employee_Dispatch" Member="Employee" ThisKey="EmployeeID" OtherKey="ID" Type="Employee" IsForeignKey="true" /> 
       <Association Name="Dispatch_OutOfProvinceTravel" Member="OutOfProvinceTravels" ThisKey="ID" OtherKey="DispatchID" Type="OutOfProvinceTravel" />

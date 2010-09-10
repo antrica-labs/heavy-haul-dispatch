@@ -47,25 +47,27 @@ namespace SingerDispatch.Database
                 context.JobCommodities.DeleteOnSubmit(c);
             }
 
-            foreach (var d in job.Dispatches.Where(d => d.ID != 0))
-            {
-                context.Dispatches.DeleteOnSubmit(d);
-            }
-            
             foreach (var l in job.Loads.Where(l => l.ID != 0))
             {
+                foreach (var d in l.Dispatches.Where(d => d.ID != 0))
+                {
+                    context.Dispatches.DeleteOnSubmit(d);
+                }
+
+                foreach (var t in l.ThirdPartyServices.Where(t => t.ID != 0))
+                {
+                    context.ThirdPartyServices.DeleteOnSubmit(t);
+                }
+
+                foreach (var p in l.Permits.Where(p => p.ID != 0))
+                {
+                    context.Permits.DeleteOnSubmit(p);
+                }
+
                 context.Loads.DeleteOnSubmit(l);
             }
 
-            foreach (var t in job.ThirdPartyServices.Where(t => t.ID != 0))
-            {
-                context.ThirdPartyServices.DeleteOnSubmit(t);
-            }
-
-            foreach (var p in job.Permits.Where(p => p.ID != 0))
-            {
-                context.Permits.DeleteOnSubmit(p);
-            }
+            
 
             if (job.ID != 0)
                 context.Jobs.DeleteOnSubmit(job);
@@ -134,10 +136,7 @@ namespace SingerDispatch.Database
 
         public static void SaveAsNewDispatch(Dispatch dispatch, SingerDispatchDataContext context)
         {
-            if (dispatch.Job == null)
-                throw new Exception("Dispatch must be assigned to a job");
-
-            var number = (from d in context.Dispatches where d.Job == dispatch.Job select d.Number).Max() + 1;
+            var number = (from d in context.Dispatches where d.Load == dispatch.Load select d.Number).Max() + 1;
 
             dispatch.Number = number ?? 1;
 

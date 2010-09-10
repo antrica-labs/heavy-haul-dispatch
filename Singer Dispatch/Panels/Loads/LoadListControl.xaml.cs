@@ -11,14 +11,14 @@ using SingerDispatch.Printing.Documents;
 namespace SingerDispatch.Panels.Jobs
 {
     /// <summary>
-    /// Interaction logic for LoadsControl.xaml
+    /// Interaction logic for LoadListControl.xaml
     /// </summary>
-    public partial class LoadsControl
+    public partial class LoadListControl
     {
         public SingerDispatchDataContext Database { get; set; }
         public Status DefaultLoadStatus { get; set; }
 
-        public LoadsControl()
+        public LoadListControl()
         {
             InitializeComponent();
 
@@ -78,7 +78,7 @@ namespace SingerDispatch.Panels.Jobs
         private void NewLoad_Click(object sender, RoutedEventArgs e)
         {
             var list = (ObservableCollection<Load>)dgLoads.ItemsSource;
-            var load = new Load { Job = SelectedJob, StartDate = SelectedJob.StartDate, EndDate = SelectedJob.EndDate, Status = DefaultLoadStatus };
+            var load = new Load { Job = SelectedJob, Status = DefaultLoadStatus };
 
             SelectedJob.Loads.Add(load);
             list.Add(load);

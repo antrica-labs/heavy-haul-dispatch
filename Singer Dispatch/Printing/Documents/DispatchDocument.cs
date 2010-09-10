@@ -634,7 +634,7 @@ namespace SingerDispatch.Printing.Documents
             replacements[5] = copyType;
             replacements[6] = (dispatch != null) ? dispatch.Name : "UNKNOWN";
 
-            if (dispatch.Job.Company.CompanyPriorityLevel.Name.EndsWith("Cash on Delivery"))
+            if (dispatch.Load.Job.Company.CompanyPriorityLevel.Name.EndsWith("Cash on Delivery"))
                 replacements[7] = "<span>C.O.D.<br>Collect</span>";            
 
             return string.Format(html, replacements);
@@ -690,7 +690,7 @@ namespace SingerDispatch.Printing.Documents
 
             var dispatchReplacements = new object[5];
 
-            dispatchReplacements[0] = dispatch.Job.Company.Name;
+            dispatchReplacements[0] = dispatch.Load.Job.Company.Name;
             dispatchReplacements[1] = (dispatch.Equipment != null) ? dispatch.Equipment.UnitNumber : "";
             dispatchReplacements[2] = (dispatch.Load != null && dispatch.Load.Rate != null) ? dispatch.Load.Rate.Name + " - " : "";
 
@@ -731,13 +731,13 @@ namespace SingerDispatch.Printing.Documents
             // List any reference numbers given to this job            
             var references = new StringBuilder();
             
-            for (var i = 0; i < dispatch.Job.ReferenceNumbers.Count; i++) 
+            for (var i = 0; i < dispatch.Load.Job.ReferenceNumbers.Count; i++) 
             {
-                var item = dispatch.Job.ReferenceNumbers[i];
+                var item = dispatch.Load.Job.ReferenceNumbers[i];
 
                 references.Append(@"<span class=""reference""><span class=""field_name"">" + item.Field + @"</span>: <span class=""value"">" + item.Value + "</span></span>");
 
-                if ((i + 1) != dispatch.Job.ReferenceNumbers.Count)
+                if ((i + 1) != dispatch.Load.Job.ReferenceNumbers.Count)
                     references.Append(", ");
             }
             

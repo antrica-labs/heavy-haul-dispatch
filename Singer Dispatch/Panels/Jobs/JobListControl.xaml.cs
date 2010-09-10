@@ -114,10 +114,15 @@ namespace SingerDispatch.Panels.Jobs
             grid.ScrollIntoView(grid.SelectedItem);
         }
 
+        private void cmbCareOfCompanies_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            cmbContacts.ItemsSource = (SelectedCompany == null) ? from c in Database.Contacts where c.Address.CompanyID == SelectedCompany.ID orderby c.FirstName, c.LastName select c : from c in Database.Contacts where c.Address.CompanyID == SelectedCompany.ID || c.Address.CompanyID == SelectedJob.CareOfCompanyID orderby c.FirstName, c.LastName select c;
+        }
+
         private void NewJob_Click(object sender, RoutedEventArgs e)
         {
             var list = (ObservableCollection<Job>)dgJobs.ItemsSource;
-            var job = new Job { Status = DefaultJobStatus, Company = SelectedCompany, Employee = SingerConfigs.OperatingEmployee };
+            var job = new Job { Status = DefaultJobStatus, Company = SelectedCompany };
 
             list.Insert(0, job);            
             SelectedCompany.Jobs.Add(job);
@@ -217,5 +222,7 @@ namespace SingerDispatch.Panels.Jobs
             dgReferenceNumbers.UpdateLayout();
             dgReferenceNumbers.MaxHeight = dgReferenceNumbers.ActualHeight;
         }
+
+        
     }
 }

@@ -76,6 +76,7 @@ namespace SingerDispatch.Panels.Jobs
             CommitChangesButton.RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent, CommitChangesButton));
         }
 
+        /*
         private void ViewDispatches_Click(object sender, RoutedEventArgs e)
         {
             if (SelectedJob == null) return;
@@ -96,5 +97,6 @@ namespace SingerDispatch.Panels.Jobs
             var viewer = new DocumentViewerWindow(new DispatchDocument(printFileCopy), dispatches, string.Format("Dispatches - Job #{0}", SelectedJob.Number)) { IsMetric = !UseImperialMeasurements, IsSpecializedDocument = SelectedCompany.CustomerType.IsEnterprise != true };
             viewer.DisplayPrintout();
         }
+        */
     }
 }

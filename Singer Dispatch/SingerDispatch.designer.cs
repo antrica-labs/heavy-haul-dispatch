@@ -3864,8 +3864,6 @@ namespace SingerDispatch
 		
 		private string _WindowsUserName;
 		
-		private EntitySet<Job> _Jobs;
-		
 		private EntitySet<Quote> _Quotes;
 		
 		private EntitySet<Equipment> _Equipments;
@@ -3912,7 +3910,6 @@ namespace SingerDispatch
 		
 		public Employee()
 		{
-			this._Jobs = new EntitySet<Job>(new Action<Job>(this.attach_Jobs), new Action<Job>(this.detach_Jobs));
 			this._Quotes = new EntitySet<Quote>(new Action<Quote>(this.attach_Quotes), new Action<Quote>(this.detach_Quotes));
 			this._Equipments = new EntitySet<Equipment>(new Action<Equipment>(this.attach_Equipments), new Action<Equipment>(this.detach_Equipments));
 			this._DispatchedDispatches = new EntitySet<Dispatch>(new Action<Dispatch>(this.attach_DispatchedDispatches), new Action<Dispatch>(this.detach_DispatchedDispatches));
@@ -4201,19 +4198,6 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Employee_Job", Storage="_Jobs", ThisKey="ID", OtherKey="EmployeeID")]
-		public EntitySet<Job> Jobs
-		{
-			get
-			{
-				return this._Jobs;
-			}
-			set
-			{
-				this._Jobs.Assign(value);
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Employee_Quote", Storage="_Quotes", ThisKey="ID", OtherKey="EmployeeID")]
 		public EntitySet<Quote> Quotes
 		{
@@ -4297,18 +4281,6 @@ namespace SingerDispatch
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
-		}
-		
-		private void attach_Jobs(Job entity)
-		{
-			this.SendPropertyChanging();
-			entity.Employee = this;
-		}
-		
-		private void detach_Jobs(Job entity)
-		{
-			this.SendPropertyChanging();
-			entity.Employee = null;
 		}
 		
 		private void attach_Quotes(Quote entity)
@@ -5122,8 +5094,6 @@ namespace SingerDispatch
 		
 		private System.Nullable<long> _QuoteID;
 		
-		private System.Nullable<long> _EmployeeID;
-		
 		private System.Nullable<long> _CareOfCompanyID;
 		
 		private System.Nullable<long> _StatusID;
@@ -5134,13 +5104,7 @@ namespace SingerDispatch
 		
 		private string _Name;
 		
-		private string _Description;
-		
 		private string _Notes;
-		
-		private System.Nullable<System.DateTime> _StartDate;
-		
-		private System.Nullable<System.DateTime> _EndDate;
 		
 		private EntitySet<JobCommodity> _JobCommodities;
 		
@@ -5148,15 +5112,7 @@ namespace SingerDispatch
 		
 		private EntitySet<Load> _Loads;
 		
-		private EntitySet<Permit> _Permits;
-		
-		private EntitySet<ThirdPartyService> _ThirdPartyServices;
-		
-		private EntitySet<Dispatch> _Dispatches;
-		
 		private EntitySet<Invoice> _Invoices;
-		
-		private EntityRef<Employee> _Employee;
 		
 		private EntityRef<Company> _Company;
 		
@@ -5178,8 +5134,6 @@ namespace SingerDispatch
     partial void OnCompanyIDChanged();
     partial void OnQuoteIDChanging(System.Nullable<long> value);
     partial void OnQuoteIDChanged();
-    partial void OnEmployeeIDChanging(System.Nullable<long> value);
-    partial void OnEmployeeIDChanged();
     partial void OnCareOfCompanyIDChanging(System.Nullable<long> value);
     partial void OnCareOfCompanyIDChanged();
     partial void OnStatusIDChanging(System.Nullable<long> value);
@@ -5190,14 +5144,8 @@ namespace SingerDispatch
     partial void OnNumberChanged();
     partial void OnNameChanging(string value);
     partial void OnNameChanged();
-    partial void OnDescriptionChanging(string value);
-    partial void OnDescriptionChanged();
     partial void OnNotesChanging(string value);
     partial void OnNotesChanged();
-    partial void OnStartDateChanging(System.Nullable<System.DateTime> value);
-    partial void OnStartDateChanged();
-    partial void OnEndDateChanging(System.Nullable<System.DateTime> value);
-    partial void OnEndDateChanged();
     #endregion
 		
 		public Job()
@@ -5205,11 +5153,7 @@ namespace SingerDispatch
 			this._JobCommodities = new EntitySet<JobCommodity>(new Action<JobCommodity>(this.attach_JobCommodities), new Action<JobCommodity>(this.detach_JobCommodities));
 			this._ReferenceNumbers = new EntitySet<JobReferenceNumber>(new Action<JobReferenceNumber>(this.attach_ReferenceNumbers), new Action<JobReferenceNumber>(this.detach_ReferenceNumbers));
 			this._Loads = new EntitySet<Load>(new Action<Load>(this.attach_Loads), new Action<Load>(this.detach_Loads));
-			this._Permits = new EntitySet<Permit>(new Action<Permit>(this.attach_Permits), new Action<Permit>(this.detach_Permits));
-			this._ThirdPartyServices = new EntitySet<ThirdPartyService>(new Action<ThirdPartyService>(this.attach_ThirdPartyServices), new Action<ThirdPartyService>(this.detach_ThirdPartyServices));
-			this._Dispatches = new EntitySet<Dispatch>(new Action<Dispatch>(this.attach_Dispatches), new Action<Dispatch>(this.detach_Dispatches));
 			this._Invoices = new EntitySet<Invoice>(new Action<Invoice>(this.attach_Invoices), new Action<Invoice>(this.detach_Invoices));
-			this._Employee = default(EntityRef<Employee>);
 			this._Company = default(EntityRef<Company>);
 			this._CareOfCompany = default(EntityRef<Company>);
 			this._Status = default(EntityRef<Status>);
@@ -5282,30 +5226,6 @@ namespace SingerDispatch
 					this._QuoteID = value;
 					this.SendPropertyChanged("QuoteID");
 					this.OnQuoteIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EmployeeID")]
-		public System.Nullable<long> EmployeeID
-		{
-			get
-			{
-				return this._EmployeeID;
-			}
-			set
-			{
-				if ((this._EmployeeID != value))
-				{
-					if (this._Employee.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnEmployeeIDChanging(value);
-					this.SendPropertyChanging();
-					this._EmployeeID = value;
-					this.SendPropertyChanged("EmployeeID");
-					this.OnEmployeeIDChanged();
 				}
 			}
 		}
@@ -5422,26 +5342,6 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Description")]
-		public string Description
-		{
-			get
-			{
-				return this._Description;
-			}
-			set
-			{
-				if ((this._Description != value))
-				{
-					this.OnDescriptionChanging(value);
-					this.SendPropertyChanging();
-					this._Description = value;
-					this.SendPropertyChanged("Description");
-					this.OnDescriptionChanged();
-				}
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Notes")]
 		public string Notes
 		{
@@ -5458,46 +5358,6 @@ namespace SingerDispatch
 					this._Notes = value;
 					this.SendPropertyChanged("Notes");
 					this.OnNotesChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_StartDate")]
-		public System.Nullable<System.DateTime> StartDate
-		{
-			get
-			{
-				return this._StartDate;
-			}
-			set
-			{
-				if ((this._StartDate != value))
-				{
-					this.OnStartDateChanging(value);
-					this.SendPropertyChanging();
-					this._StartDate = value;
-					this.SendPropertyChanged("StartDate");
-					this.OnStartDateChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EndDate")]
-		public System.Nullable<System.DateTime> EndDate
-		{
-			get
-			{
-				return this._EndDate;
-			}
-			set
-			{
-				if ((this._EndDate != value))
-				{
-					this.OnEndDateChanging(value);
-					this.SendPropertyChanging();
-					this._EndDate = value;
-					this.SendPropertyChanged("EndDate");
-					this.OnEndDateChanged();
 				}
 			}
 		}
@@ -5541,45 +5401,6 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Job_Permit", Storage="_Permits", ThisKey="ID", OtherKey="JobID")]
-		public EntitySet<Permit> Permits
-		{
-			get
-			{
-				return this._Permits;
-			}
-			set
-			{
-				this._Permits.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Job_ThirdPartyService", Storage="_ThirdPartyServices", ThisKey="ID", OtherKey="JobID")]
-		public EntitySet<ThirdPartyService> ThirdPartyServices
-		{
-			get
-			{
-				return this._ThirdPartyServices;
-			}
-			set
-			{
-				this._ThirdPartyServices.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Job_Dispatch", Storage="_Dispatches", ThisKey="ID", OtherKey="JobID")]
-		public EntitySet<Dispatch> Dispatches
-		{
-			get
-			{
-				return this._Dispatches;
-			}
-			set
-			{
-				this._Dispatches.Assign(value);
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Job_Invoice", Storage="_Invoices", ThisKey="ID", OtherKey="JobID")]
 		public EntitySet<Invoice> Invoices
 		{
@@ -5590,40 +5411,6 @@ namespace SingerDispatch
 			set
 			{
 				this._Invoices.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Employee_Job", Storage="_Employee", ThisKey="EmployeeID", OtherKey="ID", IsForeignKey=true)]
-		public Employee Employee
-		{
-			get
-			{
-				return this._Employee.Entity;
-			}
-			set
-			{
-				Employee previousValue = this._Employee.Entity;
-				if (((previousValue != value) 
-							|| (this._Employee.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Employee.Entity = null;
-						previousValue.Jobs.Remove(this);
-					}
-					this._Employee.Entity = value;
-					if ((value != null))
-					{
-						value.Jobs.Add(this);
-						this._EmployeeID = value.ID;
-					}
-					else
-					{
-						this._EmployeeID = default(Nullable<long>);
-					}
-					this.SendPropertyChanged("Employee");
-				}
 			}
 		}
 		
@@ -5848,42 +5635,6 @@ namespace SingerDispatch
 		}
 		
 		private void detach_Loads(Load entity)
-		{
-			this.SendPropertyChanging();
-			entity.Job = null;
-		}
-		
-		private void attach_Permits(Permit entity)
-		{
-			this.SendPropertyChanging();
-			entity.Job = this;
-		}
-		
-		private void detach_Permits(Permit entity)
-		{
-			this.SendPropertyChanging();
-			entity.Job = null;
-		}
-		
-		private void attach_ThirdPartyServices(ThirdPartyService entity)
-		{
-			this.SendPropertyChanging();
-			entity.Job = this;
-		}
-		
-		private void detach_ThirdPartyServices(ThirdPartyService entity)
-		{
-			this.SendPropertyChanging();
-			entity.Job = null;
-		}
-		
-		private void attach_Dispatches(Dispatch entity)
-		{
-			this.SendPropertyChanging();
-			entity.Job = this;
-		}
-		
-		private void detach_Dispatches(Dispatch entity)
 		{
 			this.SendPropertyChanging();
 			entity.Job = null;
@@ -6319,9 +6070,9 @@ namespace SingerDispatch
 		
 		private EntitySet<Dispatch> _Dispatches;
 		
-		private EntityRef<Status> _Status;
-		
 		private EntityRef<Job> _Job;
+		
+		private EntityRef<Status> _Status;
 		
 		private EntityRef<Season> _Season;
 		
@@ -6428,8 +6179,8 @@ namespace SingerDispatch
 			this._Permits = new EntitySet<Permit>(new Action<Permit>(this.attach_Permits), new Action<Permit>(this.detach_Permits));
 			this._ThirdPartyServices = new EntitySet<ThirdPartyService>(new Action<ThirdPartyService>(this.attach_ThirdPartyServices), new Action<ThirdPartyService>(this.detach_ThirdPartyServices));
 			this._Dispatches = new EntitySet<Dispatch>(new Action<Dispatch>(this.attach_Dispatches), new Action<Dispatch>(this.detach_Dispatches));
-			this._Status = default(EntityRef<Status>);
 			this._Job = default(EntityRef<Job>);
+			this._Status = default(EntityRef<Status>);
 			this._Season = default(EntityRef<Season>);
 			this._Equipment = default(EntityRef<Equipment>);
 			this._Rate = default(EntityRef<Rate>);
@@ -7366,40 +7117,6 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Status_Load", Storage="_Status", ThisKey="StatusID", OtherKey="ID", IsForeignKey=true)]
-		public Status Status
-		{
-			get
-			{
-				return this._Status.Entity;
-			}
-			set
-			{
-				Status previousValue = this._Status.Entity;
-				if (((previousValue != value) 
-							|| (this._Status.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Status.Entity = null;
-						previousValue.Loads.Remove(this);
-					}
-					this._Status.Entity = value;
-					if ((value != null))
-					{
-						value.Loads.Add(this);
-						this._StatusID = value.ID;
-					}
-					else
-					{
-						this._StatusID = default(Nullable<long>);
-					}
-					this.SendPropertyChanged("Status");
-				}
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Job_Load", Storage="_Job", ThisKey="JobID", OtherKey="ID", IsForeignKey=true)]
 		public Job Job
 		{
@@ -7430,6 +7147,40 @@ namespace SingerDispatch
 						this._JobID = default(Nullable<long>);
 					}
 					this.SendPropertyChanged("Job");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Status_Load", Storage="_Status", ThisKey="StatusID", OtherKey="ID", IsForeignKey=true)]
+		public Status Status
+		{
+			get
+			{
+				return this._Status.Entity;
+			}
+			set
+			{
+				Status previousValue = this._Status.Entity;
+				if (((previousValue != value) 
+							|| (this._Status.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Status.Entity = null;
+						previousValue.Loads.Remove(this);
+					}
+					this._Status.Entity = value;
+					if ((value != null))
+					{
+						value.Loads.Add(this);
+						this._StatusID = value.ID;
+					}
+					else
+					{
+						this._StatusID = default(Nullable<long>);
+					}
+					this.SendPropertyChanged("Status");
 				}
 			}
 		}
@@ -9321,8 +9072,6 @@ namespace SingerDispatch
 		
 		private long _ID;
 		
-		private System.Nullable<long> _JobID;
-		
 		private System.Nullable<long> _LoadID;
 		
 		private System.Nullable<long> _PermitTypeID;
@@ -9334,8 +9083,6 @@ namespace SingerDispatch
 		private string _Conditions;
 		
 		private System.Nullable<decimal> _Cost;
-		
-		private EntityRef<Job> _Job;
 		
 		private EntityRef<Load> _Load;
 		
@@ -9349,8 +9096,6 @@ namespace SingerDispatch
     partial void OnCreated();
     partial void OnIDChanging(long value);
     partial void OnIDChanged();
-    partial void OnJobIDChanging(System.Nullable<long> value);
-    partial void OnJobIDChanged();
     partial void OnLoadIDChanging(System.Nullable<long> value);
     partial void OnLoadIDChanged();
     partial void OnPermitTypeIDChanging(System.Nullable<long> value);
@@ -9367,7 +9112,6 @@ namespace SingerDispatch
 		
 		public Permit()
 		{
-			this._Job = default(EntityRef<Job>);
 			this._Load = default(EntityRef<Load>);
 			this._PermitType = default(EntityRef<PermitType>);
 			this._IssuingCompany = default(EntityRef<Company>);
@@ -9390,30 +9134,6 @@ namespace SingerDispatch
 					this._ID = value;
 					this.SendPropertyChanged("ID");
 					this.OnIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_JobID")]
-		public System.Nullable<long> JobID
-		{
-			get
-			{
-				return this._JobID;
-			}
-			set
-			{
-				if ((this._JobID != value))
-				{
-					if (this._Job.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnJobIDChanging(value);
-					this.SendPropertyChanging();
-					this._JobID = value;
-					this.SendPropertyChanged("JobID");
-					this.OnJobIDChanged();
 				}
 			}
 		}
@@ -9546,40 +9266,6 @@ namespace SingerDispatch
 					this._Cost = value;
 					this.SendPropertyChanged("Cost");
 					this.OnCostChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Job_Permit", Storage="_Job", ThisKey="JobID", OtherKey="ID", IsForeignKey=true)]
-		public Job Job
-		{
-			get
-			{
-				return this._Job.Entity;
-			}
-			set
-			{
-				Job previousValue = this._Job.Entity;
-				if (((previousValue != value) 
-							|| (this._Job.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Job.Entity = null;
-						previousValue.Permits.Remove(this);
-					}
-					this._Job.Entity = value;
-					if ((value != null))
-					{
-						value.Permits.Add(this);
-						this._JobID = value.ID;
-					}
-					else
-					{
-						this._JobID = default(Nullable<long>);
-					}
-					this.SendPropertyChanged("Job");
 				}
 			}
 		}
@@ -13792,8 +13478,6 @@ namespace SingerDispatch
 		
 		private long _ID;
 		
-		private System.Nullable<long> _JobID;
-		
 		private System.Nullable<long> _LoadID;
 		
 		private System.Nullable<long> _CompanyID;
@@ -13814,8 +13498,6 @@ namespace SingerDispatch
 		
 		private EntityRef<Contact> _Contact;
 		
-		private EntityRef<Job> _Job;
-		
 		private EntityRef<Load> _Load;
 		
 		private EntityRef<ServiceType> _ServiceType;
@@ -13826,8 +13508,6 @@ namespace SingerDispatch
     partial void OnCreated();
     partial void OnIDChanging(long value);
     partial void OnIDChanged();
-    partial void OnJobIDChanging(System.Nullable<long> value);
-    partial void OnJobIDChanged();
     partial void OnLoadIDChanging(System.Nullable<long> value);
     partial void OnLoadIDChanged();
     partial void OnCompanyIDChanging(System.Nullable<long> value);
@@ -13850,7 +13530,6 @@ namespace SingerDispatch
 		{
 			this._Company = default(EntityRef<Company>);
 			this._Contact = default(EntityRef<Contact>);
-			this._Job = default(EntityRef<Job>);
 			this._Load = default(EntityRef<Load>);
 			this._ServiceType = default(EntityRef<ServiceType>);
 			OnCreated();
@@ -13872,30 +13551,6 @@ namespace SingerDispatch
 					this._ID = value;
 					this.SendPropertyChanged("ID");
 					this.OnIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_JobID")]
-		public System.Nullable<long> JobID
-		{
-			get
-			{
-				return this._JobID;
-			}
-			set
-			{
-				if ((this._JobID != value))
-				{
-					if (this._Job.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnJobIDChanging(value);
-					this.SendPropertyChanging();
-					this._JobID = value;
-					this.SendPropertyChanged("JobID");
-					this.OnJobIDChanged();
 				}
 			}
 		}
@@ -14140,40 +13795,6 @@ namespace SingerDispatch
 						this._ContactID = default(Nullable<long>);
 					}
 					this.SendPropertyChanged("Contact");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Job_ThirdPartyService", Storage="_Job", ThisKey="JobID", OtherKey="ID", IsForeignKey=true)]
-		public Job Job
-		{
-			get
-			{
-				return this._Job.Entity;
-			}
-			set
-			{
-				Job previousValue = this._Job.Entity;
-				if (((previousValue != value) 
-							|| (this._Job.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Job.Entity = null;
-						previousValue.ThirdPartyServices.Remove(this);
-					}
-					this._Job.Entity = value;
-					if ((value != null))
-					{
-						value.ThirdPartyServices.Add(this);
-						this._JobID = value.ID;
-					}
-					else
-					{
-						this._JobID = default(Nullable<long>);
-					}
-					this.SendPropertyChanged("Job");
 				}
 			}
 		}
@@ -15141,8 +14762,6 @@ namespace SingerDispatch
 		
 		private long _ID;
 		
-		private System.Nullable<long> _JobID;
-		
 		private System.Nullable<long> _LoadID;
 		
 		private System.Nullable<long> _DispatchedByID;
@@ -15177,8 +14796,6 @@ namespace SingerDispatch
 		
 		private EntityRef<Equipment> _Equipment;
 		
-		private EntityRef<Job> _Job;
-		
 		private EntityRef<Load> _Load;
 		
 		private EntityRef<Employee> _Employee;
@@ -15189,8 +14806,6 @@ namespace SingerDispatch
     partial void OnCreated();
     partial void OnIDChanging(long value);
     partial void OnIDChanged();
-    partial void OnJobIDChanging(System.Nullable<long> value);
-    partial void OnJobIDChanged();
     partial void OnLoadIDChanging(System.Nullable<long> value);
     partial void OnLoadIDChanged();
     partial void OnDispatchedByIDChanging(System.Nullable<long> value);
@@ -15224,7 +14839,6 @@ namespace SingerDispatch
 			this._DispatchedBy = default(EntityRef<Employee>);
 			this._EquipmentType = default(EntityRef<EquipmentType>);
 			this._Equipment = default(EntityRef<Equipment>);
-			this._Job = default(EntityRef<Job>);
 			this._Load = default(EntityRef<Load>);
 			this._Employee = default(EntityRef<Employee>);
 			OnCreated();
@@ -15246,30 +14860,6 @@ namespace SingerDispatch
 					this._ID = value;
 					this.SendPropertyChanged("ID");
 					this.OnIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_JobID")]
-		public System.Nullable<long> JobID
-		{
-			get
-			{
-				return this._JobID;
-			}
-			set
-			{
-				if ((this._JobID != value))
-				{
-					if (this._Job.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnJobIDChanging(value);
-					this.SendPropertyChanging();
-					this._JobID = value;
-					this.SendPropertyChanged("JobID");
-					this.OnJobIDChanged();
 				}
 			}
 		}
@@ -15642,40 +15232,6 @@ namespace SingerDispatch
 						this._EquipmentID = default(Nullable<long>);
 					}
 					this.SendPropertyChanged("Equipment");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Job_Dispatch", Storage="_Job", ThisKey="JobID", OtherKey="ID", IsForeignKey=true)]
-		public Job Job
-		{
-			get
-			{
-				return this._Job.Entity;
-			}
-			set
-			{
-				Job previousValue = this._Job.Entity;
-				if (((previousValue != value) 
-							|| (this._Job.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Job.Entity = null;
-						previousValue.Dispatches.Remove(this);
-					}
-					this._Job.Entity = value;
-					if ((value != null))
-					{
-						value.Dispatches.Add(this);
-						this._JobID = value.ID;
-					}
-					else
-					{
-						this._JobID = default(Nullable<long>);
-					}
-					this.SendPropertyChanged("Job");
 				}
 			}
 		}

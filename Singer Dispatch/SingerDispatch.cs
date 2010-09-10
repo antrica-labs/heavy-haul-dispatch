@@ -155,10 +155,8 @@ namespace SingerDispatch
             // Fill the job properties with as many of the applicable quote properties as possible
             job.Quote = this;
             job.Company = Company;
-            job.CareOfCompany = CareOfCompany;
-            job.StartDate = StartDate;
-            job.EndDate = EndDate;
-            job.Description = Description;
+            job.CareOfCompany = CareOfCompany;            
+            job.Notes = Description;
 
             foreach (var commodity in QuoteCommodities)
             {
@@ -308,12 +306,8 @@ namespace SingerDispatch
             cp.Name = Name;
             cp.CareOfCompany = CareOfCompany;
             cp.Company = Company;
-            cp.Description = Description;
-            cp.Employee = Employee;
-            cp.EndDate = cp.EndDate;
-            cp.Quote = Quote;
-            cp.StartDate = StartDate;
-            cp.EndDate = EndDate;
+            cp.Notes = Notes;            
+            cp.Quote = Quote;            
             cp.Status = Status;
             
             foreach (var item in JobCommodities)
@@ -321,15 +315,6 @@ namespace SingerDispatch
 
             foreach (var item in Loads)
                 cp.Loads.Add(item.Duplicate());
-
-            foreach (var item in Permits)
-                cp.Permits.Add(item.Duplicate());
-
-            foreach (var item in ThirdPartyServices)
-                cp.ThirdPartyServices.Add(item.Duplicate());
-
-            foreach (var item in Dispatches)
-                cp.Dispatches.Add(item.Duplicate());
 
             foreach (var item in ReferenceNumbers)
                 cp.ReferenceNumbers.Add(item.Duplicate());
@@ -487,9 +472,9 @@ namespace SingerDispatch
                 string dispatchNumber;
 
                 if (Load == null)
-                    dispatchNumber = string.Format("{0}-{1:D2}", Job.Number, Number);
+                    dispatchNumber = string.Format("{0}-{1:D2}", Load.Job.Number, Number);
                 else
-                    dispatchNumber = string.Format("{0}-{1:D2}-{2:D2}", Job.Number, Load.Number, Number);
+                    dispatchNumber = string.Format("{0}-{1:D2}-{2:D2}", Load.Job.Number, Load.Number, Number);
 
                 return dispatchNumber;
             }
@@ -554,7 +539,16 @@ namespace SingerDispatch
 
             foreach (var item in LoadedCommodities)
                 cp.LoadedCommodities.Add(item.Duplicate());
-            
+
+            foreach (var item in Permits)
+                cp.Permits.Add(item.Duplicate());
+
+            foreach (var item in ThirdPartyServices)
+                cp.ThirdPartyServices.Add(item.Duplicate());
+
+            foreach (var item in Dispatches)
+                cp.Dispatches.Add(item.Duplicate());
+
             return cp;
         }
 

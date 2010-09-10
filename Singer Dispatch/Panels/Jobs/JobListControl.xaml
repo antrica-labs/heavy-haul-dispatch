@@ -4,6 +4,7 @@
                        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
                        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                        xmlns:Panels="clr-namespace:SingerDispatch.Panels"
+                       xmlns:Controls="clr-namespace:SingerDispatch.Controls"
                        Loaded="Control_Loaded" LayoutUpdated="Control_LayoutUpdated"
                        mc:Ignorable="d" x:Name="ThePanel" d:DesignWidth="750">
     <UserControl.Resources>
@@ -55,10 +56,10 @@
                             </Grid.RowDefinitions>
 
                             <Label Grid.Column="0" Grid.Row="0">Care of:</Label>
-                            <ComboBox Name="cmbCareOfCompanies" Grid.Column="0" Grid.Row="1" SelectedItem="{Binding CareOfCompany}" ItemTemplate="{StaticResource SimpleNameTemplate}" />
+                            <ComboBox Name="cmbCareOfCompanies" Grid.Column="0" Grid.Row="1" SelectedItem="{Binding CareOfCompany}" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectionChanged="cmbCareOfCompanies_SelectionChanged" Controls:ComboUtil.AllowNull="True" />
 
                             <Label Grid.Column="1" Grid.Row="0">Contact:</Label>
-                            <ComboBox Name="cmbContacts" Grid.Column="1" Grid.Row="1" SelectedItem="{Binding Contact}" ItemTemplate="{StaticResource SimpleNameTemplate}" />
+                            <ComboBox Name="cmbContacts" Grid.Column="1" Grid.Row="1" SelectedItem="{Binding Contact}" ItemTemplate="{StaticResource ContactTemplate}" Controls:ComboUtil.AllowNull="True" />
                         </Grid>
 
                         <Label Grid.ColumnSpan="2">Notes:</Label>
