@@ -14,53 +14,56 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <DockPanel>
-        <Border DockPanel.Dock="Top" Background="LightGoldenrodYellow" BorderBrush="LightGray" BorderThickness="1" Margin="0,0,0,5" DataContext="{Binding ElementName=ThePanel}">
-            <Grid Margin="5,3">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="250" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        
+        <Border Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Background="LightGoldenrodYellow" BorderBrush="LightGray" BorderThickness="1" Margin="0,0,0,3">
+            <Grid Margin="3">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
+                    <ColumnDefinition Width="3" />
                     <ColumnDefinition />
+                    <ColumnDefinition Width="3" />
                     <ColumnDefinition />
+                    <ColumnDefinition Width="3" />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
-                
-                <StackPanel Grid.Column="0" Orientation="Horizontal">
-                    <Label>Selected job #:</Label>
-                    <Label Content="{Binding SelectedJob.Number}" FontWeight="Bold" />
-                </StackPanel>
 
-                <Label x:Name="lblSavedStatus" Style="{StaticResource SavedLabel}" Grid.Column="1" />
-                <!-- <Button Style="{StaticResource Horizontal}" Grid.Column="2" Click="ViewDispatches_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, Path=SelectedJob}">View all dispatches</Button> -->
-                <Button Style="{StaticResource HorizontalEnd}" Name="CommitChangesButton" Grid.Column="3" Click="CommitJobChanges_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, Path=SelectedJob}" LostFocus="CommitChangesButton_LostFocus">Save changes</Button>
+                
+                <Button Grid.Column="6" Name="CommitChangesButton" Click="CommitJobChanges_Click" LostFocus="CommitChangesButton_LostFocus">Save changes</Button>
             </Grid>
         </Border>
 
-        <TabControl Name="Tabs" DataContext="{Binding ElementName=ThePanel}">
+        <DataGrid Name="dgJobs" Grid.Column="0" Grid.Row="1" Style="{StaticResource ListDisplay}" SelectedItem="{Binding SelectedJob}" SelectionChanged="dgJobs_SelectionChanged">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Number" Binding="{Binding Number}"/>
+                <DataGridTextColumn Header="Status" Binding="{Binding Status.Name}" />
+                <DataGridTextColumn Header="Name" Binding="{Binding Name}" />
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <StackPanel Grid.Column="0" Grid.Row="2" Margin="0,3,0,0">
+            <Button Style="{StaticResource Vertical}" Click="NewJob_Click">New job</Button>
+            <Button Style="{StaticResource Vertical}" Click="DuplicateJob_Click" IsEnabled="{Binding SelectedJob, Converter={StaticResource IsEnabledNullConverter}}">Duplicate job</Button>
+            <Button Style="{StaticResource Vertical}" Click="ViewQuote_Click" IsEnabled="{Binding SelectedJob, Converter={StaticResource IsEnabledNullConverter}}">View original quote</Button>
+            <Button Style="{StaticResource VerticalEnd}" Click="DeleteJob_Click" IsEnabled="{Binding SelectedJob, Converter={StaticResource IsEnabledNullConverter}}">Delete Job</Button>
+        </StackPanel>
+
+        <TabControl Name="Tabs"  Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" DataContext="{Binding ElementName=ThePanel}" Margin="5,0,0,0">
             <TabItem Header="Job List">
-                <Jobs:JobListControl SelectedCompany="{Binding SelectedCompany}" SelectedJob="{Binding SelectedJob}" UseImperialMeasurements="{Binding UseImperialMeasurements}" />
+                <Jobs:JobDetailsControl SelectedCompany="{Binding SelectedCompany}" SelectedJob="{Binding SelectedJob}" UseImperialMeasurements="{Binding UseImperialMeasurements}" />
             </TabItem>
             <TabItem Header="Commodities" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, Path=SelectedJob}">
                 <Jobs:JobCommoditiesControl SelectedCompany="{Binding SelectedCompany}"  SelectedJob="{Binding SelectedJob}" UseImperialMeasurements="{Binding UseImperialMeasurements}" />
-            </TabItem>
-            
-            <!--
-            <TabItem Header="Jobs List">
-                <Jobs:JobHistoryControl SelectedCompany="{Binding SelectedCompany}" SelectedJob="{Binding SelectedJob}" UseImperialMeasurements="{Binding UseImperialMeasurements}" />
-            </TabItem>
-            
-            <TabItem Header="Loads" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, Path=SelectedJob}">
-                <Jobs:LoadsControl SelectedCompany="{Binding SelectedCompany}" SelectedJob="{Binding SelectedJob}" UseImperialMeasurements="{Binding UseImperialMeasurements}" />
-            </TabItem>
-            <TabItem Header="Dispatches" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, Path=SelectedJob}">
-                <Jobs:DispatchesControl SelectedCompany="{Binding SelectedCompany}" SelectedJob="{Binding SelectedJob}" UseImperialMeasurements="{Binding UseImperialMeasurements}" />
-            </TabItem>
-            <TabItem Header="Permits" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, Path=SelectedJob}">
-                <Jobs:PermitsControl SelectedCompany="{Binding SelectedCompany}" SelectedJob="{Binding SelectedJob}" UseImperialMeasurements="{Binding UseImperialMeasurements}" />
-            </TabItem>
-            <TabItem Header="Third Party Services" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, Path=SelectedJob}">
-                <Jobs:ThirdPartyServicesControl SelectedCompany="{Binding SelectedCompany}" SelectedJob="{Binding SelectedJob}" UseImperialMeasurements="{Binding UseImperialMeasurements}" />
-            </TabItem>
-            -->
+            </TabItem>    
         </TabControl>
-    </DockPanel>
+    </Grid>
 </Panels:JobUserControl>

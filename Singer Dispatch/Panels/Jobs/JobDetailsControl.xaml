@@ -1,0 +1,72 @@
+﻿<Panels:JobUserControl x:Class="SingerDispatch.Panels.Jobs.JobDetailsControl"
+                       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+                       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                       xmlns:Panels="clr-namespace:SingerDispatch.Panels"
+                       xmlns:Controls="clr-namespace:SingerDispatch.Controls"
+                       Loaded="Control_Loaded" LayoutUpdated="Control_LayoutUpdated"
+                       mc:Ignorable="d" x:Name="ThePanel" d:DesignWidth="750">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/SingerDispatchDictionary.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <DockPanel>
+        <GroupBox DockPanel.Dock="Top" Header="Details" DataContext="{Binding ElementName=ThePanel, Path=SelectedJob}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+
+                <Label Grid.Column="0" Grid.Row="0">Name:</Label>
+                <TextBox Name="txtName" Grid.Column="0" Grid.Row="1" Text="{Binding Name}" />
+
+                <Label Grid.Column="1" Grid.Row="0">Status:</Label>
+                <ComboBox Name="cmbStatuses" Grid.Column="1" Grid.Row="1" SelectedItem="{Binding Status}" ItemTemplate="{StaticResource SimpleNameTemplate}" />
+
+                <Label Grid.Column="0" Grid.Row="2">Care of:</Label>
+                <ComboBox Name="cmbCareOfCompanies" Grid.Column="0" Grid.Row="3" SelectedItem="{Binding CareOfCompany}" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectionChanged="cmbCareOfCompanies_SelectionChanged" Controls:ComboUtil.AllowNull="True" />
+
+                <Label Grid.Column="1" Grid.Row="2">Contact:</Label>
+                <ComboBox Name="cmbContacts" Grid.Column="1" Grid.Row="3" SelectedItem="{Binding Contact}" ItemTemplate="{StaticResource ContactTemplate}" Controls:ComboUtil.AllowNull="True" />
+            </Grid>
+        </GroupBox>
+                
+        <GroupBox Header="Reference numbers" DockPanel.Dock="Top" Height="200">
+            <DockPanel>
+                <Grid DockPanel.Dock="Bottom">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+
+                    <Button Style="{StaticResource Horizontal}" Grid.Column="0" Click="AddReferenceNumber_Click">Add</Button>
+                    <Button Style="{StaticResource HorizontalEnd}" Grid.Column="1" Click="RemoveReferenceNumber_Click">Remove</Button>
+                </Grid>
+
+                <DataGrid Name="dgReferenceNumbers" Style="{StaticResource ListDisplay}" IsReadOnly="False">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Field" Binding="{Binding Field}" />
+                        <DataGridTextColumn Header="Value" Binding="{Binding Value}" />
+                    </DataGrid.Columns>
+                </DataGrid>
+            </DockPanel>       
+        </GroupBox>
+        
+        <GroupBox Header="Additional Notes">            
+            <TextBox Style="{StaticResource MultiLine}" Height="Auto" />
+        </GroupBox>
+    </DockPanel>
+</Panels:JobUserControl>

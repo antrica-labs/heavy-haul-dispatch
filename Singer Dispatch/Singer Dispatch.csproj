@@ -176,8 +176,8 @@
     <Compile Include="Panels\Jobs\JobCommoditiesControl.xaml.cs">
       <DependentUpon>JobCommoditiesControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Panels\Jobs\JobListControl.xaml.cs">
-      <DependentUpon>JobListControl.xaml</DependentUpon>
+    <Compile Include="Panels\Jobs\JobDetailsControl.xaml.cs">
+      <DependentUpon>JobDetailsControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Panels\Jobs\JobsPanel.xaml.cs">
       <DependentUpon>JobsPanel.xaml</DependentUpon>
@@ -406,7 +406,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Panels\Jobs\JobListControl.xaml">
+    <Page Include="Panels\Jobs\JobDetailsControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

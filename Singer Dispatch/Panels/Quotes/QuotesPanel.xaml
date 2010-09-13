@@ -25,9 +25,7 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <Button Grid.Column="0" Grid.Row="0" Click="NewQuote_Click" Style="{StaticResource Vertical}">New quote</Button>
-
-        <Border Grid.Column="1" Grid.Row="0" Background="LightGoldenrodYellow" BorderBrush="LightGray" BorderThickness="1" Margin="5,0,0,3">
+        <Border Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Background="LightGoldenrodYellow" BorderBrush="LightGray" BorderThickness="1" Margin="0,0,0,3">
             <Grid Margin="3">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
@@ -35,10 +33,12 @@
                     <ColumnDefinition />
                     <ColumnDefinition Width="3" />
                     <ColumnDefinition />
+                    <ColumnDefinition Width="3" />
+                    <ColumnDefinition />
                 </Grid.ColumnDefinitions>
-
-                <Button Grid.Column="2" Click="ViewQuote_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=ThePanel, Path=SelectedQuote}">View quote</Button>
-                <Button Grid.Column="4" Name="CommitChangesButton" Click="CommitQuoteChanges_Click" LostFocus="CommitChangesButton_LostFocus">Save changes</Button>
+                
+                <Button Grid.Column="4" Click="ViewQuote_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=ThePanel, Path=SelectedQuote}">View quote</Button>
+                <Button Grid.Column="6" Name="CommitChangesButton" Click="CommitQuoteChanges_Click" LostFocus="CommitChangesButton_LostFocus">Save changes</Button>
             </Grid>
         </Border>
         
@@ -51,6 +51,7 @@
         </DataGrid>
 
         <StackPanel Grid.Column="0" Grid.Row="2" Margin="0,3,0,0">
+            <Button Click="NewQuote_Click" Style="{StaticResource Vertical}">New quote</Button>
             <Button Click="CreateRevision_Click" Style="{StaticResource Vertical}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=ThePanel, Path=SelectedQuote}">Create revision</Button>
             <Button Click="CreateJob_Click" Style="{StaticResource Vertical}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=ThePanel, Path=SelectedQuote}">Create job</Button>
             <Button Click="DeleteQuote_Click" Style="{StaticResource VerticalEnd}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=ThePanel, Path=SelectedQuote}">Delete quote</Button>
