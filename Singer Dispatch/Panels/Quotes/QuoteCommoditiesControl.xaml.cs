@@ -46,11 +46,13 @@ namespace SingerDispatch.Panels.Quotes
         public QuoteCommoditiesControl()
         {
             InitializeComponent();
-
-            Database = SingerConfigs.CommonDataContext;
-
+            
             CommonSiteNames = new ObservableCollection<string>();
             CommonSiteAddresses = new ObservableCollection<string>();
+
+            if (InDesignMode()) return;
+
+            Database = SingerConfigs.CommonDataContext;
         }
 
         private void Control_Loaded(object sender, RoutedEventArgs e)

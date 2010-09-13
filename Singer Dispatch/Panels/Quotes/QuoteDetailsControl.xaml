@@ -1,0 +1,172 @@
+﻿<Panels:QuoteUserControl x:Class="SingerDispatch.Panels.Quotes.QuoteDetailsControl"
+                         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                         xmlns:Panels="clr-namespace:SingerDispatch.Panels"
+                         xmlns:Controls="clr-namespace:SingerDispatch.Controls"
+                         x:Name="ThePanel"
+                         Loaded="Control_Loaded" mc:Ignorable="d" d:DesignWidth="780">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/SingerDispatchDictionary.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <DataTemplate x:Key="AddressTemplate">
+                <TextBlock>
+                    <TextBlock.Text>
+                        <MultiBinding StringFormat="{}{0} - {1}, {2}, {3}">
+                            <Binding Path="AddressType.Name" />
+                            <Binding Path="Line1" />
+                            <Binding Path="City" />
+                            <Binding Path="PostalZip" />
+                        </MultiBinding>
+                    </TextBlock.Text>
+                </TextBlock>
+            </DataTemplate>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <DockPanel>
+        <StackPanel DockPanel.Dock="Top">
+            <GroupBox Header="Quote Details" Margin="0,0,3,0" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=ThePanel, Path=SelectedQuote}" DataContext="{Binding SelectedQuote}">
+                <StackPanel>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="115"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+
+                        <Label Grid.Row="0" Grid.Column="0">Quote price:</Label>
+                        <TextBox Name="txtPrice" Grid.Row="2" Grid.Column="0" Text="{Binding Price, StringFormat=c, Converter={StaticResource NullableValueConverter}}" Controls:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" />
+
+                        <Label Grid.Row="0" Grid.Column="1">Price breakdown:</Label>
+                        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding PrintoutCostHeading}" IsEnabled="{Binding ElementName=cbItemized, Path=IsChecked}" />
+
+                        <CheckBox Name="cbItemized" Grid.Row="1" Grid.Column="2" IsChecked="{Binding IsItemizedBilling}" Checked="ItemizedBilling_Checked" Unchecked="ItemizedBilling_Unchecked">Itemized billing</CheckBox>
+                    </Grid>
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+
+                        <Label Grid.Row="0" Grid.Column="0">Care of:</Label>
+                        <ComboBox Name="cmbCareOfCompanies" Grid.Row="1" Grid.Column="0" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectionChanged="CareOfCompanies_SelectionChanged" SelectedItem="{Binding CareOfCompany}" TextSearch.TextPath="Name" IsEditable="True" Controls:ComboUtil.AllowNull="True" />
+
+                        <Label Grid.Row="0" Grid.Column="1">Author:</Label>
+                        <ComboBox Name="cmbQuotedBy" Grid.Row="1" Grid.Column="1" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectedItem="{Binding Employee}" TextSearch.TextPath="Name" IsEditable="True" Controls:ComboUtil.AllowNull="True"></ComboBox>
+                    </Grid>
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+
+                        
+                    </Grid>
+                </StackPanel>
+            </GroupBox>
+        </StackPanel>
+
+        <GroupBox DockPanel.Dock="Top" Header="Quote Timeline" Grid.Column="1" Grid.Row="1" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=ThePanel, Path=SelectedQuote}" DataContext="{Binding SelectedQuote}">                
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+
+                <Label Grid.Row="0" Grid.Column="0">Creation date:</Label>
+                <DatePicker Grid.Row="1" Grid.Column="0" SelectedDate="{Binding CreationDate}" />
+
+                <Label Grid.Row="0" Grid.Column="1">Expiration date:</Label>
+                <DatePicker Grid.Row="1" Grid.Column="1" SelectedDate="{Binding ExpirationDate}" />
+
+                <Label Grid.Row="0" Grid.Column="2">Job start date:</Label>
+                <DatePicker Name="dpStartDate" Grid.Row="1" Grid.Column="2" SelectedDate="{Binding StartDate}" />
+
+                <Label Grid.Row="0" Grid.Column="3">Job end date:</Label>
+                <DatePicker Name="dpEndDate" Grid.Row="1" Grid.Column="3" SelectedDate="{Binding EndDate}" />
+            </Grid>
+        </GroupBox>
+
+        <GroupBox DockPanel.Dock="Top" Header="Quote Recipient" Margin="3,0,0,0" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=ThePanel, Path=SelectedQuote}" DataContext="{Binding SelectedQuote}">
+            <StackPanel>
+                <Grid Margin="0,4,0,5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+
+                    <Label Grid.Column="0" Grid.Row="0">Address:</Label>
+                    <ComboBox Grid.Column="0" Grid.Row="1" Name="cmbAddresses" SelectedItem="{Binding BillingAddress}" ItemTemplate="{StaticResource AddressTemplate}" Controls:ComboUtil.AllowNull="True" />
+
+                    <Label Grid.Column="1" Grid.Row="0">Name:</Label>
+                    <ComboBox Grid.Column="1" Grid.Row="1" Name="cmbContacts" SelectedItem="{Binding Contact}" ItemTemplate="{StaticResource SimpleNameTemplate}" TextSearch.TextPath="Name" Controls:ComboUtil.AllowNull="True" />
+                </Grid>
+
+                <Grid DataContext="{Binding Contact}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="10" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+
+                    <Label Grid.Column="0" Grid.Row="0">Company:</Label>
+                    <Label Grid.Column="1" Grid.Row="0" Content="{Binding Address.Company.Name}" />
+
+                    <Label Grid.Column="0" Grid.Row="1">Email:</Label>
+                    <Label Grid.Column="1" Grid.Row="1" Content="{Binding Email}" />
+
+                    <Label Grid.Column="0" Grid.Row="2">Phone 1:</Label>
+                    <Label Grid.Column="1" Grid.Row="2" Content="{Binding PrimaryPhone, Converter={StaticResource PhoneNumberConverter}}" />
+
+                    <Label Grid.Column="3" Grid.Row="0">Phone 2:</Label>
+                    <Label Grid.Column="4" Grid.Row="0" Content="{Binding SecondaryPhone, Converter={StaticResource PhoneNumberConverter}}" />
+
+                    <Label Grid.Column="3" Grid.Row="1">Fax:</Label>
+                    <Label Grid.Column="4" Grid.Row="1" Content="{Binding Fax, Converter={StaticResource PhoneNumberConverter}}" />
+
+                    <Label Grid.Column="3" Grid.Row="2">Preferred:</Label>
+                    <Label Grid.Column="4" Grid.Row="2" Content="{Binding PreferedContactMethod}" />
+                </Grid>
+            </StackPanel>
+        </GroupBox>
+        
+        <GroupBox Header="Description &amp; Notes">
+            <TextBox Name="txtDescription" Style="{StaticResource MultiLine}" Height="Auto" Text="{Binding Description}"/>
+        </GroupBox>
+    </DockPanel>
+</Panels:QuoteUserControl>

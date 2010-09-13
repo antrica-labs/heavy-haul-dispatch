@@ -116,6 +116,14 @@
         <Setter Property="Margin" Value="0,3,0,3" />
     </Style>
     
+    <Style TargetType="Button" x:Key="Vertical">
+        <Setter Property="Margin" Value="0,0,0,3" />
+    </Style>
+    
+    <Style TargetType="Button" x:Key="VerticalEnd">
+        <Setter Property="Margin" Value="0,0,0,0" />
+    </Style>    
+    
     <Style TargetType="TextBox" x:Key="MultiLine">        
         <Setter Property="Height" Value="40" />
         <Setter Property="Margin" Value="3" />
@@ -133,8 +141,7 @@
     <Style x:Key="SavedLabel" TargetType="Label">
         <Setter Property="FontWeight" Value="Bold" />
         <Setter Property="Foreground" Value="SeaGreen" />
-        <Setter Property="HorizontalAlignment" Value="Right" />
-        <Setter Property="Margin" Value="0,0,5,0" />
+        <Setter Property="Margin" Value="0" />
     </Style>
 
     <Style x:Key="SectionExpander" TargetType="Expander">

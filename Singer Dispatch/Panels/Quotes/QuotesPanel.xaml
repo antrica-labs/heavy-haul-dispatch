@@ -6,7 +6,7 @@
                          xmlns:Quotes="clr-namespace:SingerDispatch.Panels.Quotes"
                          xmlns:Panels="clr-namespace:SingerDispatch.Panels"
                          x:Name="ThePanel" Loaded="Control_Loaded"
-                         mc:Ignorable="d" IsEnabled="False">
+                         mc:Ignorable="d" IsEnabled="False" d:DesignWidth="865" d:DesignHeight="518">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -14,44 +14,58 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <DockPanel>
-        <Border DockPanel.Dock="Top"  Background="LightGoldenrodYellow" BorderBrush="LightGray" BorderThickness="1" Margin="0,0,0,5" DataContext="{Binding ElementName=ThePanel}">
-            <Grid Margin="5,3">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="250" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Button Grid.Column="0" Grid.Row="0" Click="NewQuote_Click" Style="{StaticResource Vertical}">New quote</Button>
+
+        <Border Grid.Column="1" Grid.Row="0" Background="LightGoldenrodYellow" BorderBrush="LightGray" BorderThickness="1" Margin="5,0,0,3">
+            <Grid Margin="3">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
+                    <ColumnDefinition Width="3" />
                     <ColumnDefinition />
-                    <ColumnDefinition />
+                    <ColumnDefinition Width="3" />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
 
-                <StackPanel Grid.Column="0" Orientation="Horizontal">
-                    <Label>Selected quote #:</Label>
-                    <Label>
-                        <Label.Content>
-                            <MultiBinding Converter="{StaticResource QuoteFriendlyNameConverter}">
-                                <Binding Path="SelectedQuote.Number" />                                
-                                <Binding Path="SelectedQuote.Revision" />
-                            </MultiBinding>
-                        </Label.Content>
-                    </Label>
-                </StackPanel>
-
-                <Label x:Name="lblSavedStatus" Style="{StaticResource SavedLabel}" Grid.Column="1" />
-                <Button Style="{StaticResource Horizontal}" Grid.Column="2" Click="ViewQuote_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, Path=SelectedQuote}">View quote</Button>
-                <Button Style="{StaticResource HorizontalEnd}" Name="CommitChangesButton" Grid.Column="3" Click="CommitQuoteChanges_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, Path=SelectedQuote}" LostFocus="CommitChangesButton_LostFocus">Save changes</Button>                
+                <Button Grid.Column="2" Click="ViewQuote_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=ThePanel, Path=SelectedQuote}">View quote</Button>
+                <Button Grid.Column="4" Name="CommitChangesButton" Click="CommitQuoteChanges_Click" LostFocus="CommitChangesButton_LostFocus">Save changes</Button>
             </Grid>
         </Border>
         
-        <TabControl Name="Tabs" DataContext="{Binding ElementName=ThePanel}">
-            <TabItem Header="Quotes List">
-                <Quotes:QuoteHistoryControl SelectedCompany="{Binding SelectedCompany}" SelectedQuote="{Binding SelectedQuote}" UseImperialMeasurements="{Binding UseImperialMeasurements}" />
+        <DataGrid Grid.Column="0" Grid.Row="1" Style="{StaticResource ListDisplay}" Name="dgQuoteList" SelectedItem="{Binding SelectedQuote}" SelectionChanged="dgQuoteList_SelectionChanged">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Number" Binding="{Binding Number}" Width="0.75*" />
+                <DataGridTextColumn Header="Rev" Binding="{Binding Revision}" Width="0.5*" />
+                <DataGridTextColumn Header="Price" Binding="{Binding Price, StringFormat=C}" />
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <StackPanel Grid.Column="0" Grid.Row="2" Margin="0,3,0,0">
+            <Button Click="CreateRevision_Click" Style="{StaticResource Vertical}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=ThePanel, Path=SelectedQuote}">Create revision</Button>
+            <Button Click="CreateJob_Click" Style="{StaticResource Vertical}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=ThePanel, Path=SelectedQuote}">Create job</Button>
+            <Button Click="DeleteQuote_Click" Style="{StaticResource VerticalEnd}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=ThePanel, Path=SelectedQuote}">Delete quote</Button>
+        </StackPanel>
+
+        <TabControl Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" Name="Tabs" DataContext="{Binding ElementName=ThePanel}" Margin="5,0,0,0">
+            <TabItem Header="Quotes Details">
+                <Quotes:QuoteDetailsControl SelectedCompany="{Binding SelectedCompany}" SelectedQuote="{Binding SelectedQuote}" UseImperialMeasurements="{Binding UseImperialMeasurements}" />
             </TabItem>
             <TabItem Header="Commodities" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, Path=SelectedQuote}">
                 <Quotes:QuoteCommoditiesControl SelectedCompany="{Binding SelectedCompany}" SelectedQuote="{Binding SelectedQuote}" UseImperialMeasurements="{Binding UseImperialMeasurements}" />
             </TabItem>
             <TabItem Header="Supplements" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, Path=SelectedQuote}">
                 <Quotes:QuoteSupplementsControl SelectedCompany="{Binding SelectedCompany}" SelectedQuote="{Binding SelectedQuote}" UseImperialMeasurements="{Binding UseImperialMeasurements}" />
-            </TabItem>            
+            </TabItem>
             <TabItem Header="Storage Items" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, Path=SelectedQuote}">
                 <Quotes:QuoteStorageControl SelectedCompany="{Binding SelectedCompany}" SelectedQuote="{Binding SelectedQuote}" UseImperialMeasurements="{Binding UseImperialMeasurements}" />
             </TabItem>
@@ -59,11 +73,11 @@
                 <Quotes:QuoteInclusionsControl SelectedCompany="{Binding SelectedCompany}" SelectedQuote="{Binding SelectedQuote}" UseImperialMeasurements="{Binding UseImperialMeasurements}" />
             </TabItem>
             <TabItem Header="Conditions" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, Path=SelectedQuote}">
-                <Quotes:QuoteConditionsControl SelectedCompany="{Binding SelectedCompany}" SelectedQuote="{Binding SelectedQuote}" UseImperialMeasurements="{Binding UseImperialMeasurements}" />                
+                <Quotes:QuoteConditionsControl SelectedCompany="{Binding SelectedCompany}" SelectedQuote="{Binding SelectedQuote}" UseImperialMeasurements="{Binding UseImperialMeasurements}" />
             </TabItem>
             <TabItem Header="Additional Notes" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, Path=SelectedQuote}">
                 <Quotes:QuoteNotesControl SelectedCompany="{Binding SelectedCompany}" SelectedQuote="{Binding SelectedQuote}" UseImperialMeasurements="{Binding UseImperialMeasurements}" />
             </TabItem>
         </TabControl>
-    </DockPanel>
+    </Grid>
 </Panels:QuoteUserControl>

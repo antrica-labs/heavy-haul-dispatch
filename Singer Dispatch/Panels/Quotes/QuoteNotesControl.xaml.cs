@@ -26,6 +26,8 @@ namespace SingerDispatch.Panels.Quotes
         {
             InitializeComponent();
 
+            if (InDesignMode()) return;
+
             Database = SingerConfigs.CommonDataContext;
         }
 

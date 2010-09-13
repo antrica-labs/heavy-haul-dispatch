@@ -15,9 +15,12 @@ namespace SingerDispatch.Panels.Quotes
         public QuoteInclusionsControl()
         {
             InitializeComponent();
+            
+            TheList.ItemsSource = new ObservableCollection<CheckBox>();
+
+            if (InDesignMode()) return;
 
             Database = SingerConfigs.CommonDataContext;
-            TheList.ItemsSource = new ObservableCollection<CheckBox>();
         }
 
         private void QuoteUserControl_Loaded(object sender, RoutedEventArgs e)

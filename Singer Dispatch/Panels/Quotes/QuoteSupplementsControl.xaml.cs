@@ -16,6 +16,8 @@ namespace SingerDispatch.Panels.Quotes
         {
             InitializeComponent();
 
+            if (InDesignMode()) return;
+
             Database = SingerConfigs.CommonDataContext;
 
             cmbBillingType.ItemsSource = from bt in Database.BillingTypes select bt;
