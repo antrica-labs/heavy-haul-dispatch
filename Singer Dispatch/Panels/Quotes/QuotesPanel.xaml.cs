@@ -118,10 +118,10 @@ namespace SingerDispatch.Panels.Quotes
         {
             var list = (ObservableCollection<Quote>)dgQuoteList.ItemsSource;
             var quote = new Quote { CreationDate = DateTime.Today, ExpirationDate = DateTime.Today.AddDays(30), Company = SelectedCompany, Employee = SingerConfigs.OperatingEmployee };
-            
-            list.Add(quote);
-            dgQuoteList.SelectedItem = quote;            
+
             SelectedCompany.Quotes.Add(quote);
+            list.Insert(0, quote);
+            dgQuoteList.SelectedItem = quote;
 
             // Add any of the default quote conditions            
             foreach (var condition in (from c in Database.Conditions where c.AutoInclude == true select c))
@@ -146,9 +146,9 @@ namespace SingerDispatch.Panels.Quotes
             var quote = SelectedQuote.Duplicate();
             var list = (ObservableCollection<Quote>)dgQuoteList.ItemsSource;
 
-            list.Add(quote);
-            dgQuoteList.SelectedItem = quote;            
             SelectedCompany.Quotes.Add(quote);
+            list.Insert(0, quote);
+            dgQuoteList.SelectedItem = quote;
 
             try
             {
