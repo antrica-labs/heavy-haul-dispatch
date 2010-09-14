@@ -64,7 +64,7 @@ namespace SingerDispatch.Panels.Jobs
             IsEnabled = newValue != null;
             SelectedJob = null;
             Tabs.SelectedIndex = 0;
-
+                        
             UpdateJobList();
         }
 

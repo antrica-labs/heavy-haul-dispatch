@@ -182,10 +182,22 @@
     <Compile Include="Panels\Jobs\JobsPanel.xaml.cs">
       <DependentUpon>JobsPanel.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Panels\Loads\DispatchesControl.xaml.cs">
+      <DependentUpon>DispatchesControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Panels\Loads\ExtraEquipmentControl.xaml.cs">
+      <DependentUpon>ExtraEquipmentControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Panels\Loads\LoadsPanel.xaml.cs">
       <DependentUpon>LoadsPanel.xaml</DependentUpon>
     </Compile>
     <Compile Include="Panels\JobUserControl.cs" />
+    <Compile Include="Panels\Loads\PermitsControl.xaml.cs">
+      <DependentUpon>PermitsControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Panels\Loads\ThirdPartyServicesControl.xaml.cs">
+      <DependentUpon>ThirdPartyServicesControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Panels\LoadUserControl.cs" />
     <Compile Include="Panels\Quotes\QuoteCommoditiesControl.xaml.cs">
       <DependentUpon>QuoteCommoditiesControl.xaml</DependentUpon>
@@ -416,9 +428,25 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Panels\Loads\DispatchesControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Panels\Loads\ExtraEquipmentControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Panels\Loads\LoadsPanel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Panels\Loads\PermitsControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Panels\Loads\ThirdPartyServicesControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Panels\Quotes\QuoteCommoditiesControl.xaml">
       <Generator>MSBuild:Compile</Generator>

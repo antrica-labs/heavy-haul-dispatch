@@ -1,11 +1,12 @@
 ﻿<Panels:LoadUserControl x:Class="SingerDispatch.Panels.Loads.LoadsPanel"
-                           xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                           xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                           xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-                           xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-                           xmlns:Panels="clr-namespace:SingerDispatch.Panels"
-                           x:Name="ThePanel" mc:Ignorable="d" 
-                           d:DesignHeight="300" d:DesignWidth="700">
+                        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                        xmlns:Panels="clr-namespace:SingerDispatch.Panels"
+                        xmlns:Loads="clr-namespace:SingerDispatch.Panels.Loads"
+                        x:Name="ThePanel" mc:Ignorable="d"
+                        d:DesignHeight="500" d:DesignWidth="950" Loaded="ThePanel_Loaded">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -13,37 +14,69 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <DockPanel>
-        <Border DockPanel.Dock="Top" Background="LightGoldenrodYellow" BorderBrush="LightGray" BorderThickness="1" Margin="0,0,0,5" DataContext="{Binding ElementName=ThePanel}">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="250" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Border Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Background="LightGoldenrodYellow" BorderBrush="LightGray" BorderThickness="1" Margin="0,0,0,3">
             <StackPanel>
-                <Grid>
+                <Grid Margin="3">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition />
+                        <ColumnDefinition Width="3" />
                         <ColumnDefinition />
+                        <ColumnDefinition Width="3" />
                         <ColumnDefinition />
-                        <ColumnDefinition />
+                        <ColumnDefinition Width="3" />
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
 
-                    <ComboBox Grid.Column="0" />
-                    <Button Grid.Column="3" Style="{StaticResource Horizontal}">View all dispatches</Button>
-                    <Button Grid.Column="4" Style="{StaticResource HorizontalEnd}">Save changes</Button>
+                    <ComboBox Grid.Column="0" Grid.ColumnSpan="3" IsEditable="true" Margin="0" />
+                    <Button Grid.Column="4">View all dispatches</Button>
+                    <Button Grid.Column="6">Save changes</Button>
                 </Grid>
-
-                <Expander Header="Job info">
-                    <Grid>
-
-                    </Grid>
-                </Expander>
             </StackPanel>
         </Border>
 
-        <TabControl Name="Tabs" DataContext="{Binding ElementName=ThePanel}">
-            <TabItem Header="Loads"></TabItem>
-            <TabItem Header="Loaded commodities"></TabItem>
-            <TabItem Header="Extra equipment"></TabItem>
-            <TabItem Header="Third party services"></TabItem>
-            <TabItem Header="Permits"></TabItem>
+        <DataGrid Name="dgJobs" Grid.Column="0" Grid.Row="1" Style="{StaticResource ListDisplay}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Number" Binding="{Binding Number}" Width="65"/>
+                <DataGridTextColumn Header="Status" Binding="{Binding Status.Name}" Width="70" />
+                <DataGridTemplateColumn Header="Commodities">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Converter={StaticResource LoadCommoditiesStringConverter}, Path=LoadedCommodities}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>                
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <StackPanel Grid.Column="0" Grid.Row="2" Margin="0,3,0,0">            
+            <Button Style="{StaticResource VerticalEnd}" IsEnabled="{Binding SelectedJob, Converter={StaticResource IsEnabledNullConverter}}">Delete load</Button>
+        </StackPanel>
+
+        <TabControl Name="Tabs" Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" DataContext="{Binding ElementName=ThePanel}" Margin="5,0,0,0">
+            <TabItem Header="Equipment"></TabItem>
+            <TabItem Header="Extra equipment" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, Path=SelectedLoad}">
+                <Loads:ExtraEquipmentControl SelectedCompany="{Binding SelectedCompany}"  SelectedLoad="{Binding SelectedLoad}" UseImperialMeasurements="{Binding UseImperialMeasurements}" />
+            </TabItem>
+            <TabItem Header="Dispatches" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, Path=SelectedLoad}">
+                <Loads:DispatchesControl SelectedCompany="{Binding SelectedCompany}"  SelectedLoad="{Binding SelectedLoad}" UseImperialMeasurements="{Binding UseImperialMeasurements}" />
+            </TabItem>
+            <TabItem Header="Permits" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, Path=SelectedLoad}">
+                <Loads:PermitsControl SelectedCompany="{Binding SelectedCompany}"  SelectedLoad="{Binding SelectedLoad}" UseImperialMeasurements="{Binding UseImperialMeasurements}" />
+            </TabItem>
+            <TabItem Header="Third party services" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, Path=SelectedLoad}">
+                <Loads:ThirdPartyServicesControl SelectedCompany="{Binding SelectedCompany}"  SelectedLoad="{Binding SelectedLoad}" UseImperialMeasurements="{Binding UseImperialMeasurements}" />
+            </TabItem>            
         </TabControl>
-    </DockPanel>
+    </Grid>
 </Panels:LoadUserControl>

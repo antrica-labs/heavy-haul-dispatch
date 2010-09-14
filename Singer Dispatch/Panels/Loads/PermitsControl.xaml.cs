@@ -2,7 +2,7 @@
 using System.Windows;
 using System.Collections.ObjectModel;
 
-namespace SingerDispatch.Panels.Jobs
+namespace SingerDispatch.Panels.Loads
 {
     /// <summary>
     /// Interaction logic for PermitsControl.xaml
@@ -15,36 +15,39 @@ namespace SingerDispatch.Panels.Jobs
         {
             InitializeComponent();
 
+            if (InDesignMode()) return;
+
             Database = SingerConfigs.CommonDataContext;
         }
 
         private void ControlLoaded(object sender, RoutedEventArgs e)
-        {            
-            cmbLoads.ItemsSource = (SelectedJob == null) ? null : SelectedJob.Loads.ToList();
-            cmbCompanies.ItemsSource = (SelectedJob == null) ? null : from c in Database.Companies where c.IsVisible == true orderby c.Name select c;
-            cmbPermitTypes.ItemsSource = (SelectedJob == null) ? null : from pt in Database.PermitTypes select pt;
+        {
+            if (InDesignMode()) return;
+                        
+            cmbCompanies.ItemsSource = (SelectedLoad == null) ? null : from c in Database.Companies where c.IsVisible == true orderby c.Name select c;
+            cmbPermitTypes.ItemsSource = (SelectedLoad == null) ? null : from pt in Database.PermitTypes select pt;
         }
 
-        protected override void SelectedJobChanged(Job newValue, Job oldValue)
+        protected override void SelectedLoadChanged(Load newValue, Load oldValue)
         {
-            base.SelectedJobChanged(newValue, oldValue);
+            base.SelectedLoadChanged(newValue, oldValue);
 
             dgPermits.ItemsSource = (newValue == null) ? null : new ObservableCollection<Permit>(newValue.Permits);
         }
 
         private void NewPermit_Click(object sender, RoutedEventArgs e)
         {
-            if (SelectedJob == null) return;
+            if (SelectedLoad == null) return;
 
             var list = (ObservableCollection<Permit>)dgPermits.ItemsSource;
-            var permit = new Permit { JobID = SelectedJob.ID };
+            var permit = new Permit { LoadID = SelectedLoad.ID };
 
-            SelectedJob.Permits.Add(permit);
+            SelectedLoad.Permits.Add(permit);
             list.Add(permit);
             dgPermits.SelectedItem = permit;
-            dgPermits.ScrollIntoView(permit);                
+            dgPermits.ScrollIntoView(permit);
 
-            cmbLoads.Focus();
+            cmbCompanies.Focus();
         }
 
         private void DuplicatePermit_Click(object sender, RoutedEventArgs e)
@@ -57,7 +60,7 @@ namespace SingerDispatch.Panels.Jobs
 
             permit = permit.Duplicate();
 
-            SelectedJob.Permits.Add(permit);
+            SelectedLoad.Permits.Add(permit);
             list.Add(permit);
             dgPermits.SelectedItem = permit;
             dgPermits.ScrollIntoView(permit);                
@@ -74,7 +77,7 @@ namespace SingerDispatch.Panels.Jobs
 
             if (confirmation != MessageBoxResult.Yes) return;
 
-            SelectedJob.Permits.Remove(permit);
+            SelectedLoad.Permits.Remove(permit);
             ((ObservableCollection<Permit>)dgPermits.ItemsSource).Remove(permit);
 
             dgPermits.SelectedItem = null;

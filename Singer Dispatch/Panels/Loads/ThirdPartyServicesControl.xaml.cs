@@ -3,7 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Collections.ObjectModel;
 
-namespace SingerDispatch.Panels.Jobs
+namespace SingerDispatch.Panels.Loads
 {
     /// <summary>
     /// Interaction logic for ThirdPartyServicesControl.xaml
@@ -16,18 +16,21 @@ namespace SingerDispatch.Panels.Jobs
         {
             InitializeComponent();
 
+            if (InDesignMode()) return;
+
             Database = SingerConfigs.CommonDataContext;
         }
 
         private void ControlLoaded(object sender, RoutedEventArgs e)
         {
-            cmbLoads.ItemsSource = (SelectedJob == null) ? null : SelectedJob.Loads.ToList();
-            cmbCompanies.ItemsSource = (SelectedJob == null) ? null : from c in Database.Companies  where c.IsVisible == true orderby c.Name select c;
+            if (InDesignMode()) return;
+
+            cmbCompanies.ItemsSource = (SelectedLoad == null) ? null : from c in Database.Companies  where c.IsVisible == true orderby c.Name select c;
         }
 
-        protected override void SelectedJobChanged(Job newValue, Job oldValue)
+        protected override void SelectedLoadChanged(Load newValue, Load oldValue)
         {
-            base.SelectedJobChanged(newValue, oldValue);
+            base.SelectedLoadChanged(newValue, oldValue);
 
             dgServices.ItemsSource = (newValue == null) ? null : new ObservableCollection<ThirdPartyService>(newValue.ThirdPartyServices);
         }
@@ -52,17 +55,17 @@ namespace SingerDispatch.Panels.Jobs
 
         private void NewService_Click(object sender, RoutedEventArgs e)
         {
-            if (SelectedJob == null) return;
+            if (SelectedLoad == null) return;
 
             var list = (ObservableCollection<ThirdPartyService>)dgServices.ItemsSource;
-            var service = new ThirdPartyService { JobID = SelectedJob.ID, ServiceDate = SelectedJob.StartDate };
+            var service = new ThirdPartyService { LoadID = SelectedLoad.ID };
 
-            SelectedJob.ThirdPartyServices.Add(service);
+            SelectedLoad.ThirdPartyServices.Add(service);
             list.Add(service);
             dgServices.SelectedItem = service;
             dgServices.ScrollIntoView(service);
 
-            cmbLoads.Focus();
+            cmbCompanies.Focus();
         }
 
         private void DuplicateService_Click(object sender, RoutedEventArgs e)
@@ -75,7 +78,7 @@ namespace SingerDispatch.Panels.Jobs
 
             service = service.Duplicate();
 
-            SelectedJob.ThirdPartyServices.Add(service);
+            SelectedLoad.ThirdPartyServices.Add(service);
             list.Add(service);
             dgServices.SelectedItem = service;
             dgServices.ScrollIntoView(service);
@@ -92,7 +95,7 @@ namespace SingerDispatch.Panels.Jobs
             if (confirmation != MessageBoxResult.Yes) return;
 
             ((ObservableCollection<ThirdPartyService>)dgServices.ItemsSource).Remove(service);
-            SelectedJob.ThirdPartyServices.Remove(service);
+            SelectedLoad.ThirdPartyServices.Remove(service);
 
             dgServices.SelectedItem = null;
         }

@@ -1,4 +1,4 @@
-﻿<Panels:JobUserControl x:Class="SingerDispatch.Panels.Jobs.ThirdPartyServicesControl"
+﻿<Panels:LoadUserControl x:Class="SingerDispatch.Panels.Loads.ThirdPartyServicesControl"
                        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -42,31 +42,27 @@
                         <RowDefinition />
                         <RowDefinition />
                         <RowDefinition />
-                        <RowDefinition />
-                    </Grid.RowDefinitions>
+                    </Grid.RowDefinitions>                    
 
-                    <Label Grid.Row="0" Grid.Column="0">Load:</Label>
-                    <ComboBox Name="cmbLoads"  Grid.Row="0" Grid.Column="1" SelectedItem="{Binding Load}" ItemTemplate="{StaticResource LoadTemplate}" Controls:ComboUtil.AllowNull="True" />
+                    <Label Grid.Row="0" Grid.Column="0">Company:</Label>
+                    <ComboBox Name="cmbCompanies" Grid.Row="0" Grid.Column="1" SelectedItem="{Binding Company}" TextSearch.TextPath="Name" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectionChanged="ServiceCompany_SelectionChanged" Controls:ComboUtil.AllowNull="True" />
 
-                    <Label Grid.Row="1" Grid.Column="0">Company:</Label>
-                    <ComboBox Name="cmbCompanies" Grid.Row="1" Grid.Column="1" SelectedItem="{Binding Company}" TextSearch.TextPath="Name" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectionChanged="ServiceCompany_SelectionChanged" Controls:ComboUtil.AllowNull="True" />
+                    <Label Grid.Row="1" Grid.Column="0">Service type:</Label>
+                    <ComboBox Name="cmbServiceTypes" Grid.Row="1" Grid.Column="1" SelectedItem="{Binding ServiceType}" ItemTemplate="{StaticResource SimpleNameTemplate}" TextSearch.TextPath="Name" Controls:ComboUtil.AllowNull="True" />
 
-                    <Label Grid.Row="2" Grid.Column="0">Service type:</Label>
-                    <ComboBox Name="cmbServiceTypes" Grid.Row="2" Grid.Column="1" SelectedItem="{Binding ServiceType}" ItemTemplate="{StaticResource SimpleNameTemplate}" TextSearch.TextPath="Name" Controls:ComboUtil.AllowNull="True" />
+                    <Label Grid.Row="2" Grid.Column="0">Contact:</Label>
+                    <ComboBox Name="cmbContacts" Grid.Row="2" Grid.Column="1" SelectedItem="{Binding Contact}" ItemTemplate="{StaticResource SimpleNameTemplate}" TextSearch.TextPath="Name" />
 
-                    <Label Grid.Row="3" Grid.Column="0">Contact:</Label>
-                    <ComboBox Name="cmbContacts" Grid.Row="3" Grid.Column="1" SelectedItem="{Binding Contact}" ItemTemplate="{StaticResource SimpleNameTemplate}" TextSearch.TextPath="Name" />
+                    <Label Grid.Row="3" Grid.Column="0">Location:</Label>
+                    <TextBox Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Location}" />
 
-                    <Label Grid.Row="4" Grid.Column="0">Location:</Label>
-                    <TextBox Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Location}" />
+                    <Label Grid.Row="4" Grid.Column="0">Reference:</Label>
+                    <TextBox Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Reference}" />
 
-                    <Label Grid.Row="5" Grid.Column="0">Reference:</Label>
-                    <TextBox Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Reference}" />
+                    <Label Grid.Row="5" Grid.Column="0">Notes:</Label>
+                    <TextBox Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Notes}" Style="{StaticResource MultiLine}" Height="40" />
 
-                    <Label Grid.Row="6" Grid.Column="0">Notes:</Label>
-                    <TextBox Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Notes}" Style="{StaticResource MultiLine}" Height="40" />
-
-                    <GroupBox Grid.Column="2" Grid.Row="0" Grid.RowSpan="4" Header="Departure" Margin="5,0,0,0">
+                    <GroupBox Grid.Column="2" Grid.Row="0" Grid.RowSpan="3" Header="Departure" Margin="5,0,0,0">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto" />
@@ -95,4 +91,4 @@
             </DataGrid.Columns>
         </DataGrid>
     </DockPanel>
-</Panels:JobUserControl>
+</Panels:LoadUserControl>

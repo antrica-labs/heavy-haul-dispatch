@@ -37,5 +37,10 @@ namespace SingerDispatch.Panels.Loads
         {
             InitializeComponent();
         }
+
+        private void ThePanel_Loaded(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

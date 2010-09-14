@@ -10,7 +10,7 @@ namespace SingerDispatch.Panels
     {
         public static DependencyProperty SelectedLoadProperty = DependencyProperty.Register("SelectedLoad", typeof(Load), typeof(LoadUserControl), new PropertyMetadata(null, SelectedLoadPropertyChanged));
 
-        public Job SelectedLoad
+        public Load SelectedLoad
         {
             set
             {
@@ -18,7 +18,7 @@ namespace SingerDispatch.Panels
             }
             get
             {
-                return (Job)GetValue(SelectedLoadProperty);
+                return (Load)GetValue(SelectedLoadProperty);
             }
         }
 

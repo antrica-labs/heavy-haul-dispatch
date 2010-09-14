@@ -9,7 +9,7 @@ using System.Windows.Data;
 using SingerDispatch.Controls;
 using SingerDispatch.Printing.Documents;
 
-namespace SingerDispatch.Panels.Jobs
+namespace SingerDispatch.Panels.Loads
 {
     /// <summary>
     /// Interaction logic for DispatchesControl.xaml
@@ -21,6 +21,8 @@ namespace SingerDispatch.Panels.Jobs
         public DispatchesControl()
         {
             InitializeComponent();
+
+            if (InDesignMode()) return;
 
             Database = SingerConfigs.CommonDataContext;
 
@@ -42,10 +44,11 @@ namespace SingerDispatch.Panels.Jobs
 
         private void ControlLoaded(object sender, RoutedEventArgs e)
         {
-            cmbLoads.ItemsSource = (SelectedJob == null) ? null : SelectedJob.Loads.ToList();            
-            cmbEquipmentTypes.ItemsSource = (SelectedJob == null) ? null : from et in Database.EquipmentTypes orderby et.Prefix select et;
-            cmbEmployees.ItemsSource = (SelectedJob == null) ? null : from emp in Database.Employees orderby emp.FirstName, emp.LastName select emp;
-            cmbDispatchedByEmployees.ItemsSource = (SelectedJob == null) ? null : from emp in Database.Employees orderby emp.FirstName, emp.LastName select emp;
+            if (InDesignMode()) return;
+
+            cmbEquipmentTypes.ItemsSource = (SelectedLoad == null) ? null : from et in Database.EquipmentTypes orderby et.Prefix select et;
+            cmbEmployees.ItemsSource = (SelectedLoad == null) ? null : from emp in Database.Employees orderby emp.FirstName, emp.LastName select emp;
+            cmbDispatchedByEmployees.ItemsSource = (SelectedLoad == null) ? null : from emp in Database.Employees orderby emp.FirstName, emp.LastName select emp;
 
             var provider = (ObjectDataProvider)FindResource("EmployeeDropList");
 
@@ -63,21 +66,21 @@ namespace SingerDispatch.Panels.Jobs
             }
         }
 
-        protected override void SelectedJobChanged(Job newValue, Job oldValue)
+        protected override void SelectedLoadChanged(Load newValue, Load oldValue)
         {
-            base.SelectedJobChanged(newValue, oldValue);
+            base.SelectedLoadChanged(newValue, oldValue);
 
             dgDispatches.ItemsSource = (newValue == null) ? null : new ObservableCollection<Dispatch>(newValue.Dispatches);
         }
 
         private void NewDispatch_Click(object sender, RoutedEventArgs e)
         {
-            if (SelectedJob == null) return;
+            if (SelectedLoad == null) return;
 
             var list = (ObservableCollection<Dispatch>)dgDispatches.ItemsSource;
-            var dispatch = new Dispatch { JobID = SelectedJob.ID, DispatchedBy = SingerConfigs.OperatingEmployee };
-
-            SelectedJob.Dispatches.Add(dispatch);
+            var dispatch = new Dispatch { LoadID = SelectedLoad.ID, DispatchedBy = SingerConfigs.OperatingEmployee };
+            
+            SelectedLoad.Dispatches.Add(dispatch);
             list.Add(dispatch);
             dgDispatches.SelectedItem = dispatch;
             dgDispatches.ScrollIntoView(dispatch);
@@ -104,7 +107,7 @@ namespace SingerDispatch.Panels.Jobs
 
             dispatch = dispatch.Duplicate();
 
-            SelectedJob.Dispatches.Add(dispatch);
+            SelectedLoad.Dispatches.Add(dispatch);
             list.Add(dispatch);
 
             dgDispatches.ScrollIntoView(dispatch);
@@ -153,7 +156,7 @@ namespace SingerDispatch.Panels.Jobs
 
             var dispatch = (Dispatch)dgDispatches.SelectedItem;
 
-            SelectedJob.Dispatches.Remove(dispatch);
+            SelectedLoad.Dispatches.Remove(dispatch);
             ((ObservableCollection<Dispatch>)dgDispatches.ItemsSource).Remove(dispatch);
         }
 
@@ -177,7 +180,7 @@ namespace SingerDispatch.Panels.Jobs
 
             var prefix = string.Format("{0}-", type.Prefix);
 
-            cmbUnits.ItemsSource = (SelectedJob == null) ? null : from u in Database.Equipment where u.IsDispatchable == true && u.UnitNumber.StartsWith(prefix) orderby u.UnitNumber select u;
+            cmbUnits.ItemsSource = (SelectedLoad == null) ? null : from u in Database.Equipment where u.IsDispatchable == true && u.UnitNumber.StartsWith(prefix) orderby u.UnitNumber select u;
         }
 
         private void AddTravel_Click(object sender, RoutedEventArgs e)

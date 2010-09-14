@@ -44,8 +44,8 @@
 
         <DataGrid Name="dgJobs" Grid.Column="0" Grid.Row="1" Style="{StaticResource ListDisplay}" SelectedItem="{Binding SelectedJob}" SelectionChanged="dgJobs_SelectionChanged">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Number" Binding="{Binding Number}"/>
-                <DataGridTextColumn Header="Status" Binding="{Binding Status.Name}" />
+                <DataGridTextColumn Header="Number" Binding="{Binding Number}" Width="65"/>
+                <DataGridTextColumn Header="Status" Binding="{Binding Status.Name}" Width="70" />
                 <DataGridTextColumn Header="Name" Binding="{Binding Name}" />
             </DataGrid.Columns>
         </DataGrid>
@@ -57,7 +57,7 @@
             <Button Style="{StaticResource VerticalEnd}" Click="DeleteJob_Click" IsEnabled="{Binding SelectedJob, Converter={StaticResource IsEnabledNullConverter}}">Delete Job</Button>
         </StackPanel>
 
-        <TabControl Name="Tabs"  Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" DataContext="{Binding ElementName=ThePanel}" Margin="5,0,0,0">
+        <TabControl Name="Tabs" Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" DataContext="{Binding ElementName=ThePanel}" Margin="5,0,0,0">
             <TabItem Header="Job List">
                 <Jobs:JobDetailsControl SelectedCompany="{Binding SelectedCompany}" SelectedJob="{Binding SelectedJob}" UseImperialMeasurements="{Binding UseImperialMeasurements}" />
             </TabItem>
