@@ -119,7 +119,7 @@
             </Grid>
         </GroupBox>
 
-        <GroupBox DockPanel.Dock="Top" Header="Dimentions" DataContext="{Binding ElementName=ThePanel, Path=SelectedLoad}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=ThePanel, Path=SelectedLoad}">
+        <GroupBox DockPanel.Dock="Top" Header="Dimensions" DataContext="{Binding ElementName=ThePanel, Path=SelectedLoad}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=ThePanel, Path=SelectedLoad}">
             <StackPanel>
                 <Grid>
                     <Grid.ColumnDefinitions>

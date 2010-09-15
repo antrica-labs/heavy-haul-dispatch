@@ -77,7 +77,7 @@
                     <Label Grid.Row="7" Grid.Column="0">Notes:</Label>
                     <TextBox Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="2" Style="{StaticResource MultiLine}" Text="{Binding Notes}" />
 
-                    <GroupBox Header="Dimentions" Grid.Row="0" Grid.Column="2" Grid.RowSpan="7" Margin="5,0,0,0">
+                    <GroupBox Header="Dimensions" Grid.Row="0" Grid.Column="2" Grid.RowSpan="7" Margin="5,0,0,0">
                         <StackPanel>
                             <Grid>
                                 <Grid.ColumnDefinitions>
