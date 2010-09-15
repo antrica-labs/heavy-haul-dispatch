@@ -6004,6 +6004,8 @@ namespace SingerDispatch
 		
 		private string _Notes;
 		
+		private System.Nullable<decimal> _AdjustedRate;
+		
 		private System.Nullable<double> _EWeightSteer;
 		
 		private System.Nullable<double> _EWeightDrive;
@@ -6114,6 +6116,8 @@ namespace SingerDispatch
     partial void OnScheduleChanged();
     partial void OnNotesChanging(string value);
     partial void OnNotesChanged();
+    partial void OnAdjustedRateChanging(System.Nullable<decimal> value);
+    partial void OnAdjustedRateChanged();
     partial void OnEWeightSteerChanging(System.Nullable<double> value);
     partial void OnEWeightSteerChanged();
     partial void OnEWeightDriveChanging(System.Nullable<double> value);
@@ -6472,7 +6476,7 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Notes", UpdateCheck=UpdateCheck.Never)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Notes")]
 		public string Notes
 		{
 			get
@@ -6488,6 +6492,26 @@ namespace SingerDispatch
 					this._Notes = value;
 					this.SendPropertyChanged("Notes");
 					this.OnNotesChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AdjustedRate")]
+		public System.Nullable<decimal> AdjustedRate
+		{
+			get
+			{
+				return this._AdjustedRate;
+			}
+			set
+			{
+				if ((this._AdjustedRate != value))
+				{
+					this.OnAdjustedRateChanging(value);
+					this.SendPropertyChanging();
+					this._AdjustedRate = value;
+					this.SendPropertyChanged("AdjustedRate");
+					this.OnAdjustedRateChanged();
 				}
 			}
 		}

@@ -256,7 +256,8 @@
       <Column Name="EndDate" Type="System.DateTime" CanBeNull="true" />
       <Column Name="Ban" Type="System.String" CanBeNull="true" />      
       <Column Name="Schedule" Type="System.String" CanBeNull="true" />
-      <Column Name="Notes" Type="System.String" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="Notes" Type="System.String" CanBeNull="true" />
+      <Column Name="AdjustedRate" Type="System.Decimal" CanBeNull="true" />
       <Column Name="EWeightSteer" Type="System.Double" CanBeNull="true" />
       <Column Name="EWeightDrive" Type="System.Double" CanBeNull="true" />
       <Column Name="EWeightGroup1" Type="System.Double" CanBeNull="true" />

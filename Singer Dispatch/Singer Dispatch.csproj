@@ -188,6 +188,9 @@
     <Compile Include="Panels\Loads\ExtraEquipmentControl.xaml.cs">
       <DependentUpon>ExtraEquipmentControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Panels\Loads\LoadEquipmentControl.xaml.cs">
+      <DependentUpon>LoadEquipmentControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Panels\Loads\LoadsPanel.xaml.cs">
       <DependentUpon>LoadsPanel.xaml</DependentUpon>
     </Compile>
@@ -433,6 +436,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Panels\Loads\ExtraEquipmentControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Panels\Loads\LoadEquipmentControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
