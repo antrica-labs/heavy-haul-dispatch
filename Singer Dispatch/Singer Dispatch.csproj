@@ -185,8 +185,8 @@
     <Compile Include="Panels\Loads\DispatchesControl.xaml.cs">
       <DependentUpon>DispatchesControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Panels\Loads\ExtraEquipmentControl.xaml.cs">
-      <DependentUpon>ExtraEquipmentControl.xaml</DependentUpon>
+    <Compile Include="Panels\Loads\LoadCommoditiesControl.xaml.cs">
+      <DependentUpon>LoadCommoditiesControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Panels\Loads\LoadEquipmentControl.xaml.cs">
       <DependentUpon>LoadEquipmentControl.xaml</DependentUpon>
@@ -435,7 +435,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Panels\Loads\ExtraEquipmentControl.xaml">
+    <Page Include="Panels\Loads\LoadCommoditiesControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

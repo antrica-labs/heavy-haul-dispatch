@@ -5,7 +5,7 @@
                        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                        xmlns:Panels="clr-namespace:SingerDispatch.Panels"
                        xmlns:Controls="clr-namespace:SingerDispatch.Controls"
-                       Loaded="ControlLoaded" mc:Ignorable="d" d:DesignWidth="780">
+                       Loaded="ControlLoaded" x:Name="ThePanel" mc:Ignorable="d" d:DesignWidth="780">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -13,7 +13,7 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <DockPanel>
+    <DockPanel IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=ThePanel, Path=SelectedLoad}">
         <StackPanel DockPanel.Dock="Bottom">
             <Grid>
                 <Grid.ColumnDefinitions>

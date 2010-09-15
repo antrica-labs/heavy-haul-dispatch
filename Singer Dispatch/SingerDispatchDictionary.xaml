@@ -46,7 +46,27 @@
             </TextBlock.Text>
         </TextBlock>
     </DataTemplate>
+
+    <DataTemplate x:Key="NameAndUnitTemplate">
+        <TextBlock Text="{Binding NameAndUnit}" />
+    </DataTemplate>
     
+    <DataTemplate x:Key="AddressTemplate">
+        <TextBlock>
+            <TextBlock.Text>
+                <MultiBinding StringFormat="{}{0}, {1}, {2}">
+                    <Binding Path="Line1" />
+                    <Binding Path="City" />
+                    <Binding Path="PostalZip" />
+                </MultiBinding>
+            </TextBlock.Text>
+        </TextBlock>
+    </DataTemplate>
+    
+    <DataTemplate x:Key="AbbreviationTemplate">
+        <TextBlock Text="{Binding Abbreviation}" />
+    </DataTemplate>
+
     <Style TargetType="{x:Type Controls:TabIndexHyperlink}">
         <Setter Property="TextDecorations" Value="None" />
         <Setter Property="Foreground" Value="Black" />

@@ -49,25 +49,8 @@ namespace SingerDispatch.Database
 
             foreach (var l in job.Loads.Where(l => l.ID != 0))
             {
-                foreach (var d in l.Dispatches.Where(d => d.ID != 0))
-                {
-                    context.Dispatches.DeleteOnSubmit(d);
-                }
-
-                foreach (var t in l.ThirdPartyServices.Where(t => t.ID != 0))
-                {
-                    context.ThirdPartyServices.DeleteOnSubmit(t);
-                }
-
-                foreach (var p in l.Permits.Where(p => p.ID != 0))
-                {
-                    context.Permits.DeleteOnSubmit(p);
-                }
-
-                context.Loads.DeleteOnSubmit(l);
+                PrepareEntityDelete(l, context);
             }
-
-            
 
             if (job.ID != 0)
                 context.Jobs.DeleteOnSubmit(job);
@@ -93,6 +76,25 @@ namespace SingerDispatch.Database
             if (invoice.ID != 0)
                 context.Invoices.DeleteOnSubmit(invoice);
         }
+
+        public static void PrepareEntityDelete(Load load, SingerDispatchDataContext context)
+        {
+            foreach (var item in load.Dispatches.Where(item => item.ID != 0))
+                context.Dispatches.DeleteOnSubmit(item);
+
+            foreach (var item in load.LoadedCommodities.Where(item => item.ID != 0))
+                context.LoadedCommodities.DeleteOnSubmit(item);
+
+            foreach (var item in load.Permits.Where(item => item.ID != 0))
+                context.Permits.DeleteOnSubmit(item);
+
+            foreach (var item in load.ThirdPartyServices.Where(item => item.ID != 0))
+                context.ThirdPartyServices.DeleteOnSubmit(item);
+
+            if (load.ID != 0)
+                context.Loads.DeleteOnSubmit(load);
+        }
+
 
         public static void SaveAsQuoteRevision(Quote quote, SingerDispatchDataContext context)
         {

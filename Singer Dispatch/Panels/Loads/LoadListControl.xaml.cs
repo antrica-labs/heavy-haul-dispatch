@@ -92,7 +92,7 @@ namespace SingerDispatch.Panels.Jobs
             }
             catch (Exception ex)
             {
-                ErrorNoticeWindow.ShowError("Error while attempting write changes to database", ex.Message);
+                ErrorNoticeWindow.ShowError("Error while attempting to write changes to database", ex.Message);
             }
         }
 
@@ -118,7 +118,7 @@ namespace SingerDispatch.Panels.Jobs
             }
             catch (Exception ex)
             {
-                ErrorNoticeWindow.ShowError("Error while attempting write changes to database", ex.Message);
+                ErrorNoticeWindow.ShowError("Error while attempting to write changes to database", ex.Message);
             }
         }
 
@@ -133,21 +133,18 @@ namespace SingerDispatch.Panels.Jobs
 
             if (confirmation != MessageBoxResult.Yes) return;
 
-            foreach (var item in load.Dispatches.ToList())
-                item.Load = null;
+            try
+            {
+                EntityHelper.PrepareEntityDelete(load, Database);
 
-            foreach (var item in load.LoadedCommodities.ToList())
-                item.Load = null;
-
-            foreach (var item in load.Permits.ToList())
-                item.Load = null;
-
-            foreach (var item in load.ThirdPartyServices.ToList())
-                item.Load = null;
-
-            list.Remove(load);
-            SelectedJob.Loads.Remove(load);
-            dgLoads.SelectedItem = null;
+                list.Remove(load);
+                SelectedJob.Loads.Remove(load);
+                dgLoads.SelectedItem = null;
+            }
+            catch (Exception ex)
+            {
+                ErrorNoticeWindow.ShowError("Error while attempting to delete load", ex.Message);
+            }
         }
 
         private void AxleWeightChanged(object sender, TextChangedEventArgs e)
@@ -317,7 +314,6 @@ namespace SingerDispatch.Panels.Jobs
         private void GuessLoadWeights_Click(object sender, RoutedEventArgs e)
         {
             // Populate as many of the estimated weights and the dimensions as you can based on the tractor, trailer combo, and commodities.
-
             var load = (Load)dgLoads.SelectedItem;
 
             if (load == null) return;
@@ -358,7 +354,6 @@ namespace SingerDispatch.Panels.Jobs
                 if (width > widest)
                     widest = width;
             }
-
 
             load.LoadedHeight += highest;
 

@@ -6,15 +6,26 @@
                         xmlns:Panels="clr-namespace:SingerDispatch.Panels"
                         xmlns:Loads="clr-namespace:SingerDispatch.Panels.Loads"
                         x:Name="ThePanel" mc:Ignorable="d"
-                        d:DesignHeight="500" d:DesignWidth="950" Loaded="ThePanel_Loaded">
+                        d:DesignHeight="500" d:DesignWidth="950" Loaded="Control_Loaded">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/SingerDispatchDictionary.xaml" />
             </ResourceDictionary.MergedDictionaries>
+
+            <DataTemplate x:Key="SimpleJobTemplate">
+                <TextBlock>
+            <TextBlock.Text>
+                <MultiBinding StringFormat="{}{0} - {1}">
+                    <Binding Path="Number" />
+                    <Binding Path="Name" />
+                </MultiBinding>
+            </TextBlock.Text>
+                </TextBlock>
+            </DataTemplate>
         </ResourceDictionary>
     </UserControl.Resources>
-    <Grid>
+    <Grid IsEnabled="{Binding ElementName=ThePanel, Path=SelectedCompany, Converter={StaticResource IsEnabledNullConverter}}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="250" />
             <ColumnDefinition />
@@ -38,14 +49,14 @@
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
 
-                    <ComboBox Grid.Column="0" Grid.ColumnSpan="3" IsEditable="true" Margin="0" />
-                    <Button Grid.Column="4">View all dispatches</Button>
-                    <Button Grid.Column="6">Save changes</Button>
+                    <ComboBox Name="cmbJobList" Grid.Column="0" Grid.ColumnSpan="3" IsEditable="true" Margin="0" SelectedItem="{Binding SelectedJob}" TextSearch.TextPath="Number" ItemTemplate="{StaticResource SimpleJobTemplate}" SelectionChanged="cmbJobList_SelectionChanged" />
+                    <Button Grid.Column="4" Click="ViewAllDispatches_Click" IsEnabled="{Binding ElementName=ThePanel, Path=SelectedLoad, Converter={StaticResource IsEnabledNullConverter}}">View all dispatches</Button>
+                    <Button Name="CommitChangesButton" Grid.Column="6" Click="CommitChanges_Click" LostFocus="CommitChangesButton_LostFocus" IsEnabled="{Binding ElementName=ThePanel, Path=SelectedLoad, Converter={StaticResource IsEnabledNullConverter}}">Save changes</Button>
                 </Grid>
             </StackPanel>
         </Border>
 
-        <DataGrid Name="dgJobs" Grid.Column="0" Grid.Row="1" Style="{StaticResource ListDisplay}">
+        <DataGrid Name="dgLoads" Grid.Column="0" Grid.Row="1" Style="{StaticResource ListDisplay}" SelectedItem="{Binding SelectedLoad}" SelectionChanged="dgLoads_SelectionChanged">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Number" Binding="{Binding Number}" Width="65"/>
                 <DataGridTextColumn Header="Status" Binding="{Binding Status.Name}" Width="70" />
@@ -59,16 +70,18 @@
             </DataGrid.Columns>
         </DataGrid>
 
-        <StackPanel Grid.Column="0" Grid.Row="2" Margin="0,3,0,0">            
-            <Button Style="{StaticResource VerticalEnd}" IsEnabled="{Binding SelectedJob, Converter={StaticResource IsEnabledNullConverter}}">Delete load</Button>
+        <StackPanel Grid.Column="0" Grid.Row="2" Margin="0,3,0,0">
+            <Button Style="{StaticResource Vertical}" IsEnabled="{Binding ElementName=ThePanel, Path=SelectedJob, Converter={StaticResource IsEnabledNullConverter}}" Click="NewLoad_Click">New load</Button>
+            <Button Style="{StaticResource Vertical}" IsEnabled="{Binding ElementName=dgLoads, Path=SelectedItem, Converter={StaticResource IsEnabledNullConverter}}" Click="DuplicateLoad_Click">Duplicate load</Button>
+            <Button Style="{StaticResource VerticalEnd}" IsEnabled="{Binding ElementName=dgLoads, Path=SelectedItem, Converter={StaticResource IsEnabledNullConverter}}" Click="DeleteLoad_Click">Delete load</Button>
         </StackPanel>
 
         <TabControl Name="Tabs" Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" DataContext="{Binding ElementName=ThePanel}" Margin="5,0,0,0">
+            <TabItem Header="Commodities" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, Path=SelectedLoad}">
+                <Loads:LoadCommoditiesControl SelectedCompany="{Binding SelectedCompany}"  SelectedLoad="{Binding SelectedLoad}" UseImperialMeasurements="{Binding UseImperialMeasurements}" />
+            </TabItem>
             <TabItem Header="Equipment" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, Path=SelectedLoad}">
                 <Loads:LoadEquipmentControl SelectedCompany="{Binding SelectedCompany}"  SelectedLoad="{Binding SelectedLoad}" UseImperialMeasurements="{Binding UseImperialMeasurements}" />   
-            </TabItem>
-            <TabItem Header="Extra equipment" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, Path=SelectedLoad}">
-                <Loads:ExtraEquipmentControl SelectedCompany="{Binding SelectedCompany}"  SelectedLoad="{Binding SelectedLoad}" UseImperialMeasurements="{Binding UseImperialMeasurements}" />
             </TabItem>
             <TabItem Header="Dispatches" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, Path=SelectedLoad}">
                 <Loads:DispatchesControl SelectedCompany="{Binding SelectedCompany}"  SelectedLoad="{Binding SelectedLoad}" UseImperialMeasurements="{Binding UseImperialMeasurements}" />

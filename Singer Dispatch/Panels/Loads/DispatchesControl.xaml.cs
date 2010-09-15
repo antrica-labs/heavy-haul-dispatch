@@ -79,7 +79,14 @@ namespace SingerDispatch.Panels.Loads
 
             var list = (ObservableCollection<Dispatch>)dgDispatches.ItemsSource;
             var dispatch = new Dispatch { LoadID = SelectedLoad.ID, DispatchedBy = SingerConfigs.OperatingEmployee };
-            
+
+            if (!String.IsNullOrEmpty(SelectedLoad.Schedule))
+            {
+                
+                dispatch.Description = string.Format(SingerConfigs.DefaultDispatchDescription, Load.PrintCommodityList(SelectedLoad));
+                dispatch.Schedule = SelectedLoad.Schedule;
+            }
+
             SelectedLoad.Dispatches.Add(dispatch);
             list.Add(dispatch);
             dgDispatches.SelectedItem = dispatch;
@@ -89,11 +96,11 @@ namespace SingerDispatch.Panels.Loads
             {
                 EntityHelper.SaveAsNewDispatch(dispatch, Database);
 
-                cmbLoads.Focus();
+                cmbDispatchedByEmployees.Focus();
             }
             catch (Exception ex)
             {
-                ErrorNoticeWindow.ShowError("Error while attempting write changes to database", ex.Message);
+                ErrorNoticeWindow.ShowError("Error while attempting to write changes to database", ex.Message);
             }            
         }
 
@@ -117,11 +124,11 @@ namespace SingerDispatch.Panels.Loads
             {
                 EntityHelper.SaveAsNewDispatch(dispatch, Database);
 
-                cmbLoads.Focus();
+                cmbDispatchedByEmployees.Focus();
             }
             catch (Exception ex)
             {
-                ErrorNoticeWindow.ShowError("Error while attempting write changes to database", ex.Message);
+                ErrorNoticeWindow.ShowError("Error while attempting to write changes to database", ex.Message);
             }
         }
 
@@ -160,6 +167,7 @@ namespace SingerDispatch.Panels.Loads
             ((ObservableCollection<Dispatch>)dgDispatches.ItemsSource).Remove(dispatch);
         }
 
+        /*
         private void cmbLoads_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
             var load = (Load)cmbLoads.SelectedItem;
@@ -171,6 +179,7 @@ namespace SingerDispatch.Panels.Loads
             dispatch.Description = string.Format(SingerConfigs.DefaultDispatchDescription, Load.PrintCommodityList(load));
             dispatch.Schedule = load.Schedule;
         }
+        */
 
         private void cmbEquipmentTypes_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
