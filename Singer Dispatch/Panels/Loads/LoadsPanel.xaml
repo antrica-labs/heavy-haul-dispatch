@@ -6,7 +6,7 @@
                         xmlns:Panels="clr-namespace:SingerDispatch.Panels"
                         xmlns:Loads="clr-namespace:SingerDispatch.Panels.Loads"
                         x:Name="ThePanel" mc:Ignorable="d"
-                        d:DesignHeight="500" d:DesignWidth="950" Loaded="Control_Loaded">
+                        d:DesignHeight="500" d:DesignWidth="850" Loaded="Control_Loaded">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
