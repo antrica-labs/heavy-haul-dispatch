@@ -696,8 +696,7 @@ namespace SingerDispatch.Importer
             commodity.Height = height ?? eheight;
             commodity.Weight = weight ?? eweight;
 
-            commodity.SizeEstimated = (length == null) || (width == null) || (height == null);
-            commodity.WeightEstimated = (weight == null);
+            commodity.DimensionsEstimated = (length == null) || (width == null) || (height == null) || (weight == null);
             
             return commodity;
         }

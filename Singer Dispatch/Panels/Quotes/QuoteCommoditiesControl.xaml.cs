@@ -57,8 +57,15 @@ namespace SingerDispatch.Panels.Quotes
 
         private void Control_Loaded(object sender, RoutedEventArgs e)
         {
-            cmbCommodityName.ItemsSource = (SelectedQuote == null) ? null : from c in Database.Commodities where c.Company == SelectedCompany || c.Company == SelectedQuote.CareOfCompany orderby c.Name, c.Unit select c;
-            
+            if (SelectedQuote != null)
+            {
+                var selected = cmbCommodityName.SelectedItem;
+                cmbCommodityName.ItemsSource = from c in Database.Commodities where c.Company == SelectedCompany || c.Company == SelectedQuote.CareOfCompany orderby c.Name, c.Unit select c;
+                cmbCommodityName.SelectedItem = selected;
+            }
+            else
+                cmbCommodityName.ItemsSource = null;
+
             UpdateAddressesAndSites();
         }
 
@@ -113,11 +120,8 @@ namespace SingerDispatch.Panels.Quotes
                 commodity.Width = original.Width;
                 commodity.Height = original.Height;
                 commodity.Weight = original.Weight;
-                commodity.SizeEstimated = original.SizeEstimated;
-                commodity.WeightEstimated = original.WeightEstimated;
-                commodity.Notes = original.Notes;
-                commodity.LastAddress = original.LastAddress;
-                commodity.LastLocation = original.LastLocation;
+                commodity.DimensionsEstimated = original.DimensionsEstimated;
+                commodity.Notes = original.Notes;                
                 commodity.DepartureAddress = original.LastAddress;
                 commodity.DepartureSiteName = original.LastLocation;
             }
@@ -133,13 +137,12 @@ namespace SingerDispatch.Panels.Quotes
                 commodity.Width = null;
                 commodity.Height = null;
                 commodity.Weight = null;
-                commodity.SizeEstimated = null;
-                commodity.WeightEstimated = null;
+                commodity.DimensionsEstimated = null;
                 commodity.Notes = null;
-                commodity.LastAddress = null;
-                commodity.LastLocation = null;
                 commodity.DepartureAddress = null;
                 commodity.DepartureSiteName = null;
+                commodity.ArrivalAddress = null;
+                commodity.ArrivalSiteName = null;
             }
         }
 
@@ -148,7 +151,7 @@ namespace SingerDispatch.Panels.Quotes
             UpdateAddressesAndSites();
 
             var list = (ObservableCollection<QuoteCommodity>)dgQuoteCommodities.ItemsSource;
-            var commodity = new QuoteCommodity { QuoteID = SelectedQuote.ID, SizeEstimated = true, WeightEstimated = true};
+            var commodity = new QuoteCommodity { QuoteID = SelectedQuote.ID };
 
             SelectedQuote.QuoteCommodities.Add(commodity);
             list.Add(commodity);            

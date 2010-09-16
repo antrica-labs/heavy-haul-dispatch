@@ -6,7 +6,7 @@
                        xmlns:Panels="clr-namespace:SingerDispatch.Panels"
                        xmlns:Jobs="clr-namespace:SingerDispatch.Panels.Jobs"
                        x:Name="ThePanel" Loaded="Control_Loaded"
-                       mc:Ignorable="d" d:DesignWidth="780" IsEnabled="False">
+                       mc:Ignorable="d" d:DesignWidth="780">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -14,7 +14,7 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <Grid>
+    <Grid IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=ThePanel, Path=SelectedCompany}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="250" />
             <ColumnDefinition />
@@ -37,7 +37,7 @@
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
 
-                
+                <Button Grid.Column="4" Click="ViewLoads_Click" IsEnabled="{Binding ElementName=ThePanel, Path=SelectedJob, Converter={StaticResource IsEnabledNullConverter}}">View loads</Button>
                 <Button Grid.Column="6" Name="CommitChangesButton" Click="CommitJobChanges_Click" LostFocus="CommitChangesButton_LostFocus">Save changes</Button>
             </Grid>
         </Border>

@@ -53,48 +53,18 @@ namespace SingerDispatch.Panels.Loads
         {
 
         }
-
-        private void cmbLoadingContacts_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
+        
         private void cmbUnloadingContactCompanies_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
         }
-
-        private void cmbUnloadingContacts_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
-        private void cmbLoadingProvinces_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
-        private void cmbUnloadingProvinces_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
+        
         private void cmbLoadingSiteContactCompanies_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
         }
-
-        private void cmbLoadingSiteContacts_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
+        
         private void cmbUnloadingSiteContactCompanies_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
-        private void cmbUnloadingSiteContacts_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
         }

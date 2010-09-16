@@ -319,6 +319,17 @@ namespace SingerDispatch
             ((JobsPanel)panelMainContent.Child).SelectedJob = job;
         }
 
+        public void ViewLoads(Job job)
+        {
+            if (job == null || job.Company == null) return;
+
+            expanderLoads.IsExpanded = true;
+            cmbCompanies.SelectedItem = job.Company;
+
+            ((LoadsPanel)panelMainContent.Child).UpdateLayout();
+            ((LoadsPanel)panelMainContent.Child).SelectedJob = job;
+        }
+
         public void ViewQuote(Quote quote)
         {
             if (quote == null || quote.Company == null) return;

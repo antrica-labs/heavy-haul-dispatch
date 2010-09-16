@@ -31,9 +31,9 @@
                 <Button Style="{StaticResource Horizontal}" Grid.Column="0" Click="NewCommodity_Click">New commodity</Button>
                 <Button Style="{StaticResource Horizontal}" Grid.Column="1" Click="DuplicateCommodity_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgCommodities, Path=SelectedItem}">Duplicate commodity</Button>
                 <Button Style="{StaticResource HorizontalEnd}" Grid.Column="3" Click="RemoveCommodity_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgCommodities, Path=SelectedItem}">Remove commodity</Button>
-            </Grid>            
-            
-            <GroupBox Header="Commodity Details" DataContext="{Binding ElementName=dgCommodities, Path=SelectedItem}">
+            </Grid>
+
+            <GroupBox Header="Commodity Details" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgCommodities, Path=SelectedItem}" DataContext="{Binding ElementName=dgCommodities, Path=SelectedItem}">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
@@ -56,28 +56,25 @@
                     <Label Grid.Row="0" Grid.Column="0" Style="{StaticResource Important}">Commodity name:</Label>
                     <ComboBox Name="cmbCommodityName" Text="{Binding Name}" Grid.Row="0" Grid.Column="1" IsEditable="True" ItemTemplate="{StaticResource NameAndUnitTemplate}" TextSearch.TextPath="Name" SelectionChanged="CommodityName_SelectionChanged" Controls:ComboUtil.AllowNull="True" />
 
-                    <Label Grid.Row="1" Grid.Column="0" Style="{StaticResource Important}">Declared value:</Label>
-                    <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Value, StringFormat=c, Converter={StaticResource NullableValueConverter}}" Controls:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" />
+                    <Label Grid.Row="2" Grid.Column="0" Style="{StaticResource Important}">Declared value:</Label>
+                    <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Value, StringFormat=c, Converter={StaticResource NullableValueConverter}}" Controls:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" />
 
-                    <Label Grid.Row="2" Grid.Column="0">Serial number:</Label>
-                    <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Serial}" />
+                    <Label Grid.Row="3" Grid.Column="0">Hauling cost:</Label>
+                    <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Cost, StringFormat=c, Converter={StaticResource NullableValueConverter}}" Controls:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" />
+                    
+                    <Label Grid.Row="4" Grid.Column="0">Serial number:</Label>
+                    <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Serial}" />
 
-                    <Label Grid.Row="3" Grid.Column="0">Unit number:</Label>
-                    <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Unit}" />
+                    <Label Grid.Row="1" Grid.Column="0" Style="{StaticResource Important}">Unit number:</Label>
+                    <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Unit}" />
 
-                    <Label Grid.Row="4" Grid.Column="0">Owner:</Label>
-                    <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Owner}" />
+                    <Label Grid.Row="5" Grid.Column="0">Owner:</Label>
+                    <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding Owner}" />
 
-                    <Label Grid.Row="5" Grid.Column="0">Last location:</Label>
-                    <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding LastLocation}" />
+                    <Label Grid.Row="6" Grid.Column="0">Notes:</Label>
+                    <TextBox Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2" Style="{StaticResource MultiLine}" Text="{Binding Notes}" />
 
-                    <Label Grid.Row="6" Grid.Column="0">Last address:</Label>
-                    <TextBox Grid.Row="6" Grid.Column="1" Text="{Binding LastAddress}" />
-
-                    <Label Grid.Row="7" Grid.Column="0">Notes:</Label>
-                    <TextBox Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="2" Style="{StaticResource MultiLine}" Text="{Binding Notes}" />
-
-                    <GroupBox Header="Dimensions" Grid.Row="0" Grid.Column="2" Grid.RowSpan="7" Margin="5,0,0,0">
+                    <GroupBox Header="Dimensions" Grid.Row="0" Grid.Column="2" Grid.RowSpan="6" Margin="5,0,0,0">
                         <StackPanel>
                             <Grid>
                                 <Grid.ColumnDefinitions>
@@ -94,7 +91,7 @@
                                 </Grid.RowDefinitions>
 
                                 <Label Grid.Row="0" Grid.Column="0" Style="{StaticResource Important}">Length:</Label>
-                                <TextBox Name="txtCommodityLength" Grid.Row="0" Grid.Column="1">
+                                <TextBox Grid.Row="0" Grid.Column="1">
                                     <TextBox.Text>
                                         <MultiBinding Converter="{StaticResource LengthMeasurementConverter}">
                                             <Binding Path="Length" />
@@ -104,7 +101,7 @@
                                 </TextBox>
 
                                 <Label Grid.Row="1" Grid.Column="0" Style="{StaticResource Important}">Width:</Label>
-                                <TextBox Name="txtCommodityWidth" Grid.Row="1" Grid.Column="1" Height="22.96" Margin="3,0,3,3" VerticalAlignment="Bottom">
+                                <TextBox Grid.Row="1" Grid.Column="1" Height="22.96" Margin="3,0,3,3" VerticalAlignment="Bottom">
                                     <TextBox.Text>
                                         <MultiBinding Converter="{StaticResource LengthMeasurementConverter}">
                                             <Binding Path="Width" />
@@ -114,7 +111,7 @@
                                 </TextBox>
 
                                 <Label Grid.Row="2" Grid.Column="0" Style="{StaticResource Important}">Height:</Label>
-                                <TextBox Name="txtCommodityHeight" Grid.Row="2" Grid.Column="1">
+                                <TextBox Grid.Row="2" Grid.Column="1">
                                     <TextBox.Text>
                                         <MultiBinding Converter="{StaticResource LengthMeasurementConverter}">
                                             <Binding Path="Height" />
@@ -123,11 +120,8 @@
                                     </TextBox.Text>
                                 </TextBox>
 
-                                <Label Grid.Row="3" Width="65">Estimated:</Label>
-                                <CheckBox Name="chbCommoditySizeEstimated" Grid.Row="3" Grid.Column="1" IsChecked="{Binding SizeEstimated}" />
-
-                                <Label Grid.Row="4" Grid.Column="0" Style="{StaticResource Important}">Weight:</Label>
-                                <TextBox Name="txtCommodityWeight" Grid.Row="4" Grid.Column="1">
+                                <Label Grid.Row="3" Grid.Column="0" Style="{StaticResource Important}">Weight:</Label>
+                                <TextBox Grid.Row="3" Grid.Column="1">
                                     <TextBox.Text>
                                         <MultiBinding Converter="{StaticResource WeightMeasurementConverter}">
                                             <Binding Path="Weight" />
@@ -136,13 +130,60 @@
                                     </TextBox.Text>
                                 </TextBox>
 
-                                <Label Grid.Row="5" Grid.Column="0">Estimated:</Label>
-                                <CheckBox Name="chbCommodityWeightEstimated" Grid.Row="5" Grid.Column="1" IsChecked="{Binding WeightEstimated}"/>
+                                <Label Grid.Row="4" Grid.Column="0">Estimated:</Label>
+                                <CheckBox Grid.Row="4" Grid.Column="1" IsChecked="{Binding DimensionsEstimated}"/>
                             </Grid>
                         </StackPanel>
                     </GroupBox>
                 </Grid>
             </GroupBox>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="3" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+
+                <GroupBox Header="Origin" Grid.Column="0" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgCommodities, Path=SelectedItem}" DataContext="{Binding ElementName=dgCommodities, Path=SelectedItem}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+
+                        <Label Grid.Column="0" Grid.Row="0">Site name:</Label>
+                        <ComboBox Grid.Column="1" Grid.Row="0" Text="{Binding DepartureSiteName}" IsEditable="True" ItemsSource="{Binding ElementName=ThePanel, Path=CommonSiteNames}" />
+
+                        <Label Grid.Column="0" Grid.Row="1">Address/LSD:</Label>
+                        <ComboBox Grid.Column="1" Grid.Row="1" Text="{Binding DepartureAddress}" IsEditable="True" ItemsSource="{Binding ElementName=ThePanel, Path=CommonSiteAddresses}" />
+                    </Grid>
+                </GroupBox>
+
+                <GroupBox Header="Destination" Grid.Column="2" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgCommodities, Path=SelectedItem}" DataContext="{Binding ElementName=dgCommodities, Path=SelectedItem}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+
+
+                        <Label Grid.Column="0" Grid.Row="0">Site name:</Label>
+                        <ComboBox Grid.Column="1" Grid.Row="0" Text="{Binding ArrivalSiteName}" IsEditable="True" ItemsSource="{Binding ElementName=ThePanel, Path=CommonSiteNames}" />
+
+                        <Label Grid.Column="0" Grid.Row="1">Address/LSD:</Label>
+                        <ComboBox Grid.Column="1" Grid.Row="1" Text="{Binding ArrivalAddress}" IsEditable="True" ItemsSource="{Binding ElementName=ThePanel, Path=CommonSiteAddresses}" />
+                    </Grid>
+                </GroupBox>
+            </Grid>
         </StackPanel>
 
         <DataGrid Name="dgCommodities" Style="{StaticResource ListDisplay}">

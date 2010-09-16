@@ -32,11 +32,9 @@ namespace SingerDispatch.Panels.Quotes
         {
             if (InDesignMode()) return;
 
-            // refresh database lists in case they have been modified elsewhere.
-            cmbQuotedBy.ItemsSource = from emp in Database.Employees orderby emp.FirstName, emp.LastName select emp;
-            cmbCareOfCompanies.ItemsSource = (SelectedCompany == null) ? null : from c in Database.Companies where c != SelectedCompany && c.IsVisible == true select c;
-            
-            RefreshAddressesAndContacts();
+            UpdateAuthorList();
+            UpdateCareOfCompanies();
+            UpdateAddressesAndContacts();
             CalculateItemizedCost();
         }
 
@@ -44,17 +42,66 @@ namespace SingerDispatch.Panels.Quotes
         {
             base.SelectedCompanyChanged(newValue, oldValue);
 
-            cmbCareOfCompanies.ItemsSource = (SelectedCompany == null) ? null : from c in Database.Companies where c != SelectedCompany select c;
+            if (!IsVisible) return;
+            
+            UpdateCareOfCompanies();
         }
 
         protected override void SelectedQuoteChanged(Quote newValue, Quote oldValue)
         {
             base.SelectedQuoteChanged(newValue, oldValue);
 
-            RefreshAddressesAndContacts();
+            UpdateAuthorList();
+            UpdateCareOfCompanies();
+            UpdateAddressesAndContacts();
             CalculateItemizedCost();
         }
 
+        private void UpdateAuthorList()
+        {
+            if (SelectedQuote != null)
+            {
+                var selected = cmbQuotedBy.SelectedItem;
+                cmbQuotedBy.ItemsSource = from emp in Database.Employees orderby emp.FirstName, emp.LastName select emp;
+                cmbQuotedBy.SelectedItem = selected;
+            }
+            else
+                cmbQuotedBy.ItemsSource = null;
+        }
+
+        private void UpdateCareOfCompanies()
+        {
+            if (SelectedQuote != null)
+            {
+                var selected = cmbCareOfCompanies.SelectedIndex;
+                cmbCareOfCompanies.ItemsSource = from c in Database.Companies where c != SelectedCompany && c.IsVisible == true select c;
+                cmbCareOfCompanies.SelectedIndex = selected;
+            }
+            else
+                cmbCareOfCompanies.ItemsSource = null;
+        }
+
+        private void UpdateAddressesAndContacts()
+        {
+            if (SelectedQuote != null)
+            {
+                var address = cmbAddresses.SelectedItem;
+                var contact = cmbContacts.SelectedItem;
+
+                var addressQuery = from a in Database.Addresses where a.Company == SelectedQuote.Company || a.Company == SelectedQuote.CareOfCompany orderby a.AddressType.Name select a;
+
+                cmbAddresses.ItemsSource = addressQuery.ToList();
+                cmbContacts.ItemsSource = (from c in Database.Contacts where addressQuery.Contains(c.Address) orderby c.FirstName, c.LastName select c).ToList();
+
+                cmbAddresses.SelectedItem = address;
+                cmbContacts.SelectedItem = contact;
+            }
+            else
+            {
+                cmbAddresses.ItemsSource = null;
+                cmbContacts.ItemsSource = null;
+            }
+        }
 
         private void ViewQuote_Click(object sender, RoutedEventArgs e)
         {
@@ -68,24 +115,8 @@ namespace SingerDispatch.Panels.Quotes
 
         private void CareOfCompanies_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            RefreshAddressesAndContacts();
-        }
-
-        private void RefreshAddressesAndContacts()
-        {
-            if (SelectedQuote != null)
-            {
-                var addressQuery = from a in Database.Addresses where a.Company == SelectedQuote.Company || a.Company == SelectedQuote.CareOfCompany orderby a.AddressType.Name select a;
-
-                cmbAddresses.ItemsSource = addressQuery.ToList();
-                cmbContacts.ItemsSource = (from c in Database.Contacts where addressQuery.Contains(c.Address) orderby c.FirstName, c.LastName select c).ToList();
-            }
-            else
-            {
-                cmbAddresses.ItemsSource = null;
-                cmbContacts.ItemsSource = null;
-            }
-        }
+            UpdateAddressesAndContacts();
+        }        
 
         private void ItemizedBilling_Checked(object sender, RoutedEventArgs e)
         {

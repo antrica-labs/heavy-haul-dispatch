@@ -6,7 +6,7 @@
                          xmlns:Quotes="clr-namespace:SingerDispatch.Panels.Quotes"
                          xmlns:Panels="clr-namespace:SingerDispatch.Panels"
                          x:Name="ThePanel" Loaded="Control_Loaded"
-                         mc:Ignorable="d" IsEnabled="False" d:DesignWidth="865" d:DesignHeight="518">
+                         mc:Ignorable="d" d:DesignWidth="865" d:DesignHeight="518">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -14,7 +14,7 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <Grid>
+    <Grid IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=ThePanel, Path=SelectedCompany}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="250" />
             <ColumnDefinition />
@@ -41,8 +41,8 @@
                 <Button Grid.Column="6" Name="CommitChangesButton" Click="CommitQuoteChanges_Click" LostFocus="CommitChangesButton_LostFocus">Save changes</Button>
             </Grid>
         </Border>
-        
-        <DataGrid Grid.Column="0" Grid.Row="1" Style="{StaticResource ListDisplay}" Name="dgQuoteList" SelectedItem="{Binding SelectedQuote}" SelectionChanged="dgQuoteList_SelectionChanged">
+
+        <DataGrid Grid.Column="0" Grid.Row="1" Name="dgQuoteList" Style="{StaticResource ListDisplay}" SelectedItem="{Binding ElementName=ThePanel, Path=SelectedQuote}">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Number" Binding="{Binding Number}" Width="0.75*" />
                 <DataGridTextColumn Header="Rev" Binding="{Binding Revision}" Width="0.5*" />

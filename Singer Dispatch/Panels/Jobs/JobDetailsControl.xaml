@@ -22,7 +22,7 @@
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition />
+                    <RowDefinition Height="Auto" />
                     <RowDefinition />
                     <RowDefinition />
                     <RowDefinition />
@@ -43,30 +43,40 @@
                 <ComboBox Name="cmbContacts" Grid.Column="1" Grid.Row="3" SelectedItem="{Binding Contact}" ItemTemplate="{StaticResource ContactTemplate}" Controls:ComboUtil.AllowNull="True" />
             </Grid>
         </GroupBox>
-                
-        <GroupBox Header="Reference numbers" DockPanel.Dock="Top" Height="200">
-            <DockPanel>
-                <Grid DockPanel.Dock="Bottom">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition />
-                        <ColumnDefinition />
-                    </Grid.ColumnDefinitions>
 
-                    <Button Style="{StaticResource Horizontal}" Grid.Column="0" Click="AddReferenceNumber_Click">Add</Button>
-                    <Button Style="{StaticResource HorizontalEnd}" Grid.Column="1" Click="RemoveReferenceNumber_Click">Remove</Button>
-                </Grid>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="3" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
 
-                <DataGrid Name="dgReferenceNumbers" Style="{StaticResource ListDisplay}" IsReadOnly="False">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="Field" Binding="{Binding Field}" />
-                        <DataGridTextColumn Header="Value" Binding="{Binding Value}" />
-                    </DataGrid.Columns>
-                </DataGrid>
-            </DockPanel>       
-        </GroupBox>
-        
-        <GroupBox Header="Additional Notes">            
-            <TextBox Style="{StaticResource MultiLine}" Height="Auto" />
-        </GroupBox>
+            <GroupBox Grid.Column="0" Header="Additional Notes">
+                <TextBox Style="{StaticResource MultiLine}" Height="Auto" />
+            </GroupBox>
+            
+            <GroupBox Grid.Column="2" Header="Reference numbers">
+                <DockPanel>
+                    <Grid DockPanel.Dock="Top">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+
+                        <Button Style="{StaticResource Horizontal}" Grid.Column="0" Click="AddReferenceNumber_Click">Add</Button>
+                        <Button Style="{StaticResource HorizontalEnd}" Grid.Column="1" Click="RemoveReferenceNumber_Click">Remove</Button>
+                    </Grid>
+
+                    <DataGrid Name="dgReferenceNumbers" Style="{StaticResource ListDisplay}" IsReadOnly="False">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Field" Binding="{Binding Field}" />
+                            <DataGridTextColumn Header="Value" Binding="{Binding Value}" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </DockPanel>
+            </GroupBox>
+        </Grid>
     </DockPanel>
 </Panels:JobUserControl>
+
+    

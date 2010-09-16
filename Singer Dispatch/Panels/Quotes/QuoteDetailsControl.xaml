@@ -29,7 +29,7 @@
     </UserControl.Resources>
     <DockPanel>
         <StackPanel DockPanel.Dock="Top">
-            <GroupBox Header="Quote Details" Margin="0,0,3,0" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=ThePanel, Path=SelectedQuote}" DataContext="{Binding SelectedQuote}">
+            <GroupBox Header="Quote Details" Margin="0,0,3,0" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=ThePanel, Path=SelectedQuote}" DataContext="{Binding ElementName=ThePanel, Path=SelectedQuote}">
                 <StackPanel>
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -62,10 +62,10 @@
                         </Grid.RowDefinitions>
 
                         <Label Grid.Row="0" Grid.Column="0">Care of:</Label>
-                        <ComboBox Name="cmbCareOfCompanies" Grid.Row="1" Grid.Column="0" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectionChanged="CareOfCompanies_SelectionChanged" SelectedItem="{Binding CareOfCompany}" TextSearch.TextPath="Name" IsEditable="True" Controls:ComboUtil.AllowNull="True" />
+                        <ComboBox Name="cmbCareOfCompanies" Grid.Row="1" Grid.Column="0" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectionChanged="CareOfCompanies_SelectionChanged" SelectedItem="{Binding CareOfCompany}" TextSearch.TextPath="Name" Controls:ComboUtil.AllowNull="True" />
 
                         <Label Grid.Row="0" Grid.Column="1">Author:</Label>
-                        <ComboBox Name="cmbQuotedBy" Grid.Row="1" Grid.Column="1" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectedItem="{Binding Employee}" TextSearch.TextPath="Name" IsEditable="True" Controls:ComboUtil.AllowNull="True"></ComboBox>
+                        <ComboBox Name="cmbQuotedBy" Grid.Row="1" Grid.Column="1" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectedItem="{Binding Employee}" TextSearch.TextPath="Name" Controls:ComboUtil.AllowNull="True"></ComboBox>
                     </Grid>
 
                     <Grid>
@@ -127,7 +127,7 @@
                     <ComboBox Grid.Column="0" Grid.Row="1" Name="cmbAddresses" SelectedItem="{Binding BillingAddress}" ItemTemplate="{StaticResource AddressTemplate}" Controls:ComboUtil.AllowNull="True" />
 
                     <Label Grid.Column="1" Grid.Row="0">Name:</Label>
-                    <ComboBox Grid.Column="1" Grid.Row="1" Name="cmbContacts" SelectedItem="{Binding Contact}" ItemTemplate="{StaticResource SimpleNameTemplate}" TextSearch.TextPath="Name" Controls:ComboUtil.AllowNull="True" />
+                    <ComboBox Grid.Column="1" Grid.Row="1" Name="cmbContacts" SelectedItem="{Binding Contact}" ItemTemplate="{StaticResource ContactTemplate}" TextSearch.TextPath="Name" Controls:ComboUtil.AllowNull="True" />
                 </Grid>
 
                 <Grid DataContext="{Binding Contact}">
@@ -164,9 +164,9 @@
                 </Grid>
             </StackPanel>
         </GroupBox>
-        
-        <GroupBox Header="Description &amp; Notes">
-            <TextBox Name="txtDescription" Style="{StaticResource MultiLine}" Height="Auto" Text="{Binding Description}"/>
+
+        <GroupBox Header="Description &amp; Notes" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=ThePanel, Path=SelectedQuote}" DataContext="{Binding ElementName=ThePanel, Path=SelectedQuote}">
+            <TextBox Style="{StaticResource MultiLine}" Height="Auto" Text="{Binding Description}"/>
         </GroupBox>
     </DockPanel>
 </Panels:QuoteUserControl>

@@ -1,16 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Collections.ObjectModel;
 using SingerDispatch.Database;
 using SingerDispatch.Windows;
@@ -53,6 +45,7 @@ namespace SingerDispatch.Panels.Loads
 
         protected void SelectedJobChanged(Job newValue, Job oldValue)
         {
+            cmbJobList.SelectedItem = newValue;
             UpdateLoadList();
         }
 
@@ -60,7 +53,7 @@ namespace SingerDispatch.Panels.Loads
         {
             base.SelectedCompanyChanged(newValue, oldValue);
 
-            cmbJobList.ItemsSource = from j in Database.Jobs orderby j.Number descending select j;
+            cmbJobList.ItemsSource = from j in Database.Jobs where j.Company == SelectedCompany orderby j.Number descending select j;
         }
 
         public LoadsPanel()

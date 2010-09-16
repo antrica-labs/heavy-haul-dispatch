@@ -54,8 +54,7 @@
       <Column Name="Width" Type="System.Double" CanBeNull="true" />
       <Column Name="Height" Type="System.Double" CanBeNull="true" />
       <Column Name="Weight" Type="System.Double" CanBeNull="true" />
-      <Column Name="SizeEstimated" Type="System.Boolean" CanBeNull="true" />
-      <Column Name="WeightEstimated" Type="System.Boolean" CanBeNull="true" />
+      <Column Name="DimensionsEstimated" Type="System.Boolean" CanBeNull="true" />
       <Column Name="Notes" Type="System.String" CanBeNull="true" UpdateCheck="Never" />
       <Association Name="Commodity_JobCommodity" Member="JobCommodities" ThisKey="ID" OtherKey="OriginalCommodityID" Type="JobCommodity" />
       <Association Name="Commodity_QuoteCommodity" Member="QuoteCommodities" ThisKey="ID" OtherKey="OriginalCommodityID" Type="QuoteCommodity" />
@@ -187,14 +186,15 @@
       <Column Name="Serial" Type="System.String" CanBeNull="true" />
       <Column Name="Unit" Type="System.String" CanBeNull="true" />
       <Column Name="Owner" Type="System.String" CanBeNull="true" />
-      <Column Name="LastLocation" Type="System.String" CanBeNull="true" />
-      <Column Name="LastAddress" Type="System.String" CanBeNull="true" />
+      <Column Name="DepartureSiteName" Type="System.String" CanBeNull="true" />
+      <Column Name="DepartureAddress" Type="System.String" CanBeNull="true" />
+      <Column Name="ArrivalSiteName" Type="System.String" CanBeNull="true" />
+      <Column Name="ArrivalAddress" Type="System.String" CanBeNull="true" />      
       <Column Name="Length" Type="System.Double" CanBeNull="true" />
       <Column Name="Width" Type="System.Double" CanBeNull="true" />
       <Column Name="Height" Type="System.Double" CanBeNull="true" />
       <Column Name="Weight" Type="System.Double" CanBeNull="true" />
-      <Column Name="SizeEstimated" Type="System.Boolean" CanBeNull="true" />
-      <Column Name="WeightEstimated" Type="System.Boolean" CanBeNull="true" />
+      <Column Name="DimensionsEstimated" Type="System.Boolean" CanBeNull="true" />      
       <Column Name="Cost" Type="System.Decimal" CanBeNull="true" />      
       <Column Name="Notes" Type="System.String" CanBeNull="true" UpdateCheck="Never" />      
       <Association Name="JobCommodity_LoadedCommodity" Member="LoadedCommodities" ThisKey="ID" OtherKey="JobCommodityID" Type="LoadedCommodity" />
@@ -412,15 +412,12 @@
       <Column Name="Value" Type="System.Decimal" CanBeNull="true" />
       <Column Name="Serial" Type="System.String" CanBeNull="true" />
       <Column Name="Unit" Type="System.String" CanBeNull="true" />
-      <Column Name="Owner" Type="System.String" CanBeNull="true" />
-      <Column Name="LastLocation" Type="System.String" CanBeNull="true" />
-      <Column Name="LastAddress" Type="System.String" CanBeNull="true" />
+      <Column Name="Owner" Type="System.String" CanBeNull="true" />      
       <Column Name="Length" Type="System.Double" CanBeNull="true" />
       <Column Name="Width" Type="System.Double" CanBeNull="true" />
       <Column Name="Height" Type="System.Double" CanBeNull="true" />
       <Column Name="Weight" Type="System.Double" CanBeNull="true" />
-      <Column Name="SizeEstimated" Type="System.Boolean" CanBeNull="true" />
-      <Column Name="WeightEstimated" Type="System.Boolean" CanBeNull="true" />
+      <Column Name="DimensionsEstimated" Type="System.Boolean" CanBeNull="true" />
       <Column Name="Cost" Type="System.Decimal" CanBeNull="true" />
       <Column Name="Notes" Type="System.String" CanBeNull="true" UpdateCheck="Never" />
       <Association Name="Quote_QuoteCommodity" Member="Quote" ThisKey="QuoteID" OtherKey="ID" Type="Quote" IsForeignKey="true" />

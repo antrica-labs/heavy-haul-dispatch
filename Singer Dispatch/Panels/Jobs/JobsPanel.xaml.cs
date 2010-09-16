@@ -37,7 +37,7 @@ namespace SingerDispatch.Panels.Jobs
         }
 
         private void Control_Loaded(object sender, RoutedEventArgs e)
-        {            
+        {
             SaveCommand.Executed += CommitJobChanges_Executed;
 
             if (InDesignMode()) return;
@@ -60,11 +60,10 @@ namespace SingerDispatch.Panels.Jobs
         protected override void SelectedCompanyChanged(Company newValue, Company oldValue)
         {
             base.SelectedCompanyChanged(newValue, oldValue);
-
-            IsEnabled = newValue != null;
+                        
             SelectedJob = null;
             Tabs.SelectedIndex = 0;
-                        
+            
             UpdateJobList();
         }
 
@@ -81,7 +80,7 @@ namespace SingerDispatch.Panels.Jobs
 
             var button = (ButtonBase)sender;
 
-            try
+            try 
             {
                 Database.SubmitChanges();
 
@@ -193,27 +192,12 @@ namespace SingerDispatch.Panels.Jobs
             window.ViewQuote(SelectedJob.Quote);
         }
 
-        /*
-        private void ViewDispatches_Click(object sender, RoutedEventArgs e)
+        private void ViewLoads_Click(object sender, RoutedEventArgs e)
         {
             if (SelectedJob == null) return;
 
-            var dispatches = (from d in SelectedJob.Dispatches select d).ToList();
-
-            bool printFileCopy;
-
-            if (SelectedCompany.CustomerType.IsEnterprise == true)
-            {
-                printFileCopy = Convert.ToBoolean(SingerConfigs.GetConfig("Dispatch-EnterprisePrintFileCopy") ?? "false");                               
-            }
-            else
-            {
-                printFileCopy = Convert.ToBoolean(SingerConfigs.GetConfig("Dispatch-SingerPrintFileCopy") ?? "false");                               
-            }
-
-            var viewer = new DocumentViewerWindow(new DispatchDocument(printFileCopy), dispatches, string.Format("Dispatches - Job #{0}", SelectedJob.Number)) { IsMetric = !UseImperialMeasurements, IsSpecializedDocument = SelectedCompany.CustomerType.IsEnterprise != true };
-            viewer.DisplayPrintout();
-        }
-        */
+            var window = (MainWindow)Application.Current.MainWindow;
+            window.ViewLoads(SelectedJob);
+        }        
     }
 }

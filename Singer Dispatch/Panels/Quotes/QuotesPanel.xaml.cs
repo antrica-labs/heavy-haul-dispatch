@@ -34,45 +34,43 @@ namespace SingerDispatch.Panels.Quotes
         }
 
         private void Control_Loaded(object sender, RoutedEventArgs e)
-        {               
+        {
             SaveCommand.Executed += CommitQuoteChanges_Executed;
 
             if (InDesignMode()) return;
 
-            if (SelectedCompany != null)
-            {
-                var quotes = new ObservableCollection<Quote>(from quote in Database.Quotes where quote.Company == SelectedCompany orderby quote.Number descending, quote.Revision descending select quote);
-
-                if (SelectedQuote != null && SelectedQuote.ID == 0)
-                    quotes.Insert(0, SelectedQuote);
-
-                dgQuoteList.ItemsSource = quotes;
-            }
-            else
-            {
-                dgQuoteList.ItemsSource = null;
-            }
+            UpdateQuoteList();
         }
 
         protected override void SelectedCompanyChanged(Company newValue, Company oldValue)
         {
             base.SelectedCompanyChanged(newValue, oldValue);
 
-            IsEnabled = newValue != null;
-            SelectedQuote = null;
+            if (!IsVisible) return;
 
-            dgQuoteList.ItemsSource = (SelectedCompany == null) ? null : new ObservableCollection<Quote>(from quote in Database.Quotes where quote.Company == SelectedCompany orderby quote.Number descending, quote.Revision descending select quote);
-
-            Tabs.SelectedIndex = 0;
+            UpdateQuoteList();
         }
 
         protected override void SelectedQuoteChanged(Quote newValue, Quote oldValue)
         {
             base.SelectedQuoteChanged(newValue, oldValue);
 
-            Tabs.SelectedIndex = 0;
+            if (newValue == null)
+                Tabs.SelectedIndex = 0;
         }
-      
+
+        private void UpdateQuoteList()
+        {
+            if (SelectedCompany != null)
+            {
+                var selected = dgQuoteList.SelectedItem;
+                dgQuoteList.ItemsSource = new ObservableCollection<Quote>(from quote in Database.Quotes where quote.Company == SelectedCompany orderby quote.Number descending, quote.Revision descending select quote);
+                dgQuoteList.SelectedItem = selected;
+            }
+            else
+                dgQuoteList.ItemsSource = null;
+        }
+
         private void CommitQuoteChanges_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             CommitChangesButton.RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent, CommitChangesButton));
@@ -229,8 +227,6 @@ namespace SingerDispatch.Panels.Quotes
 
             grid.ScrollIntoView(grid.SelectedItem);
             grid.UpdateLayout();
-
-            SelectedQuote = (Quote)grid.SelectedItem;
         }
     }
 }

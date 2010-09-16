@@ -76,8 +76,7 @@ namespace SingerDispatch
 
         partial void OnCreated()
         {
-            WeightEstimated = WeightEstimated ?? false;
-            SizeEstimated = SizeEstimated ?? false;
+            DimensionsEstimated = DimensionsEstimated ?? true;
         }
     }
 
@@ -112,6 +111,8 @@ namespace SingerDispatch
             copy.Company = Company;
             copy.Number = Number;
             copy.CareOfCompany = CareOfCompany;
+            copy.BillingAddress = BillingAddress;
+            copy.Contact = Contact;
             copy.Description = Description;
             copy.StartDate = StartDate;
             copy.EndDate = EndDate;
@@ -155,7 +156,8 @@ namespace SingerDispatch
             // Fill the job properties with as many of the applicable quote properties as possible
             job.Quote = this;
             job.Company = Company;
-            job.CareOfCompany = CareOfCompany;            
+            job.CareOfCompany = CareOfCompany;
+            job.Contact = Contact;
             job.Notes = Description;
 
             foreach (var commodity in QuoteCommodities)
@@ -172,8 +174,7 @@ namespace SingerDispatch
         partial void OnCreated()
         {
             OrderIndex = 1;
-            WeightEstimated = WeightEstimated ?? false;
-            SizeEstimated = SizeEstimated ?? false;
+            DimensionsEstimated = DimensionsEstimated ?? true;            
         }
 
         public QuoteCommodity Duplicate()
@@ -190,14 +191,11 @@ namespace SingerDispatch
             copy.Serial = Serial;
             copy.Unit = Unit;
             copy.Owner = Owner;
-            copy.LastLocation = LastLocation;
-            copy.LastAddress = LastAddress;
             copy.Length = Length;
             copy.Width = Width;
             copy.Height = Height;
             copy.Weight = Weight;
-            copy.SizeEstimated = SizeEstimated;
-            copy.WeightEstimated = WeightEstimated;
+            copy.DimensionsEstimated = DimensionsEstimated;
             copy.Cost = Cost;
             copy.Notes = Notes;
 
@@ -215,14 +213,15 @@ namespace SingerDispatch
             jc.Serial = Serial;
             jc.Unit = Unit;
             jc.Owner = Owner;
-            jc.LastLocation = LastLocation;
-            jc.LastAddress = LastAddress;
+            jc.DepartureSiteName = DepartureSiteName;
+            jc.DepartureAddress = DepartureAddress;
+            jc.ArrivalSiteName = ArrivalSiteName;
+            jc.ArrivalAddress = ArrivalAddress;
             jc.Length = Length;
             jc.Width = Width;
             jc.Height = Height;
             jc.Weight = Weight;
-            jc.SizeEstimated = SizeEstimated;
-            jc.WeightEstimated = WeightEstimated;
+            jc.DimensionsEstimated = DimensionsEstimated;
             jc.Cost = Cost;
             jc.Notes = Notes;            
 
@@ -335,8 +334,7 @@ namespace SingerDispatch
     {
         partial void OnCreated()
         {
-            WeightEstimated = WeightEstimated ?? false;
-            SizeEstimated = SizeEstimated ?? false;
+            DimensionsEstimated = DimensionsEstimated ?? true;
         }
 
         public string NameAndUnit
@@ -362,14 +360,15 @@ namespace SingerDispatch
             copy.Serial = Serial;
             copy.Unit = Unit;
             copy.Owner = Owner;
-            copy.LastLocation = LastLocation;
-            copy.LastAddress = LastAddress;
+            copy.DepartureSiteName = DepartureSiteName;
+            copy.DepartureAddress = DepartureAddress;
+            copy.ArrivalSiteName = ArrivalSiteName;
+            copy.ArrivalAddress = ArrivalAddress;
             copy.Length = Length;
             copy.Width = Width;
             copy.Height = Height;
             copy.Weight = Weight;
-            copy.SizeEstimated = SizeEstimated;
-            copy.WeightEstimated = WeightEstimated;
+            copy.DimensionsEstimated = DimensionsEstimated;
             copy.Cost = Cost;            
             copy.Notes = Notes;
 

@@ -102,11 +102,10 @@ namespace SingerDispatch.Panels.Jobs
                 commodity.Width = original.Width;
                 commodity.Height = original.Height;
                 commodity.Weight = original.Weight;
-                commodity.SizeEstimated = original.SizeEstimated;
-                commodity.WeightEstimated = original.WeightEstimated;
+                commodity.DimensionsEstimated = original.DimensionsEstimated;
                 commodity.Notes = original.Notes;
-                commodity.LastAddress = original.LastAddress;
-                commodity.LastLocation = original.LastLocation;
+                commodity.DepartureSiteName = original.LastLocation;
+                commodity.DepartureAddress = original.LastAddress;
             }
             else
             {
@@ -120,11 +119,12 @@ namespace SingerDispatch.Panels.Jobs
                 commodity.Width = null;
                 commodity.Height = null;
                 commodity.Weight = null;
-                commodity.SizeEstimated = null;
-                commodity.WeightEstimated = null;
+                commodity.DimensionsEstimated = null;
                 commodity.Notes = null;
-                commodity.LastAddress = null;
-                commodity.LastLocation = null;
+                commodity.DepartureSiteName = null;
+                commodity.DepartureAddress = null;
+                commodity.ArrivalSiteName = null;
+                commodity.ArrivalAddress = null;
             }
         }
 

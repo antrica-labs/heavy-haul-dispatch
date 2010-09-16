@@ -1505,9 +1505,7 @@ namespace SingerDispatch
 		
 		private System.Nullable<double> _Weight;
 		
-		private System.Nullable<bool> _SizeEstimated;
-		
-		private System.Nullable<bool> _WeightEstimated;
+		private System.Nullable<bool> _DimensionsEstimated;
 		
 		private string _Notes;
 		
@@ -1547,10 +1545,8 @@ namespace SingerDispatch
     partial void OnHeightChanged();
     partial void OnWeightChanging(System.Nullable<double> value);
     partial void OnWeightChanged();
-    partial void OnSizeEstimatedChanging(System.Nullable<bool> value);
-    partial void OnSizeEstimatedChanged();
-    partial void OnWeightEstimatedChanging(System.Nullable<bool> value);
-    partial void OnWeightEstimatedChanged();
+    partial void OnDimensionsEstimatedChanging(System.Nullable<bool> value);
+    partial void OnDimensionsEstimatedChanged();
     partial void OnNotesChanging(string value);
     partial void OnNotesChanged();
     #endregion
@@ -1827,42 +1823,22 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SizeEstimated")]
-		public System.Nullable<bool> SizeEstimated
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DimensionsEstimated")]
+		public System.Nullable<bool> DimensionsEstimated
 		{
 			get
 			{
-				return this._SizeEstimated;
+				return this._DimensionsEstimated;
 			}
 			set
 			{
-				if ((this._SizeEstimated != value))
+				if ((this._DimensionsEstimated != value))
 				{
-					this.OnSizeEstimatedChanging(value);
+					this.OnDimensionsEstimatedChanging(value);
 					this.SendPropertyChanging();
-					this._SizeEstimated = value;
-					this.SendPropertyChanged("SizeEstimated");
-					this.OnSizeEstimatedChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WeightEstimated")]
-		public System.Nullable<bool> WeightEstimated
-		{
-			get
-			{
-				return this._WeightEstimated;
-			}
-			set
-			{
-				if ((this._WeightEstimated != value))
-				{
-					this.OnWeightEstimatedChanging(value);
-					this.SendPropertyChanging();
-					this._WeightEstimated = value;
-					this.SendPropertyChanged("WeightEstimated");
-					this.OnWeightEstimatedChanged();
+					this._DimensionsEstimated = value;
+					this.SendPropertyChanged("DimensionsEstimated");
+					this.OnDimensionsEstimatedChanged();
 				}
 			}
 		}
@@ -4480,9 +4456,13 @@ namespace SingerDispatch
 		
 		private string _Owner;
 		
-		private string _LastLocation;
+		private string _DepartureSiteName;
 		
-		private string _LastAddress;
+		private string _DepartureAddress;
+		
+		private string _ArrivalSiteName;
+		
+		private string _ArrivalAddress;
 		
 		private System.Nullable<double> _Length;
 		
@@ -4492,9 +4472,7 @@ namespace SingerDispatch
 		
 		private System.Nullable<double> _Weight;
 		
-		private System.Nullable<bool> _SizeEstimated;
-		
-		private System.Nullable<bool> _WeightEstimated;
+		private System.Nullable<bool> _DimensionsEstimated;
 		
 		private System.Nullable<decimal> _Cost;
 		
@@ -4530,10 +4508,14 @@ namespace SingerDispatch
     partial void OnUnitChanged();
     partial void OnOwnerChanging(string value);
     partial void OnOwnerChanged();
-    partial void OnLastLocationChanging(string value);
-    partial void OnLastLocationChanged();
-    partial void OnLastAddressChanging(string value);
-    partial void OnLastAddressChanged();
+    partial void OnDepartureSiteNameChanging(string value);
+    partial void OnDepartureSiteNameChanged();
+    partial void OnDepartureAddressChanging(string value);
+    partial void OnDepartureAddressChanged();
+    partial void OnArrivalSiteNameChanging(string value);
+    partial void OnArrivalSiteNameChanged();
+    partial void OnArrivalAddressChanging(string value);
+    partial void OnArrivalAddressChanged();
     partial void OnLengthChanging(System.Nullable<double> value);
     partial void OnLengthChanged();
     partial void OnWidthChanging(System.Nullable<double> value);
@@ -4542,10 +4524,8 @@ namespace SingerDispatch
     partial void OnHeightChanged();
     partial void OnWeightChanging(System.Nullable<double> value);
     partial void OnWeightChanged();
-    partial void OnSizeEstimatedChanging(System.Nullable<bool> value);
-    partial void OnSizeEstimatedChanged();
-    partial void OnWeightEstimatedChanging(System.Nullable<bool> value);
-    partial void OnWeightEstimatedChanged();
+    partial void OnDimensionsEstimatedChanging(System.Nullable<bool> value);
+    partial void OnDimensionsEstimatedChanged();
     partial void OnCostChanging(System.Nullable<decimal> value);
     partial void OnCostChanged();
     partial void OnNotesChanging(string value);
@@ -4768,42 +4748,82 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LastLocation")]
-		public string LastLocation
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DepartureSiteName")]
+		public string DepartureSiteName
 		{
 			get
 			{
-				return this._LastLocation;
+				return this._DepartureSiteName;
 			}
 			set
 			{
-				if ((this._LastLocation != value))
+				if ((this._DepartureSiteName != value))
 				{
-					this.OnLastLocationChanging(value);
+					this.OnDepartureSiteNameChanging(value);
 					this.SendPropertyChanging();
-					this._LastLocation = value;
-					this.SendPropertyChanged("LastLocation");
-					this.OnLastLocationChanged();
+					this._DepartureSiteName = value;
+					this.SendPropertyChanged("DepartureSiteName");
+					this.OnDepartureSiteNameChanged();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LastAddress")]
-		public string LastAddress
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DepartureAddress")]
+		public string DepartureAddress
 		{
 			get
 			{
-				return this._LastAddress;
+				return this._DepartureAddress;
 			}
 			set
 			{
-				if ((this._LastAddress != value))
+				if ((this._DepartureAddress != value))
 				{
-					this.OnLastAddressChanging(value);
+					this.OnDepartureAddressChanging(value);
 					this.SendPropertyChanging();
-					this._LastAddress = value;
-					this.SendPropertyChanged("LastAddress");
-					this.OnLastAddressChanged();
+					this._DepartureAddress = value;
+					this.SendPropertyChanged("DepartureAddress");
+					this.OnDepartureAddressChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ArrivalSiteName")]
+		public string ArrivalSiteName
+		{
+			get
+			{
+				return this._ArrivalSiteName;
+			}
+			set
+			{
+				if ((this._ArrivalSiteName != value))
+				{
+					this.OnArrivalSiteNameChanging(value);
+					this.SendPropertyChanging();
+					this._ArrivalSiteName = value;
+					this.SendPropertyChanged("ArrivalSiteName");
+					this.OnArrivalSiteNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ArrivalAddress")]
+		public string ArrivalAddress
+		{
+			get
+			{
+				return this._ArrivalAddress;
+			}
+			set
+			{
+				if ((this._ArrivalAddress != value))
+				{
+					this.OnArrivalAddressChanging(value);
+					this.SendPropertyChanging();
+					this._ArrivalAddress = value;
+					this.SendPropertyChanged("ArrivalAddress");
+					this.OnArrivalAddressChanged();
 				}
 			}
 		}
@@ -4888,42 +4908,22 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SizeEstimated")]
-		public System.Nullable<bool> SizeEstimated
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DimensionsEstimated")]
+		public System.Nullable<bool> DimensionsEstimated
 		{
 			get
 			{
-				return this._SizeEstimated;
+				return this._DimensionsEstimated;
 			}
 			set
 			{
-				if ((this._SizeEstimated != value))
+				if ((this._DimensionsEstimated != value))
 				{
-					this.OnSizeEstimatedChanging(value);
+					this.OnDimensionsEstimatedChanging(value);
 					this.SendPropertyChanging();
-					this._SizeEstimated = value;
-					this.SendPropertyChanged("SizeEstimated");
-					this.OnSizeEstimatedChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WeightEstimated")]
-		public System.Nullable<bool> WeightEstimated
-		{
-			get
-			{
-				return this._WeightEstimated;
-			}
-			set
-			{
-				if ((this._WeightEstimated != value))
-				{
-					this.OnWeightEstimatedChanging(value);
-					this.SendPropertyChanging();
-					this._WeightEstimated = value;
-					this.SendPropertyChanged("WeightEstimated");
-					this.OnWeightEstimatedChanged();
+					this._DimensionsEstimated = value;
+					this.SendPropertyChanged("DimensionsEstimated");
+					this.OnDimensionsEstimatedChanged();
 				}
 			}
 		}
@@ -9822,10 +9822,6 @@ namespace SingerDispatch
 		
 		private string _Owner;
 		
-		private string _LastLocation;
-		
-		private string _LastAddress;
-		
 		private System.Nullable<double> _Length;
 		
 		private System.Nullable<double> _Width;
@@ -9834,9 +9830,7 @@ namespace SingerDispatch
 		
 		private System.Nullable<double> _Weight;
 		
-		private System.Nullable<bool> _SizeEstimated;
-		
-		private System.Nullable<bool> _WeightEstimated;
+		private System.Nullable<bool> _DimensionsEstimated;
 		
 		private System.Nullable<decimal> _Cost;
 		
@@ -9876,10 +9870,6 @@ namespace SingerDispatch
     partial void OnUnitChanged();
     partial void OnOwnerChanging(string value);
     partial void OnOwnerChanged();
-    partial void OnLastLocationChanging(string value);
-    partial void OnLastLocationChanged();
-    partial void OnLastAddressChanging(string value);
-    partial void OnLastAddressChanged();
     partial void OnLengthChanging(System.Nullable<double> value);
     partial void OnLengthChanged();
     partial void OnWidthChanging(System.Nullable<double> value);
@@ -9888,10 +9878,8 @@ namespace SingerDispatch
     partial void OnHeightChanged();
     partial void OnWeightChanging(System.Nullable<double> value);
     partial void OnWeightChanged();
-    partial void OnSizeEstimatedChanging(System.Nullable<bool> value);
-    partial void OnSizeEstimatedChanged();
-    partial void OnWeightEstimatedChanging(System.Nullable<bool> value);
-    partial void OnWeightEstimatedChanged();
+    partial void OnDimensionsEstimatedChanging(System.Nullable<bool> value);
+    partial void OnDimensionsEstimatedChanged();
     partial void OnCostChanging(System.Nullable<decimal> value);
     partial void OnCostChanged();
     partial void OnNotesChanging(string value);
@@ -10173,46 +10161,6 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LastLocation")]
-		public string LastLocation
-		{
-			get
-			{
-				return this._LastLocation;
-			}
-			set
-			{
-				if ((this._LastLocation != value))
-				{
-					this.OnLastLocationChanging(value);
-					this.SendPropertyChanging();
-					this._LastLocation = value;
-					this.SendPropertyChanged("LastLocation");
-					this.OnLastLocationChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LastAddress")]
-		public string LastAddress
-		{
-			get
-			{
-				return this._LastAddress;
-			}
-			set
-			{
-				if ((this._LastAddress != value))
-				{
-					this.OnLastAddressChanging(value);
-					this.SendPropertyChanging();
-					this._LastAddress = value;
-					this.SendPropertyChanged("LastAddress");
-					this.OnLastAddressChanged();
-				}
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Length")]
 		public System.Nullable<double> Length
 		{
@@ -10293,42 +10241,22 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SizeEstimated")]
-		public System.Nullable<bool> SizeEstimated
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DimensionsEstimated")]
+		public System.Nullable<bool> DimensionsEstimated
 		{
 			get
 			{
-				return this._SizeEstimated;
+				return this._DimensionsEstimated;
 			}
 			set
 			{
-				if ((this._SizeEstimated != value))
+				if ((this._DimensionsEstimated != value))
 				{
-					this.OnSizeEstimatedChanging(value);
+					this.OnDimensionsEstimatedChanging(value);
 					this.SendPropertyChanging();
-					this._SizeEstimated = value;
-					this.SendPropertyChanged("SizeEstimated");
-					this.OnSizeEstimatedChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WeightEstimated")]
-		public System.Nullable<bool> WeightEstimated
-		{
-			get
-			{
-				return this._WeightEstimated;
-			}
-			set
-			{
-				if ((this._WeightEstimated != value))
-				{
-					this.OnWeightEstimatedChanging(value);
-					this.SendPropertyChanging();
-					this._WeightEstimated = value;
-					this.SendPropertyChanged("WeightEstimated");
-					this.OnWeightEstimatedChanged();
+					this._DimensionsEstimated = value;
+					this.SendPropertyChanged("DimensionsEstimated");
+					this.OnDimensionsEstimatedChanged();
 				}
 			}
 		}
