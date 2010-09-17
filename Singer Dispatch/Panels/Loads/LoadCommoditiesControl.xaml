@@ -5,7 +5,7 @@
                         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                         xmlns:Panels="clr-namespace:SingerDispatch.Panels"
                         xmlns:Controls="clr-namespace:SingerDispatch.Controls"                        
-                        x:Name="ThePanel" mc:Ignorable="d" d:DesignWidth="750">
+                        x:Name="ThePanel" mc:Ignorable="d" d:DesignWidth="750" Loaded="ThePanel_Loaded">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -29,7 +29,7 @@
                 <Button Style="{StaticResource HorizontalEnd}" Grid.Column="3" Click="RemoveCommodity_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgCommodities, Path=SelectedItem}">Remove commodity</Button>
             </Grid>
 
-            <GroupBox Header="Commodity" DataContext="{Binding ElementName=dgCommodities, Path=SelectedItem}">
+            <GroupBox Header="Commodity" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgCommodities, Path=SelectedItem}" DataContext="{Binding ElementName=dgCommodities, Path=SelectedItem}">
                 <StackPanel>
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -119,7 +119,7 @@
                 </StackPanel>
             </GroupBox>
 
-            <GroupBox Header="Loading &amp; Unloading Info" DataContext="{Binding ElementName=dgCommodities, Path=SelectedItem}">
+            <GroupBox Header="Loading &amp; Unloading Info" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgCommodities, Path=SelectedItem}" DataContext="{Binding ElementName=dgCommodities, Path=SelectedItem}">
                 <StackPanel>
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -258,7 +258,7 @@
                 </StackPanel>
             </GroupBox>
 
-            <GroupBox Header="Bill of Lading" DataContext="{Binding ElementName=dgCommodities, Path=SelectedItem}">
+            <GroupBox Header="Bill of Lading" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgCommodities, Path=SelectedItem}" DataContext="{Binding ElementName=dgCommodities, Path=SelectedItem}">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
