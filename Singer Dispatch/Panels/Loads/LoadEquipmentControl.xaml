@@ -1,11 +1,12 @@
 ﻿<Panels:LoadUserControl x:Class="SingerDispatch.Panels.Loads.LoadEquipmentControl"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:Panels="clr-namespace:SingerDispatch.Panels"
-             xmlns:Controls="clr-namespace:SingerDispatch.Controls"
-             x:Name="ThePanel" mc:Ignorable="d" d:DesignWidth="800" Loaded="Control_Loaded">
+                        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+                        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                        xmlns:Panels="clr-namespace:SingerDispatch.Panels"
+                        xmlns:Controls="clr-namespace:SingerDispatch.Controls"
+                        Loaded="Control_Loaded"
+                        x:Name="ThePanel" mc:Ignorable="d" d:DesignWidth="800">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -51,10 +52,10 @@
             <GroupBox Header="Instruction" Grid.Column="0" Grid.Row="0" Grid.RowSpan="2">
                 <StackPanel>
                     <Label>Schedule:</Label>
-                    <TextBox Text="{Binding Schedule}" Style="{StaticResource MultiLine}" />
+                    <TextBox Text="{Binding Schedule}" Style="{StaticResource MultiLine}" Height="45" />
 
                     <Label>Additional notes:</Label>
-                    <TextBox Text="{Binding Notes}" Style="{StaticResource MultiLine}"/>
+                    <TextBox Text="{Binding Notes}" Style="{StaticResource MultiLine}" Height="50"/>
                 </StackPanel>
             </GroupBox>
             
@@ -112,7 +113,7 @@
                 <ComboBox Name="cmbTrailerCombinations" Grid.Column="3" Grid.Row="1" SelectedItem="{Binding TrailerCombination}" ItemTemplate="{StaticResource TrailerCombinationTemplate}" Controls:ComboUtil.AllowNull="True" />
 
                 <Label Grid.Row="0" Grid.Column="4">Season</Label>
-                <ComboBox Name="cmbSeasons" Grid.Row="1" Grid.Column="4" SelectedItem="{Binding Season}" ItemTemplate="{StaticResource SimpleNameTemplate}" IsEditable="True" TextSearch.TextPath="Name" Controls:ComboUtil.AllowNull="True" />
+                <ComboBox Name="cmbSeasons" Grid.Row="1" Grid.Column="4" SelectedItem="{Binding Season}" ItemTemplate="{StaticResource SimpleNameTemplate}" TextSearch.TextPath="Name" Controls:ComboUtil.AllowNull="True" />
 
                 <Label Grid.Row="0" Grid.Column="5">Ban (%)</Label>
                 <TextBox Grid.Row="1" Grid.Column="5" Text="{Binding Ban}"/>

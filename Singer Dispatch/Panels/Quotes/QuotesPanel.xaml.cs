@@ -17,9 +17,9 @@ namespace SingerDispatch.Panels.Quotes
     /// </summary>
     public partial class QuotesPanel
     {
-        private CommandBinding SaveCommand { get; set; }
+        public SingerDispatchDataContext Database { get; set; }
 
-        private SingerDispatchDataContext Database { get; set; }
+        private CommandBinding SaveCommand { get; set; }
 
         public QuotesPanel()
         {
@@ -94,9 +94,10 @@ namespace SingerDispatch.Panels.Quotes
 
             try
             {
-                Database.SubmitChanges();
-                
                 button.Focus();
+
+                Database.SubmitChanges();                
+                
                 button.IsEnabled = false;
             }
             catch (Exception ex)

@@ -70,8 +70,6 @@ namespace SingerDispatch.Panels.Jobs
         protected override void SelectedJobChanged(Job newValue, Job oldValue)
         {
             base.SelectedJobChanged(newValue, oldValue);
-
-            dgJobs.SelectedItem = newValue;
         }
 
         private void CommitJobChanges_Click(object sender, RoutedEventArgs e)
@@ -82,10 +80,10 @@ namespace SingerDispatch.Panels.Jobs
 
             try 
             {
-                Database.SubmitChanges();
-
-                
                 button.Focus();
+
+                Database.SubmitChanges();
+                
                 button.IsEnabled = false;
             }
             catch (System.Exception ex)
@@ -180,8 +178,6 @@ namespace SingerDispatch.Panels.Jobs
 
             grid.ScrollIntoView(grid.SelectedItem);
             grid.UpdateLayout();
-
-            SelectedJob = (Job)grid.SelectedItem;
         }
 
         private void ViewQuote_Click(object sender, RoutedEventArgs e)

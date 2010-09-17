@@ -99,6 +99,7 @@ namespace SingerDispatch.Panels.Admin
             try
             {
                 ((ButtonBase)sender).Focus();
+
                 Database.SubmitChanges();                
             }
             catch (System.Exception ex)

@@ -76,9 +76,9 @@ namespace SingerDispatch.Panels.Admin
         {
             try
             {
-                Database.SubmitChanges();
-
                 ((ButtonBase)sender).Focus();
+
+                Database.SubmitChanges();
             }
             catch (System.Exception ex)
             {

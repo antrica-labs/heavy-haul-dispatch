@@ -80,6 +80,9 @@ namespace SingerDispatch
     partial void InsertLoad(Load instance);
     partial void UpdateLoad(Load instance);
     partial void DeleteLoad(Load instance);
+    partial void InsertLoadReferenceNumber(LoadReferenceNumber instance);
+    partial void UpdateLoadReferenceNumber(LoadReferenceNumber instance);
+    partial void DeleteLoadReferenceNumber(LoadReferenceNumber instance);
     partial void InsertLoadedCommodity(LoadedCommodity instance);
     partial void UpdateLoadedCommodity(LoadedCommodity instance);
     partial void DeleteLoadedCommodity(LoadedCommodity instance);
@@ -344,6 +347,14 @@ namespace SingerDispatch
 			get
 			{
 				return this.GetTable<Load>();
+			}
+		}
+		
+		public System.Data.Linq.Table<LoadReferenceNumber> LoadReferenceNumbers
+		{
+			get
+			{
+				return this.GetTable<LoadReferenceNumber>();
 			}
 		}
 		
@@ -6062,6 +6073,8 @@ namespace SingerDispatch
 		
 		private System.Nullable<double> _LoadedHeight;
 		
+		private EntitySet<LoadReferenceNumber> _ReferenceNumbers;
+		
 		private EntitySet<LoadedCommodity> _LoadedCommodities;
 		
 		private EntitySet<ExtraEquipment> _ExtraEquipment;
@@ -6178,6 +6191,7 @@ namespace SingerDispatch
 		
 		public Load()
 		{
+			this._ReferenceNumbers = new EntitySet<LoadReferenceNumber>(new Action<LoadReferenceNumber>(this.attach_ReferenceNumbers), new Action<LoadReferenceNumber>(this.detach_ReferenceNumbers));
 			this._LoadedCommodities = new EntitySet<LoadedCommodity>(new Action<LoadedCommodity>(this.attach_LoadedCommodities), new Action<LoadedCommodity>(this.detach_LoadedCommodities));
 			this._ExtraEquipment = new EntitySet<ExtraEquipment>(new Action<ExtraEquipment>(this.attach_ExtraEquipment), new Action<ExtraEquipment>(this.detach_ExtraEquipment));
 			this._Permits = new EntitySet<Permit>(new Action<Permit>(this.attach_Permits), new Action<Permit>(this.detach_Permits));
@@ -7076,6 +7090,19 @@ namespace SingerDispatch
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Load_LoadReferenceNumber", Storage="_ReferenceNumbers", ThisKey="ID", OtherKey="LoadID")]
+		public EntitySet<LoadReferenceNumber> ReferenceNumbers
+		{
+			get
+			{
+				return this._ReferenceNumbers;
+			}
+			set
+			{
+				this._ReferenceNumbers.Assign(value);
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Load_LoadedCommodity", Storage="_LoadedCommodities", ThisKey="ID", OtherKey="LoadID")]
 		public EntitySet<LoadedCommodity> LoadedCommodities
 		{
@@ -7365,6 +7392,18 @@ namespace SingerDispatch
 			}
 		}
 		
+		private void attach_ReferenceNumbers(LoadReferenceNumber entity)
+		{
+			this.SendPropertyChanging();
+			entity.Load = this;
+		}
+		
+		private void detach_ReferenceNumbers(LoadReferenceNumber entity)
+		{
+			this.SendPropertyChanging();
+			entity.Load = null;
+		}
+		
 		private void attach_LoadedCommodities(LoadedCommodity entity)
 		{
 			this.SendPropertyChanging();
@@ -7423,6 +7462,181 @@ namespace SingerDispatch
 		{
 			this.SendPropertyChanging();
 			entity.Load = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="")]
+	public partial class LoadReferenceNumber : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private long _ID;
+		
+		private System.Nullable<long> _LoadID;
+		
+		private string _Field;
+		
+		private string _Value;
+		
+		private EntityRef<Load> _Load;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDChanging(long value);
+    partial void OnIDChanged();
+    partial void OnLoadIDChanging(System.Nullable<long> value);
+    partial void OnLoadIDChanged();
+    partial void OnFieldChanging(string value);
+    partial void OnFieldChanged();
+    partial void OnValueChanging(string value);
+    partial void OnValueChanged();
+    #endregion
+		
+		public LoadReferenceNumber()
+		{
+			this._Load = default(EntityRef<Load>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, IsPrimaryKey=true, IsDbGenerated=true)]
+		public long ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this.OnIDChanging(value);
+					this.SendPropertyChanging();
+					this._ID = value;
+					this.SendPropertyChanged("ID");
+					this.OnIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LoadID")]
+		public System.Nullable<long> LoadID
+		{
+			get
+			{
+				return this._LoadID;
+			}
+			set
+			{
+				if ((this._LoadID != value))
+				{
+					if (this._Load.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnLoadIDChanging(value);
+					this.SendPropertyChanging();
+					this._LoadID = value;
+					this.SendPropertyChanged("LoadID");
+					this.OnLoadIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Field")]
+		public string Field
+		{
+			get
+			{
+				return this._Field;
+			}
+			set
+			{
+				if ((this._Field != value))
+				{
+					this.OnFieldChanging(value);
+					this.SendPropertyChanging();
+					this._Field = value;
+					this.SendPropertyChanged("Field");
+					this.OnFieldChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Value")]
+		public string Value
+		{
+			get
+			{
+				return this._Value;
+			}
+			set
+			{
+				if ((this._Value != value))
+				{
+					this.OnValueChanging(value);
+					this.SendPropertyChanging();
+					this._Value = value;
+					this.SendPropertyChanged("Value");
+					this.OnValueChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Load_LoadReferenceNumber", Storage="_Load", ThisKey="LoadID", OtherKey="ID", IsForeignKey=true)]
+		public Load Load
+		{
+			get
+			{
+				return this._Load.Entity;
+			}
+			set
+			{
+				Load previousValue = this._Load.Entity;
+				if (((previousValue != value) 
+							|| (this._Load.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Load.Entity = null;
+						previousValue.ReferenceNumbers.Remove(this);
+					}
+					this._Load.Entity = value;
+					if ((value != null))
+					{
+						value.ReferenceNumbers.Add(this);
+						this._LoadID = value.ID;
+					}
+					else
+					{
+						this._LoadID = default(Nullable<long>);
+					}
+					this.SendPropertyChanged("Load");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
 		}
 	}
 	

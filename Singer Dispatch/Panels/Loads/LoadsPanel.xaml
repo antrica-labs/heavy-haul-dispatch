@@ -49,14 +49,14 @@
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
 
-                    <ComboBox Name="cmbJobList" Grid.Column="0" Grid.ColumnSpan="3" IsEditable="true" Margin="0" SelectedItem="{Binding SelectedJob}" TextSearch.TextPath="Number" ItemTemplate="{StaticResource SimpleJobTemplate}" SelectionChanged="cmbJobList_SelectionChanged" />
+                    <ComboBox Name="cmbJobList" Grid.Column="0" Grid.ColumnSpan="3" IsEditable="true" Margin="0" SelectedItem="{Binding ElementName=ThePanel, Path=SelectedJob}" TextSearch.TextPath="Number" ItemTemplate="{StaticResource SimpleJobTemplate}" SelectionChanged="cmbJobList_SelectionChanged" />
                     <Button Grid.Column="4" Click="ViewAllDispatches_Click" IsEnabled="{Binding ElementName=ThePanel, Path=SelectedLoad, Converter={StaticResource IsEnabledNullConverter}}">View all dispatches</Button>
                     <Button Name="CommitChangesButton" Grid.Column="6" Click="CommitChanges_Click" LostFocus="CommitChangesButton_LostFocus" IsEnabled="{Binding ElementName=ThePanel, Path=SelectedLoad, Converter={StaticResource IsEnabledNullConverter}}">Save changes</Button>
                 </Grid>
             </StackPanel>
         </Border>
 
-        <DataGrid Name="dgLoads" Grid.Column="0" Grid.Row="1" Style="{StaticResource ListDisplay}" SelectedItem="{Binding SelectedLoad}" SelectionChanged="dgLoads_SelectionChanged">
+        <DataGrid Name="dgLoads" Grid.Column="0" Grid.Row="1" Style="{StaticResource ListDisplay}" SelectedItem="{Binding ElementName=ThePanel, Path=SelectedLoad}" SelectionChanged="dgLoads_SelectionChanged">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Number" Binding="{Binding Number}" Width="65"/>
                 <DataGridTextColumn Header="Status" Binding="{Binding Status.Name}" Width="70" />

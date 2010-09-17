@@ -103,9 +103,9 @@ namespace SingerDispatch.Panels.Companies
         {
             try
             {
-                Database.SubmitChanges();
-
                 ((ButtonBase)sender).Focus();
+
+                Database.SubmitChanges();
             }
             catch (System.Exception ex)
             {

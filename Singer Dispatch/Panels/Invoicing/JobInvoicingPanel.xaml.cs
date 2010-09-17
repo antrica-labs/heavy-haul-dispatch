@@ -73,11 +73,12 @@ namespace SingerDispatch.Panels.Invoicing
             if (SelectedInvoice == null) return;
 
             try
-            {                
+            {
+                ((ButtonBase)sender).Focus();                
+
                 Database.SubmitChanges();
 
                 lblSavedStatus.Content = "Saved";
-                ((ButtonBase)sender).Focus();                
             }
             catch (Exception ex)
             {

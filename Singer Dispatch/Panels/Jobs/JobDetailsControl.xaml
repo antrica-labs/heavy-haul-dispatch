@@ -5,7 +5,7 @@
                        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                        xmlns:Panels="clr-namespace:SingerDispatch.Panels"
                        xmlns:Controls="clr-namespace:SingerDispatch.Controls"
-                       Loaded="Control_Loaded" LayoutUpdated="Control_LayoutUpdated"
+                       Loaded="Control_Loaded"
                        mc:Ignorable="d" x:Name="ThePanel" d:DesignWidth="750">
     <UserControl.Resources>
         <ResourceDictionary>
@@ -51,8 +51,8 @@
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
 
-            <GroupBox Grid.Column="0" Header="Additional Notes">
-                <TextBox Style="{StaticResource MultiLine}" Height="Auto" />
+            <GroupBox Grid.Column="0" Header="Additional Notes" DataContext="{Binding ElementName=ThePanel, Path=SelectedJob}">
+                <TextBox Style="{StaticResource MultiLine}" Height="Auto" Text="{Binding Notes}" />
             </GroupBox>
             
             <GroupBox Grid.Column="2" Header="Reference numbers">

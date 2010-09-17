@@ -12,6 +12,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Collections.ObjectModel;
+using SingerDispatch.Controls;
 
 namespace SingerDispatch.Panels.Loads
 {
@@ -32,9 +33,24 @@ namespace SingerDispatch.Panels.Loads
         }
 
         private void Control_Loaded(object sender, RoutedEventArgs e)
-        {
+        {            
             if (InDesignMode()) return;
+            
+            UpdateComboBoxes();
+            UpdateExtras();
+            UpdateReferenceNumbers();
+        }
 
+        protected override void SelectedLoadChanged(Load newValue, Load oldValue)
+        {
+            base.SelectedLoadChanged(newValue, oldValue);
+
+            UpdateComboBoxes();
+            UpdateExtras();            
+        }
+
+        private void UpdateComboBoxes()
+        {
             cmbSeasons.ItemsSource = from s in Database.Seasons select s;
             cmbRates.ItemsSource = GetCompanyRates(SelectedCompany);
             cmbUnits.ItemsSource = (SelectedLoad == null) ? null : from u in Database.Equipment where u.EquipmentClass.Name == "Tractor" || u.EquipmentClass.Name == "Trailor" orderby u.UnitNumber select u;
@@ -44,15 +60,19 @@ namespace SingerDispatch.Panels.Loads
             {
                 cmbTrailerCombinations.ItemsSource = (from tc in Database.TrailerCombinations where tc.Rate == cmbRates.SelectedItem select tc).ToList();
             }
-
-            UpdateExtras();
         }
 
-        protected override void SelectedLoadChanged(Load newValue, Load oldValue)
+        private void UpdateReferenceNumbers()
         {
-            base.SelectedLoadChanged(newValue, oldValue);
-
-            UpdateExtras();
+            if (SelectedLoad != null)
+            {
+                dgReferenceNumbers.MaxHeight = dgReferenceNumbers.ActualHeight;
+                dgReferenceNumbers.ItemsSource = new ObservableCollection<LoadReferenceNumber>(SelectedLoad.ReferenceNumbers);
+            }
+            else
+            {
+                dgReferenceNumbers.ItemsSource = null;
+            }
         }
 
         private void UpdateExtras()
@@ -79,6 +99,7 @@ namespace SingerDispatch.Panels.Loads
             dgExtraEquipment.SelectedItem = equipment;
 
             lbExtraEquipmentTypes.Focus();
+            lbExtraEquipmentTypes.SelectedIndex = 0;
         }
 
         private void RemoveEquipment_Click(object sender, RoutedEventArgs e)
@@ -181,12 +202,24 @@ namespace SingerDispatch.Panels.Loads
 
         private void AddReferenceNumber_Click(object sender, RoutedEventArgs e)
         {
+            if (SelectedLoad == null) return;
 
+            var reference = new LoadReferenceNumber();
+
+            SelectedLoad.ReferenceNumbers.Add(reference);
+            ((ObservableCollection<LoadReferenceNumber>)dgReferenceNumbers.ItemsSource).Add(reference);
+
+            DataGridHelper.EditFirstColumn(dgReferenceNumbers, reference);
         }
 
         private void RemoveReferenceNumber_Click(object sender, RoutedEventArgs e)
         {
+            var selected = (LoadReferenceNumber)dgReferenceNumbers.SelectedItem;
 
+            if (SelectedLoad == null || selected == null) return;
+
+            SelectedLoad.ReferenceNumbers.Remove(selected);
+            ((ObservableCollection<LoadReferenceNumber>)dgReferenceNumbers.ItemsSource).Remove(selected);
         }
     }
 }

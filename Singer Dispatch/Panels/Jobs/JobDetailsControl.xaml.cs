@@ -37,7 +37,15 @@ namespace SingerDispatch.Panels.Jobs
 
         private void Control_Loaded(object sender, RoutedEventArgs e)
         {
-            
+            UpdateComboBoxes();
+        }
+
+        protected override void SelectedJobChanged(Job newValue, Job oldValue)
+        {
+            base.SelectedJobChanged(newValue, oldValue);
+
+            UpdateComboBoxes();
+            UpdateReferenceNumbers();
         }
 
         private void UpdateComboBoxes()
@@ -68,19 +76,6 @@ namespace SingerDispatch.Panels.Jobs
             }
         }
 
-        protected override void SelectedCompanyChanged(Company newValue, Company oldValue)
-        {
-            base.SelectedCompanyChanged(newValue, oldValue);
-        }
-
-        protected override void SelectedJobChanged(Job newValue, Job oldValue)
-        {
-            base.SelectedJobChanged(newValue, oldValue);
-
-            UpdateComboBoxes();
-            UpdateReferenceNumbers();
-        }
-
         private void cmbCareOfCompanies_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (SelectedJob == null) return;
@@ -108,12 +103,6 @@ namespace SingerDispatch.Panels.Jobs
 
             SelectedJob.ReferenceNumbers.Remove(selected);
             ((ObservableCollection<JobReferenceNumber>)dgReferenceNumbers.ItemsSource).Remove(selected);
-        }
-
-        private void Control_LayoutUpdated(object sender, EventArgs e)
-        {
-            dgReferenceNumbers.UpdateLayout();
-            dgReferenceNumbers.MaxHeight = dgReferenceNumbers.ActualHeight;
         }
     }
 }

@@ -36,26 +36,6 @@ namespace SingerDispatch.Panels.Loads
             }
         }
 
-        public static void SelectedJobPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var control = (LoadsPanel)d;
-
-            control.SelectedJobChanged((Job)e.NewValue, (Job)e.OldValue);
-        }
-
-        protected void SelectedJobChanged(Job newValue, Job oldValue)
-        {
-            cmbJobList.SelectedItem = newValue;
-            UpdateLoadList();
-        }
-
-        protected override void SelectedCompanyChanged(Company newValue, Company oldValue)
-        {
-            base.SelectedCompanyChanged(newValue, oldValue);
-
-            cmbJobList.ItemsSource = from j in Database.Jobs where j.Company == SelectedCompany orderby j.Number descending select j;
-        }
-
         public LoadsPanel()
         {
             InitializeComponent();
@@ -78,10 +58,24 @@ namespace SingerDispatch.Panels.Loads
             UpdateLoadList();
         }
 
-        private void CommitQuoteChanges_Executed(object sender, ExecutedRoutedEventArgs e)
+        public static void SelectedJobPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            CommitChangesButton.RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent, CommitChangesButton));
+            var control = (LoadsPanel)d;
+
+            control.SelectedJobChanged((Job)e.NewValue, (Job)e.OldValue);
         }
+
+        protected void SelectedJobChanged(Job newValue, Job oldValue)
+        {            
+            UpdateLoadList();
+        }
+
+        protected override void SelectedCompanyChanged(Company newValue, Company oldValue)
+        {
+            base.SelectedCompanyChanged(newValue, oldValue);
+
+            cmbJobList.ItemsSource = from j in Database.Jobs where j.Company == SelectedCompany orderby j.Number descending select j;
+        }        
 
         public void UpdateLoadList()
         {
@@ -181,6 +175,11 @@ namespace SingerDispatch.Panels.Loads
             viewer.DisplayPrintout();
         }
 
+        private void CommitQuoteChanges_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            CommitChangesButton.RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent, CommitChangesButton));
+        }
+
         private void CommitChanges_Click(object sender, RoutedEventArgs e)
         {
             if (SelectedLoad == null) return;
@@ -189,9 +188,10 @@ namespace SingerDispatch.Panels.Loads
 
             try
             {
+                button.Focus();
+
                 Database.SubmitChanges();
 
-                button.Focus();
                 button.IsEnabled = false;
             }
             catch (System.Exception ex)
@@ -209,12 +209,12 @@ namespace SingerDispatch.Panels.Loads
 
         private void cmbJobList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            SelectedJob = (Job)cmbJobList.SelectedItem;
+            
         }
 
         private void dgLoads_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            SelectedLoad = (Load)dgLoads.SelectedItem;
+            
         }
     }
 }

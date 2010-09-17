@@ -296,7 +296,17 @@
       <Association Name="Equipment_Load" Member="Equipment" ThisKey="EquipmentID" OtherKey="ID" Type="Equipment" IsForeignKey="true" />
       <Association Name="Rate_Load" Member="Rate" ThisKey="RateID" OtherKey="ID" Type="Rate" IsForeignKey="true" />
       <Association Name="TrailerCombination_Load" Member="TrailerCombination" ThisKey="TrailerCombinationID" OtherKey="ID" Type="TrailerCombination" IsForeignKey="true" />
-      <Association Name="Load_ExtraEquipment" Member="ExtraEquipment" ThisKey="ID" OtherKey="LoadID" Type="ExtraEquipment" />      
+      <Association Name="Load_ExtraEquipment" Member="ExtraEquipment" ThisKey="ID" OtherKey="LoadID" Type="ExtraEquipment" />
+      <Association Name="Load_LoadReferenceNumber" Member="ReferenceNumbers" ThisKey="ID" OtherKey="LoadID" Type="LoadReferenceNumber" />
+    </Type>
+  </Table>
+  <Table Name="" Member="LoadReferenceNumbers">
+    <Type Name="LoadReferenceNumber">
+      <Column Name="ID" Type="System.Int64" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="LoadID" Type="System.Int64" CanBeNull="true" />
+      <Column Name="Field" Type="System.String" CanBeNull="true" />
+      <Column Name="Value" Type="System.String" CanBeNull="true" />
+      <Association Name="Load_LoadReferenceNumber" Member="Load" ThisKey="LoadID" OtherKey="ID" Type="Load" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="" Member="LoadedCommodities">

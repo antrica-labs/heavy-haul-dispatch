@@ -42,7 +42,7 @@
             </Grid>
         </Border>
 
-        <DataGrid Name="dgJobs" Grid.Column="0" Grid.Row="1" Style="{StaticResource ListDisplay}" SelectedItem="{Binding SelectedJob}" SelectionChanged="dgJobs_SelectionChanged">
+        <DataGrid Name="dgJobs" Grid.Column="0" Grid.Row="1" Style="{StaticResource ListDisplay}" SelectedItem="{Binding ElementName=ThePanel, Path=SelectedJob}" SelectionChanged="dgJobs_SelectionChanged">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Number" Binding="{Binding Number}" Width="65"/>
                 <DataGridTextColumn Header="Status" Binding="{Binding Status.Name}" Width="70" />
