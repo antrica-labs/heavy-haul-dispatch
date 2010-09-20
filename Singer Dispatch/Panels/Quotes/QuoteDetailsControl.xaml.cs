@@ -126,6 +126,8 @@ namespace SingerDispatch.Panels.Quotes
             _previousStyle = txtPrice.Style;
             txtPrice.Style = (Style)TryFindResource("ReadOnly");
 
+            SelectedQuote.PrintoutCostHeading = "Price";
+
             CalculateItemizedCost();
         }
 
@@ -135,6 +137,8 @@ namespace SingerDispatch.Panels.Quotes
 
             txtPrice.IsReadOnly = false;
             txtPrice.Style = _previousStyle;
+
+            SelectedQuote.PrintoutCostHeading = "";
         }
 
         private void CalculateItemizedCost()

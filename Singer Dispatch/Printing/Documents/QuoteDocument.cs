@@ -40,7 +40,13 @@ namespace SingerDispatch.Printing.Documents
             if (quote.QuoteStorageItems.Count > 0)
             {
                 content.Append(PageBreak);
-                content.Append(new StorageContractDocument().GenerateBodyHTML(quote));
+
+                var doc = new StorageContractDocument();
+
+                doc.SpecializedDocument = SpecializedDocument;
+                doc.PrintMetric = PrintMetric;
+
+                content.Append(doc.GenerateBodyHTML(quote));
             }
 
             content.Append("</body>");
