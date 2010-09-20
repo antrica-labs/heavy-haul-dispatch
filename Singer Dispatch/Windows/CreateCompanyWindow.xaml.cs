@@ -26,11 +26,11 @@ namespace SingerDispatch.Windows
             
             Company = new Company();
             companyDetails.DataContext = Company;
-
+            
             Address = new Address();
             addressDetails.DataContext = Address;
 
-            Company.CustomerType = (from ct in Database.CustomerType where ct.IsEnterprise == false select ct).First();
+            Company.CustomerType = (from ct in Database.CustomerType where ct.IsEnterprise == false select ct).First();            
         }
 
         public Company CreateCompany()
@@ -42,8 +42,12 @@ namespace SingerDispatch.Windows
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            var addressTypes = from at in Database.AddressTypes select at;
+
             cmbProvinceOrState.ItemsSource = from ps in Database.ProvincesAndStates orderby ps.CountryID, ps.Name select ps;
-            cmbAddressType.ItemsSource = from at in Database.AddressTypes select at;
+            cmbAddressType.ItemsSource = addressTypes;
+
+            Address.AddressType = addressTypes.First();
         }
 
         private void CreateCompanyHandler()

@@ -429,11 +429,6 @@ namespace SingerDispatch
         {
             var window = new CreateCompanyWindow(Database, Companies) { Owner = this };
             Company newCompany = window.CreateCompany();
-
-            if (newCompany != null)
-            {
-                cmbCompanies.SelectedItem = newCompany;
-            }
         }
 
         private void EditCompanies()

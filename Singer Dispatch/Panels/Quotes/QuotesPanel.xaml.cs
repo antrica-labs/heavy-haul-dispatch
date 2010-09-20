@@ -118,6 +118,11 @@ namespace SingerDispatch.Panels.Quotes
             var list = (ObservableCollection<Quote>)dgQuoteList.ItemsSource;
             var quote = new Quote { CreationDate = DateTime.Today, ExpirationDate = DateTime.Today.AddDays(30), Company = SelectedCompany, Employee = SingerConfigs.OperatingEmployee };
 
+            var addresses = from a in SelectedCompany.Addresses select a;
+
+            if (addresses.Count() > 0)
+                quote.BillingAddress = addresses.First();
+
             SelectedCompany.Quotes.Add(quote);
             list.Insert(0, quote);
             dgQuoteList.SelectedItem = quote;
