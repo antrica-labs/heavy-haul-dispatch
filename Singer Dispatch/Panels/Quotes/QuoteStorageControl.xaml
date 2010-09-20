@@ -5,7 +5,7 @@
                          xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                          xmlns:Panels="clr-namespace:SingerDispatch.Panels"
                          xmlns:Controls="clr-namespace:SingerDispatch.Controls"
-                         Loaded="Control_Loaded" mc:Ignorable="d" d:DesignWidth="780">
+                         x:Name="ThePanel" Loaded="Control_Loaded" mc:Ignorable="d" d:DesignWidth="780">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -28,6 +28,75 @@
                 <Button Style="{StaticResource HorizontalEnd}" Grid.Column="3" Click="RemoveStorageItem_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgStorageList, Path=SelectedItem}">Remove storage</Button>
             </Grid>
             
+            <GroupBox Header="Item Details" DataContext="{Binding ElementName=dgStorageList, Path=SelectedItem}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgStorageList, Path=SelectedItem}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    
+                    <Label Grid.Column="0" Grid.Row="0">Commodity:</Label>
+                    <ComboBox Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="5" Name="cmbCommodities" SelectedItem="{Binding Commodity}" ItemTemplate="{StaticResource NameAndUnitTemplate}" TextSearch.TextPath="Name" Controls:ComboUtil.AllowNull="True" />
+                    
+                    <Label Grid.Column="6" Grid.Row="0">Price:</Label>
+                    <TextBox Grid.Column="7" Grid.Row="0" Text="{Binding Price, StringFormat=C, Converter={StaticResource NullableValueConverter}}" Controls:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" />
+                    
+                    <Label Grid.Column="0" Grid.Row="1">Length:</Label>
+                    <TextBox Grid.Column="1" Grid.Row="1" Controls:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text">
+                        <TextBox.Text>
+                            <MultiBinding Converter="{StaticResource LengthMeasurementConverter}">
+                                <Binding Path="Commodity.Length" />
+                                <Binding ElementName="ThePanel" Path="UseImperialMeasurements" />
+                            </MultiBinding>
+                        </TextBox.Text>
+                    </TextBox>
+
+                    <Label Grid.Column="2" Grid.Row="1">Width:</Label>
+                    <TextBox Grid.Column="3" Grid.Row="1" Controls:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text">
+                        <TextBox.Text>
+                            <MultiBinding Converter="{StaticResource LengthMeasurementConverter}">
+                                <Binding Path="Commodity.Width" />
+                                <Binding ElementName="ThePanel" Path="UseImperialMeasurements" />
+                            </MultiBinding>
+                        </TextBox.Text>
+                    </TextBox>
+
+                    <Label Grid.Column="4" Grid.Row="1">Height:</Label>
+                    <TextBox Grid.Column="5" Grid.Row="1" Controls:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text">
+                        <TextBox.Text>
+                            <MultiBinding Converter="{StaticResource LengthMeasurementConverter}">
+                                <Binding Path="Commodity.Height" />
+                                <Binding ElementName="ThePanel" Path="UseImperialMeasurements" />
+                            </MultiBinding>
+                        </TextBox.Text>
+                    </TextBox>
+
+                    <Label Grid.Column="6" Grid.Row="1">Weight:</Label>
+                    <TextBox Grid.Column="7" Grid.Row="1" Controls:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text">                        
+                        <TextBox.Text>
+                            <MultiBinding Converter="{StaticResource WeightMeasurementConverter}">
+                                <Binding Path="Commodity.Weight" />
+                                <Binding ElementName="ThePanel" Path="UseImperialMeasurements" />
+                            </MultiBinding>
+                        </TextBox.Text>
+                    </TextBox>
+
+                    <Label Grid.Column="0" Grid.Row="2">Notes:</Label>
+                    <TextBox Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="7" Style="{StaticResource MultiLine}" />
+                </Grid>
+            </GroupBox>
+            <!--
             <GroupBox Header="Storage Item Details" DataContext="{Binding ElementName=dgStorageList, Path=SelectedItem}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgStorageList, Path=SelectedItem}">
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -58,15 +127,45 @@
                     <TextBox Grid.Row="2" Grid.Column="3" Name="txtCostPerItem" Text="{Binding CostPerItem, StringFormat=c, Converter={StaticResource NullableValueConverter}}" Controls:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" />
                 </Grid>
             </GroupBox>
+            -->
         </StackPanel>
 
         <DataGrid Name="dgStorageList" Style="{StaticResource ListDisplay}">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Commodity" Binding="{Binding Commodity.Name}" />
-                <DataGridTextColumn Header="Details" Binding="{Binding Details}" />
-                <DataGridTextColumn Header="Billing type" Binding="{Binding BillingType.Name}" IsReadOnly="True" />
-                <DataGridTextColumn Header="Quantity" Binding="{Binding Quantity}" />
-                <DataGridTextColumn Header="Cost" Binding="{Binding CostPerItem, StringFormat=c}" />
+                <DataGridTextColumn Header="Commodity" Binding="{Binding Commodity.NameAndUnit}" Width="3*"/>
+                <DataGridTextColumn Header="Length">
+                    <DataGridTextColumn.Binding>
+                        <MultiBinding Converter="{StaticResource LengthMeasurementConverter}">
+                            <Binding Path="Commodity.Length" />
+                            <Binding Path="DataContext.UseImperialMeasurements" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type UserControl}}" />
+                        </MultiBinding>
+                    </DataGridTextColumn.Binding>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="Width">
+                    <DataGridTextColumn.Binding>
+                        <MultiBinding Converter="{StaticResource LengthMeasurementConverter}">
+                            <Binding Path="Commodity.Width" />
+                            <Binding Path="DataContext.UseImperialMeasurements" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type UserControl}}" />
+                        </MultiBinding>
+                    </DataGridTextColumn.Binding>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="Height">
+                    <DataGridTextColumn.Binding>
+                        <MultiBinding Converter="{StaticResource LengthMeasurementConverter}">
+                            <Binding Path="Commodity.Height" />
+                            <Binding Path="DataContext.UseImperialMeasurements" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type UserControl}}" />
+                        </MultiBinding>
+                    </DataGridTextColumn.Binding>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="Weight">
+                    <DataGridTextColumn.Binding>
+                        <MultiBinding Converter="{StaticResource WeightMeasurementConverter}">
+                            <Binding Path="Commodity.Weight" />
+                            <Binding Path="DataContext.UseImperialMeasurements" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type UserControl}}" />
+                        </MultiBinding>
+                    </DataGridTextColumn.Binding>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="Price" Binding="{Binding Price, StringFormat=c}" />
             </DataGrid.Columns>
         </DataGrid>
     </DockPanel>

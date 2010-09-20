@@ -12,10 +12,6 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/SingerDispatchDictionary.xaml" />
             </ResourceDictionary.MergedDictionaries>
-
-            <DataTemplate x:Key="NameAndUnitTemplate">
-                <TextBlock Text="{Binding NameAndUnit}" />
-            </DataTemplate>
         </ResourceDictionary>
     </UserControl.Resources>
     <DockPanel>

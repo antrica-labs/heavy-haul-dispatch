@@ -1354,8 +1354,6 @@ namespace SingerDispatch
 		
 		private EntitySet<QuoteSupplement> _QuoteSupplements;
 		
-		private EntitySet<QuoteStorageItem> _QuoteStorageItem;
-		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -1369,7 +1367,6 @@ namespace SingerDispatch
 		public BillingType()
 		{
 			this._QuoteSupplements = new EntitySet<QuoteSupplement>(new Action<QuoteSupplement>(this.attach_QuoteSupplements), new Action<QuoteSupplement>(this.detach_QuoteSupplements));
-			this._QuoteStorageItem = new EntitySet<QuoteStorageItem>(new Action<QuoteStorageItem>(this.attach_QuoteStorageItem), new Action<QuoteStorageItem>(this.detach_QuoteStorageItem));
 			OnCreated();
 		}
 		
@@ -1426,19 +1423,6 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="BillingType_QuoteStorageItem", Storage="_QuoteStorageItem", ThisKey="ID", OtherKey="BillingTypeID")]
-		public EntitySet<QuoteStorageItem> QuoteStorageItem
-		{
-			get
-			{
-				return this._QuoteStorageItem;
-			}
-			set
-			{
-				this._QuoteStorageItem.Assign(value);
-			}
-		}
-		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -1466,18 +1450,6 @@ namespace SingerDispatch
 		}
 		
 		private void detach_QuoteSupplements(QuoteSupplement entity)
-		{
-			this.SendPropertyChanging();
-			entity.BillingType = null;
-		}
-		
-		private void attach_QuoteStorageItem(QuoteStorageItem entity)
-		{
-			this.SendPropertyChanging();
-			entity.BillingType = this;
-		}
-		
-		private void detach_QuoteStorageItem(QuoteStorageItem entity)
 		{
 			this.SendPropertyChanging();
 			entity.BillingType = null;
@@ -10050,6 +10022,8 @@ namespace SingerDispatch
 		
 		private string _Notes;
 		
+		private EntitySet<QuoteStorageItem> _StorageQuotes;
+		
 		private EntityRef<Quote> _Quote;
 		
 		private EntityRef<Commodity> _OriginalCommodity;
@@ -10102,6 +10076,7 @@ namespace SingerDispatch
 		
 		public QuoteCommodity()
 		{
+			this._StorageQuotes = new EntitySet<QuoteStorageItem>(new Action<QuoteStorageItem>(this.attach_StorageQuotes), new Action<QuoteStorageItem>(this.detach_StorageQuotes));
 			this._Quote = default(EntityRef<Quote>);
 			this._OriginalCommodity = default(EntityRef<Commodity>);
 			OnCreated();
@@ -10515,6 +10490,19 @@ namespace SingerDispatch
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="QuoteCommodity_QuoteStorageItem", Storage="_StorageQuotes", ThisKey="ID", OtherKey="QuoteCommodityID")]
+		public EntitySet<QuoteStorageItem> StorageQuotes
+		{
+			get
+			{
+				return this._StorageQuotes;
+			}
+			set
+			{
+				this._StorageQuotes.Assign(value);
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Quote_QuoteCommodity", Storage="_Quote", ThisKey="QuoteID", OtherKey="ID", IsForeignKey=true)]
 		public Quote Quote
 		{
@@ -10601,6 +10589,18 @@ namespace SingerDispatch
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
+		}
+		
+		private void attach_StorageQuotes(QuoteStorageItem entity)
+		{
+			this.SendPropertyChanging();
+			entity.Commodity = this;
+		}
+		
+		private void detach_StorageQuotes(QuoteStorageItem entity)
+		{
+			this.SendPropertyChanging();
+			entity.Commodity = null;
 		}
 	}
 	
@@ -11900,21 +11900,15 @@ namespace SingerDispatch
 		
 		private System.Nullable<long> _QuoteID;
 		
-		private System.Nullable<long> _BillingTypeID;
+		private System.Nullable<long> _QuoteCommodityID;
 		
-		private System.Nullable<long> _CommodityID;
+		private System.Nullable<decimal> _Price;
 		
-		private string _Details;
-		
-		private System.Nullable<int> _Quantity;
-		
-		private System.Nullable<decimal> _CostPerItem;
-		
-		private EntityRef<BillingType> _BillingType;
+		private string _Notes;
 		
 		private EntityRef<Quote> _Quote;
 		
-		private EntityRef<Commodity> _Commodity;
+		private EntityRef<QuoteCommodity> _Commodity;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -11924,23 +11918,18 @@ namespace SingerDispatch
     partial void OnIDChanged();
     partial void OnQuoteIDChanging(System.Nullable<long> value);
     partial void OnQuoteIDChanged();
-    partial void OnBillingTypeIDChanging(System.Nullable<long> value);
-    partial void OnBillingTypeIDChanged();
-    partial void OnCommodityIDChanging(System.Nullable<long> value);
-    partial void OnCommodityIDChanged();
-    partial void OnDetailsChanging(string value);
-    partial void OnDetailsChanged();
-    partial void OnQuantityChanging(System.Nullable<int> value);
-    partial void OnQuantityChanged();
-    partial void OnCostPerItemChanging(System.Nullable<decimal> value);
-    partial void OnCostPerItemChanged();
+    partial void OnQuoteCommodityIDChanging(System.Nullable<long> value);
+    partial void OnQuoteCommodityIDChanged();
+    partial void OnPriceChanging(System.Nullable<decimal> value);
+    partial void OnPriceChanged();
+    partial void OnNotesChanging(string value);
+    partial void OnNotesChanged();
     #endregion
 		
 		public QuoteStorageItem()
 		{
-			this._BillingType = default(EntityRef<BillingType>);
 			this._Quote = default(EntityRef<Quote>);
-			this._Commodity = default(EntityRef<Commodity>);
+			this._Commodity = default(EntityRef<QuoteCommodity>);
 			OnCreated();
 		}
 		
@@ -11988,144 +11977,66 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BillingTypeID")]
-		public System.Nullable<long> BillingTypeID
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_QuoteCommodityID")]
+		public System.Nullable<long> QuoteCommodityID
 		{
 			get
 			{
-				return this._BillingTypeID;
+				return this._QuoteCommodityID;
 			}
 			set
 			{
-				if ((this._BillingTypeID != value))
-				{
-					if (this._BillingType.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnBillingTypeIDChanging(value);
-					this.SendPropertyChanging();
-					this._BillingTypeID = value;
-					this.SendPropertyChanged("BillingTypeID");
-					this.OnBillingTypeIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CommodityID")]
-		public System.Nullable<long> CommodityID
-		{
-			get
-			{
-				return this._CommodityID;
-			}
-			set
-			{
-				if ((this._CommodityID != value))
+				if ((this._QuoteCommodityID != value))
 				{
 					if (this._Commodity.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
-					this.OnCommodityIDChanging(value);
+					this.OnQuoteCommodityIDChanging(value);
 					this.SendPropertyChanging();
-					this._CommodityID = value;
-					this.SendPropertyChanged("CommodityID");
-					this.OnCommodityIDChanged();
+					this._QuoteCommodityID = value;
+					this.SendPropertyChanged("QuoteCommodityID");
+					this.OnQuoteCommodityIDChanged();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Details")]
-		public string Details
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Price")]
+		public System.Nullable<decimal> Price
 		{
 			get
 			{
-				return this._Details;
+				return this._Price;
 			}
 			set
 			{
-				if ((this._Details != value))
+				if ((this._Price != value))
 				{
-					this.OnDetailsChanging(value);
+					this.OnPriceChanging(value);
 					this.SendPropertyChanging();
-					this._Details = value;
-					this.SendPropertyChanged("Details");
-					this.OnDetailsChanged();
+					this._Price = value;
+					this.SendPropertyChanged("Price");
+					this.OnPriceChanged();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Quantity")]
-		public System.Nullable<int> Quantity
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Notes")]
+		public string Notes
 		{
 			get
 			{
-				return this._Quantity;
+				return this._Notes;
 			}
 			set
 			{
-				if ((this._Quantity != value))
+				if ((this._Notes != value))
 				{
-					this.OnQuantityChanging(value);
+					this.OnNotesChanging(value);
 					this.SendPropertyChanging();
-					this._Quantity = value;
-					this.SendPropertyChanged("Quantity");
-					this.OnQuantityChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CostPerItem")]
-		public System.Nullable<decimal> CostPerItem
-		{
-			get
-			{
-				return this._CostPerItem;
-			}
-			set
-			{
-				if ((this._CostPerItem != value))
-				{
-					this.OnCostPerItemChanging(value);
-					this.SendPropertyChanging();
-					this._CostPerItem = value;
-					this.SendPropertyChanged("CostPerItem");
-					this.OnCostPerItemChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="BillingType_QuoteStorageItem", Storage="_BillingType", ThisKey="BillingTypeID", OtherKey="ID", IsForeignKey=true)]
-		public BillingType BillingType
-		{
-			get
-			{
-				return this._BillingType.Entity;
-			}
-			set
-			{
-				BillingType previousValue = this._BillingType.Entity;
-				if (((previousValue != value) 
-							|| (this._BillingType.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._BillingType.Entity = null;
-						previousValue.QuoteStorageItem.Remove(this);
-					}
-					this._BillingType.Entity = value;
-					if ((value != null))
-					{
-						value.QuoteStorageItem.Add(this);
-						this._BillingTypeID = value.ID;
-					}
-					else
-					{
-						this._BillingTypeID = default(Nullable<long>);
-					}
-					this.SendPropertyChanged("BillingType");
+					this._Notes = value;
+					this.SendPropertyChanged("Notes");
+					this.OnNotesChanged();
 				}
 			}
 		}
@@ -12164,8 +12075,8 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Commodity_QuoteStorageItem", Storage="_Commodity", ThisKey="CommodityID", OtherKey="ID", IsForeignKey=true)]
-		public Commodity Commodity
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="QuoteCommodity_QuoteStorageItem", Storage="_Commodity", ThisKey="QuoteCommodityID", OtherKey="ID", IsForeignKey=true)]
+		public QuoteCommodity Commodity
 		{
 			get
 			{
@@ -12173,10 +12084,26 @@ namespace SingerDispatch
 			}
 			set
 			{
-				if ((this._Commodity.Entity != value))
+				QuoteCommodity previousValue = this._Commodity.Entity;
+				if (((previousValue != value) 
+							|| (this._Commodity.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Commodity.Entity = null;
+						previousValue.StorageQuotes.Remove(this);
+					}
 					this._Commodity.Entity = value;
+					if ((value != null))
+					{
+						value.StorageQuotes.Add(this);
+						this._QuoteCommodityID = value.ID;
+					}
+					else
+					{
+						this._QuoteCommodityID = default(Nullable<long>);
+					}
 					this.SendPropertyChanged("Commodity");
 				}
 			}

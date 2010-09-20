@@ -227,6 +227,19 @@ namespace SingerDispatch
 
             return jc;
         }
+
+        public string NameAndUnit
+        {
+            get
+            {
+                var name = Name;
+
+                if (!string.IsNullOrEmpty(Unit))
+                    name += " - " + Unit;
+
+                return name;
+            }
+        }
     }
 
     partial class Condition
@@ -279,12 +292,10 @@ namespace SingerDispatch
         public QuoteStorageItem Duplicate()
         {
             var copy = new QuoteStorageItem();
-
-            copy.Details = Details;
+            
             copy.Commodity = Commodity;
-            copy.BillingType = BillingType;
-            copy.Quantity = Quantity;
-            copy.CostPerItem = CostPerItem;
+            copy.Price = Price;
+            copy.Notes = Notes;
 
             return copy;
         }

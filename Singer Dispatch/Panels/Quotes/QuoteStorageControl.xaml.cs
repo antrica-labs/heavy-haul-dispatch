@@ -19,14 +19,12 @@ namespace SingerDispatch.Panels.Quotes
             if (InDesignMode()) return;
 
             Database = SingerConfigs.CommonDataContext;
-
-            cmbBillingType.ItemsSource = from bt in Database.BillingTypes select bt;
         }
 
         private void Control_Loaded(object sender, RoutedEventArgs e)
         {
             // refresh the commodity list
-            cmbCommodities.ItemsSource = (SelectedQuote == null) ? null : from c in Database.Commodities where c.Company == SelectedCompany || c.Company == SelectedQuote.CareOfCompany select c;
+            cmbCommodities.ItemsSource = (SelectedQuote == null) ? null : SelectedQuote.QuoteCommodities;
         }
 
         protected override void SelectedQuoteChanged(Quote newValue, Quote oldValue)
@@ -77,25 +75,6 @@ namespace SingerDispatch.Panels.Quotes
             
             ((ObservableCollection<QuoteStorageItem>)dgStorageList.ItemsSource).Remove(item);
             SelectedQuote.QuoteStorageItems.Remove(item);            
-        }
-
-
-        private void BillingType_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            var type = (BillingType)((ComboBox)sender).SelectedItem;
-
-            if (type != null && type.Name == "Cost Included")
-            {
-                txtQuantity.Text = null;
-                txtQuantity.IsEnabled = false;
-                txtCostPerItem.Text = null;
-                txtCostPerItem.IsEnabled = false;
-            }
-            else
-            {
-                txtQuantity.IsEnabled = true;
-                txtCostPerItem.IsEnabled = true;
-            }
         }
     }
 }

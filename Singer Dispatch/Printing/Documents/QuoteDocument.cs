@@ -8,6 +8,8 @@ namespace SingerDispatch.Printing.Documents
 {
     class QuoteDocument : IPrintDocument
     {
+        private const string PageBreak = @"<div class=""page_break""></div>";
+
         public bool PrintMetric { get; set; }
         public bool SpecializedDocument { get; set; }
 
@@ -33,6 +35,26 @@ namespace SingerDispatch.Printing.Documents
             content.Append(GetStyles());
             content.Append("</head>");
             content.Append("<body>");
+            content.Append(GetQuoteBody(quote));
+
+            if (quote.QuoteStorageItems.Count > 0)
+            {
+                content.Append(PageBreak);
+                content.Append(new StorageContractDocument().GenerateBodyHTML(quote));
+            }
+
+            content.Append("</body>");
+            content.Append("</html>");
+
+            return content.ToString();
+        }
+
+
+        private StringBuilder GetQuoteBody(Quote quote)
+        {
+            var content = new StringBuilder();
+
+            content.Append(@"<div class=""quote_body"">");
             content.Append(GetHeader("#" + quote.NumberAndRev));
             content.Append(GetRecipient(quote.BillingAddress, quote.Contact));
             content.Append(GetDescription(quote.Contact, quote.Description, quote.CreationDate, quote.ExpirationDate));
@@ -43,15 +65,13 @@ namespace SingerDispatch.Printing.Documents
 
             content.Append(GetNotes(quote));
             content.Append(GetPrice(quote));
-            content.Append(GetInclusions(quote));            
+            content.Append(GetInclusions(quote));
             content.Append(GetConditions(quote));
             content.Append(GetSignoff(quote));
-            content.Append("</body>");
-            content.Append("</html>");
+            content.Append("</div>");
 
-            return content.ToString();
+            return content;
         }
-
 
         private static string GetTitle(string title)
         {
@@ -332,6 +352,16 @@ namespace SingerDispatch.Printing.Documents
                     {
                         padding: 2px 0;
                     }
+                
+                    %SC_SCREEN_STYLES%
+                
+                    div.page_break
+                    {
+                        display: block;
+                        margin: 35px;
+                        height: 1px;
+                        border-top: 1px #454545 solid;
+                    } 
                 </style>
                 <style type=""text/css"" media=""print"">
                     body
@@ -339,10 +369,20 @@ namespace SingerDispatch.Printing.Documents
                     	font-size: 13pt;
                         padding: 0;
                     }
+
+                    %SC_PRINT_STYLES%
+
+                    div.page_break
+                    {
+                        border: none;
+                        display: block;
+                        page-break-before: always;
+                        margin: 0;
+                    }
                 </style>
             ";
 
-            return content;
+            return content.Replace("%SC_SCREEN_STYLES%", StorageContractDocument.GetDocSpecificScreenStyles()).Replace("%SC_PRINT_STYLES%", StorageContractDocument.GetDocSpecificPrintStyles());
         }
 
         private string GetHeader(string quoteName)
@@ -485,8 +525,7 @@ namespace SingerDispatch.Printing.Documents
             var html = @"
                 <div id=""description"">
                     <table>
-                        {0}
-                        <tr><td class=""fieldname"">Re:</td><td>{1}</td></tr>
+                        {0}                        
                     </table>
 
                     <p>As per your quotation request we are pleased to submit the following proposal, valid until {2}:</p>

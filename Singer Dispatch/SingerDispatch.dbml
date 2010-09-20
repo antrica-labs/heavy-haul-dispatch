@@ -431,6 +431,7 @@
       <Column Name="Cost" Type="System.Decimal" CanBeNull="true" />
       <Column Name="Notes" Type="System.String" CanBeNull="true" UpdateCheck="Never" />
       <Association Name="Quote_QuoteCommodity" Member="Quote" ThisKey="QuoteID" OtherKey="ID" Type="Quote" IsForeignKey="true" />
+      <Association Name="QuoteCommodity_QuoteStorageItem" Member="StorageQuotes" ThisKey="ID" OtherKey="QuoteCommodityID" Type="QuoteStorageItem" />
       <Association Name="Commodity_QuoteCommodity" Member="OriginalCommodity" ThisKey="OriginalCommodityID" OtherKey="ID" Type="Commodity" IsForeignKey="true" />
     </Type>
   </Table>
@@ -492,14 +493,11 @@
     <Type Name="QuoteStorageItem">
       <Column Name="ID" Type="System.Int64" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="QuoteID" Type="System.Int64" CanBeNull="true" />
-      <Column Name="BillingTypeID" Type="System.Int64" CanBeNull="true" />
-      <Column Name="CommodityID" Type="System.Int64" CanBeNull="true" />
-      <Column Name="Details" Type="System.String" CanBeNull="true" />
-      <Column Name="Quantity" Type="System.Int32" CanBeNull="true" />
-      <Column Name="CostPerItem" Type="System.Decimal" CanBeNull="true" />
-      <Association Name="BillingType_QuoteStorageItem" Member="BillingType" ThisKey="BillingTypeID" OtherKey="ID" Type="BillingType" IsForeignKey="true" />
+      <Column Name="QuoteCommodityID" Type="System.Int64" CanBeNull="true" />
+      <Column Name="Price" Type="System.Decimal" CanBeNull="true" />
+      <Column Name="Notes" Type="System.String" CanBeNull="true" />      
       <Association Name="Quote_QuoteStorageItem" Member="Quote" ThisKey="QuoteID" OtherKey="ID" Type="Quote" IsForeignKey="true" />
-      <Association Name="Commodity_QuoteStorageItem" Member="Commodity" ThisKey="CommodityID" OtherKey="ID" Type="Commodity" IsForeignKey="true" />
+      <Association Name="QuoteCommodity_QuoteStorageItem" Member="Commodity" ThisKey="QuoteCommodityID" OtherKey="ID" Type="QuoteCommodity" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="" Member="Inclusions">

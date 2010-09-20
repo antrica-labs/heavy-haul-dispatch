@@ -165,7 +165,7 @@
             </StackPanel>
         </GroupBox>
 
-        <GroupBox Header="Description &amp; Notes" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=ThePanel, Path=SelectedQuote}" DataContext="{Binding ElementName=ThePanel, Path=SelectedQuote}">
+        <GroupBox Header="Description &amp; Comments (Not printed)" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=ThePanel, Path=SelectedQuote}" DataContext="{Binding ElementName=ThePanel, Path=SelectedQuote}">
             <TextBox Style="{StaticResource MultiLine}" Height="Auto" Text="{Binding Description}"/>
         </GroupBox>
     </DockPanel>
