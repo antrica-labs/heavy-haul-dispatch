@@ -207,14 +207,12 @@ namespace SingerDispatch.Panels.Loads
             button.IsEnabled = true;
         }
 
-        private void cmbJobList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void EditJob_Click(object sender, RoutedEventArgs e)
         {
-            
-        }
+            if (SelectedJob == null) return;
 
-        private void dgLoads_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            
+            var window = (MainWindow)Application.Current.MainWindow;
+            window.ViewJob(SelectedJob);
         }
     }
 }

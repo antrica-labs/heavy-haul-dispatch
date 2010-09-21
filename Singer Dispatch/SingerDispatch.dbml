@@ -87,6 +87,10 @@
       <Association Name="Company_Permit" Member="Permits" ThisKey="ID" OtherKey="CompanyID" Type="Permit"  />
       <Association Name="ShipperCompany_LoadedCommodity" Member="ShipperLoadedCommodities" OtherKey="ShipperCompanyID" ThisKey="ID" Type="LoadedCommodity" />
       <Association Name="ConsigneeCompany_LoadedCommodity" Member="ConsigneeLoadedCommodities" OtherKey="ConsigneeCompanyID" ThisKey="ID" Type="LoadedCommodity" />
+      <Association Name="Company_LoadedCommodity_LoadSite" Member="LoadSites" OtherKey="LoadSiteCompanyID" ThisKey="ID" Type="LoadedCommodity" />
+      <Association Name="Company_LoadedCommodity_UnloadSite" Member="UnloadSite" OtherKey="UnloadSiteCompanyID" ThisKey="ID" Type="LoadedCommodity" />
+      <Association Name="Company_LoadedCommodity_Load" Member="Loading" OtherKey="LoadingCompanyID" ThisKey="ID" Type="LoadedCommodity" />
+      <Association Name="Company_LoadedCommodity_Unload" Member="Unloading" OtherKey="UnloadingCompanyID" ThisKey="ID" Type="LoadedCommodity" />
     </Type>
   </Table>
   <Table Name="" Member="CompanyPriorityLevels">
@@ -314,22 +318,24 @@
       <Column Name="ID" Type="System.Int64" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="JobCommodityID" Type="System.Int64" CanBeNull="true" />
       <Column Name="LoadID" Type="System.Int64" CanBeNull="true" />
+      <Column Name="LoadSiteCompanyID" Type="System.Int64" CanBeNull="true" />
       <Column Name="LoadSiteContactID" Type="System.Int64" CanBeNull="true" />
-      <Column Name="LoadContactID" Type="System.Int64" CanBeNull="true" />
+      <Column Name="LoadingCompanyID" Type="System.Int64" CanBeNull="true" />
+      <Column Name="LoadingContactID" Type="System.Int64" CanBeNull="true" />
       <Column Name="LoadingProvinceID" Type="System.Int64" CanBeNull="true" />
       <Column Name="LoadLocation" Type="System.String" CanBeNull="true" />
-      <Column Name="LoadAddress" Type="System.String" CanBeNull="true" />
-      <Column Name="LoadBy" Type="System.String" CanBeNull="true" />
+      <Column Name="LoadAddress" Type="System.String" CanBeNull="true" />      
       <Column Name="LoadMethodID" Type="System.Int64" CanBeNull="true" />
       <Column Name="LoadDate" Type="System.DateTime" CanBeNull="true" />
       <Column Name="LoadInstructions" Type="System.String" CanBeNull="true" />
-      <Column Name="LoadRoute" Type="System.String" CanBeNull="true" />      
+      <Column Name="LoadRoute" Type="System.String" CanBeNull="true" />
+      <Column Name="UnloadSiteCompanyID" Type="System.Int64" CanBeNull="true" />
       <Column Name="UnloadSiteContactID" Type="System.Int64" CanBeNull="true" />
-      <Column Name="UnloadContactID" Type="System.Int64" CanBeNull="true" />
+      <Column Name="UnloadingCompanyID" Type="System.Int64" CanBeNull="true" />
+      <Column Name="UnloadingContactID" Type="System.Int64" CanBeNull="true" />
       <Column Name="UnloadingProvinceID" Type="System.Int64" CanBeNull="true" />
       <Column Name="UnloadLocation" Type="System.String" CanBeNull="true" />
-      <Column Name="UnloadAddress" Type="System.String" CanBeNull="true" />
-      <Column Name="UnloadBy" Type="System.String" CanBeNull="true" />
+      <Column Name="UnloadAddress" Type="System.String" CanBeNull="true" />      
       <Column Name="UnloadMethodID" Type="System.Int64" CanBeNull="true" />
       <Column Name="UnloadDate" Type="System.DateTime" CanBeNull="true" />
       <Column Name="UnloadInstructions" Type="System.String" CanBeNull="true" />
@@ -340,10 +346,14 @@
       <Column Name="ShipperAddressID" Type="System.Int64" CanBeNull="true" />
       <Column Name="ConsigneeCompanyID" Type="System.Int64" CanBeNull="true" />
       <Column Name="ConsigneeAddressID" Type="System.Int64" CanBeNull="true" />
+      <Association Name="Company_LoadedCommodity_LoadSite" Member="LoadSiteCompany" ThisKey="LoadSiteCompanyID" OtherKey="ID" Type="Company" IsForeignKey="true"/>
       <Association Name="Contact_LoadedCommodity_LoadSite" Member="LoadSiteContact" ThisKey="LoadSiteContactID" OtherKey="ID" Type="Contact" IsForeignKey="true" />
+      <Association Name="Company_LoadedCommodity_UnloadSite" Member="UnloadSiteCompany" ThisKey="UnloadSiteCompanyID" OtherKey="ID" Type="Company" IsForeignKey="true" />
       <Association Name="Contact_LoadedCommodity_UnloadSite" Member="UnloadSiteContact" ThisKey="UnloadSiteContactID" OtherKey="ID" Type="Contact" IsForeignKey="true" />
-      <Association Name="Contact_LoadedCommodity_Load" Member="LoadContact" ThisKey="LoadContactID" OtherKey="ID" Type="Contact" IsForeignKey="true" />
-      <Association Name="Contact_LoadedCommodity_Unload" Member="UnloadContact" ThisKey="UnloadContactID" OtherKey="ID" Type="Contact" IsForeignKey="true" />
+      <Association Name="Company_LoadedCommodity_Load" Member="LoadingCompany" ThisKey="LoadingCompanyID" OtherKey="ID" Type="Company" IsForeignKey="true" />
+      <Association Name="Contact_LoadedCommodity_Load" Member="LoadingContact" ThisKey="LoadingContactID" OtherKey="ID" Type="Contact" IsForeignKey="true" />
+      <Association Name="Company_LoadedCommodity_Unload" Member="UnloadingCompany" ThisKey="UnloadingCompanyID" OtherKey="ID" Type="Company" IsForeignKey="true" />
+      <Association Name="Contact_LoadedCommodity_Unload" Member="UnloadingContact" ThisKey="UnloadingContactID" OtherKey="ID" Type="Contact" IsForeignKey="true" />
       <Association Name="Load_LoadedCommodity" Member="Load" ThisKey="LoadID" OtherKey="ID" Type="Load" IsForeignKey="true" />
       <Association Name="JobCommodity_LoadedCommodity" Member="JobCommodity" ThisKey="JobCommodityID" OtherKey="ID" Type="JobCommodity" IsForeignKey="true" />
       <Association Name="ShipperCompany_LoadedCommodity" Member="ShipperCompany" ThisKey="ShipperCompanyID" OtherKey="ID" Type="Company" IsForeignKey="true" />

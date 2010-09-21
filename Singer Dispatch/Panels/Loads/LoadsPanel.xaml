@@ -40,30 +40,33 @@
             <StackPanel>
                 <Grid Margin="3">
                     <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />                        
                         <ColumnDefinition />
-                        <ColumnDefinition Width="3" />
                         <ColumnDefinition />
-                        <ColumnDefinition Width="3" />
                         <ColumnDefinition />
-                        <ColumnDefinition Width="3" />
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
 
-                    <ComboBox Name="cmbJobList" Grid.Column="0" Grid.ColumnSpan="3" IsEditable="true" Margin="0" SelectedItem="{Binding ElementName=ThePanel, Path=SelectedJob}" TextSearch.TextPath="Number" ItemTemplate="{StaticResource SimpleJobTemplate}" SelectionChanged="cmbJobList_SelectionChanged" />
-                    <Button Grid.Column="4" Click="ViewAllDispatches_Click" IsEnabled="{Binding ElementName=ThePanel, Path=SelectedLoad, Converter={StaticResource IsEnabledNullConverter}}">View all dispatches</Button>
-                    <Button Name="CommitChangesButton" Grid.Column="6" Click="CommitChanges_Click" LostFocus="CommitChangesButton_LostFocus" IsEnabled="{Binding ElementName=ThePanel, Path=SelectedLoad, Converter={StaticResource IsEnabledNullConverter}}">Save changes</Button>
+                    <Label>Job #:</Label>
+                    <ComboBox Name="cmbJobList" Grid.Column="1" IsEditable="true" SelectedItem="{Binding ElementName=ThePanel, Path=SelectedJob}" TextSearch.TextPath="Number" ItemTemplate="{StaticResource SimpleJobTemplate}" />
+                    <Button Grid.Column="3" Style="{StaticResource Horizontal}" Click="EditJob_Click" IsEnabled="{Binding ElementName=ThePanel, Path=SelectedJob, Converter={StaticResource IsEnabledNullConverter}}">Edit job</Button>                    
+                    <Button Name="CommitChangesButton" Grid.Column="4" Style="{StaticResource HorizontalEnd}" Click="CommitChanges_Click" LostFocus="CommitChangesButton_LostFocus" IsEnabled="{Binding ElementName=ThePanel, Path=SelectedLoad, Converter={StaticResource IsEnabledNullConverter}}">Save changes</Button>
                 </Grid>
             </StackPanel>
         </Border>
 
-        <DataGrid Name="dgLoads" Grid.Column="0" Grid.Row="1" Style="{StaticResource ListDisplay}" SelectedItem="{Binding ElementName=ThePanel, Path=SelectedLoad}" SelectionChanged="dgLoads_SelectionChanged">
+        <DataGrid Name="dgLoads" Grid.Column="0" Grid.Row="1" Style="{StaticResource ListDisplay}" SelectedItem="{Binding ElementName=ThePanel, Path=SelectedLoad}">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Number" Binding="{Binding Number}" Width="65"/>
-                <DataGridTextColumn Header="Status" Binding="{Binding Status.Name}" Width="70" />
+                <DataGridTextColumn Header="Num" Binding="{Binding Number}" Width="50"/>
+                <DataGridTextColumn Header="Status" Binding="{Binding Status.Name}" Width="63" />
                 <DataGridTemplateColumn Header="Commodities">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding Converter={StaticResource LoadCommoditiesStringConverter}, Path=LoadedCommodities}" />
+                            <TextBlock Text="{Binding Converter={StaticResource LoadCommoditiesStringConverter}, Path=LoadedCommodities}">
+                                <TextBlock.ToolTip>
+                                    <TextBlock Text="{Binding Converter={StaticResource LoadCommoditiesStringConverter}, Path=LoadedCommodities}" />
+                                </TextBlock.ToolTip>
+                            </TextBlock>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>                
@@ -72,8 +75,9 @@
 
         <StackPanel Grid.Column="0" Grid.Row="2" Margin="0,3,0,0">
             <Button Style="{StaticResource Vertical}" IsEnabled="{Binding ElementName=ThePanel, Path=SelectedJob, Converter={StaticResource IsEnabledNullConverter}}" Click="NewLoad_Click">New load</Button>
-            <Button Style="{StaticResource Vertical}" IsEnabled="{Binding ElementName=dgLoads, Path=SelectedItem, Converter={StaticResource IsEnabledNullConverter}}" Click="DuplicateLoad_Click">Duplicate load</Button>
-            <Button Style="{StaticResource VerticalEnd}" IsEnabled="{Binding ElementName=dgLoads, Path=SelectedItem, Converter={StaticResource IsEnabledNullConverter}}" Click="DeleteLoad_Click">Delete load</Button>
+            <Button Style="{StaticResource Vertical}" IsEnabled="{Binding ElementName=ThePanel, Path=SelectedLoad, Converter={StaticResource IsEnabledNullConverter}}" Click="ViewAllDispatches_Click">Vew load dispatches</Button>
+            <Button Style="{StaticResource Vertical}" IsEnabled="{Binding ElementName=ThePanel, Path=SelectedLoad, Converter={StaticResource IsEnabledNullConverter}}" Click="DuplicateLoad_Click">Duplicate load</Button>
+            <Button Style="{StaticResource VerticalEnd}" IsEnabled="{Binding ElementName=ThePanel, Path=SelectedLoad, Converter={StaticResource IsEnabledNullConverter}}" Click="DeleteLoad_Click">Delete load</Button>
         </StackPanel>
 
         <TabControl Name="Tabs" Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" DataContext="{Binding ElementName=ThePanel}" Margin="5,0,0,0">

@@ -970,8 +970,8 @@ namespace SingerDispatch.Printing.Documents
 
                 reps[6] = item.LoadLocation;
                 reps[7] = (item.LoadSiteContact != null) ? string.Format(@"<span class=""contact"">{0}</span><span class=""contact"">{1}</span>", item.LoadSiteContact.Name, item.LoadSiteContact.PrimaryPhone) : "";
-                reps[8] = item.LoadBy;
-                reps[9] = (item.LoadContact != null) ? string.Format(@"<span class=""contact"">{0}</span><span class=""contact"">{1}</span>", item.LoadContact.Name, item.LoadContact.PrimaryPhone) : ""; ;
+                reps[8] = (item.LoadingCompany != null) ? item.LoadingCompany.Name : "";
+                reps[9] = (item.LoadingContact != null) ? string.Format(@"<span class=""contact"">{0}</span><span class=""contact"">{1}</span>", item.LoadingContact.Name, item.LoadingContact.PrimaryPhone) : ""; ;
                 reps[10] = item.LoadRoute;
                 reps[11] = item.LoadInstructions;                
 
@@ -989,8 +989,8 @@ namespace SingerDispatch.Printing.Documents
 
                 reps[14] = item.UnloadLocation;
                 reps[15] = (item.UnloadSiteContact != null) ? string.Format(@"<span class=""contact"">{0}</span><span class=""contact"">{1}</span>", item.UnloadSiteContact.Name, item.UnloadSiteContact.PrimaryPhone) : "";
-                reps[16] = item.UnloadBy;
-                reps[17] = (item.UnloadContact != null) ? string.Format(@"<span class=""contact"">{0}</span><span class=""contact"">{1}</span>", item.UnloadContact.Name, item.UnloadContact.PrimaryPhone) : ""; ; ;
+                reps[16] = (item.UnloadingCompany != null) ? item.UnloadingCompany.Name : "";
+                reps[17] = (item.UnloadingContact != null) ? string.Format(@"<span class=""contact"">{0}</span><span class=""contact"">{1}</span>", item.UnloadingContact.Name, item.UnloadingContact.PrimaryPhone) : ""; ; ;
                 reps[18] = item.UnloadRoute;
                 reps[19] = item.UnloadInstructions;
                 

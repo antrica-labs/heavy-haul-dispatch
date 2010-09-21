@@ -11,6 +11,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Collections.ObjectModel;
+using SingerDispatch.Printing.Documents;
+using SingerDispatch.Windows;
 
 namespace SingerDispatch.Panels.Loads
 {
@@ -24,10 +27,16 @@ namespace SingerDispatch.Panels.Loads
         public LoadCommoditiesControl()
         {
             InitializeComponent();
+
+            if (InDesignMode()) return;
+
+            Database = SingerConfigs.CommonDataContext;
         }
 
         private void ThePanel_Loaded(object sender, RoutedEventArgs e)
         {
+            if (InDesignMode()) return;
+
             UpdateComboBoxes();
         }
 
@@ -35,11 +44,14 @@ namespace SingerDispatch.Panels.Loads
         {
             base.SelectedLoadChanged(newValue, oldValue);
 
+            dgCommodities.ItemsSource = (newValue == null) ? null : new ObservableCollection<LoadedCommodity>(newValue.LoadedCommodities);
         }
 
         private void UpdateComboBoxes()
         {
             if (SelectedLoad == null) return;
+
+            cmbCommodityName.ItemsSource = SelectedLoad.Job.JobCommodities.ToList();
 
             var companies = from c in Database.Companies select c;
 
@@ -54,42 +66,65 @@ namespace SingerDispatch.Panels.Loads
 
             cmbLoadMethods.ItemsSource = methods;
             cmbUnloadMethods.ItemsSource = methods;
-
-            if (cmbLoadingSiteContactCompanies.SelectedItem == null)
-                cmbLoadingSiteContactCompanies.SelectedItem = SelectedCompany;
-
-            if (cmbUnloadingSiteContactCompanies.SelectedItem == null)
-                cmbUnloadingSiteContactCompanies.SelectedItem = SelectedCompany;
-
+            
             var provinces = from p in Database.ProvincesAndStates select p;
 
             cmbLoadingProvinces.ItemsSource = provinces;
             cmbUnloadingProvinces.ItemsSource = provinces;
         }
-
-        private void CommodityName_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
+                
         private void NewCommodity_Click(object sender, RoutedEventArgs e)
         {
+            if (SelectedLoad == null) return;
 
+            var list = (ObservableCollection<LoadedCommodity>)dgCommodities.ItemsSource;
+            var loaded = new LoadedCommodity { Load = SelectedLoad, LoadSiteCompany = SelectedCompany, UnloadSiteCompany = SelectedCompany };
+
+            SelectedLoad.LoadedCommodities.Add(loaded);
+            list.Add(loaded);
+            dgCommodities.SelectedItem = loaded;
+            SelectedLoad.Notify("LoadedCommodities");
         }
 
         private void DuplicateCommodity_Click(object sender, RoutedEventArgs e)
         {
+            var list = (ObservableCollection<LoadedCommodity>)dgCommodities.ItemsSource;
+            var loaded = (LoadedCommodity)dgCommodities.SelectedItem;
 
+            if (loaded == null) return;
+
+            loaded = loaded.Duplicate();
+
+            SelectedLoad.LoadedCommodities.Add(loaded);
+            list.Add(loaded);
+            dgCommodities.SelectedItem = loaded;
+            SelectedLoad.Notify("LoadedCommodities");
         }
 
         private void RemoveCommodity_Click(object sender, RoutedEventArgs e)
         {
+            var list = (ObservableCollection<LoadedCommodity>)dgCommodities.ItemsSource;
+            var loaded = (LoadedCommodity)dgCommodities.SelectedItem;
 
+            if (loaded == null) return;
+
+            var confirmation = MessageBox.Show(SingerConfigs.DefaultRemoveItemMessage, "Delete confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+            if (confirmation != MessageBoxResult.Yes) return;
+
+            list.Remove(loaded);
+            SelectedLoad.LoadedCommodities.Remove(loaded);
+            SelectedLoad.Notify("LoadedCommodities");
         }
 
         private void PrintBoL_Click(object sender, RoutedEventArgs e)
         {
+            var loaded = (LoadedCommodity)dgCommodities.SelectedItem;
 
+            if (loaded == null || loaded.JobCommodity == null) return;
+
+            var viewer = new DocumentViewerWindow(new BillOfLadingDocument(), loaded, string.Format("Bill of Lading - {0}", loaded.JobCommodity.NameAndUnit)) { IsMetric = !UseImperialMeasurements, IsSpecializedDocument = SelectedCompany.CustomerType.IsEnterprise != true };
+            viewer.DisplayPrintout();
         }
 
         private void cmbLoadingSiteContactCompanies_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -134,6 +169,21 @@ namespace SingerDispatch.Panels.Loads
             var company = (Company)cmb.SelectedItem;
 
             cmbConsigneeAddresses.ItemsSource = (company != null) ? company.Addresses : null;
+        }
+
+        private void dgCommodities_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var grid = (DataGrid)sender;
+
+            if (grid.SelectedItem == null) return;
+
+            grid.ScrollIntoView(grid.SelectedItem);
+            grid.UpdateLayout();
+
+            UpdateComboBoxes();
+            
+            if (SelectedLoad != null)
+                SelectedLoad.Notify("LoadedCommodities");
         }
         
     }

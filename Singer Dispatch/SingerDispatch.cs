@@ -361,6 +361,19 @@ namespace SingerDispatch
             }
         }
 
+        public string UnitAndName
+        {
+            get
+            {
+                var name = Name;
+
+                if (!string.IsNullOrEmpty(Unit))
+                    name = Unit + " - " + name;
+
+                return name;
+            }
+        }
+
         public JobCommodity Duplicate()
         {
             var copy = new JobCommodity();
@@ -395,17 +408,21 @@ namespace SingerDispatch
                         
             copy.JobCommodity = JobCommodity;
             copy.LoadLocation = LoadLocation;
-            copy.LoadBy = LoadBy;
-            copy.LoadContact = copy.LoadContact;
+            copy.LoadingCompany = LoadingCompany;            
+            copy.LoadingContact = copy.LoadingContact;
             copy.LoadMethod = LoadMethod;
             copy.LoadDate = LoadDate;
+            copy.LoadSiteCompany = LoadSiteCompany;
+            copy.LoadSiteContact = LoadSiteContact;
             copy.LoadInstructions = LoadInstructions;
             copy.LoadRoute = LoadRoute;            
             copy.UnloadLocation = UnloadLocation;
-            copy.UnloadBy = UnloadBy;
-            copy.UnloadContact = UnloadContact;
+            copy.UnloadingCompany = UnloadingCompany;
+            copy.UnloadingContact = UnloadingContact;
             copy.UnloadMethod = UnloadMethod;
             copy.UnloadDate = UnloadDate;
+            copy.UnloadSiteCompany = UnloadSiteCompany;
+            copy.UnloadSiteContact = UnloadSiteContact;
             copy.UnloadInstructions = UnloadInstructions;
             copy.UnloadRoute = UnloadRoute;            
             copy.ShipperCompany = ShipperCompany;
