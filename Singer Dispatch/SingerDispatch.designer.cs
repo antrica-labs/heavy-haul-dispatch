@@ -62,9 +62,6 @@ namespace SingerDispatch
     partial void InsertEmployee(Employee instance);
     partial void UpdateEmployee(Employee instance);
     partial void DeleteEmployee(Employee instance);
-    partial void InsertEquipmentType(EquipmentType instance);
-    partial void UpdateEquipmentType(EquipmentType instance);
-    partial void DeleteEquipmentType(EquipmentType instance);
     partial void InsertJobCommodity(JobCommodity instance);
     partial void UpdateJobCommodity(JobCommodity instance);
     partial void DeleteJobCommodity(JobCommodity instance);
@@ -152,6 +149,9 @@ namespace SingerDispatch
     partial void InsertEquipmentClass(EquipmentClass instance);
     partial void UpdateEquipmentClass(EquipmentClass instance);
     partial void DeleteEquipmentClass(EquipmentClass instance);
+    partial void InsertEquipmentType(EquipmentType instance);
+    partial void UpdateEquipmentType(EquipmentType instance);
+    partial void DeleteEquipmentType(EquipmentType instance);
     partial void InsertDispatch(Dispatch instance);
     partial void UpdateDispatch(Dispatch instance);
     partial void DeleteDispatch(Dispatch instance);
@@ -299,14 +299,6 @@ namespace SingerDispatch
 			get
 			{
 				return this.GetTable<Employee>();
-			}
-		}
-		
-		public System.Data.Linq.Table<EquipmentType> EquipmentTypes
-		{
-			get
-			{
-				return this.GetTable<EquipmentType>();
 			}
 		}
 		
@@ -539,6 +531,14 @@ namespace SingerDispatch
 			get
 			{
 				return this.GetTable<EquipmentClass>();
+			}
+		}
+		
+		public System.Data.Linq.Table<EquipmentType> EquipmentTypes
+		{
+			get
+			{
+				return this.GetTable<EquipmentType>();
 			}
 		}
 		
@@ -4412,116 +4412,6 @@ namespace SingerDispatch
 		{
 			this.SendPropertyChanging();
 			entity.Employee = null;
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="")]
-	public partial class EquipmentType : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private long _ID;
-		
-		private string _Prefix;
-		
-		private string _Name;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIDChanging(long value);
-    partial void OnIDChanged();
-    partial void OnPrefixChanging(string value);
-    partial void OnPrefixChanged();
-    partial void OnNameChanging(string value);
-    partial void OnNameChanged();
-    #endregion
-		
-		public EquipmentType()
-		{
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, IsPrimaryKey=true, IsDbGenerated=true)]
-		public long ID
-		{
-			get
-			{
-				return this._ID;
-			}
-			set
-			{
-				if ((this._ID != value))
-				{
-					this.OnIDChanging(value);
-					this.SendPropertyChanging();
-					this._ID = value;
-					this.SendPropertyChanged("ID");
-					this.OnIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Prefix")]
-		public string Prefix
-		{
-			get
-			{
-				return this._Prefix;
-			}
-			set
-			{
-				if ((this._Prefix != value))
-				{
-					this.OnPrefixChanging(value);
-					this.SendPropertyChanging();
-					this._Prefix = value;
-					this.SendPropertyChanged("Prefix");
-					this.OnPrefixChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name")]
-		public string Name
-		{
-			get
-			{
-				return this._Name;
-			}
-			set
-			{
-				if ((this._Name != value))
-				{
-					this.OnNameChanging(value);
-					this.SendPropertyChanging();
-					this._Name = value;
-					this.SendPropertyChanged("Name");
-					this.OnNameChanged();
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
 		}
 	}
 	
@@ -14317,6 +14207,8 @@ namespace SingerDispatch
 		
 		private System.Nullable<long> _ClassID;
 		
+		private System.Nullable<long> _TypeID;
+		
 		private string _UnitNumber;
 		
 		private string _Serial;
@@ -14325,15 +14217,11 @@ namespace SingerDispatch
 		
 		private string _Model;
 		
+		private string _Engine;
+		
 		private string _Year;
 		
 		private string _LicencePlate;
-		
-		private string _EngineMake;
-		
-		private string _EngineModel;
-		
-		private string _EngineType;
 		
 		private System.Nullable<bool> _IsDispatchable;
 		
@@ -14363,9 +14251,11 @@ namespace SingerDispatch
 		
 		private EntitySet<Dispatch> _Dispatches;
 		
-		private EntityRef<Employee> _Employee;
-		
 		private EntityRef<EquipmentClass> _EquipmentClass;
+		
+		private EntityRef<EquipmentType> _EquipmentType;
+		
+		private EntityRef<Employee> _Employee;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -14377,6 +14267,8 @@ namespace SingerDispatch
     partial void OnDefaultDriverIDChanged();
     partial void OnClassIDChanging(System.Nullable<long> value);
     partial void OnClassIDChanged();
+    partial void OnTypeIDChanging(System.Nullable<long> value);
+    partial void OnTypeIDChanged();
     partial void OnUnitNumberChanging(string value);
     partial void OnUnitNumberChanged();
     partial void OnSerialChanging(string value);
@@ -14385,16 +14277,12 @@ namespace SingerDispatch
     partial void OnMakeChanged();
     partial void OnModelChanging(string value);
     partial void OnModelChanged();
+    partial void OnEngineChanging(string value);
+    partial void OnEngineChanged();
     partial void OnYearChanging(string value);
     partial void OnYearChanged();
     partial void OnLicencePlateChanging(string value);
     partial void OnLicencePlateChanged();
-    partial void OnEngineMakeChanging(string value);
-    partial void OnEngineMakeChanged();
-    partial void OnEngineModelChanging(string value);
-    partial void OnEngineModelChanged();
-    partial void OnEngineTypeChanging(string value);
-    partial void OnEngineTypeChanged();
     partial void OnIsDispatchableChanging(System.Nullable<bool> value);
     partial void OnIsDispatchableChanged();
     partial void OnTareChanging(System.Nullable<double> value);
@@ -14425,8 +14313,9 @@ namespace SingerDispatch
 		{
 			this._Loads = new EntitySet<Load>(new Action<Load>(this.attach_Loads), new Action<Load>(this.detach_Loads));
 			this._Dispatches = new EntitySet<Dispatch>(new Action<Dispatch>(this.attach_Dispatches), new Action<Dispatch>(this.detach_Dispatches));
-			this._Employee = default(EntityRef<Employee>);
 			this._EquipmentClass = default(EntityRef<EquipmentClass>);
+			this._EquipmentType = default(EntityRef<EquipmentType>);
+			this._Employee = default(EntityRef<Employee>);
 			OnCreated();
 		}
 		
@@ -14494,6 +14383,30 @@ namespace SingerDispatch
 					this._ClassID = value;
 					this.SendPropertyChanged("ClassID");
 					this.OnClassIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TypeID")]
+		public System.Nullable<long> TypeID
+		{
+			get
+			{
+				return this._TypeID;
+			}
+			set
+			{
+				if ((this._TypeID != value))
+				{
+					if (this._EquipmentType.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnTypeIDChanging(value);
+					this.SendPropertyChanging();
+					this._TypeID = value;
+					this.SendPropertyChanged("TypeID");
+					this.OnTypeIDChanged();
 				}
 			}
 		}
@@ -14578,6 +14491,26 @@ namespace SingerDispatch
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Engine")]
+		public string Engine
+		{
+			get
+			{
+				return this._Engine;
+			}
+			set
+			{
+				if ((this._Engine != value))
+				{
+					this.OnEngineChanging(value);
+					this.SendPropertyChanging();
+					this._Engine = value;
+					this.SendPropertyChanged("Engine");
+					this.OnEngineChanged();
+				}
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Year")]
 		public string Year
 		{
@@ -14614,66 +14547,6 @@ namespace SingerDispatch
 					this._LicencePlate = value;
 					this.SendPropertyChanged("LicencePlate");
 					this.OnLicencePlateChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EngineMake")]
-		public string EngineMake
-		{
-			get
-			{
-				return this._EngineMake;
-			}
-			set
-			{
-				if ((this._EngineMake != value))
-				{
-					this.OnEngineMakeChanging(value);
-					this.SendPropertyChanging();
-					this._EngineMake = value;
-					this.SendPropertyChanged("EngineMake");
-					this.OnEngineMakeChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EngineModel")]
-		public string EngineModel
-		{
-			get
-			{
-				return this._EngineModel;
-			}
-			set
-			{
-				if ((this._EngineModel != value))
-				{
-					this.OnEngineModelChanging(value);
-					this.SendPropertyChanging();
-					this._EngineModel = value;
-					this.SendPropertyChanged("EngineModel");
-					this.OnEngineModelChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EngineType")]
-		public string EngineType
-		{
-			get
-			{
-				return this._EngineType;
-			}
-			set
-			{
-				if ((this._EngineType != value))
-				{
-					this.OnEngineTypeChanging(value);
-					this.SendPropertyChanging();
-					this._EngineType = value;
-					this.SendPropertyChanged("EngineType");
-					this.OnEngineTypeChanged();
 				}
 			}
 		}
@@ -14944,40 +14817,6 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Employee_Equipment", Storage="_Employee", ThisKey="DefaultDriverID", OtherKey="ID", IsForeignKey=true)]
-		public Employee Employee
-		{
-			get
-			{
-				return this._Employee.Entity;
-			}
-			set
-			{
-				Employee previousValue = this._Employee.Entity;
-				if (((previousValue != value) 
-							|| (this._Employee.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Employee.Entity = null;
-						previousValue.Equipments.Remove(this);
-					}
-					this._Employee.Entity = value;
-					if ((value != null))
-					{
-						value.Equipments.Add(this);
-						this._DefaultDriverID = value.ID;
-					}
-					else
-					{
-						this._DefaultDriverID = default(Nullable<long>);
-					}
-					this.SendPropertyChanged("Employee");
-				}
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="EquipmentClass_Equipment", Storage="_EquipmentClass", ThisKey="ClassID", OtherKey="ID", IsForeignKey=true)]
 		public EquipmentClass EquipmentClass
 		{
@@ -15008,6 +14847,74 @@ namespace SingerDispatch
 						this._ClassID = default(Nullable<long>);
 					}
 					this.SendPropertyChanged("EquipmentClass");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="EquipmentType_Equipment", Storage="_EquipmentType", ThisKey="TypeID", OtherKey="ID", IsForeignKey=true)]
+		public EquipmentType EquipmentType
+		{
+			get
+			{
+				return this._EquipmentType.Entity;
+			}
+			set
+			{
+				EquipmentType previousValue = this._EquipmentType.Entity;
+				if (((previousValue != value) 
+							|| (this._EquipmentType.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._EquipmentType.Entity = null;
+						previousValue.Equipments.Remove(this);
+					}
+					this._EquipmentType.Entity = value;
+					if ((value != null))
+					{
+						value.Equipments.Add(this);
+						this._TypeID = value.ID;
+					}
+					else
+					{
+						this._TypeID = default(Nullable<long>);
+					}
+					this.SendPropertyChanged("EquipmentType");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Employee_Equipment", Storage="_Employee", ThisKey="DefaultDriverID", OtherKey="ID", IsForeignKey=true)]
+		public Employee Employee
+		{
+			get
+			{
+				return this._Employee.Entity;
+			}
+			set
+			{
+				Employee previousValue = this._Employee.Entity;
+				if (((previousValue != value) 
+							|| (this._Employee.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Employee.Entity = null;
+						previousValue.Equipments.Remove(this);
+					}
+					this._Employee.Entity = value;
+					if ((value != null))
+					{
+						value.Equipments.Add(this);
+						this._DefaultDriverID = value.ID;
+					}
+					else
+					{
+						this._DefaultDriverID = default(Nullable<long>);
+					}
+					this.SendPropertyChanged("Employee");
 				}
 			}
 		}
@@ -15168,6 +15075,144 @@ namespace SingerDispatch
 		{
 			this.SendPropertyChanging();
 			entity.EquipmentClass = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="")]
+	public partial class EquipmentType : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private long _ID;
+		
+		private string _Prefix;
+		
+		private string _Name;
+		
+		private EntitySet<Equipment> _Equipments;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDChanging(long value);
+    partial void OnIDChanged();
+    partial void OnPrefixChanging(string value);
+    partial void OnPrefixChanged();
+    partial void OnNameChanging(string value);
+    partial void OnNameChanged();
+    #endregion
+		
+		public EquipmentType()
+		{
+			this._Equipments = new EntitySet<Equipment>(new Action<Equipment>(this.attach_Equipments), new Action<Equipment>(this.detach_Equipments));
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, IsPrimaryKey=true, IsDbGenerated=true)]
+		public long ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this.OnIDChanging(value);
+					this.SendPropertyChanging();
+					this._ID = value;
+					this.SendPropertyChanged("ID");
+					this.OnIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Prefix")]
+		public string Prefix
+		{
+			get
+			{
+				return this._Prefix;
+			}
+			set
+			{
+				if ((this._Prefix != value))
+				{
+					this.OnPrefixChanging(value);
+					this.SendPropertyChanging();
+					this._Prefix = value;
+					this.SendPropertyChanged("Prefix");
+					this.OnPrefixChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name")]
+		public string Name
+		{
+			get
+			{
+				return this._Name;
+			}
+			set
+			{
+				if ((this._Name != value))
+				{
+					this.OnNameChanging(value);
+					this.SendPropertyChanging();
+					this._Name = value;
+					this.SendPropertyChanged("Name");
+					this.OnNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="EquipmentType_Equipment", Storage="_Equipments", ThisKey="ID", OtherKey="TypeID")]
+		public EntitySet<Equipment> Equipments
+		{
+			get
+			{
+				return this._Equipments;
+			}
+			set
+			{
+				this._Equipments.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_Equipments(Equipment entity)
+		{
+			this.SendPropertyChanging();
+			entity.EquipmentType = this;
+		}
+		
+		private void detach_Equipments(Equipment entity)
+		{
+			this.SendPropertyChanging();
+			entity.EquipmentType = null;
 		}
 	}
 	

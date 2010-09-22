@@ -18,6 +18,8 @@ namespace SingerDispatch.Importer
         private Dictionary<string, ContactType> ContactTypes { get; set; }
         private Dictionary<string, Rate> Rates { get; set; }
         private Dictionary<int?, Address> NewAddresses { get; set; }
+        private Dictionary<string, EquipmentType> EquipmentTypes { get; set; }
+        private Dictionary<string, EquipmentClass> EquipmentClasses { get; set; }
 
         static void Main(string[] args)
         {
@@ -148,7 +150,9 @@ namespace SingerDispatch.Importer
                 Rates.Add(item.Name, item);
             }
 
+            EquipmentClasses = new Dictionary<string, EquipmentClass>();
             ProvincesAndStates = new Dictionary<string, ProvincesAndState>();
+            EquipmentTypes = new Dictionary<string, EquipmentType>();
         }
 
         private void ImportOldData()
@@ -164,6 +168,9 @@ namespace SingerDispatch.Importer
             List<ExtraEquipmentType> extraEquipmentTypes;
             List<PermitType> permitTypes;
             List<TrailerCombination> trailerCombos;
+            List<EquipmentClass> equipmentClasses;
+            List<EquipmentType> equipmentTypes;
+            List<Equipment> equipment;
             
             var datasource = ConfigurationManager.ConnectionStrings["OldDBConnectionParameters"].ConnectionString;
             var provider = ConfigurationManager.ConnectionStrings["OldDBConnectionParameters"].ProviderName;
@@ -183,7 +190,10 @@ namespace SingerDispatch.Importer
                 conditions = ImportConditions(connection);
                 extraEquipmentTypes = ImportExtraEquipmentTypes(connection);
                 permitTypes = ImportPermitTypes(connection);
-                
+                equipmentClasses = ImportEquipmentClasses(connection);
+                equipmentTypes = ImportEquipmentTypes(connection);
+                equipment = ImportEquipment(connection);
+
                 Console.Write("Importing companies");
                 companies = ImportCompanies(connection);                
             }
@@ -199,6 +209,9 @@ namespace SingerDispatch.Importer
             context.TrailerCombinations.InsertAllOnSubmit(trailerCombos);
             context.Inclusions.InsertAllOnSubmit(inclusions);
             context.Conditions.InsertAllOnSubmit(conditions);
+            context.EquipmentClasses.InsertAllOnSubmit(equipmentClasses);
+            context.EquipmentTypes.InsertAllOnSubmit(equipmentTypes);
+            context.Equipment.InsertAllOnSubmit(equipment);
             context.ExtraEquipmentTypes.InsertAllOnSubmit(extraEquipmentTypes);
             context.PermitTypes.InsertAllOnSubmit(permitTypes);
             context.Companies.InsertAllOnSubmit(companies);
@@ -326,6 +339,146 @@ namespace SingerDispatch.Importer
 
                         list.Add(type);
                         ContactTypes[name.ToUpper()] = type;
+                    }
+                }
+            }
+
+            return list;
+        }
+
+        private List<EquipmentType> ImportEquipmentTypes(OleDbConnection connection)
+        {
+            var list = new List<EquipmentType>();
+
+            const string select = "SELECT * FROM tbl_EquipmentType";
+            using (var command = new OleDbCommand(select, connection))
+            {
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        var name = reader["equipmentType"] == DBNull.Value ? null : (string)reader["equipmentType"];
+                        var prefix = reader["equipmentTypePreFix"] == DBNull.Value ? null : (string)reader["equipmentTypePreFix"];
+
+                        var type = new EquipmentType { Name = name, Prefix = prefix };
+
+                        list.Add(type);
+                        EquipmentTypes.Add(prefix, type);
+                    }
+                }
+            }
+
+            return list;
+        }
+
+        private List<EquipmentClass> ImportEquipmentClasses(OleDbConnection connection)
+        {
+            var list = new List<EquipmentClass>();
+
+            // Create the quipment classes
+            var tractorClass = new EquipmentClass { Name = "Tractor" };
+            var trailorClass = new EquipmentClass { Name = "Trailor" };
+            var pilotClass = new EquipmentClass { Name = "Pilot" };
+            var otherClass = new EquipmentClass { Name = "Other" };
+
+            list.Add(tractorClass);
+            list.Add(trailorClass);
+            list.Add(pilotClass);
+            list.Add(otherClass);
+
+            EquipmentClasses.Add(tractorClass.Name, tractorClass);
+            EquipmentClasses.Add(trailorClass.Name, trailorClass);
+            EquipmentClasses.Add(pilotClass.Name, pilotClass);
+            EquipmentClasses.Add(otherClass.Name, otherClass);
+
+            return list;
+        }
+
+        private List<Equipment> ImportEquipment(OleDbConnection connection)
+        {
+            var list = new List<Equipment>();
+
+            const string select = "SELECT * FROM tbl_Equipment";
+            using (var command = new OleDbCommand(select, connection))
+            {
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        var unit = reader["equipmentUnitNum"] == DBNull.Value ? null : reader["equipmentUnitNum"].ToString();
+                        var serial = reader["equipmentSerial"] == DBNull.Value ? null : reader["equipmentSerial"].ToString();
+                        var make = reader["equipmentMake"] == DBNull.Value ? null : reader["equipmentMake"].ToString();
+                        var model = reader["equipmentModel"] == DBNull.Value ? null : reader["equipmentModel"].ToString();
+                        var emake = reader["equipmentEMake"] == DBNull.Value ? null : reader["equipmentEMake"].ToString();
+                        var emodel = reader["equipmentEModel"] == DBNull.Value ? null : reader["equipmentEModel"].ToString();
+                        var year = reader["equipmentYear"] == DBNull.Value ? null : reader["equipmentYear"].ToString();
+                        var plate = reader["equipmentLicensePlate"] == DBNull.Value ? null : reader["equipmentLicensePlate"].ToString();
+                        var dispatchable = reader["equipmentIsDispatchable"] == DBNull.Value ? null : (bool?)reader["equipmentIsDispatchable"];
+                        var tare = reader["tractorTare"] == DBNull.Value ? null : (double?)Convert.ToDouble(reader["tractorTare"].ToString());
+                        var axelConfig = reader["tractorAxleConfig"] == DBNull.Value ? null : reader["tractorAxleConfig"].ToString();
+                        var hasWinch = reader["tractorHasWinch"] == DBNull.Value ? null : (bool?)reader["tractorHasWinch"];
+                        var steerTireSize = reader["tractorSteerTireSize"] == DBNull.Value ? null : reader["tractorSteerTireSize"].ToString();
+                        var driveTireSize = reader["tractorDriveTireSize"] == DBNull.Value ? null : reader["tractorDriveTireSize"].ToString();
+                        var isProrated = reader["tractorIsProrated"] == DBNull.Value ? null : (bool?)reader["tractorIsProrated"];
+                        var onlyScheuerle = reader["tractorIsOnlyForScheuerle"] == DBNull.Value ? null : (bool?)reader["tractorIsOnlyForScheuerle"];
+                        var onlyPush = reader["tractorIsOnlyForPush"] == DBNull.Value ? null : (bool?)reader["tractorIsOnlyForPush"];
+                        var height = reader["tractorHeight"] == DBNull.Value ? null : (double?)Convert.ToDouble(reader["tractorHeight"].ToString());
+                        var fleet = reader["fleetId"] == DBNull.Value ? null : reader["fleetId"].ToString();
+                        var inServiceDate = reader["equipmentStartDate"] == DBNull.Value ? null : (DateTime?)reader["equipmentStartDate"];
+                        var outServiceDate = reader["equipmentEndDate"] == DBNull.Value ? null : (DateTime?)reader["equipmentEndDate"];
+
+                        var prefix = reader["equipmentTypePreFix"] == DBNull.Value ? null : reader["equipmentTypePreFix"].ToString();
+                        var isClassTractor = reader["equipmentIsTractor"] == DBNull.Value ? false : (bool)reader["equipmentIsTractor"];
+                        var isClassTrailer = reader["equipmentIsTrailer"] == DBNull.Value ? false : (bool)reader["equipmentIsTrailer"];
+                        var isClassPilot = reader["equipmentIsPilot"] == DBNull.Value ? false : (bool)reader["equipmentIsPilot"];
+                        
+                        var engine = "" + emake;
+
+                        if (!string.IsNullOrEmpty(emake) && !string.IsNullOrEmpty(emodel))
+                            engine += " ";
+
+                        engine += emake;
+
+                        var equipment = new Equipment 
+                            { 
+                                UnitNumber = unit,
+                                Serial = serial,
+                                Make = make,
+                                Model = model,
+                                Engine = engine,
+                                Year = year,
+                                LicencePlate = plate,
+                                IsDispatchable = dispatchable,
+                                Tare = tare,
+                                Height = height,
+                                AxleConfig = axelConfig,
+                                HasWinch = hasWinch,
+                                SteerTireSize = steerTireSize,
+                                DriveTireSize = driveTireSize,
+                                IsProrated = isProrated,
+                                IsOnlyForScheuerle = onlyScheuerle,
+                                IsOnlyForPushing = onlyPush,
+                                InServiceDate = inServiceDate,
+                                OutOfServiceDate = outServiceDate
+                            };
+                                               
+                        if (isClassTractor)
+                            equipment.EquipmentClass = EquipmentClasses["Tractor"];
+                        else if (isClassTrailer)
+                            equipment.EquipmentClass = EquipmentClasses["Trailor"];
+                        else if (isClassPilot)
+                            equipment.EquipmentClass = EquipmentClasses["Pilot"];
+                        else
+                            equipment.EquipmentClass = EquipmentClasses["Other"];
+
+                        try
+                        {
+                            equipment.EquipmentType = EquipmentTypes[prefix];
+                        }
+                        catch
+                        { }
+
+                        list.Add(equipment);
                     }
                 }
             }

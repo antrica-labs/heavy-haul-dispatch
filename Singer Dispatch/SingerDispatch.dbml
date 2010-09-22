@@ -171,13 +171,6 @@
       <Association Name="Employee_Dispatch_DispatchedBy" Member="DispatchedDispatches" ThisKey="ID" OtherKey="DispatchedByID" Type="Dispatch" />
     </Type>
   </Table>
-  <Table Name="" Member="EquipmentTypes">
-    <Type Name="EquipmentType">
-      <Column Name="ID" Type="System.Int64" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Prefix" Type="System.String" CanBeNull="true" />
-      <Column Name="Name" Type="System.String" CanBeNull="true" />
-    </Type>
-  </Table>
   <Table Name="" Member="JobCommodities">
     <Type Name="JobCommodity">
       <Column Name="ID" Type="System.Int64" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -609,15 +602,14 @@
       <Column Name="ID" Type="System.Int64" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="DefaultDriverID" Type="System.Int64" CanBeNull="true" />
       <Column Name="ClassID" Type="System.Int64" CanBeNull="true" />
+      <Column Name="TypeID" Type="System.Int64" CanBeNull="true" />
       <Column Name="UnitNumber" Type="System.String" CanBeNull="true" />
       <Column Name="Serial" Type="System.String" CanBeNull="true" />
       <Column Name="Make" Type="System.String" CanBeNull="true" />
       <Column Name="Model" Type="System.String" CanBeNull="true" />
+      <Column Name="Engine" Type="System.String" CanBeNull="true" />
       <Column Name="Year" Type="System.String" CanBeNull="true" />
-      <Column Name="LicencePlate" Type="System.String" CanBeNull="true" />
-      <Column Name="EngineMake" Type="System.String" CanBeNull="true" />
-      <Column Name="EngineModel" Type="System.String" CanBeNull="true" />
-      <Column Name="EngineType" Type="System.String" CanBeNull="true" />
+      <Column Name="LicencePlate" Type="System.String" CanBeNull="true" />      
       <Column Name="IsDispatchable" Type="System.Boolean" CanBeNull="true" />
       <Column Name="Tare" Type="System.Double" CanBeNull="true" />
       <Column Name="Height" Type="System.Double" CanBeNull="true" />
@@ -630,10 +622,11 @@
       <Column Name="IsOnlyForPushing" Type="System.Boolean" CanBeNull="true" />
       <Column Name="InServiceDate" Type="System.DateTime" CanBeNull="true" />
       <Column Name="OutOfServiceDate" Type="System.DateTime" CanBeNull="true" />
+      <Association Name="EquipmentClass_Equipment" Member="EquipmentClass" ThisKey="ClassID" OtherKey="ID" Type="EquipmentClass" IsForeignKey="true" />
+      <Association Name="EquipmentType_Equipment" Member="EquipmentType" ThisKey="TypeID" OtherKey="ID" Type="EquipmentType" IsForeignKey="true" />
       <Association Name="Equipment_Load" Member="Loads" ThisKey="ID" OtherKey="EquipmentID" Type="Load" />
       <Association Name="Equipment_Dispatch" Member="Dispatches" ThisKey="ID" OtherKey="EquipmentID" Type="Dispatch" />
       <Association Name="Employee_Equipment" Member="Employee" ThisKey="DefaultDriverID" OtherKey="ID" Type="Employee" IsForeignKey="true" />
-      <Association Name="EquipmentClass_Equipment" Member="EquipmentClass" ThisKey="ClassID" OtherKey="ID" Type="EquipmentClass" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="" Member="EquipmentClasses">
@@ -641,6 +634,14 @@
       <Column Name="ID" Type="System.Int64" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Name" Type="System.String" CanBeNull="true" />
       <Association Name="EquipmentClass_Equipment" Member="Equipments" ThisKey="ID" OtherKey="ClassID" Type="Equipment" />
+    </Type>
+  </Table>
+  <Table Name="" Member="EquipmentTypes">
+    <Type Name="EquipmentType">
+      <Column Name="ID" Type="System.Int64" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Prefix" Type="System.String" CanBeNull="true" />
+      <Column Name="Name" Type="System.String" CanBeNull="true" />
+      <Association Name="EquipmentType_Equipment" Member="Equipments" ThisKey="ID" OtherKey="TypeID" Type="Equipment" />
     </Type>
   </Table>
   <Table Name="" Member="Dispatches">
