@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Windows;
 
 namespace SingerDispatch
 {
@@ -37,6 +34,15 @@ namespace SingerDispatch
 
             return result;
         }
+
+        public static string SingerSearchString
+        {
+            get
+            {
+                return "Singer Specialized";
+            }
+        }
+        
 
         public static string PrintedDateFormatString
         {

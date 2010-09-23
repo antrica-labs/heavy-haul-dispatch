@@ -46,7 +46,7 @@ namespace SingerDispatch.Panels.Loads
         {
             if (InDesignMode()) return;
 
-            cmbEquipmentTypes.ItemsSource = (SelectedLoad == null) ? null : from et in Database.EquipmentTypes orderby et.Prefix select et;
+            cmbEquipmentTypes.ItemsSource = (SelectedLoad == null) ? null : (from et in Database.EquipmentTypes orderby et.Prefix select et).ToList();
             cmbEmployees.ItemsSource = (SelectedLoad == null) ? null : from emp in Database.Employees orderby emp.FirstName, emp.LastName select emp;
             cmbDispatchedByEmployees.ItemsSource = (SelectedLoad == null) ? null : from emp in Database.Employees orderby emp.FirstName, emp.LastName select emp;
 
@@ -81,10 +81,16 @@ namespace SingerDispatch.Panels.Loads
             var dispatch = new Dispatch { LoadID = SelectedLoad.ID, DispatchedBy = SingerConfigs.OperatingEmployee };
 
             if (!String.IsNullOrEmpty(SelectedLoad.Schedule))
-            {
-                
+            {   
                 dispatch.Description = string.Format(SingerConfigs.DefaultDispatchDescription, Load.PrintCommodityList(SelectedLoad));
                 dispatch.Schedule = SelectedLoad.Schedule;
+            }
+
+            if (SelectedLoad.Dispatches.Count == 0 && SelectedLoad.Equipment != null)
+            {
+                // Assume they want a dispatch for the tractor pulling this load
+                dispatch.EquipmentType = SelectedLoad.Equipment.EquipmentType;
+                dispatch.Equipment = SelectedLoad.Equipment;
             }
 
             SelectedLoad.Dispatches.Add(dispatch);
@@ -165,31 +171,6 @@ namespace SingerDispatch.Panels.Loads
 
             SelectedLoad.Dispatches.Remove(dispatch);
             ((ObservableCollection<Dispatch>)dgDispatches.ItemsSource).Remove(dispatch);
-        }
-
-        /*
-        private void cmbLoads_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
-        {
-            var load = (Load)cmbLoads.SelectedItem;
-
-            if (load == null || String.IsNullOrEmpty(load.Schedule)) return;
-
-            var dispatch = (Dispatch)dgDispatches.SelectedItem;
-
-            dispatch.Description = string.Format(SingerConfigs.DefaultDispatchDescription, Load.PrintCommodityList(load));
-            dispatch.Schedule = load.Schedule;
-        }
-        */
-
-        private void cmbEquipmentTypes_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
-        {
-            var type = (EquipmentType)cmbEquipmentTypes.SelectedItem;
-
-            if (type == null) return;
-
-            var prefix = string.Format("{0}-", type.Prefix);
-
-            cmbUnits.ItemsSource = (SelectedLoad == null) ? null : from u in Database.Equipment where u.IsDispatchable == true && u.UnitNumber.StartsWith(prefix) orderby u.UnitNumber select u;
         }
 
         private void AddTravel_Click(object sender, RoutedEventArgs e)
@@ -277,8 +258,6 @@ namespace SingerDispatch.Panels.Loads
             dgOutOfProvince.ItemsSource = (dispatch == null) ? null : new ObservableCollection<OutOfProvinceTravel>(dispatch.OutOfProvinceTravels);
             dgSwampers.ItemsSource = (dispatch == null) ? null : new ObservableCollection<Swamper>(dispatch.Swampers);
         }
-
-        
     }
 
     public class EmployeeDropList : ObservableCollection<Employee>

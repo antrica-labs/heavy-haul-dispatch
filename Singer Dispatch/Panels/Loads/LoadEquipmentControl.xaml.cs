@@ -53,7 +53,7 @@ namespace SingerDispatch.Panels.Loads
         {
             cmbSeasons.ItemsSource = from s in Database.Seasons select s;
             cmbRates.ItemsSource = GetCompanyRates(SelectedCompany);
-            cmbUnits.ItemsSource = (SelectedLoad == null) ? null : from u in Database.Equipment where u.EquipmentClass.Name == "Tractor" || u.EquipmentClass.Name == "Trailor" orderby u.UnitNumber select u;
+            cmbUnits.ItemsSource = (SelectedLoad == null) ? null : from u in Database.Equipment where u.EquipmentClass.Name == "Tractor" orderby u.UnitNumber select u;
             cmbStatuses.ItemsSource = from s in Database.Statuses select s;
 
             if (cmbRates.SelectedItem != null)

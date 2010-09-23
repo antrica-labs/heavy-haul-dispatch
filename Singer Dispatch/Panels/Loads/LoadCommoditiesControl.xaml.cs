@@ -1,16 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Collections.ObjectModel;
 using SingerDispatch.Printing.Documents;
 using SingerDispatch.Windows;
@@ -53,7 +44,7 @@ namespace SingerDispatch.Panels.Loads
 
             cmbCommodityName.ItemsSource = SelectedLoad.Job.JobCommodities.ToList();
 
-            var companies = from c in Database.Companies select c;
+            var companies = (from c in Database.Companies select c).ToList();
 
             cmbShipperCompanies.ItemsSource = companies;
             cmbConsigneeCompanies.ItemsSource = companies;
@@ -79,6 +70,25 @@ namespace SingerDispatch.Panels.Loads
 
             var list = (ObservableCollection<LoadedCommodity>)dgCommodities.ItemsSource;
             var loaded = new LoadedCommodity { Load = SelectedLoad, LoadSiteCompany = SelectedCompany, UnloadSiteCompany = SelectedCompany };
+
+            var singerList = from c in (List<Company>)cmbShipperCompanies.ItemsSource where c.Name.Contains(SingerConfigs.SingerSearchString) select c;
+
+            if (singerList.Count() > 0)
+                loaded.ShipperCompany = singerList.First();
+
+            try
+            {
+                loaded.ShipperAddress = loaded.ShipperCompany.Addresses.First();
+            }
+            catch { }
+
+            loaded.ConsigneeCompany = SelectedCompany;
+
+            try
+            {
+                loaded.ConsigneeAddress = loaded.ConsigneeCompany.Addresses.First();
+            }
+            catch { }
 
             SelectedLoad.LoadedCommodities.Add(loaded);
             list.Add(loaded);

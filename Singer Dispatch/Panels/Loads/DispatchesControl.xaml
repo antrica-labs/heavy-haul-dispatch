@@ -37,7 +37,7 @@
                 <Button Style="{StaticResource HorizontalEnd}" Grid.Column="3" Click="RemoveDispatch_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgDispatches, Path=SelectedItem}">Remove dispatch</Button>
             </Grid>
             
-            <GroupBox Header="Dispatch Details" DataContext="{Binding ElementName=dgDispatches, Path=SelectedItem}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgDispatches, Path=SelectedItem}">
+            <GroupBox Name="gbDetails" Header="Dispatch Details" DataContext="{Binding ElementName=dgDispatches, Path=SelectedItem}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgDispatches, Path=SelectedItem}">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
@@ -59,10 +59,10 @@
                     <ComboBox Name="cmbDispatchedByEmployees" Grid.Row="0" Grid.Column="1" SelectedItem="{Binding DispatchedBy}" ItemTemplate="{StaticResource SimpleNameTemplate}" />
                     
                     <Label Grid.Row="1" Grid.Column="0">Equipment type:</Label>
-                    <ComboBox Name="cmbEquipmentTypes" Grid.Row="1" Grid.Column="1" SelectedItem="{Binding EquipmentType}" ItemTemplate="{StaticResource SimpleNameTemplate}" TextSearch.TextPath="Name" SelectionChanged="cmbEquipmentTypes_SelectionChanged" Controls:ComboUtil.AllowNull="True" />
+                    <ComboBox Name="cmbEquipmentTypes" Grid.Row="1" Grid.Column="1" ItemTemplate="{StaticResource SimpleNameTemplate}" TextSearch.TextPath="Name" Controls:ComboUtil.AllowNull="True" SelectedItem="{Binding EquipmentType}" />
 
                     <Label Grid.Row="2" Grid.Column="0">Unit:</Label>
-                    <ComboBox Name="cmbUnits" Grid.Row="2" Grid.Column="1" SelectedItem="{Binding Equipment}" ItemTemplate="{StaticResource EquipmentNameTemplate}" TextSearch.TextPath="UnitNumber" Controls:ComboUtil.AllowNull="True" />
+                    <ComboBox Name="cmbUnits" Grid.Row="2" Grid.Column="1" ItemTemplate="{StaticResource EquipmentNameTemplate}" TextSearch.TextPath="UnitNumber" Controls:ComboUtil.AllowNull="True" ItemsSource="{Binding EquipmentType.Equipment}" SelectedItem="{Binding Equipment}" />
                     
                     <Label Grid.Row="3" Grid.Column="0">Driver:</Label>
                     <ComboBox Name="cmbEmployees" Grid.Row="3" Grid.Column="1" SelectedItem="{Binding Employee}" ItemTemplate="{StaticResource SimpleNameTemplate}" TextSearch.TextPath="Name" Controls:ComboUtil.AllowNull="True" />

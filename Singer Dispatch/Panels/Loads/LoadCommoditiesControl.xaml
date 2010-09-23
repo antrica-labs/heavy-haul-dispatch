@@ -185,7 +185,7 @@
                                 <ColumnDefinition />
                             </Grid.ColumnDefinitions>
 
-                            <ComboBox Name="cmbLoadingProvinces" Grid.Column="0" SelectedItem="{Binding LoadingProvince}" ItemTemplate="{StaticResource AbbreviationTemplate}" />
+                            <ComboBox Name="cmbLoadingProvinces" Grid.Column="0" SelectedItem="{Binding LoadingProvince}" ItemTemplate="{StaticResource AbbreviationTemplate}" TextSearch.TextPath="Abbreviation" />
                             <TextBox Grid.Column="1" Text="{Binding LoadAddress}" />
                         </Grid>
                         <Grid Grid.Column="3" Grid.Row="1">
@@ -205,7 +205,7 @@
                                 <ColumnDefinition />
                             </Grid.ColumnDefinitions>
 
-                            <ComboBox Name="cmbUnloadingProvinces" Grid.Column="0" SelectedItem="{Binding UnloadingProvince}" ItemTemplate="{StaticResource AbbreviationTemplate}" />
+                            <ComboBox Name="cmbUnloadingProvinces" Grid.Column="0" SelectedItem="{Binding UnloadingProvince}" ItemTemplate="{StaticResource AbbreviationTemplate}" TextSearch.TextPath="Abbreviation" />
                             <TextBox Grid.Column="1" Text="{Binding UnloadAddress}" />
                         </Grid>
                         <Grid Grid.Row="2" Grid.Column="3">

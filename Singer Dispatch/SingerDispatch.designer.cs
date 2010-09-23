@@ -14868,12 +14868,12 @@ namespace SingerDispatch
 					if ((previousValue != null))
 					{
 						this._EquipmentType.Entity = null;
-						previousValue.Equipments.Remove(this);
+						previousValue.Equipment.Remove(this);
 					}
 					this._EquipmentType.Entity = value;
 					if ((value != null))
 					{
-						value.Equipments.Add(this);
+						value.Equipment.Add(this);
 						this._TypeID = value.ID;
 					}
 					else
@@ -15090,7 +15090,7 @@ namespace SingerDispatch
 		
 		private string _Name;
 		
-		private EntitySet<Equipment> _Equipments;
+		private EntitySet<Equipment> _Equipment;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -15106,7 +15106,7 @@ namespace SingerDispatch
 		
 		public EquipmentType()
 		{
-			this._Equipments = new EntitySet<Equipment>(new Action<Equipment>(this.attach_Equipments), new Action<Equipment>(this.detach_Equipments));
+			this._Equipment = new EntitySet<Equipment>(new Action<Equipment>(this.attach_Equipment), new Action<Equipment>(this.detach_Equipment));
 			OnCreated();
 		}
 		
@@ -15170,16 +15170,16 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="EquipmentType_Equipment", Storage="_Equipments", ThisKey="ID", OtherKey="TypeID")]
-		public EntitySet<Equipment> Equipments
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="EquipmentType_Equipment", Storage="_Equipment", ThisKey="ID", OtherKey="TypeID")]
+		public EntitySet<Equipment> Equipment
 		{
 			get
 			{
-				return this._Equipments;
+				return this._Equipment;
 			}
 			set
 			{
-				this._Equipments.Assign(value);
+				this._Equipment.Assign(value);
 			}
 		}
 		
@@ -15203,13 +15203,13 @@ namespace SingerDispatch
 			}
 		}
 		
-		private void attach_Equipments(Equipment entity)
+		private void attach_Equipment(Equipment entity)
 		{
 			this.SendPropertyChanging();
 			entity.EquipmentType = this;
 		}
 		
-		private void detach_Equipments(Equipment entity)
+		private void detach_Equipment(Equipment entity)
 		{
 			this.SendPropertyChanging();
 			entity.EquipmentType = null;

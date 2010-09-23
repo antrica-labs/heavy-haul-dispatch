@@ -52,6 +52,11 @@ namespace SingerDispatch.Database
                 PrepareEntityDelete(l, context);
             }
 
+            foreach (var r in job.ReferenceNumbers.Where(r => r.ID != 0))
+            {
+                context.JobReferenceNumbers.DeleteOnSubmit(r);
+            }
+
             if (job.ID != 0)
                 context.Jobs.DeleteOnSubmit(job);
         }
@@ -90,6 +95,9 @@ namespace SingerDispatch.Database
 
             foreach (var item in load.ThirdPartyServices.Where(item => item.ID != 0))
                 context.ThirdPartyServices.DeleteOnSubmit(item);
+
+            foreach (var item in load.ReferenceNumbers.Where(item => item.ID != 0))
+                context.LoadReferenceNumbers.DeleteOnSubmit(item);
 
             if (load.ID != 0)
                 context.Loads.DeleteOnSubmit(load);

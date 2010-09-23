@@ -641,7 +641,7 @@
       <Column Name="ID" Type="System.Int64" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Prefix" Type="System.String" CanBeNull="true" />
       <Column Name="Name" Type="System.String" CanBeNull="true" />
-      <Association Name="EquipmentType_Equipment" Member="Equipments" ThisKey="ID" OtherKey="TypeID" Type="Equipment" />
+      <Association Name="EquipmentType_Equipment" Member="Equipment" ThisKey="ID" OtherKey="TypeID" Type="Equipment" />
     </Type>
   </Table>
   <Table Name="" Member="Dispatches">
