@@ -5,6 +5,8 @@ using System.Windows.Controls;
 using System.Collections.ObjectModel;
 using SingerDispatch.Printing.Documents;
 using SingerDispatch.Windows;
+using System.Windows.Input;
+using SingerDispatch.Controls;
 
 namespace SingerDispatch.Panels.Loads
 {
@@ -13,12 +15,33 @@ namespace SingerDispatch.Panels.Loads
     /// </summary>
     public partial class LoadCommoditiesControl
     {
+        public static DependencyProperty CommonRoutesProperty = DependencyProperty.Register("CommonRoutes", typeof(ObservableCollection<string>), typeof(LoadCommoditiesControl));
+        public static DependencyProperty CommonInstructionsProperty = DependencyProperty.Register("CommonInstructions", typeof(ObservableCollection<string>), typeof(LoadCommoditiesControl));
+
         public SingerDispatchDataContext Database { get; set; }
+
+        public ObservableCollection<string> CommonRoutes
+        {
+            get
+            {
+                return (ObservableCollection<string>)GetValue(CommonRoutesProperty);
+            }
+            set
+            {
+                SetValue(CommonRoutesProperty, value);
+            }
+        }
 
         public LoadCommoditiesControl()
         {
             InitializeComponent();
 
+            CommonRoutes = new ObservableCollection<string>();
+
+            CommonRoutes.Add("Something really long goes in this box. Something really long goes in this box. Something really long goes in this box. Something really long goes in this box. Something really long goes in this box. Something really long goes in this box. Something really long goes in this box.");
+            CommonRoutes.Add("Another long entry is in here. Another long entry is in here. Another long entry is in here. Another long entry is in here. Another long entry is in here. Another long entry is in here. Another long entry is in here. Another long entry is in here.");
+            CommonRoutes.Add("All work and no play makes Jack a dull boy. All work and no play makes Jack a dull boy. All work and no play makes Jack a dull boy. All work and no play makes Jack a dull boy. All work and no play makes Jack a dull boy. All work and no play makes Jack a dull boy. All work and no play makes Jack a dull boy. All work and no play makes Jack a dull boy. All work and no play makes Jack a dull boy. All work and no play makes Jack a dull boy. All work and no play makes Jack a dull boy. All work and no play makes Jack a dull boy. All work and no play makes Jack a dull boy. All work and no play makes Jack a dull boy. ");
+            
             if (InDesignMode()) return;
 
             Database = SingerConfigs.CommonDataContext;
@@ -36,6 +59,7 @@ namespace SingerDispatch.Panels.Loads
             base.SelectedLoadChanged(newValue, oldValue);
 
             dgCommodities.ItemsSource = (newValue == null) ? null : new ObservableCollection<LoadedCommodity>(newValue.LoadedCommodities);
+            UpdateComboBoxes();
         }
 
         private void UpdateComboBoxes()
@@ -195,6 +219,160 @@ namespace SingerDispatch.Panels.Loads
             if (SelectedLoad != null)
                 SelectedLoad.Notify("LoadedCommodities");
         }
-        
+
+        private static void ReindexCollection(ObservableCollection<LoadedCommodity> list)
+        {
+            int index = 1;
+
+            foreach (var item in list)
+            {
+                item.OrderIndex = index;
+
+                index++;
+            }
+        }
+
+
+        #region DraggedItem
+
+        /// <summary>
+        /// DraggedItem Dependency Property
+        /// </summary>
+        public static readonly DependencyProperty DraggedItemProperty = DependencyProperty.Register("DraggedItem", typeof(LoadedCommodity), typeof(LoadCommoditiesControl));
+
+        /// <summary>
+        /// Gets or sets the DraggedItem property.  This dependency property 
+        /// indicates ....
+        /// </summary>
+        public LoadedCommodity DraggedItem
+        {
+            get { return (LoadedCommodity)GetValue(DraggedItemProperty); }
+            set { SetValue(DraggedItemProperty, value); }
+        }
+
+        #endregion
+
+        #region edit mode monitoring
+
+        /// <summary>
+        /// State flag which indicates whether the grid is in edit
+        /// mode or not.
+        /// </summary>
+        public bool IsEditing { get; set; }
+
+        private void OnBeginEdit(object sender, DataGridBeginningEditEventArgs e)
+        {
+            IsEditing = true;
+            //in case we are in the middle of a drag/drop operation, cancel it...
+            if (IsDragging) ResetDragDrop();
+        }
+
+        private void OnEndEdit(object sender, DataGridCellEditEndingEventArgs e)
+        {
+            IsEditing = false;
+        }
+
+        #endregion
+
+        #region Drag and Drop Rows
+
+        /// <summary>
+        /// Keeps in mind whether
+        /// </summary>
+        public bool IsDragging { get; set; }
+
+        /// <summary>
+        /// Initiates a drag action if the grid is not in edit mode.
+        /// </summary>
+        private void OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (IsEditing) return;
+
+            var row = UIHelpers.TryFindFromPoint<DataGridRow>((UIElement)sender, e.GetPosition(dgCommodities));
+            if (row == null || row.IsEditing) return;
+
+            //set flag that indicates we're capturing mouse movements
+            IsDragging = true;
+            DraggedItem = (LoadedCommodity)row.Item;
+        }
+
+
+        /// <summary>
+        /// Completes a drag/drop operation.
+        /// </summary>
+        private void OnMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            if (!IsDragging || IsEditing)
+            {
+                return;
+            }
+
+            //get the target item
+            var targetItem = (LoadedCommodity)dgCommodities.SelectedItem;
+
+            if (targetItem == null || !ReferenceEquals(DraggedItem, targetItem))
+            {
+                var list = (ObservableCollection<LoadedCommodity>)dgCommodities.ItemsSource;
+
+                //remove the source from the list
+                list.Remove(DraggedItem);
+
+                //get target index
+                var targetIndex = list.IndexOf(targetItem);
+
+                //move source at the target's location
+                list.Insert(targetIndex, DraggedItem);
+
+                //select the dropped item
+                dgCommodities.SelectedItem = DraggedItem;
+
+                ReindexCollection((ObservableCollection<LoadedCommodity>)dgCommodities.ItemsSource);
+            }
+
+            //reset
+            ResetDragDrop();
+        }
+
+
+        /// <summary>
+        /// Closes the popup and resets the
+        /// grid to read-enabled mode.
+        /// </summary>
+        private void ResetDragDrop()
+        {
+            IsDragging = false;
+            popup.IsOpen = false;
+            dgCommodities.IsReadOnly = false;
+        }
+
+
+        /// <summary>
+        /// Updates the popup's position in case of a drag/drop operation.
+        /// </summary>
+        private void OnMouseMove(object sender, MouseEventArgs e)
+        {
+            if (!IsDragging || e.LeftButton != MouseButtonState.Pressed) return;
+
+            //display the popup if it hasn't been opened yet
+            if (!popup.IsOpen)
+            {
+                //switch to read-only mode
+                dgCommodities.IsReadOnly = true;
+
+                //make sure the popup is visible
+                popup.IsOpen = true;
+            }
+
+
+            Size popupSize = new Size(popup.ActualWidth, popup.ActualHeight);
+            popup.PlacementRectangle = new Rect(e.GetPosition(this), popupSize);
+
+            //make sure the row under the grid is being selected
+            Point position = e.GetPosition(dgCommodities);
+            var row = UIHelpers.TryFindFromPoint<DataGridRow>(dgCommodities, position);
+            if (row != null) dgCommodities.SelectedItem = row.Item;
+        }
+
+        #endregion
     }
 }

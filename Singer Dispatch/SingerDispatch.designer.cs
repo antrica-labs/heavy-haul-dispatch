@@ -188,6 +188,9 @@ namespace SingerDispatch
     partial void InsertConfiguration(Configuration instance);
     partial void UpdateConfiguration(Configuration instance);
     partial void DeleteConfiguration(Configuration instance);
+    partial void InsertStorageItem(StorageItem instance);
+    partial void UpdateStorageItem(StorageItem instance);
+    partial void DeleteStorageItem(StorageItem instance);
     #endregion
 		
 		public SingerDispatchDataContext(string connection) : 
@@ -635,6 +638,14 @@ namespace SingerDispatch
 			get
 			{
 				return this.GetTable<Configuration>();
+			}
+		}
+		
+		public System.Data.Linq.Table<StorageItem> StorageItems
+		{
+			get
+			{
+				return this.GetTable<StorageItem>();
 			}
 		}
 	}
@@ -1496,6 +1507,8 @@ namespace SingerDispatch
 		
 		private EntitySet<QuoteCommodity> _QuoteCommodities;
 		
+		private EntitySet<StorageItem> _Storage;
+		
 		private EntityRef<Company> _Company;
 		
     #region Extensibility Method Definitions
@@ -1538,6 +1551,7 @@ namespace SingerDispatch
 		{
 			this._JobCommodities = new EntitySet<JobCommodity>(new Action<JobCommodity>(this.attach_JobCommodities), new Action<JobCommodity>(this.detach_JobCommodities));
 			this._QuoteCommodities = new EntitySet<QuoteCommodity>(new Action<QuoteCommodity>(this.attach_QuoteCommodities), new Action<QuoteCommodity>(this.detach_QuoteCommodities));
+			this._Storage = new EntitySet<StorageItem>(new Action<StorageItem>(this.attach_Storage), new Action<StorageItem>(this.detach_Storage));
 			this._Company = default(EntityRef<Company>);
 			OnCreated();
 		}
@@ -1872,6 +1886,19 @@ namespace SingerDispatch
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Commodity_StorageItem", Storage="_Storage", ThisKey="ID", OtherKey="CommodityID")]
+		public EntitySet<StorageItem> Storage
+		{
+			get
+			{
+				return this._Storage;
+			}
+			set
+			{
+				this._Storage.Assign(value);
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Company_Commodity", Storage="_Company", ThisKey="CompanyID", OtherKey="ID", IsForeignKey=true)]
 		public Company Company
 		{
@@ -1948,6 +1975,18 @@ namespace SingerDispatch
 		{
 			this.SendPropertyChanging();
 			entity.OriginalCommodity = null;
+		}
+		
+		private void attach_Storage(StorageItem entity)
+		{
+			this.SendPropertyChanging();
+			entity.Commodity = this;
+		}
+		
+		private void detach_Storage(StorageItem entity)
+		{
+			this.SendPropertyChanging();
+			entity.Commodity = null;
 		}
 	}
 	
@@ -7622,6 +7661,8 @@ namespace SingerDispatch
 		
 		private long _ID;
 		
+		private int _OrderIndex;
+		
 		private System.Nullable<long> _JobCommodityID;
 		
 		private System.Nullable<long> _LoadID;
@@ -7724,6 +7765,8 @@ namespace SingerDispatch
     partial void OnCreated();
     partial void OnIDChanging(long value);
     partial void OnIDChanged();
+    partial void OnOrderIndexChanging(int value);
+    partial void OnOrderIndexChanged();
     partial void OnJobCommodityIDChanging(System.Nullable<long> value);
     partial void OnJobCommodityIDChanged();
     partial void OnLoadIDChanging(System.Nullable<long> value);
@@ -7825,6 +7868,26 @@ namespace SingerDispatch
 					this._ID = value;
 					this.SendPropertyChanged("ID");
 					this.OnIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OrderIndex")]
+		public int OrderIndex
+		{
+			get
+			{
+				return this._OrderIndex;
+			}
+			set
+			{
+				if ((this._OrderIndex != value))
+				{
+					this.OnOrderIndexChanging(value);
+					this.SendPropertyChanging();
+					this._OrderIndex = value;
+					this.SendPropertyChanged("OrderIndex");
+					this.OnOrderIndexChanged();
 				}
 			}
 		}
@@ -18183,6 +18246,277 @@ namespace SingerDispatch
 					this._Value = value;
 					this.SendPropertyChanged("Value");
 					this.OnValueChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="")]
+	public partial class StorageItem : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private long _ID;
+		
+		private System.Nullable<long> _CommodityID;
+		
+		private System.Nullable<System.DateTime> _DateEntered;
+		
+		private System.Nullable<System.DateTime> _DateRemoved;
+		
+		private string _YardLocation;
+		
+		private System.Nullable<decimal> _BillingRate;
+		
+		private string _ReferenceCode;
+		
+		private string _Notes;
+		
+		private EntityRef<Commodity> _Commodity;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDChanging(long value);
+    partial void OnIDChanged();
+    partial void OnCommodityIDChanging(System.Nullable<long> value);
+    partial void OnCommodityIDChanged();
+    partial void OnDateEnteredChanging(System.Nullable<System.DateTime> value);
+    partial void OnDateEnteredChanged();
+    partial void OnDateRemovedChanging(System.Nullable<System.DateTime> value);
+    partial void OnDateRemovedChanged();
+    partial void OnYardLocationChanging(string value);
+    partial void OnYardLocationChanged();
+    partial void OnBillingRateChanging(System.Nullable<decimal> value);
+    partial void OnBillingRateChanged();
+    partial void OnReferenceCodeChanging(string value);
+    partial void OnReferenceCodeChanged();
+    partial void OnNotesChanging(string value);
+    partial void OnNotesChanged();
+    #endregion
+		
+		public StorageItem()
+		{
+			this._Commodity = default(EntityRef<Commodity>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, IsPrimaryKey=true, IsDbGenerated=true)]
+		public long ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this.OnIDChanging(value);
+					this.SendPropertyChanging();
+					this._ID = value;
+					this.SendPropertyChanged("ID");
+					this.OnIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CommodityID")]
+		public System.Nullable<long> CommodityID
+		{
+			get
+			{
+				return this._CommodityID;
+			}
+			set
+			{
+				if ((this._CommodityID != value))
+				{
+					if (this._Commodity.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnCommodityIDChanging(value);
+					this.SendPropertyChanging();
+					this._CommodityID = value;
+					this.SendPropertyChanged("CommodityID");
+					this.OnCommodityIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateEntered")]
+		public System.Nullable<System.DateTime> DateEntered
+		{
+			get
+			{
+				return this._DateEntered;
+			}
+			set
+			{
+				if ((this._DateEntered != value))
+				{
+					this.OnDateEnteredChanging(value);
+					this.SendPropertyChanging();
+					this._DateEntered = value;
+					this.SendPropertyChanged("DateEntered");
+					this.OnDateEnteredChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateRemoved")]
+		public System.Nullable<System.DateTime> DateRemoved
+		{
+			get
+			{
+				return this._DateRemoved;
+			}
+			set
+			{
+				if ((this._DateRemoved != value))
+				{
+					this.OnDateRemovedChanging(value);
+					this.SendPropertyChanging();
+					this._DateRemoved = value;
+					this.SendPropertyChanged("DateRemoved");
+					this.OnDateRemovedChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_YardLocation")]
+		public string YardLocation
+		{
+			get
+			{
+				return this._YardLocation;
+			}
+			set
+			{
+				if ((this._YardLocation != value))
+				{
+					this.OnYardLocationChanging(value);
+					this.SendPropertyChanging();
+					this._YardLocation = value;
+					this.SendPropertyChanged("YardLocation");
+					this.OnYardLocationChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BillingRate")]
+		public System.Nullable<decimal> BillingRate
+		{
+			get
+			{
+				return this._BillingRate;
+			}
+			set
+			{
+				if ((this._BillingRate != value))
+				{
+					this.OnBillingRateChanging(value);
+					this.SendPropertyChanging();
+					this._BillingRate = value;
+					this.SendPropertyChanged("BillingRate");
+					this.OnBillingRateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ReferenceCode")]
+		public string ReferenceCode
+		{
+			get
+			{
+				return this._ReferenceCode;
+			}
+			set
+			{
+				if ((this._ReferenceCode != value))
+				{
+					this.OnReferenceCodeChanging(value);
+					this.SendPropertyChanging();
+					this._ReferenceCode = value;
+					this.SendPropertyChanged("ReferenceCode");
+					this.OnReferenceCodeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Notes")]
+		public string Notes
+		{
+			get
+			{
+				return this._Notes;
+			}
+			set
+			{
+				if ((this._Notes != value))
+				{
+					this.OnNotesChanging(value);
+					this.SendPropertyChanging();
+					this._Notes = value;
+					this.SendPropertyChanged("Notes");
+					this.OnNotesChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Commodity_StorageItem", Storage="_Commodity", ThisKey="CommodityID", OtherKey="ID", IsForeignKey=true)]
+		public Commodity Commodity
+		{
+			get
+			{
+				return this._Commodity.Entity;
+			}
+			set
+			{
+				Commodity previousValue = this._Commodity.Entity;
+				if (((previousValue != value) 
+							|| (this._Commodity.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Commodity.Entity = null;
+						previousValue.Storage.Remove(this);
+					}
+					this._Commodity.Entity = value;
+					if ((value != null))
+					{
+						value.Storage.Add(this);
+						this._CommodityID = value.ID;
+					}
+					else
+					{
+						this._CommodityID = default(Nullable<long>);
+					}
+					this.SendPropertyChanged("Commodity");
 				}
 			}
 		}

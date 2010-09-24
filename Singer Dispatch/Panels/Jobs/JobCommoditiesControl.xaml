@@ -5,7 +5,7 @@
                        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                        xmlns:Panels="clr-namespace:SingerDispatch.Panels"
                        xmlns:Controls="clr-namespace:SingerDispatch.Controls"
-                       x:Name="ThisControl"
+                       x:Name="ThePanel"
                        Loaded="ControlLoaded" mc:Ignorable="d" d:DesignWidth="780">
     <UserControl.Resources>
         <ResourceDictionary>
@@ -186,7 +186,7 @@
             </Grid>
         </StackPanel>
 
-        <DataGrid Name="dgCommodities" Style="{StaticResource ListDisplay}">
+        <DataGrid Name="dgCommodities" Style="{StaticResource ListDisplay}" SelectionChanged="dgCommodities_SelectionChanged">
             <DataGrid.Columns>                
                 <DataGridTextColumn Header="Unit" Binding="{Binding Unit}" />
                 <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="2*" />

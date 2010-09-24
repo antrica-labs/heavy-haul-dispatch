@@ -1,10 +1,10 @@
-﻿<UserControl x:Class="SingerDispatch.Panels.Storage.StoragePanel"
+﻿<Panels:BaseUserControl x:Class="SingerDispatch.Panels.Storage.StoragePanel"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:Storage="clr-namespace:SingerDispatch.Panels.Storage"
-             mc:Ignorable="d">
+             xmlns:Panels="clr-namespace:SingerDispatch.Panels"
+             mc:Ignorable="d" d:DesignWidth="800" Loaded="Control_Loaded">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -12,12 +12,39 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <Grid>
+    <DockPanel>
         <TabControl Name="Tabs">
             <TabItem Header="Storage List">
-                <Storage:StorageListControl />
+                <DockPanel>
+                    <StackPanel DockPanel.Dock="Bottom">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            
+                            <Button Grid.Column="0" Style="{StaticResource Horizontal}">Add item</Button>                            
+                        </Grid>
+                        
+                        <GroupBox Header="Storge Item" DataContext="{Binding ElementName=dgStorageItems, Path=SelectedItem}">
+                            <Grid>
+                                
+                            </Grid>    
+                        </GroupBox>
+                    </StackPanel>
+                    
+                    <DataGrid Name="dgStorageItems" Style="{StaticResource ListDisplay}">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Company" Binding="{Binding Company.Name}" />
+                            <DataGridTextColumn Header="Commodity" Binding="{Binding Commodity.Name}" />
+                            <DataGridTextColumn Header="Location" Binding="{Binding Location}" />
+                            <DataGridTextColumn Header="Rate" Binding="{Binding Rate, StringFormat=C}" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </DockPanel>    
             </TabItem>
-            <TabItem Header="Billing"></TabItem>
         </TabControl>
-    </Grid>
-</UserControl>
+    </DockPanel>
+</Panels:BaseUserControl>

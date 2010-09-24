@@ -59,6 +59,7 @@
       <Association Name="Commodity_JobCommodity" Member="JobCommodities" ThisKey="ID" OtherKey="OriginalCommodityID" Type="JobCommodity" />
       <Association Name="Commodity_QuoteCommodity" Member="QuoteCommodities" ThisKey="ID" OtherKey="OriginalCommodityID" Type="QuoteCommodity" />
       <Association Name="Company_Commodity" Member="Company" ThisKey="CompanyID" OtherKey="ID" Type="Company" IsForeignKey="true" />
+      <Association Name="Commodity_StorageItem" Member="Storage" ThisKey="ID" OtherKey="CommmodityID" Type="StorageItem" />
     </Type>
   </Table>
   <Table Name="" Member="Companies">
@@ -309,6 +310,7 @@
   <Table Name="" Member="LoadedCommodities">
     <Type Name="LoadedCommodity">
       <Column Name="ID" Type="System.Int64" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="OrderIndex" Type="System.Int32" CanBeNull="false" />
       <Column Name="JobCommodityID" Type="System.Int64" CanBeNull="true" />
       <Column Name="LoadID" Type="System.Int64" CanBeNull="true" />
       <Column Name="LoadSiteCompanyID" Type="System.Int64" CanBeNull="true" />
@@ -784,6 +786,19 @@
       <Column Name="ID" Type="System.Int64" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Name" Type="System.String" CanBeNull="true" />
       <Column Name="Value" Type="System.String" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="" Member="StorageItems">
+    <Type Name="StorageItem">
+      <Column Name="ID" Type="System.Int64" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="CommodityID" Type="System.Int64" CanBeNull="true" />
+      <Column Name="DateEntered" Type="System.DateTime" CanBeNull="true" />
+      <Column Name="DateRemoved" Type="System.DateTime" CanBeNull="true" />
+      <Column Name="YardLocation" Type="System.String" CanBeNull="true" />
+      <Column Name="BillingRate" Type="System.Decimal" CanBeNull="true" />
+      <Column Name="ReferenceCode" Type="System.String" CanBeNull="true" />
+      <Column Name="Notes" Type="System.String" CanBeNull="true" />
+      <Association Name="Commodity_StorageItem" Member="Commodity" ThisKey="CommodityID" OtherKey="ID" Type="Commodity" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>

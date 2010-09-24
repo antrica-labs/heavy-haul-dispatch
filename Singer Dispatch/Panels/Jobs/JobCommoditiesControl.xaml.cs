@@ -13,11 +13,41 @@ namespace SingerDispatch.Panels.Jobs
     /// </summary>
     public partial class JobCommoditiesControl
     {
+        public static DependencyProperty CommonSiteNamesProperty = DependencyProperty.Register("CommonSiteNames", typeof(ObservableCollection<string>), typeof(JobCommoditiesControl));
+        public static DependencyProperty CommonSiteAddressesProperty = DependencyProperty.Register("CommonSiteAddresses", typeof(ObservableCollection<string>), typeof(JobCommoditiesControl));
+
         public SingerDispatchDataContext Database { get; set; }
+
+        public ObservableCollection<string> CommonSiteNames
+        {
+            get
+            {
+                return (ObservableCollection<string>)GetValue(CommonSiteNamesProperty);
+            }
+            set
+            {
+                SetValue(CommonSiteNamesProperty, value);
+            }
+        }
+
+        public ObservableCollection<string> CommonSiteAddresses
+        {
+            get
+            {
+                return (ObservableCollection<string>)GetValue(CommonSiteAddressesProperty);
+            }
+            set
+            {
+                SetValue(CommonSiteAddressesProperty, value);
+            }
+        }
 
         public JobCommoditiesControl()
         {
             InitializeComponent();
+
+            CommonSiteNames = new ObservableCollection<string>();
+            CommonSiteAddresses = new ObservableCollection<string>();
 
             if (InDesignMode()) return;
             
@@ -29,6 +59,7 @@ namespace SingerDispatch.Panels.Jobs
             if (InDesignMode()) return;
             
             cmbCommodityName.ItemsSource = (SelectedJob == null) ? null : from c in Database.Commodities where c.Company == SelectedJob.Company || c.Company == SelectedJob.CareOfCompany orderby c.Name, c.Unit select c;
+            UpdateAddressesAndSites();
         }
 
         protected override void SelectedJobChanged(Job newValue, Job oldValue)
@@ -36,6 +67,26 @@ namespace SingerDispatch.Panels.Jobs
             base.SelectedJobChanged(newValue, oldValue);
 
             dgCommodities.ItemsSource = (newValue == null) ? null : new ObservableCollection<JobCommodity>(newValue.JobCommodities);
+        }
+
+        private void UpdateAddressesAndSites()
+        {
+            var list = (ObservableCollection<JobCommodity>)dgCommodities.ItemsSource;
+
+            if (list != null)
+            {
+                foreach (var item in list)
+                {
+                    if (item.DepartureAddress != null && item.DepartureAddress.Trim().Length > 0 && !CommonSiteAddresses.Contains(item.DepartureAddress))
+                        CommonSiteAddresses.Add(item.DepartureAddress);
+                    if (item.ArrivalAddress != null && item.ArrivalAddress.Trim().Length > 0 && !CommonSiteAddresses.Contains(item.ArrivalAddress))
+                        CommonSiteAddresses.Add(item.ArrivalAddress);
+                    if (item.DepartureSiteName != null && item.DepartureSiteName.Trim().Length > 0 && !CommonSiteNames.Contains(item.DepartureSiteName))
+                        CommonSiteNames.Add(item.DepartureSiteName);
+                    if (item.ArrivalSiteName != null && item.ArrivalSiteName.Trim().Length > 0 && !CommonSiteNames.Contains(item.ArrivalSiteName))
+                        CommonSiteNames.Add(item.ArrivalSiteName);
+                }
+            }
         }
 
         private void NewCommodity_Click(object sender, RoutedEventArgs e)
@@ -126,6 +177,11 @@ namespace SingerDispatch.Panels.Jobs
                 commodity.ArrivalSiteName = null;
                 commodity.ArrivalAddress = null;
             }
+        }
+
+        private void dgCommodities_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            UpdateAddressesAndSites();
         }
 
         
