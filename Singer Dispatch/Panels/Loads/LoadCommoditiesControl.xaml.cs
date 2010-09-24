@@ -62,6 +62,11 @@ namespace SingerDispatch.Panels.Loads
             UpdateComboBoxes();
         }
 
+        protected override void UseImperialMeasurementsChanged(bool value)
+        {
+            base.UseImperialMeasurementsChanged(value);
+        }
+
         private void UpdateComboBoxes()
         {
             if (SelectedLoad == null) return;
@@ -76,6 +81,8 @@ namespace SingerDispatch.Panels.Loads
             cmbLoadingContactCompanies.ItemsSource = companies;
             cmbUnloadingSiteContactCompanies.ItemsSource = companies;
             cmbUnloadingContactCompanies.ItemsSource = companies;
+            cmbLoadSites.ItemsSource = companies;
+            cmbUnloadSites.ItemsSource = companies;
 
             var methods = from m in Database.LoadUnloadMethods select m;
 

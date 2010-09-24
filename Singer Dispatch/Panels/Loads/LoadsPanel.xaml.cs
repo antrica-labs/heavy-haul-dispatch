@@ -20,7 +20,6 @@ namespace SingerDispatch.Panels.Loads
         private CommandBinding SaveCommand { get; set; }
 
         public SingerDispatchDataContext Database { get; set; }
-        public Status DefaultLoadStatus { get; set; }
 
         public static DependencyProperty SelectedJobProperty = DependencyProperty.Register("SelectedJob", typeof(Job), typeof(LoadsPanel), new PropertyMetadata(null, SelectedJobPropertyChanged));
 
@@ -45,8 +44,7 @@ namespace SingerDispatch.Panels.Loads
 
             if (InDesignMode()) return;
 
-            Database = SingerConfigs.CommonDataContext;
-            DefaultLoadStatus = (from s in Database.Statuses where s.Name == "Pending" select s).First();
+            Database = SingerConfigs.CommonDataContext;            
         }
 
         private void Control_Loaded(object sender, RoutedEventArgs e)
@@ -75,7 +73,12 @@ namespace SingerDispatch.Panels.Loads
             base.SelectedCompanyChanged(newValue, oldValue);
 
             cmbJobList.ItemsSource = from j in Database.Jobs where j.Company == SelectedCompany orderby j.Number descending select j;
-        }        
+        }
+
+        protected override void UseImperialMeasurementsChanged(bool value)
+        {
+            base.UseImperialMeasurementsChanged(value);
+        }
 
         public void UpdateLoadList()
         {
@@ -85,7 +88,7 @@ namespace SingerDispatch.Panels.Loads
         private void NewLoad_Click(object sender, RoutedEventArgs e)
         {
             var list = (ObservableCollection<Load>)dgLoads.ItemsSource;
-            var load = new Load { Job = SelectedJob, Status = DefaultLoadStatus };
+            var load = new Load { Job = SelectedJob, Status = SelectedJob.Status };
 
             SelectedJob.Loads.Add(load);
             list.Insert(0, load);
