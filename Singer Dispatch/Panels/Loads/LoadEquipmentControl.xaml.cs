@@ -71,12 +71,22 @@ namespace SingerDispatch.Panels.Loads
         {
             if (SelectedLoad == null) return;
 
-            var types = (from et in Database.ExtraEquipmentTypes orderby et.Name select et).ToList();
-            var list = new ObservableCollection<ExtraEquipment>(SelectedLoad.ExtraEquipment);
+            var provider = (ObjectDataProvider)FindResource("ExtraEquipmentTypeDropList");
 
-            lbExtraEquipmentTypes.ItemsSource = types;
+            if (provider != null)
+            {
+                var types = from et in Database.ExtraEquipmentTypes orderby et.Name select et;
+                var list = (ExtraEquipmentTypeDropList)provider.Data;
 
-            dgExtraEquipment.ItemsSource = list;
+                list.Clear();
+
+                foreach (var item in types)
+                {
+                    list.Add(item);
+                }
+            }
+
+            dgExtraEquipment.ItemsSource = new ObservableCollection<ExtraEquipment>(SelectedLoad.ExtraEquipment);
         }
 
         private void AddEquipment_Click(object sender, RoutedEventArgs e)
@@ -90,8 +100,7 @@ namespace SingerDispatch.Panels.Loads
             dgExtraEquipment.ScrollIntoView(equipment);
             dgExtraEquipment.SelectedItem = equipment;
 
-            lbExtraEquipmentTypes.Focus();
-            lbExtraEquipmentTypes.SelectedIndex = 0;
+            DataGridHelper.EditFirstColumn(dgExtraEquipment, equipment);
         }
 
         private void RemoveEquipment_Click(object sender, RoutedEventArgs e)
@@ -180,5 +189,9 @@ namespace SingerDispatch.Panels.Loads
             SelectedLoad.ReferenceNumbers.Remove(selected);
             ((ObservableCollection<LoadReferenceNumber>)dgReferenceNumbers.ItemsSource).Remove(selected);
         }
+    }
+
+    public class ExtraEquipmentTypeDropList : ObservableCollection<ExtraEquipmentType>
+    {
     }
 }
