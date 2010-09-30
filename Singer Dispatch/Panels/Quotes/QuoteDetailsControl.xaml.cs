@@ -71,14 +71,7 @@ namespace SingerDispatch.Panels.Quotes
 
         private void UpdateCareOfCompanies()
         {
-            if (SelectedQuote != null)
-            {
-                var selected = cmbCareOfCompanies.SelectedIndex;
-                cmbCareOfCompanies.ItemsSource = from c in Database.Companies where c != SelectedCompany && c.IsVisible == true select c;
-                cmbCareOfCompanies.SelectedIndex = selected;
-            }
-            else
-                cmbCareOfCompanies.ItemsSource = null;
+            
         }
 
         private void UpdateAddressesAndContacts()

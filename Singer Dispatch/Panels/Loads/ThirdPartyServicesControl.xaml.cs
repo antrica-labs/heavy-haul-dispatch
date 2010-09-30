@@ -22,10 +22,9 @@ namespace SingerDispatch.Panels.Loads
         }
 
         private void ControlLoaded(object sender, RoutedEventArgs e)
-        {
-            if (InDesignMode()) return;
+        {  
 
-            cmbCompanies.ItemsSource = (SelectedLoad == null) ? null : from c in Database.Companies  where c.IsVisible == true orderby c.Name select c;
+            
         }
 
         protected override void SelectedLoadChanged(Load newValue, Load oldValue)

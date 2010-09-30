@@ -45,7 +45,7 @@
                     </Grid.RowDefinitions>                    
 
                     <Label Grid.Row="0" Grid.Column="0">Company:</Label>
-                    <ComboBox Name="cmbCompanies" Grid.Row="0" Grid.Column="1" SelectedItem="{Binding Company}" TextSearch.TextPath="Name" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectionChanged="ServiceCompany_SelectionChanged" Controls:ComboUtil.AllowNull="True" />
+                    <ComboBox Name="cmbCompanies" Grid.Row="0" Grid.Column="1" ItemsSource="{Binding ElementName=ThePanel,Path=CompanyList}" SelectedItem="{Binding Company}" TextSearch.TextPath="Name" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectionChanged="ServiceCompany_SelectionChanged" Controls:ComboUtil.AllowNull="True" />
 
                     <Label Grid.Row="1" Grid.Column="0">Service type:</Label>
                     <ComboBox Name="cmbServiceTypes" Grid.Row="1" Grid.Column="1" SelectedItem="{Binding ServiceType}" ItemTemplate="{StaticResource SimpleNameTemplate}" TextSearch.TextPath="Name" Controls:ComboUtil.AllowNull="True" />

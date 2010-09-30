@@ -51,14 +51,12 @@ namespace SingerDispatch.Panels.Jobs
         private void UpdateComboBoxes()
         {
             if (SelectedJob != null)
-            {
-                cmbCareOfCompanies.ItemsSource = from c in Database.Companies where c != SelectedCompany && c.IsVisible == true select c;
+            {                
                 cmbContacts.ItemsSource = (SelectedCompany == null) ? from c in Database.Contacts where c.Address.CompanyID == SelectedCompany.ID orderby c.FirstName, c.LastName select c : from c in Database.Contacts where c.Address.CompanyID == SelectedCompany.ID || c.Address.CompanyID == SelectedJob.CareOfCompanyID orderby c.FirstName, c.LastName select c;
                 cmbStatuses.ItemsSource = from s in Database.Statuses orderby s.Name select s;
             }
             else
-            {
-                cmbCareOfCompanies.ItemsSource = null;
+            {                
                 cmbContacts.ItemsSource = null;
                 cmbStatuses.ItemsSource = null;
             }

@@ -62,7 +62,7 @@
                         </Grid.RowDefinitions>
 
                         <Label Grid.Row="0" Grid.Column="0">Care of:</Label>
-                        <ComboBox Name="cmbCareOfCompanies" Grid.Row="1" Grid.Column="0" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectionChanged="CareOfCompanies_SelectionChanged" SelectedItem="{Binding CareOfCompany}" TextSearch.TextPath="Name" Controls:ComboUtil.AllowNull="True" />
+                        <ComboBox Name="cmbCareOfCompanies" Grid.Row="1" Grid.Column="0" ItemsSource="{Binding ElementName=ThePanel, Path=CompanyList}" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectionChanged="CareOfCompanies_SelectionChanged" SelectedItem="{Binding CareOfCompany}" TextSearch.TextPath="Name" Controls:ComboUtil.AllowNull="True" />
 
                         <Label Grid.Row="0" Grid.Column="1">Author:</Label>
                         <ComboBox Name="cmbQuotedBy" Grid.Row="1" Grid.Column="1" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectedItem="{Binding Employee}" TextSearch.TextPath="Name" Controls:ComboUtil.AllowNull="True"></ComboBox>

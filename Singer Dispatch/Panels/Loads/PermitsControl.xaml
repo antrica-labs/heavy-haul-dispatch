@@ -43,7 +43,7 @@
                     </Grid.RowDefinitions>
 
                     <Label Grid.Row="0" Grid.Column="0">Issuer:</Label>
-                    <ComboBox Name="cmbCompanies" Grid.Row="0" Grid.Column="1" SelectedItem="{Binding IssuingCompany}" TextSearch.TextPath="Name" ItemTemplate="{StaticResource SimpleNameTemplate}" Controls:ComboUtil.AllowNull="True" />
+                    <ComboBox Name="cmbCompanies" Grid.Row="0" Grid.Column="1" ItemsSource="{Binding ElementName=ThePanel, Path=CompanyList}"  SelectedItem="{Binding IssuingCompany}" TextSearch.TextPath="Name" ItemTemplate="{StaticResource SimpleNameTemplate}" Controls:ComboUtil.AllowNull="True" />
 
                     <Label Grid.Row="1" Grid.Column="0">Permit type:</Label>
                     <ComboBox Name="cmbPermitTypes" Grid.Row="1" Grid.Column="1" SelectedItem="{Binding PermitType}" ItemTemplate="{StaticResource SimpleNameTemplate}" TextSearch.TextPath="Name" Controls:ComboUtil.AllowNull="True" />

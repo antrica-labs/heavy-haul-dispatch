@@ -37,7 +37,7 @@
                 <ComboBox Name="cmbStatuses" Grid.Column="1" Grid.Row="1" SelectedItem="{Binding Status}" ItemTemplate="{StaticResource SimpleNameTemplate}" />
 
                 <Label Grid.Column="0" Grid.Row="2">Care of:</Label>
-                <ComboBox Name="cmbCareOfCompanies" Grid.Column="0" Grid.Row="3" SelectedItem="{Binding CareOfCompany}" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectionChanged="cmbCareOfCompanies_SelectionChanged" Controls:ComboUtil.AllowNull="True" />
+                <ComboBox Name="cmbCareOfCompanies" Grid.Column="0" Grid.Row="3" ItemsSource="{Binding ElementName=ThePanel, Path=CompanyList}" SelectedItem="{Binding CareOfCompany}" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectionChanged="cmbCareOfCompanies_SelectionChanged" Controls:ComboUtil.AllowNull="True" />
 
                 <Label Grid.Column="1" Grid.Row="2">Contact:</Label>
                 <ComboBox Name="cmbContacts" Grid.Column="1" Grid.Row="3" SelectedItem="{Binding Contact}" ItemTemplate="{StaticResource ContactTemplate}" Controls:ComboUtil.AllowNull="True" />

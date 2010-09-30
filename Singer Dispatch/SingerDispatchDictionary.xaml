@@ -217,6 +217,7 @@
     
     <Style TargetType="{x:Type DatePicker}">
         <Setter Property="Margin" Value="3" />
+        <Setter Property="Padding" Value="0" />
         <Setter Property="Background" Value="White" />
     </Style>
 

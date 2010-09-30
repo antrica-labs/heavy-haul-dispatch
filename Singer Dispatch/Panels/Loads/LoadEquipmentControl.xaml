@@ -38,6 +38,53 @@
         </ResourceDictionary>
     </UserControl.Resources>
     <DockPanel IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=ThePanel, Path=SelectedLoad}">
+        <Grid DockPanel.Dock="Top" DataContext="{Binding ElementName=ThePanel, Path=SelectedLoad}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="3" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            
+            <GroupBox Header="Instruction" Grid.Column="0" Grid.Row="0" Grid.RowSpan="2">
+                <StackPanel>
+                    <Label>Schedule:</Label>
+                    <TextBox Text="{Binding Schedule}" Style="{StaticResource MultiLine}" Height="45" />
+
+                    <Label>Additional notes:</Label>
+                    <TextBox Text="{Binding Notes}" Style="{StaticResource MultiLine}" Height="50"/>
+                </StackPanel>
+            </GroupBox>
+            
+            <GroupBox Header="Status" Grid.Column="2" Grid.Row="0">
+                <ComboBox Name="cmbStatuses" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectedItem="{Binding Status}" />
+            </GroupBox>
+
+            <GroupBox Header="References" Grid.Column="2" Grid.Row="1">
+                <DockPanel>
+                    <Grid DockPanel.Dock="Bottom">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+
+                        <Button Style="{StaticResource Horizontal}" Grid.Column="0" Click="AddReferenceNumber_Click">Add</Button>
+                        <Button Style="{StaticResource HorizontalEnd}" Grid.Column="1" Click="RemoveReferenceNumber_Click">Remove</Button>
+                    </Grid>
+
+                    <DataGrid Name="dgReferenceNumbers" Style="{StaticResource ListDisplay}" IsReadOnly="False">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Field" Binding="{Binding Field}" />
+                            <DataGridTextColumn Header="Value" Binding="{Binding Value}" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </DockPanel>
+            </GroupBox>            
+        </Grid>
+
         <GroupBox DockPanel.Dock="Top" Header="Dimensions" DataContext="{Binding ElementName=ThePanel, Path=SelectedLoad}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=ThePanel, Path=SelectedLoad}">
             <StackPanel>
                 <Grid>
@@ -321,53 +368,6 @@
             </StackPanel>
         </GroupBox>
         
-        <Grid DockPanel.Dock="Top" DataContext="{Binding ElementName=ThePanel, Path=SelectedLoad}">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition />
-                <ColumnDefinition Width="3" />
-                <ColumnDefinition />
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition />
-            </Grid.RowDefinitions>
-            
-            <GroupBox Header="Instruction" Grid.Column="0" Grid.Row="0" Grid.RowSpan="2">
-                <StackPanel>
-                    <Label>Schedule:</Label>
-                    <TextBox Text="{Binding Schedule}" Style="{StaticResource MultiLine}" Height="45" />
-
-                    <Label>Additional notes:</Label>
-                    <TextBox Text="{Binding Notes}" Style="{StaticResource MultiLine}" Height="50"/>
-                </StackPanel>
-            </GroupBox>
-            
-            <GroupBox Header="Status" Grid.Column="2" Grid.Row="0">
-                <ComboBox Name="cmbStatuses" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectedItem="{Binding Status}" />
-            </GroupBox>
-
-            <GroupBox Header="References" Grid.Column="2" Grid.Row="1">
-                <DockPanel>
-                    <Grid DockPanel.Dock="Bottom">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
-
-                        <Button Style="{StaticResource Horizontal}" Grid.Column="0" Click="AddReferenceNumber_Click">Add</Button>
-                        <Button Style="{StaticResource HorizontalEnd}" Grid.Column="1" Click="RemoveReferenceNumber_Click">Remove</Button>
-                    </Grid>
-
-                    <DataGrid Name="dgReferenceNumbers" Style="{StaticResource ListDisplay}" IsReadOnly="False">
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Header="Field" Binding="{Binding Field}" />
-                            <DataGridTextColumn Header="Value" Binding="{Binding Value}" />
-                        </DataGrid.Columns>
-                    </DataGrid>
-                </DockPanel>
-            </GroupBox>            
-        </Grid>
-
         <GroupBox Header="Extra Equipment" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=ThePanel, Path=SelectedLoad}">
             <DockPanel>
                 <Grid DockPanel.Dock="Bottom">
