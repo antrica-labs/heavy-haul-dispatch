@@ -100,7 +100,7 @@ namespace SingerDispatch.Panels.Loads
             var list = (ObservableCollection<LoadedCommodity>)dgCommodities.ItemsSource;
             var loaded = new LoadedCommodity { Load = SelectedLoad, LoadSiteCompany = SelectedCompany, UnloadSiteCompany = SelectedCompany };
 
-            var singerList = from c in (List<Company>)cmbShipperCompanies.ItemsSource where c.Name.Contains(SingerConfigs.SingerSearchString) select c;
+            var singerList = from c in CompanyList where c.Name.Contains(SingerConfigs.SingerSearchString) select c;
 
             if (singerList.Count() > 0)
                 loaded.ShipperCompany = singerList.First();

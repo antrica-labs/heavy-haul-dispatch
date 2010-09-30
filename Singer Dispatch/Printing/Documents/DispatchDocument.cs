@@ -697,7 +697,7 @@ namespace SingerDispatch.Printing.Documents
             if (dispatch.Load != null && dispatch.Load.TrailerCombination != null)
                 dispatchReplacements[2] += dispatch.Load.TrailerCombination.Combination;
 
-            dispatchReplacements[3] = (dispatch.Employee != null) ? dispatch.Employee.Name : "";
+            dispatchReplacements[3] = (dispatch.Employee != null) ? string.Format("{0} {1}", dispatch.Employee.Name, dispatch.Employee.Phone) : "";
                         
             
             var swampers = new StringBuilder();
@@ -705,7 +705,7 @@ namespace SingerDispatch.Printing.Documents
             {
                 if (swamper.Employee != null)
                 {
-                    swampers.Append(swamper.Employee.Name);
+                    swampers.Append(string.Format("{0} {1}", swamper.Employee.Name, swamper.Employee.Phone));
                     swampers.Append("; ");
                 }
             }
@@ -1159,7 +1159,7 @@ namespace SingerDispatch.Printing.Documents
                 var replacements = new object[3];
 
                 replacements[0] = (item.Equipment != null) ? item.Equipment.UnitNumber : "";
-                replacements[1] = (item.Employee == null) ? "" : item.Employee.Name + " " + item.Employee.Phone;
+                replacements[1] = (item.Employee == null) ? "" : string.Format("{0} {1}", item.Employee.Name, item.Employee.Phone);
                 replacements[2] = (item.Load != null && item.Load.TrailerCombination != null) ? item.Load.TrailerCombination.Combination : "";
 
                 rows.Append(string.Format(row, replacements));
@@ -1204,11 +1204,8 @@ namespace SingerDispatch.Printing.Documents
             foreach (var item in dispatches)
             {
                 var replacements = new object[2];
-                var contact = (item.Employee == null) ? "" : item.Employee.Name;
-
-                if (item.Employee != null && !string.IsNullOrEmpty(item.Employee.Phone))
-                    contact += " " + item.Employee.Phone;
-
+                var contact = (item.Employee == null) ? "" : string.Format("{0} {1}", item.Employee.Name, item.Employee.Phone);
+                                
                 replacements[0] = (item.Equipment == null) ? "" : item.Equipment.UnitNumber;
                 replacements[1] = contact;
 
