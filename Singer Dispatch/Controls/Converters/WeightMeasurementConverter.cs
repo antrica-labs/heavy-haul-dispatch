@@ -47,15 +47,25 @@ namespace SingerDispatch.Controls
                 {
                     kg = 0;
                 }
+
                 if (measurement.EndsWith(MeasurementFormater.UPounds))
                 {
                     double pounds = Double.Parse(measurement.Replace(MeasurementFormater.UPounds, ""));
 
                     kg = pounds * 0.45359237;
                 }
-                else
+                else if (measurement.EndsWith(MeasurementFormater.UKilograms))
                 {
                     kg = Double.Parse(measurement.Replace(MeasurementFormater.UKilograms, ""));
+                }
+                else
+                {   
+                    kg = Double.Parse(measurement);
+
+                    // No unit was entered, so check what the users preference is
+                    var settings = new UserSettings();
+                    if (!settings.MetricMeasurements)
+                        kg *= 0.45359237;
                 }
 
                 result[0] = kg;

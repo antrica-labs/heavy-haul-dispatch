@@ -78,9 +78,14 @@ namespace SingerDispatch.Controls
 
                     meters = inches / 39.37;
                 }
-                else // Assume they are entering with no units and want meters
+                else 
                 {
                     meters = Double.Parse(measurement);
+
+                    // They didn't actually enter a unit, so we need to check what their preference is to see if feet was expected.
+                    var settings = new UserSettings();
+                    if (!settings.MetricMeasurements)
+                        meters *= 0.3048;
                 }
 
                 result[0] = meters;
@@ -91,6 +96,6 @@ namespace SingerDispatch.Controls
             }
 
             return result;
-        }
+        }        
     }
 }
