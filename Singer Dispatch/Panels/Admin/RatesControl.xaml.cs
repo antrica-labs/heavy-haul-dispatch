@@ -20,6 +20,8 @@ namespace SingerDispatch.Panels.Admin
         {
             InitializeComponent();
 
+            if (InDesignMode()) return;
+
             Database = SingerConfigs.CommonDataContext;
 
             var provider = (ObjectDataProvider)FindResource("RateTypesDropList");
@@ -40,6 +42,8 @@ namespace SingerDispatch.Panels.Admin
 
         private void Control_Loaded(object sender, RoutedEventArgs e)
         {
+            if (InDesignMode()) return;
+
             dgRates.ItemsSource = new ObservableCollection<Rate>(from r in Database.Rates select r);            
         }
 

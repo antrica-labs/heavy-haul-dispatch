@@ -20,11 +20,15 @@ namespace SingerDispatch.Panels.Admin
         {
             InitializeComponent();
 
+            if (InDesignMode()) return;
+
             Database = SingerConfigs.CommonDataContext;
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
+            if (InDesignMode()) return;
+
             TheGrid.ItemsSource = new ObservableCollection<Inclusion>(from i in Database.Inclusions orderby i.Line select i);
         }
 

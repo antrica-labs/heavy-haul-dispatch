@@ -30,12 +30,24 @@ namespace SingerDispatch
     public partial class MainWindow
     {
         private UserSettings Settings { get; set; }
-        private Dictionary<Type, UserControl> Panels { get; set; }
-        private ObservableCollection<Company> Companies { get; set; }
+        private Dictionary<Type, UserControl> Panels { get; set; }        
         private SingerDispatchDataContext Database { get; set; }
 
+        public static DependencyProperty CompaniesProperty = DependencyProperty.Register("Companies", typeof(ObservableCollection<Company>), typeof(BaseUserControl));
         public static DependencyProperty UseImperialMeasurementsProperty = DependencyProperty.Register("UseImperialMeasurements", typeof(Boolean), typeof(MainWindow), new PropertyMetadata(false, UseImperialMeasurementsPropertyChanged));
 
+        public ObservableCollection<Company> Companies 
+        {
+            get
+            {
+                return (ObservableCollection<Company>)GetValue(CompaniesProperty);
+            }
+            set
+            {
+                SetValue(CompaniesProperty, value);
+            }
+        }
+        
         public Boolean UseImperialMeasurements
         {
             get
@@ -238,9 +250,11 @@ namespace SingerDispatch
                     }
                 }
 
+                var companyListBinding = new Binding { ElementName = "cmbCompanies", Path = new PropertyPath(Selector.ItemsSourceProperty) };
                 var companyBinding = new Binding { ElementName = "cmbCompanies", Path = new PropertyPath(Selector.SelectedItemProperty) };
                 var imperialBinding = new Binding { ElementName = "mainWindow", Path = new PropertyPath(MainWindow.UseImperialMeasurementsProperty) };
 
+                panel.SetBinding(BaseUserControl.CompanyListProperty, companyListBinding);
                 panel.SetBinding(CompanyUserControl.SelectedCompanyProperty, companyBinding);
                 panel.SetBinding(BaseUserControl.UseImperialMeasurementsProperty, imperialBinding);
 

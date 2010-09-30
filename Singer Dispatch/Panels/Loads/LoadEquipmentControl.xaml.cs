@@ -51,15 +51,7 @@ namespace SingerDispatch.Panels.Loads
 
         private void UpdateComboBoxes()
         {
-            cmbSeasons.ItemsSource = from s in Database.Seasons select s;
-            cmbRates.ItemsSource = GetCompanyRates(SelectedCompany);
-            cmbUnits.ItemsSource = (SelectedLoad == null) ? null : from u in Database.Equipment where u.EquipmentClass.Name == "Tractor" orderby u.UnitNumber select u;
             cmbStatuses.ItemsSource = from s in Database.Statuses select s;
-
-            if (cmbRates.SelectedItem != null)
-            {
-                cmbTrailerCombinations.ItemsSource = (from tc in Database.TrailerCombinations where tc.Rate == cmbRates.SelectedItem select tc).ToList();
-            }
         }
 
         private void UpdateReferenceNumbers()
@@ -165,39 +157,6 @@ namespace SingerDispatch.Panels.Loads
 
             if (longest > load.LoadedLength)
                 load.LoadedLength = longest;
-        }
-
-        private void cmbRates_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            cmbTrailerCombinations.ItemsSource = from tc in Database.TrailerCombinations where tc.Rate == cmbRates.SelectedItem select tc;
-        }
-
-        private System.Collections.IEnumerable GetCompanyRates(Company company)
-        {
-            if (company == null)
-            {
-                return null;
-            }
-
-            var rates = from r in Database.Rates where r.RateType.Name == "Trailer" select r;
-            var discount = company.RateAdjustment ?? 0.00m;
-            var enterprise = company.CustomerType != null && company.CustomerType.IsEnterprise == true;
-
-            foreach (var rate in rates)
-            {
-                if (enterprise && rate.HourlyEnterprise != null)
-                {
-                    rate.Hourly = rate.HourlySpecialized;
-                    rate.Adjusted = rate.Hourly + discount;
-                }
-                else if (!enterprise && rate.HourlySpecialized != null)
-                {
-                    rate.Hourly = rate.HourlyEnterprise;
-                    rate.Adjusted = rate.Hourly + discount;
-                }
-            }
-
-            return rates;
         }
 
         private void AddReferenceNumber_Click(object sender, RoutedEventArgs e)

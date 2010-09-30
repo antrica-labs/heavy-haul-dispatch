@@ -18,10 +18,7 @@
             </DataTemplate>
             <DataTemplate x:Key="TrailerCombinationTemplate">
                 <TextBlock Text="{Binding Combination}" />
-            </DataTemplate>
-            <DataTemplate x:Key="NameAndUnitTemplate">
-                <TextBlock Text="{Binding NameAndUnit}" />
-            </DataTemplate>
+            </DataTemplate>            
             <DataTemplate x:Key="WheelTypeTemplate">
                 <TextBlock>
                     <TextBlock.Text>
@@ -38,41 +35,6 @@
         </ResourceDictionary>
     </UserControl.Resources>
     <DockPanel IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=ThePanel, Path=SelectedLoad}">
-        <GroupBox DockPanel.Dock="Top" Header="Vehicle" DataContext="{Binding ElementName=ThePanel, Path=SelectedLoad}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=ThePanel, Path=SelectedLoad}">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition />
-                    <ColumnDefinition Width="1.5*" />
-                    <ColumnDefinition />
-                    <ColumnDefinition Width="2*" />
-                    <ColumnDefinition Width="2*" />
-                    <ColumnDefinition Width="0.6*" />
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition />
-                    <RowDefinition />
-                </Grid.RowDefinitions>
-
-                <Label Grid.Column="0" Grid.Row="0">Unit:</Label>
-                <ComboBox Name="cmbUnits" Grid.Column="0" Grid.Row="1" SelectedItem="{Binding Equipment}" ItemTemplate="{StaticResource EquipmentNameTemplate}" IsEditable="True" TextSearch.TextPath="UnitNumber" Controls:ComboUtil.AllowNull="True"></ComboBox>
-
-                <Label Grid.Column="1" Grid.Row="0">Wheel type:</Label>
-                <ComboBox Name="cmbRates" Grid.Column="1" Grid.Row="1" SelectedItem="{Binding Rate}" SelectionChanged="cmbRates_SelectionChanged" ItemTemplate="{StaticResource WheelTypeTemplate}" IsEditable="True" TextSearch.TextPath="Name" Controls:ComboUtil.AllowNull="True"></ComboBox>
-
-                <Label Grid.Column="2" Grid.Row="0">Rate:</Label>
-                <TextBox Grid.Column="2" Grid.Row="1" Text="{Binding ElementName=cmbRates, Path=SelectedItem.Adjusted, StringFormat=c}" />
-
-                <Label Grid.Column="3" Grid.Row="0">Combination:</Label>
-                <ComboBox Name="cmbTrailerCombinations" Grid.Column="3" Grid.Row="1" SelectedItem="{Binding TrailerCombination}" ItemTemplate="{StaticResource TrailerCombinationTemplate}" Controls:ComboUtil.AllowNull="True" />
-
-                <Label Grid.Row="0" Grid.Column="4">Season</Label>
-                <ComboBox Name="cmbSeasons" Grid.Row="1" Grid.Column="4" SelectedItem="{Binding Season}" ItemTemplate="{StaticResource SimpleNameTemplate}" TextSearch.TextPath="Name" Controls:ComboUtil.AllowNull="True" />
-
-                <Label Grid.Row="0" Grid.Column="5">Ban (%)</Label>
-                <TextBox Grid.Row="1" Grid.Column="5" Text="{Binding Ban}"/>
-            </Grid>
-        </GroupBox>
-
         <GroupBox DockPanel.Dock="Top" Header="Dimensions" DataContext="{Binding ElementName=ThePanel, Path=SelectedLoad}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=ThePanel, Path=SelectedLoad}">
             <StackPanel>
                 <Grid>

@@ -322,6 +322,7 @@
       <Column Name="LoadAddress" Type="System.String" CanBeNull="true" />      
       <Column Name="LoadMethodID" Type="System.Int64" CanBeNull="true" />
       <Column Name="LoadDate" Type="System.DateTime" CanBeNull="true" />
+      <Column Name="LoadTime" Type="System.String" CanBeNull="true" />
       <Column Name="LoadInstructions" Type="System.String" CanBeNull="true" />
       <Column Name="LoadRoute" Type="System.String" CanBeNull="true" />
       <Column Name="UnloadSiteCompanyID" Type="System.Int64" CanBeNull="true" />
@@ -333,6 +334,7 @@
       <Column Name="UnloadAddress" Type="System.String" CanBeNull="true" />      
       <Column Name="UnloadMethodID" Type="System.Int64" CanBeNull="true" />
       <Column Name="UnloadDate" Type="System.DateTime" CanBeNull="true" />
+      <Column Name="UnloadTime" Type="System.String" CanBeNull="true" />
       <Column Name="UnloadInstructions" Type="System.String" CanBeNull="true" />
       <Column Name="UnloadRoute" Type="System.String" CanBeNull="true" />      
       <Column Name="BoLComments" Type="System.String" CanBeNull="true" />
@@ -590,6 +592,7 @@
       <Column Name="ServiceTypeID" Type="System.Int64" CanBeNull="true" />
       <Column Name="ContactID" Type="System.Int64" CanBeNull="true" />
       <Column Name="ServiceDate" Type="System.DateTime" CanBeNull="true" />
+      <Column Name="ServiceTime" Type="System.String" CanBeNull="true" />
       <Column Name="Location" Type="System.String" CanBeNull="true" />
       <Column Name="Reference" Type="System.String" CanBeNull="true" />
       <Column Name="Notes" Type="System.String" CanBeNull="true" />
@@ -657,7 +660,8 @@
       <Column Name="Number" Type="System.Int32" CanBeNull="true" />
       <Column Name="Description" Type="System.String" CanBeNull="true" />
       <Column Name="Schedule" Type="System.String" CanBeNull="true" />
-      <Column Name="MeetingTime" Type="System.DateTime" CanBeNull="true" />
+      <Column Name="MeetingDate" Type="System.DateTime" CanBeNull="true" />
+      <Column Name="MeetingTime" Type="System.String" CanBeNull="true" />
       <Column Name="DepartingUnits" Type="System.String" CanBeNull="true" />
       <Column Name="DepartingLocation" Type="System.String" CanBeNull="true" />
       <Column Name="Notes" Type="System.String" CanBeNull="true" UpdateCheck="Never" />

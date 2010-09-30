@@ -59,25 +59,25 @@
 
         <TabControl Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" Name="Tabs" DataContext="{Binding ElementName=ThePanel}" Margin="5,0,0,0">
             <TabItem Header="Quotes Details">
-                <Quotes:QuoteDetailsControl SelectedCompany="{Binding SelectedCompany}" SelectedQuote="{Binding SelectedQuote}" UseImperialMeasurements="{Binding UseImperialMeasurements}" />
+                <Quotes:QuoteDetailsControl CompanyList="{Binding CompanyList}" SelectedCompany="{Binding SelectedCompany}" SelectedQuote="{Binding SelectedQuote}" UseImperialMeasurements="{Binding UseImperialMeasurements}" />
             </TabItem>
             <TabItem Header="Commodities" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, Path=SelectedQuote}">
-                <Quotes:QuoteCommoditiesControl SelectedCompany="{Binding SelectedCompany}" SelectedQuote="{Binding SelectedQuote}" UseImperialMeasurements="{Binding UseImperialMeasurements}" />
+                <Quotes:QuoteCommoditiesControl CompanyList="{Binding CompanyList}" SelectedCompany="{Binding SelectedCompany}" SelectedQuote="{Binding SelectedQuote}" UseImperialMeasurements="{Binding UseImperialMeasurements}" />
             </TabItem>
             <TabItem Header="Supplements" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, Path=SelectedQuote}">
-                <Quotes:QuoteSupplementsControl SelectedCompany="{Binding SelectedCompany}" SelectedQuote="{Binding SelectedQuote}" UseImperialMeasurements="{Binding UseImperialMeasurements}" />
+                <Quotes:QuoteSupplementsControl CompanyList="{Binding CompanyList}" SelectedCompany="{Binding SelectedCompany}" SelectedQuote="{Binding SelectedQuote}" UseImperialMeasurements="{Binding UseImperialMeasurements}" />
             </TabItem>
             <TabItem Header="Storage Items" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, Path=SelectedQuote}">
-                <Quotes:QuoteStorageControl SelectedCompany="{Binding SelectedCompany}" SelectedQuote="{Binding SelectedQuote}" UseImperialMeasurements="{Binding UseImperialMeasurements}" />
+                <Quotes:QuoteStorageControl CompanyList="{Binding CompanyList}" SelectedCompany="{Binding SelectedCompany}" SelectedQuote="{Binding SelectedQuote}" UseImperialMeasurements="{Binding UseImperialMeasurements}" />
             </TabItem>
             <TabItem Header="Inclusions" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, Path=SelectedQuote}">
-                <Quotes:QuoteInclusionsControl SelectedCompany="{Binding SelectedCompany}" SelectedQuote="{Binding SelectedQuote}" UseImperialMeasurements="{Binding UseImperialMeasurements}" />
+                <Quotes:QuoteInclusionsControl CompanyList="{Binding CompanyList}" SelectedCompany="{Binding SelectedCompany}" SelectedQuote="{Binding SelectedQuote}" UseImperialMeasurements="{Binding UseImperialMeasurements}" />
             </TabItem>
             <TabItem Header="Conditions" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, Path=SelectedQuote}">
-                <Quotes:QuoteConditionsControl SelectedCompany="{Binding SelectedCompany}" SelectedQuote="{Binding SelectedQuote}" UseImperialMeasurements="{Binding UseImperialMeasurements}" />
+                <Quotes:QuoteConditionsControl CompanyList="{Binding CompanyList}" SelectedCompany="{Binding SelectedCompany}" SelectedQuote="{Binding SelectedQuote}" UseImperialMeasurements="{Binding UseImperialMeasurements}" />
             </TabItem>
             <TabItem Header="Additional Notes" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, Path=SelectedQuote}">
-                <Quotes:QuoteNotesControl SelectedCompany="{Binding SelectedCompany}" SelectedQuote="{Binding SelectedQuote}" UseImperialMeasurements="{Binding UseImperialMeasurements}" />
+                <Quotes:QuoteNotesControl CompanyList="{Binding CompanyList}" SelectedCompany="{Binding SelectedCompany}" SelectedQuote="{Binding SelectedQuote}" UseImperialMeasurements="{Binding UseImperialMeasurements}" />
             </TabItem>
         </TabControl>
     </Grid>

@@ -21,10 +21,13 @@ namespace SingerDispatch.Panels.Companies
         public CommoditiesControl()
         {
             InitializeComponent();
-
-            Database = SingerConfigs.CommonDataContext;
+                        
             SaveCommand = new CommandBinding(CustomCommands.GenericSaveCommand);
             CommandBindings.Add(SaveCommand);
+
+            if (InDesignMode()) return;
+
+            Database = SingerConfigs.CommonDataContext;
         }
 
         private void Control_Loaded(object sender, RoutedEventArgs e)

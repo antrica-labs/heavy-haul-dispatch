@@ -71,18 +71,16 @@ namespace SingerDispatch.Panels.Loads
         {
             if (SelectedLoad == null) return;
 
+            cmbSeasons.ItemsSource = from s in Database.Seasons select s;
+            cmbRates.ItemsSource = GetCompanyRates(SelectedCompany);
+            cmbUnits.ItemsSource = (SelectedLoad == null) ? null : from u in Database.Equipment where u.EquipmentClass.Name == "Tractor" orderby u.UnitNumber select u;
+
+            if (cmbRates.SelectedItem != null)
+            {
+                cmbTrailerCombinations.ItemsSource = (from tc in Database.TrailerCombinations where tc.Rate == cmbRates.SelectedItem select tc).ToList();
+            }
+
             cmbCommodityName.ItemsSource = SelectedLoad.Job.JobCommodities.ToList();
-
-            var companies = (from c in Database.Companies select c).ToList();
-
-            cmbShipperCompanies.ItemsSource = companies;
-            cmbConsigneeCompanies.ItemsSource = companies;
-            cmbLoadingSiteContactCompanies.ItemsSource = companies;
-            cmbLoadingContactCompanies.ItemsSource = companies;
-            cmbUnloadingSiteContactCompanies.ItemsSource = companies;
-            cmbUnloadingContactCompanies.ItemsSource = companies;
-            cmbLoadSites.ItemsSource = companies;
-            cmbUnloadSites.ItemsSource = companies;
 
             var methods = from m in Database.LoadUnloadMethods select m;
 
@@ -239,6 +237,33 @@ namespace SingerDispatch.Panels.Loads
             }
         }
 
+        private System.Collections.IEnumerable GetCompanyRates(Company company)
+        {
+            if (company == null)
+            {
+                return null;
+            }
+
+            var rates = from r in Database.Rates where r.RateType.Name == "Trailer" select r;
+            var discount = company.RateAdjustment ?? 0.00m;
+            var enterprise = company.CustomerType != null && company.CustomerType.IsEnterprise == true;
+
+            foreach (var rate in rates)
+            {
+                if (enterprise && rate.HourlyEnterprise != null)
+                {
+                    rate.Hourly = rate.HourlySpecialized;
+                    rate.Adjusted = rate.Hourly + discount;
+                }
+                else if (!enterprise && rate.HourlySpecialized != null)
+                {
+                    rate.Hourly = rate.HourlyEnterprise;
+                    rate.Adjusted = rate.Hourly + discount;
+                }
+            }
+
+            return rates;
+        }
 
         #region DraggedItem
 
@@ -381,5 +406,10 @@ namespace SingerDispatch.Panels.Loads
         }
 
         #endregion
+
+        private void cmbRates_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            cmbTrailerCombinations.ItemsSource = from tc in Database.TrailerCombinations where tc.Rate == cmbRates.SelectedItem select tc;
+        }
     }
 }

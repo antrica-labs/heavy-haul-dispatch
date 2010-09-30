@@ -19,15 +19,20 @@ namespace SingerDispatch.Panels.Admin
         public EmployeesControl()
         {
             InitializeComponent();
-            
-            Database = SingerConfigs.CommonDataContext;
+
             SaveCommand = new CommandBinding(CustomCommands.GenericSaveCommand);
+
+            if (InDesignMode()) return;
+
+            Database = SingerConfigs.CommonDataContext;            
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             SaveCommand.Executed += CommitChanges_Executed;
-            
+
+            if (InDesignMode()) return;
+
             dgEmployees.ItemsSource = new ObservableCollection<Employee>(from emp in Database.Employees orderby emp.FirstName, emp.LastName select emp);            
         }
 

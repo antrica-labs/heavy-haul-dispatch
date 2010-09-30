@@ -21,17 +21,21 @@ namespace SingerDispatch.Panels.Companies
         {
             InitializeComponent();
 
-            Database = SingerConfigs.CommonDataContext;
-
             SaveCommand = new CommandBinding(CustomCommands.GenericSaveCommand);
             CommandBindings.Add(SaveCommand);
 
             lbContactTypes.ItemsSource = new ObservableCollection<CheckBox>();
+
+            if (InDesignMode()) return;
+
+            Database = SingerConfigs.CommonDataContext;
         }
 
         private void Control_Loaded(object sender, RoutedEventArgs e)
         {            
             SaveCommand.Executed += CommitChanges_Executed;
+
+            if (InDesignMode()) return;
 
             var list = (ObservableCollection<CheckBox>)lbContactTypes.ItemsSource;
 

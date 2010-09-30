@@ -20,16 +20,20 @@ namespace SingerDispatch.Panels.Admin
         public EquipmentControl()
         {
             InitializeComponent();
-
-            Database = SingerConfigs.CommonDataContext;
+            
             SaveCommand = new CommandBinding(CustomCommands.GenericSaveCommand);
 
+            if (InDesignMode()) return;
+
+            Database = SingerConfigs.CommonDataContext;
             cmbEquipmentClasses.ItemsSource = from ec in Database.EquipmentClasses select ec;
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             SaveCommand.Executed += CommitChanges_Executed;
+
+            if (InDesignMode()) return;
 
             cmbEmployees.ItemsSource = from emp in Database.Employees orderby emp.FirstName, emp.LastName select emp;            
             dgEquipment.ItemsSource = new ObservableCollection<Equipment>(from equip in Database.Equipment orderby equip.UnitNumber select equip);            

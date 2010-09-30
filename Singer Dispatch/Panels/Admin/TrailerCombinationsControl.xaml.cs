@@ -22,11 +22,15 @@ namespace SingerDispatch.Panels.Admin
         {
             InitializeComponent();
 
+            if (InDesignMode()) return;
+
             Database = SingerConfigs.CommonDataContext;
         }
 
         private void Control_Loaded(object sender, RoutedEventArgs e)
         {
+            if (InDesignMode()) return;
+
             var provider = (ObjectDataProvider)FindResource("RatesDropList");
 
             if (provider != null)

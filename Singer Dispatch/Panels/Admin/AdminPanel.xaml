@@ -6,7 +6,7 @@
                         xmlns:Panels="clr-namespace:SingerDispatch.Panels"
                         xmlns:Admin="clr-namespace:SingerDispatch.Panels.Admin"
                         x:Name="ThisPanel"
-                        mc:Ignorable="d">
+                        mc:Ignorable="d" d:DesignWidth="800">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -17,22 +17,22 @@
     <Grid>
         <TabControl Name="Tabs">
             <TabItem Header="Employees">
-                <Admin:EmployeesControl />    
+                <Admin:EmployeesControl Width="Auto" CompanyList="{Binding CompanyList}" UseImperialMeasurements="{Binding UseImperialMeasurements}" />    
             </TabItem>
             <TabItem Header="Equipment">
-                <Admin:EquipmentControl UseImperialMeasurements="{Binding UseImperialMeasurements}" />
+                <Admin:EquipmentControl Width="Auto" CompanyList="{Binding CompanyList}" UseImperialMeasurements="{Binding UseImperialMeasurements}" />
             </TabItem>
             <TabItem Header="Inclusions">
-                <Admin:InclusionsControl />
+                <Admin:InclusionsControl Width="Auto" CompanyList="{Binding CompanyList}" UseImperialMeasurements="{Binding UseImperialMeasurements}" />
             </TabItem>
             <TabItem Header="Conditions">
-                <Admin:ConditionsControl />
+                <Admin:ConditionsControl Width="Auto" CompanyList="{Binding CompanyList}" UseImperialMeasurements="{Binding UseImperialMeasurements}" />
             </TabItem>
             <TabItem Header="Rates">
-                <Admin:RatesControl />
+                <Admin:RatesControl Width="Auto" CompanyList="{Binding CompanyList}" UseImperialMeasurements="{Binding UseImperialMeasurements}" />
             </TabItem>
             <TabItem Header="Trailer combinations">
-                <Admin:TrailerCombinationsControl Width="Auto" UseImperialMeasurements="{Binding ElementName=ThisPanel, Path=UseImperialMeasurements}" />
+                <Admin:TrailerCombinationsControl Width="Auto" CompanyList="{Binding CompanyList}" UseImperialMeasurements="{Binding UseImperialMeasurements}" />
             </TabItem>
         </TabControl>
     </Grid>

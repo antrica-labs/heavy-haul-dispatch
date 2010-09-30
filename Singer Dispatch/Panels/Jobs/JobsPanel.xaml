@@ -59,10 +59,10 @@
 
         <TabControl Name="Tabs" Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" DataContext="{Binding ElementName=ThePanel}" Margin="5,0,0,0">
             <TabItem Header="Job List">
-                <Jobs:JobDetailsControl SelectedCompany="{Binding SelectedCompany}" SelectedJob="{Binding SelectedJob}" UseImperialMeasurements="{Binding UseImperialMeasurements}" />
+                <Jobs:JobDetailsControl CompanyList="{Binding CompanyList}" SelectedCompany="{Binding SelectedCompany}" SelectedJob="{Binding SelectedJob}" UseImperialMeasurements="{Binding UseImperialMeasurements}" />
             </TabItem>
             <TabItem Header="Commodities" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, Path=SelectedJob}">
-                <Jobs:JobCommoditiesControl SelectedCompany="{Binding SelectedCompany}"  SelectedJob="{Binding SelectedJob}" UseImperialMeasurements="{Binding UseImperialMeasurements}" />
+                <Jobs:JobCommoditiesControl CompanyList="{Binding CompanyList}" SelectedCompany="{Binding SelectedCompany}"  SelectedJob="{Binding SelectedJob}" UseImperialMeasurements="{Binding UseImperialMeasurements}" />
             </TabItem>    
         </TabControl>
     </Grid>

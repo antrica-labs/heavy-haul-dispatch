@@ -16,6 +16,7 @@
     <Controls:WeightMeasurementConverter x:Key="WeightMeasurementConverter" />
     <Controls:PhoneNumberConverter x:Key="PhoneNumberConverter" />
     <Controls:NullableValueConverter x:Key="NullableValueConverter" />
+    <Controls:TimeConverter x:Key="TimeConverter" />
     
     <DataTemplate x:Key="SimpleNameTemplate">
         <TextBlock Text="{Binding Name}" />

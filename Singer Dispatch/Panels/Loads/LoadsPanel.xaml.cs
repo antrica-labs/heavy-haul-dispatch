@@ -160,7 +160,7 @@ namespace SingerDispatch.Panels.Loads
         private void ViewAllDispatches_Click(object sender, RoutedEventArgs e)
         {
             if (SelectedLoad == null) return;
-
+             
             var dispatches = (from d in SelectedLoad.Dispatches select d).ToList();
 
             bool printFileCopy;

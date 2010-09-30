@@ -718,8 +718,8 @@ namespace SingerDispatch.Printing.Documents
             if (dispatch.DispatchedBy != null)
                 departureReplacement.Append(string.Format(rowTemplate, "Dispatched By", dispatch.DispatchedBy.Name));
 
-            if (dispatch.MeetingTime != null)
-                departureReplacement.Append(string.Format(rowTemplate, "Departing Date", dispatch.MeetingTime.Value.ToString(SingerConfigs.PrintedDateFormatString) + " " + dispatch.MeetingTime.Value.ToString(SingerConfigs.PrintedTimeFormatString)));
+            if (dispatch.MeetingDate != null)
+                departureReplacement.Append(string.Format(rowTemplate, "Departing Date", dispatch.MeetingDate.Value.ToString(SingerConfigs.PrintedDateFormatString) + " " + dispatch.MeetingTime));
             
             if (!string.IsNullOrEmpty(dispatch.DepartingLocation))
                 departureReplacement.Append(string.Format(rowTemplate, "Departing Location", dispatch.DepartingLocation));

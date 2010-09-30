@@ -75,7 +75,10 @@
                             </Grid.RowDefinitions>
 
                             <Label Grid.Row="0" Grid.Column="0">Date:</Label>
-                            <DatePicker Grid.Row="0" Grid.Column="1" SelectedDate="{Binding ServiceDate}" SelectedDateFormat="Long" />
+                            <DatePicker Grid.Row="0" Grid.Column="1"  SelectedDate="{Binding ServiceDate}" />
+                            
+                            <Label Grid.Row="1" Grid.Column="0">Time:</Label>
+                            <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding ServiceTime, Converter={StaticResource TimeConverter}}" />                            
                         </Grid>
                     </GroupBox>
                 </Grid>

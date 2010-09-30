@@ -7685,6 +7685,8 @@ namespace SingerDispatch
 		
 		private System.Nullable<System.DateTime> _LoadDate;
 		
+		private string _LoadTime;
+		
 		private string _LoadInstructions;
 		
 		private string _LoadRoute;
@@ -7706,6 +7708,8 @@ namespace SingerDispatch
 		private System.Nullable<long> _UnloadMethodID;
 		
 		private System.Nullable<System.DateTime> _UnloadDate;
+		
+		private string _UnloadTime;
 		
 		private string _UnloadInstructions;
 		
@@ -7789,6 +7793,8 @@ namespace SingerDispatch
     partial void OnLoadMethodIDChanged();
     partial void OnLoadDateChanging(System.Nullable<System.DateTime> value);
     partial void OnLoadDateChanged();
+    partial void OnLoadTimeChanging(string value);
+    partial void OnLoadTimeChanged();
     partial void OnLoadInstructionsChanging(string value);
     partial void OnLoadInstructionsChanged();
     partial void OnLoadRouteChanging(string value);
@@ -7811,6 +7817,8 @@ namespace SingerDispatch
     partial void OnUnloadMethodIDChanged();
     partial void OnUnloadDateChanging(System.Nullable<System.DateTime> value);
     partial void OnUnloadDateChanged();
+    partial void OnUnloadTimeChanging(string value);
+    partial void OnUnloadTimeChanged();
     partial void OnUnloadInstructionsChanging(string value);
     partial void OnUnloadInstructionsChanged();
     partial void OnUnloadRouteChanging(string value);
@@ -8144,6 +8152,26 @@ namespace SingerDispatch
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LoadTime")]
+		public string LoadTime
+		{
+			get
+			{
+				return this._LoadTime;
+			}
+			set
+			{
+				if ((this._LoadTime != value))
+				{
+					this.OnLoadTimeChanging(value);
+					this.SendPropertyChanging();
+					this._LoadTime = value;
+					this.SendPropertyChanged("LoadTime");
+					this.OnLoadTimeChanged();
+				}
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LoadInstructions")]
 		public string LoadInstructions
 		{
@@ -8384,6 +8412,26 @@ namespace SingerDispatch
 					this._UnloadDate = value;
 					this.SendPropertyChanged("UnloadDate");
 					this.OnUnloadDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UnloadTime")]
+		public string UnloadTime
+		{
+			get
+			{
+				return this._UnloadTime;
+			}
+			set
+			{
+				if ((this._UnloadTime != value))
+				{
+					this.OnUnloadTimeChanging(value);
+					this.SendPropertyChanging();
+					this._UnloadTime = value;
+					this.SendPropertyChanged("UnloadTime");
+					this.OnUnloadTimeChanged();
 				}
 			}
 		}
@@ -13858,6 +13906,8 @@ namespace SingerDispatch
 		
 		private System.Nullable<System.DateTime> _ServiceDate;
 		
+		private string _ServiceTime;
+		
 		private string _Location;
 		
 		private string _Reference;
@@ -13888,6 +13938,8 @@ namespace SingerDispatch
     partial void OnContactIDChanged();
     partial void OnServiceDateChanging(System.Nullable<System.DateTime> value);
     partial void OnServiceDateChanged();
+    partial void OnServiceTimeChanging(string value);
+    partial void OnServiceTimeChanged();
     partial void OnLocationChanging(string value);
     partial void OnLocationChanged();
     partial void OnReferenceChanging(string value);
@@ -14037,6 +14089,26 @@ namespace SingerDispatch
 					this._ServiceDate = value;
 					this.SendPropertyChanged("ServiceDate");
 					this.OnServiceDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ServiceTime")]
+		public string ServiceTime
+		{
+			get
+			{
+				return this._ServiceTime;
+			}
+			set
+			{
+				if ((this._ServiceTime != value))
+				{
+					this.OnServiceTimeChanging(value);
+					this.SendPropertyChanging();
+					this._ServiceTime = value;
+					this.SendPropertyChanged("ServiceTime");
+					this.OnServiceTimeChanged();
 				}
 			}
 		}
@@ -15303,7 +15375,9 @@ namespace SingerDispatch
 		
 		private string _Schedule;
 		
-		private System.Nullable<System.DateTime> _MeetingTime;
+		private System.Nullable<System.DateTime> _MeetingDate;
+		
+		private string _MeetingTime;
 		
 		private string _DepartingUnits;
 		
@@ -15347,7 +15421,9 @@ namespace SingerDispatch
     partial void OnDescriptionChanged();
     partial void OnScheduleChanging(string value);
     partial void OnScheduleChanged();
-    partial void OnMeetingTimeChanging(System.Nullable<System.DateTime> value);
+    partial void OnMeetingDateChanging(System.Nullable<System.DateTime> value);
+    partial void OnMeetingDateChanged();
+    partial void OnMeetingTimeChanging(string value);
     partial void OnMeetingTimeChanged();
     partial void OnDepartingUnitsChanging(string value);
     partial void OnDepartingUnitsChanged();
@@ -15569,8 +15645,28 @@ namespace SingerDispatch
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MeetingDate")]
+		public System.Nullable<System.DateTime> MeetingDate
+		{
+			get
+			{
+				return this._MeetingDate;
+			}
+			set
+			{
+				if ((this._MeetingDate != value))
+				{
+					this.OnMeetingDateChanging(value);
+					this.SendPropertyChanging();
+					this._MeetingDate = value;
+					this.SendPropertyChanged("MeetingDate");
+					this.OnMeetingDateChanged();
+				}
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MeetingTime")]
-		public System.Nullable<System.DateTime> MeetingTime
+		public string MeetingTime
 		{
 			get
 			{

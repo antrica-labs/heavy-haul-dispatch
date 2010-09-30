@@ -82,19 +82,19 @@
 
         <TabControl Name="Tabs" Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" DataContext="{Binding ElementName=ThePanel}" Margin="5,0,0,0">
             <TabItem Header="Commodities" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, Path=SelectedLoad}">
-                <Loads:LoadCommoditiesControl SelectedCompany="{Binding SelectedCompany}"  SelectedLoad="{Binding SelectedLoad}" UseImperialMeasurements="{Binding UseImperialMeasurements}" />
+                <Loads:LoadCommoditiesControl CompanyList="{Binding CompanyList}" SelectedCompany="{Binding SelectedCompany}"  SelectedLoad="{Binding SelectedLoad}" UseImperialMeasurements="{Binding UseImperialMeasurements}" />
             </TabItem>
-            <TabItem Header="Equipment" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, Path=SelectedLoad}">
-                <Loads:LoadEquipmentControl SelectedCompany="{Binding SelectedCompany}"  SelectedLoad="{Binding SelectedLoad}" UseImperialMeasurements="{Binding UseImperialMeasurements}" />   
+            <TabItem Header="Load details" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, Path=SelectedLoad}">
+                <Loads:LoadEquipmentControl CompanyList="{Binding CompanyList}" SelectedCompany="{Binding SelectedCompany}"  SelectedLoad="{Binding SelectedLoad}" UseImperialMeasurements="{Binding UseImperialMeasurements}" />   
             </TabItem>
             <TabItem Header="Dispatches" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, Path=SelectedLoad}">
-                <Loads:DispatchesControl SelectedCompany="{Binding SelectedCompany}"  SelectedLoad="{Binding SelectedLoad}" UseImperialMeasurements="{Binding UseImperialMeasurements}" />
+                <Loads:DispatchesControl CompanyList="{Binding CompanyList}" SelectedCompany="{Binding SelectedCompany}"  SelectedLoad="{Binding SelectedLoad}" UseImperialMeasurements="{Binding UseImperialMeasurements}" />
             </TabItem>
             <TabItem Header="Permits" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, Path=SelectedLoad}">
-                <Loads:PermitsControl SelectedCompany="{Binding SelectedCompany}"  SelectedLoad="{Binding SelectedLoad}" UseImperialMeasurements="{Binding UseImperialMeasurements}" />
+                <Loads:PermitsControl CompanyList="{Binding CompanyList}" SelectedCompany="{Binding SelectedCompany}"  SelectedLoad="{Binding SelectedLoad}" UseImperialMeasurements="{Binding UseImperialMeasurements}" />
             </TabItem>
             <TabItem Header="Third party services" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, Path=SelectedLoad}">
-                <Loads:ThirdPartyServicesControl SelectedCompany="{Binding SelectedCompany}"  SelectedLoad="{Binding SelectedLoad}" UseImperialMeasurements="{Binding UseImperialMeasurements}" />
+                <Loads:ThirdPartyServicesControl CompanyList="{Binding CompanyList}" SelectedCompany="{Binding SelectedCompany}"  SelectedLoad="{Binding SelectedLoad}" UseImperialMeasurements="{Binding UseImperialMeasurements}" />
             </TabItem>            
         </TabControl>
     </Grid>

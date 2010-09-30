@@ -20,15 +20,20 @@ namespace SingerDispatch.Panels.Companies
         {
             InitializeComponent();
 
-            Database = SingerConfigs.CommonDataContext;
-
+            
             SaveCommand = new CommandBinding(CustomCommands.GenericSaveCommand);
             CommandBindings.Add(SaveCommand);
+
+            if (InDesignMode()) return;
+
+            Database = SingerConfigs.CommonDataContext;
         }
 
         private void Control_Loaded(object sender, RoutedEventArgs e)
         {            
-            SaveCommand.Executed += CommitChanges_Executed;            
+            SaveCommand.Executed += CommitChanges_Executed;
+
+            if (InDesignMode()) return;
 
             cmbCreditPriority.ItemsSource = from l in Database.CompanyPriorityLevels orderby l.Name select l;
             cmbCreditCustomerType.ItemsSource = from ct in Database.CustomerType select ct;

@@ -110,6 +110,7 @@
     <Compile Include="Controls\Converters\LengthMeasurementConverter.cs" />
     <Compile Include="Controls\Converters\NullableValueConverter.cs" />
     <Compile Include="Controls\Converters\PhoneNumberConverter.cs" />
+    <Compile Include="Controls\Converters\TimeConverter.cs" />
     <Compile Include="Controls\Converters\WeightMeasurementConverter.cs" />
     <Compile Include="Controls\CustomCommands.cs" />
     <Compile Include="Controls\DataGridHelper.cs" />
