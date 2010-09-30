@@ -730,17 +730,32 @@ namespace SingerDispatch.Printing.Documents
 
             // List any reference numbers given to this job            
             var references = new StringBuilder();
-            
-            for (var i = 0; i < dispatch.Load.Job.ReferenceNumbers.Count; i++) 
+
+            if (dispatch.Load.ReferenceNumbers.Count == 0)
             {
-                var item = dispatch.Load.Job.ReferenceNumbers[i];
+                for (var i = 0; i < dispatch.Load.Job.ReferenceNumbers.Count; i++)
+                {
+                    var item = dispatch.Load.Job.ReferenceNumbers[i];
 
-                references.Append(@"<span class=""reference""><span class=""field_name"">" + item.Field + @"</span>: <span class=""value"">" + item.Value + "</span></span>");
+                    references.Append(@"<span class=""reference""><span class=""field_name"">" + item.Field + @"</span>: <span class=""value"">" + item.Value + "</span></span>");
 
-                if ((i + 1) != dispatch.Load.Job.ReferenceNumbers.Count)
-                    references.Append(", ");
+                    if ((i + 1) != dispatch.Load.Job.ReferenceNumbers.Count)
+                        references.Append(", ");
+                }
             }
-            
+            else
+            {
+                for (var i = 0; i < dispatch.Load.ReferenceNumbers.Count; i++)
+                {
+                    var item = dispatch.Load.ReferenceNumbers[i];
+
+                    references.Append(@"<span class=""reference""><span class=""field_name"">" + item.Field + @"</span>: <span class=""value"">" + item.Value + "</span></span>");
+
+                    if ((i + 1) != dispatch.Load.ReferenceNumbers.Count)
+                        references.Append(", ");
+                }
+            }
+
             var referenceReplacement = (references.Length > 0) ? string.Format(rowTemplate, "Customer References", references.ToString()) : "";
 
 
