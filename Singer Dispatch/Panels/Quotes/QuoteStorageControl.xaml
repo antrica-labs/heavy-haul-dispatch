@@ -112,7 +112,7 @@
                     </Grid.RowDefinitions>
 
                     <Label Grid.Row="0" Grid.Column="0">Commodity:</Label>
-                    <ComboBox Grid.Row="0" Grid.Column="1" Name="cmbCommodities" SelectedItem="{Binding Commodity}" ItemTemplate="{StaticResource SimpleNameTemplate}" IsEditable="True" TextSearch.TextPath="Name" Controls:ComboUtil.AllowNull="True" />
+                    <ComboBox Grid.Row="0" Grid.Column="1" Name="cmbCommodities" SelectedItem="{Binding Commodity}" ItemTemplate="{StaticResource SimpleNameTemplate}" TextSearch.TextPath="Name" Controls:ComboUtil.AllowNull="True" />
 
                     <Label Grid.Row="1" Grid.Column="0">Details:</Label>
                     <TextBox Grid.Row="1" Grid.Column="1" Grid.RowSpan="2" Text="{Binding Details}" Style="{StaticResource MultiLine}" VerticalScrollBarVisibility="Hidden" />

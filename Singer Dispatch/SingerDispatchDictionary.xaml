@@ -111,6 +111,7 @@
     
     <Style TargetType="ComboBox">
         <Setter Property="Margin" Value="3" />
+        <Setter Property="IsEditable" Value="True" />
     </Style>
     
     <Style TargetType="CheckBox">

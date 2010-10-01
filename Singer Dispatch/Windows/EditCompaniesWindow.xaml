@@ -13,7 +13,7 @@
     <DockPanel>
         <Button DockPanel.Dock="Bottom" Margin="5,0,5,5" Click="CloseWindow_Click">Close</Button>
 
-        <ComboBox Name="CmbSearch" DockPanel.Dock="Bottom" ItemTemplate="{StaticResource SimpleNameTemplate}" TextSearch.TextPath="Name" IsEditable="True" SelectionChanged="CmbSearch_SelectionChanged" />
+        <ComboBox Name="CmbSearch" DockPanel.Dock="Bottom" ItemTemplate="{StaticResource SimpleNameTemplate}" TextSearch.TextPath="Name" SelectionChanged="CmbSearch_SelectionChanged" />
 
         <DataGrid Name="CompaniesGrid" Margin="5" Style="{StaticResource ListDisplay}" IsReadOnly="False" RowEditEnding="CompaniesGrid_RowEditEnding">
             <DataGrid.Columns>

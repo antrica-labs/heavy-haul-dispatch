@@ -50,7 +50,7 @@
                     </Grid.RowDefinitions>
 
                     <Label Grid.Row="0" Grid.Column="0">Commodity name:</Label>
-                    <ComboBox Name="cmbCommodityName" Text="{Binding Name}" Grid.Row="0" Grid.Column="1" IsEditable="True" ItemTemplate="{StaticResource NameAndUnitTemplate}" TextSearch.TextPath="Name" SelectionChanged="CommodityName_SelectionChanged" Controls:ComboUtil.AllowNull="True" />
+                    <ComboBox Name="cmbCommodityName" Text="{Binding Name}" Grid.Row="0" Grid.Column="1" ItemTemplate="{StaticResource NameAndUnitTemplate}" TextSearch.TextPath="Name" SelectionChanged="CommodityName_SelectionChanged" Controls:ComboUtil.AllowNull="True" />
 
                     <Label Grid.Row="1" Grid.Column="0">Unit number:</Label>
                     <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Unit}" />
@@ -153,10 +153,10 @@
                         </Grid.RowDefinitions>
 
                         <Label Grid.Column="0" Grid.Row="0">Site name:</Label>
-                        <ComboBox Grid.Column="1" Grid.Row="0" Text="{Binding DepartureSiteName}" IsEditable="True" ItemsSource="{Binding ElementName=ThePanel, Path=CommonSiteNames}" />
+                        <ComboBox Grid.Column="1" Grid.Row="0" Text="{Binding DepartureSiteName}" ItemsSource="{Binding ElementName=ThePanel, Path=CommonSiteNames}" />
 
                         <Label Grid.Column="0" Grid.Row="1">Address/LSD:</Label>
-                        <ComboBox Grid.Column="1" Grid.Row="1" Text="{Binding DepartureAddress}" IsEditable="True" ItemsSource="{Binding ElementName=ThePanel, Path=CommonSiteAddresses}" />
+                        <ComboBox Grid.Column="1" Grid.Row="1" Text="{Binding DepartureAddress}" ItemsSource="{Binding ElementName=ThePanel, Path=CommonSiteAddresses}" />
                     </Grid>
                 </GroupBox>
 
@@ -173,10 +173,10 @@
 
 
                         <Label Grid.Column="0" Grid.Row="0">Site name:</Label>
-                        <ComboBox Grid.Column="1" Grid.Row="0" Text="{Binding ArrivalSiteName}" IsEditable="True" ItemsSource="{Binding ElementName=ThePanel, Path=CommonSiteNames}" />
+                        <ComboBox Grid.Column="1" Grid.Row="0" Text="{Binding ArrivalSiteName}" ItemsSource="{Binding ElementName=ThePanel, Path=CommonSiteNames}" />
 
                         <Label Grid.Column="0" Grid.Row="1">Address/LSD:</Label>
-                        <ComboBox Grid.Column="1" Grid.Row="1" Text="{Binding ArrivalAddress}" IsEditable="True" ItemsSource="{Binding ElementName=ThePanel, Path=CommonSiteAddresses}" />
+                        <ComboBox Grid.Column="1" Grid.Row="1" Text="{Binding ArrivalAddress}" ItemsSource="{Binding ElementName=ThePanel, Path=CommonSiteAddresses}" />
                     </Grid>
                 </GroupBox>
             </Grid>

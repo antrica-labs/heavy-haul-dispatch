@@ -28,7 +28,7 @@
                 </Grid.ColumnDefinitions>
                 
                 <Label Grid.Column="0">Job number:</Label>
-                <ComboBox Grid.Column="1" Name="cmbJobList" TextSearch.TextPath="Number" IsEditable="True" ItemTemplate="{StaticResource JobNameTemplate}" SelectedItem="{Binding ElementName=ThePanel, Path=SelectedJob}" />
+                <ComboBox Grid.Column="1" Name="cmbJobList" TextSearch.TextPath="Number" ItemTemplate="{StaticResource JobNameTemplate}" SelectedItem="{Binding ElementName=ThePanel, Path=SelectedJob}" />
                 <Button Grid.Column="2" Style="{StaticResource HorizontalEnd}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=cmbJobList, Path=SelectedItem}" Click="ViewJob_Click">View job</Button>
             </Grid>
         </Border>
