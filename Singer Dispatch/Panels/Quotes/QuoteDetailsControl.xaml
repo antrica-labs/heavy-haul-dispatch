@@ -5,6 +5,7 @@
                          xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                          xmlns:Panels="clr-namespace:SingerDispatch.Panels"
                          xmlns:Controls="clr-namespace:SingerDispatch.Controls"
+                         xmlns:Validators="clr-namespace:SingerDispatch.Controls.Validators"
                          x:Name="ThePanel"
                          Loaded="Control_Loaded" mc:Ignorable="d" d:DesignWidth="780">
     <UserControl.Resources>
@@ -62,7 +63,15 @@
                         </Grid.RowDefinitions>
 
                         <Label Grid.Row="0" Grid.Column="0">Care of:</Label>
-                        <ComboBox Name="cmbCareOfCompanies" Grid.Row="1" Grid.Column="0" ItemsSource="{Binding ElementName=ThePanel, Path=CompanyList}" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectionChanged="CareOfCompanies_SelectionChanged" SelectedItem="{Binding CareOfCompany}" TextSearch.TextPath="Name" Controls:ComboUtil.AllowNull="True" />
+                        <ComboBox Name="cmbCareOfCompanies" Grid.Row="1" Grid.Column="0" ItemsSource="{Binding ElementName=ThePanel, Path=CompanyList}" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectionChanged="CareOfCompanies_SelectionChanged" TextSearch.TextPath="Name" Controls:ComboUtil.AllowNull="True">
+                            <ComboBox.SelectedItem>
+                                <Binding Path="CareOfCompany">
+                                    <Binding.ValidationRules>
+                                        <Validators:SelectionExistValidator />
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </ComboBox.SelectedItem>
+                        </ComboBox>
 
                         <Label Grid.Row="0" Grid.Column="1">Author:</Label>
                         <ComboBox Name="cmbQuotedBy" Grid.Row="1" Grid.Column="1" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectedItem="{Binding Employee}" TextSearch.TextPath="Name" Controls:ComboUtil.AllowNull="True"></ComboBox>

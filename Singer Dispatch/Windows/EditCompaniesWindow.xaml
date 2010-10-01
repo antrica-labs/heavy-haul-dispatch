@@ -20,7 +20,7 @@
                 <DataGridTextColumn Header="Name" Binding="{Binding Name}" />
                 <DataGridTextColumn Header="Operating As" Binding="{Binding OperatingAs}" />
                 <DataGridCheckBoxColumn Header="Visible" Binding="{Binding IsVisible}" Width="60" />
-            </DataGrid.Columns>    
-        </DataGrid>        
+            </DataGrid.Columns>
+        </DataGrid>
     </DockPanel>
 </Window>
