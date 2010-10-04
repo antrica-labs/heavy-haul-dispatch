@@ -15,6 +15,8 @@ namespace SingerDispatch.Panels.Loads
     /// </summary>
     public partial class LoadCommoditiesControl
     {
+        public static DependencyProperty CommonSiteLocationsProperty = DependencyProperty.Register("CommonSiteLocations", typeof(ObservableCollection<string>), typeof(LoadCommoditiesControl));
+        public static DependencyProperty CommonSiteAddressesProperty = DependencyProperty.Register("CommonSiteAddresses", typeof(ObservableCollection<string>), typeof(LoadCommoditiesControl));
         public static DependencyProperty CommonRoutesProperty = DependencyProperty.Register("CommonRoutes", typeof(ObservableCollection<string>), typeof(LoadCommoditiesControl));
         public static DependencyProperty CommonInstructionsProperty = DependencyProperty.Register("CommonInstructions", typeof(ObservableCollection<string>), typeof(LoadCommoditiesControl));
 
@@ -31,6 +33,43 @@ namespace SingerDispatch.Panels.Loads
                 SetValue(CommonRoutesProperty, value);
             }
         }
+
+        public ObservableCollection<string> CommonInstructions
+        {
+            get
+            {
+                return (ObservableCollection<string>)GetValue(CommonInstructionsProperty);
+            }
+            set
+            {
+                SetValue(CommonInstructionsProperty, value);
+            }
+        }
+
+        public ObservableCollection<string> CommonSiteLocations
+        {
+            get
+            {
+                return (ObservableCollection<string>)GetValue(CommonSiteLocationsProperty);
+            }
+            set
+            {
+                SetValue(CommonSiteLocationsProperty, value);
+            }
+        }
+
+        public ObservableCollection<string> CommonSiteAddresses
+        {
+            get
+            {
+                return (ObservableCollection<string>)GetValue(CommonSiteAddressesProperty);
+            }
+            set
+            {
+                SetValue(CommonSiteAddressesProperty, value);
+            }
+        }
+
 
         public LoadCommoditiesControl()
         {
@@ -103,7 +142,13 @@ namespace SingerDispatch.Panels.Loads
             var singerList = from c in CompanyList where c.Name.Contains(SingerConfigs.SingerSearchString) select c;
 
             if (singerList.Count() > 0)
-                loaded.ShipperCompany = singerList.First();
+            {
+                var company = singerList.First();
+
+                loaded.ShipperCompany = company;
+                loaded.LoadingCompany = company;
+                loaded.UnloadingCompany = company;
+            }
 
             try
             {
@@ -220,9 +265,17 @@ namespace SingerDispatch.Panels.Loads
             grid.UpdateLayout();
 
             UpdateComboBoxes();
-            
+            UpdateCommonLists();
+
             if (SelectedLoad != null)
                 SelectedLoad.Notify("LoadedCommodities");
+        }
+
+        private void UpdateCommonLists()
+        {
+            var loaded = (LoadedCommodity)dgCommodities.SelectedItem;
+
+            if (loaded == null) return;
         }
 
         private static void ReindexCollection(ObservableCollection<LoadedCommodity> list)
