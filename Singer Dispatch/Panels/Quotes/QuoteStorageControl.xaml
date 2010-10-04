@@ -5,6 +5,7 @@
                          xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                          xmlns:Panels="clr-namespace:SingerDispatch.Panels"
                          xmlns:Controls="clr-namespace:SingerDispatch.Controls"
+                         xmlns:Validators="clr-namespace:SingerDispatch.Controls.Validators"
                          x:Name="ThePanel" Loaded="Control_Loaded" mc:Ignorable="d" d:DesignWidth="780">
     <UserControl.Resources>
         <ResourceDictionary>
@@ -47,7 +48,15 @@
                     </Grid.RowDefinitions>
                     
                     <Label Grid.Column="0" Grid.Row="0">Commodity:</Label>
-                    <ComboBox Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="5" Name="cmbCommodities" SelectedItem="{Binding Commodity}" ItemTemplate="{StaticResource NameAndUnitTemplate}" TextSearch.TextPath="Name" Controls:ComboUtil.AllowNull="True" />
+                    <ComboBox Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="5" Name="cmbCommodities" ItemTemplate="{StaticResource NameAndUnitTemplate}" TextSearch.TextPath="Name" Controls:ComboUtil.AllowNull="True">
+                        <ComboBox.SelectedItem>
+                            <Binding Path="Commodity">
+                                <Binding.ValidationRules>
+                                    <Validators:SelectionExistsValidator />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </ComboBox.SelectedItem>
+                    </ComboBox>
                     
                     <Label Grid.Column="6" Grid.Row="0">Price:</Label>
                     <TextBox Grid.Column="7" Grid.Row="0" Text="{Binding Price, StringFormat=C, Converter={StaticResource NullableValueConverter}}" Controls:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" />
@@ -95,39 +104,7 @@
                     <Label Grid.Column="0" Grid.Row="2">Notes:</Label>
                     <TextBox Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="7" Style="{StaticResource MultiLine}" />
                 </Grid>
-            </GroupBox>
-            <!--
-            <GroupBox Header="Storage Item Details" DataContext="{Binding ElementName=dgStorageList, Path=SelectedItem}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgStorageList, Path=SelectedItem}">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="2.3*"/>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition />
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition />
-                        <RowDefinition />
-                        <RowDefinition />
-                    </Grid.RowDefinitions>
-
-                    <Label Grid.Row="0" Grid.Column="0">Commodity:</Label>
-                    <ComboBox Grid.Row="0" Grid.Column="1" Name="cmbCommodities" SelectedItem="{Binding Commodity}" ItemTemplate="{StaticResource SimpleNameTemplate}" TextSearch.TextPath="Name" Controls:ComboUtil.AllowNull="True" />
-
-                    <Label Grid.Row="1" Grid.Column="0">Details:</Label>
-                    <TextBox Grid.Row="1" Grid.Column="1" Grid.RowSpan="2" Text="{Binding Details}" Style="{StaticResource MultiLine}" VerticalScrollBarVisibility="Hidden" />
-
-                    <Label Grid.Row="0" Grid.Column="2">Billing type:</Label>
-                    <ComboBox Grid.Row="0" Grid.Column="3" Name="cmbBillingType" SelectedItem="{Binding BillingType}" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectionChanged="BillingType_SelectionChanged" Controls:ComboUtil.AllowNull="True" />
-
-                    <Label Grid.Row="1" Grid.Column="2">Quantity:</Label>
-                    <TextBox Grid.Row="1" Grid.Column="3" Name="txtQuantity" Text="{Binding Quantity}" />
-
-                    <Label Grid.Row="2" Grid.Column="2">Cost per:</Label>
-                    <TextBox Grid.Row="2" Grid.Column="3" Name="txtCostPerItem" Text="{Binding CostPerItem, StringFormat=c, Converter={StaticResource NullableValueConverter}}" Controls:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" />
-                </Grid>
-            </GroupBox>
-            -->
+            </GroupBox>            
         </StackPanel>
 
         <DataGrid Name="dgStorageList" Style="{StaticResource ListDisplay}">

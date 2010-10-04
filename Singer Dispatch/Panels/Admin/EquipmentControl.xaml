@@ -5,6 +5,7 @@
                         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                         xmlns:Panels="clr-namespace:SingerDispatch.Panels"
                         xmlns:Controls="clr-namespace:SingerDispatch.Controls"
+                        xmlns:Validators="clr-namespace:SingerDispatch.Controls.Validators"
                         x:Name="ThisControl"
                         Loaded="UserControl_Loaded" mc:Ignorable="d" d:DesignWidth="780">
     <UserControl.Resources>
@@ -55,7 +56,15 @@
                         <TextBox Name="txtUnitNumber" Grid.Row="0" Grid.Column="1" Text="{Binding UnitNumber}" />
 
                         <Label Grid.Row="1" Grid.Column="0">Default Driver:</Label>
-                        <ComboBox Name="cmbEmployees" Grid.Row="1" Grid.Column="1" SelectedItem="{Binding Employee}" ItemTemplate="{StaticResource SimpleNameTemplate}" TextSearch.TextPath="Name" Controls:ComboUtil.AllowNull="True" />
+                        <ComboBox Name="cmbEmployees" Grid.Row="1" Grid.Column="1" ItemTemplate="{StaticResource SimpleNameTemplate}" TextSearch.TextPath="Name" Controls:ComboUtil.AllowNull="True">
+                            <ComboBox.SelectedItem>
+                                <Binding Path="Employee">
+                                    <Binding.ValidationRules>
+                                        <Validators:SelectionExistsValidator />
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </ComboBox.SelectedItem>
+                        </ComboBox>
 
                         <Label Grid.Row="2" Grid.Column="0">Serial</Label>
                         <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Serial}" />
@@ -76,7 +85,7 @@
                         <TextBox Grid.Row="7" Grid.Column="1" Text="{Binding LicencePlate}" />
 
                         <Label Grid.Row="8" Grid.Column="0">Class:</Label>
-                        <ComboBox Name="cmbEquipmentClasses" Grid.Row="8" Grid.Column="1" SelectedItem="{Binding EquipmentClass}" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectionChanged="EquipmentClass_SelectionChanged" Controls:ComboUtil.AllowNull="True" />
+                        <ComboBox Name="cmbEquipmentClasses" Grid.Row="8" Grid.Column="1" SelectedItem="{Binding EquipmentClass}" IsEditable="False" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectionChanged="EquipmentClass_SelectionChanged" Controls:ComboUtil.AllowNull="True" />
 
                         <Label Grid.Row="9" Grid.Column="0">Is dispatchable:</Label>
                         <CheckBox Grid.Row="9" Grid.Column="1" IsChecked="{Binding IsDispatchable}" />

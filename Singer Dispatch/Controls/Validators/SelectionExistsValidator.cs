@@ -6,14 +6,11 @@ using System.Windows.Controls;
 
 namespace SingerDispatch.Controls.Validators
 {
-    class SelectionExistValidator : ValidationRule
+    class SelectionExistsValidator : ValidationRule
     {
         public override ValidationResult Validate(object value, System.Globalization.CultureInfo cultureInfo)
         {
-            var text = combo.Text;
-            var selection = combo.SelectedItem;
-
-            if (selection == null && text.Length > 0)
+            if (value == null)
                 return new ValidationResult(false, "Item not found");
 
             return new ValidationResult(true, null);

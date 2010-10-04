@@ -67,14 +67,22 @@
                             <ComboBox.SelectedItem>
                                 <Binding Path="CareOfCompany">
                                     <Binding.ValidationRules>
-                                        <Validators:SelectionExistValidator />
+                                        <Validators:SelectionExistsValidator />
                                     </Binding.ValidationRules>
                                 </Binding>
                             </ComboBox.SelectedItem>
                         </ComboBox>
 
                         <Label Grid.Row="0" Grid.Column="1">Author:</Label>
-                        <ComboBox Name="cmbQuotedBy" Grid.Row="1" Grid.Column="1" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectedItem="{Binding Employee}" TextSearch.TextPath="Name" Controls:ComboUtil.AllowNull="True"></ComboBox>
+                        <ComboBox Name="cmbQuotedBy" Grid.Row="1" Grid.Column="1" ItemTemplate="{StaticResource SimpleNameTemplate}" TextSearch.TextPath="Name" Controls:ComboUtil.AllowNull="True">
+                            <ComboBox.SelectedItem>
+                                <Binding Path="Employee">
+                                    <Binding.ValidationRules>
+                                        <Validators:SelectionExistsValidator />
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </ComboBox.SelectedItem>
+                        </ComboBox>
                     </Grid>
 
                     <Grid>
@@ -133,10 +141,26 @@
                     </Grid.RowDefinitions>
 
                     <Label Grid.Column="0" Grid.Row="0">Address:</Label>
-                    <ComboBox Grid.Column="0" Grid.Row="1" Name="cmbAddresses" SelectedItem="{Binding BillingAddress}" ItemTemplate="{StaticResource AddressTemplate}" Controls:ComboUtil.AllowNull="True" />
+                    <ComboBox Grid.Column="0" Grid.Row="1" Name="cmbAddresses" ItemTemplate="{StaticResource AddressTemplate}" TextSearch.TextPath="Line1" Controls:ComboUtil.AllowNull="True">
+                        <ComboBox.SelectedItem>
+                            <Binding Path="BillingAddress">
+                                <Binding.ValidationRules>
+                                    <Validators:SelectionExistsValidator />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </ComboBox.SelectedItem>
+                    </ComboBox>
 
                     <Label Grid.Column="1" Grid.Row="0">Name:</Label>
-                    <ComboBox Grid.Column="1" Grid.Row="1" Name="cmbContacts" SelectedItem="{Binding Contact}" ItemTemplate="{StaticResource ContactTemplate}" TextSearch.TextPath="Name" Controls:ComboUtil.AllowNull="True" />
+                    <ComboBox Grid.Column="1" Grid.Row="1" Name="cmbContacts" ItemTemplate="{StaticResource ContactTemplate}" TextSearch.TextPath="Name" Controls:ComboUtil.AllowNull="True">
+                        <ComboBox.SelectedItem>
+                            <Binding Path="CareOfCompany">
+                                <Binding.ValidationRules>
+                                    <Validators:SelectionExistsValidator />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </ComboBox.SelectedItem>
+                    </ComboBox>
                 </Grid>
 
                 <Grid DataContext="{Binding Contact}">

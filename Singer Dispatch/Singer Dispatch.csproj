@@ -121,7 +121,7 @@
     <Compile Include="Controls\Converters\QuoteFriendlyNameConverter.cs" />
     <Compile Include="Controls\TabIndexHyperlink.cs" />
     <Compile Include="Controls\UIHelper.cs" />
-    <Compile Include="Controls\Validators\SelectionExistValidator.cs" />
+    <Compile Include="Controls\Validators\SelectionExistsValidator.cs" />
     <Compile Include="Database\EntityHelper.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>

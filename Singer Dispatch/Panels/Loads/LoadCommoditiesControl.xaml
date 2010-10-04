@@ -5,6 +5,7 @@
                         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                         xmlns:Panels="clr-namespace:SingerDispatch.Panels"
                         xmlns:Controls="clr-namespace:SingerDispatch.Controls"
+                        xmlns:Validators="clr-namespace:SingerDispatch.Controls.Validators"
                         x:Name="ThePanel" mc:Ignorable="d" d:DesignWidth="883" Loaded="ThePanel_Loaded">
     <UserControl.Resources>
         <ResourceDictionary>
@@ -55,19 +56,43 @@
                 </Grid.RowDefinitions>
 
                 <Label Grid.Column="0" Grid.Row="0">Unit:</Label>
-                <ComboBox Name="cmbUnits" Grid.Column="0" Grid.Row="1" SelectedItem="{Binding Equipment}" ItemTemplate="{StaticResource EquipmentNameTemplate}" TextSearch.TextPath="UnitNumber" Controls:ComboUtil.AllowNull="True"></ComboBox>
+                <ComboBox Name="cmbUnits" Grid.Column="0" Grid.Row="1" ItemTemplate="{StaticResource EquipmentNameTemplate}" TextSearch.TextPath="UnitNumber" Controls:ComboUtil.AllowNull="True">
+                    <ComboBox.SelectedItem>
+                        <Binding Path="Equipment">
+                            <Binding.ValidationRules>
+                                <Validators:SelectionExistsValidator />
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </ComboBox.SelectedItem>
+                </ComboBox>
 
                 <Label Grid.Column="1" Grid.Row="0">Wheel type:</Label>
-                <ComboBox Name="cmbRates" Grid.Column="1" Grid.Row="1" SelectedItem="{Binding Rate}" SelectionChanged="cmbRates_SelectionChanged" ItemTemplate="{StaticResource WheelTypeTemplate}" TextSearch.TextPath="Name" Controls:ComboUtil.AllowNull="True"></ComboBox>
+                <ComboBox Name="cmbRates" Grid.Column="1" Grid.Row="1" SelectionChanged="cmbRates_SelectionChanged" ItemTemplate="{StaticResource WheelTypeTemplate}" TextSearch.TextPath="Name" Controls:ComboUtil.AllowNull="True">
+                    <ComboBox.SelectedItem>
+                        <Binding Path="Rate">
+                            <Binding.ValidationRules>
+                                <Validators:SelectionExistsValidator />
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </ComboBox.SelectedItem>
+                </ComboBox>
 
                 <Label Grid.Column="2" Grid.Row="0">Rate:</Label>
                 <TextBox Grid.Column="2" Grid.Row="1" Text="{Binding ElementName=cmbRates, Path=SelectedItem.Adjusted, StringFormat=c}" />
 
                 <Label Grid.Column="3" Grid.Row="0">Combination:</Label>
-                <ComboBox Name="cmbTrailerCombinations" Grid.Column="3" Grid.Row="1" SelectedItem="{Binding TrailerCombination}" ItemTemplate="{StaticResource TrailerCombinationTemplate}" Controls:ComboUtil.AllowNull="True" />
+                <ComboBox Name="cmbTrailerCombinations" Grid.Column="3" Grid.Row="1" TextSearch.TextPath="Combination" ItemTemplate="{StaticResource TrailerCombinationTemplate}" Controls:ComboUtil.AllowNull="True">
+                    <ComboBox.SelectedItem>
+                        <Binding Path="TrailerCombination">
+                            <Binding.ValidationRules>
+                                <Validators:SelectionExistsValidator />
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </ComboBox.SelectedItem>
+                </ComboBox>
 
                 <Label Grid.Row="0" Grid.Column="4">Season</Label>
-                <ComboBox Name="cmbSeasons" Grid.Row="1" Grid.Column="4" SelectedItem="{Binding Season}" ItemTemplate="{StaticResource SimpleNameTemplate}" TextSearch.TextPath="Name" Controls:ComboUtil.AllowNull="True" />
+                <ComboBox Name="cmbSeasons" Grid.Row="1" Grid.Column="4" SelectedItem="{Binding Season}" IsEditable="False" ItemTemplate="{StaticResource SimpleNameTemplate}" TextSearch.TextPath="Name" Controls:ComboUtil.AllowNull="True" />
 
                 <Label Grid.Row="0" Grid.Column="5">Ban (%)</Label>
                 <TextBox Grid.Row="1" Grid.Column="5" Text="{Binding Ban}"/>
@@ -208,7 +233,15 @@
                                 <ColumnDefinition />
                             </Grid.ColumnDefinitions>
 
-                            <ComboBox Name="cmbLoadingProvinces" Grid.Column="0" SelectedItem="{Binding LoadingProvince}" ItemTemplate="{StaticResource AbbreviationTemplate}" TextSearch.TextPath="Name" />
+                            <ComboBox Name="cmbLoadingProvinces" Grid.Column="0" ItemTemplate="{StaticResource AbbreviationTemplate}" TextSearch.TextPath="Name">
+                                <ComboBox.SelectedItem>
+                                    <Binding Path="LoadingProvince">
+                                        <Binding.ValidationRules>
+                                            <Validators:SelectionExistsValidator />
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </ComboBox.SelectedItem>
+                            </ComboBox>
                             <TextBox Grid.Column="1" Text="{Binding LoadAddress}" />
                         </Grid>
                         <Grid Grid.Column="3" Grid.Row="1">
@@ -217,8 +250,24 @@
                                 <ColumnDefinition />
                             </Grid.ColumnDefinitions>
 
-                            <ComboBox Name="cmbLoadingSiteContactCompanies" Grid.Column="0" SelectedItem="{Binding LoadSiteCompany}" TextSearch.TextPath="Name" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectionChanged="cmbLoadingSiteContactCompanies_SelectionChanged" Controls:ComboUtil.AllowNull="True" />
-                            <ComboBox Name="cmbLoadingSiteContacts" Grid.Column="1" SelectedItem="{Binding LoadSiteContact}" TextSearch.TextPath="Name" ItemTemplate="{StaticResource ContactTemplate}" Controls:ComboUtil.AllowNull="True" />
+                            <ComboBox Name="cmbLoadingSiteContactCompanies" Grid.Column="0" TextSearch.TextPath="Name" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectionChanged="cmbLoadingSiteContactCompanies_SelectionChanged" Controls:ComboUtil.AllowNull="True">
+                                <ComboBox.SelectedItem>
+                                    <Binding Path="LoadSiteCompany">
+                                        <Binding.ValidationRules>
+                                            <Validators:SelectionExistsValidator />
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </ComboBox.SelectedItem>
+                            </ComboBox>
+                            <ComboBox Name="cmbLoadingSiteContacts" Grid.Column="1" TextSearch.TextPath="Name" ItemTemplate="{StaticResource ContactTemplate}" Controls:ComboUtil.AllowNull="True">
+                                <ComboBox.SelectedItem>
+                                    <Binding Path="LoadSiteContact">
+                                        <Binding.ValidationRules>
+                                            <Validators:SelectionExistsValidator />
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </ComboBox.SelectedItem>
+                            </ComboBox>
                         </Grid>
 
                         <ComboBox Name="cmbUnloadSites" Grid.Row="2" Grid.Column="1" Text="{Binding UnloadLocation}" ItemsSource="{Binding ElementName=ThePanel, Path=CompanyList}" ItemTemplate="{StaticResource SimpleNameTemplate}" />
@@ -228,7 +277,15 @@
                                 <ColumnDefinition />
                             </Grid.ColumnDefinitions>
 
-                            <ComboBox Name="cmbUnloadingProvinces" Grid.Column="0" SelectedItem="{Binding UnloadingProvince}" ItemTemplate="{StaticResource AbbreviationTemplate}" TextSearch.TextPath="Name" />
+                            <ComboBox Name="cmbUnloadingProvinces" Grid.Column="0" ItemTemplate="{StaticResource AbbreviationTemplate}" TextSearch.TextPath="Name">
+                                <ComboBox.SelectedItem>
+                                    <Binding Path="UnloadingProvince">
+                                        <Binding.ValidationRules>
+                                            <Validators:SelectionExistsValidator />
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </ComboBox.SelectedItem>
+                            </ComboBox>
                             <TextBox Grid.Column="1" Text="{Binding UnloadAddress}" />
                         </Grid>
                         <Grid Grid.Row="2" Grid.Column="3">
@@ -237,8 +294,24 @@
                                 <ColumnDefinition />
                             </Grid.ColumnDefinitions>
 
-                            <ComboBox Name="cmbUnloadingSiteContactCompanies" Grid.Column="0" SelectedItem="{Binding UnloadSiteCompany}" TextSearch.TextPath="Name" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectionChanged="cmbUnloadingSiteContactCompanies_SelectionChanged" Controls:ComboUtil.AllowNull="True" />
-                            <ComboBox Name="cmbUnloadingSiteContacts" Grid.Column="1" SelectedItem="{Binding UnloadSiteContact}" TextSearch.TextPath="Name" ItemTemplate="{StaticResource ContactTemplate}" Controls:ComboUtil.AllowNull="True" />
+                            <ComboBox Name="cmbUnloadingSiteContactCompanies" Grid.Column="0" TextSearch.TextPath="Name" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectionChanged="cmbUnloadingSiteContactCompanies_SelectionChanged" Controls:ComboUtil.AllowNull="True">
+                                <ComboBox.SelectedItem>
+                                    <Binding Path="UnloadSiteCompany">
+                                        <Binding.ValidationRules>
+                                            <Validators:SelectionExistsValidator />
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </ComboBox.SelectedItem>
+                            </ComboBox>
+                            <ComboBox Name="cmbUnloadingSiteContacts" Grid.Column="1" TextSearch.TextPath="Name" ItemTemplate="{StaticResource ContactTemplate}" Controls:ComboUtil.AllowNull="True">
+                                <ComboBox.SelectedItem>
+                                    <Binding Path="UnloadSiteContact">
+                                        <Binding.ValidationRules>
+                                            <Validators:SelectionExistsValidator />
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </ComboBox.SelectedItem>
+                            </ComboBox>
                         </Grid>
                     </Grid>
 
@@ -264,9 +337,33 @@
                         <Label Grid.Row="0" Grid.Column="3">Method</Label>
                         <Label Grid.Row="0" Grid.Column="4">Time</Label>
 
-                        <ComboBox Name="cmbLoadingContactCompanies" Grid.Column="1" Grid.Row="1" ItemsSource="{Binding ElementName=ThePanel, Path=CompanyList}" SelectedItem="{Binding LoadingCompany}" TextSearch.TextPath="Name" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectionChanged="cmbLoadingContactCompanies_SelectionChanged" Controls:ComboUtil.AllowNull="True" />
-                        <ComboBox Name="cmbLoadingContacts" Grid.Column="2" Grid.Row="1" SelectedItem="{Binding LoadingContact}" TextSearch.TextPath="Name" ItemTemplate="{StaticResource ContactTemplate}" Controls:ComboUtil.AllowNull="True" />
-                        <ComboBox Name="cmbLoadMethods" Grid.Column="3" Grid.Row="1" SelectedItem="{Binding LoadMethod}" ItemTemplate="{StaticResource SimpleNameTemplate}" TextSearch.TextPath="Name" Controls:ComboUtil.AllowNull="True" />
+                        <ComboBox Name="cmbLoadingContactCompanies" Grid.Column="1" Grid.Row="1" ItemsSource="{Binding ElementName=ThePanel, Path=CompanyList}" TextSearch.TextPath="Name" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectionChanged="cmbLoadingContactCompanies_SelectionChanged" Controls:ComboUtil.AllowNull="True">
+                            <ComboBox.SelectedItem>
+                                <Binding Path="LoadingCompany">
+                                    <Binding.ValidationRules>
+                                        <Validators:SelectionExistsValidator />
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </ComboBox.SelectedItem>
+                        </ComboBox>
+                        <ComboBox Name="cmbLoadingContacts" Grid.Column="2" Grid.Row="1" TextSearch.TextPath="Name" ItemTemplate="{StaticResource ContactTemplate}" Controls:ComboUtil.AllowNull="True">
+                            <ComboBox.SelectedItem>
+                                <Binding Path="LoadingContact">
+                                    <Binding.ValidationRules>
+                                        <Validators:SelectionExistsValidator />
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </ComboBox.SelectedItem>
+                        </ComboBox>
+                        <ComboBox Name="cmbLoadMethods" Grid.Column="3" Grid.Row="1" ItemTemplate="{StaticResource SimpleNameTemplate}" TextSearch.TextPath="Name" Controls:ComboUtil.AllowNull="True">
+                            <ComboBox.SelectedItem>
+                                <Binding Path="LoadMethod">
+                                    <Binding.ValidationRules>
+                                        <Validators:SelectionExistsValidator />
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </ComboBox.SelectedItem>
+                        </ComboBox>
                         <Grid Grid.Column="4" Grid.Row="1">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="1.5*" />
@@ -277,9 +374,33 @@
                             <TextBox Grid.Column="1" Text="{Binding LoadTime, Converter={StaticResource TimeConverter}}" />
                         </Grid>
 
-                        <ComboBox Name="cmbUnloadingContactCompanies" Grid.Column="1" Grid.Row="2" ItemsSource="{Binding ElementName=ThePanel, Path=CompanyList}" SelectedItem="{Binding UnloadingCompany}" TextSearch.TextPath="Name" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectionChanged="cmbUnloadingContactCompanies_SelectionChanged" Controls:ComboUtil.AllowNull="True" />
-                        <ComboBox Name="cmbUnloadingContacts" Grid.Column="2" Grid.Row="2" SelectedItem="{Binding UnloadingContact}" TextSearch.TextPath="Name" ItemTemplate="{StaticResource ContactTemplate}" Controls:ComboUtil.AllowNull="True" Height="24" Margin="3,0,3,3" VerticalAlignment="Bottom" />
-                        <ComboBox Name="cmbUnloadMethods" Grid.Column="3" Grid.Row="2" SelectedItem="{Binding UnloadMethod}" ItemTemplate="{StaticResource SimpleNameTemplate}" TextSearch.TextPath="Name" Controls:ComboUtil.AllowNull="True" />
+                        <ComboBox Name="cmbUnloadingContactCompanies" Grid.Column="1" Grid.Row="2" ItemsSource="{Binding ElementName=ThePanel, Path=CompanyList}" TextSearch.TextPath="Name" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectionChanged="cmbUnloadingContactCompanies_SelectionChanged" Controls:ComboUtil.AllowNull="True">
+                            <ComboBox.SelectedItem>
+                                <Binding Path="UnloadingCompany">
+                                    <Binding.ValidationRules>
+                                        <Validators:SelectionExistsValidator />
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </ComboBox.SelectedItem>
+                        </ComboBox>                            
+                        <ComboBox Name="cmbUnloadingContacts" Grid.Column="2" Grid.Row="2" TextSearch.TextPath="Name" ItemTemplate="{StaticResource ContactTemplate}" Controls:ComboUtil.AllowNull="True" Height="24" Margin="3,0,3,3" VerticalAlignment="Bottom">
+                            <ComboBox.SelectedItem>
+                                <Binding Path="UnloadingContact">
+                                    <Binding.ValidationRules>
+                                        <Validators:SelectionExistsValidator />
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </ComboBox.SelectedItem>
+                        </ComboBox>
+                        <ComboBox Name="cmbUnloadMethods" Grid.Column="3" Grid.Row="2" ItemTemplate="{StaticResource SimpleNameTemplate}" TextSearch.TextPath="Name" Controls:ComboUtil.AllowNull="True">
+                            <ComboBox.SelectedItem>
+                                <Binding Path="UnloadMethod">
+                                    <Binding.ValidationRules>
+                                        <Validators:SelectionExistsValidator />
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </ComboBox.SelectedItem>
+                        </ComboBox>                        
                         <Grid Grid.Column="4" Grid.Row="2">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="1.5*" />
@@ -308,8 +429,7 @@
 
                         <Label Grid.Column="1" Grid.Row="0">Route</Label>
                         <Label Grid.Column="2" Grid.Row="0">Load/Unload instructions</Label>
-                        
-                        <!-- <ComboBox Grid.Column="1" Grid.Row="1" Text="{Binding LoadRoute}" ItemsSource="{Binding ElementName=ThePanel, Path=CommonRoutes}" ItemTemplate="{DynamicResource RouteComboTemplate}" /> -->
+                                                
                         <TextBox Grid.Column="1" Grid.Row="1" Style="{StaticResource MultiLine}" Text="{Binding LoadRoute}" />
                         <TextBox Grid.Column="2" Grid.Row="1" Style="{StaticResource MultiLine}" Text="{Binding LoadInstructions}"  />
 
@@ -338,11 +458,43 @@
                     <Label Grid.Column="1" Grid.Row="0">Company:</Label>
                     <Label Grid.Column="2" Grid.Row="0">Address:</Label>
 
-                    <ComboBox Grid.Column="1" Grid.Row="1" Name="cmbShipperCompanies" TextSearch.TextPath="Name" ItemsSource="{Binding ElementName=ThePanel, Path=CompanyList}" SelectedItem="{Binding ShipperCompany}" SelectionChanged="ShipperCompany_SelectionChanged" ItemTemplate="{StaticResource SimpleNameTemplate}" Controls:ComboUtil.AllowNull="True" />
-                    <ComboBox Grid.Column="2" Grid.Row="1" Name="cmbShipperAddresses" TextSearch.TextPath="Line1" SelectedItem="{Binding ShipperAddress}" ItemTemplate="{StaticResource AddressTemplate}" Controls:ComboUtil.AllowNull="True" />
+                    <ComboBox Grid.Column="1" Grid.Row="1" Name="cmbShipperCompanies" TextSearch.TextPath="Name" ItemsSource="{Binding ElementName=ThePanel, Path=CompanyList}" SelectionChanged="ShipperCompany_SelectionChanged" ItemTemplate="{StaticResource SimpleNameTemplate}" Controls:ComboUtil.AllowNull="True">
+                        <ComboBox.SelectedItem>
+                            <Binding Path="ShipperCompany">
+                                <Binding.ValidationRules>
+                                    <Validators:SelectionExistsValidator />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </ComboBox.SelectedItem>
+                    </ComboBox>
+                    <ComboBox Grid.Column="2" Grid.Row="1" Name="cmbShipperAddresses" TextSearch.TextPath="Line1" ItemTemplate="{StaticResource AddressTemplate}" Controls:ComboUtil.AllowNull="True">
+                        <ComboBox.SelectedItem>
+                            <Binding Path="ShipperAddress">
+                                <Binding.ValidationRules>
+                                    <Validators:SelectionExistsValidator />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </ComboBox.SelectedItem>
+                    </ComboBox>
 
-                    <ComboBox Grid.Column="1" Grid.Row="2" Name="cmbConsigneeCompanies" TextSearch.TextPath="Name" ItemsSource="{Binding ElementName=ThePanel, Path=CompanyList}" SelectedItem="{Binding ConsigneeCompany}" SelectionChanged="ConsigneeCompany_SelectionChanged" ItemTemplate="{StaticResource SimpleNameTemplate}" Controls:ComboUtil.AllowNull="True" />
-                    <ComboBox Grid.Column="2" Grid.Row="2" Name="cmbConsigneeAddresses" TextSearch.TextPath="Line1" SelectedItem="{Binding ConsigneeAddress}" ItemTemplate="{StaticResource AddressTemplate}" Controls:ComboUtil.AllowNull="True" />
+                    <ComboBox Grid.Column="1" Grid.Row="2" Name="cmbConsigneeCompanies" TextSearch.TextPath="Name" ItemsSource="{Binding ElementName=ThePanel, Path=CompanyList}" SelectionChanged="ConsigneeCompany_SelectionChanged" ItemTemplate="{StaticResource SimpleNameTemplate}" Controls:ComboUtil.AllowNull="True">
+                        <ComboBox.SelectedItem>
+                            <Binding Path="ConsigneeCompany">
+                                <Binding.ValidationRules>
+                                    <Validators:SelectionExistsValidator />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </ComboBox.SelectedItem>
+                    </ComboBox>
+                    <ComboBox Grid.Column="2" Grid.Row="2" Name="cmbConsigneeAddresses" TextSearch.TextPath="Line1" ItemTemplate="{StaticResource AddressTemplate}" Controls:ComboUtil.AllowNull="True">
+                        <ComboBox.SelectedItem>
+                            <Binding Path="ConsigneeAddress">
+                                <Binding.ValidationRules>
+                                    <Validators:SelectionExistsValidator />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </ComboBox.SelectedItem>
+                    </ComboBox>
                 </Grid>
 
                 <!--

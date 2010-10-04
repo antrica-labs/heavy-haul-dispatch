@@ -6,6 +6,7 @@
                         xmlns:Local="clr-namespace:SingerDispatch.Panels.Loads"
                         xmlns:Panels="clr-namespace:SingerDispatch.Panels"
                         xmlns:Controls="clr-namespace:SingerDispatch.Controls"
+                        xmlns:Validators="clr-namespace:SingerDispatch.Controls.Validators"
                         Loaded="ControlLoaded" x:Name="ThePanel" mc:Ignorable="d" d:DesignWidth="750">
     <UserControl.Resources>
         <ResourceDictionary>
@@ -56,16 +57,48 @@
                     </Grid.RowDefinitions>
 
                     <Label Grid.Row="0" Grid.Column="0">Dispatched by:</Label>
-                    <ComboBox Name="cmbDispatchedByEmployees" Grid.Row="0" Grid.Column="1" SelectedItem="{Binding DispatchedBy}" ItemTemplate="{StaticResource SimpleNameTemplate}" />
+                    <ComboBox Name="cmbDispatchedByEmployees" Grid.Row="0" Grid.Column="1" ItemTemplate="{StaticResource SimpleNameTemplate}">
+                        <ComboBox.SelectedItem>
+                            <Binding Path="DispatchedBy">
+                                <Binding.ValidationRules>
+                                    <Validators:SelectionExistsValidator />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </ComboBox.SelectedItem>
+                    </ComboBox>
                     
                     <Label Grid.Row="1" Grid.Column="0">Equipment type:</Label>
-                    <ComboBox Name="cmbEquipmentTypes" Grid.Row="1" Grid.Column="1" ItemTemplate="{StaticResource SimpleNameTemplate}" TextSearch.TextPath="Name" Controls:ComboUtil.AllowNull="True" SelectedItem="{Binding EquipmentType}" />
+                    <ComboBox Name="cmbEquipmentTypes" Grid.Row="1" Grid.Column="1" ItemTemplate="{StaticResource SimpleNameTemplate}" TextSearch.TextPath="Name" Controls:ComboUtil.AllowNull="True">
+                        <ComboBox.SelectedItem>
+                            <Binding Path="EquipmentType">
+                                <Binding.ValidationRules>
+                                    <Validators:SelectionExistsValidator />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </ComboBox.SelectedItem>
+                    </ComboBox>
 
                     <Label Grid.Row="2" Grid.Column="0">Unit:</Label>
-                    <ComboBox Name="cmbUnits" Grid.Row="2" Grid.Column="1" ItemTemplate="{StaticResource EquipmentNameTemplate}" TextSearch.TextPath="UnitNumber" Controls:ComboUtil.AllowNull="True" ItemsSource="{Binding EquipmentType.Equipment}" SelectedItem="{Binding Equipment}" />
+                    <ComboBox Name="cmbUnits" Grid.Row="2" Grid.Column="1" ItemTemplate="{StaticResource EquipmentNameTemplate}" TextSearch.TextPath="UnitNumber" Controls:ComboUtil.AllowNull="True" ItemsSource="{Binding EquipmentType.Equipment}">
+                        <ComboBox.SelectedItem>
+                            <Binding Path="Equipment">
+                                <Binding.ValidationRules>
+                                    <Validators:SelectionExistsValidator />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </ComboBox.SelectedItem>
+                    </ComboBox>
                     
                     <Label Grid.Row="3" Grid.Column="0">Driver:</Label>
-                    <ComboBox Name="cmbEmployees" Grid.Row="3" Grid.Column="1" SelectedItem="{Binding Employee}" ItemTemplate="{StaticResource SimpleNameTemplate}" TextSearch.TextPath="Name" Controls:ComboUtil.AllowNull="True" />
+                    <ComboBox Name="cmbEmployees" Grid.Row="3" Grid.Column="1" ItemTemplate="{StaticResource SimpleNameTemplate}" TextSearch.TextPath="Name" Controls:ComboUtil.AllowNull="True">
+                        <ComboBox.SelectedItem>
+                            <Binding Path="Employee">
+                                <Binding.ValidationRules>
+                                    <Validators:SelectionExistsValidator />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </ComboBox.SelectedItem>
+                    </ComboBox>
 
                     <Label Grid.Row="4" Grid.Column="0">Departing units:</Label>
                     <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding DepartingUnits}" />

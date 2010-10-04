@@ -5,6 +5,7 @@
                            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                            xmlns:Panels="clr-namespace:SingerDispatch.Panels"
                            xmlns:Controls="clr-namespace:SingerDispatch.Controls"
+                           xmlns:Validators="clr-namespace:SingerDispatch.Controls.Validators"
                            Loaded="Control_Loaded"
                            x:Name="ThePanel"
                            d:DesignWidth="780" mc:Ignorable="d">
@@ -62,10 +63,26 @@
                             </Grid.RowDefinitions>
 
                             <Label Grid.Column="0" Grid.Row="0">Address:</Label>
-                            <ComboBox Grid.Column="1" Grid.Row="0" Name="CmbAddresses" SelectedItem="{Binding BillingAddress}" ItemTemplate="{StaticResource AddressTemplate}" Controls:ComboUtil.AllowNull="True" />
+                            <ComboBox Grid.Column="1" Grid.Row="0" Name="CmbAddresses" ItemTemplate="{StaticResource AddressTemplate}" Controls:ComboUtil.AllowNull="True">
+                                <ComboBox.SelectedItem>
+                                    <Binding Path="BillingAddress">
+                                        <Binding.ValidationRules>
+                                            <Validators:SelectionExistsValidator />
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </ComboBox.SelectedItem>
+                            </ComboBox>
 
                             <Label Grid.Column="0" Grid.Row="1">Name:</Label>
-                            <ComboBox Grid.Column="1" Grid.Row="1" Name="CmbContacts" SelectedItem="{Binding Contact}" ItemTemplate="{StaticResource SimpleNameTemplate}" Controls:ComboUtil.AllowNull="True" />
+                            <ComboBox Grid.Column="1" Grid.Row="1" Name="CmbContacts" ItemTemplate="{StaticResource SimpleNameTemplate}" Controls:ComboUtil.AllowNull="True">
+                                <ComboBox.SelectedItem>
+                                    <Binding Path="Contact">
+                                        <Binding.ValidationRules>
+                                            <Validators:SelectionExistsValidator />
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </ComboBox.SelectedItem>
+                            </ComboBox>
                         </Grid>
                     </GroupBox>
                     

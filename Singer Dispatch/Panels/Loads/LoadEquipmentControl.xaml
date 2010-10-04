@@ -60,7 +60,7 @@
             </GroupBox>
             
             <GroupBox Header="Status" Grid.Column="2" Grid.Row="0">
-                <ComboBox Name="cmbStatuses" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectedItem="{Binding Status}" />
+                <ComboBox Name="cmbStatuses" ItemTemplate="{StaticResource SimpleNameTemplate}" IsEditable="False" SelectedItem="{Binding Status}" />
             </GroupBox>
 
             <GroupBox Header="References" Grid.Column="2" Grid.Row="1">
