@@ -136,7 +136,7 @@ namespace SingerDispatch.Panels.Loads
             if (SelectedLoad == null) return;
 
             var list = (ObservableCollection<LoadedCommodity>)dgCommodities.ItemsSource;
-            var loaded = new LoadedCommodity { Load = SelectedLoad, LoadSiteCompany = SelectedCompany, UnloadSiteCompany = SelectedCompany };
+            var loaded = new LoadedCommodity { Load = SelectedLoad, LoadSiteCompany = SelectedCompany, UnloadSiteCompany = SelectedCompany };            
 
             var singerList = from c in CompanyList where c.Name.Contains(SingerConfigs.SingerSearchString) select c;
 
@@ -272,7 +272,7 @@ namespace SingerDispatch.Panels.Loads
 
         private void UpdateCommonLists()
         {
-            var list = (ObservableCollection<LoadedCommodity>)dgCommodities.SelectedItem;
+            var list = (ObservableCollection<LoadedCommodity>)dgCommodities.ItemsSource;
 
             if (list == null) return;
 

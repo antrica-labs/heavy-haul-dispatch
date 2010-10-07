@@ -1,4 +1,5 @@
 ﻿
+using System.Collections.ObjectModel;
 namespace SingerDispatch.Panels.Admin
 {
     /// <summary>
@@ -14,6 +15,11 @@ namespace SingerDispatch.Panels.Admin
         protected override void UseImperialMeasurementsChanged(bool value)
         {
             base.UseImperialMeasurementsChanged(value);
+        }
+
+        protected override void CompanyListChanged(ObservableCollection<Company> newValue, ObservableCollection<Company> oldValue)
+        {
+            base.CompanyListChanged(newValue, oldValue);
         }
     }
 }

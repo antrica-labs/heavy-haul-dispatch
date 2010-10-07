@@ -1,10 +1,11 @@
 ﻿<Panels:BaseUserControl x:Class="SingerDispatch.Panels.Storage.StoragePanel"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:Panels="clr-namespace:SingerDispatch.Panels"
-             mc:Ignorable="d" d:DesignWidth="800" Loaded="Control_Loaded">
+                        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+                        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+                        xmlns:Panels="clr-namespace:SingerDispatch.Panels"
+                        x:Name="ThePanel"
+                        mc:Ignorable="d" d:DesignWidth="800" Loaded="Control_Loaded">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -25,22 +26,131 @@
                                 <ColumnDefinition />
                             </Grid.ColumnDefinitions>
                             
-                            <Button Grid.Column="0" Style="{StaticResource Horizontal}">Add item</Button>                            
+                            <Button Grid.Column="0" Style="{StaticResource Horizontal}" Click="AddItem_Click">Add item</Button>
+                            <Button Grid.Column="3" Style="{StaticResource HorizontalEnd}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgStorageItems, Path=SelectedItem}" Click="RemoveItem_Click">Remove item</Button>
                         </Grid>
-                        
-                        <GroupBox Header="Storge Item" DataContext="{Binding ElementName=dgStorageItems, Path=SelectedItem}">
+
+                        <GroupBox Header="Storge Item" DataContext="{Binding ElementName=dgStorageItems, Path=SelectedItem}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgStorageItems, Path=SelectedItem}">
                             <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition />
+                                    <ColumnDefinition Width="0.8*" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+
+                                <Label Grid.Row="0" Grid.Column="0">Company:</Label>
+                                <ComboBox Name="cmbCompanies" Grid.Row="0" Grid.Column="1" ItemsSource="{Binding ElementName=ThePanel, Path=CompanyList}" SelectedItem="{Binding Company}" />
+
+                                <Label Grid.Row="1" Grid.Column="0">Commodity:</Label>
+                                <ComboBox Grid.Row="1" Grid.Column="1" ItemsSource="{Binding Company.Commodities}" SelectedItem="{Binding Commodity}" />
+
+                                <Label Grid.Row="2" Grid.Column="0">Unit #:</Label>
+                                <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Commodity.Unit}" />
+
+                                <Label Grid.Row="3" Grid.Column="0">Location:</Label>
+                                <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding YardLocation}" />
                                 
-                            </Grid>    
+                                <GroupBox Grid.Row="0" Grid.Column="2" Grid.RowSpan="4" Header="Billing">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />                                        
+                                            <ColumnDefinition />
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition />
+                                            <RowDefinition />
+                                            <RowDefinition />
+                                        </Grid.RowDefinitions>
+
+                                        <Label Grid.Column="0" Grid.Row="0">Billing rate:</Label>
+                                        <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding BillingRate, StringFormat=C}" />
+                                        
+                                        <Label Grid.Column="0" Grid.Row="1">Date in:</Label>
+                                        <DatePicker Grid.Column="1" Grid.Row="1" SelectedDate="{Binding DateEntered}" />
+
+                                        <Label Grid.Column="0" Grid.Row="2">Date out:</Label>
+                                        <DatePicker Grid.Column="1" Grid.Row="2" SelectedDate="{Binding DateRemoved}" />
+                                    </Grid>
+                                </GroupBox>
+                                
+                                <GroupBox Header="Dimensions" Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="3" DataContext="{Binding Commodity}">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition />
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition />
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition />
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition />
+                                        </Grid.ColumnDefinitions>
+
+                                        <Label Grid.Column="0">Length:</Label>
+                                        <TextBox Grid.Column="1">
+                                            <TextBox.Text>
+                                                <MultiBinding Converter="{StaticResource LengthMeasurementConverter}">
+                                                    <Binding Path="Length" />
+                                                    <Binding ElementName="ThisPanel" Path="UseImperialMeasurements" />
+                                                </MultiBinding>
+                                            </TextBox.Text>
+                                        </TextBox>
+
+                                        <Label Grid.Column="2">Width:</Label>
+                                        <TextBox Grid.Column="3">
+                                            <TextBox.Text>
+                                                <MultiBinding Converter="{StaticResource LengthMeasurementConverter}">
+                                                    <Binding Path="Width" />
+                                                    <Binding ElementName="ThisPanel" Path="UseImperialMeasurements" />
+                                                </MultiBinding>
+                                            </TextBox.Text>
+                                        </TextBox>
+
+                                        <Label Grid.Column="4">Height:</Label>
+                                        <TextBox Grid.Column="5">
+                                            <TextBox.Text>
+                                                <MultiBinding Converter="{StaticResource LengthMeasurementConverter}">
+                                                    <Binding Path="Height" />
+                                                    <Binding ElementName="ThisPanel" Path="UseImperialMeasurements" />
+                                                </MultiBinding>
+                                            </TextBox.Text>
+                                        </TextBox>
+                                        
+                                        <Label Grid.Column="6">Weight:</Label>
+                                        <TextBox Grid.Column="7">
+                                            <TextBox.Text>
+                                                <MultiBinding Converter="{StaticResource WeightMeasurementConverter}">
+                                                    <Binding Path="Weight" />
+                                                    <Binding ElementName="ThisPanel" Path="UseImperialMeasurements" />
+                                                </MultiBinding>
+                                            </TextBox.Text>
+                                        </TextBox>
+                                    </Grid>
+                                </GroupBox>
+
+                                <Label Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="3">Notes:</Label>
+                                <TextBox Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="3" Style="{StaticResource MultiLine}" Text="{Binding Notes}" />
+                            </Grid>
                         </GroupBox>
+
+                        <Button Name="CommitChangesButton" Style="{StaticResource HorizontalEnd}" Click="CommitChangesButton_Click" LostFocus="CommitChangesButton_LostFocus">Save changes</Button>
                     </StackPanel>
                     
                     <DataGrid Name="dgStorageItems" Style="{StaticResource ListDisplay}">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Company" Binding="{Binding Company.Name}" />
-                            <DataGridTextColumn Header="Commodity" Binding="{Binding Commodity.Name}" />
-                            <DataGridTextColumn Header="Location" Binding="{Binding Location}" />
-                            <DataGridTextColumn Header="Rate" Binding="{Binding Rate, StringFormat=C}" />
+                            <DataGridTextColumn Header="Commodity" Binding="{Binding Commodity.NameAndUnit}" />
+                            <DataGridTextColumn Header="Location" Binding="{Binding YardLocation}" />
+                            <DataGridTextColumn Header="Rate" Binding="{Binding BillingRate, StringFormat=C}" Width="0.5*" />
                         </DataGrid.Columns>
                     </DataGrid>
                 </DockPanel>    

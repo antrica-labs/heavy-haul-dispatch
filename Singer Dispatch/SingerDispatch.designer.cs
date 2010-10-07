@@ -2048,6 +2048,8 @@ namespace SingerDispatch
 		
 		private EntitySet<ThirdPartyService> _ThirdPartyServices;
 		
+		private EntitySet<StorageItem> _StoredItems;
+		
 		private EntityRef<CompanyPriorityLevel> _CompanyPriorityLevel;
 		
 		private EntityRef<CustomerType> _CustomerType;
@@ -2097,6 +2099,7 @@ namespace SingerDispatch
 			this._CareOfQuotes = new EntitySet<Quote>(new Action<Quote>(this.attach_CareOfQuotes), new Action<Quote>(this.detach_CareOfQuotes));
 			this._Services = new EntitySet<Service>(new Action<Service>(this.attach_Services), new Action<Service>(this.detach_Services));
 			this._ThirdPartyServices = new EntitySet<ThirdPartyService>(new Action<ThirdPartyService>(this.attach_ThirdPartyServices), new Action<ThirdPartyService>(this.detach_ThirdPartyServices));
+			this._StoredItems = new EntitySet<StorageItem>(new Action<StorageItem>(this.attach_StoredItems), new Action<StorageItem>(this.detach_StoredItems));
 			this._CompanyPriorityLevel = default(EntityRef<CompanyPriorityLevel>);
 			this._CustomerType = default(EntityRef<CustomerType>);
 			OnCreated();
@@ -2525,6 +2528,19 @@ namespace SingerDispatch
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Company_StorageItem", Storage="_StoredItems", ThisKey="ID", OtherKey="CompanyID")]
+		public EntitySet<StorageItem> StoredItems
+		{
+			get
+			{
+				return this._StoredItems;
+			}
+			set
+			{
+				this._StoredItems.Assign(value);
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="CompanyPriorityLevel_Company", Storage="_CompanyPriorityLevel", ThisKey="PriorityLevelID", OtherKey="ID", IsForeignKey=true)]
 		public CompanyPriorityLevel CompanyPriorityLevel
 		{
@@ -2788,6 +2804,18 @@ namespace SingerDispatch
 		}
 		
 		private void detach_ThirdPartyServices(ThirdPartyService entity)
+		{
+			this.SendPropertyChanging();
+			entity.Company = null;
+		}
+		
+		private void attach_StoredItems(StorageItem entity)
+		{
+			this.SendPropertyChanging();
+			entity.Company = this;
+		}
+		
+		private void detach_StoredItems(StorageItem entity)
 		{
 			this.SendPropertyChanging();
 			entity.Company = null;
@@ -18375,6 +18403,10 @@ namespace SingerDispatch
 		
 		private long _ID;
 		
+		private System.Nullable<bool> _IsVisible;
+		
+		private System.Nullable<long> _CompanyID;
+		
 		private System.Nullable<long> _CommodityID;
 		
 		private System.Nullable<System.DateTime> _DateEntered;
@@ -18389,6 +18421,8 @@ namespace SingerDispatch
 		
 		private string _Notes;
 		
+		private EntityRef<Company> _Company;
+		
 		private EntityRef<Commodity> _Commodity;
 		
     #region Extensibility Method Definitions
@@ -18397,6 +18431,10 @@ namespace SingerDispatch
     partial void OnCreated();
     partial void OnIDChanging(long value);
     partial void OnIDChanged();
+    partial void OnIsVisibleChanging(System.Nullable<bool> value);
+    partial void OnIsVisibleChanged();
+    partial void OnCompanyIDChanging(System.Nullable<long> value);
+    partial void OnCompanyIDChanged();
     partial void OnCommodityIDChanging(System.Nullable<long> value);
     partial void OnCommodityIDChanged();
     partial void OnDateEnteredChanging(System.Nullable<System.DateTime> value);
@@ -18415,6 +18453,7 @@ namespace SingerDispatch
 		
 		public StorageItem()
 		{
+			this._Company = default(EntityRef<Company>);
 			this._Commodity = default(EntityRef<Commodity>);
 			OnCreated();
 		}
@@ -18435,6 +18474,50 @@ namespace SingerDispatch
 					this._ID = value;
 					this.SendPropertyChanged("ID");
 					this.OnIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsVisible")]
+		public System.Nullable<bool> IsVisible
+		{
+			get
+			{
+				return this._IsVisible;
+			}
+			set
+			{
+				if ((this._IsVisible != value))
+				{
+					this.OnIsVisibleChanging(value);
+					this.SendPropertyChanging();
+					this._IsVisible = value;
+					this.SendPropertyChanged("IsVisible");
+					this.OnIsVisibleChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CompanyID")]
+		public System.Nullable<long> CompanyID
+		{
+			get
+			{
+				return this._CompanyID;
+			}
+			set
+			{
+				if ((this._CompanyID != value))
+				{
+					if (this._Company.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnCompanyIDChanging(value);
+					this.SendPropertyChanging();
+					this._CompanyID = value;
+					this.SendPropertyChanged("CompanyID");
+					this.OnCompanyIDChanged();
 				}
 			}
 		}
@@ -18579,6 +18662,40 @@ namespace SingerDispatch
 					this._Notes = value;
 					this.SendPropertyChanged("Notes");
 					this.OnNotesChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Company_StorageItem", Storage="_Company", ThisKey="CompanyID", OtherKey="ID", IsForeignKey=true)]
+		public Company Company
+		{
+			get
+			{
+				return this._Company.Entity;
+			}
+			set
+			{
+				Company previousValue = this._Company.Entity;
+				if (((previousValue != value) 
+							|| (this._Company.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Company.Entity = null;
+						previousValue.StoredItems.Remove(this);
+					}
+					this._Company.Entity = value;
+					if ((value != null))
+					{
+						value.StoredItems.Add(this);
+						this._CompanyID = value.ID;
+					}
+					else
+					{
+						this._CompanyID = default(Nullable<long>);
+					}
+					this.SendPropertyChanged("Company");
 				}
 			}
 		}

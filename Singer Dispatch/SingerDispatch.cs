@@ -405,26 +405,33 @@ namespace SingerDispatch
         public LoadedCommodity Duplicate()
         {
             var copy = new LoadedCommodity();
-                        
-            copy.JobCommodity = JobCommodity;
+
+            copy.Load = Load;
+            copy.JobCommodity = JobCommodity;            
             copy.LoadLocation = LoadLocation;
-            copy.LoadingCompany = LoadingCompany;            
+            copy.LoadAddress = LoadAddress;
+            copy.LoadingProvince = LoadingProvince;
+            copy.LoadSiteCompany = LoadSiteCompany;
+            copy.LoadSiteContact = LoadSiteContact;
+            copy.LoadingCompany = LoadingCompany;
             copy.LoadingContact = copy.LoadingContact;
             copy.LoadMethod = LoadMethod;
             copy.LoadDate = LoadDate;
-            copy.LoadSiteCompany = LoadSiteCompany;
-            copy.LoadSiteContact = LoadSiteContact;
+            copy.LoadTime = LoadTime;
             copy.LoadInstructions = LoadInstructions;
-            copy.LoadRoute = LoadRoute;            
+            copy.LoadRoute = LoadRoute;
             copy.UnloadLocation = UnloadLocation;
+            copy.UnloadAddress = copy.UnloadAddress;
+            copy.UnloadingProvince = UnloadingProvince;
+            copy.UnloadSiteCompany = UnloadSiteCompany;
+            copy.UnloadSiteContact = UnloadSiteContact;            
             copy.UnloadingCompany = UnloadingCompany;
             copy.UnloadingContact = UnloadingContact;
             copy.UnloadMethod = UnloadMethod;
             copy.UnloadDate = UnloadDate;
-            copy.UnloadSiteCompany = UnloadSiteCompany;
-            copy.UnloadSiteContact = UnloadSiteContact;
+            copy.UnloadTime = UnloadTime;
             copy.UnloadInstructions = UnloadInstructions;
-            copy.UnloadRoute = UnloadRoute;            
+            copy.UnloadRoute = UnloadRoute;
             copy.ShipperCompany = ShipperCompany;
             copy.ShipperAddress = ShipperAddress;
             copy.ConsigneeCompany = ConsigneeCompany;
@@ -720,5 +727,13 @@ namespace SingerDispatch
         {
             return new OutOfProvinceTravel { ProvinceOrState = ProvinceOrState, Distance = Distance };
         }
+    }
+
+    partial class StorageItem
+    {
+        partial void OnCreated()
+        {
+            IsVisible = IsVisible ?? true;
+        } 
     }
 }

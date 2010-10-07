@@ -57,6 +57,11 @@ namespace SingerDispatch.Panels.Jobs
             }
         }
 
+        protected override void CompanyListChanged(ObservableCollection<Company> newValue, ObservableCollection<Company> oldValue)
+        {
+            base.CompanyListChanged(newValue, oldValue);
+        }
+
         protected override void SelectedCompanyChanged(Company newValue, Company oldValue)
         {
             base.SelectedCompanyChanged(newValue, oldValue);

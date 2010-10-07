@@ -5,6 +5,7 @@ using System.Windows.Input;
 using SingerDispatch.Controls;
 using System;
 using SingerDispatch.Printing.Documents;
+using System.Collections.ObjectModel;
 
 namespace SingerDispatch.Panels.Invoicing
 {
@@ -34,6 +35,11 @@ namespace SingerDispatch.Panels.Invoicing
             SaveCommand.Executed += CommitJobChanges_Executed;
 
             RefreshJobList();
+        }
+
+        protected override void CompanyListChanged(ObservableCollection<Company> newValue, ObservableCollection<Company> oldValue)
+        {
+            base.CompanyListChanged(newValue, oldValue);
         }
 
         protected override void SelectedCompanyChanged(Company newValue, Company oldValue)

@@ -56,6 +56,11 @@ namespace SingerDispatch.Panels.Loads
             UpdateLoadList();
         }
 
+        protected override void CompanyListChanged(ObservableCollection<Company> newValue, ObservableCollection<Company> oldValue)
+        {
+            base.CompanyListChanged(newValue, oldValue);
+        }
+
         public static void SelectedJobPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var control = (LoadsPanel)d;

@@ -92,6 +92,7 @@
       <Association Name="Company_LoadedCommodity_UnloadSite" Member="UnloadSite" OtherKey="UnloadSiteCompanyID" ThisKey="ID" Type="LoadedCommodity" />
       <Association Name="Company_LoadedCommodity_Load" Member="Loading" OtherKey="LoadingCompanyID" ThisKey="ID" Type="LoadedCommodity" />
       <Association Name="Company_LoadedCommodity_Unload" Member="Unloading" OtherKey="UnloadingCompanyID" ThisKey="ID" Type="LoadedCommodity" />
+      <Association Name="Company_StorageItem" Member="StoredItems" ThisKey="ID" OtherKey="CompanyID" Type="StorageItem" />
     </Type>
   </Table>
   <Table Name="" Member="CompanyPriorityLevels">
@@ -795,6 +796,8 @@
   <Table Name="" Member="StorageItems">
     <Type Name="StorageItem">
       <Column Name="ID" Type="System.Int64" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="IsVisible" Type="System.Boolean" CanBeNull="true"/>
+      <Column Name="CompanyID" Type="System.Int64" CanBeNull="true" />
       <Column Name="CommodityID" Type="System.Int64" CanBeNull="true" />
       <Column Name="DateEntered" Type="System.DateTime" CanBeNull="true" />
       <Column Name="DateRemoved" Type="System.DateTime" CanBeNull="true" />
@@ -802,7 +805,8 @@
       <Column Name="BillingRate" Type="System.Decimal" CanBeNull="true" />
       <Column Name="ReferenceCode" Type="System.String" CanBeNull="true" />
       <Column Name="Notes" Type="System.String" CanBeNull="true" />
-      <Association Name="Commodity_StorageItem" Member="Commodity" ThisKey="CommodityID" OtherKey="ID" Type="Commodity" IsForeignKey="true" />
+      <Association Name="Company_StorageItem" Member="Company" ThisKey="CompanyID" OtherKey="ID" Type="Company" IsForeignKey="true" />
+      <Association Name="Commodity_StorageItem" Member="Commodity" ThisKey="CommodityID" OtherKey="ID" Type="Commodity" IsForeignKey="true" />      
     </Type>
   </Table>
 </Database>
