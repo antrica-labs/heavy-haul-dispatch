@@ -77,13 +77,13 @@ namespace SingerDispatch.Panels.Jobs
             {
                 foreach (var item in list)
                 {
-                    if (item.DepartureAddress != null && item.DepartureAddress.Trim().Length > 0 && !CommonSiteAddresses.Contains(item.DepartureAddress))
+                    if (!string.IsNullOrWhiteSpace(item.DepartureAddress) && !CommonSiteAddresses.Contains(item.DepartureAddress))
                         CommonSiteAddresses.Add(item.DepartureAddress);
-                    if (item.ArrivalAddress != null && item.ArrivalAddress.Trim().Length > 0 && !CommonSiteAddresses.Contains(item.ArrivalAddress))
+                    if (!string.IsNullOrWhiteSpace(item.ArrivalAddress) && !CommonSiteAddresses.Contains(item.ArrivalAddress))
                         CommonSiteAddresses.Add(item.ArrivalAddress);
-                    if (item.DepartureSiteName != null && item.DepartureSiteName.Trim().Length > 0 && !CommonSiteNames.Contains(item.DepartureSiteName))
+                    if (!string.IsNullOrWhiteSpace(item.DepartureSiteName) && !CommonSiteNames.Contains(item.DepartureSiteName))
                         CommonSiteNames.Add(item.DepartureSiteName);
-                    if (item.ArrivalSiteName != null && item.ArrivalSiteName.Trim().Length > 0 && !CommonSiteNames.Contains(item.ArrivalSiteName))
+                    if (!string.IsNullOrWhiteSpace(item.ArrivalSiteName) && !CommonSiteNames.Contains(item.ArrivalSiteName))
                         CommonSiteNames.Add(item.ArrivalSiteName);
                 }
             }

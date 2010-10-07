@@ -76,11 +76,10 @@ namespace SingerDispatch.Panels.Loads
             InitializeComponent();
 
             CommonRoutes = new ObservableCollection<string>();
+            CommonSiteAddresses = new ObservableCollection<string>();
+            CommonSiteLocations = new ObservableCollection<string>();
+            CommonInstructions = new ObservableCollection<string>();
 
-            CommonRoutes.Add("Something really long goes in this box. Something really long goes in this box. Something really long goes in this box. Something really long goes in this box. Something really long goes in this box. Something really long goes in this box. Something really long goes in this box.");
-            CommonRoutes.Add("Another long entry is in here. Another long entry is in here. Another long entry is in here. Another long entry is in here. Another long entry is in here. Another long entry is in here. Another long entry is in here. Another long entry is in here.");
-            CommonRoutes.Add("All work and no play makes Jack a dull boy. All work and no play makes Jack a dull boy. All work and no play makes Jack a dull boy. All work and no play makes Jack a dull boy. All work and no play makes Jack a dull boy. All work and no play makes Jack a dull boy. All work and no play makes Jack a dull boy. All work and no play makes Jack a dull boy. All work and no play makes Jack a dull boy. All work and no play makes Jack a dull boy. All work and no play makes Jack a dull boy. All work and no play makes Jack a dull boy. All work and no play makes Jack a dull boy. All work and no play makes Jack a dull boy. ");
-            
             if (InDesignMode()) return;
 
             Database = SingerConfigs.CommonDataContext;
@@ -273,9 +272,32 @@ namespace SingerDispatch.Panels.Loads
 
         private void UpdateCommonLists()
         {
-            var loaded = (LoadedCommodity)dgCommodities.SelectedItem;
+            var list = (ObservableCollection<LoadedCommodity>)dgCommodities.SelectedItem;
 
-            if (loaded == null) return;
+            if (list == null) return;
+
+            foreach (var item in list)
+            {
+                if (!string.IsNullOrWhiteSpace(item.LoadLocation) && !CommonSiteLocations.Contains(item.LoadLocation))
+                    CommonSiteLocations.Add(item.LoadLocation);
+                if (!string.IsNullOrWhiteSpace(item.UnloadLocation) && !CommonSiteLocations.Contains(item.UnloadLocation))
+                    CommonSiteLocations.Add(item.UnloadLocation);
+
+                if (!string.IsNullOrWhiteSpace(item.LoadAddress) && !CommonSiteAddresses.Contains(item.LoadAddress))
+                    CommonSiteAddresses.Add(item.LoadAddress);
+                if (!string.IsNullOrWhiteSpace(item.UnloadAddress) && !CommonSiteAddresses.Contains(item.UnloadAddress))
+                    CommonSiteAddresses.Add(item.UnloadAddress);
+
+                if (!string.IsNullOrWhiteSpace(item.LoadRoute) && !CommonRoutes.Contains(item.LoadRoute))
+                    CommonRoutes.Add(item.LoadRoute);
+                if (!string.IsNullOrWhiteSpace(item.UnloadRoute) && !CommonRoutes.Contains(item.UnloadRoute))
+                    CommonRoutes.Add(item.UnloadRoute);
+
+                if (!string.IsNullOrWhiteSpace(item.LoadInstructions) && !CommonInstructions.Contains(item.LoadInstructions))
+                    CommonInstructions.Add(item.LoadInstructions);
+                if (!string.IsNullOrWhiteSpace(item.UnloadInstructions) && !CommonInstructions.Contains(item.UnloadInstructions))
+                    CommonInstructions.Add(item.UnloadInstructions);
+            }
         }
 
         private static void ReindexCollection(ObservableCollection<LoadedCommodity> list)
