@@ -459,5 +459,7 @@ namespace SingerDispatch
             cmbCompanies.ItemsSource = Companies;
             cmbOperators.ItemsSource = Companies;
         }
+
+        
     }
 }
