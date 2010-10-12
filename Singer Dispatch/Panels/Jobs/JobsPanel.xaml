@@ -58,7 +58,7 @@
         </StackPanel>
 
         <TabControl Name="Tabs" Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" DataContext="{Binding ElementName=ThePanel}" Margin="5,0,0,0">
-            <TabItem Header="Job List">
+            <TabItem Header="Job List" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, Path=SelectedJob}">
                 <Jobs:JobDetailsControl CompanyList="{Binding CompanyList}" SelectedCompany="{Binding SelectedCompany}" SelectedJob="{Binding SelectedJob}" UseImperialMeasurements="{Binding UseImperialMeasurements}" />
             </TabItem>
             <TabItem Header="Commodities" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, Path=SelectedJob}">

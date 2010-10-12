@@ -15,7 +15,7 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <DockPanel>
+    <DockPanel IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=ThePanel, Path=SelectedJob}">
         <GroupBox DockPanel.Dock="Top" Header="Details" DataContext="{Binding ElementName=ThePanel, Path=SelectedJob}">
             <Grid>
                 <Grid.ColumnDefinitions>

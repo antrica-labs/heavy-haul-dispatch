@@ -53,7 +53,7 @@
                                 <ComboBox Grid.Row="0" Grid.Column="1" ItemsSource="{Binding ElementName=ThePanel, Path=CompanyList}" TextSearch.TextPath="Name" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectedItem="{Binding Company}" />
                                 
                                 <Label Grid.Row="1" Grid.Column="0">Commodity:</Label>
-                                <ComboBox Grid.Row="1" Grid.Column="1" ItemsSource="{Binding Company.Commodities}" SelectedItem="{Binding Commodity}" ItemTemplate="{StaticResource NameAndUnitTemplate}" />
+                                <ComboBox Grid.Row="1" Grid.Column="1" ItemsSource="{Binding Company.Commodities}" SelectedItem="{Binding Commodity}" ItemTemplate="{StaticResource NameAndUnitTemplate}" TextSearch.TextPath="Name" />
 
                                 <Label Grid.Row="2" Grid.Column="0">Unit #:</Label>
                                 <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Commodity.Unit}" />
@@ -149,22 +149,13 @@
 
                     <DataGrid Name="dgStorageItems" Style="{StaticResource ListDisplay}">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="Company" Binding="{Binding Company.Name}" />
+                            <DataGridTextColumn Header="Company" Binding="{Binding Company.Name}" Width="0.8*"/>
                             <DataGridTextColumn Header="Commodity" Binding="{Binding Commodity.NameAndUnit}" />
-                            <DataGridTextColumn Header="Location" Binding="{Binding YardLocation}" />
+                            <DataGridTextColumn Header="Location" Binding="{Binding YardLocation}" Width="0.6*" />
                             <DataGridTextColumn Header="Rate" Binding="{Binding BillingRate, StringFormat=C}" Width="0.5*" />
                         </DataGrid.Columns>
                     </DataGrid>
                 </DockPanel>
-            </TabItem>
-            <TabItem Header="Companies">
-                <StackPanel>
-                    <ComboBox ItemsSource="{Binding ElementName=ThePanel, Path=CompanyList}" ItemTemplate="{StaticResource SimpleNameTemplate}" />
-                    
-                    <DataGrid ></DataGrid>
-                    
-                    <Button >Click</Button>
-                </StackPanel>
             </TabItem>
         </TabControl>
     </DockPanel>
