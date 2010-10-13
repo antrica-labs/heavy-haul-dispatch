@@ -70,7 +70,24 @@ namespace SingerDispatch.Panels.Storage
 
         private void RemoveItem_Click(object sender, RoutedEventArgs e)
         {
+            var list = (ObservableCollection<StorageItem>)dgStorageItems.ItemsSource;
+            var item = (StorageItem)dgStorageItems.SelectedItem;
 
+            if (item == null) return;
+
+            item.DateRemoved = item.DateRemoved ?? DateTime.Now;
+            item.IsVisible = false;
+
+            list.Remove(item);
+
+            try
+            {                
+                Database.SubmitChanges();
+            }
+            catch (System.Exception ex)
+            {
+                Windows.ErrorNoticeWindow.ShowError("Error while attempting to write changes to database", ex.Message);
+            }
         }
 
         private void CommitChangesButton_Click(object sender, RoutedEventArgs e)
