@@ -26,6 +26,17 @@
         <TextBlock Text="{Binding FriendlyName}" />
     </DataTemplate>
     
+    <DataTemplate x:Key="PersonNameTemplate">
+        <TextBlock>
+            <TextBlock.Text>
+                <MultiBinding StringFormat="{}{0} {1}}">
+                    <Binding Path="FirstName" />
+                    <Binding Path="LastName" />
+                </MultiBinding>
+            </TextBlock.Text>
+        </TextBlock>
+    </DataTemplate>
+    
     <DataTemplate x:Key="ContactTemplate">
         <TextBlock>
             <TextBlock.Text>

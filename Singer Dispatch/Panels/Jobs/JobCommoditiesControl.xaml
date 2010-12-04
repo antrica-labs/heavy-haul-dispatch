@@ -95,7 +95,7 @@
                                     <TextBox.Text>
                                         <MultiBinding Converter="{StaticResource LengthMeasurementConverter}">
                                             <Binding Path="Length" />
-                                            <Binding ElementName="ThisControl" Path="UseImperialMeasurements" />
+                                            <Binding ElementName="ThePanel" Path="UseImperialMeasurements" />
                                         </MultiBinding>
                                     </TextBox.Text>
                                 </TextBox>
@@ -105,7 +105,7 @@
                                     <TextBox.Text>
                                         <MultiBinding Converter="{StaticResource LengthMeasurementConverter}">
                                             <Binding Path="Width" />
-                                            <Binding ElementName="ThisControl" Path="UseImperialMeasurements" />
+                                            <Binding ElementName="ThePanel" Path="UseImperialMeasurements" />
                                         </MultiBinding>
                                     </TextBox.Text>
                                 </TextBox>
@@ -115,7 +115,7 @@
                                     <TextBox.Text>
                                         <MultiBinding Converter="{StaticResource LengthMeasurementConverter}">
                                             <Binding Path="Height" />
-                                            <Binding ElementName="ThisControl" Path="UseImperialMeasurements" />
+                                            <Binding ElementName="ThePanel" Path="UseImperialMeasurements" />
                                         </MultiBinding>
                                     </TextBox.Text>
                                 </TextBox>
@@ -125,7 +125,7 @@
                                     <TextBox.Text>
                                         <MultiBinding Converter="{StaticResource WeightMeasurementConverter}">
                                             <Binding Path="Weight" />
-                                            <Binding ElementName="ThisControl" Path="UseImperialMeasurements" />
+                                            <Binding ElementName="ThePanel" Path="UseImperialMeasurements" />
                                         </MultiBinding>
                                     </TextBox.Text>
                                 </TextBox>

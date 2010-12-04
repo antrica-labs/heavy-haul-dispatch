@@ -320,8 +320,9 @@
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition />
                             <ColumnDefinition />
-                            <ColumnDefinition Width="0.9*"/>
-                            <ColumnDefinition />
+                            <ColumnDefinition Width="0.9*" />
+                            <ColumnDefinition Width="0.7*" />
+                            <ColumnDefinition Width="0.5*" />
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition />
@@ -332,10 +333,11 @@
                         <Label Grid.Row="1" Grid.Column="0">Load:</Label>
                         <Label Grid.Row="2" Grid.Column="0">Unload:</Label>
 
-                        <Label Grid.Row="0" Grid.Column="1">Company</Label>
-                        <Label Grid.Row="0" Grid.Column="2">Contact</Label>
-                        <Label Grid.Row="0" Grid.Column="3">Method</Label>
-                        <Label Grid.Row="0" Grid.Column="4">Time</Label>
+                        <Label Grid.Row="0" Grid.Column="1">Company:</Label>
+                        <Label Grid.Row="0" Grid.Column="2">Contact:</Label>
+                        <Label Grid.Row="0" Grid.Column="3">Method:</Label>
+                        <Label Grid.Row="0" Grid.Column="4">Date:</Label>
+                        <Label Grid.Row="0" Grid.Column="5">Time:</Label>
 
                         <ComboBox Name="cmbLoadingContactCompanies" Grid.Column="1" Grid.Row="1" ItemsSource="{Binding ElementName=ThePanel, Path=CompanyList}" TextSearch.TextPath="Name" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectionChanged="cmbLoadingContactCompanies_SelectionChanged" Controls:ComboUtil.AllowNull="True">
                             <ComboBox.SelectedItem>
@@ -364,15 +366,8 @@
                                 </Binding>
                             </ComboBox.SelectedItem>
                         </ComboBox>
-                        <Grid Grid.Column="4" Grid.Row="1">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="1.5*" />
-                                <ColumnDefinition />
-                            </Grid.ColumnDefinitions>
-
-                            <DatePicker Grid.Column="0" SelectedDate="{Binding LoadDate}" />
-                            <TextBox Grid.Column="1" Text="{Binding LoadTime, Converter={StaticResource TimeConverter}}" />
-                        </Grid>
+                        <DatePicker Grid.Column="4" Grid.Row="1" SelectedDate="{Binding Date}" />
+                        <TextBox Grid.Column="5" Grid.Row="1" Text="{Binding LoadTime, Converter={StaticResource TimeConverter}}" />
 
                         <ComboBox Name="cmbUnloadingContactCompanies" Grid.Column="1" Grid.Row="2" ItemsSource="{Binding ElementName=ThePanel, Path=CompanyList}" TextSearch.TextPath="Name" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectionChanged="cmbUnloadingContactCompanies_SelectionChanged" Controls:ComboUtil.AllowNull="True">
                             <ComboBox.SelectedItem>
@@ -400,16 +395,9 @@
                                     </Binding.ValidationRules>
                                 </Binding>
                             </ComboBox.SelectedItem>
-                        </ComboBox>                        
-                        <Grid Grid.Column="4" Grid.Row="2">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="1.5*" />
-                                <ColumnDefinition />
-                            </Grid.ColumnDefinitions>
-
-                            <DatePicker Grid.Column="0" SelectedDate="{Binding UnloadDate}" />
-                            <TextBox Grid.Column="1" Text="{Binding UnloadTime, Converter={StaticResource TimeConverter}}" />
-                        </Grid>
+                        </ComboBox>
+                        <DatePicker Grid.Column="4" Grid.Row="2" SelectedDate="{Binding UnloadDate}" />
+                        <TextBox Grid.Column="5" Grid.Row="2" Text="{Binding UnloadTime, Converter={StaticResource TimeConverter}}" />                        
                     </Grid>
 
                     <Grid>

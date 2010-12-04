@@ -258,6 +258,20 @@ namespace SingerDispatch.Panels.Loads
             dgOutOfProvince.ItemsSource = (dispatch == null) ? null : new ObservableCollection<OutOfProvinceTravel>(dispatch.OutOfProvinceTravels);
             dgSwampers.ItemsSource = (dispatch == null) ? null : new ObservableCollection<Swamper>(dispatch.Swampers);
         }
+
+        private void cmbUnits_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            
+        }
+
+        private void AssignDriver_Click(object sender, RoutedEventArgs e)
+        {
+            var dispatch = (Dispatch)dgDispatches.SelectedItem;
+
+            if (dispatch == null || cmbUnits.SelectedItem == null) return;
+
+            dispatch.Employee = ((Equipment)cmbUnits.SelectedItem).Employee;
+        }
     }
 
     public class EmployeeDropList : ObservableCollection<Employee>
