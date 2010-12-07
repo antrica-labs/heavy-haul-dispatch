@@ -5,7 +5,7 @@ namespace SingerDispatch.Printing.Documents
     {
         bool PrintMetric { get; set; }
         bool SpecializedDocument { get; set; }
-        string GenerateHTML(object entity);        
+        string GenerateHTML(object entity);
     }
 }
 

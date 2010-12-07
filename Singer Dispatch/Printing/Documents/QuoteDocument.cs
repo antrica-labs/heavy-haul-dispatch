@@ -6,12 +6,9 @@ using SingerDispatch.Utils;
 
 namespace SingerDispatch.Printing.Documents
 {
-    class QuoteDocument : IPrintDocument
+    class QuoteDocument : SingerPrintDocument
     {
         private const string PageBreak = @"<div class=""page_break""></div>";
-
-        public bool PrintMetric { get; set; }
-        public bool SpecializedDocument { get; set; }
 
         public QuoteDocument()
         {
@@ -19,9 +16,9 @@ namespace SingerDispatch.Printing.Documents
             SpecializedDocument = true;
         }
 
-        public string GenerateHTML(object quote)
+        public override string GenerateHTML(object entity)
         {
-            return GenerateHTML((Quote)quote);
+            return GenerateHTML((Quote)entity);
         }
 
         private string GenerateHTML(Quote quote)
@@ -413,22 +410,9 @@ namespace SingerDispatch.Printing.Documents
                 </div>
             ";
 
-            var process = System.Diagnostics.Process.GetCurrentProcess();
-            string img;
-
-            if (SpecializedDocument)
-                img = SingerConfigs.GetConfig("Documents-SingerHeaderImg") ?? @"Images\SingerHeader.png";
-            else
-                img = SingerConfigs.GetConfig("Documents-MEHeaderImg") ?? @"Images\MEHeader.png";
-
-            if (process.MainModule != null)
-            {
-                img = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(process.MainModule.FileName), img);
-            }
-
             var replacements = new object[5];
 
-            replacements[0] = img;
+            replacements[0] = GetHeaderImg();
             replacements[1] = quoteName;
             replacements[2] = SingerConfigs.GetConfig("SingerAddress-StreetAddress");
             replacements[3] = SingerConfigs.GetConfig("SingerAddress-City");

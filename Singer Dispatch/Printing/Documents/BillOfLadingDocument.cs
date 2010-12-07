@@ -18,18 +18,15 @@ namespace SingerDispatch.Printing.Documents
         }
     }
 
-    class BillOfLadingDocument : IPrintDocument
+    class BillOfLadingDocument : SingerPrintDocument
     {
-        public bool PrintMetric { get; set; }
-        public bool SpecializedDocument { get; set; }
-
         public BillOfLadingDocument()
         {
             PrintMetric = true;
             SpecializedDocument = true;        
         }
         
-        public string GenerateHTML(object entity)
+        public override string GenerateHTML(object entity)
         {
             if (entity is BillOfLadingEntity)
             {
@@ -614,21 +611,8 @@ namespace SingerDispatch.Printing.Documents
             ";
 
             var replacements = new object[7];
-
-            var process = System.Diagnostics.Process.GetCurrentProcess();
-            string img;
-
-            if (SpecializedDocument)
-                img = SingerConfigs.GetConfig("Documents-SingerHeaderImg") ?? @"Images\SingerHeader.png";
-            else
-                img = SingerConfigs.GetConfig("Documents-MEHeaderImg") ?? @"Images\MEHeader.png";
-
-            if (process.MainModule != null)
-            {
-                img = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(process.MainModule.FileName), img);
-            }
-
-            replacements[0] = img;
+            
+            replacements[0] = GetHeaderImg();
             replacements[1] = SingerConfigs.GetConfig("SingerName") ?? "Singer Specialized";
             replacements[2] = SingerConfigs.GetConfig("SingerAddress-StreetAddress");
             replacements[3] = SingerConfigs.GetConfig("SingerAddress-City");

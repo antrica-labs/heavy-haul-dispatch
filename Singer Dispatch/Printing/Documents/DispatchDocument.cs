@@ -9,14 +9,12 @@ using SingerDispatch.Utils;
 
 namespace SingerDispatch.Printing.Documents
 {
-    class DispatchDocument : IPrintDocument
+    class DispatchDocument : SingerPrintDocument
     {
         private const string PageBreak = @"<div class=""page_break""></div>";
         
         public bool IncludeFileCopy { get; set; }
-        public bool PrintMetric { get; set; }
-        public bool SpecializedDocument { get; set; }
-
+        
         public DispatchDocument()
         {
             IncludeFileCopy = false;
@@ -31,12 +29,12 @@ namespace SingerDispatch.Printing.Documents
             SpecializedDocument = true;
         }
 
-        public string GenerateHTML(object dispatch)
+        public override string GenerateHTML(object entity)
         {
-            if (dispatch is List<Dispatch>)
-                return GenerateHTML((List<Dispatch>)dispatch);
-            
-            return GenerateHTML((Dispatch)dispatch);
+            if (entity is List<Dispatch>)
+                return GenerateHTML((List<Dispatch>)entity);
+
+            return GenerateHTML((Dispatch)entity);
         }
 
         private string GenerateHTML(Dispatch dispatch)
@@ -612,21 +610,8 @@ namespace SingerDispatch.Printing.Documents
             ";
 
             var replacements = new object[8];
-
-            var process = System.Diagnostics.Process.GetCurrentProcess();
-            string img;
-
-            if (SpecializedDocument)
-                img = SingerConfigs.GetConfig("Documents-SingerHeaderImg") ?? @"Images\SingerHeader.png";
-            else
-                img = SingerConfigs.GetConfig("Documents-MEHeaderImg") ?? @"Images\MEHeader.png";
-
-            if (process.MainModule != null)
-            {
-                img = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(process.MainModule.FileName), img);
-            }
-
-            replacements[0] = img;
+            
+            replacements[0] = GetHeaderImg();
             replacements[1] = SingerConfigs.GetConfig("SingerName") ?? "Singer Specialized";
             replacements[2] = SingerConfigs.GetConfig("SingerAddress-StreetAddress");
             replacements[3] = SingerConfigs.GetConfig("SingerAddress-City");

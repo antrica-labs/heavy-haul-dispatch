@@ -4,20 +4,17 @@ using System.Text;
 
 namespace SingerDispatch.Printing.Documents
 {
-    class InvoiceDocument : IPrintDocument
+    class InvoiceDocument : SingerPrintDocument
     {
-        public bool PrintMetric { get; set; }
-        public bool SpecializedDocument { get; set; }
-
         public InvoiceDocument()
         {
             PrintMetric = true;
             SpecializedDocument = true;
         }
-
-        public string GenerateHTML(object invoice)
+        
+        public override string GenerateHTML(object entity)
         {
-            return GenerateHTML((Invoice)invoice);
+            return GenerateHTML((Invoice)entity);
         }
 
         private string GenerateHTML(Invoice invoice)
@@ -85,19 +82,8 @@ namespace SingerDispatch.Printing.Documents
 
         private string GetHeaderLogo()
         {            
-            var html = @"<span class=""logo""><img src=""{0}"" alt=""Singer Specialized""></span>";
-            var process = System.Diagnostics.Process.GetCurrentProcess();
-            string img;
-
-            if (SpecializedDocument)
-                img = SingerConfigs.GetConfig("Documents-SingerHeaderImg") ?? @"Images\SingerHeader.png";
-            else
-                img = SingerConfigs.GetConfig("Documents-MEHeaderImg") ?? @"Images\MEHeader.png";
-
-            if (process.MainModule != null)
-            {
-                img = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(process.MainModule.FileName), img);
-            }
+            var html = @"<span class=""logo""><img src=""{0}"" alt=""Singer Specialized""></span>";            
+            var img = GetHeaderImg();
 
             if (img != null)
                 return string.Format(html, img);
