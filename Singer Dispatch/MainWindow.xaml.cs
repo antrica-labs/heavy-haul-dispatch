@@ -21,6 +21,7 @@ using System.Windows.Interop;
 using System.ComponentModel;
 using SingerDispatch.Security;
 using SingerDispatch.Panels.Loads;
+using WPFAutoCompleteBox.Controls;
 
 namespace SingerDispatch
 {
@@ -35,7 +36,7 @@ namespace SingerDispatch
 
         public static DependencyProperty CompaniesProperty = DependencyProperty.Register("Companies", typeof(ObservableCollection<Company>), typeof(BaseUserControl));
         public static DependencyProperty UseImperialMeasurementsProperty = DependencyProperty.Register("UseImperialMeasurements", typeof(Boolean), typeof(MainWindow), new PropertyMetadata(false, UseImperialMeasurementsPropertyChanged));
-
+        
         public ObservableCollection<Company> Companies 
         {
             get
@@ -124,11 +125,18 @@ namespace SingerDispatch
                 from c in Database.Companies where c.IsVisible == true orderby c.Name select c
             );
 
-            cmbCompanies.ItemsSource = Companies;
-            cmbOperators.ItemsSource = Companies;
+            expanderCompanies.IsExpanded = true;            
+            acCompany.Focus();
 
-            expanderCompanies.IsExpanded = true;
-            cmbCompanies.Focus();
+            try
+            {
+                var acManager = new WPFAutoCompleteBox.Core.AutoCompleteManager(acCompany);
+                acManager.DataProvider = new SingerDispatch.Database.CompleteProviders.CompanyNameACProvider(Database);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
         }
 
         private void Window_Closing(object sender, CancelEventArgs e)
@@ -250,9 +258,9 @@ namespace SingerDispatch
                     }
                 }
 
-                var companyListBinding = new Binding { ElementName = "cmbCompanies", Path = new PropertyPath(Selector.ItemsSourceProperty) };
-                var companyBinding = new Binding { ElementName = "cmbCompanies", Path = new PropertyPath(Selector.SelectedItemProperty) };
-                var imperialBinding = new Binding { ElementName = "mainWindow", Path = new PropertyPath(MainWindow.UseImperialMeasurementsProperty) };
+                var companyListBinding = new Binding { ElementName = "ThisWindow", Path = new PropertyPath(MainWindow.CompaniesProperty) };
+                var companyBinding = new Binding { ElementName = "acCompany", Path = new PropertyPath(CompletableTextBox.SelectedItemProperty) };
+                var imperialBinding = new Binding { ElementName = "ThisWindow", Path = new PropertyPath(MainWindow.UseImperialMeasurementsProperty) };
 
                 panel.SetBinding(BaseUserControl.CompanyListProperty, companyListBinding);
                 panel.SetBinding(CompanyUserControl.SelectedCompanyProperty, companyBinding);
@@ -316,7 +324,7 @@ namespace SingerDispatch
             if (job == null || job.Company == null) return;
 
             expanderInvoicing.IsExpanded = true;
-            cmbCompanies.SelectedItem = job.Company;
+            acCompany.SelectedItem = job.Company;
 
             ((JobInvoicingPanel)panelMainContent.Child).UpdateLayout();
             ((JobInvoicingPanel)panelMainContent.Child).SelectedJob = job;
@@ -326,8 +334,8 @@ namespace SingerDispatch
         {
             if (job == null || job.Company == null) return;
 
-            expanderJobs.IsExpanded = true;
-            cmbCompanies.SelectedItem = job.Company;
+            expanderJobs.IsExpanded = true;            
+            acCompany.SelectedItem = job.Company;
 
             ((JobsPanel)panelMainContent.Child).UpdateLayout();
             ((JobsPanel)panelMainContent.Child).SelectedJob = job;
@@ -338,7 +346,7 @@ namespace SingerDispatch
             if (job == null || job.Company == null) return;
 
             expanderLoads.IsExpanded = true;
-            cmbCompanies.SelectedItem = job.Company;
+            acCompany.SelectedItem = job.Company;
 
             ((LoadsPanel)panelMainContent.Child).UpdateLayout();
             ((LoadsPanel)panelMainContent.Child).SelectedJob = job;
@@ -349,7 +357,7 @@ namespace SingerDispatch
             if (quote == null || quote.Company == null) return;
 
             expanderQuotes.IsExpanded = true;
-            cmbCompanies.SelectedItem = quote.Company;
+            acCompany.SelectedItem = quote.Company;
 
             ((QuotesPanel)panelMainContent.Child).UpdateLayout();
             ((QuotesPanel)panelMainContent.Child).SelectedQuote = quote;
@@ -449,15 +457,12 @@ namespace SingerDispatch
         {
             var window = new EditCompaniesWindow { Owner = this };
             window.ShowDialog();
-
-            cmbCompanies.SelectedItem = null;
+                        
+            acCompany.SelectedItem = null;
 
             Companies = new ObservableCollection<Company>(
                 from c in Database.Companies where c.IsVisible == true orderby c.Name select c
             );
-
-            cmbCompanies.ItemsSource = Companies;
-            cmbOperators.ItemsSource = Companies;
         }
 
         

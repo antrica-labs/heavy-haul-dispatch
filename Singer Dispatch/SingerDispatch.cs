@@ -27,6 +27,11 @@ namespace SingerDispatch
                 return OperatingAs ?? Name;
             }
         }
+
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 
     partial class Address
