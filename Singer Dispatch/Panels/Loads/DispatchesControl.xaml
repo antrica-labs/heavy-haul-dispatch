@@ -97,7 +97,7 @@
                                 </Binding>
                             </ComboBox.SelectedItem>
                         </ComboBox>
-                        <Button Grid.Column="1" Style="{StaticResource Horizontal}" Click="AssignDriver_Click">Assign default driver</Button>
+                        <Button Grid.Column="1" Style="{StaticResource Horizontal}" Click="AssignDriver_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, Path=Equipment.DefaultDriver}">Assign default driver</Button>
                     </Grid>
                     
                     

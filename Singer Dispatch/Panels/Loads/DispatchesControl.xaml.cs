@@ -268,9 +268,9 @@ namespace SingerDispatch.Panels.Loads
         {
             var dispatch = (Dispatch)dgDispatches.SelectedItem;
 
-            if (dispatch == null || cmbUnits.SelectedItem == null) return;
+            if (dispatch == null || dispatch.Equipment == null) return;
 
-            dispatch.Employee = ((Equipment)cmbUnits.SelectedItem).Employee;
+            dispatch.Employee = dispatch.Equipment.DefaultDriver;
         }
     }
 

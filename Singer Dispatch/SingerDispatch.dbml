@@ -167,7 +167,7 @@
       <Column Name="Email" Type="System.String" CanBeNull="true" />
       <Column Name="WindowsUserName" Type="System.String" CanBeNull="true" />      
       <Association Name="Employee_Quote" Member="Quotes" ThisKey="ID" OtherKey="EmployeeID" Type="Quote" />
-      <Association Name="Employee_Equipment" Member="Equipments" ThisKey="ID" OtherKey="DefaultDriverID" Type="Equipment" />
+      <Association Name="Employee_Equipment" Member="Equipment" ThisKey="ID" OtherKey="DefaultDriverID" Type="Equipment" />
       <Association Name="Employee_Dispatch" Member="Dispatches" ThisKey="ID" OtherKey="EmployeeID" Type="Dispatch" />
       <Association Name="Employee_Swamper" Member="Swampers" ThisKey="ID" OtherKey="EmployeeID" Type="Swamper" />
       <Association Name="Employee_Dispatch_DispatchedBy" Member="DispatchedDispatches" ThisKey="ID" OtherKey="DispatchedByID" Type="Dispatch" />
@@ -632,7 +632,7 @@
       <Association Name="EquipmentType_Equipment" Member="EquipmentType" ThisKey="TypeID" OtherKey="ID" Type="EquipmentType" IsForeignKey="true" />
       <Association Name="Equipment_Load" Member="Loads" ThisKey="ID" OtherKey="EquipmentID" Type="Load" />
       <Association Name="Equipment_Dispatch" Member="Dispatches" ThisKey="ID" OtherKey="EquipmentID" Type="Dispatch" />
-      <Association Name="Employee_Equipment" Member="Employee" ThisKey="DefaultDriverID" OtherKey="ID" Type="Employee" IsForeignKey="true" />
+      <Association Name="Employee_Equipment" Member="DefaultDriver" ThisKey="DefaultDriverID" OtherKey="ID" Type="Employee" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="" Member="EquipmentClasses">

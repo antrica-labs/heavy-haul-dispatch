@@ -163,6 +163,9 @@ namespace SingerDispatch.Panels.Loads
             }
             catch { }
 
+            cmbLoadingSiteContactCompanies.SelectedItem = SelectedCompany;
+            cmbUnloadingSiteContactCompanies.SelectedItem = SelectedCompany;
+
             SelectedLoad.LoadedCommodities.Add(loaded);
             list.Add(loaded);
             dgCommodities.SelectedItem = loaded;

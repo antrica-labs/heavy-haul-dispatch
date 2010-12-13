@@ -58,7 +58,7 @@
                         <Label Grid.Row="1" Grid.Column="0">Default Driver:</Label>
                         <ComboBox Name="cmbEmployees" Grid.Row="1" Grid.Column="1" ItemTemplate="{StaticResource SimpleNameTemplate}" TextSearch.TextPath="Name" Controls:ComboUtil.AllowNull="True">
                             <ComboBox.SelectedItem>
-                                <Binding Path="Employee">
+                                <Binding Path="DefaultDriver">
                                     <Binding.ValidationRules>
                                         <Validators:SelectionExistsValidator />
                                     </Binding.ValidationRules>
@@ -160,7 +160,7 @@
                 <DataGridTextColumn Header="Unit" Binding="{Binding UnitNumber}" />
                 <DataGridTextColumn Header="Make" Binding="{Binding Make}" />
                 <DataGridTextColumn Header="Model" Binding="{Binding Model}" />
-                <DataGridTextColumn Header="Driver" Binding="{Binding Employee.Name}" />
+                <DataGridTextColumn Header="Driver" Binding="{Binding DefaultDriver.Name}" />
             </DataGrid.Columns>
         </DataGrid>
     </DockPanel>

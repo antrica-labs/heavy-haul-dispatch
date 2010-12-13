@@ -4004,7 +4004,7 @@ namespace SingerDispatch
 		
 		private EntitySet<Quote> _Quotes;
 		
-		private EntitySet<Equipment> _Equipments;
+		private EntitySet<Equipment> _Equipment;
 		
 		private EntitySet<Dispatch> _DispatchedDispatches;
 		
@@ -4049,7 +4049,7 @@ namespace SingerDispatch
 		public Employee()
 		{
 			this._Quotes = new EntitySet<Quote>(new Action<Quote>(this.attach_Quotes), new Action<Quote>(this.detach_Quotes));
-			this._Equipments = new EntitySet<Equipment>(new Action<Equipment>(this.attach_Equipments), new Action<Equipment>(this.detach_Equipments));
+			this._Equipment = new EntitySet<Equipment>(new Action<Equipment>(this.attach_Equipment), new Action<Equipment>(this.detach_Equipment));
 			this._DispatchedDispatches = new EntitySet<Dispatch>(new Action<Dispatch>(this.attach_DispatchedDispatches), new Action<Dispatch>(this.detach_DispatchedDispatches));
 			this._Dispatches = new EntitySet<Dispatch>(new Action<Dispatch>(this.attach_Dispatches), new Action<Dispatch>(this.detach_Dispatches));
 			this._Swampers = new EntitySet<Swamper>(new Action<Swamper>(this.attach_Swampers), new Action<Swamper>(this.detach_Swampers));
@@ -4349,16 +4349,16 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Employee_Equipment", Storage="_Equipments", ThisKey="ID", OtherKey="DefaultDriverID")]
-		public EntitySet<Equipment> Equipments
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Employee_Equipment", Storage="_Equipment", ThisKey="ID", OtherKey="DefaultDriverID")]
+		public EntitySet<Equipment> Equipment
 		{
 			get
 			{
-				return this._Equipments;
+				return this._Equipment;
 			}
 			set
 			{
-				this._Equipments.Assign(value);
+				this._Equipment.Assign(value);
 			}
 		}
 		
@@ -4433,16 +4433,16 @@ namespace SingerDispatch
 			entity.Employee = null;
 		}
 		
-		private void attach_Equipments(Equipment entity)
+		private void attach_Equipment(Equipment entity)
 		{
 			this.SendPropertyChanging();
-			entity.Employee = this;
+			entity.DefaultDriver = this;
 		}
 		
-		private void detach_Equipments(Equipment entity)
+		private void detach_Equipment(Equipment entity)
 		{
 			this.SendPropertyChanging();
-			entity.Employee = null;
+			entity.DefaultDriver = null;
 		}
 		
 		private void attach_DispatchedDispatches(Dispatch entity)
@@ -14418,7 +14418,7 @@ namespace SingerDispatch
 		
 		private EntityRef<EquipmentType> _EquipmentType;
 		
-		private EntityRef<Employee> _Employee;
+		private EntityRef<Employee> _DefaultDriver;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -14478,7 +14478,7 @@ namespace SingerDispatch
 			this._Dispatches = new EntitySet<Dispatch>(new Action<Dispatch>(this.attach_Dispatches), new Action<Dispatch>(this.detach_Dispatches));
 			this._EquipmentClass = default(EntityRef<EquipmentClass>);
 			this._EquipmentType = default(EntityRef<EquipmentType>);
-			this._Employee = default(EntityRef<Employee>);
+			this._DefaultDriver = default(EntityRef<Employee>);
 			OnCreated();
 		}
 		
@@ -14513,7 +14513,7 @@ namespace SingerDispatch
 			{
 				if ((this._DefaultDriverID != value))
 				{
-					if (this._Employee.HasLoadedOrAssignedValue)
+					if (this._DefaultDriver.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -15048,36 +15048,36 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Employee_Equipment", Storage="_Employee", ThisKey="DefaultDriverID", OtherKey="ID", IsForeignKey=true)]
-		public Employee Employee
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Employee_Equipment", Storage="_DefaultDriver", ThisKey="DefaultDriverID", OtherKey="ID", IsForeignKey=true)]
+		public Employee DefaultDriver
 		{
 			get
 			{
-				return this._Employee.Entity;
+				return this._DefaultDriver.Entity;
 			}
 			set
 			{
-				Employee previousValue = this._Employee.Entity;
+				Employee previousValue = this._DefaultDriver.Entity;
 				if (((previousValue != value) 
-							|| (this._Employee.HasLoadedOrAssignedValue == false)))
+							|| (this._DefaultDriver.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._Employee.Entity = null;
-						previousValue.Equipments.Remove(this);
+						this._DefaultDriver.Entity = null;
+						previousValue.Equipment.Remove(this);
 					}
-					this._Employee.Entity = value;
+					this._DefaultDriver.Entity = value;
 					if ((value != null))
 					{
-						value.Equipments.Add(this);
+						value.Equipment.Add(this);
 						this._DefaultDriverID = value.ID;
 					}
 					else
 					{
 						this._DefaultDriverID = default(Nullable<long>);
 					}
-					this.SendPropertyChanged("Employee");
+					this.SendPropertyChanged("DefaultDriver");
 				}
 			}
 		}
