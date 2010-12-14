@@ -144,24 +144,24 @@ namespace SingerDispatch.Panels.Loads
             {
                 var company = singerList.First();
 
-                loaded.ShipperCompany = company;
                 loaded.LoadingCompany = company;
                 loaded.UnloadingCompany = company;
             }
-
+            
             try
             {
-                loaded.ShipperAddress = loaded.ShipperCompany.Addresses.First();
+                loaded.ShipperCompany = loaded.ConsigneeCompany = SelectedCompany;
+
+                loaded.ShipperAddress = loaded.ConsigneeAddress = (from a in loaded.ShipperCompany.Addresses where a.AddressType.Name == "Head Office" select a).First();
             }
-            catch { }
-
-            loaded.ConsigneeCompany = SelectedCompany;
-
-            try
+            catch
             {
-                loaded.ConsigneeAddress = loaded.ConsigneeCompany.Addresses.First();
+                try
+                {
+                    loaded.ShipperAddress = loaded.ConsigneeAddress = loaded.ShipperCompany.Addresses.First();
+                }
+                catch { }
             }
-            catch { }
 
             cmbLoadingSiteContactCompanies.SelectedItem = SelectedCompany;
             cmbUnloadingSiteContactCompanies.SelectedItem = SelectedCompany;
