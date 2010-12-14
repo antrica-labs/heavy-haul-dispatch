@@ -150,11 +150,14 @@ namespace SingerDispatch.Panels.Loads
 
             try
             {
+                Database.SubmitChanges(); // Save any unsaved changes before doing delete.
+
                 EntityHelper.PrepareEntityDelete(load, Database);
+                                
+                SelectedJob.Loads.Remove(load);
+                Database.SubmitChanges();
 
                 list.Remove(load);
-                SelectedJob.Loads.Remove(load);
-                dgLoads.SelectedItem = null;
             }
             catch (Exception ex)
             {

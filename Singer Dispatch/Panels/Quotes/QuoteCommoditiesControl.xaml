@@ -127,7 +127,7 @@
                                 </TextBox>
 
                                 <Label Grid.Row="4" Grid.Column="0">Estimated:</Label>
-                                <CheckBox Grid.Row="4" Grid.Column="1" IsChecked="{Binding WeightEstimated}"/>
+                                <CheckBox Grid.Row="4" Grid.Column="1" IsChecked="{Binding DimensionsEstimated}"/>
                             </Grid>
                         </StackPanel>
                     </GroupBox>

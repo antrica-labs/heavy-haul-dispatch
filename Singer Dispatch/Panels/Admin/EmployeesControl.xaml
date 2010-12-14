@@ -46,6 +46,7 @@
                         <RowDefinition />
                         <RowDefinition />
                         <RowDefinition />
+                        <RowDefinition />
                     </Grid.RowDefinitions>
 
                     <Label Grid.Row="0" Grid.Column="0">First name:</Label>
@@ -54,38 +55,41 @@
                     <Label Grid.Row="1" Grid.Column="0">Last name:</Label>
                     <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding LastName}" />
 
-                    <Label Grid.Row="2" Grid.Column="0">Email:</Label>
-                    <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Email}" />
+                    <Label Grid.Row="2" Grid.Column="0">Job title:</Label>
+                    <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding JobTitle}" />
 
-                    <Label Grid.Row="3" Grid.Column="0">Phone:</Label>
-                    <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Phone, Converter={StaticResource PhoneNumberConverter}}" />
+                    <Label Grid.Row="3" Grid.Column="0">Email:</Label>
+                    <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Email}" />
 
-                    <Label Grid.Row="4" Grid.Column="0">Mobile:</Label>
-                    <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Mobile, Converter={StaticResource PhoneNumberConverter}}" />
+                    <Label Grid.Row="4" Grid.Column="0">Phone:</Label>
+                    <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Phone, Converter={StaticResource PhoneNumberConverter}}" />
 
-                    <Label Grid.Row="5" Grid.Column="0">Available:</Label>
-                    <CheckBox Grid.Row="5" Grid.Column="1" IsChecked="{Binding IsAvailable}" />
+                    <Label Grid.Row="5" Grid.Column="0">Mobile:</Label>
+                    <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding Mobile, Converter={StaticResource PhoneNumberConverter}}" />
 
-                    <Label Grid.Row="6" Grid.Column="0">Supervisor:</Label>
-                    <CheckBox Grid.Row="6" Grid.Column="1" IsChecked="{Binding IsSupervisor}" />
+                    <Label Grid.Row="6" Grid.Column="0">Available:</Label>
+                    <CheckBox Grid.Row="6" Grid.Column="1" IsChecked="{Binding IsAvailable}" />
 
-                    <Label Grid.Row="7" Grid.Column="0">Singer staff:</Label>
-                    <CheckBox Grid.Row="7" Grid.Column="1" IsChecked="{Binding IsSingerStaff}" />
+                    <Label Grid.Row="7" Grid.Column="0">Supervisor:</Label>
+                    <CheckBox Grid.Row="7" Grid.Column="1" IsChecked="{Binding IsSupervisor}" />
 
-                    <Label Grid.Row="8" Grid.Column="0">Start date:</Label>
-                    <DatePicker Grid.Row="8" Grid.Column="1" SelectedDate="{Binding StartDate}" />
+                    <Label Grid.Row="8" Grid.Column="0">Singer staff:</Label>
+                    <CheckBox Grid.Row="8" Grid.Column="1" IsChecked="{Binding IsSingerStaff}" />
 
-                    <Label Grid.Row="9" Grid.Column="0">End date:</Label>
-                    <DatePicker Grid.Row="9" Grid.Column="1" SelectedDate="{Binding EndDate}" />
+                    <Label Grid.Row="9" Grid.Column="0">Start date:</Label>
+                    <DatePicker Grid.Row="9" Grid.Column="1" SelectedDate="{Binding StartDate}" />
 
-                    <Label Grid.Row="10" Grid.Column="0">Responsibility:</Label>
-                    <TextBox Grid.Row="10" Grid.Column="1" Text="{Binding Responsibilities}" />
+                    <Label Grid.Row="10" Grid.Column="0">End date:</Label>
+                    <DatePicker Grid.Row="10" Grid.Column="1" SelectedDate="{Binding EndDate}" />
 
-                    <Label Grid.Row="11" Grid.Column="0">Notes:</Label>
-                    <TextBox Grid.Row="11" Grid.Column="1" Height="60" Style="{StaticResource MultiLine}" Text="{Binding Notes}" />
+                    <Label Grid.Row="11" Grid.Column="0">Responsibility:</Label>
+                    <TextBox Grid.Row="11" Grid.Column="1" Text="{Binding Responsibilities}" />
 
-                    <Label Grid.Row="12" Grid.Column="0">Windows user:</Label>
-                    <TextBox Grid.Row="12" Grid.Column="1" Text="{Binding WindowsUserName}" />
+                    <Label Grid.Row="12" Grid.Column="0">Notes:</Label>
+                    <TextBox Grid.Row="12" Grid.Column="1" Height="60" Style="{StaticResource MultiLine}" Text="{Binding Notes}" />
+
+                    <Label Grid.Row="13" Grid.Column="0">Windows user:</Label>
+                    <TextBox Grid.Row="13" Grid.Column="1" Text="{Binding WindowsUserName}" />
                 </Grid>
             </GroupBox>
         </StackPanel>

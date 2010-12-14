@@ -3980,6 +3980,8 @@ namespace SingerDispatch
 		
 		private string _LastName;
 		
+		private string _JobTitle;
+		
 		private string _Phone;
 		
 		private string _Mobile;
@@ -4022,6 +4024,8 @@ namespace SingerDispatch
     partial void OnFirstNameChanged();
     partial void OnLastNameChanging(string value);
     partial void OnLastNameChanged();
+    partial void OnJobTitleChanging(string value);
+    partial void OnJobTitleChanged();
     partial void OnPhoneChanging(string value);
     partial void OnPhoneChanged();
     partial void OnMobileChanging(string value);
@@ -4112,6 +4116,26 @@ namespace SingerDispatch
 					this._LastName = value;
 					this.SendPropertyChanged("LastName");
 					this.OnLastNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_JobTitle")]
+		public string JobTitle
+		{
+			get
+			{
+				return this._JobTitle;
+			}
+			set
+			{
+				if ((this._JobTitle != value))
+				{
+					this.OnJobTitleChanging(value);
+					this.SendPropertyChanging();
+					this._JobTitle = value;
+					this.SendPropertyChanged("JobTitle");
+					this.OnJobTitleChanged();
 				}
 			}
 		}

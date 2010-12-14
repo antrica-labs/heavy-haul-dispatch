@@ -91,7 +91,7 @@ namespace SingerDispatch
             }
             catch (Exception e)
             {
-                ErrorNoticeWindow.ShowError("Database Error", e.Message);                
+                ErrorNoticeWindow.ShowError("Startup error", e.ToString());                
 
                 Application.Current.Shutdown();
             }

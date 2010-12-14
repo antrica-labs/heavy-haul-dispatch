@@ -155,6 +155,7 @@
       <Column Name="ID" Type="System.Int64" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="FirstName" Type="System.String" CanBeNull="true" />
       <Column Name="LastName" Type="System.String" CanBeNull="true" />
+      <Column Name="JobTitle" Type="System.String" CanBeNull="true" />
       <Column Name="Phone" Type="System.String" CanBeNull="true" />
       <Column Name="Mobile" Type="System.String" CanBeNull="true" />
       <Column Name="IsAvailable" Type="System.Boolean" CanBeNull="true" />

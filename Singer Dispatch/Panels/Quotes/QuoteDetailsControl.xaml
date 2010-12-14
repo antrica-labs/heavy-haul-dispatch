@@ -154,7 +154,7 @@
                     <Label Grid.Column="1" Grid.Row="0">Name:</Label>
                     <ComboBox Grid.Column="1" Grid.Row="1" Name="cmbContacts" ItemTemplate="{StaticResource ContactTemplate}" TextSearch.TextPath="Name" Controls:ComboUtil.AllowNull="True">
                         <ComboBox.SelectedItem>
-                            <Binding Path="CareOfCompany">
+                            <Binding Path="Contact">
                                 <Binding.ValidationRules>
                                     <Validators:SelectionExistsValidator />
                                 </Binding.ValidationRules>

@@ -131,7 +131,7 @@
                         </Grid.RowDefinitions>
 
                         <Label Grid.Column="0" Grid.Row="0">Name:</Label>
-                        <ComboBox Grid.Column="1" Grid.Row="0" Name="cmbCommodityName" ItemTemplate="{StaticResource UnitAndNameTemplate}" TextSearch.TextPath="Name" SelectedItem="{Binding JobCommodity}" Controls:ComboUtil.AllowNull="True" />
+                        <ComboBox Grid.Column="1" Grid.Row="0" Name="cmbCommodityName" ItemTemplate="{StaticResource UnitAndNameTemplate}" TextSearch.TextPath="Name" SelectedItem="{Binding JobCommodity}" Controls:ComboUtil.AllowNull="True" SelectionChanged="cmbCommodityName_SelectionChanged" />
 
                         <Label Grid.Column="2" Grid.Row="0" >Unit:</Label>
                         <TextBox Grid.Column="3" Grid.Row="0" Text="{Binding JobCommodity.Unit}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=cmbCommodityName, Path=SelectedItem}" />

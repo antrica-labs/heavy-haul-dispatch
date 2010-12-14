@@ -292,6 +292,11 @@ namespace SingerDispatch.Printing.Documents
                         padding-right: 15px;                
                     }
 
+                    table.itemized th span.sub 
+                    {
+                        text-transform: none;
+                    }
+
                     table.itemized td 
                     {
                     	border-top: 1px;
@@ -553,7 +558,7 @@ namespace SingerDispatch.Printing.Documents
                                 <th>Description</th>
                                 <th>From</th>
                                 <th>To</th>
-                                <th>Dimensions (LxWxH)</th>
+                                <th>Dimensions <span class=""sub"">(LxWxH)</span></th>
                                 <th>Weight</th>                                
                                 {0}
                             </tr>
@@ -702,14 +707,13 @@ namespace SingerDispatch.Printing.Documents
                 rows.Append(supplement.Quantity);                
                 rows.Append("</td>");
                 rows.Append("<td>");
-                rows.Append(supplement.CostPerItem);
+                rows.Append(string.Format("{0:C}", supplement.CostPerItem));
                 rows.Append("</td>");
                 rows.Append("<td>");
 
                 if (supplement.BillingType != null && supplement.BillingType.Name != "Cost Included")
                 {
-                    rows.Append("$");
-                    rows.Append(supplement.CostPerItem * supplement.Quantity);
+                    rows.Append(string.Format("{0:C}", supplement.CostPerItem * supplement.Quantity));
                 }
 
                 rows.Append("</td>");
@@ -835,14 +839,40 @@ namespace SingerDispatch.Printing.Documents
                     <p>{0}</p>
 
                     <p>Sincerely,</p>
-
+                    <br><br><br>
                     <p class=""author"">
                         {1}
                     </p>
                 </div>
             ";
 
-            content = string.Format(content, SingerConfigs.GetConfig("Quote-DefaultSignoff") ?? "", quote.Employee != null ? quote.Employee.Name : "Dan Klassen");
+            
+
+            string employee;
+            
+            if (quote.Employee != null)            
+            {
+                employee = quote.Employee.Name;
+
+                if (!string.IsNullOrWhiteSpace(quote.Employee.JobTitle))
+                {
+                    employee += "<br>";
+                    employee += quote.Employee.JobTitle;
+                }
+
+                if (!string.IsNullOrWhiteSpace(quote.Employee.Email))
+                {
+                    employee += "<br>";
+                    employee += quote.Employee.Email;
+                }
+            }
+            else
+                employee = "Dan Klassen";
+            
+
+            
+
+            content = string.Format(content, SingerConfigs.GetConfig("Quote-DefaultSignoff") ?? "", employee);
 
             return content;
         }

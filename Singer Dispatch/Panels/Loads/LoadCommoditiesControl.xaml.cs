@@ -489,5 +489,19 @@ namespace SingerDispatch.Panels.Loads
         {
             cmbTrailerCombinations.ItemsSource = from tc in Database.TrailerCombinations where tc.Rate == cmbRates.SelectedItem select tc;
         }
+
+        private void cmbCommodityName_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var commodity = (LoadedCommodity)dgCommodities.SelectedItem;            
+
+            if (commodity == null || commodity.JobCommodity == null) return;
+
+            commodity.LoadLocation = commodity.JobCommodity.DepartureSiteName;
+            commodity.LoadAddress = commodity.JobCommodity.DepartureAddress;
+            commodity.UnloadLocation = commodity.JobCommodity.ArrivalSiteName;
+            commodity.UnloadAddress = commodity.JobCommodity.ArrivalAddress;
+
+            SelectedLoad.Notify("LoadedCommodities");
+        }
     }
 }

@@ -84,20 +84,12 @@ namespace SingerDispatch.Database
 
         public static void PrepareEntityDelete(Load load, SingerDispatchDataContext context)
         {
-            foreach (var item in load.Dispatches.Where(item => item.ID != 0))
-                context.Dispatches.DeleteOnSubmit(item);
-
-            foreach (var item in load.LoadedCommodities.Where(item => item.ID != 0))
-                context.LoadedCommodities.DeleteOnSubmit(item);
-
-            foreach (var item in load.Permits.Where(item => item.ID != 0))
-                context.Permits.DeleteOnSubmit(item);
-
-            foreach (var item in load.ThirdPartyServices.Where(item => item.ID != 0))
-                context.ThirdPartyServices.DeleteOnSubmit(item);
-
-            foreach (var item in load.ReferenceNumbers.Where(item => item.ID != 0))
-                context.LoadReferenceNumbers.DeleteOnSubmit(item);
+            context.LoadedCommodities.DeleteAllOnSubmit(load.LoadedCommodities.Where(item => item.ID != 0));
+            context.Dispatches.DeleteAllOnSubmit(load.Dispatches.Where(item => item.ID != 0));
+            context.Permits.DeleteAllOnSubmit(load.Permits.Where(item => item.ID != 0));
+            context.ThirdPartyServices.DeleteAllOnSubmit(load.ThirdPartyServices.Where(item => item.ID != 0));
+            context.ExtraEquipment.DeleteAllOnSubmit(load.ExtraEquipment.Where(item => item.ID != 0));
+            context.LoadReferenceNumbers.DeleteAllOnSubmit(load.ReferenceNumbers.Where(item => item.ID != 0));
 
             if (load.ID != 0)
                 context.Loads.DeleteOnSubmit(load);

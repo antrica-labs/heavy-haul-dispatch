@@ -31,7 +31,7 @@
                     <RowDefinition />
                 </Grid.RowDefinitions>
 
-                <Label Grid.Column="0" Grid.Row="0">Name:</Label>
+                <Label Grid.Column="0" Grid.Row="0">Project name:</Label>
                 <TextBox Name="txtName" Grid.Column="0" Grid.Row="1" Text="{Binding Name}" />
 
                 <Label Grid.Column="1" Grid.Row="0">Status:</Label>
