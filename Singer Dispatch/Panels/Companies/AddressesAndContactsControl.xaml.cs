@@ -53,12 +53,9 @@ namespace SingerDispatch.Panels.Companies
             base.SelectedCompanyChanged(newValue, oldValue);
 
             if (newValue != null)
-            {
-                var addressQuery = from a in Database.Addresses where a.Company == newValue select a;
-                var contactQuery = from c in Database.Contacts where addressQuery.Contains(c.Address) orderby c.FirstName, c.LastName select c;
-
-                dgAddresses.ItemsSource = new ObservableCollection<Address>(addressQuery);
-                //dgContacts.ItemsSource = new ObservableCollection<Contact>(contactQuery);
+            {                
+                dgAddresses.ItemsSource = from a in Database.Addresses where a.Company == newValue select a;
+                dgContacts.ItemsSource = from c in Database.Contacts where c.Company == newValue select c;
             }
             else
             {
@@ -92,10 +89,7 @@ namespace SingerDispatch.Panels.Companies
 
         private void Addresses_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var control = (DataGrid)sender;
-            var address = (Address)control.SelectedItem;
-
-            dgContacts.ItemsSource = (address == null) ? null : new ObservableCollection<Contact>(from c in Database.Contacts where c.Address == address orderby c.FirstName, c.LastName select c);
+            
         }
 
         private void Contact_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -156,7 +150,7 @@ namespace SingerDispatch.Panels.Companies
             
             try
             {
-                selected.Address.Contacts.Remove(selected);
+                SelectedCompany.Contacts.Remove(selected);
                 Database.SubmitChanges();
 
                 ((ObservableCollection<Contact>)dgContacts.ItemsSource).Remove(selected);
@@ -191,7 +185,7 @@ namespace SingerDispatch.Panels.Companies
 
             var contact = new Contact();
 
-            address.Contacts.Add(contact);
+            SelectedCompany.Contacts.Add(contact);
             ((ObservableCollection<Contact>)dgContacts.ItemsSource).Add(contact);
             dgContacts.SelectedItem = contact;
             dgContacts.ScrollIntoView(contact);

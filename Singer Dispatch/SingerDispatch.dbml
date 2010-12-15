@@ -13,8 +13,7 @@
       <Column Name="PrimaryPhone" Type="System.String" CanBeNull="true" />
       <Column Name="SecondaryPhone" Type="System.String" CanBeNull="true" />
       <Column Name="Fax" Type="System.String" CanBeNull="true" />
-      <Column Name="Notes" Type="System.String" CanBeNull="true" UpdateCheck="Never" />
-      <Association Name="Address_Contact" Member="Contacts" ThisKey="ID" OtherKey="AddressID" Type="Contact" />
+      <Column Name="Notes" Type="System.String" CanBeNull="true" UpdateCheck="Never" />      
       <Association Name="Address_Quote" Member="Quotes" ThisKey="ID" OtherKey="AddressID" Type="Quote" />
       <Association Name="Address_Invoice" Member="Invoices" ThisKey="ID" OtherKey="AddressID" Type="Invoice" />
       <Association Name="AddressType_Address" Member="AddressType" ThisKey="AddressTypeID" OtherKey="ID" Type="AddressType" IsForeignKey="true" />
@@ -76,6 +75,7 @@
       <Column Name="RateAdjustment" Type="System.Decimal" CanBeNull="true" />
       <Column Name="IsVisible" Type="System.Boolean" CanBeNull="true" />
       <Association Name="Company_Address" Member="Addresses" ThisKey="ID" OtherKey="CompanyID" Type="Address" />
+      <Association Name="Company_Contact" Member="Contacts" ThisKey="ID" OtherKey="CompanyID" Type="Contact" />
       <Association Name="Company_Commodity" Member="Commodities" ThisKey="ID" OtherKey="CompanyID" Type="Commodity" />      
       <Association Name="Company_Job" Member="Jobs" ThisKey="ID" OtherKey="CompanyID" Type="Job" />
       <Association Name="Company_Job1" Member="CareOfJobs" ThisKey="ID" OtherKey="CareOfCompanyID" Type="Job" />
@@ -105,7 +105,7 @@
   <Table Name="" Member="Contacts">
     <Type Name="Contact">
       <Column Name="ID" Type="System.Int64" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="AddressID" Type="System.Int64" CanBeNull="true" />      
+      <Column Name="CompanyID" Type="System.Int64" CanBeNull="true" />      
       <Column Name="ContactMethodID" Type="System.Int64" CanBeNull="true" />
       <Column Name="FirstName" Type="System.String" CanBeNull="true" />
       <Column Name="LastName" Type="System.String" CanBeNull="true" />
@@ -118,7 +118,7 @@
       <Association Name="Contact_Job" Member="Jobs" ThisKey="ID" OtherKey="ContactID" Type="Job" />
       <Association Name="Contact_ThirdPartyService" Member="ThirdPartyServices" ThisKey="ID" OtherKey="ContactID" Type="ThirdPartyService" />
       <Association Name="Contact_Invoice" Member="Invoices" ThisKey="ID" OtherKey="ContactID" Type="Invoice" />
-      <Association Name="Address_Contact" Member="Address" ThisKey="AddressID" OtherKey="ID" Type="Address" IsForeignKey="true" />
+      <Association Name="Company_Contact" Member="Company" ThisKey="CompanyID" OtherKey="ID" Type="Company" IsForeignKey="true" />
       <Association Name="Contact_ContactRole" Member="ContactRoles" ThisKey="ID" OtherKey="ContactID" Type="ContactRole" />
       <Association Name="ContactMethod_Contact" Member="PreferedContactMethod" ThisKey="ContactMethodID" OtherKey="ID" Type="ContactMethod" IsForeignKey="true" />
       <Association Name="Contact_LoadedCommodity_LoadSite" Member="LoadSiteCommodities" OtherKey="LoadSiteContactID" ThisKey="ID" Type="LoadedCommodity" />

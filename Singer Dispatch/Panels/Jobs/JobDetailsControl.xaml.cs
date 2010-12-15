@@ -52,7 +52,7 @@ namespace SingerDispatch.Panels.Jobs
         {
             if (SelectedJob != null)
             {                
-                cmbContacts.ItemsSource = (SelectedCompany == null) ? from c in Database.Contacts where c.Address.CompanyID == SelectedCompany.ID orderby c.FirstName, c.LastName select c : from c in Database.Contacts where c.Address.CompanyID == SelectedCompany.ID || c.Address.CompanyID == SelectedJob.CareOfCompanyID orderby c.FirstName, c.LastName select c;
+                cmbContacts.ItemsSource = (SelectedCompany == null) ? from c in Database.Contacts where c.Company == SelectedCompany orderby c.FirstName, c.LastName select c : from c in Database.Contacts where c.Company == SelectedCompany || c.Company == SelectedJob.CareOfCompany orderby c.FirstName, c.LastName select c;
                 cmbStatuses.ItemsSource = from s in Database.Statuses orderby s.Name select s;
             }
             else
@@ -78,7 +78,7 @@ namespace SingerDispatch.Panels.Jobs
         {
             if (SelectedJob == null) return;
 
-            cmbContacts.ItemsSource = (SelectedCompany == null) ? from c in Database.Contacts where c.Address.CompanyID == SelectedCompany.ID orderby c.FirstName, c.LastName select c : from c in Database.Contacts where c.Address.CompanyID == SelectedCompany.ID || c.Address.CompanyID == SelectedJob.CareOfCompanyID orderby c.FirstName, c.LastName select c;
+            cmbContacts.ItemsSource = (SelectedCompany == null) ? from c in Database.Contacts where c.Company == SelectedCompany orderby c.FirstName, c.LastName select c : from c in Database.Contacts where c.Company == SelectedCompany || c.Company == SelectedJob.CareOfCompany orderby c.FirstName, c.LastName select c;
         }
         
         private void AddReferenceNumber_Click(object sender, RoutedEventArgs e)

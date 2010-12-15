@@ -40,10 +40,8 @@ namespace SingerDispatch.Panels.Loads
             {
                 var company = (Company)e.AddedItems[0];
 
-                cmbServiceTypes.ItemsSource = from st in Database.Services where st.Company == company select st.ServiceType;
-
-                var addressQuery = from a in Database.Addresses where a.Company == company select a;                
-                cmbContacts.ItemsSource = from c in Database.Contacts where addressQuery.Contains(c.Address) orderby c.FirstName, c.LastName select c;
+                cmbServiceTypes.ItemsSource = from st in Database.Services where st.Company == company select st.ServiceType;                                
+                cmbContacts.ItemsSource = from c in Database.Contacts where c.Company == company orderby c.FirstName, c.LastName select c;
             }
             else
             {

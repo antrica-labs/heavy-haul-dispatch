@@ -680,8 +680,6 @@ namespace SingerDispatch
 		
 		private string _Notes;
 		
-		private EntitySet<Contact> _Contacts;
-		
 		private EntitySet<LoadedCommodity> _ShipperLoadedCommodities;
 		
 		private EntitySet<LoadedCommodity> _ConsigneeLoadedCommodities;
@@ -728,7 +726,6 @@ namespace SingerDispatch
 		
 		public Address()
 		{
-			this._Contacts = new EntitySet<Contact>(new Action<Contact>(this.attach_Contacts), new Action<Contact>(this.detach_Contacts));
 			this._ShipperLoadedCommodities = new EntitySet<LoadedCommodity>(new Action<LoadedCommodity>(this.attach_ShipperLoadedCommodities), new Action<LoadedCommodity>(this.detach_ShipperLoadedCommodities));
 			this._ConsigneeLoadedCommodities = new EntitySet<LoadedCommodity>(new Action<LoadedCommodity>(this.attach_ConsigneeLoadedCommodities), new Action<LoadedCommodity>(this.detach_ConsigneeLoadedCommodities));
 			this._Quotes = new EntitySet<Quote>(new Action<Quote>(this.attach_Quotes), new Action<Quote>(this.detach_Quotes));
@@ -991,19 +988,6 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Address_Contact", Storage="_Contacts", ThisKey="ID", OtherKey="AddressID")]
-		public EntitySet<Contact> Contacts
-		{
-			get
-			{
-				return this._Contacts;
-			}
-			set
-			{
-				this._Contacts.Assign(value);
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Address_LoadedCommodity", Storage="_ShipperLoadedCommodities", ThisKey="ID", OtherKey="ShipperAddressID")]
 		public EntitySet<LoadedCommodity> ShipperLoadedCommodities
 		{
@@ -1176,18 +1160,6 @@ namespace SingerDispatch
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
-		}
-		
-		private void attach_Contacts(Contact entity)
-		{
-			this.SendPropertyChanging();
-			entity.Address = this;
-		}
-		
-		private void detach_Contacts(Contact entity)
-		{
-			this.SendPropertyChanging();
-			entity.Address = null;
 		}
 		
 		private void attach_ShipperLoadedCommodities(LoadedCommodity entity)
@@ -2022,6 +1994,8 @@ namespace SingerDispatch
 		
 		private EntitySet<Commodity> _Commodities;
 		
+		private EntitySet<Contact> _Contacts;
+		
 		private EntitySet<Job> _Jobs;
 		
 		private EntitySet<Job> _CareOfJobs;
@@ -2086,6 +2060,7 @@ namespace SingerDispatch
 		{
 			this._Addresses = new EntitySet<Address>(new Action<Address>(this.attach_Addresses), new Action<Address>(this.detach_Addresses));
 			this._Commodities = new EntitySet<Commodity>(new Action<Commodity>(this.attach_Commodities), new Action<Commodity>(this.detach_Commodities));
+			this._Contacts = new EntitySet<Contact>(new Action<Contact>(this.attach_Contacts), new Action<Contact>(this.detach_Contacts));
 			this._Jobs = new EntitySet<Job>(new Action<Job>(this.attach_Jobs), new Action<Job>(this.detach_Jobs));
 			this._CareOfJobs = new EntitySet<Job>(new Action<Job>(this.attach_CareOfJobs), new Action<Job>(this.detach_CareOfJobs));
 			this._LoadSites = new EntitySet<LoadedCommodity>(new Action<LoadedCommodity>(this.attach_LoadSites), new Action<LoadedCommodity>(this.detach_LoadSites));
@@ -2356,6 +2331,19 @@ namespace SingerDispatch
 			set
 			{
 				this._Commodities.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Company_Contact", Storage="_Contacts", ThisKey="ID", OtherKey="CompanyID")]
+		public EntitySet<Contact> Contacts
+		{
+			get
+			{
+				return this._Contacts;
+			}
+			set
+			{
+				this._Contacts.Assign(value);
 			}
 		}
 		
@@ -2653,6 +2641,18 @@ namespace SingerDispatch
 			entity.Company = null;
 		}
 		
+		private void attach_Contacts(Contact entity)
+		{
+			this.SendPropertyChanging();
+			entity.Company = this;
+		}
+		
+		private void detach_Contacts(Contact entity)
+		{
+			this.SendPropertyChanging();
+			entity.Company = null;
+		}
+		
 		private void attach_Jobs(Job entity)
 		{
 			this.SendPropertyChanging();
@@ -2944,7 +2944,7 @@ namespace SingerDispatch
 		
 		private long _ID;
 		
-		private System.Nullable<long> _AddressID;
+		private System.Nullable<long> _CompanyID;
 		
 		private System.Nullable<long> _ContactMethodID;
 		
@@ -2980,7 +2980,7 @@ namespace SingerDispatch
 		
 		private EntitySet<Invoice> _Invoices;
 		
-		private EntityRef<Address> _Address;
+		private EntityRef<Company> _Company;
 		
 		private EntityRef<ContactMethod> _PreferedContactMethod;
 		
@@ -2990,8 +2990,8 @@ namespace SingerDispatch
     partial void OnCreated();
     partial void OnIDChanging(long value);
     partial void OnIDChanged();
-    partial void OnAddressIDChanging(System.Nullable<long> value);
-    partial void OnAddressIDChanged();
+    partial void OnCompanyIDChanging(System.Nullable<long> value);
+    partial void OnCompanyIDChanged();
     partial void OnContactMethodIDChanging(System.Nullable<long> value);
     partial void OnContactMethodIDChanged();
     partial void OnFirstNameChanging(string value);
@@ -3021,7 +3021,7 @@ namespace SingerDispatch
 			this._Quotes = new EntitySet<Quote>(new Action<Quote>(this.attach_Quotes), new Action<Quote>(this.detach_Quotes));
 			this._ThirdPartyServices = new EntitySet<ThirdPartyService>(new Action<ThirdPartyService>(this.attach_ThirdPartyServices), new Action<ThirdPartyService>(this.detach_ThirdPartyServices));
 			this._Invoices = new EntitySet<Invoice>(new Action<Invoice>(this.attach_Invoices), new Action<Invoice>(this.detach_Invoices));
-			this._Address = default(EntityRef<Address>);
+			this._Company = default(EntityRef<Company>);
 			this._PreferedContactMethod = default(EntityRef<ContactMethod>);
 			OnCreated();
 		}
@@ -3046,26 +3046,26 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AddressID")]
-		public System.Nullable<long> AddressID
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CompanyID")]
+		public System.Nullable<long> CompanyID
 		{
 			get
 			{
-				return this._AddressID;
+				return this._CompanyID;
 			}
 			set
 			{
-				if ((this._AddressID != value))
+				if ((this._CompanyID != value))
 				{
-					if (this._Address.HasLoadedOrAssignedValue)
+					if (this._Company.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
-					this.OnAddressIDChanging(value);
+					this.OnCompanyIDChanging(value);
 					this.SendPropertyChanging();
-					this._AddressID = value;
-					this.SendPropertyChanged("AddressID");
-					this.OnAddressIDChanged();
+					this._CompanyID = value;
+					this.SendPropertyChanged("CompanyID");
+					this.OnCompanyIDChanged();
 				}
 			}
 		}
@@ -3351,36 +3351,36 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Address_Contact", Storage="_Address", ThisKey="AddressID", OtherKey="ID", IsForeignKey=true)]
-		public Address Address
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Company_Contact", Storage="_Company", ThisKey="CompanyID", OtherKey="ID", IsForeignKey=true)]
+		public Company Company
 		{
 			get
 			{
-				return this._Address.Entity;
+				return this._Company.Entity;
 			}
 			set
 			{
-				Address previousValue = this._Address.Entity;
+				Company previousValue = this._Company.Entity;
 				if (((previousValue != value) 
-							|| (this._Address.HasLoadedOrAssignedValue == false)))
+							|| (this._Company.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._Address.Entity = null;
+						this._Company.Entity = null;
 						previousValue.Contacts.Remove(this);
 					}
-					this._Address.Entity = value;
+					this._Company.Entity = value;
 					if ((value != null))
 					{
 						value.Contacts.Add(this);
-						this._AddressID = value.ID;
+						this._CompanyID = value.ID;
 					}
 					else
 					{
-						this._AddressID = default(Nullable<long>);
+						this._CompanyID = default(Nullable<long>);
 					}
-					this.SendPropertyChanged("Address");
+					this.SendPropertyChanged("Company");
 				}
 			}
 		}

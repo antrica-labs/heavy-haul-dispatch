@@ -20,6 +20,7 @@ namespace SingerDispatch.Importer
         private Dictionary<int?, Address> NewAddresses { get; set; }
         private Dictionary<string, EquipmentType> EquipmentTypes { get; set; }
         private Dictionary<string, EquipmentClass> EquipmentClasses { get; set; }
+        private Dictionary<string, ServiceType> ServiceTypes { get; set; }
 
         static void Main(string[] args)
         {
@@ -153,6 +154,7 @@ namespace SingerDispatch.Importer
             EquipmentClasses = new Dictionary<string, EquipmentClass>();
             ProvincesAndStates = new Dictionary<string, ProvincesAndState>();
             EquipmentTypes = new Dictionary<string, EquipmentType>();
+            ServiceTypes = new Dictionary<string, ServiceType>();
         }
 
         private void ImportOldData()
@@ -166,6 +168,7 @@ namespace SingerDispatch.Importer
             List<Condition> conditions;
             List<ContactType> contactTypes;
             List<ExtraEquipmentType> extraEquipmentTypes;
+            List<Company> permitIssuers;
             List<PermitType> permitTypes;
             List<TrailerCombination> trailerCombos;
             List<EquipmentClass> equipmentClasses;
@@ -189,11 +192,12 @@ namespace SingerDispatch.Importer
                 inclusions = ImportInclusions(connection);
                 conditions = ImportConditions(connection);
                 extraEquipmentTypes = ImportExtraEquipmentTypes(connection);
+                permitIssuers = ImportPermitIssuers(connection);
                 permitTypes = ImportPermitTypes(connection);
                 equipmentClasses = ImportEquipmentClasses(connection);
                 equipmentTypes = ImportEquipmentTypes(connection);
                 equipment = ImportEquipment(connection);
-
+                
                 Console.Write("Importing companies");
                 companies = ImportCompanies(connection);                
             }
@@ -273,7 +277,10 @@ namespace SingerDispatch.Importer
 
                         if (name == null) continue;
 
-                        list.Add(new ServiceType { Name = name });
+                        var type = new ServiceType { Name = name };
+                                                
+                        list.Add(type);
+                        ServiceTypes.Add(type.Name, type);                        
                     }
                 }
             }
@@ -549,6 +556,80 @@ namespace SingerDispatch.Importer
             return types;
         }
 
+        private List<Company> ImportPermitIssuers(OleDbConnection connection)
+        {
+            var companies = new List<Company>();
+
+            const string select = "SELECT p.*, c.cityName, c.provinceAbr AS cityProvinceAbr FROM tbl_PermitCompany p LEFT JOIN tbl_City c ON a.cityId = c.cityId";
+            using (var command = new OleDbCommand(select, connection))
+            {
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        // Suck out all the good stuff!
+                        // permitCompanyId -> ArchiveID
+                        // permitCompanyName -> Name
+                        // permitCompanyNote -> Notes
+                        // permitCompanyPhone1 -> Address-PrimaryPhone
+                        // permitCompanyPhone2 -> Address-SecondaryPhone
+                        // permitCompanyFax -> Address-Fax
+                        // permitCompanyAddress1 -> Address->Line1
+                        // permitCompanyAddress2 -> Address->Line2
+                        var company = new Company();
+                                                
+                        company.Name = reader["permitCompanyName"] == DBNull.Value ? null : (string)reader["permitCompanyName"];
+                        company.Notes = reader["permitCompanyNote"] == DBNull.Value ? null : (string)reader["permitCompanyNote"];
+
+                        var address = new Address();
+
+                        address.AddressType = AddressTypes["Head Office"];
+                        address.Line1 = reader["permitCompanyAddress1"] == DBNull.Value ? null : (string)reader["permitCompanyAddress1"];
+                        address.Line1 = reader["permitCompanyAddress2"] == DBNull.Value ? null : (string)reader["permitCompanyAddress2"];
+                        address.PrimaryPhone = reader["permitCompanyPhone1"] == DBNull.Value ? null : (string)reader["permitCompanyPhone1"];
+                        address.SecondaryPhone = reader["permitCompanyPhone2"] == DBNull.Value ? null : (string)reader["permitCompanyPhone2"];
+                        address.Fax = reader["permitCompanyFax"] == DBNull.Value ? null : (string)reader["permitCompanyFax"];
+
+                        var contacts = PullContactsForPermitIssuer((int)reader["permitCompanyId"], connection);
+
+                        company.Addresses.Add(address);
+
+                        companies.Add(company);
+                    }
+                }
+            }
+
+            return companies;
+        }
+
+        private List<Contact> PullContactsForPermitIssuer(int companyId, OleDbConnection connection)
+        {
+            var contacts = new List<Contact>();
+
+            const string select = "SELECT * FROM tbl_PermitCompanyContact WHERE permitCompanyId = {0}";
+            using (var command = new OleDbCommand(string.Format(select, companyId), connection))
+            {
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        var contact = new Contact();
+
+                        contact.FirstName = reader["permitCompanyContactFirstName"] == DBNull.Value ? null : (string)reader["permitCompanyContactFirstName"];
+                        contact.LastName = reader["permitCompanyContactLastName"] == DBNull.Value ? null : (string)reader["permitCompanyContactLastName"];
+                        contact.PrimaryPhone = reader["permitCompanyContactPrimaryPhone"] == DBNull.Value ? null : (string)reader["permitCompanyContactPrimaryPhone"];
+                        contact.PrimaryPhone += reader["permitCompanyContactPrimaryPhoneExt"] == DBNull.Value ? null : " ext " + (string)reader["permitCompanyContactPrimaryPhoneExt"];
+                        contact.SecondaryPhone = reader["permitCompanyContactSecondaryPhone"] == DBNull.Value ? null : (string)reader["permitCompanyContactSecondaryPhone"];
+                        contact.SecondaryPhone += reader["permitCompanyContactSecondaryPhoneExt"] == DBNull.Value ? null : " ext " + (string)reader["permitCompanyContactSecondaryPhoneExt"];
+                        
+                        contacts.Add(contact);
+                    }
+                }
+            }
+
+            return contacts;
+        }
+
         private List<PermitType> ImportPermitTypes(OleDbConnection connection)
         {
             var types = new List<PermitType>();
@@ -682,18 +763,7 @@ namespace SingerDispatch.Importer
                                 }
                             }
 
-                            try
-                            {
-                                // Figure out what address to put them into...
-                                if (contact.Address == null)
-                                    contact.Address = company.Addresses.First();
-                                
-
-                                contact.Address.Contacts.Add(contact);
-                            }
-                            catch
-                            {
-                            }
+                            company.Contacts.Add(contact);
                         }
                     }
                 }
@@ -794,15 +864,7 @@ namespace SingerDispatch.Importer
             contact.Fax = reader["contactFax"] == DBNull.Value ? null : PhoneNumberCleanup((string)reader["contactFax"]);
             contact.Email = reader["contactEmail"] == DBNull.Value ? null : (string)reader["contactEmail"];
             contact.Notes = reader["contactNote"] == DBNull.Value ? null : (string)reader["contactNote"];
-
-            try
-            {
-                contact.Address = reader["addressId"] == DBNull.Value ? null : NewAddresses[(int?)reader["addressId"]];
-            }
-            catch
-            {
-            }
-            
+                        
             var pext = reader["contactPrimaryPhoneExt"] == DBNull.Value ? null : (string)reader["contactPrimaryPhoneExt"];
             if (pext != null)
                 contact.PrimaryPhone += " ext " + pext;

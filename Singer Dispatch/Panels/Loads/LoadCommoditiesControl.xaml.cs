@@ -217,28 +217,28 @@ namespace SingerDispatch.Panels.Loads
         {
             var company = (Company)cmbLoadingSiteContactCompanies.SelectedItem;
 
-            cmbLoadingSiteContacts.ItemsSource = (company == null) ? null : (from c in Database.Contacts where c.Address.CompanyID == company.ID orderby c.FirstName, c.LastName select c).ToList();
+            cmbLoadingSiteContacts.ItemsSource = (company == null) ? null : (from c in Database.Contacts where c.Company == company orderby c.FirstName, c.LastName select c).ToList();
         }
 
         private void cmbUnloadingSiteContactCompanies_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var company = (Company)cmbUnloadingSiteContactCompanies.SelectedItem;
 
-            cmbUnloadingSiteContacts.ItemsSource = (company == null) ? null : (from c in Database.Contacts where c.Address.CompanyID == company.ID orderby c.FirstName, c.LastName select c).ToList();
+            cmbUnloadingSiteContacts.ItemsSource = (company == null) ? null : (from c in Database.Contacts where c.Company == company orderby c.FirstName, c.LastName select c).ToList();
         }
 
         private void cmbLoadingContactCompanies_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var company = (Company)cmbLoadingContactCompanies.SelectedItem;
 
-            cmbLoadingContacts.ItemsSource = (company == null) ? null : (from c in Database.Contacts where c.Address.CompanyID == company.ID orderby c.FirstName, c.LastName select c).ToList();
+            cmbLoadingContacts.ItemsSource = (company == null) ? null : (from c in Database.Contacts where c.Company == company orderby c.FirstName, c.LastName select c).ToList();
         }
 
         private void cmbUnloadingContactCompanies_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var company = (Company)cmbUnloadingContactCompanies.SelectedItem;
 
-            cmbUnloadingContacts.ItemsSource = (company == null) ? null : (from c in Database.Contacts where c.Address.CompanyID == company.ID orderby c.FirstName, c.LastName select c).ToList();
+            cmbUnloadingContacts.ItemsSource = (company == null) ? null : (from c in Database.Contacts where c.Company == company orderby c.FirstName, c.LastName select c).ToList();
         }
 
         private void ShipperCompany_SelectionChanged(object sender, SelectionChangedEventArgs e)
