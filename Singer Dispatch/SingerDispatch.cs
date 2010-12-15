@@ -278,7 +278,7 @@ namespace SingerDispatch
             copy.Details = Details;
             copy.BillingType = BillingType;
             copy.Quantity = Quantity;
-            copy.Cost = Cost;
+            copy.CostPerItem = CostPerItem;
 
             return copy;
         }

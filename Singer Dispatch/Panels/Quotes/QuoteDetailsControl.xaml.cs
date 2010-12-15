@@ -145,9 +145,12 @@ namespace SingerDispatch.Panels.Quotes
                 SelectedQuote.Price += item;
             }
 
-            foreach (var item in (from c in SelectedQuote.QuoteSupplements where c.Cost != null select c))
+            foreach (var item in (from c in SelectedQuote.QuoteSupplements where c.CostPerItem != null select c))
             {
-                SelectedQuote.Price += item.Cost;
+                if (item.Quantity != null)
+                    SelectedQuote.Price += item.Quantity * item.CostPerItem;
+                else
+                    SelectedQuote.Price += item.CostPerItem;
             }
         }
     }

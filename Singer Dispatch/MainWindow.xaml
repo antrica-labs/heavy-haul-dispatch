@@ -48,7 +48,7 @@
                 <StackPanel Name="altNavigationStack">
                     <Label Style="{StaticResource Heading}">Singer Specialized</Label>
                     
-                    <Expander Name="expanderCompanies"  Header="Company info" Style="{StaticResource SectionExpander}" Expanded="ExpandCompanies">
+                    <Expander Name="expanderCompanies"  Header="Companies" Style="{StaticResource SectionExpander}" Expanded="ExpandCompanies">
                         <StackPanel Name="linksCompanies" Style="{StaticResource SectionExpanderContent}" VerticalAlignment="Top"></StackPanel>
                     </Expander>
                     <Expander Name="expanderQuotes" Header="Quotes" Style="{StaticResource SectionExpander}" Expanded="ExpandQuotes">

@@ -11997,7 +11997,7 @@ namespace SingerDispatch
 		
 		private System.Nullable<int> _Quantity;
 		
-		private System.Nullable<decimal> _Cost;
+		private System.Nullable<decimal> _CostPerItem;
 		
 		private EntityRef<BillingType> _BillingType;
 		
@@ -12019,8 +12019,8 @@ namespace SingerDispatch
     partial void OnDetailsChanged();
     partial void OnQuantityChanging(System.Nullable<int> value);
     partial void OnQuantityChanged();
-    partial void OnCostChanging(System.Nullable<decimal> value);
-    partial void OnCostChanged();
+    partial void OnCostPerItemChanging(System.Nullable<decimal> value);
+    partial void OnCostPerItemChanged();
     #endregion
 		
 		public QuoteSupplement()
@@ -12158,22 +12158,22 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Cost")]
-		public System.Nullable<decimal> Cost
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CostPerItem")]
+		public System.Nullable<decimal> CostPerItem
 		{
 			get
 			{
-				return this._Cost;
+				return this._CostPerItem;
 			}
 			set
 			{
-				if ((this._Cost != value))
+				if ((this._CostPerItem != value))
 				{
-					this.OnCostChanging(value);
+					this.OnCostPerItemChanging(value);
 					this.SendPropertyChanging();
-					this._Cost = value;
-					this.SendPropertyChanged("Cost");
-					this.OnCostChanged();
+					this._CostPerItem = value;
+					this.SendPropertyChanged("CostPerItem");
+					this.OnCostPerItemChanged();
 				}
 			}
 		}

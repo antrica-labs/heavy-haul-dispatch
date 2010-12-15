@@ -91,7 +91,6 @@ namespace SingerDispatch.Panels.Loads
                 // Assume they want a dispatch for the tractor pulling this load
                 dispatch.EquipmentType = SelectedLoad.Equipment.EquipmentType;
                 dispatch.Equipment = SelectedLoad.Equipment;
-                dispatch.Employee = dispatch.Equipment.DefaultDriver;
             }
 
             SelectedLoad.Dispatches.Add(dispatch);
@@ -204,7 +203,11 @@ namespace SingerDispatch.Panels.Loads
             var dispatch = (Dispatch)dgDispatches.SelectedItem;
 
             if (travel == null || dispatch == null) return;
-                        
+
+            var confirmation = MessageBox.Show(SingerConfigs.DefaultRemoveItemMessage, "Delete confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+            if (confirmation != MessageBoxResult.Yes) return;
+
             dispatch.OutOfProvinceTravels.Remove(travel);
             ((ObservableCollection<OutOfProvinceTravel>)dgOutOfProvince.ItemsSource).Remove(travel);
         }
@@ -239,7 +242,11 @@ namespace SingerDispatch.Panels.Loads
             var dispatch = (Dispatch)dgDispatches.SelectedItem;
 
             if (swamper == null || dispatch == null) return;
-                        
+
+            var confirmation = MessageBox.Show(SingerConfigs.DefaultRemoveItemMessage, "Delete confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+            if (confirmation != MessageBoxResult.Yes) return;
+
             dispatch.Swampers.Remove(swamper);
             ((ObservableCollection<Swamper>)dgSwampers.ItemsSource).Remove(swamper);
         }
