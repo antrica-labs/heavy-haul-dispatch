@@ -673,9 +673,8 @@ namespace SingerDispatch.Printing.Documents
                                 <th>Item</th>
                                 <th>Description</th>
                                 <th>Billed By</th>
-                                <th>Quantity</th>
-                                <th>Price Per</th>
-                                <th>Total</th>
+                                <th>Quantity</th>                                
+                                <th>Cost</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -707,13 +706,10 @@ namespace SingerDispatch.Printing.Documents
                 rows.Append(supplement.Quantity);                
                 rows.Append("</td>");
                 rows.Append("<td>");
-                rows.Append(string.Format("{0:C}", supplement.CostPerItem));
-                rows.Append("</td>");
-                rows.Append("<td>");
 
                 if (supplement.BillingType != null && supplement.BillingType.Name != "Cost Included")
                 {
-                    rows.Append(string.Format("{0:C}", supplement.CostPerItem * supplement.Quantity));
+                    rows.Append(string.Format("{0:C}", supplement.Cost));
                 }
 
                 rows.Append("</td>");

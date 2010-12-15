@@ -89,13 +89,13 @@
             </TabItem>
             <TabItem Header="Dispatches" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, Path=SelectedLoad}">
                 <Loads:DispatchesControl CompanyList="{Binding CompanyList}" SelectedCompany="{Binding SelectedCompany}"  SelectedLoad="{Binding SelectedLoad}" UseImperialMeasurements="{Binding UseImperialMeasurements}" />
+            </TabItem>            
+            <TabItem Header="Third party services" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, Path=SelectedLoad}">
+                <Loads:ThirdPartyServicesControl CompanyList="{Binding CompanyList}" SelectedCompany="{Binding SelectedCompany}"  SelectedLoad="{Binding SelectedLoad}" UseImperialMeasurements="{Binding UseImperialMeasurements}" />
             </TabItem>
             <TabItem Header="Permits" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, Path=SelectedLoad}">
                 <Loads:PermitsControl CompanyList="{Binding CompanyList}" SelectedCompany="{Binding SelectedCompany}"  SelectedLoad="{Binding SelectedLoad}" UseImperialMeasurements="{Binding UseImperialMeasurements}" />
             </TabItem>
-            <TabItem Header="Third party services" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, Path=SelectedLoad}">
-                <Loads:ThirdPartyServicesControl CompanyList="{Binding CompanyList}" SelectedCompany="{Binding SelectedCompany}"  SelectedLoad="{Binding SelectedLoad}" UseImperialMeasurements="{Binding UseImperialMeasurements}" />
-            </TabItem>            
         </TabControl>
     </Grid>
 </Panels:LoadUserControl>
