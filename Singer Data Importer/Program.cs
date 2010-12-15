@@ -218,6 +218,7 @@ namespace SingerDispatch.Importer
             context.Equipment.InsertAllOnSubmit(equipment);
             context.ExtraEquipmentTypes.InsertAllOnSubmit(extraEquipmentTypes);
             context.PermitTypes.InsertAllOnSubmit(permitTypes);
+            context.Companies.InsertAllOnSubmit(permitIssuers);
             context.Companies.InsertAllOnSubmit(companies);
             
             context.SubmitChanges();
@@ -283,6 +284,14 @@ namespace SingerDispatch.Importer
                         ServiceTypes.Add(type.Name, type);                        
                     }
                 }
+            }
+
+            if (!ServiceTypes.ContainsKey("Permits"))
+            {
+                var type = new ServiceType { Name = "Permits" };
+
+                list.Add(type);
+                ServiceTypes.Add(type.Name, type);
             }
 
             return list;
@@ -560,7 +569,7 @@ namespace SingerDispatch.Importer
         {
             var companies = new List<Company>();
 
-            const string select = "SELECT p.*, c.cityName, c.provinceAbr AS cityProvinceAbr FROM tbl_PermitCompany p LEFT JOIN tbl_City c ON a.cityId = c.cityId";
+            const string select = "SELECT p.*, c.cityName, c.provinceAbr AS cityProvinceAbr FROM tbl_PermitCompany p LEFT JOIN tbl_City c ON p.cityId = c.cityId";
             using (var command = new OleDbCommand(select, connection))
             {
                 using (var reader = command.ExecuteReader())
@@ -590,9 +599,22 @@ namespace SingerDispatch.Importer
                         address.SecondaryPhone = reader["permitCompanyPhone2"] == DBNull.Value ? null : (string)reader["permitCompanyPhone2"];
                         address.Fax = reader["permitCompanyFax"] == DBNull.Value ? null : (string)reader["permitCompanyFax"];
 
-                        var contacts = PullContactsForPermitIssuer((int)reader["permitCompanyId"], connection);
-
                         company.Addresses.Add(address);
+
+                        foreach (var contact in PullContactsForPermitIssuer((int)reader["permitCompanyId"], connection))
+                        {
+                            company.Contacts.Add(contact);
+                        }
+
+
+                        try
+                        {
+                            var service = new Service { Company = company, ServiceType = ServiceTypes["Permits"] };
+
+                            company.Services.Add(service);
+                        }
+                        catch { }
+
 
                         companies.Add(company);
                     }
