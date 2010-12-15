@@ -82,16 +82,19 @@ namespace SingerDispatch.Panels.Quotes
             var type = (BillingType)((ComboBox)sender).SelectedItem;
 
             if (type != null && type.Name == "Cost Included")
-            {
-                txtQuantity.Text = null;
-                txtQuantity.IsEnabled = false;
-                txtCostPerItem.Text = null;
-                txtCostPerItem.IsEnabled = false;
+            {                   
+                txtCost.IsEnabled = false;
+
+                var supplement = (QuoteSupplement)dgSupplements.SelectedItem;
+
+                if (supplement != null)
+                {
+                    supplement.Cost = null;
+                }                    
             }
             else
-            {
-                txtQuantity.IsEnabled = true;
-                txtCostPerItem.IsEnabled = true;
+            {                
+                txtCost.IsEnabled = true;
             }
         }
     }

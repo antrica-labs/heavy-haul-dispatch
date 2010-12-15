@@ -117,17 +117,9 @@ namespace SingerDispatch.Panels.Loads
             var load = SelectedLoad;
 
             if (load == null) return;
-
-            load.GrossWeight = 0.0;
-
-            if (load.Equipment != null)
-            {
-                load.GrossWeight += load.Equipment.Tare ?? 0.0;
-            }
-
+                        
             if (load.TrailerCombination != null)
-            {
-                load.GrossWeight += load.TrailerCombination.Tare ?? 0.0;
+            {   
                 load.LoadedWidth = load.TrailerCombination.Width ?? 0.0;
                 load.LoadedLength = load.TrailerCombination.Length ?? 0.0;
                 load.LoadedHeight = load.TrailerCombination.Height ?? 0.0;
@@ -139,8 +131,6 @@ namespace SingerDispatch.Panels.Loads
 
             foreach (var commodity in load.LoadedCommodities)
             {
-                load.GrossWeight += commodity.JobCommodity.Weight ?? 0.0;
-
                 var length = commodity.JobCommodity.Length ?? 0.0;
                 var height = commodity.JobCommodity.Height ?? 0.0;
                 var width = commodity.JobCommodity.Width ?? 0.0;
