@@ -492,7 +492,12 @@ namespace SingerDispatch.Panels.Loads
 
         private void cmbCommodityName_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var commodity = (LoadedCommodity)dgCommodities.SelectedItem;            
+            SelectedLoad.Notify("LoadedCommodities");
+        }
+
+        private void FillLocations_Click(object sender, RoutedEventArgs e)
+        {
+            var commodity = (LoadedCommodity)dgCommodities.SelectedItem;
 
             if (commodity == null || commodity.JobCommodity == null) return;
 
@@ -500,8 +505,6 @@ namespace SingerDispatch.Panels.Loads
             commodity.LoadAddress = commodity.JobCommodity.DepartureAddress;
             commodity.UnloadLocation = commodity.JobCommodity.ArrivalSiteName;
             commodity.UnloadAddress = commodity.JobCommodity.ArrivalAddress;
-
-            SelectedLoad.Notify("LoadedCommodities");
         }
     }
 }

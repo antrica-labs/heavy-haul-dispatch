@@ -416,14 +416,14 @@ namespace SingerDispatch
             copy.LoadSiteCompany = LoadSiteCompany;
             copy.LoadSiteContact = LoadSiteContact;
             copy.LoadingCompany = LoadingCompany;
-            copy.LoadingContact = copy.LoadingContact;
+            copy.LoadingContact = LoadingContact;
             copy.LoadMethod = LoadMethod;
             copy.LoadDate = LoadDate;
             copy.LoadTime = LoadTime;
             copy.LoadInstructions = LoadInstructions;
             copy.LoadRoute = LoadRoute;
             copy.UnloadLocation = UnloadLocation;
-            copy.UnloadAddress = copy.UnloadAddress;
+            copy.UnloadAddress = UnloadAddress;
             copy.UnloadingProvince = UnloadingProvince;
             copy.UnloadSiteCompany = UnloadSiteCompany;
             copy.UnloadSiteContact = UnloadSiteContact;            

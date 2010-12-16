@@ -115,93 +115,70 @@
             </Grid>
 
             <GroupBox Header="Commodity Details" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgCommodities, Path=SelectedItem}" DataContext="{Binding ElementName=dgCommodities, Path=SelectedItem}">
-                <StackPanel>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition />
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="0.60*" />
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="0.60*" />
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition />
-                            <RowDefinition />
-                        </Grid.RowDefinitions>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="Auto" />                      
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
 
-                        <Label Grid.Column="0" Grid.Row="0">Name:</Label>
-                        <ComboBox Grid.Column="1" Grid.Row="0" Name="cmbCommodityName" ItemTemplate="{StaticResource UnitAndNameTemplate}" TextSearch.TextPath="Name" SelectedItem="{Binding JobCommodity}" Controls:ComboUtil.AllowNull="True" SelectionChanged="cmbCommodityName_SelectionChanged" />
+                    <Label Grid.Column="0" Grid.Row="0">Name:</Label>
+                    <ComboBox Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="7" Name="cmbCommodityName" ItemTemplate="{StaticResource UnitAndNameTemplate}" TextSearch.TextPath="Name" IsEditable="False" SelectedItem="{Binding JobCommodity}" Controls:ComboUtil.AllowNull="True" SelectionChanged="cmbCommodityName_SelectionChanged" />
 
-                        <Label Grid.Column="2" Grid.Row="0" >Unit:</Label>
-                        <TextBox Grid.Column="3" Grid.Row="0" Text="{Binding JobCommodity.Unit}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=cmbCommodityName, Path=SelectedItem}" />
+                    <Button Grid.Column="8" Grid.Row="0" Style="{StaticResource HorizontalEnd}" Padding="3,0,3,0" Click="FillLocations_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=cmbCommodityName, Path=SelectedItem}">Fill locations</Button>
+                    
+                    <Label Grid.Column="0" Grid.Row="1">Length:</Label>
+                    <TextBox Grid.Column="1" Grid.Row="1" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=cmbCommodityName, Path=SelectedItem}">
+                        <TextBox.Text>
+                            <MultiBinding Converter="{StaticResource LengthMeasurementConverter}">
+                                <Binding Path="JobCommodity.Length" />
+                                <Binding ElementName="ThePanel" Path="UseImperialMeasurements" />
+                            </MultiBinding>
+                        </TextBox.Text>
+                    </TextBox>
 
-                        <Label Grid.Column="4" Grid.Row="0">Value:</Label>
-                        <TextBox Grid.Column="5" Grid.Row="0" Text="{Binding JobCommodity.Value, StringFormat=c, Converter={StaticResource NullableValueConverter}}" Controls:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=cmbCommodityName, Path=SelectedItem}" />
+                    <Label Grid.Column="2" Grid.Row="1">Width:</Label>
+                    <TextBox Grid.Column="3" Grid.Row="1" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=cmbCommodityName, Path=SelectedItem}">
+                        <TextBox.Text>
+                            <MultiBinding Converter="{StaticResource LengthMeasurementConverter}">
+                                <Binding Path="JobCommodity.Width" />
+                                <Binding ElementName="ThePanel" Path="UseImperialMeasurements" />
+                            </MultiBinding>
+                        </TextBox.Text>
+                    </TextBox>
 
-                        <Label Grid.Column="0" Grid.Row="1">Owner:</Label>
-                        <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding JobCommodity.Owner}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=cmbCommodityName, Path=SelectedItem}" />
+                    <Label Grid.Column="4" Grid.Row="1">Height:</Label>
+                    <TextBox Grid.Column="5" Grid.Row="1" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=cmbCommodityName, Path=SelectedItem}">
+                        <TextBox.Text>
+                            <MultiBinding Converter="{StaticResource LengthMeasurementConverter}">
+                                <Binding Path="JobCommodity.Height" />
+                                <Binding ElementName="ThePanel" Path="UseImperialMeasurements" />
+                            </MultiBinding>
+                        </TextBox.Text>
+                    </TextBox>
 
-                        <Label Grid.Column="2" Grid.Row="1" Grid.ColumnSpan="2">Serial:</Label>
-                        <TextBox Grid.Column="3" Grid.Row="1" Grid.ColumnSpan="3" Text="{Binding JobCommodity.Serial}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=cmbCommodityName, Path=SelectedItem}" />
-                    </Grid>
+                    <Label Grid.Column="6" Grid.Row="1">Weight:</Label>
+                    <TextBox Grid.Column="7" Grid.Row="1" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=cmbCommodityName, Path=SelectedItem}">
+                        <TextBox.Text>
+                            <MultiBinding Converter="{StaticResource WeightMeasurementConverter}">
+                                <Binding Path="JobCommodity.Weight" />
+                                <Binding ElementName="ThePanel" Path="UseImperialMeasurements" />
+                            </MultiBinding>
+                        </TextBox.Text>
+                    </TextBox>
 
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition />
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition />
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition />
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
-
-                        <Label Grid.Column="0">Length:</Label>
-                        <TextBox Grid.Column="1" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=cmbCommodityName, Path=SelectedItem}">
-                            <TextBox.Text>
-                                <MultiBinding Converter="{StaticResource LengthMeasurementConverter}">
-                                    <Binding Path="JobCommodity.Length" />
-                                    <Binding ElementName="ThePanel" Path="UseImperialMeasurements" />
-                                </MultiBinding>
-                            </TextBox.Text>
-                        </TextBox>
-
-                        <Label Grid.Column="2">Width:</Label>
-                        <TextBox Grid.Column="3" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=cmbCommodityName, Path=SelectedItem}">
-                            <TextBox.Text>
-                                <MultiBinding Converter="{StaticResource LengthMeasurementConverter}">
-                                    <Binding Path="JobCommodity.Width" />
-                                    <Binding ElementName="ThePanel" Path="UseImperialMeasurements" />
-                                </MultiBinding>
-                            </TextBox.Text>
-                        </TextBox>
-
-                        <Label Grid.Column="4">Height:</Label>
-                        <TextBox Grid.Column="5" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=cmbCommodityName, Path=SelectedItem}">
-                            <TextBox.Text>
-                                <MultiBinding Converter="{StaticResource LengthMeasurementConverter}">
-                                    <Binding Path="JobCommodity.Height" />
-                                    <Binding ElementName="ThePanel" Path="UseImperialMeasurements" />
-                                </MultiBinding>
-                            </TextBox.Text>
-                        </TextBox>
-
-                        <Label Grid.Column="6">Weight:</Label>
-                        <TextBox Grid.Column="7" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=cmbCommodityName, Path=SelectedItem}">
-                            <TextBox.Text>
-                                <MultiBinding Converter="{StaticResource WeightMeasurementConverter}">
-                                    <Binding Path="JobCommodity.Weight" />
-                                    <Binding ElementName="ThePanel" Path="UseImperialMeasurements" />
-                                </MultiBinding>
-                            </TextBox.Text>
-                        </TextBox>
-
-                        <CheckBox Grid.Column="8" IsChecked="{Binding JobCommodity.DimensionsEstimated}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=cmbCommodityName, Path=SelectedItem}">Estimated</CheckBox>
-                    </Grid>
-                </StackPanel>
+                    <CheckBox Grid.Column="8" Grid.Row="1" IsChecked="{Binding JobCommodity.DimensionsEstimated}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=cmbCommodityName, Path=SelectedItem}">Estimated</CheckBox>
+                </Grid>
             </GroupBox>
 
             <GroupBox Header="Loading &amp; Unloading Info" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgCommodities, Path=SelectedItem}" DataContext="{Binding ElementName=dgCommodities, Path=SelectedItem}">
@@ -342,7 +319,7 @@
                                 </Binding>
                             </ComboBox.SelectedItem>
                         </ComboBox>
-                        <DatePicker Grid.Column="4" Grid.Row="1" SelectedDate="{Binding Date}" />
+                        <DatePicker Grid.Column="4" Grid.Row="1" SelectedDate="{Binding LoadDate}" />
                         <TextBox Grid.Column="5" Grid.Row="1" Text="{Binding LoadTime, Converter={StaticResource TimeConverter}}" />
 
                         <ComboBox Name="cmbUnloadingContactCompanies" Grid.Column="1" Grid.Row="2" ItemsSource="{Binding ElementName=ThePanel, Path=CompanyList}" TextSearch.TextPath="Name" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectionChanged="cmbUnloadingContactCompanies_SelectionChanged" Controls:ComboUtil.AllowNull="True">

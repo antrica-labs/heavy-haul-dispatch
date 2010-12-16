@@ -53,7 +53,7 @@
                                 <ComboBox Name="cmbCompanies" Grid.Row="0" Grid.Column="1" ItemsSource="{Binding ElementName=ThePanel, Path=CompanyList}" TextSearch.TextPath="Name" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectedItem="{Binding Company}" SelectionChanged="ComboBox_SelectionChanged" />
                                 
                                 <Label Grid.Row="1" Grid.Column="0">Commodity:</Label>
-                                <ComboBox Name="cmbCommodities" Grid.Row="1" Grid.Column="1" SelectedItem="{Binding Commodity}" ItemTemplate="{StaticResource NameAndUnitTemplate}" TextSearch.TextPath="Name" />
+                                <ComboBox Name="cmbCommodities" Grid.Row="1" Grid.Column="1" SelectedItem="{Binding Commodity}" ItemsSource="{Binding Company.Commodities}" ItemTemplate="{StaticResource NameAndUnitTemplate}" TextSearch.TextPath="Name" />
 
                                 <Label Grid.Row="2" Grid.Column="0">Unit #:</Label>
                                 <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Commodity.Unit}" />

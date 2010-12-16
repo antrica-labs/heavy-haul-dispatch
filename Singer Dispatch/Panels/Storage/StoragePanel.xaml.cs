@@ -40,20 +40,15 @@ namespace SingerDispatch.Panels.Storage
 
             cmbBillingIntervals.ItemsSource = from bi in Database.BillingIntervals select bi;
         }
-        
-       
+
         private void Control_Loaded(object sender, RoutedEventArgs e)
         {
             SaveCommand.Executed += CommitJobChanges_Executed;
 
             if (InDesignMode()) return;
 
-            var company = (Company)cmbCompanies.SelectedItem;
-
-            cmbCommodities.ItemsSource = (company == null) ? null : from c in Database.Commodities where c.Company == company select c;
             dgStorageItems.ItemsSource = new ObservableCollection<StorageItem>(from si in Database.StorageItems where si.IsVisible == true select si);
         }
-
         
         private void CommitJobChanges_Executed(object sender, ExecutedRoutedEventArgs e)
         {
@@ -121,9 +116,7 @@ namespace SingerDispatch.Panels.Storage
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var company = (Company)cmbCompanies.SelectedItem;
-
-            cmbCommodities.ItemsSource = (company == null) ? null : from c in Database.Commodities where c.Company == company select c;
+         
         }
     }
 }
