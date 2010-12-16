@@ -913,7 +913,6 @@ namespace SingerDispatch.Importer
             commodity.Value = reader["commodityValue"] == DBNull.Value ? null : (decimal?)reader["commodityValue"];
             commodity.Serial = reader["commoditySerialNum"] == DBNull.Value ? null : (string)reader["commoditySerialNum"];
             commodity.Unit = reader["commodityUnitNum"] == DBNull.Value ? null : (string)reader["commodityUnitNum"];
-            commodity.Owner = reader["commodityOwner"] == DBNull.Value ? null : (string)reader["commodityOwner"];
             commodity.LastLocation = reader["commodityLastKnownLocation"] == DBNull.Value ? null : (string)reader["commodityLastKnownLocation"];
             commodity.LastAddress = (reader["commodityLastKnownSiteName"] == DBNull.Value ? null : (string)reader["commodityLastKnownSiteName"]) ??
                                     (reader["commodityLastKnownLSD"] == DBNull.Value ? null : (string)reader["commodityLastKnownLSD"]);
