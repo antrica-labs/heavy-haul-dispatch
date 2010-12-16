@@ -23,8 +23,9 @@ namespace SingerDispatch.Panels.Loads
         private void ControlLoaded(object sender, RoutedEventArgs e)
         {
             if (InDesignMode()) return;
-            
-            cmbPermitTypes.ItemsSource = (SelectedLoad == null) ? null : from pt in Database.PermitTypes select pt;
+
+            cmbCompanies.ItemsSource = from s in Database.Services where s.ServiceType == (from st in Database.ServiceTypes where st.Name == "Permits" select st).First() select s.Company;
+            cmbPermitTypes.ItemsSource = (SelectedLoad == null) ? null : from pt in Database.PermitTypes select pt;            
         }
 
         protected override void SelectedLoadChanged(Load newValue, Load oldValue)

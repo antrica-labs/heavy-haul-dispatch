@@ -106,7 +106,14 @@
         <EventSetter Event="GotMouseCapture" Handler="TextBox_GotKeyboardFocus"/>
         <EventSetter Event="GotFocus" Handler="TextBox_GotKeyboardFocus" />
     </Style>
-    
+
+    <Style TargetType="TextBox" x:Key="BadInfo" BasedOn="{StaticResource {x:Type TextBox}}">
+        <Setter Property="Foreground" Value="Red" />
+    </Style>
+
+    <Style TargetType="TextBox" x:Key="GoodInfo" BasedOn="{StaticResource {x:Type TextBox}}">
+    </Style>
+
     <Style TargetType="{x:Type AC:CompletableTextBox}">
         <Setter Property="Margin" Value="3" />
         <EventSetter Event="GotMouseCapture" Handler="TextBox_GotKeyboardFocus"/>

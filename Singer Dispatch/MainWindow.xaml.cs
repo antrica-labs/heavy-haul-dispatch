@@ -465,6 +465,15 @@ namespace SingerDispatch
             );
         }
 
+        private void txtCompanyPriorityLevel_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            var box = (TextBox)sender;
+
+            if (box.Text.ToUpper().Contains("DO NOT HAUL"))
+                box.Style = TryFindResource("BadInfo") as Style;
+            else
+                box.Style = TryFindResource("GoodInfo") as Style; ;
+        }
         
     }
 }

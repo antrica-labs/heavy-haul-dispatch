@@ -6,7 +6,7 @@ using System.Windows.Controls;
 
 namespace SingerDispatch.Controls.Validators
 {
-    class SelectionExistsValidator : ValidationRule
+    public class SelectionExistsValidator : ValidationRule
     {
         public override ValidationResult Validate(object value, System.Globalization.CultureInfo cultureInfo)
         {
