@@ -48,6 +48,9 @@ namespace SingerDispatch.Panels.Storage
 
             if (InDesignMode()) return;
 
+            var company = (Company)cmbCompanies.SelectedItem;
+
+            cmbCommodities.ItemsSource = (company == null) ? null : from c in Database.Commodities where c.Company == company select c;
             dgStorageItems.ItemsSource = new ObservableCollection<StorageItem>(from si in Database.StorageItems where si.IsVisible == true select si);
         }
 
@@ -114,6 +117,13 @@ namespace SingerDispatch.Panels.Storage
             var button = (ButtonBase)sender;
 
             button.IsEnabled = true;
+        }
+
+        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var company = (Company)cmbCompanies.SelectedItem;
+
+            cmbCommodities.ItemsSource = (company == null) ? null : from c in Database.Commodities where c.Company == company select c;
         }
     }
 }
