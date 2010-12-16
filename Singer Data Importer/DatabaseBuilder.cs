@@ -85,6 +85,16 @@ namespace SingerDispatch.Importer
             Database.BillingTypes.InsertAllOnSubmit(billingtypes);
 
 
+            // Populate billing intervals
+            var intervals = new List<BillingInterval>();
+
+            intervals.Add(new BillingInterval { Name = "Per day" });
+            intervals.Add(new BillingInterval { Name = "Per week" });
+            intervals.Add(new BillingInterval { Name = "Per month" });
+            intervals.Add(new BillingInterval { Name = "Per year" });
+
+            Database.BillingIntervals.InsertAllOnSubmit(intervals);
+
             // Insert the rate types
             var servicerate = new RateType { Name = "Service" };
             var trailerrate = new RateType { Name = "Trailer" };

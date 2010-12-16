@@ -61,19 +61,16 @@
                     <Label Grid.Row="3" Grid.Column="0">Unit number:</Label>
                     <TextBox Name="txtCommodityUnitNumber" Grid.Row="3" Grid.Column="1" Text="{Binding Unit}" />
 
-                    <Label Grid.Row="4" Grid.Column="0">Owner:</Label>
-                    <TextBox Name="txtCommodityOwner" Grid.Row="4" Grid.Column="1" Text="{Binding Owner}" />
+                    <Label Grid.Row="4" Grid.Column="0">Last location:</Label>
+                    <TextBox Name="txtCommodityLastLocation" Grid.Row="4" Grid.Column="1" Text="{Binding LastLocation}" />
 
-                    <Label Grid.Row="5" Grid.Column="0">Last location:</Label>
-                    <TextBox Name="txtCommodityLastLocation" Grid.Row="5" Grid.Column="1" Text="{Binding LastLocation}" />
+                    <Label Grid.Row="5" Grid.Column="0">Last address:</Label>
+                    <TextBox Name="txtCommodityLastAddress" Grid.Row="5" Grid.Column="1" Text="{Binding LastAddress}" />
 
-                    <Label Grid.Row="6" Grid.Column="0">Last address:</Label>
-                    <TextBox Name="txtCommodityLastAddress" Grid.Row="6" Grid.Column="1" Text="{Binding LastAddress}" />
+                    <Label Grid.Row="6" Grid.Column="0">Notes:</Label>
+                    <TextBox Name="txtCommodityNotes" Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2" Height="40" Style="{StaticResource MultiLine}" Text="{Binding Notes}" />
 
-                    <Label Grid.Row="7" Grid.Column="0">Notes:</Label>
-                    <TextBox Name="txtCommodityNotes" Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="2" Height="40" Style="{StaticResource MultiLine}" Text="{Binding Notes}" />
-
-                    <GroupBox Header="Dimentions" Grid.Row="0" Grid.Column="2" Grid.RowSpan="7" Margin="5,0,0,0">
+                    <GroupBox Header="Dimentions" Grid.Row="0" Grid.Column="2" Grid.RowSpan="6" Margin="5,0,0,0">
                         <StackPanel>
                             <Grid>
                                 <Grid.ColumnDefinitions>

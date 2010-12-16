@@ -38,6 +38,13 @@
       <Association Name="BillingType_QuoteStorageItem" Member="QuoteStorageItem" ThisKey="ID" OtherKey="BillingTypeID" Type="QuoteStorageItem" />
     </Type>
   </Table>
+  <Table Name="" Member="BillingIntervals">
+    <Type Name="BillingInterval">
+      <Column Name="ID" Type="System.Int64" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" CanBeNull="true" />
+      <Association Name="BillingInterval_StorageItem" Member="StorageItems" ThisKey="ID" OtherKey="BillingIntervalID" Type="StorageItem" />
+    </Type>
+  </Table>
   <Table Name="" Member="Commodities">
     <Type Name="Commodity">
       <Column Name="ID" Type="System.Int64" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -46,7 +53,6 @@
       <Column Name="Value" Type="System.Decimal" CanBeNull="true" />
       <Column Name="Serial" Type="System.String" CanBeNull="true" />
       <Column Name="Unit" Type="System.String" CanBeNull="true" />
-      <Column Name="Owner" Type="System.String" CanBeNull="true" />
       <Column Name="LastLocation" Type="System.String" CanBeNull="true" />
       <Column Name="LastAddress" Type="System.String" CanBeNull="true" />
       <Column Name="Length" Type="System.Double" CanBeNull="true" />
@@ -185,7 +191,6 @@
       <Column Name="Value" Type="System.Decimal" CanBeNull="true" />
       <Column Name="Serial" Type="System.String" CanBeNull="true" />
       <Column Name="Unit" Type="System.String" CanBeNull="true" />
-      <Column Name="Owner" Type="System.String" CanBeNull="true" />
       <Column Name="DepartureSiteName" Type="System.String" CanBeNull="true" />
       <Column Name="DepartureAddress" Type="System.String" CanBeNull="true" />
       <Column Name="ArrivalSiteName" Type="System.String" CanBeNull="true" />
@@ -430,8 +435,7 @@
       <Column Name="Name" Type="System.String" CanBeNull="true" />
       <Column Name="Value" Type="System.Decimal" CanBeNull="true" />
       <Column Name="Serial" Type="System.String" CanBeNull="true" />
-      <Column Name="Unit" Type="System.String" CanBeNull="true" />
-      <Column Name="Owner" Type="System.String" CanBeNull="true" />      
+      <Column Name="Unit" Type="System.String" CanBeNull="true" />      
       <Column Name="Length" Type="System.Double" CanBeNull="true" />
       <Column Name="Width" Type="System.Double" CanBeNull="true" />
       <Column Name="Height" Type="System.Double" CanBeNull="true" />
@@ -800,6 +804,7 @@
       <Column Name="IsVisible" Type="System.Boolean" CanBeNull="true"/>
       <Column Name="CompanyID" Type="System.Int64" CanBeNull="true" />
       <Column Name="CommodityID" Type="System.Int64" CanBeNull="true" />
+      <Column Name="BillingIntervalID" Type="System.Int64" CanBeNull="true" />
       <Column Name="DateEntered" Type="System.DateTime" CanBeNull="true" />
       <Column Name="DateRemoved" Type="System.DateTime" CanBeNull="true" />
       <Column Name="YardLocation" Type="System.String" CanBeNull="true" />
@@ -807,7 +812,8 @@
       <Column Name="ReferenceCode" Type="System.String" CanBeNull="true" />
       <Column Name="Notes" Type="System.String" CanBeNull="true" />
       <Association Name="Company_StorageItem" Member="Company" ThisKey="CompanyID" OtherKey="ID" Type="Company" IsForeignKey="true" />
-      <Association Name="Commodity_StorageItem" Member="Commodity" ThisKey="CommodityID" OtherKey="ID" Type="Commodity" IsForeignKey="true" />      
+      <Association Name="Commodity_StorageItem" Member="Commodity" ThisKey="CommodityID" OtherKey="ID" Type="Commodity" IsForeignKey="true" />
+      <Association Name="BillingInterval_StorageItem" Member="BillingInterval" ThisKey="BillingIntervalID" OtherKey="ID" Type="BillingInterval" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>

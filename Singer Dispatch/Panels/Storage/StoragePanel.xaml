@@ -74,8 +74,17 @@
                                         </Grid.RowDefinitions>
 
                                         <Label Grid.Column="0" Grid.Row="0">Billing rate:</Label>
-                                        <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding BillingRate, StringFormat=C}" Controls:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" />
+                                        <Grid Grid.Column="1" Grid.Row="0">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition />
+                                                <ColumnDefinition Width="1.2*"/>
+                                            </Grid.ColumnDefinitions>
 
+                                            <TextBox Grid.Column="0" Text="{Binding BillingRate, StringFormat=C}" Controls:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" />
+                                            <ComboBox Grid.Column="1" Name="cmbBillingIntervals" SelectedItem="{Binding BillingInterval}" ItemTemplate="{StaticResource SimpleNameTemplate}" IsEditable="False" />
+
+                                        </Grid>
+                                        
                                         <Label Grid.Column="0" Grid.Row="1">Date in:</Label>
                                         <DatePicker Grid.Column="1" Grid.Row="1" SelectedDate="{Binding DateEntered}" />
 

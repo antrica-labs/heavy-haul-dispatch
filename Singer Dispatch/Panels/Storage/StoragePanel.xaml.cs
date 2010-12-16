@@ -37,6 +37,8 @@ namespace SingerDispatch.Panels.Storage
             // Work below can only be done when the real app is running. It fails during design time.
 
             Database = SingerConfigs.CommonDataContext;
+
+            cmbBillingIntervals.ItemsSource = from bi in Database.BillingIntervals select bi;
         }
         
        
@@ -57,7 +59,6 @@ namespace SingerDispatch.Panels.Storage
 
         private void AddItem_Click(object sender, RoutedEventArgs e)
         {
-
             var list = (ObservableCollection<StorageItem>)dgStorageItems.ItemsSource;
             var item = new StorageItem { DateEntered = DateTime.Now };
 

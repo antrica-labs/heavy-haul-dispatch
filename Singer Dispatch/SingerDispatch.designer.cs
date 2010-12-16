@@ -38,6 +38,9 @@ namespace SingerDispatch
     partial void InsertBillingType(BillingType instance);
     partial void UpdateBillingType(BillingType instance);
     partial void DeleteBillingType(BillingType instance);
+    partial void InsertBillingInterval(BillingInterval instance);
+    partial void UpdateBillingInterval(BillingInterval instance);
+    partial void DeleteBillingInterval(BillingInterval instance);
     partial void InsertCommodity(Commodity instance);
     partial void UpdateCommodity(Commodity instance);
     partial void DeleteCommodity(Commodity instance);
@@ -238,6 +241,14 @@ namespace SingerDispatch
 			get
 			{
 				return this.GetTable<BillingType>();
+			}
+		}
+		
+		public System.Data.Linq.Table<BillingInterval> BillingIntervals
+		{
+			get
+			{
+				return this.GetTable<BillingInterval>();
 			}
 		}
 		
@@ -1440,6 +1451,120 @@ namespace SingerDispatch
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="")]
+	public partial class BillingInterval : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private long _ID;
+		
+		private string _Name;
+		
+		private EntitySet<StorageItem> _StorageItems;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDChanging(long value);
+    partial void OnIDChanged();
+    partial void OnNameChanging(string value);
+    partial void OnNameChanged();
+    #endregion
+		
+		public BillingInterval()
+		{
+			this._StorageItems = new EntitySet<StorageItem>(new Action<StorageItem>(this.attach_StorageItems), new Action<StorageItem>(this.detach_StorageItems));
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, IsPrimaryKey=true, IsDbGenerated=true)]
+		public long ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this.OnIDChanging(value);
+					this.SendPropertyChanging();
+					this._ID = value;
+					this.SendPropertyChanged("ID");
+					this.OnIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name")]
+		public string Name
+		{
+			get
+			{
+				return this._Name;
+			}
+			set
+			{
+				if ((this._Name != value))
+				{
+					this.OnNameChanging(value);
+					this.SendPropertyChanging();
+					this._Name = value;
+					this.SendPropertyChanged("Name");
+					this.OnNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="BillingInterval_StorageItem", Storage="_StorageItems", ThisKey="ID", OtherKey="BillingIntervalID")]
+		public EntitySet<StorageItem> StorageItems
+		{
+			get
+			{
+				return this._StorageItems;
+			}
+			set
+			{
+				this._StorageItems.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_StorageItems(StorageItem entity)
+		{
+			this.SendPropertyChanging();
+			entity.BillingInterval = this;
+		}
+		
+		private void detach_StorageItems(StorageItem entity)
+		{
+			this.SendPropertyChanging();
+			entity.BillingInterval = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="")]
 	public partial class Commodity : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
@@ -1456,8 +1581,6 @@ namespace SingerDispatch
 		private string _Serial;
 		
 		private string _Unit;
-		
-		private string _Owner;
 		
 		private string _LastLocation;
 		
@@ -1499,8 +1622,6 @@ namespace SingerDispatch
     partial void OnSerialChanged();
     partial void OnUnitChanging(string value);
     partial void OnUnitChanged();
-    partial void OnOwnerChanging(string value);
-    partial void OnOwnerChanged();
     partial void OnLastLocationChanging(string value);
     partial void OnLastLocationChanged();
     partial void OnLastAddressChanging(string value);
@@ -1648,26 +1769,6 @@ namespace SingerDispatch
 					this._Unit = value;
 					this.SendPropertyChanged("Unit");
 					this.OnUnitChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Owner")]
-		public string Owner
-		{
-			get
-			{
-				return this._Owner;
-			}
-			set
-			{
-				if ((this._Owner != value))
-				{
-					this.OnOwnerChanging(value);
-					this.SendPropertyChanging();
-					this._Owner = value;
-					this.SendPropertyChanged("Owner");
-					this.OnOwnerChanged();
 				}
 			}
 		}
@@ -4530,8 +4631,6 @@ namespace SingerDispatch
 		
 		private string _Unit;
 		
-		private string _Owner;
-		
 		private string _DepartureSiteName;
 		
 		private string _DepartureAddress;
@@ -4582,8 +4681,6 @@ namespace SingerDispatch
     partial void OnSerialChanged();
     partial void OnUnitChanging(string value);
     partial void OnUnitChanged();
-    partial void OnOwnerChanging(string value);
-    partial void OnOwnerChanged();
     partial void OnDepartureSiteNameChanging(string value);
     partial void OnDepartureSiteNameChanged();
     partial void OnDepartureAddressChanging(string value);
@@ -4800,26 +4897,6 @@ namespace SingerDispatch
 					this._Unit = value;
 					this.SendPropertyChanged("Unit");
 					this.OnUnitChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Owner")]
-		public string Owner
-		{
-			get
-			{
-				return this._Owner;
-			}
-			set
-			{
-				if ((this._Owner != value))
-				{
-					this.OnOwnerChanging(value);
-					this.SendPropertyChanging();
-					this._Owner = value;
-					this.SendPropertyChanged("Owner");
-					this.OnOwnerChanged();
 				}
 			}
 		}
@@ -10383,8 +10460,6 @@ namespace SingerDispatch
 		
 		private string _Unit;
 		
-		private string _Owner;
-		
 		private System.Nullable<double> _Length;
 		
 		private System.Nullable<double> _Width;
@@ -10433,8 +10508,6 @@ namespace SingerDispatch
     partial void OnSerialChanged();
     partial void OnUnitChanging(string value);
     partial void OnUnitChanged();
-    partial void OnOwnerChanging(string value);
-    partial void OnOwnerChanged();
     partial void OnLengthChanging(System.Nullable<double> value);
     partial void OnLengthChanged();
     partial void OnWidthChanging(System.Nullable<double> value);
@@ -10703,26 +10776,6 @@ namespace SingerDispatch
 					this._Unit = value;
 					this.SendPropertyChanged("Unit");
 					this.OnUnitChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Owner")]
-		public string Owner
-		{
-			get
-			{
-				return this._Owner;
-			}
-			set
-			{
-				if ((this._Owner != value))
-				{
-					this.OnOwnerChanging(value);
-					this.SendPropertyChanging();
-					this._Owner = value;
-					this.SendPropertyChanged("Owner");
-					this.OnOwnerChanged();
 				}
 			}
 		}
@@ -18433,6 +18486,8 @@ namespace SingerDispatch
 		
 		private System.Nullable<long> _CommodityID;
 		
+		private System.Nullable<long> _BillingIntervalID;
+		
 		private System.Nullable<System.DateTime> _DateEntered;
 		
 		private System.Nullable<System.DateTime> _DateRemoved;
@@ -18449,6 +18504,8 @@ namespace SingerDispatch
 		
 		private EntityRef<Commodity> _Commodity;
 		
+		private EntityRef<BillingInterval> _BillingInterval;
+		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -18461,6 +18518,8 @@ namespace SingerDispatch
     partial void OnCompanyIDChanged();
     partial void OnCommodityIDChanging(System.Nullable<long> value);
     partial void OnCommodityIDChanged();
+    partial void OnBillingIntervalIDChanging(System.Nullable<long> value);
+    partial void OnBillingIntervalIDChanged();
     partial void OnDateEnteredChanging(System.Nullable<System.DateTime> value);
     partial void OnDateEnteredChanged();
     partial void OnDateRemovedChanging(System.Nullable<System.DateTime> value);
@@ -18479,6 +18538,7 @@ namespace SingerDispatch
 		{
 			this._Company = default(EntityRef<Company>);
 			this._Commodity = default(EntityRef<Commodity>);
+			this._BillingInterval = default(EntityRef<BillingInterval>);
 			OnCreated();
 		}
 		
@@ -18566,6 +18626,30 @@ namespace SingerDispatch
 					this._CommodityID = value;
 					this.SendPropertyChanged("CommodityID");
 					this.OnCommodityIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BillingIntervalID")]
+		public System.Nullable<long> BillingIntervalID
+		{
+			get
+			{
+				return this._BillingIntervalID;
+			}
+			set
+			{
+				if ((this._BillingIntervalID != value))
+				{
+					if (this._BillingInterval.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnBillingIntervalIDChanging(value);
+					this.SendPropertyChanging();
+					this._BillingIntervalID = value;
+					this.SendPropertyChanged("BillingIntervalID");
+					this.OnBillingIntervalIDChanged();
 				}
 			}
 		}
@@ -18754,6 +18838,40 @@ namespace SingerDispatch
 						this._CommodityID = default(Nullable<long>);
 					}
 					this.SendPropertyChanged("Commodity");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="BillingInterval_StorageItem", Storage="_BillingInterval", ThisKey="BillingIntervalID", OtherKey="ID", IsForeignKey=true)]
+		public BillingInterval BillingInterval
+		{
+			get
+			{
+				return this._BillingInterval.Entity;
+			}
+			set
+			{
+				BillingInterval previousValue = this._BillingInterval.Entity;
+				if (((previousValue != value) 
+							|| (this._BillingInterval.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._BillingInterval.Entity = null;
+						previousValue.StorageItems.Remove(this);
+					}
+					this._BillingInterval.Entity = value;
+					if ((value != null))
+					{
+						value.StorageItems.Add(this);
+						this._BillingIntervalID = value.ID;
+					}
+					else
+					{
+						this._BillingIntervalID = default(Nullable<long>);
+					}
+					this.SendPropertyChanged("BillingInterval");
 				}
 			}
 		}

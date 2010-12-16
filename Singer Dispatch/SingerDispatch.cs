@@ -195,7 +195,6 @@ namespace SingerDispatch
             copy.Value = Value;
             copy.Serial = Serial;
             copy.Unit = Unit;
-            copy.Owner = Owner;
             copy.Length = Length;
             copy.Width = Width;
             copy.Height = Height;
@@ -217,7 +216,6 @@ namespace SingerDispatch
             jc.Value = Value;
             jc.Serial = Serial;
             jc.Unit = Unit;
-            jc.Owner = Owner;
             jc.DepartureSiteName = DepartureSiteName;
             jc.DepartureAddress = DepartureAddress;
             jc.ArrivalSiteName = ArrivalSiteName;
@@ -388,7 +386,6 @@ namespace SingerDispatch
             copy.Value = Value;
             copy.Serial = Serial;
             copy.Unit = Unit;
-            copy.Owner = Owner;
             copy.DepartureSiteName = DepartureSiteName;
             copy.DepartureAddress = DepartureAddress;
             copy.ArrivalSiteName = ArrivalSiteName;

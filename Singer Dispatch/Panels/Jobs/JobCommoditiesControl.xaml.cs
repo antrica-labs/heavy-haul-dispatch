@@ -148,7 +148,6 @@ namespace SingerDispatch.Panels.Jobs
                 commodity.Value = original.Value;
                 commodity.Serial = original.Serial;
                 commodity.Unit = original.Unit;
-                commodity.Owner = original.Owner;
                 commodity.Length = original.Length;
                 commodity.Width = original.Width;
                 commodity.Height = original.Height;
@@ -165,7 +164,6 @@ namespace SingerDispatch.Panels.Jobs
                 commodity.Value = null;
                 commodity.Serial = null;
                 commodity.Unit = null;
-                commodity.Owner = null;
                 commodity.Length = null;
                 commodity.Width = null;
                 commodity.Height = null;

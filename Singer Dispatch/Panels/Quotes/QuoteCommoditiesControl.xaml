@@ -63,14 +63,11 @@
 
                     <Label Grid.Row="4" Grid.Column="0">Serial number:</Label>
                     <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Serial}" />
-
-                    <Label Grid.Row="5" Grid.Column="0">Owner:</Label>
-                    <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding Owner}" />
                                        
-                    <Label Grid.Row="6" Grid.Column="0">Notes:</Label>
-                    <TextBox Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2" Style="{StaticResource MultiLine}" Text="{Binding Notes}" />
+                    <Label Grid.Row="5" Grid.Column="0">Notes:</Label>
+                    <TextBox Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" Style="{StaticResource MultiLine}" Text="{Binding Notes}" />
 
-                    <GroupBox Header="Dimensions" Grid.Row="0" Grid.Column="2" Grid.RowSpan="6" Margin="5,0,0,0">
+                    <GroupBox Header="Dimensions" Grid.Row="0" Grid.Column="2" Grid.RowSpan="5" Margin="5,0,0,0">
                         <StackPanel>
                             <Grid>
                                 <Grid.ColumnDefinitions>                                    
