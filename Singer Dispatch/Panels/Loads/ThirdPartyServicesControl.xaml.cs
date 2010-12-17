@@ -22,9 +22,13 @@ namespace SingerDispatch.Panels.Loads
         }
 
         private void ControlLoaded(object sender, RoutedEventArgs e)
-        {  
-
-            
+        {
+            var service = (ThirdPartyService)dgServices.SelectedItem;
+            if (service != null && service.Company != null)
+            {
+                cmbServiceTypes.ItemsSource = from st in Database.Services where st.Company == service.Company select st.ServiceType;
+                cmbContacts.ItemsSource = from c in Database.Contacts where c.Company == service.Company orderby c.FirstName, c.LastName select c;
+            }
         }
 
         protected override void SelectedLoadChanged(Load newValue, Load oldValue)
@@ -36,17 +40,11 @@ namespace SingerDispatch.Panels.Loads
 
         private void ServiceCompany_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (e.AddedItems.Count > 0)
+            var service = (ThirdPartyService)dgServices.SelectedItem;
+            if (service != null && service.Company != null)
             {
-                var company = (Company)e.AddedItems[0];
-
-                cmbServiceTypes.ItemsSource = from st in Database.Services where st.Company == company select st.ServiceType;                                
-                cmbContacts.ItemsSource = from c in Database.Contacts where c.Company == company orderby c.FirstName, c.LastName select c;
-            }
-            else
-            {
-                cmbServiceTypes.ItemsSource = null;
-                cmbContacts.ItemsSource = null;
+                cmbServiceTypes.ItemsSource = from st in Database.Services where st.Company == service.Company select st.ServiceType;
+                cmbContacts.ItemsSource = from c in Database.Contacts where c.Company == service.Company orderby c.FirstName, c.LastName select c;
             }
         }
 

@@ -187,7 +187,7 @@
                             <DataGrid Name="dgOutOfProvince" Style="{StaticResource ListDisplay}" IsReadOnly="False">
                                 <DataGrid.Columns>
                                     <DataGridComboBoxColumn Header="Province" ItemsSource="{Binding Source={StaticResource ProvStateDropList}}" DisplayMemberPath="Name" SelectedItemBinding="{Binding ProvinceOrState}" />
-                                    <DataGridTextColumn Header="Distance" Binding="{Binding Distance, StringFormat={}{0:F2}km, Converter={StaticResource NullableValueConverter}}" />
+                                    <DataGridTextColumn Header="Distance" Binding="{Binding Distance, StringFormat={}{0:F0} km, Converter={StaticResource NullableValueConverter}}" />
                                 </DataGrid.Columns>
                             </DataGrid>
                         </DockPanel>

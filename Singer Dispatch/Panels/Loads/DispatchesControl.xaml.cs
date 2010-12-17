@@ -92,6 +92,17 @@ namespace SingerDispatch.Panels.Loads
                 dispatch.EquipmentType = SelectedLoad.Equipment.EquipmentType;
                 dispatch.Equipment = SelectedLoad.Equipment;
                 dispatch.Employee = dispatch.Equipment.DefaultDriver;
+
+                // Go through the loaded commodities and add any out of province that can be found
+                foreach (var commodity in SelectedLoad.LoadedCommodities.Where(l => l.LoadingProvince.Abbreviation != "AB" || l.UnloadingProvince.Abbreviation != "AB"))
+                {
+                    var place = (commodity.LoadingProvince.Abbreviation != "AB") ? commodity.LoadingProvince : commodity.UnloadingProvince;
+
+                    var travels = from t in dispatch.OutOfProvinceTravels select t.ProvinceOrState;
+
+                    if (!travels.Contains(place))
+                        dispatch.OutOfProvinceTravels.Add(new OutOfProvinceTravel { ProvinceOrState = place, Distance = 0 });
+                } 
             }
 
             SelectedLoad.Dispatches.Add(dispatch);
