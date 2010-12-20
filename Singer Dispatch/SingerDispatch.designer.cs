@@ -6183,6 +6183,8 @@ namespace SingerDispatch
 		
 		private System.Nullable<double> _EWeightGroup10;
 		
+		private System.Nullable<double> _EGrossWeight;
+		
 		private System.Nullable<double> _SWeightSteer;
 		
 		private System.Nullable<double> _SWeightDrive;
@@ -6207,7 +6209,7 @@ namespace SingerDispatch
 		
 		private System.Nullable<double> _SWeightGroup10;
 		
-		private System.Nullable<double> _GrossWeight;
+		private System.Nullable<double> _SGrossWeight;
 		
 		private System.Nullable<double> _LoadedLength;
 		
@@ -6297,6 +6299,8 @@ namespace SingerDispatch
     partial void OnEWeightGroup9Changed();
     partial void OnEWeightGroup10Changing(System.Nullable<double> value);
     partial void OnEWeightGroup10Changed();
+    partial void OnEGrossWeightChanging(System.Nullable<double> value);
+    partial void OnEGrossWeightChanged();
     partial void OnSWeightSteerChanging(System.Nullable<double> value);
     partial void OnSWeightSteerChanged();
     partial void OnSWeightDriveChanging(System.Nullable<double> value);
@@ -6321,8 +6325,8 @@ namespace SingerDispatch
     partial void OnSWeightGroup9Changed();
     partial void OnSWeightGroup10Changing(System.Nullable<double> value);
     partial void OnSWeightGroup10Changed();
-    partial void OnGrossWeightChanging(System.Nullable<double> value);
-    partial void OnGrossWeightChanged();
+    partial void OnSGrossWeightChanging(System.Nullable<double> value);
+    partial void OnSGrossWeightChanged();
     partial void OnLoadedLengthChanging(System.Nullable<double> value);
     partial void OnLoadedLengthChanged();
     partial void OnLoadedWidthChanging(System.Nullable<double> value);
@@ -6912,6 +6916,26 @@ namespace SingerDispatch
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EGrossWeight")]
+		public System.Nullable<double> EGrossWeight
+		{
+			get
+			{
+				return this._EGrossWeight;
+			}
+			set
+			{
+				if ((this._EGrossWeight != value))
+				{
+					this.OnEGrossWeightChanging(value);
+					this.SendPropertyChanging();
+					this._EGrossWeight = value;
+					this.SendPropertyChanged("EGrossWeight");
+					this.OnEGrossWeightChanged();
+				}
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SWeightSteer")]
 		public System.Nullable<double> SWeightSteer
 		{
@@ -7152,22 +7176,22 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_GrossWeight")]
-		public System.Nullable<double> GrossWeight
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SGrossWeight")]
+		public System.Nullable<double> SGrossWeight
 		{
 			get
 			{
-				return this._GrossWeight;
+				return this._SGrossWeight;
 			}
 			set
 			{
-				if ((this._GrossWeight != value))
+				if ((this._SGrossWeight != value))
 				{
-					this.OnGrossWeightChanging(value);
+					this.OnSGrossWeightChanging(value);
 					this.SendPropertyChanging();
-					this._GrossWeight = value;
-					this.SendPropertyChanged("GrossWeight");
-					this.OnGrossWeightChanged();
+					this._SGrossWeight = value;
+					this.SendPropertyChanged("SGrossWeight");
+					this.OnSGrossWeightChanged();
 				}
 			}
 		}

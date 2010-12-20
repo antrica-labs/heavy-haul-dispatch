@@ -1090,7 +1090,7 @@ namespace SingerDispatch.Printing.Documents
             replacements[0] = MeasurementFormater.FromMetres(load.LoadedLength, lengthUnit);
             replacements[1] = MeasurementFormater.FromMetres(load.LoadedWidth, lengthUnit);
             replacements[2] = MeasurementFormater.FromMetres(load.LoadedHeight, lengthUnit);
-            replacements[3] = MeasurementFormater.FromKilograms(load.GrossWeight, weightUnit);
+            replacements[3] = MeasurementFormater.FromKilograms(load.EGrossWeight, weightUnit);
             replacements[4] = MeasurementFormater.FromKilograms(load.EWeightSteer, weightUnit);
             replacements[5] = MeasurementFormater.FromKilograms(load.EWeightDrive, weightUnit);
             replacements[6] = MeasurementFormater.FromKilograms(load.EWeightGroup1, weightUnit);

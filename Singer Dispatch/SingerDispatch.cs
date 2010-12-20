@@ -518,9 +518,64 @@ namespace SingerDispatch
     }
 
     partial class Load
-    {
+    {        
         partial void OnCreated()
-        {            
+        {
+            this.PropertyChanged += new System.ComponentModel.PropertyChangedEventHandler(SomePropertyChanged);
+        }
+
+        private void SomePropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            var other = sender;
+            var f = e;
+
+            if (e.PropertyName.StartsWith("EWeight"))
+                RecalculateEGross();
+            else if (e.PropertyName.StartsWith("SWeight"))
+                RecalculateSGross();
+
+        }
+
+        private void RecalculateEGross()
+        {
+            var weight = 0.0;
+
+            weight = 0;
+            weight += EWeightSteer ?? 0.0;
+            weight += EWeightDrive ?? 0.0;
+            weight += EWeightGroup1 ?? 0.0;
+            weight += EWeightGroup2 ?? 0.0;
+            weight += EWeightGroup3 ?? 0.0;
+            weight += EWeightGroup4 ?? 0.0;
+            weight += EWeightGroup5 ?? 0.0;
+            weight += EWeightGroup6 ?? 0.0;
+            weight += EWeightGroup7 ?? 0.0;
+            weight += EWeightGroup8 ?? 0.0;
+            weight += EWeightGroup9 ?? 0.0;
+            weight += EWeightGroup10 ?? 0.0;
+
+            EGrossWeight = weight;
+        }
+
+        private void RecalculateSGross()
+        {
+            var weight = 0.0;
+
+            weight = 0;
+            weight += SWeightSteer ?? 0.0;
+            weight += SWeightDrive ?? 0.0;
+            weight += SWeightGroup1 ?? 0.0;
+            weight += SWeightGroup2 ?? 0.0;
+            weight += SWeightGroup3 ?? 0.0;
+            weight += SWeightGroup4 ?? 0.0;
+            weight += SWeightGroup5 ?? 0.0;
+            weight += SWeightGroup6 ?? 0.0;
+            weight += SWeightGroup7 ?? 0.0;
+            weight += SWeightGroup8 ?? 0.0;
+            weight += SWeightGroup9 ?? 0.0;
+            weight += SWeightGroup10 ?? 0.0;
+
+            SGrossWeight = weight;
         }
 
         public void Notify(string property)
@@ -556,6 +611,7 @@ namespace SingerDispatch
             cp.EWeightGroup8 = EWeightGroup8;
             cp.EWeightGroup9 = EWeightGroup9;
             cp.EWeightGroup10 = EWeightGroup10;
+            cp.EGrossWeight = EGrossWeight;
             cp.SWeightSteer = SWeightSteer;
             cp.SWeightDrive = SWeightDrive;
             cp.SWeightGroup1 = SWeightGroup1;
@@ -568,7 +624,7 @@ namespace SingerDispatch
             cp.SWeightGroup8 = SWeightGroup8;
             cp.SWeightGroup9 = SWeightGroup9;
             cp.SWeightGroup10 = SWeightGroup10;            
-            cp.GrossWeight = GrossWeight;
+            cp.SGrossWeight = SGrossWeight;
             cp.LoadedLength = LoadedLength;
             cp.LoadedWidth = LoadedWidth;
             cp.LoadedHeight = LoadedHeight;

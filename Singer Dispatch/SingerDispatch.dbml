@@ -275,6 +275,7 @@
       <Column Name="EWeightGroup8" Type="System.Double" CanBeNull="true" />
       <Column Name="EWeightGroup9" Type="System.Double" CanBeNull="true" />
       <Column Name="EWeightGroup10" Type="System.Double" CanBeNull="true" />
+      <Column Name="EGrossWeight" Type="System.Double" CanBeNull="true" />
       <Column Name="SWeightSteer" Type="System.Double" CanBeNull="true" />
       <Column Name="SWeightDrive" Type="System.Double" CanBeNull="true" />
       <Column Name="SWeightGroup1" Type="System.Double" CanBeNull="true" />
@@ -287,7 +288,7 @@
       <Column Name="SWeightGroup8" Type="System.Double" CanBeNull="true" />
       <Column Name="SWeightGroup9" Type="System.Double" CanBeNull="true" />
       <Column Name="SWeightGroup10" Type="System.Double" CanBeNull="true" />
-      <Column Name="GrossWeight" Type="System.Double" CanBeNull="true" />
+      <Column Name="SGrossWeight" Type="System.Double" CanBeNull="true" />
       <Column Name="LoadedLength" Type="System.Double" CanBeNull="true" />
       <Column Name="LoadedWidth" Type="System.Double" CanBeNull="true" />
       <Column Name="LoadedHeight" Type="System.Double" CanBeNull="true" />

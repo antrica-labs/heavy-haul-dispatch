@@ -179,6 +179,37 @@ namespace SingerDispatch.Panels.Loads
             SelectedLoad.ReferenceNumbers.Remove(selected);
             ((ObservableCollection<LoadReferenceNumber>)dgReferenceNumbers.ItemsSource).Remove(selected);
         }
+
+        private void RecalculateGrossWeights(object sender, RoutedEventArgs e)
+        {
+            if (SelectedLoad == null) return;
+
+            SelectedLoad.EGrossWeight = 0;
+            SelectedLoad.EGrossWeight += SelectedLoad.EWeightSteer ?? 0.0;
+            SelectedLoad.EGrossWeight += SelectedLoad.EWeightGroup1 ?? 0.0;
+            SelectedLoad.EGrossWeight += SelectedLoad.EWeightGroup2 ?? 0.0;
+            SelectedLoad.EGrossWeight += SelectedLoad.EWeightGroup3 ?? 0.0;
+            SelectedLoad.EGrossWeight += SelectedLoad.EWeightGroup4 ?? 0.0;
+            SelectedLoad.EGrossWeight += SelectedLoad.EWeightGroup5 ?? 0.0;
+            SelectedLoad.EGrossWeight += SelectedLoad.EWeightGroup6 ?? 0.0;
+            SelectedLoad.EGrossWeight += SelectedLoad.EWeightGroup7 ?? 0.0;
+            SelectedLoad.EGrossWeight += SelectedLoad.EWeightGroup8 ?? 0.0;
+            SelectedLoad.EGrossWeight += SelectedLoad.EWeightGroup9 ?? 0.0;
+            SelectedLoad.EGrossWeight += SelectedLoad.EWeightGroup10 ?? 0.0;
+
+            SelectedLoad.SGrossWeight = 0;
+            SelectedLoad.SGrossWeight += SelectedLoad.SWeightSteer ?? 0.0;
+            SelectedLoad.SGrossWeight += SelectedLoad.SWeightGroup1 ?? 0.0;
+            SelectedLoad.SGrossWeight += SelectedLoad.SWeightGroup2 ?? 0.0;
+            SelectedLoad.SGrossWeight += SelectedLoad.SWeightGroup3 ?? 0.0;
+            SelectedLoad.SGrossWeight += SelectedLoad.SWeightGroup4 ?? 0.0;
+            SelectedLoad.SGrossWeight += SelectedLoad.SWeightGroup5 ?? 0.0;
+            SelectedLoad.SGrossWeight += SelectedLoad.SWeightGroup6 ?? 0.0;
+            SelectedLoad.SGrossWeight += SelectedLoad.SWeightGroup7 ?? 0.0;
+            SelectedLoad.SGrossWeight += SelectedLoad.SWeightGroup8 ?? 0.0;
+            SelectedLoad.SGrossWeight += SelectedLoad.SWeightGroup9 ?? 0.0;
+            SelectedLoad.SGrossWeight += SelectedLoad.SWeightGroup10 ?? 0.0;
+        }
     }
 
     public class ExtraEquipmentTypeDropList : ObservableCollection<ExtraEquipmentType>
