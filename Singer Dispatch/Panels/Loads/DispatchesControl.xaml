@@ -116,7 +116,7 @@
                     <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding DepartingUnits}" />
                     
                     <Label Grid.Row="5" Grid.Column="0">Description:</Label>
-                    <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding Description}" Style="{StaticResource AutoFilled}" Height="50" />
+                    <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding Description}" Style="{StaticResource AutoFilled}" Height="60" />
 
                     <Label Grid.Row="6" Grid.Column="0">Schedule:</Label>
                     <TextBox Grid.Row="6" Grid.Column="1" Text="{Binding Schedule}" Style="{StaticResource MultiLine}" Height="60" />
@@ -154,7 +154,7 @@
                     
                     <GroupBox Grid.Column="2" Grid.Row="3" Grid.RowSpan="3" Header="Swampers" Margin="5,0,0,0">
                         <DockPanel>
-                            <Grid DockPanel.Dock="Bottom">
+                            <Grid DockPanel.Dock="Top">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition />
                                     <ColumnDefinition />
@@ -166,7 +166,7 @@
 
                             <DataGrid Name="dgSwampers" Style="{StaticResource ListDisplay}" IsReadOnly="False">
                                 <DataGrid.Columns>
-                                    <DataGridComboBoxColumn Header="Employee" ItemsSource="{Binding Source={StaticResource EmployeeDropList}}" DisplayMemberPath="Name" SelectedItemBinding="{Binding Employee}" />                                    
+                                    <DataGridComboBoxColumn Header="Employee" CanUserSort="False"  ItemsSource="{Binding Source={StaticResource EmployeeDropList}}" DisplayMemberPath="Name" SelectedItemBinding="{Binding Employee}" />                                    
                                 </DataGrid.Columns>
                             </DataGrid>
                         </DockPanel>
@@ -174,7 +174,7 @@
 
                     <GroupBox Grid.Column="2" Grid.Row="6" Grid.RowSpan="2" Header="Out of Province Travel" Margin="5,0,0,0">
                         <DockPanel>
-                            <Grid DockPanel.Dock="Bottom">
+                            <Grid DockPanel.Dock="Top">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition />
                                     <ColumnDefinition />
@@ -186,7 +186,7 @@
 
                             <DataGrid Name="dgOutOfProvince" Style="{StaticResource ListDisplay}" IsReadOnly="False">
                                 <DataGrid.Columns>
-                                    <DataGridComboBoxColumn Header="Province" ItemsSource="{Binding Source={StaticResource ProvStateDropList}}" DisplayMemberPath="Name" SelectedItemBinding="{Binding ProvinceOrState}" />
+                                    <DataGridComboBoxColumn Header="Province" CanUserSort="False" ItemsSource="{Binding Source={StaticResource ProvStateDropList}}" DisplayMemberPath="Name" SelectedItemBinding="{Binding ProvinceOrState}" />
                                     <DataGridTextColumn Header="Distance" Binding="{Binding Distance, StringFormat={}{0:F0} km, Converter={StaticResource NullableValueConverter}}" />
                                 </DataGrid.Columns>
                             </DataGrid>

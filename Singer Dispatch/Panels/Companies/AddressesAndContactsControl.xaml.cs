@@ -37,15 +37,15 @@ namespace SingerDispatch.Panels.Companies
 
             if (InDesignMode()) return;
 
+            lbContactTypes.MaxHeight = lbContactTypes.ActualHeight;
+
             var list = (ObservableCollection<CheckBox>)lbContactTypes.ItemsSource;
 
             list.Clear();
-
+            
             cmbProvinceOrState.ItemsSource = from p in Database.ProvincesAndStates orderby p.CountryID, p.Name select p;
             cmbAddressType.ItemsSource = from at in Database.AddressTypes select at;
             cmbContactPreferedContactMethod.ItemsSource = from cm in Database.ContactMethods select cm;
-
-            lbContactTypes.MaxHeight = lbContactTypes.ActualHeight;
         }
 
         protected override void SelectedCompanyChanged(Company newValue, Company oldValue)

@@ -46,6 +46,12 @@ namespace SingerDispatch.Panels.Loads
         {
             if (InDesignMode()) return;
 
+            if (dgSwampers.ActualHeight > 0.0)
+                dgSwampers.MaxHeight = dgSwampers.ActualHeight;
+            
+            if (dgOutOfProvince.ActualHeight > 0.0)
+                dgOutOfProvince.MaxHeight = dgOutOfProvince.ActualHeight;
+
             cmbEquipmentTypes.ItemsSource = (SelectedLoad == null) ? null : (from et in Database.EquipmentTypes orderby et.Prefix select et).ToList();
             cmbEmployees.ItemsSource = (SelectedLoad == null) ? null : from emp in Database.Employees orderby emp.FirstName, emp.LastName select emp;
             cmbDispatchedByEmployees.ItemsSource = (SelectedLoad == null) ? null : from emp in Database.Employees orderby emp.FirstName, emp.LastName select emp;
@@ -94,7 +100,7 @@ namespace SingerDispatch.Panels.Loads
                 dispatch.Employee = dispatch.Equipment.DefaultDriver;
 
                 // Go through the loaded commodities and add any out of province that can be found
-                foreach (var commodity in SelectedLoad.LoadedCommodities.Where(l => l.LoadingProvince.Abbreviation != "AB" || l.UnloadingProvince.Abbreviation != "AB"))
+                foreach (var commodity in SelectedLoad.LoadedCommodities.Where(l => (l.LoadingProvince != null && l.LoadingProvince.Abbreviation != "AB") || (l.UnloadingProvince != null && l.UnloadingProvince.Abbreviation != "AB")))
                 {
                     var place = (commodity.LoadingProvince.Abbreviation != "AB") ? commodity.LoadingProvince : commodity.UnloadingProvince;
 
