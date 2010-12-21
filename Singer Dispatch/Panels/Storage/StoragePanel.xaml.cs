@@ -130,7 +130,7 @@ namespace SingerDispatch.Panels.Storage
 
             if (company == null) return;
 
-            var window = new CreateCommodityWindow(Database); // { Owner = this };
+            var window = new CreateCommodityWindow(Database) { Owner = Application.Current.MainWindow };
             var commodity = window.CreateCommodity();
 
             if (commodity == null) return;
@@ -143,7 +143,7 @@ namespace SingerDispatch.Panels.Storage
 
         private void QuickAddCompany_Click(object sender, RoutedEventArgs e)
         {
-            var window = new CreateCompanyWindow(Database);
+            var window = new CreateCompanyWindow(Database) { Owner = Application.Current.MainWindow };
             var company = window.CreateCompany();
 
             if (company == null) return;

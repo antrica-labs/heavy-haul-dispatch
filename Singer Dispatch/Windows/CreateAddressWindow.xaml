@@ -1,0 +1,86 @@
+﻿<Window x:Class="SingerDispatch.Windows.CreateAddressWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:Controls="clr-namespace:SingerDispatch.Controls"
+        xmlns:Validators="clr-namespace:SingerDispatch.Controls.Validators"
+        Title="Create Address" SizeToContent="Height" Width="450" Loaded="Window_Loaded" KeyDown="Window_KeyDown">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/SingerDispatchDictionary.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <StackPanel Margin="5,5,5,5">
+        <Label Style="{StaticResource Heading}">Add  New Address</Label>
+       
+        <GroupBox Header="Address Details">
+            <StackPanel>
+                <Label>Company:</Label>                
+                <ComboBox Name="cmbCompanies" SelectedItem="{Binding Company}" />
+                
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+
+                    <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3">Address:</Label>
+                    <TextBox Name="txtAddress1" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Text="{Binding Path=Line1}" />
+                    <TextBox Name="txtAddress2" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Text="{Binding Path=Line2}" />
+
+                    <Label Grid.Row="3" Grid.Column="0">City:</Label>
+                    <TextBox Name="txtCity" Grid.Row="4" Grid.Column="0" Text="{Binding Path=City}"/>
+
+                    <Label Grid.Row="3" Grid.Column="1">Province/State:</Label>
+                    <ComboBox Name="cmbProvinceOrState" Grid.Row="4" Grid.Column="1" ItemTemplate="{StaticResource SimpleNameTemplate}" TextSearch.TextPath="Name" Controls:ComboUtil.AllowNull="True">
+                        <ComboBox.SelectedItem>
+                            <Binding Path="ProvincesAndState">
+                                <Binding.ValidationRules>
+                                    <Validators:SelectionExistsValidator />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </ComboBox.SelectedItem>
+                    </ComboBox>
+
+                    <Label Grid.Row="3" Grid.Column="2">Country:</Label>
+                    <TextBox Name="txtCountry" Grid.Row="4" Grid.Column="2" IsEnabled="False" Text="{Binding ElementName=cmbProvinceOrState, Path=SelectedItem.Country.Name}"/>
+
+                    <Label Grid.Row="5" Grid.Column="0">Postal/Zip Code:</Label>
+                    <TextBox Name="txtPostalZip" Grid.Row="6" Grid.Column="0" Text="{Binding Path=PostalZip}" />
+
+                    <Label Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2">Address Type:</Label>
+                    <ComboBox Name="cmbAddressType" Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectedItem="{Binding AddressType}" IsEditable="False" TextSearch.TextPath="Name" Controls:ComboUtil.AllowNull="True" />
+
+                    <Label Grid.Row="7" Grid.Column="0">Site Main Phone:</Label>
+                    <TextBox Name="txtSiteMainPhone" Grid.Row="8" Grid.Column="0" Text="{Binding Path=PrimaryPhone, Converter={StaticResource PhoneNumberConverter}}" />
+
+                    <Label Grid.Row="7" Grid.Column="1">Site Secondary:</Label>
+                    <TextBox Name="txtSiteSecondaryPhone" Grid.Row="8" Grid.Column="1" Text="{Binding Path=SecondaryPhone, Converter={StaticResource PhoneNumberConverter}}" />
+
+                    <Label Grid.Row="7" Grid.Column="2">Site Fax:</Label>
+                    <TextBox Name="txtSiteFax" Grid.Row="8" Grid.Column="2" Text="{Binding Path=Fax, Converter={StaticResource PhoneNumberConverter}}" />
+
+                    <Label Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="3">Address Notes:</Label>
+                    <TextBox Name="txtAddressNotes" Grid.Row="10" Grid.Column="0" Grid.ColumnSpan="3" Height="40" Style="{StaticResource MultiLine}" Text="{Binding Path=Notes}" />
+                </Grid>
+            </StackPanel>            
+        </GroupBox>
+
+        <Button Style="{StaticResource Standard}" Click="CreateAddress_Click">Create address</Button>
+    </StackPanel>
+</Window>

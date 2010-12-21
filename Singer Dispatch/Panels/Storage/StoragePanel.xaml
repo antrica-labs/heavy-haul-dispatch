@@ -55,7 +55,7 @@
                                         </Grid.ColumnDefinitions>
 
                                         <ComboBox Name="cmbCompanies" Grid.Column="0" TextSearch.TextPath="Name" ItemsSource="{Binding ElementName=ThePanel, Path=CompanyList}" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectedItem="{Binding Company}" SelectionChanged="Company_SelectionChanged" />
-                                        <Button Grid.Column="1" Margin="0,3" Padding="3,0" Click="QuickAddCompany_Click">Add</Button>
+                                        <Button Grid.Column="1" Style="{StaticResource Standard}" Click="QuickAddCompany_Click">Add</Button>
                                     </Grid>
                                     
 
@@ -67,7 +67,7 @@
                                         </Grid.ColumnDefinitions>
 
                                         <ComboBox Name="cmbCommodities" Grid.Column="0" SelectedItem="{Binding Commodity}" ItemTemplate="{StaticResource NameAndUnitTemplate}" TextSearch.TextPath="Name" />
-                                        <Button Grid.Column="1" Margin="0,3" Padding="3,0" Click="QuickAddCommodity_Click">Add</Button>
+                                        <Button Grid.Column="1" Style="{StaticResource Standard}" Click="QuickAddCommodity_Click">Add</Button>
                                     </Grid>
                                     
 

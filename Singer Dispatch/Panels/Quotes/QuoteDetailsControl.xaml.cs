@@ -78,16 +78,14 @@ namespace SingerDispatch.Panels.Quotes
         {
             if (SelectedQuote != null)
             {
-                var address = cmbAddresses.SelectedItem;
-                var contact = cmbContacts.SelectedItem;
+                var address = SelectedQuote.BillingAddress;
+                var contact = SelectedQuote.Contact;
 
-                var addressQuery = from a in Database.Addresses where a.Company == SelectedQuote.Company || a.Company == SelectedQuote.CareOfCompany orderby a.AddressType.Name select a;
+                cmbAddresses.ItemsSource = new ObservableCollection<Address>(from a in Database.Addresses where a.Company == SelectedQuote.Company || a.Company == SelectedQuote.CareOfCompany orderby a.AddressType.Name select a);
+                cmbContacts.ItemsSource = new ObservableCollection<Contact>(from c in Database.Contacts where c.Company == SelectedQuote.Company || c.Company == SelectedQuote.CareOfCompany orderby c.FirstName, c.LastName select c);
 
-                cmbAddresses.ItemsSource = addressQuery.ToList();
-                cmbContacts.ItemsSource = (from c in Database.Contacts where c.Company == SelectedQuote.Company || c.Company == SelectedQuote.CareOfCompany orderby c.FirstName, c.LastName select c).ToList();
-
-                cmbAddresses.SelectedItem = address;
-                cmbContacts.SelectedItem = contact;
+                SelectedQuote.BillingAddress = address;
+                SelectedQuote.Contact = contact;
             }
             else
             {
@@ -149,6 +147,63 @@ namespace SingerDispatch.Panels.Quotes
             {
                 SelectedQuote.Price += item.Cost;
             }
+        }
+
+        private void AddCompany_Click(object sender, RoutedEventArgs e)
+        {
+            if (SelectedQuote == null) return;
+
+            var window = new CreateCompanyWindow(Database) { Owner = Application.Current.MainWindow };
+            var company = window.CreateCompany();
+
+            if (company == null) return;
+
+            try
+            {
+                Database.Companies.InsertOnSubmit(company);
+                Database.SubmitChanges();
+                CompanyList.Add(company);
+
+                SelectedQuote.CareOfCompany = company;
+            }
+            catch (Exception ex)
+            {
+                ErrorNoticeWindow.ShowError("Error while adding company to database", ex.Message);
+            }
+        }
+
+        private void AddContact_Click(object sender, RoutedEventArgs e)
+        {
+            if (SelectedQuote == null) return;
+
+            var window = new CreateContactWindow(Database, SelectedCompany, SelectedQuote.CareOfCompany) { Owner = Application.Current.MainWindow };
+            var contact = window.CreateContact();
+
+            if (contact == null || contact.Company == null) return;
+
+            var list = (ObservableCollection<Contact>)cmbContacts.ItemsSource;
+
+            contact.Company.Contacts.Add(contact);
+            list.Add(contact);
+
+            SelectedQuote.Contact = contact;
+        }
+
+        private void AddAddress_Click(object sender, RoutedEventArgs e)
+        {
+            if (SelectedQuote == null) return;
+
+            var window = new CreateAddressWindow(Database, SelectedCompany, SelectedQuote.CareOfCompany) { Owner = Application.Current.MainWindow };
+            var address = window.CreateAddress();
+
+            if (address == null || address.Company == null) return;
+
+            var list = (ObservableCollection<Address>)cmbAddresses.ItemsSource;
+
+            address.Company.Addresses.Add(address);
+            list.Add(address);
+
+            SelectedQuote.BillingAddress = address;                
         }
     }
 }

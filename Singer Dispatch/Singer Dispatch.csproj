@@ -272,11 +272,17 @@
     <Compile Include="Utils\LafiPhoneFormatProvider.cs" />
     <Compile Include="Utils\MeasurementFormater.cs" />
     <Compile Include="WindowPlacement.cs" />
+    <Compile Include="Windows\CreateAddressWindow.xaml.cs">
+      <DependentUpon>CreateAddressWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\CreateCommodityWindow.xaml.cs">
       <DependentUpon>CreateCommodityWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\CreateCompanyWindow.xaml.cs">
       <DependentUpon>CreateCompanyWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\CreateContactWindow.xaml.cs">
+      <DependentUpon>CreateContactWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\DocumentViewerWindow.xaml.cs">
       <DependentUpon>DocumentViewerWindow.xaml</DependentUpon>
@@ -514,6 +520,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Windows\CreateAddressWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Windows\CreateCommodityWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -523,6 +533,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Windows\CreateContactWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\DocumentViewerWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
