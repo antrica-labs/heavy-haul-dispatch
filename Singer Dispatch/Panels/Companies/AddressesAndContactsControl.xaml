@@ -13,15 +13,6 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/SingerDispatchDictionary.xaml" />
             </ResourceDictionary.MergedDictionaries>
-
-            <Style TargetType="ListBox" x:Key="MultiSelect">
-                <Style.Resources>                    
-                    <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="White" />
-                    <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="White" />
-                </Style.Resources>
-                
-                <Setter Property="Margin" Value="3" />
-            </Style>
         </ResourceDictionary>
     </UserControl.Resources>    
     <DockPanel>

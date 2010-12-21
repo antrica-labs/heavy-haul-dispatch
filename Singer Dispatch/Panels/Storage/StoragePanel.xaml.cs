@@ -14,6 +14,7 @@ using System.Windows.Shapes;
 using SingerDispatch.Controls;
 using System.Windows.Controls.Primitives;
 using System.Collections.ObjectModel;
+using SingerDispatch.Windows;
 
 namespace SingerDispatch.Panels.Storage
 {
@@ -46,7 +47,7 @@ namespace SingerDispatch.Panels.Storage
             SaveCommand.Executed += CommitJobChanges_Executed;
 
             if (InDesignMode()) return;
-
+                        
             dgStorageItems.ItemsSource = new ObservableCollection<StorageItem>(from si in Database.StorageItems where si.IsVisible == true select si);
         }
         
@@ -114,9 +115,51 @@ namespace SingerDispatch.Panels.Storage
             button.IsEnabled = true;
         }
 
-        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void Company_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-         
+            var company = (Company)((ComboBox)sender).SelectedItem;
+
+            if (company != null)
+                cmbCommodities.ItemsSource = new ObservableCollection<Commodity>(company.Commodities);
+        }
+
+        private void QuickAddCommodity_Click(object sender, RoutedEventArgs e)
+        {
+            var company = (Company)cmbCompanies.SelectedItem;
+            var commodities = (ObservableCollection<Commodity>)cmbCommodities.ItemsSource;
+
+            if (company == null) return;
+
+            var window = new CreateCommodityWindow(Database); // { Owner = this };
+            var commodity = window.CreateCommodity();
+
+            if (commodity == null) return;
+
+            company.Commodities.Add(commodity);
+            commodities.Add(commodity);
+
+            cmbCommodities.SelectedItem = commodity;
+        }
+
+        private void QuickAddCompany_Click(object sender, RoutedEventArgs e)
+        {
+            var window = new CreateCompanyWindow(Database);
+            var company = window.CreateCompany();
+
+            if (company == null) return;
+
+            try
+            {
+                Database.Companies.InsertOnSubmit(company);
+                Database.SubmitChanges();
+                CompanyList.Add(company);
+
+                cmbCompanies.SelectedItem = company;
+            }
+            catch (Exception ex)
+            {
+                ErrorNoticeWindow.ShowError("Error while adding company to database", ex.Message);
+            }
         }
     }
 }

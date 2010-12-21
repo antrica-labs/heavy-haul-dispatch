@@ -44,15 +44,32 @@
                                         <RowDefinition />
                                         <RowDefinition />
                                         <RowDefinition />
-                                        <RowDefinition />                                        
+                                        <RowDefinition />
                                     </Grid.RowDefinitions>
 
-
                                     <Label Grid.Row="0" Grid.Column="0">Company:</Label>
-                                    <ComboBox Name="cmbCompanies" Grid.Row="0" Grid.Column="1" ItemsSource="{Binding ElementName=ThePanel, Path=CompanyList}" TextSearch.TextPath="Name" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectedItem="{Binding Company}" SelectionChanged="ComboBox_SelectionChanged" />
+                                    <Grid Grid.Row="0" Grid.Column="1">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <ComboBox Name="cmbCompanies" Grid.Column="0" TextSearch.TextPath="Name" ItemsSource="{Binding ElementName=ThePanel, Path=CompanyList}" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectedItem="{Binding Company}" SelectionChanged="Company_SelectionChanged" />
+                                        <Button Grid.Column="1" Margin="0,3" Padding="3,0" Click="QuickAddCompany_Click">Add</Button>
+                                    </Grid>
+                                    
 
                                     <Label Grid.Row="1" Grid.Column="0">Commodity:</Label>
-                                    <ComboBox Name="cmbCommodities" Grid.Row="1" Grid.Column="1" SelectedItem="{Binding Commodity}" ItemsSource="{Binding Company.Commodities}" ItemTemplate="{StaticResource NameAndUnitTemplate}" TextSearch.TextPath="Name" />
+                                    <Grid Grid.Row="1" Grid.Column="1">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition />
+                                            <ColumnDefinition Width="Auto" />                                            
+                                        </Grid.ColumnDefinitions>
+
+                                        <ComboBox Name="cmbCommodities" Grid.Column="0" SelectedItem="{Binding Commodity}" ItemTemplate="{StaticResource NameAndUnitTemplate}" TextSearch.TextPath="Name" />
+                                        <Button Grid.Column="1" Margin="0,3" Padding="3,0" Click="QuickAddCommodity_Click">Add</Button>
+                                    </Grid>
+                                    
 
                                     <Label Grid.Row="2" Grid.Column="0">Unit #:</Label>
                                     <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Commodity.Unit}" />

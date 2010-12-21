@@ -240,7 +240,16 @@
         <Setter Property="CanUserDeleteRows" Value="False" />      
         <Setter Property="ColumnWidth" Value="*" />        
     </Style>
-    
+
+    <Style TargetType="ListBox" x:Key="MultiSelect">
+        <Style.Resources>
+            <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="White" />
+            <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="White" />
+        </Style.Resources>
+
+        <Setter Property="Margin" Value="3" />
+    </Style>
+
     <Style TargetType="{x:Type DatePicker}">
         <Setter Property="Margin" Value="3" />
         <Setter Property="Padding" Value="0" />

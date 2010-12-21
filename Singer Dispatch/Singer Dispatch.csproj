@@ -272,6 +272,9 @@
     <Compile Include="Utils\LafiPhoneFormatProvider.cs" />
     <Compile Include="Utils\MeasurementFormater.cs" />
     <Compile Include="WindowPlacement.cs" />
+    <Compile Include="Windows\CreateCommodityWindow.xaml.cs">
+      <DependentUpon>CreateCommodityWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\CreateCompanyWindow.xaml.cs">
       <DependentUpon>CreateCompanyWindow.xaml</DependentUpon>
     </Compile>
@@ -510,6 +513,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Windows\CreateCommodityWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\CreateCompanyWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

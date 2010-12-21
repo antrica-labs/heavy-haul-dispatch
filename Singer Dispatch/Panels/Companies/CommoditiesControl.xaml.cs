@@ -34,14 +34,7 @@ namespace SingerDispatch.Panels.Companies
         {
             SaveCommand.Executed += CommitChanges_Executed;
         }
-
-        protected override void UseImperialMeasurementsChanged(bool value)
-        {
-            base.UseImperialMeasurementsChanged(value);                   
-
-            value = !!value;
-        }
-
+        
         protected override void SelectedCompanyChanged(Company newValue, Company oldValue)
         {
             base.SelectedCompanyChanged(newValue, oldValue);

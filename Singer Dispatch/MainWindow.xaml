@@ -89,7 +89,7 @@
                     <Label Grid.Column="2" Grid.Row="0">Available credit:</Label>
                     <Label Grid.Column="3" Grid.Row="0">Priority level:</Label>
 
-                    <AC:CompletableTextBox Name="acCompany" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" SelectedItem="{Binding ElementName=ThisWindow, Path=SelectedCompany}" />                                        
+                    <AC:CompletableTextBox Name="acCompany" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" />                                        
                     <TextBox Name="txtCompanyAvailableCredit" Grid.Column="2" Grid.Row="1" IsReadOnly="True" Text="{Binding ElementName=acCompany, Path=SelectedItem.AvailableCredit, StringFormat=c, Converter={StaticResource NullableValueConverter}}" />
                     <TextBox Name="txtCompanyPriorityLevel" Grid.Column="3" Grid.Row="1" IsReadOnly="True" Text="{Binding ElementName=acCompany, Path=SelectedItem.CompanyPriorityLevel.Name}" TextChanged="txtCompanyPriorityLevel_TextChanged" />
                 </Grid>

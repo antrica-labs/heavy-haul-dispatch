@@ -449,8 +449,25 @@ namespace SingerDispatch
 
         private void CreateCompany()
         {
-            var window = new CreateCompanyWindow(Database, Companies) { Owner = this };
+            var window = new CreateCompanyWindow(Database) { Owner = this };
             Company newCompany = window.CreateCompany();
+
+            if (newCompany == null) return;
+
+            try
+            {
+                Database.Companies.InsertOnSubmit(newCompany);
+
+                Database.SubmitChanges();                
+
+                Companies.Add(newCompany);
+                acCompany.SelectedItem = newCompany;
+            }
+            catch (Exception ex)
+            {
+                ErrorNoticeWindow.ShowError("Error while adding company to database", ex.Message);
+            }
+                
         }
 
         private void EditCompanies()

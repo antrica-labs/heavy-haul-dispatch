@@ -32,6 +32,12 @@ namespace SingerDispatch
         {
             return Name;
         }
+
+        public void Notify(string property)
+        {
+            SendPropertyChanging();
+            SendPropertyChanged(property);
+        }
     }
 
     partial class Address
