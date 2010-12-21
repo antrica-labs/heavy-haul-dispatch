@@ -598,19 +598,14 @@ namespace SingerDispatch
         {
             var cp = new Dispatch();
 
-            cp.MeetingTime = cp.MeetingTime;            
-            cp.Employee = Employee;
-            cp.Equipment = Equipment;
-            cp.Description = Description;
-            cp.Schedule = Schedule;
             cp.DepartingUnits = DepartingUnits;
+            cp.MeetingDate = MeetingDate;
+            cp.MeetingTime = MeetingTime;
             cp.DepartingLocation = DepartingLocation;
+            cp.Description = Description;
+            cp.Schedule = Schedule;            
             cp.Notes = Notes;
-            //cp.Rate = Rate;
-
-            foreach (var item in OutOfProvinceTravels)
-                cp.OutOfProvinceTravels.Add(item.Duplicate());
-
+            
             return cp;
         }
         

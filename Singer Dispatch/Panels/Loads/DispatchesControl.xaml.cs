@@ -98,17 +98,6 @@ namespace SingerDispatch.Panels.Loads
                 dispatch.EquipmentType = SelectedLoad.Equipment.EquipmentType;
                 dispatch.Equipment = SelectedLoad.Equipment;
                 dispatch.Employee = dispatch.Equipment.DefaultDriver;
-
-                // Go through the loaded commodities and add any out of province that can be found
-                foreach (var commodity in SelectedLoad.LoadedCommodities.Where(l => (l.LoadingProvince != null && l.LoadingProvince.Abbreviation != "AB") || (l.UnloadingProvince != null && l.UnloadingProvince.Abbreviation != "AB")))
-                {
-                    var place = (commodity.LoadingProvince.Abbreviation != "AB") ? commodity.LoadingProvince : commodity.UnloadingProvince;
-
-                    var travels = from t in dispatch.OutOfProvinceTravels select t.ProvinceOrState;
-
-                    if (!travels.Contains(place))
-                        dispatch.OutOfProvinceTravels.Add(new OutOfProvinceTravel { ProvinceOrState = place, Distance = 0 });
-                } 
             }
 
             SelectedLoad.Dispatches.Add(dispatch);
@@ -128,7 +117,7 @@ namespace SingerDispatch.Panels.Loads
             }            
         }
 
-        private void DuplicateDispatch_Click(object sender, RoutedEventArgs e)
+        private void CopyDispatch_Click(object sender, RoutedEventArgs e)
         {
             var list = (ObservableCollection<Dispatch>)dgDispatches.ItemsSource;
             var dispatch = (Dispatch)dgDispatches.SelectedItem;
@@ -137,6 +126,7 @@ namespace SingerDispatch.Panels.Loads
                 return;
 
             dispatch = dispatch.Duplicate();
+            dispatch.DispatchedBy = SingerConfigs.OperatingEmployee;
 
             SelectedLoad.Dispatches.Add(dispatch);
             list.Add(dispatch);
@@ -268,12 +258,7 @@ namespace SingerDispatch.Panels.Loads
             dgOutOfProvince.ItemsSource = (dispatch == null) ? null : new ObservableCollection<OutOfProvinceTravel>(dispatch.OutOfProvinceTravels);
             dgSwampers.ItemsSource = (dispatch == null) ? null : new ObservableCollection<Swamper>(dispatch.Swampers);
         }
-
-        private void cmbUnits_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
-        {
-            
-        }
-
+        
         private void AssignDriver_Click(object sender, RoutedEventArgs e)
         {
             var dispatch = (Dispatch)dgDispatches.SelectedItem;
@@ -281,6 +266,35 @@ namespace SingerDispatch.Panels.Loads
             if (dispatch == null || dispatch.Equipment == null) return;
 
             dispatch.Employee = dispatch.Equipment.DefaultDriver;
+        }
+
+        private void AutoFillOPT_Click(object sender, RoutedEventArgs e)
+        {
+            var dispatch = (Dispatch)dgDispatches.SelectedItem;
+
+            if (dispatch == null || dispatch.Equipment == null || dispatch.Equipment.EquipmentClass.Name != "Tractor") return;
+
+            // If this is a tractor, try and fill out the out of province distance.
+            // Go through the loaded commodities and add any out of province that can be found
+            var commodities = SelectedLoad.LoadedCommodities.Where(l => (l.LoadingProvince != null && l.LoadingProvince.Abbreviation != "AB") || (l.UnloadingProvince != null && l.UnloadingProvince.Abbreviation != "AB"));
+            foreach (var commodity in commodities)
+            {
+                var travels = from t in dispatch.OutOfProvinceTravels select t.ProvinceOrState;
+
+                if (commodity.LoadingProvince != null && commodity.LoadingProvince.Abbreviation != "AB" && !travels.Contains(commodity.LoadingProvince))
+                {
+                    var opt = new OutOfProvinceTravel { ProvinceOrState = commodity.LoadingProvince, Distance = 0 };
+                    ((ObservableCollection<OutOfProvinceTravel>)dgOutOfProvince.ItemsSource).Add(opt);
+                    dispatch.OutOfProvinceTravels.Add(opt);
+                }
+
+                if (commodity.UnloadingProvince != null && commodity.UnloadingProvince.Abbreviation != "AB" && !travels.Contains(commodity.UnloadingProvince))
+                {
+                    var opt = new OutOfProvinceTravel { ProvinceOrState = commodity.UnloadingProvince, Distance = 0 };
+                    ((ObservableCollection<OutOfProvinceTravel>)dgOutOfProvince.ItemsSource).Add(opt);
+                    dispatch.OutOfProvinceTravels.Add(opt);
+                }
+            }
         }
     }
 

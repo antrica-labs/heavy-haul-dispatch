@@ -33,7 +33,7 @@
                 </Grid.ColumnDefinitions>
 
                 <Button Style="{StaticResource Horizontal}" Grid.Column="0" Click="NewDispatch_Click">New dispatch</Button>
-                <Button Style="{StaticResource Horizontal}" Grid.Column="1" Click="DuplicateDispatch_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgDispatches, Path=SelectedItem}">Duplicate dispatch</Button>
+                <Button Style="{StaticResource Horizontal}" Grid.Column="1" Click="CopyDispatch_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgDispatches, Path=SelectedItem}">Copy dispatch</Button>
                 <Button Style="{StaticResource Horizontal}" Grid.Column="2" Click="ViewDispatch_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgDispatches, Path=SelectedItem}">View dispatch</Button>
                 <Button Style="{StaticResource HorizontalEnd}" Grid.Column="3" Click="RemoveDispatch_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgDispatches, Path=SelectedItem}">Remove dispatch</Button>
             </Grid>
@@ -88,7 +88,7 @@
                             <RowDefinition />
                         </Grid.RowDefinitions>
 
-                        <ComboBox Name="cmbUnits" Grid.Column="0" ItemTemplate="{StaticResource EquipmentNameTemplate}" TextSearch.TextPath="UnitNumber" Controls:ComboUtil.AllowNull="True" ItemsSource="{Binding EquipmentType.Equipment}" SelectionChanged="cmbUnits_SelectionChanged">
+                        <ComboBox Name="cmbUnits" Grid.Column="0" ItemTemplate="{StaticResource EquipmentNameTemplate}" TextSearch.TextPath="UnitNumber" Controls:ComboUtil.AllowNull="True" ItemsSource="{Binding EquipmentType.Equipment}">
                             <ComboBox.SelectedItem>
                                 <Binding Path="Equipment">
                                     <Binding.ValidationRules>
@@ -178,16 +178,18 @@
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition />
                                     <ColumnDefinition />
+                                    <ColumnDefinition />
                                 </Grid.ColumnDefinitions>
 
                                 <Button Style="{StaticResource Horizontal}" Grid.Column="0" Click="AddTravel_Click">Add</Button>
-                                <Button Style="{StaticResource HorizontalEnd}" Grid.Column="1" Click="RemoveTravel_Click">Remove</Button>
+                                <Button Style="{StaticResource Horizontal}" Grid.Column="1" Click="AutoFillOPT_Click">Guess</Button>
+                                <Button Style="{StaticResource HorizontalEnd}" Grid.Column="2" Click="RemoveTravel_Click">Remove</Button>
                             </Grid>
-
+                            
                             <DataGrid Name="dgOutOfProvince" Style="{StaticResource ListDisplay}" IsReadOnly="False">
                                 <DataGrid.Columns>
                                     <DataGridComboBoxColumn Header="Province" CanUserSort="False" ItemsSource="{Binding Source={StaticResource ProvStateDropList}}" DisplayMemberPath="Name" SelectedItemBinding="{Binding ProvinceOrState}" />
-                                    <DataGridTextColumn Header="Distance" Binding="{Binding Distance, StringFormat={}{0:F0} km, Converter={StaticResource NullableValueConverter}}" />
+                                    <DataGridTextColumn Header="Distance" Binding="{Binding Distance, StringFormat={}{0:F0}km, Converter={StaticResource NullableValueConverter}}" />
                                 </DataGrid.Columns>
                             </DataGrid>
                         </DockPanel>
