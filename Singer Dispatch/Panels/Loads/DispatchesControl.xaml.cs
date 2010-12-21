@@ -46,7 +46,7 @@ namespace SingerDispatch.Panels.Loads
         {
             if (InDesignMode()) return;
 
-            if (dgSwampers.ActualHeight > 0.0)
+            if (dgSwampers.ActualHeight > 0.0) 
                 dgSwampers.MaxHeight = dgSwampers.ActualHeight;
             
             if (dgOutOfProvince.ActualHeight > 0.0)

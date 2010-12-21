@@ -57,15 +57,14 @@ namespace SingerDispatch.Panels.Quotes
 
         private void Control_Loaded(object sender, RoutedEventArgs e)
         {
-            if (SelectedQuote != null)
-            {
-                var selected = cmbCommodityName.SelectedItem;
-                cmbCommodityName.ItemsSource = from c in Database.Commodities where c.Company == SelectedCompany || c.Company == SelectedQuote.CareOfCompany orderby c.Name, c.Unit select c;
-                cmbCommodityName.SelectedItem = selected;
-            }
-            else
-                cmbCommodityName.ItemsSource = null;
+            if (InDesignMode()) return;
 
+            if (dgRecordedCommodities.ActualHeight > 0.0)
+            {
+                dgRecordedCommodities.MaxHeight = dgRecordedCommodities.ActualHeight;
+                dgRecordedCommodities.ItemsSource = (SelectedQuote == null) ? null : from c in Database.Commodities where c.Company == SelectedCompany || c.Company == SelectedQuote.CareOfCompany orderby c.Name, c.Unit select c;
+            }
+            
             UpdateAddressesAndSites();
         }
 
@@ -101,47 +100,12 @@ namespace SingerDispatch.Panels.Quotes
             }
         }
 
-        private void CommodityName_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void dgRecordedCommodities_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            var original = (Commodity)cmbCommodityName.SelectedItem;
-            var commodity = (QuoteCommodity)dgQuoteCommodities.SelectedItem;
+            var qc = (QuoteCommodity)dgQuoteCommodities.SelectedItem;
 
-            if (commodity == null || commodity.OriginalCommodity == original) return;
-
-            if (original != null)
-            {
-                commodity.OriginalCommodity = original;
-                commodity.Name = original.Name;
-                commodity.Value = original.Value;
-                commodity.Serial = original.Serial;
-                commodity.Unit = original.Unit;
-                commodity.Length = original.Length;
-                commodity.Width = original.Width;
-                commodity.Height = original.Height;
-                commodity.Weight = original.Weight;
-                commodity.DimensionsEstimated = original.DimensionsEstimated;
-                commodity.Notes = original.Notes;                
-                commodity.DepartureAddress = original.LastAddress;
-                commodity.DepartureSiteName = original.LastLocation;
-            }
-            else
-            {
-                commodity.OriginalCommodity = null;
-                commodity.Name = null;
-                commodity.Value = null;
-                commodity.Serial = null;
-                commodity.Unit = null;
-                commodity.Length = null;
-                commodity.Width = null;
-                commodity.Height = null;
-                commodity.Weight = null;
-                commodity.DimensionsEstimated = null;
-                commodity.Notes = null;
-                commodity.DepartureAddress = null;
-                commodity.DepartureSiteName = null;
-                commodity.ArrivalAddress = null;
-                commodity.ArrivalSiteName = null;
-            }
+            if (qc != null)
+                qc.OriginalCommodity = null;                
         }
 
         private void NewCommodity_Click(object sender, RoutedEventArgs e)
@@ -158,7 +122,7 @@ namespace SingerDispatch.Panels.Quotes
 
             ReindexCollection(list);
 
-            cmbCommodityName.Focus();
+            txtCommodityName.Focus();
         }
 
         private void DuplicateCommodity_Click(object sender, RoutedEventArgs e)
@@ -353,6 +317,8 @@ namespace SingerDispatch.Panels.Quotes
         }
 
         #endregion
+
+        
 
     }
 }

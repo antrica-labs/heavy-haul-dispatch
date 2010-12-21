@@ -50,7 +50,7 @@
                     </Grid.RowDefinitions>
 
                     <Label Grid.Row="0" Grid.Column="0">Commodity name:</Label>
-                    <ComboBox Name="cmbCommodityName" Text="{Binding Name}" Grid.Row="0" Grid.Column="1" ItemTemplate="{StaticResource NameAndUnitTemplate}" TextSearch.TextPath="Name" SelectionChanged="CommodityName_SelectionChanged" Controls:ComboUtil.AllowNull="True" />
+                    <TextBox Name="txtCommodityName" Text="{Binding Name}" Grid.Row="0" Grid.Column="1" />
 
                     <Label Grid.Row="1" Grid.Column="0">Unit number:</Label>
                     <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Unit}" />
@@ -65,69 +65,74 @@
                     <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Serial}" />
                                        
                     <Label Grid.Row="5" Grid.Column="0">Notes:</Label>
-                    <TextBox Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" Style="{StaticResource MultiLine}" Text="{Binding Notes}" />
+                    <TextBox Grid.Row="5" Grid.Column="1" Style="{StaticResource MultiLine}" Text="{Binding Notes}" />
 
-                    <GroupBox Header="Dimensions" Grid.Row="0" Grid.Column="2" Grid.RowSpan="5" Margin="5,0,0,0">
-                        <StackPanel>
-                            <Grid>
-                                <Grid.ColumnDefinitions>                                    
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition />
-                                </Grid.ColumnDefinitions>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition />
-                                    <RowDefinition />
-                                    <RowDefinition />
-                                    <RowDefinition />
-                                    <RowDefinition />
-                                    <RowDefinition />
-                                </Grid.RowDefinitions>
-
-                                <Label Grid.Column="0" Grid.Row="0">Length:</Label>
-                                <TextBox Grid.Column="1">
-                                    <TextBox.Text>
-                                        <MultiBinding Converter="{StaticResource LengthMeasurementConverter}">
-                                            <Binding Path="Length" />
-                                            <Binding ElementName="ThePanel" Path="UseImperialMeasurements" />
-                                        </MultiBinding>
-                                    </TextBox.Text>
-                                </TextBox>
-
-                                <Label Grid.Column="0" Grid.Row="1">Width:</Label>
-                                <TextBox Grid.Column="1" Grid.Row="1" VerticalAlignment="Bottom">
-                                    <TextBox.Text>
-                                        <MultiBinding Converter="{StaticResource LengthMeasurementConverter}">
-                                            <Binding Path="Width" />
-                                            <Binding ElementName="ThePanel" Path="UseImperialMeasurements" />
-                                        </MultiBinding>
-                                    </TextBox.Text>
-                                </TextBox>
-
-                                <Label Grid.Row="2" Grid.Column="0">Height:</Label>
-                                <TextBox Grid.Row="2" Grid.Column="1">
-                                    <TextBox.Text>
-                                        <MultiBinding Converter="{StaticResource LengthMeasurementConverter}">
-                                            <Binding Path="Height" />
-                                            <Binding ElementName="ThePanel" Path="UseImperialMeasurements" />
-                                        </MultiBinding>
-                                    </TextBox.Text>
-                                </TextBox>
-
-                                <Label Grid.Row="3" Grid.Column="0">Weight:</Label>
-                                <TextBox Grid.Row="3" Grid.Column="1">
-                                    <TextBox.Text>
-                                        <MultiBinding Converter="{StaticResource WeightMeasurementConverter}">
-                                            <Binding Path="Weight" />
-                                            <Binding ElementName="ThePanel" Path="UseImperialMeasurements" />
-                                        </MultiBinding>
-                                    </TextBox.Text>
-                                </TextBox>
-
-                                <Label Grid.Row="4" Grid.Column="0">Estimated:</Label>
-                                <CheckBox Grid.Row="4" Grid.Column="1" IsChecked="{Binding DimensionsEstimated}"/>
-                            </Grid>
-                        </StackPanel>
+                    <GroupBox Header="Recorded Commodity" Grid.Row="0" Grid.Column="2" Grid.RowSpan="6" Margin="5,0,0,0">
+                        <DataGrid Style="{StaticResource ListDisplay}" Name="dgRecordedCommodities" SelectedItem="{Binding OriginalCommodity}" DataGridRow.MouseDoubleClick="dgRecordedCommodities_MouseDoubleClick">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Name" Binding="{Binding Name}" />
+                                <DataGridTextColumn Header="Unit" Binding="{Binding Unit}" Width="0.5*" />
+                            </DataGrid.Columns>
+                        </DataGrid>
                     </GroupBox>
+                </Grid>
+            </GroupBox>
+
+            <GroupBox Header="Dimensions &amp; Weight" DataContext="{Binding ElementName=dgQuoteCommodities, Path=SelectedItem}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgQuoteCommodities, Path=SelectedItem}">                
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <Label Grid.Column="0">Length:</Label>
+                    <TextBox Grid.Column="1">
+                        <TextBox.Text>
+                            <MultiBinding Converter="{StaticResource LengthMeasurementConverter}">
+                                <Binding Path="Length" />
+                                <Binding ElementName="ThePanel" Path="UseImperialMeasurements" />
+                            </MultiBinding>
+                        </TextBox.Text>
+                    </TextBox>
+
+                    <Label Grid.Column="2">Width:</Label>
+                    <TextBox Grid.Column="3">
+                        <TextBox.Text>
+                            <MultiBinding Converter="{StaticResource LengthMeasurementConverter}">
+                                <Binding Path="Width" />
+                                <Binding ElementName="ThePanel" Path="UseImperialMeasurements" />
+                            </MultiBinding>
+                        </TextBox.Text>
+                    </TextBox>
+
+                    <Label Grid.Column="4">Height:</Label>
+                    <TextBox Grid.Column="5">
+                        <TextBox.Text>
+                            <MultiBinding Converter="{StaticResource LengthMeasurementConverter}">
+                                <Binding Path="Height" />
+                                <Binding ElementName="ThePanel" Path="UseImperialMeasurements" />
+                            </MultiBinding>
+                        </TextBox.Text>
+                    </TextBox>
+
+                    <Label Grid.Column="6">Weight:</Label>
+                    <TextBox Grid.Column="7">
+                        <TextBox.Text>
+                            <MultiBinding Converter="{StaticResource WeightMeasurementConverter}">
+                                <Binding Path="Weight" />
+                                <Binding ElementName="ThePanel" Path="UseImperialMeasurements" />
+                            </MultiBinding>
+                        </TextBox.Text>
+                    </TextBox>
+
+                    <CheckBox Grid.Column="8" IsChecked="{Binding DimensionsEstimated}">Estimated</CheckBox>
                 </Grid>
             </GroupBox>
 
@@ -137,7 +142,7 @@
                     <ColumnDefinition Width="3" />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
-
+                
                 <GroupBox Header="Origin" Grid.Column="0" DataContext="{Binding ElementName=dgQuoteCommodities, Path=SelectedItem}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgQuoteCommodities, Path=SelectedItem}">
                     <Grid>
                         <Grid.ColumnDefinitions>

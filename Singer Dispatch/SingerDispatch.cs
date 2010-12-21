@@ -176,10 +176,67 @@ namespace SingerDispatch
 
     partial class QuoteCommodity
     {
+        private Boolean _InBulkChange;
+
         partial void OnCreated()
         {
+            _InBulkChange = false;
             OrderIndex = 1;
-            DimensionsEstimated = DimensionsEstimated ?? true;            
+            DimensionsEstimated = DimensionsEstimated ?? true;
+
+            PropertyChanged += new System.ComponentModel.PropertyChangedEventHandler(SomePropertyChanged);
+        }
+
+        private void SomePropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (OriginalCommodity == null) return;
+
+            switch (e.PropertyName)
+            {
+                case "OriginalCommodity":
+                    _InBulkChange = true;
+                    OriginalCommodityChanged();
+                    _InBulkChange = false;
+                    break;
+                default:
+                    BasicPropertyChanged();
+                    break;
+            }
+        }
+
+        private void OriginalCommodityChanged()
+        {
+            if (OriginalCommodity == null) return;
+
+            Name = OriginalCommodity.Name;
+            Value = OriginalCommodity.Value;
+            Serial = OriginalCommodity.Serial;
+            Unit = OriginalCommodity.Unit;
+            Length = OriginalCommodity.Length;
+            Width = OriginalCommodity.Width;
+            Height = OriginalCommodity.Height;
+            Weight = OriginalCommodity.Weight;
+            DimensionsEstimated = OriginalCommodity.DimensionsEstimated;
+            Notes = OriginalCommodity.Notes;
+            DepartureAddress = OriginalCommodity.LastAddress;
+            DepartureSiteName = OriginalCommodity.LastLocation;
+        }
+
+        private void BasicPropertyChanged()
+        {
+            if (_InBulkChange || OriginalCommodity == null) return;
+
+            OriginalCommodity.Name = Name;
+            OriginalCommodity.Value = Value;
+            OriginalCommodity.Serial = Serial;
+            OriginalCommodity.Unit = Unit;
+            OriginalCommodity.Length = Length;
+            OriginalCommodity.Width = Width;
+            OriginalCommodity.Height = Height;
+            OriginalCommodity.Weight = Weight;
+            OriginalCommodity.DimensionsEstimated = DimensionsEstimated;
+            OriginalCommodity.LastLocation = DepartureSiteName;
+            OriginalCommodity.LastAddress = DepartureAddress;
         }
 
         public QuoteCommodity Duplicate()
@@ -346,9 +403,65 @@ namespace SingerDispatch
 
     partial class JobCommodity
     {
+        private Boolean _InBulkChange;
+
         partial void OnCreated()
         {
+            _InBulkChange = false;
             DimensionsEstimated = DimensionsEstimated ?? true;
+            PropertyChanged += new System.ComponentModel.PropertyChangedEventHandler(SomePropertyChanged);
+        }
+
+        private void SomePropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (OriginalCommodity == null) return;
+
+            switch (e.PropertyName)
+            {
+                case "OriginalCommodity":
+                    _InBulkChange = true;
+                    OriginalCommodityChanged();
+                    _InBulkChange = false;
+                    break;
+                default:
+                    BasicPropertyChanged();
+                    break;
+            }
+        }
+
+        private void OriginalCommodityChanged()
+        {
+            if (OriginalCommodity == null) return;
+
+            Name = OriginalCommodity.Name;
+            Value = OriginalCommodity.Value;
+            Serial = OriginalCommodity.Serial;
+            Unit = OriginalCommodity.Unit;
+            Length = OriginalCommodity.Length;
+            Width = OriginalCommodity.Width;
+            Height = OriginalCommodity.Height;
+            Weight = OriginalCommodity.Weight;
+            DimensionsEstimated = OriginalCommodity.DimensionsEstimated;
+            Notes = OriginalCommodity.Notes;
+            DepartureAddress = OriginalCommodity.LastAddress;
+            DepartureSiteName = OriginalCommodity.LastLocation;
+        }
+
+        private void BasicPropertyChanged()
+        {
+            if (_InBulkChange || OriginalCommodity == null) return;
+
+            OriginalCommodity.Name = Name;
+            OriginalCommodity.Value = Value;
+            OriginalCommodity.Serial = Serial;
+            OriginalCommodity.Unit = Unit;
+            OriginalCommodity.Length = Length;
+            OriginalCommodity.Width = Width;
+            OriginalCommodity.Height = Height;
+            OriginalCommodity.Weight = Weight;
+            OriginalCommodity.DimensionsEstimated = DimensionsEstimated;
+            OriginalCommodity.LastAddress = DepartureAddress;
+            OriginalCommodity.LastLocation = DepartureSiteName;
         }
 
         public string NameAndUnit

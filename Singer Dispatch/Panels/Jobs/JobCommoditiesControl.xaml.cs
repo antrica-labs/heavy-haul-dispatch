@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using System.Collections.Generic;
 using SingerDispatch.Windows;
 using SingerDispatch.Printing.Documents;
+using System.Windows.Input;
 
 namespace SingerDispatch.Panels.Jobs
 {
@@ -57,8 +58,13 @@ namespace SingerDispatch.Panels.Jobs
         private void ControlLoaded(object sender, RoutedEventArgs e)
         {
             if (InDesignMode()) return;
-            
-            cmbCommodityName.ItemsSource = (SelectedJob == null) ? null : from c in Database.Commodities where c.Company == SelectedJob.Company || c.Company == SelectedJob.CareOfCompany orderby c.Name, c.Unit select c;
+
+            if (dgRecordedCommodities.ActualHeight > 0.0)
+            {
+                dgRecordedCommodities.MaxHeight = dgRecordedCommodities.ActualHeight;
+                dgRecordedCommodities.ItemsSource = (SelectedJob == null) ? null : from c in Database.Commodities where c.Company == SelectedJob.Company || c.Company == SelectedJob.CareOfCompany orderby c.Name, c.Unit select c;
+            }
+
             UpdateAddressesAndSites();
         }
 
@@ -101,7 +107,7 @@ namespace SingerDispatch.Panels.Jobs
             dgCommodities.SelectedItem = commodity;
             dgCommodities.ScrollIntoView(commodity);
 
-            cmbCommodityName.Focus();
+            txtCommodityName.Focus();
         }
 
         private void DuplicateCommodity_Click(object sender, RoutedEventArgs e)
@@ -134,49 +140,15 @@ namespace SingerDispatch.Panels.Jobs
             ((ObservableCollection<JobCommodity>)dgCommodities.ItemsSource).Remove(commodity);
         }
 
-        private void CommodityName_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void dgRecordedCommodities_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            var original = (Commodity)cmbCommodityName.SelectedItem;
-            var commodity = (JobCommodity)dgCommodities.SelectedItem;
+            var jc = (JobCommodity)dgCommodities.SelectedItem;
 
-            if (commodity == null || commodity.OriginalCommodity == original) return;            
-
-            if (original != null)
-            {
-                commodity.OriginalCommodityID = original.ID;
-                commodity.Name = original.Name;
-                commodity.Value = original.Value;
-                commodity.Serial = original.Serial;
-                commodity.Unit = original.Unit;
-                commodity.Length = original.Length;
-                commodity.Width = original.Width;
-                commodity.Height = original.Height;
-                commodity.Weight = original.Weight;
-                commodity.DimensionsEstimated = original.DimensionsEstimated;
-                commodity.Notes = original.Notes;
-                commodity.DepartureSiteName = original.LastLocation;
-                commodity.DepartureAddress = original.LastAddress;
-            }
-            else
-            {
-                commodity.OriginalCommodityID = null;
-                commodity.Name = null;
-                commodity.Value = null;
-                commodity.Serial = null;
-                commodity.Unit = null;
-                commodity.Length = null;
-                commodity.Width = null;
-                commodity.Height = null;
-                commodity.Weight = null;
-                commodity.DimensionsEstimated = null;
-                commodity.Notes = null;
-                commodity.DepartureSiteName = null;
-                commodity.DepartureAddress = null;
-                commodity.ArrivalSiteName = null;
-                commodity.ArrivalAddress = null;
-            }
+            if (jc != null)
+                jc.OriginalCommodity = null;
         }
 
+        
         private void dgCommodities_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             UpdateAddressesAndSites();
