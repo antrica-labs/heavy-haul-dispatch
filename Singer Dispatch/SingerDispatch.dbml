@@ -811,6 +811,7 @@
       <Column Name="YardLocation" Type="System.String" CanBeNull="true" />
       <Column Name="BillingRate" Type="System.Decimal" CanBeNull="true" />
       <Column Name="ReferenceCode" Type="System.String" CanBeNull="true" />
+      <Column Name="ContractSigned" Type="System.Boolean" CanBeNull="true" />
       <Column Name="Notes" Type="System.String" CanBeNull="true" />
       <Association Name="Company_StorageItem" Member="Company" ThisKey="CompanyID" OtherKey="ID" Type="Company" IsForeignKey="true" />
       <Association Name="Commodity_StorageItem" Member="Commodity" ThisKey="CommodityID" OtherKey="ID" Type="Commodity" IsForeignKey="true" />

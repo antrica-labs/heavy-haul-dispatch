@@ -18522,6 +18522,8 @@ namespace SingerDispatch
 		
 		private string _ReferenceCode;
 		
+		private System.Nullable<bool> _ContractSigned;
+		
 		private string _Notes;
 		
 		private EntityRef<Company> _Company;
@@ -18554,6 +18556,8 @@ namespace SingerDispatch
     partial void OnBillingRateChanged();
     partial void OnReferenceCodeChanging(string value);
     partial void OnReferenceCodeChanged();
+    partial void OnContractSignedChanging(System.Nullable<bool> value);
+    partial void OnContractSignedChanged();
     partial void OnNotesChanging(string value);
     partial void OnNotesChanged();
     #endregion
@@ -18774,6 +18778,26 @@ namespace SingerDispatch
 					this._ReferenceCode = value;
 					this.SendPropertyChanged("ReferenceCode");
 					this.OnReferenceCodeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ContractSigned")]
+		public System.Nullable<bool> ContractSigned
+		{
+			get
+			{
+				return this._ContractSigned;
+			}
+			set
+			{
+				if ((this._ContractSigned != value))
+				{
+					this.OnContractSignedChanging(value);
+					this.SendPropertyChanging();
+					this._ContractSigned = value;
+					this.SendPropertyChanged("ContractSigned");
+					this.OnContractSignedChanged();
 				}
 			}
 		}

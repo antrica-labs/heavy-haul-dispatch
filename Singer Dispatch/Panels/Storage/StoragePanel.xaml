@@ -32,68 +32,76 @@
                         </Grid>
            
                         <GroupBox Header="Storge Item" DataContext="{Binding ElementName=dgStorageItems, Path=SelectedItem}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgStorageItems, Path=SelectedItem}">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition />
-                                    <ColumnDefinition Width="0.8*" />
-                                </Grid.ColumnDefinitions>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition />
-                                    <RowDefinition />
-                                    <RowDefinition />
-                                    <RowDefinition />
-                                    <RowDefinition />
-                                    <RowDefinition />
-                                    <RowDefinition />
-                                </Grid.RowDefinitions>
+                            <StackPanel>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition />
+                                        <ColumnDefinition Width="0.8*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />                                        
+                                    </Grid.RowDefinitions>
 
-                                
-                                <Label Grid.Row="0" Grid.Column="0">Company:</Label>
-                                <ComboBox Name="cmbCompanies" Grid.Row="0" Grid.Column="1" ItemsSource="{Binding ElementName=ThePanel, Path=CompanyList}" TextSearch.TextPath="Name" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectedItem="{Binding Company}" SelectionChanged="ComboBox_SelectionChanged" />
-                                
-                                <Label Grid.Row="1" Grid.Column="0">Commodity:</Label>
-                                <ComboBox Name="cmbCommodities" Grid.Row="1" Grid.Column="1" SelectedItem="{Binding Commodity}" ItemsSource="{Binding Company.Commodities}" ItemTemplate="{StaticResource NameAndUnitTemplate}" TextSearch.TextPath="Name" />
 
-                                <Label Grid.Row="2" Grid.Column="0">Unit #:</Label>
-                                <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Commodity.Unit}" />
+                                    <Label Grid.Row="0" Grid.Column="0">Company:</Label>
+                                    <ComboBox Name="cmbCompanies" Grid.Row="0" Grid.Column="1" ItemsSource="{Binding ElementName=ThePanel, Path=CompanyList}" TextSearch.TextPath="Name" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectedItem="{Binding Company}" SelectionChanged="ComboBox_SelectionChanged" />
 
-                                <Label Grid.Row="3" Grid.Column="0">Location:</Label>
-                                <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding YardLocation}" />
+                                    <Label Grid.Row="1" Grid.Column="0">Commodity:</Label>
+                                    <ComboBox Name="cmbCommodities" Grid.Row="1" Grid.Column="1" SelectedItem="{Binding Commodity}" ItemsSource="{Binding Company.Commodities}" ItemTemplate="{StaticResource NameAndUnitTemplate}" TextSearch.TextPath="Name" />
 
-                                <GroupBox Grid.Row="0" Grid.Column="2" Grid.RowSpan="4" Header="Billing">
-                                    <Grid>
+                                    <Label Grid.Row="2" Grid.Column="0">Unit #:</Label>
+                                    <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Commodity.Unit}" />
+
+                                    <Label Grid.Row="3" Grid.Column="0">Location:</Label>
+                                    <Grid Grid.Row="3" Grid.Column="1">
                                         <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="Auto" />
                                             <ColumnDefinition />
+                                            <ColumnDefinition Width="Auto" />
                                         </Grid.ColumnDefinitions>
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition />
-                                            <RowDefinition />
-                                            <RowDefinition />
-                                        </Grid.RowDefinitions>
 
-                                        <Label Grid.Column="0" Grid.Row="0">Billing rate:</Label>
-                                        <Grid Grid.Column="1" Grid.Row="0">
+                                        <TextBox Grid.Column="0" Text="{Binding YardLocation}" />
+                                        <CheckBox Grid.Column="1" IsChecked="{Binding ContractSigned}">Contract signed</CheckBox>
+                                    </Grid>                                    
+
+                                    <GroupBox Grid.Row="0" Grid.Column="2" Grid.RowSpan="4" Header="Billing" Margin="3,0,0,0">
+                                        <Grid>
                                             <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto" />
                                                 <ColumnDefinition />
-                                                <ColumnDefinition Width="1.2*"/>
                                             </Grid.ColumnDefinitions>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition />
+                                                <RowDefinition />
+                                                <RowDefinition />
+                                            </Grid.RowDefinitions>
 
-                                            <TextBox Grid.Column="0" Text="{Binding BillingRate, StringFormat=C}" Controls:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" />
-                                            <ComboBox Grid.Column="1" Name="cmbBillingIntervals" SelectedItem="{Binding BillingInterval}" ItemTemplate="{StaticResource SimpleNameTemplate}" IsEditable="False" />
+                                            <Label Grid.Column="0" Grid.Row="0">Billing rate:</Label>
+                                            <Grid Grid.Column="1" Grid.Row="0">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition />
+                                                    <ColumnDefinition Width="1.2*"/>
+                                                </Grid.ColumnDefinitions>
 
+                                                <TextBox Grid.Column="0" Text="{Binding BillingRate, StringFormat=C}" Controls:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" />
+                                                <ComboBox Grid.Column="1" Name="cmbBillingIntervals" SelectedItem="{Binding BillingInterval}" ItemTemplate="{StaticResource SimpleNameTemplate}" IsEditable="False" />
+
+                                            </Grid>
+
+                                            <Label Grid.Column="0" Grid.Row="1">Date in:</Label>
+                                            <DatePicker Grid.Column="1" Grid.Row="1" SelectedDate="{Binding DateEntered}" />
+
+                                            <Label Grid.Column="0" Grid.Row="2">Date out:</Label>
+                                            <DatePicker Grid.Column="1" Grid.Row="2" SelectedDate="{Binding DateRemoved}" />
                                         </Grid>
-                                        
-                                        <Label Grid.Column="0" Grid.Row="1">Date in:</Label>
-                                        <DatePicker Grid.Column="1" Grid.Row="1" SelectedDate="{Binding DateEntered}" />
+                                    </GroupBox>
+                                </Grid>
 
-                                        <Label Grid.Column="0" Grid.Row="2">Date out:</Label>
-                                        <DatePicker Grid.Column="1" Grid.Row="2" SelectedDate="{Binding DateRemoved}" />
-                                    </Grid>
-                                </GroupBox>
-
-                                <GroupBox Header="Dimensions" Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="3" DataContext="{Binding Commodity}">
+                                <GroupBox Header="Dimensions" DataContext="{Binding Commodity}">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="Auto" />
@@ -148,9 +156,9 @@
                                     </Grid>
                                 </GroupBox>
 
-                                <Label Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="3">Notes:</Label>
-                                <TextBox Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="3" Style="{StaticResource MultiLine}" Text="{Binding Notes}" />
-                            </Grid>
+                                <Label>Notes:</Label>
+                                <TextBox Style="{StaticResource MultiLine}" Text="{Binding Notes}" />
+                            </StackPanel>
                         </GroupBox>                        
 
                         <Button Name="CommitChangesButton" Style="{StaticResource HorizontalEnd}" Click="CommitChangesButton_Click" LostFocus="CommitChangesButton_LostFocus">Save changes</Button>                        
@@ -162,6 +170,8 @@
                             <DataGridTextColumn Header="Commodity" Binding="{Binding Commodity.NameAndUnit}" />
                             <DataGridTextColumn Header="Location" Binding="{Binding YardLocation}" Width="0.6*" />
                             <DataGridTextColumn Header="Rate" Binding="{Binding BillingRate, StringFormat=C}" Width="0.5*" />
+                            <DataGridTextColumn Header="Interval" Binding="{Binding BillingInterval.Name}" Width="0.5*" />
+                            <DataGridCheckBoxColumn Header="Signed" Binding="{Binding ContractSigned}" Width="Auto" />
                         </DataGrid.Columns>
                     </DataGrid>
                 </DockPanel>

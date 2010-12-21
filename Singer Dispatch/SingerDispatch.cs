@@ -792,6 +792,7 @@ namespace SingerDispatch
         partial void OnCreated()
         {
             IsVisible = IsVisible ?? true;
+            ContractSigned = ContractSigned ?? false;
         } 
     }
 }
