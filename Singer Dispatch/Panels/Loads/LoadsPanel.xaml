@@ -75,8 +75,8 @@
 
         <StackPanel Grid.Column="0" Grid.Row="2" Margin="0,3,0,0">
             <Button Style="{StaticResource Vertical}" IsEnabled="{Binding ElementName=ThePanel, Path=SelectedJob, Converter={StaticResource IsEnabledNullConverter}}" Click="NewLoad_Click">New load</Button>
-            <Button Style="{StaticResource Vertical}" IsEnabled="{Binding ElementName=ThePanel, Path=SelectedLoad, Converter={StaticResource IsEnabledNullConverter}}" Click="ViewAllDispatches_Click">Vew load dispatches</Button>
-            <Button Style="{StaticResource Vertical}" IsEnabled="{Binding ElementName=ThePanel, Path=SelectedLoad, Converter={StaticResource IsEnabledNullConverter}}" Click="DuplicateLoad_Click">Duplicate load</Button>
+            <Button Style="{StaticResource Vertical}" IsEnabled="{Binding ElementName=ThePanel, Path=SelectedLoad, Converter={StaticResource IsEnabledNullConverter}}" Click="CopyLoad_Click">Copy load</Button>
+            <Button Style="{StaticResource Vertical}" IsEnabled="{Binding ElementName=ThePanel, Path=SelectedLoad, Converter={StaticResource IsEnabledNullConverter}}" Click="ViewAllDispatches_Click">Vew dispatches</Button>            
             <Button Style="{StaticResource VerticalEnd}" IsEnabled="{Binding ElementName=ThePanel, Path=SelectedLoad, Converter={StaticResource IsEnabledNullConverter}}" Click="DeleteLoad_Click">Delete load</Button>
         </StackPanel>
 

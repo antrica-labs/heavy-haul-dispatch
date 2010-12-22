@@ -526,9 +526,7 @@ namespace SingerDispatch
         public LoadedCommodity Duplicate()
         {
             var copy = new LoadedCommodity();
-
-            copy.Load = Load;
-            copy.JobCommodity = JobCommodity;            
+                        
             copy.LoadLocation = LoadLocation;
             copy.LoadAddress = LoadAddress;
             copy.LoadingProvince = LoadingProvince;
@@ -703,45 +701,13 @@ namespace SingerDispatch
             var cp = new Load();
 
             cp.Status = Status;
-            cp.Schedule = Schedule;
-            cp.Equipment = Equipment;
-            cp.Rate = Rate;
+            cp.Schedule = Schedule;            
             cp.Season = Season;
-            cp.TrailerCombination = TrailerCombination;
             cp.Info = Info;
             cp.StartDate = StartDate;
             cp.EndDate = EndDate;
-            cp.Ban = Ban;            
+            cp.Ban = Ban;
             cp.Notes = Notes;
-            cp.EWeightSteer = EWeightSteer;
-            cp.EWeightDrive = EWeightDrive;
-            cp.EWeightGroup1 = EWeightGroup1;
-            cp.EWeightGroup2 = EWeightGroup2;
-            cp.EWeightGroup3 = EWeightGroup3;
-            cp.EWeightGroup4 = EWeightGroup4;
-            cp.EWeightGroup5 = EWeightGroup5;
-            cp.EWeightGroup6 = EWeightGroup6;
-            cp.EWeightGroup7 = EWeightGroup7;
-            cp.EWeightGroup8 = EWeightGroup8;
-            cp.EWeightGroup9 = EWeightGroup9;
-            cp.EWeightGroup10 = EWeightGroup10;
-            cp.EGrossWeight = EGrossWeight;
-            cp.SWeightSteer = SWeightSteer;
-            cp.SWeightDrive = SWeightDrive;
-            cp.SWeightGroup1 = SWeightGroup1;
-            cp.SWeightGroup2 = SWeightGroup2;
-            cp.SWeightGroup3 = SWeightGroup3;
-            cp.SWeightGroup4 = SWeightGroup4;
-            cp.SWeightGroup5 = SWeightGroup5;
-            cp.SWeightGroup6 = SWeightGroup6;
-            cp.SWeightGroup7 = SWeightGroup7;
-            cp.SWeightGroup8 = SWeightGroup8;
-            cp.SWeightGroup9 = SWeightGroup9;
-            cp.SWeightGroup10 = SWeightGroup10;            
-            cp.SGrossWeight = SGrossWeight;
-            cp.LoadedLength = LoadedLength;
-            cp.LoadedWidth = LoadedWidth;
-            cp.LoadedHeight = LoadedHeight;
 
             foreach (var item in LoadedCommodities)
                 cp.LoadedCommodities.Add(item.Duplicate());
@@ -751,10 +717,7 @@ namespace SingerDispatch
 
             foreach (var item in ThirdPartyServices)
                 cp.ThirdPartyServices.Add(item.Duplicate());
-
-            foreach (var item in Dispatches)
-                cp.Dispatches.Add(item.Duplicate());
-
+            
             return cp;
         }
 

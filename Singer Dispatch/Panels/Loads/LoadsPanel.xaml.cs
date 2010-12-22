@@ -111,7 +111,7 @@ namespace SingerDispatch.Panels.Loads
             }
         }
 
-        private void DuplicateLoad_Click(object sender, RoutedEventArgs e)
+        private void CopyLoad_Click(object sender, RoutedEventArgs e)
         {
             var load = (Load)dgLoads.SelectedItem;
             var list = (ObservableCollection<Load>)dgLoads.ItemsSource;
