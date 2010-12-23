@@ -98,6 +98,19 @@ namespace SingerDispatch.Panels.Quotes
                         CommonSiteNames.Add(item.ArrivalSiteName);
                 }
             }
+
+            List<Address> knownAddresses;
+
+            if (SelectedQuote != null && SelectedQuote.CareOfCompany != null)
+                knownAddresses = (from a in Database.Addresses where a.Company == SelectedCompany || a.Company == SelectedQuote.CareOfCompany select a).ToList();                
+            else
+                knownAddresses = (from a in Database.Addresses where a.Company == SelectedCompany select a).ToList();
+
+            foreach (var item in knownAddresses)
+            {
+                if (!CommonSiteAddresses.Contains(item.ToString()))
+                    CommonSiteAddresses.Add(item.ToString());
+            }
         }
 
         private void dgRecordedCommodities_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -317,6 +330,12 @@ namespace SingerDispatch.Panels.Quotes
         }
 
         #endregion
+
+        private void dgRecordedCommodities_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (dgRecordedCommodities.SelectedItem != null)
+                dgRecordedCommodities.ScrollIntoView(dgRecordedCommodities.SelectedItem);
+        }
 
         
 

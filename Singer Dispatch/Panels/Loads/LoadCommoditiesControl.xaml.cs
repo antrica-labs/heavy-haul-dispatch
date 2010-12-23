@@ -96,7 +96,18 @@ namespace SingerDispatch.Panels.Loads
         {
             base.SelectedLoadChanged(newValue, oldValue);
 
-            dgCommodities.ItemsSource = (newValue == null) ? null : new ObservableCollection<LoadedCommodity>(newValue.LoadedCommodities);
+            if (newValue != null)
+            {
+                var list = new ObservableCollection<LoadedCommodity>(newValue.LoadedCommodities);
+
+                dgCommodities.ItemsSource = list;
+
+                if (list.Count > 0)
+                    dgCommodities.SelectedItem = list.First();
+            }
+            else
+                dgCommodities.ItemsSource = null;
+            
             UpdateComboBoxes();
         }
 

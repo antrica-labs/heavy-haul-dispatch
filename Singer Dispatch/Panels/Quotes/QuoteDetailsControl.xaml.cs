@@ -58,14 +58,9 @@ namespace SingerDispatch.Panels.Quotes
 
         private void UpdateAuthorList()
         {
-            if (SelectedQuote != null)
-            {
-                var selected = cmbQuotedBy.SelectedItem;
-                cmbQuotedBy.ItemsSource = from emp in Database.Employees orderby emp.FirstName, emp.LastName select emp;
-                cmbQuotedBy.SelectedItem = selected;
-            }
-            else
-                cmbQuotedBy.ItemsSource = null;
+            //var selected = cmbQuotedBy.SelectedItem;
+            cmbQuotedBy.ItemsSource = from emp in Database.Employees orderby emp.FirstName, emp.LastName select emp;
+            //cmbQuotedBy.SelectedItem = selected;
         }
 
         private void UpdateCareOfCompanies()

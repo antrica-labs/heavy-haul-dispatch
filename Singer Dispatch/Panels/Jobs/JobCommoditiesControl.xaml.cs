@@ -92,6 +92,20 @@ namespace SingerDispatch.Panels.Jobs
                 if (!string.IsNullOrWhiteSpace(item.ArrivalSiteName) && !CommonSiteNames.Contains(item.ArrivalSiteName))
                     CommonSiteNames.Add(item.ArrivalSiteName);
             }
+
+            List<Address> knownAddresses;
+
+            if (SelectedJob != null && SelectedJob.CareOfCompany != null)
+                knownAddresses = (from a in Database.Addresses where a.Company == SelectedCompany || a.Company == SelectedJob.CareOfCompany select a).ToList();                
+            else
+                knownAddresses = (from a in Database.Addresses where a.Company == SelectedCompany select a).ToList();
+                
+
+            foreach (var item in knownAddresses)
+            {
+                if (!CommonSiteAddresses.Contains(item.ToString()))
+                    CommonSiteAddresses.Add(item.ToString());
+            }
         }
 
         private void NewCommodity_Click(object sender, RoutedEventArgs e)
@@ -151,6 +165,12 @@ namespace SingerDispatch.Panels.Jobs
         private void dgCommodities_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             UpdateAddressesAndSites();
+        }
+
+        private void dgRecordedCommodities_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (dgRecordedCommodities.SelectedItem != null)
+                dgRecordedCommodities.ScrollIntoView(dgRecordedCommodities.SelectedItem);
         }
 
         

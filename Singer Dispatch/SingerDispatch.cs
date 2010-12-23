@@ -43,6 +43,19 @@ namespace SingerDispatch
     partial class Address
     {
         public int? ArchiveID { get; set; }
+
+        public override string ToString()
+        {
+            var address = Line1;
+
+            if (!string.IsNullOrWhiteSpace(City))
+                address += ", " + City;
+
+            if (ProvincesAndState != null)
+                address += ", " + ProvincesAndState.Abbreviation;
+
+            return address;
+        }
     }
 
     partial class Contact
