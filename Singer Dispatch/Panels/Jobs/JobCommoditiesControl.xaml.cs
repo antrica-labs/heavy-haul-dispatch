@@ -79,19 +79,18 @@ namespace SingerDispatch.Panels.Jobs
         {
             var list = (ObservableCollection<JobCommodity>)dgCommodities.ItemsSource;
 
-            if (list != null)
+            if (list == null) return;
+
+            foreach (var item in list)
             {
-                foreach (var item in list)
-                {
-                    if (!string.IsNullOrWhiteSpace(item.DepartureAddress) && !CommonSiteAddresses.Contains(item.DepartureAddress))
-                        CommonSiteAddresses.Add(item.DepartureAddress);
-                    if (!string.IsNullOrWhiteSpace(item.ArrivalAddress) && !CommonSiteAddresses.Contains(item.ArrivalAddress))
-                        CommonSiteAddresses.Add(item.ArrivalAddress);
-                    if (!string.IsNullOrWhiteSpace(item.DepartureSiteName) && !CommonSiteNames.Contains(item.DepartureSiteName))
-                        CommonSiteNames.Add(item.DepartureSiteName);
-                    if (!string.IsNullOrWhiteSpace(item.ArrivalSiteName) && !CommonSiteNames.Contains(item.ArrivalSiteName))
-                        CommonSiteNames.Add(item.ArrivalSiteName);
-                }
+                if (!string.IsNullOrWhiteSpace(item.DepartureAddress) && !CommonSiteAddresses.Contains(item.DepartureAddress))
+                    CommonSiteAddresses.Add(item.DepartureAddress);
+                if (!string.IsNullOrWhiteSpace(item.ArrivalAddress) && !CommonSiteAddresses.Contains(item.ArrivalAddress))
+                    CommonSiteAddresses.Add(item.ArrivalAddress);
+                if (!string.IsNullOrWhiteSpace(item.DepartureSiteName) && !CommonSiteNames.Contains(item.DepartureSiteName))
+                    CommonSiteNames.Add(item.DepartureSiteName);
+                if (!string.IsNullOrWhiteSpace(item.ArrivalSiteName) && !CommonSiteNames.Contains(item.ArrivalSiteName))
+                    CommonSiteNames.Add(item.ArrivalSiteName);
             }
         }
 

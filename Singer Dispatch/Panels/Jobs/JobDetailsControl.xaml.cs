@@ -37,28 +37,32 @@ namespace SingerDispatch.Panels.Jobs
 
         private void Control_Loaded(object sender, RoutedEventArgs e)
         {
-            UpdateComboBoxes();
+            cmbStatuses.ItemsSource = from s in Database.Statuses orderby s.Name select s;
+
+            UpdateContacts();
         }
 
         protected override void SelectedJobChanged(Job newValue, Job oldValue)
         {
             base.SelectedJobChanged(newValue, oldValue);
 
-            UpdateComboBoxes();
+            UpdateContacts();
             UpdateReferenceNumbers();
         }
 
-        private void UpdateComboBoxes()
+        private void UpdateContacts()
         {
             if (SelectedJob != null)
-            {                
-                cmbContacts.ItemsSource = (SelectedCompany == null) ? from c in Database.Contacts where c.Company == SelectedCompany orderby c.FirstName, c.LastName select c : from c in Database.Contacts where c.Company == SelectedCompany || c.Company == SelectedJob.CareOfCompany orderby c.FirstName, c.LastName select c;
-                cmbStatuses.ItemsSource = from s in Database.Statuses orderby s.Name select s;
+            {
+                var contact = SelectedJob.Contact;
+
+                cmbContacts.ItemsSource = new ObservableCollection<Contact>(from c in Database.Contacts where c.Company == SelectedCompany || c.Company == SelectedJob.CareOfCompany orderby c.FirstName, c.LastName select c);
+
+                cmbContacts.SelectedItem = contact;
             }
             else
-            {                
+            {
                 cmbContacts.ItemsSource = null;
-                cmbStatuses.ItemsSource = null;
             }
         }
 
@@ -76,9 +80,7 @@ namespace SingerDispatch.Panels.Jobs
 
         private void cmbCareOfCompanies_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (SelectedJob == null) return;
-
-            cmbContacts.ItemsSource = (SelectedCompany == null) ? from c in Database.Contacts where c.Company == SelectedCompany orderby c.FirstName, c.LastName select c : from c in Database.Contacts where c.Company == SelectedCompany || c.Company == SelectedJob.CareOfCompany orderby c.FirstName, c.LastName select c;
+            UpdateContacts();
         }
         
         private void AddReferenceNumber_Click(object sender, RoutedEventArgs e)
@@ -101,6 +103,48 @@ namespace SingerDispatch.Panels.Jobs
 
             SelectedJob.ReferenceNumbers.Remove(selected);
             ((ObservableCollection<JobReferenceNumber>)dgReferenceNumbers.ItemsSource).Remove(selected);
+        }
+        
+        private void AddCompany_Click(object sender, RoutedEventArgs e)
+        {
+            if (SelectedJob == null) return;
+
+            var window = new CreateCompanyWindow(Database) { Owner = Application.Current.MainWindow };
+            var company = window.CreateCompany();
+
+            if (company == null) return;
+
+            try
+            {
+                Database.Companies.InsertOnSubmit(company);
+                Database.SubmitChanges();
+                CompanyList.Add(company);
+                                
+                SelectedJob.CareOfCompany = company;
+
+                UpdateContacts();
+            }
+            catch (Exception ex)
+            {
+                ErrorNoticeWindow.ShowError("Error while adding company to database", ex.Message);
+            }
+        }
+
+        private void AddContact_Click(object sender, RoutedEventArgs e)
+        {
+            if (SelectedJob == null) return;
+
+            var window = new CreateContactWindow(Database, SelectedCompany, SelectedJob.CareOfCompany) { Owner = Application.Current.MainWindow };
+            var contact = window.CreateContact();
+
+            if (contact == null || contact.Company == null) return;
+
+            var list = (ObservableCollection<Contact>)cmbContacts.ItemsSource;
+
+            contact.Company.Contacts.Add(contact);
+            list.Add(contact);
+
+            SelectedJob.Contact = contact;
         }
     }
 }

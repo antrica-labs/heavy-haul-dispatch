@@ -51,7 +51,6 @@ namespace SingerDispatch.Panels.Quotes
         {
             base.SelectedQuoteChanged(newValue, oldValue);
 
-            UpdateAuthorList();
             UpdateCareOfCompanies();
             UpdateAddressesAndContacts();
             CalculateItemizedCost();
@@ -165,6 +164,8 @@ namespace SingerDispatch.Panels.Quotes
                 CompanyList.Add(company);
 
                 SelectedQuote.CareOfCompany = company;
+
+                UpdateAddressesAndContacts();
             }
             catch (Exception ex)
             {
@@ -174,19 +175,19 @@ namespace SingerDispatch.Panels.Quotes
 
         private void AddContact_Click(object sender, RoutedEventArgs e)
         {
-            if (SelectedQuote == null) return;
+                if (SelectedQuote == null) return;
 
-            var window = new CreateContactWindow(Database, SelectedCompany, SelectedQuote.CareOfCompany) { Owner = Application.Current.MainWindow };
-            var contact = window.CreateContact();
+                var window = new CreateContactWindow(Database, SelectedCompany, SelectedQuote.CareOfCompany) { Owner = Application.Current.MainWindow };
+                var contact = window.CreateContact();
 
-            if (contact == null || contact.Company == null) return;
+                if (contact == null || contact.Company == null) return;
 
-            var list = (ObservableCollection<Contact>)cmbContacts.ItemsSource;
+                var list = (ObservableCollection<Contact>)cmbContacts.ItemsSource;
 
-            contact.Company.Contacts.Add(contact);
-            list.Add(contact);
+                contact.Company.Contacts.Add(contact);
+                list.Add(contact);
 
-            SelectedQuote.Contact = contact;
+                SelectedQuote.Contact = contact;
         }
 
         private void AddAddress_Click(object sender, RoutedEventArgs e)

@@ -38,26 +38,43 @@
                 <ComboBox Name="cmbStatuses" Grid.Column="1" Grid.Row="1" SelectedItem="{Binding Status}" IsEditable="False" ItemTemplate="{StaticResource SimpleNameTemplate}" />
 
                 <Label Grid.Column="0" Grid.Row="2">Care of:</Label>
-                <ComboBox Name="cmbCareOfCompanies" Grid.Column="0" Grid.Row="3" ItemsSource="{Binding ElementName=ThePanel, Path=CompanyList}" ItemTemplate="{StaticResource SimpleNameTemplate}" TextSearch.TextPath="Name" SelectionChanged="cmbCareOfCompanies_SelectionChanged" Controls:ComboUtil.AllowNull="True">
-                    <ComboBox.SelectedItem>
-                        <Binding Path="CareOfCompany">
-                            <Binding.ValidationRules>
-                                <Validators:SelectionExistsValidator />
-                            </Binding.ValidationRules>
-                        </Binding>
-                    </ComboBox.SelectedItem>
-                </ComboBox>
+                <Grid Grid.Column="0" Grid.Row="3">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <ComboBox Name="cmbCareOfCompanies" Grid.Column="0" ItemsSource="{Binding ElementName=ThePanel, Path=CompanyList}" ItemTemplate="{StaticResource SimpleNameTemplate}" TextSearch.TextPath="Name" SelectionChanged="cmbCareOfCompanies_SelectionChanged" Controls:ComboUtil.AllowNull="True">
+                        <ComboBox.SelectedItem>
+                            <Binding Path="CareOfCompany">
+                                <Binding.ValidationRules>
+                                    <Validators:SelectionExistsValidator />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </ComboBox.SelectedItem>
+                    </ComboBox>
+                    <Button Grid.Column="1" Style="{StaticResource Standard}" Click="AddCompany_Click">Add</Button>
+                </Grid>
 
                 <Label Grid.Column="1" Grid.Row="2">Contact:</Label>
-                <ComboBox Name="cmbContacts" Grid.Column="1" Grid.Row="3" ItemTemplate="{StaticResource ContactTemplate}" Controls:ComboUtil.AllowNull="True" TextSearch.TextPath="Name">
-                    <ComboBox.SelectedItem>
-                        <Binding Path="Contact">
-                            <Binding.ValidationRules>
-                                <Validators:SelectionExistsValidator />
-                            </Binding.ValidationRules>
-                        </Binding>
-                    </ComboBox.SelectedItem>
-                </ComboBox>
+                <Grid Grid.Column="1" Grid.Row="3">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <ComboBox Name="cmbContacts" Grid.Column="0" ItemTemplate="{StaticResource ContactTemplate}" Controls:ComboUtil.AllowNull="True" TextSearch.TextPath="Name">
+                        <ComboBox.SelectedItem>
+                            <Binding Path="Contact">
+                                <Binding.ValidationRules>
+                                    <Validators:SelectionExistsValidator />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </ComboBox.SelectedItem>
+                    </ComboBox>
+                    <Button Grid.Column="1" Style="{StaticResource Standard}" Click="AddContact_Click">Add</Button>
+                </Grid>
+                
             </Grid>
         </GroupBox>
 
