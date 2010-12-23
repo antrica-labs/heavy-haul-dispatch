@@ -3,7 +3,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:Controls="clr-namespace:SingerDispatch.Controls"
         xmlns:Validators="clr-namespace:SingerDispatch.Controls.Validators"
-        Title="Create Address" SizeToContent="Height" Width="450" Loaded="Window_Loaded" KeyDown="Window_KeyDown">
+        Title="Create Address" SizeToContent="Height" Width="450" 
+        Loaded="Window_Loaded" KeyDown="Window_KeyDown" Closing="Window_Closing">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -17,7 +18,7 @@
         <GroupBox Header="Address Details">
             <StackPanel>
                 <Label>Company:</Label>                
-                <ComboBox Name="cmbCompanies" SelectedItem="{Binding Company}" />
+                <ComboBox Name="cmbCompanies" SelectedItem="{Binding Company}" IsEditable="False" />
                 
                 <Grid>
                     <Grid.ColumnDefinitions>

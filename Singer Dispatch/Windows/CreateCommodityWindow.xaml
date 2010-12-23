@@ -4,7 +4,7 @@
         xmlns:Controls="clr-namespace:SingerDispatch.Controls"
         Title="Create Commodity" SizeToContent="Height" Width="650"
         FocusManager.FocusedElement="{Binding ElementName=txtCommodityName}"
-        Loaded="Window_Loaded" KeyDown="Window_KeyDown">
+        Loaded="Window_Loaded" KeyDown="Window_KeyDown" Closing="Window_Closing">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>

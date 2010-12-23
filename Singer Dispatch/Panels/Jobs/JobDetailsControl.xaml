@@ -72,7 +72,7 @@
                             </Binding>
                         </ComboBox.SelectedItem>
                     </ComboBox>
-                    <Button Grid.Column="1" Style="{StaticResource Standard}" Click="AddContact_Click">Add</Button>
+                    <Button Grid.Column="1" Style="{StaticResource Standard}" Click="AddContact_Click" DataContext="{Binding ElementName=cmbContacts}">Add</Button>
                 </Grid>
                 
             </Grid>

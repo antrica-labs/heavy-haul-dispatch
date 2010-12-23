@@ -1,4 +1,7 @@
 ﻿using System.Windows;
+using System.Collections.ObjectModel;
+using SingerDispatch.Windows;
+using System.Windows.Controls;
 
 namespace SingerDispatch.Panels
 {

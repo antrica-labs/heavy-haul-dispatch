@@ -226,30 +226,27 @@ namespace SingerDispatch.Panels.Loads
 
         private void cmbLoadingSiteContactCompanies_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var company = (Company)cmbLoadingSiteContactCompanies.SelectedItem;
-
-            cmbLoadingSiteContacts.ItemsSource = (company == null) ? null : (from c in Database.Contacts where c.Company == company orderby c.FirstName, c.LastName select c).ToList();
+            UpdateContactList(cmbLoadingSiteContacts, (Company)cmbLoadingSiteContactCompanies.SelectedItem);
         }
-
+        
         private void cmbUnloadingSiteContactCompanies_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var company = (Company)cmbUnloadingSiteContactCompanies.SelectedItem;
-
-            cmbUnloadingSiteContacts.ItemsSource = (company == null) ? null : (from c in Database.Contacts where c.Company == company orderby c.FirstName, c.LastName select c).ToList();
+            UpdateContactList(cmbUnloadingSiteContacts, (Company)cmbUnloadingSiteContactCompanies.SelectedItem);
         }
 
         private void cmbLoadingContactCompanies_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var company = (Company)cmbLoadingContactCompanies.SelectedItem;
-
-            cmbLoadingContacts.ItemsSource = (company == null) ? null : (from c in Database.Contacts where c.Company == company orderby c.FirstName, c.LastName select c).ToList();
+            UpdateContactList(cmbLoadingContacts, (Company)cmbLoadingContactCompanies.SelectedItem);            
         }
 
         private void cmbUnloadingContactCompanies_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var company = (Company)cmbUnloadingContactCompanies.SelectedItem;
+            UpdateContactList(cmbUnloadingContacts, (Company)cmbUnloadingContactCompanies.SelectedItem);
+        }
 
-            cmbUnloadingContacts.ItemsSource = (company == null) ? null : (from c in Database.Contacts where c.Company == company orderby c.FirstName, c.LastName select c).ToList();
+        private void UpdateContactList(ComboBox cmb, Company company)
+        {
+            cmb.ItemsSource = (company == null) ? null : new ObservableCollection<Contact>(from c in Database.Contacts where c.Company == company orderby c.FirstName, c.LastName select c);
         }
 
         private void ShipperCompany_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -257,7 +254,7 @@ namespace SingerDispatch.Panels.Loads
             var cmb = (ComboBox)sender;
             var company = (Company)cmb.SelectedItem;
 
-            cmbShipperAddresses.ItemsSource = (company != null) ? company.Addresses : null;
+            UpdatedAddressList(cmbShipperAddresses, company);
         }
 
         private void ConsigneeCompany_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -265,7 +262,12 @@ namespace SingerDispatch.Panels.Loads
             var cmb = (ComboBox)sender;
             var company = (Company)cmb.SelectedItem;
 
-            cmbConsigneeAddresses.ItemsSource = (company != null) ? company.Addresses : null;
+            UpdatedAddressList(cmbConsigneeAddresses, (Company)cmb.SelectedItem);
+        }
+
+        private void UpdatedAddressList(ComboBox cmb, Company company)
+        {
+            cmb.ItemsSource = (company == null) ? null : new ObservableCollection<Address>(from a in Database.Addresses where a.Company == company select a);
         }
 
         private void dgCommodities_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -311,6 +313,19 @@ namespace SingerDispatch.Panels.Loads
                     CommonInstructions.Add(item.LoadInstructions);
                 if (!string.IsNullOrWhiteSpace(item.UnloadInstructions) && !CommonInstructions.Contains(item.UnloadInstructions))
                     CommonInstructions.Add(item.UnloadInstructions);
+            }
+
+            List<Address> knownAddresses;
+
+            if (SelectedLoad.Job != null && SelectedLoad.Job.CareOfCompany != null)
+                knownAddresses = (from a in Database.Addresses where a.Company == SelectedCompany || a.Company == SelectedLoad.Job.CareOfCompany select a).ToList();
+            else
+                knownAddresses = (from a in Database.Addresses where a.Company == SelectedCompany select a).ToList();
+            
+            foreach (var item in knownAddresses)
+            {
+                if (!CommonSiteAddresses.Contains(item.ToString()))
+                    CommonSiteAddresses.Add(item.ToString());
             }
         }
 
@@ -517,5 +532,61 @@ namespace SingerDispatch.Panels.Loads
             commodity.UnloadLocation = commodity.JobCommodity.ArrivalSiteName;
             commodity.UnloadAddress = commodity.JobCommodity.ArrivalAddress;
         }
+
+        private void AddContact_Click(object sender, RoutedEventArgs e)
+        {
+            var cmbContacts = (ComboBox)((Button)sender).DataContext;
+            var cmbCompanies = (ComboBox)cmbContacts.DataContext;
+
+            var company = (Company)cmbCompanies.SelectedItem;
+
+            if (SelectedLoad == null && company != null) return;
+
+            var window = new CreateContactWindow(Database, company, null) { Owner = Application.Current.MainWindow };
+            var contact = window.CreateContact();
+
+            if (contact == null || contact.Company == null) return;
+
+            contact.Company.Contacts.Add(contact);
+                        
+            if ((Company)cmbLoadingSiteContactCompanies.SelectedItem == contact.Company)
+                ((ObservableCollection<Contact>)cmbUnloadingSiteContacts.ItemsSource).Add(contact);
+
+            if ((Company)cmbUnloadingSiteContactCompanies.SelectedItem == contact.Company)
+                ((ObservableCollection<Contact>)cmbLoadingContacts.ItemsSource).Add(contact);
+
+            if ((Company)cmbLoadingContactCompanies.SelectedItem == contact.Company)
+                ((ObservableCollection<Contact>)cmbLoadingSiteContacts.ItemsSource).Add(contact);
+
+            if ((Company)cmbUnloadingContactCompanies.SelectedItem == contact.Company)
+                ((ObservableCollection<Contact>)cmbUnloadingContacts.ItemsSource).Add(contact);
+
+            cmbContacts.SelectedItem = contact;
+        }
+
+        private void AddAddress_Click(object sender, RoutedEventArgs e)
+        {
+            var cmbAddresses = (ComboBox)((Button)sender).DataContext;
+            var cmbCompanies = (ComboBox)cmbAddresses.DataContext;
+
+            var company = (Company)cmbCompanies.SelectedItem;
+            
+            if (SelectedLoad == null && company != null) return;
+
+            var window = new CreateAddressWindow(Database, company, null) { Owner = Application.Current.MainWindow };
+            var address = window.CreateAddress();
+
+            if (address == null || address.Company == null) return;
+
+            address.Company.Addresses.Add(address);
+                        
+            if ((Company)cmbShipperCompanies.SelectedItem == address.Company)
+                ((ObservableCollection<Address>)cmbShipperAddresses.ItemsSource).Add(address);
+
+            if ((Company)cmbConsigneeCompanies.SelectedItem == address.Company)
+                ((ObservableCollection<Address>)cmbConsigneeAddresses.ItemsSource).Add(address);
+            
+            cmbAddresses.SelectedItem = address;
+        }        
     }
 }

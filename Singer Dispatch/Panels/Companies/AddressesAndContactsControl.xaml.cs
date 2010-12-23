@@ -54,8 +54,8 @@ namespace SingerDispatch.Panels.Companies
 
             if (newValue != null)
             {                
-                dgAddresses.ItemsSource = from a in Database.Addresses where a.Company == newValue select a;
-                dgContacts.ItemsSource = from c in Database.Contacts where c.Company == newValue select c;
+                dgAddresses.ItemsSource = new ObservableCollection<Address>(from a in Database.Addresses where a.Company == newValue select a);
+                dgContacts.ItemsSource = new ObservableCollection<Contact>(from c in Database.Contacts where c.Company == newValue select c);
             }
             else
             {

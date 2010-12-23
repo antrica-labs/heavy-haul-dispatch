@@ -20,12 +20,15 @@ namespace SingerDispatch.Windows
     {
         private SingerDispatchDataContext _database;
         private Address _address;
+        private Boolean _created;
 
         public CreateAddressWindow(SingerDispatchDataContext database, Company company, Company careOfCompany)
         {
             InitializeComponent();
 
+            _created = false;
             _database = database;
+            _address = new Address();
 
             var list = new List<Company>();
 
@@ -34,16 +37,14 @@ namespace SingerDispatch.Windows
             if (careOfCompany != null)
                 list.Add(careOfCompany);
 
-            cmbCompanies.ItemsSource = list;            
+            cmbCompanies.ItemsSource = list;
+            _address.Company = list.First();
+
+            DataContext = _address;
         }
 
         public Address CreateAddress()
-        {
-            _address = new Address();
-            _address.Company = ((List<Company>)cmbCompanies.ItemsSource).First();
-
-            DataContext = _address;
-
+        {   
             ShowDialog();
 
             return _address;
@@ -59,6 +60,7 @@ namespace SingerDispatch.Windows
 
         private void CreateAddress_Click(object sender, RoutedEventArgs e)
         {
+            _created = true;
             Close();
         }
 
@@ -66,8 +68,15 @@ namespace SingerDispatch.Windows
         {
             if (e.Key == Key.Escape)
             {
+                _address = null;
                 Close();
             }
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (!_created)
+                _address = null;
         }
     }
 }

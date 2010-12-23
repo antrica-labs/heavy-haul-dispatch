@@ -20,6 +20,7 @@ namespace SingerDispatch.Windows
     {
         private Commodity _commodity;
         private SingerDispatchDataContext _database;
+        private Boolean _created;
 
         public CreateCommodityWindow(SingerDispatchDataContext database)
         {
@@ -27,12 +28,13 @@ namespace SingerDispatch.Windows
 
             _database = database;
             _commodity = new Commodity();
+            _created = false;
 
             DataContext = _commodity;
         }
 
         public Commodity CreateCommodity()
-        {
+        {            
             ShowDialog();
 
             return _commodity;
@@ -45,6 +47,7 @@ namespace SingerDispatch.Windows
 
         private void CreateCompany_Click(object sender, RoutedEventArgs e)
         {
+            _created = true;
             Close();
         }
 
@@ -54,6 +57,12 @@ namespace SingerDispatch.Windows
             {
                 Close();
             }
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (!_created)
+                _commodity = null;
         }
     }
 }

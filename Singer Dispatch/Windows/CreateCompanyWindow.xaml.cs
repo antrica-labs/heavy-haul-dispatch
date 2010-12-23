@@ -13,6 +13,8 @@ namespace SingerDispatch.Windows
     /// </summary>
     public partial class CreateCompanyWindow
     {
+        private Boolean Created { get; set; }
+
         private Company Company { get; set; }
         private Address Address { get; set; }
         private Contact Contact { get; set; }        
@@ -22,6 +24,7 @@ namespace SingerDispatch.Windows
         {
             InitializeComponent();
 
+            Created = false;
             Database = database;
             
             Company = new Company();
@@ -103,11 +106,20 @@ namespace SingerDispatch.Windows
 
         private void CreateCompanyHandler()
         {
+            if (string.IsNullOrWhiteSpace(Company.Name))
+            {
+                ErrorNoticeWindow.ShowError("Company name missing", "A company cannot be created without at least a name.");
+                txtName.Focus();
+                return;
+            }
+
             if (cmbProvinceOrState.SelectedItem != null)            
                 Company.Addresses.Add(Address);
 
             if (!string.IsNullOrWhiteSpace(txtContactFirstName.Text))
                 Company.Contacts.Add(Contact);
+
+            Created = true;
 
             Close();
         }
@@ -123,6 +135,12 @@ namespace SingerDispatch.Windows
             {
                 Close();
             }
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (!Created)
+                Company = null;
         }        
     }
 }

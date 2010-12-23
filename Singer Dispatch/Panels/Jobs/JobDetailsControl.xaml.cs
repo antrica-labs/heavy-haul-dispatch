@@ -24,7 +24,7 @@ namespace SingerDispatch.Panels.Jobs
     public partial class JobDetailsControl
     {
         public SingerDispatchDataContext Database { get; set; }
-        
+
         public JobDetailsControl()
         {
             InitializeComponent();
@@ -130,8 +130,10 @@ namespace SingerDispatch.Panels.Jobs
             }
         }
 
-        private void AddContact_Click(object sender, RoutedEventArgs e)
+        protected void AddContact_Click(object sender, RoutedEventArgs e)
         {
+            var cmb = (ComboBox)((Button)sender).DataContext;
+
             if (SelectedJob == null) return;
 
             var window = new CreateContactWindow(Database, SelectedCompany, SelectedJob.CareOfCompany) { Owner = Application.Current.MainWindow };
@@ -139,12 +141,12 @@ namespace SingerDispatch.Panels.Jobs
 
             if (contact == null || contact.Company == null) return;
 
-            var list = (ObservableCollection<Contact>)cmbContacts.ItemsSource;
+            var list = (ObservableCollection<Contact>)cmb.ItemsSource;
 
             contact.Company.Contacts.Add(contact);
             list.Add(contact);
 
-            SelectedJob.Contact = contact;
+            cmb.SelectedItem = contact;
         }
     }
 }

@@ -21,12 +21,15 @@ namespace SingerDispatch.Windows
     {
         private SingerDispatchDataContext _database;
         private Contact _contact;
+        private Boolean _created;
 
         public CreateContactWindow(SingerDispatchDataContext database, Company company, Company careOfCompany)
         {
             InitializeComponent();
 
-            _database = database;            
+            _database = database;
+            _created = false;
+            _contact = new Contact();            
 
             var list = new List<Company>();
 
@@ -36,15 +39,14 @@ namespace SingerDispatch.Windows
                 list.Add(careOfCompany);
 
             cmbCompanies.ItemsSource = list;
+
+            _contact.Company = list.First();
+
+            DataContext = _contact;
         }
 
         public Contact CreateContact()
         {
-            _contact = new Contact();
-            _contact.Company = ((List<Company>)cmbCompanies.ItemsSource).First();
-
-            DataContext = _contact;
-
             ShowDialog();
 
             return _contact;
@@ -94,6 +96,7 @@ namespace SingerDispatch.Windows
 
         private void CreateContact_Click(object sender, RoutedEventArgs e)
         {
+            _created = true;
             Close();
         }
 
@@ -103,6 +106,12 @@ namespace SingerDispatch.Windows
             {
                 Close();
             }
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (!_created)
+                _contact = null;
         }
     }
 }
