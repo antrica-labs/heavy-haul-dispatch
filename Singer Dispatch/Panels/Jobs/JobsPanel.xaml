@@ -52,7 +52,7 @@
 
         <StackPanel Grid.Column="0" Grid.Row="2" Margin="0,3,0,0">
             <Button Style="{StaticResource Vertical}" Click="NewJob_Click">New job</Button>
-            <Button Style="{StaticResource Vertical}" Click="DuplicateJob_Click" IsEnabled="{Binding SelectedJob, Converter={StaticResource IsEnabledNullConverter}}">Duplicate job</Button>
+            <Button Style="{StaticResource Vertical}" Click="DuplicateJob_Click" IsEnabled="{Binding SelectedJob, Converter={StaticResource IsEnabledNullConverter}}">Copy to new</Button>
             <Button Style="{StaticResource Vertical}" Click="ViewQuote_Click" IsEnabled="{Binding SelectedJob, Converter={StaticResource IsEnabledNullConverter}}">View original quote</Button>
             <Button Style="{StaticResource VerticalEnd}" Click="DeleteJob_Click" IsEnabled="{Binding SelectedJob, Converter={StaticResource IsEnabledNullConverter}}">Delete Job</Button>
         </StackPanel>

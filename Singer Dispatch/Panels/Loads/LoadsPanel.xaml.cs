@@ -95,6 +95,13 @@ namespace SingerDispatch.Panels.Loads
             var list = (ObservableCollection<Load>)dgLoads.ItemsSource;
             var load = new Load { Job = SelectedJob, Status = SelectedJob.Status };
 
+            foreach (var item in SelectedJob.ReferenceNumbers)
+            {
+                var reference = new LoadReferenceNumber { Field = item.Field, Value = item.Value };
+
+                load.ReferenceNumbers.Add(reference);
+            }
+
             SelectedJob.Loads.Add(load);
             list.Insert(0, load);
 
