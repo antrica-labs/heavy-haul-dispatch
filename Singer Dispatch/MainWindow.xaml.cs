@@ -131,7 +131,7 @@ namespace SingerDispatch
             try
             {
                 var acManager = new WPFAutoCompleteBox.Core.AutoCompleteManager(acCompany);
-                acManager.DataProvider = new SingerDispatch.Database.CompleteProviders.CompanyNameACProvider(Database);
+                acManager.DataProvider = new SingerDispatch.Database.CompleteProviders.CompanyNameACProvider(Companies);
             }
             catch (Exception ex)
             {
@@ -303,11 +303,11 @@ namespace SingerDispatch
         {
             ExpandSection(expanderLoads, typeof(LoadsPanel));
         }
-
+        
         private void ExpandInvoicing(object sender, RoutedEventArgs e)
         {
             ExpandSection(expanderInvoicing, typeof(JobInvoicingPanel));
-        }
+        }        
 
         private void ExpandStorage(object sender, RoutedEventArgs e)
         {
@@ -318,7 +318,7 @@ namespace SingerDispatch
         {
             ExpandSection(expanderAdmin, typeof(AdminPanel));
         }
-
+        
         public void ViewInvoices(Job job)
         {
             if (job == null || job.Company == null) return;
@@ -329,7 +329,7 @@ namespace SingerDispatch
             ((JobInvoicingPanel)panelMainContent.Child).UpdateLayout();
             ((JobInvoicingPanel)panelMainContent.Child).SelectedJob = job;
         }
-
+        
         public void ViewJob(Job job)
         {
             if (job == null || job.Company == null) return;
@@ -435,7 +435,7 @@ namespace SingerDispatch
                 ViewJob(job);
             }
         }
-
+        
         private void FindInvoices()
         {
             var window = new JobLocatorWindow { Owner = this };
@@ -446,7 +446,7 @@ namespace SingerDispatch
                 ViewInvoices(job);
             }
         }
-
+        
         private void CreateCompany()
         {
             var window = new CreateCompanyWindow(Database) { Owner = this };

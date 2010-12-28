@@ -35,7 +35,7 @@
                 <MenuItem Header="Jobs">
                     <MenuItem Header="_Find job" Click="FindJob_Click" InputGestureText="Ctrl+Shift+J" />                    
                 </MenuItem>
-                <MenuItem Header="Invoicing">
+                <MenuItem Header="Invoicing" Visibility="Collapsed">
                     <MenuItem Header="_View job invoices" Click="FindJobForInvoice_Click" InputGestureText="Ctrl+Shift+I" />
                 </MenuItem>
                 <MenuItem Header="Tools">
@@ -60,7 +60,7 @@
                     <Expander Name="expanderLoads" Header="Loads" Style="{StaticResource SectionExpander}" Expanded="ExpandLoads">
                         <StackPanel Name="linksLoads" Style="{StaticResource SectionExpanderContent}" VerticalAlignment="Top"></StackPanel>
                     </Expander>
-                    <Expander Name="expanderInvoicing" Header="Invoicing" Style="{StaticResource SectionExpander}" Expanded="ExpandInvoicing">
+                    <Expander  Visibility="Collapsed" Name="expanderInvoicing" Header="Invoicing" Style="{StaticResource SectionExpander}" Expanded="ExpandInvoicing">
                         <StackPanel Name="linksPricing" Style="{StaticResource SectionExpanderContent}" VerticalAlignment="Top"></StackPanel>
                     </Expander>
                     <Expander Name="expanderStorage" Header="Storage" Style="{StaticResource SectionExpander}" Expanded="ExpandStorage">

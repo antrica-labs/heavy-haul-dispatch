@@ -3,23 +3,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using WPFAutoCompleteBox.Provider;
+using System.Collections.ObjectModel;
 
 namespace SingerDispatch.Database.CompleteProviders
 {
     class CompanyNameACProvider : IAutoCompleteDataProvider
     {
-        SingerDispatchDataContext Database { get; set; }
+        ObservableCollection<Company> Companies;
 
-        public CompanyNameACProvider(SingerDispatchDataContext database)
+        public CompanyNameACProvider(ObservableCollection<Company> companies)
         {
-            Database = database;
+            Companies = companies;
         }
 
         public IEnumerable<object> GetItems(string textPattern)
         {
             if (textPattern.Length < 3) return null; // Don't bother returning results until more than 2 characters are entered.
 
-            var companies = from c in Database.Companies where c.Name.Contains(textPattern) orderby c.Name select c;
+            var companies = from c in Companies where c.Name.Contains(textPattern) orderby c.Name select c;
 
             return companies;
         }
