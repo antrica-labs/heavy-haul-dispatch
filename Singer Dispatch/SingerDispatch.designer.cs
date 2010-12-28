@@ -1460,6 +1460,8 @@ namespace SingerDispatch
 		
 		private string _Name;
 		
+		private EntitySet<QuoteStorageItem> _QuoteStorageItems;
+		
 		private EntitySet<StorageItem> _StorageItems;
 		
     #region Extensibility Method Definitions
@@ -1474,6 +1476,7 @@ namespace SingerDispatch
 		
 		public BillingInterval()
 		{
+			this._QuoteStorageItems = new EntitySet<QuoteStorageItem>(new Action<QuoteStorageItem>(this.attach_QuoteStorageItems), new Action<QuoteStorageItem>(this.detach_QuoteStorageItems));
 			this._StorageItems = new EntitySet<StorageItem>(new Action<StorageItem>(this.attach_StorageItems), new Action<StorageItem>(this.detach_StorageItems));
 			OnCreated();
 		}
@@ -1518,6 +1521,19 @@ namespace SingerDispatch
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="BillingInterval_QuoteStorageItem", Storage="_QuoteStorageItems", ThisKey="ID", OtherKey="BillingIntervalID")]
+		public EntitySet<QuoteStorageItem> QuoteStorageItems
+		{
+			get
+			{
+				return this._QuoteStorageItems;
+			}
+			set
+			{
+				this._QuoteStorageItems.Assign(value);
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="BillingInterval_StorageItem", Storage="_StorageItems", ThisKey="ID", OtherKey="BillingIntervalID")]
 		public EntitySet<StorageItem> StorageItems
 		{
@@ -1549,6 +1565,18 @@ namespace SingerDispatch
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
+		}
+		
+		private void attach_QuoteStorageItems(QuoteStorageItem entity)
+		{
+			this.SendPropertyChanging();
+			entity.BillingInterval = this;
+		}
+		
+		private void detach_QuoteStorageItems(QuoteStorageItem entity)
+		{
+			this.SendPropertyChanging();
+			entity.BillingInterval = null;
 		}
 		
 		private void attach_StorageItems(StorageItem entity)
@@ -12384,6 +12412,8 @@ namespace SingerDispatch
 		
 		private System.Nullable<long> _QuoteCommodityID;
 		
+		private System.Nullable<long> _BillingIntervalID;
+		
 		private System.Nullable<decimal> _Price;
 		
 		private string _Notes;
@@ -12391,6 +12421,8 @@ namespace SingerDispatch
 		private EntityRef<Quote> _Quote;
 		
 		private EntityRef<QuoteCommodity> _Commodity;
+		
+		private EntityRef<BillingInterval> _BillingInterval;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -12402,6 +12434,8 @@ namespace SingerDispatch
     partial void OnQuoteIDChanged();
     partial void OnQuoteCommodityIDChanging(System.Nullable<long> value);
     partial void OnQuoteCommodityIDChanged();
+    partial void OnBillingIntervalIDChanging(System.Nullable<long> value);
+    partial void OnBillingIntervalIDChanged();
     partial void OnPriceChanging(System.Nullable<decimal> value);
     partial void OnPriceChanged();
     partial void OnNotesChanging(string value);
@@ -12412,6 +12446,7 @@ namespace SingerDispatch
 		{
 			this._Quote = default(EntityRef<Quote>);
 			this._Commodity = default(EntityRef<QuoteCommodity>);
+			this._BillingInterval = default(EntityRef<BillingInterval>);
 			OnCreated();
 		}
 		
@@ -12479,6 +12514,30 @@ namespace SingerDispatch
 					this._QuoteCommodityID = value;
 					this.SendPropertyChanged("QuoteCommodityID");
 					this.OnQuoteCommodityIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BillingIntervalID")]
+		public System.Nullable<long> BillingIntervalID
+		{
+			get
+			{
+				return this._BillingIntervalID;
+			}
+			set
+			{
+				if ((this._BillingIntervalID != value))
+				{
+					if (this._BillingInterval.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnBillingIntervalIDChanging(value);
+					this.SendPropertyChanging();
+					this._BillingIntervalID = value;
+					this.SendPropertyChanged("BillingIntervalID");
+					this.OnBillingIntervalIDChanged();
 				}
 			}
 		}
@@ -12587,6 +12646,40 @@ namespace SingerDispatch
 						this._QuoteCommodityID = default(Nullable<long>);
 					}
 					this.SendPropertyChanged("Commodity");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="BillingInterval_QuoteStorageItem", Storage="_BillingInterval", ThisKey="BillingIntervalID", OtherKey="ID", IsForeignKey=true)]
+		public BillingInterval BillingInterval
+		{
+			get
+			{
+				return this._BillingInterval.Entity;
+			}
+			set
+			{
+				BillingInterval previousValue = this._BillingInterval.Entity;
+				if (((previousValue != value) 
+							|| (this._BillingInterval.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._BillingInterval.Entity = null;
+						previousValue.QuoteStorageItems.Remove(this);
+					}
+					this._BillingInterval.Entity = value;
+					if ((value != null))
+					{
+						value.QuoteStorageItems.Add(this);
+						this._BillingIntervalID = value.ID;
+					}
+					else
+					{
+						this._BillingIntervalID = default(Nullable<long>);
+					}
+					this.SendPropertyChanged("BillingInterval");
 				}
 			}
 		}

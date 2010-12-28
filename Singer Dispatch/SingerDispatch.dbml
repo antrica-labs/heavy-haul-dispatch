@@ -43,6 +43,7 @@
       <Column Name="ID" Type="System.Int64" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Name" Type="System.String" CanBeNull="true" />
       <Association Name="BillingInterval_StorageItem" Member="StorageItems" ThisKey="ID" OtherKey="BillingIntervalID" Type="StorageItem" />
+      <Association Name="BillingInterval_QuoteStorageItem" Member="QuoteStorageItems" ThisKey="ID" OtherKey="BillingIntervalID" Type="QuoteStorageItem" />
     </Type>
   </Table>
   <Table Name="" Member="Commodities">
@@ -509,10 +510,12 @@
       <Column Name="ID" Type="System.Int64" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="QuoteID" Type="System.Int64" CanBeNull="true" />
       <Column Name="QuoteCommodityID" Type="System.Int64" CanBeNull="true" />
+      <Column Name="BillingIntervalID" Type="System.Int64" CanBeNull="true" />
       <Column Name="Price" Type="System.Decimal" CanBeNull="true" />
       <Column Name="Notes" Type="System.String" CanBeNull="true" />      
       <Association Name="Quote_QuoteStorageItem" Member="Quote" ThisKey="QuoteID" OtherKey="ID" Type="Quote" IsForeignKey="true" />
       <Association Name="QuoteCommodity_QuoteStorageItem" Member="Commodity" ThisKey="QuoteCommodityID" OtherKey="ID" Type="QuoteCommodity" IsForeignKey="true" />
+      <Association Name="BillingInterval_QuoteStorageItem" Member="BillingInterval" ThisKey="BillingIntervalID" OtherKey="ID" Type="BillingInterval" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="" Member="Inclusions">

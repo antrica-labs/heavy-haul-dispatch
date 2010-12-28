@@ -19,6 +19,8 @@ namespace SingerDispatch.Panels.Quotes
             if (InDesignMode()) return;
 
             Database = SingerConfigs.CommonDataContext;
+
+            cmbBillingIntervals.ItemsSource = from bi in Database.BillingIntervals select bi;
         }
 
         private void Control_Loaded(object sender, RoutedEventArgs e)

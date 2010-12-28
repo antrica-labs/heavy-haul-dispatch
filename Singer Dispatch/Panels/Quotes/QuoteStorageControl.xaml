@@ -39,7 +39,7 @@
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition />
                         <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition />
+                        <ColumnDefinition Width="1.5*" />
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition />
@@ -59,7 +59,15 @@
                     </ComboBox>
                     
                     <Label Grid.Column="6" Grid.Row="0">Price:</Label>
-                    <TextBox Grid.Column="7" Grid.Row="0" Text="{Binding Price, StringFormat=C, Converter={StaticResource NullableValueConverter}}" Controls:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" />
+                    <Grid Grid.Column="7" Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="1.4*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBox Grid.Column="0" Text="{Binding Price, StringFormat=C, Converter={StaticResource NullableValueConverter}}" Controls:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" />
+                        <ComboBox Grid.Column="1" Name="cmbBillingIntervals" SelectedItem="{Binding BillingInterval}" ItemTemplate="{StaticResource SimpleNameTemplate}" IsEditable="False" />
+                    </Grid>                    
                     
                     <Label Grid.Column="0" Grid.Row="1">Length:</Label>
                     <TextBox Grid.Column="1" Grid.Row="1" Controls:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text">

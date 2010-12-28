@@ -115,7 +115,6 @@
 
                                         <TextBox Grid.Column="0" Text="{Binding BillingRate, StringFormat=C}" Controls:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" />
                                         <ComboBox Grid.Column="1" Name="cmbBillingIntervals" SelectedItem="{Binding BillingInterval}" ItemTemplate="{StaticResource SimpleNameTemplate}" IsEditable="False" />
-
                                     </Grid>
 
                                     <Label Grid.Column="0" Grid.Row="2">Date in/out:</Label>

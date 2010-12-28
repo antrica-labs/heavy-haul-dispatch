@@ -481,7 +481,7 @@ namespace SingerDispatch.Printing.Documents
                                 <th class=""name"">Item Description</th>
                                 <th class=""dimensions"">Dimensions (LxWxH)</th>
                                 <th class=""weight"">Weight</th>
-                                <th class=""price"">Price per Month</th>                    
+                                <th class=""price"">Price</th>                    
                             </tr>
                         </thead>
                         <tbody>
@@ -536,7 +536,11 @@ namespace SingerDispatch.Printing.Documents
                 rowReps[0] = item.Commodity.NameAndUnit;
                 rowReps[1] = string.Format("{0} x {1} x {2} (LxWxH)", MeasurementFormater.FromMetres(item.Commodity.Length, lengthUnit), MeasurementFormater.FromMetres(item.Commodity.Width, lengthUnit), MeasurementFormater.FromMetres(item.Commodity.Height, lengthUnit));
                 rowReps[2] = string.Format("{0}", MeasurementFormater.FromKilograms(item.Commodity.Weight, weightUnit));
-                rowReps[3] = string.Format("{0:C}", item.Price);
+                
+                if (item.BillingInterval == null)
+                    rowReps[3] = string.Format("{0:C}", item.Price);
+                else
+                    rowReps[3] = string.Format("{0:C} ({1})", item.Price, item.BillingInterval.Name);
 
                 if (!string.IsNullOrEmpty(item.Notes))
                 {
