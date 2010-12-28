@@ -115,5 +115,18 @@ namespace SingerDispatch.Panels.Loads
 
             cmb.SelectedItem = contact;
         }
+
+        private void UpdateServices_Click(object sender, RoutedEventArgs e)
+        {
+            var cmb = (ComboBox)((Button)sender).DataContext;
+            var tpservice = (ThirdPartyService)dgServices.SelectedItem;
+
+            if (SelectedLoad == null || tpservice == null || tpservice.Company == null) return;
+
+            var window = new CompanyServicesWindow(Database, tpservice.Company) { Owner = Application.Current.MainWindow };
+            var services = window.UpdateServices();
+
+            cmb.ItemsSource = new ObservableCollection<ServiceType>(from s in services select s.ServiceType);
+        }
     }
 }
