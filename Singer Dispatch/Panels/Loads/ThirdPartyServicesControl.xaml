@@ -45,13 +45,22 @@
                     </Grid.RowDefinitions>                    
 
                     <Label Grid.Row="0" Grid.Column="0">Company:</Label>
-                    <ComboBox Name="cmbCompanies" Grid.Row="0" Grid.Column="1" ItemsSource="{Binding ElementName=ThePanel,Path=CompanyList}" SelectedItem="{Binding Company}" TextSearch.TextPath="Name" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectionChanged="ServiceCompany_SelectionChanged" Controls:ComboUtil.AllowNull="True" />
+                    <ComboBox Name="cmbCompanies" Grid.Row="0" Grid.Column="1" SelectedItem="{Binding Company}" ItemsSource="{Binding ElementName=ThePanel,Path=CompanyList}" TextSearch.TextPath="Name" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectionChanged="ServiceCompany_SelectionChanged" Controls:ComboUtil.AllowNull="True" />
 
                     <Label Grid.Row="1" Grid.Column="0">Service type:</Label>
-                    <ComboBox Name="cmbServiceTypes" Grid.Row="1" Grid.Column="1" SelectedItem="{Binding ServiceType}" ItemsSource="{Binding Company.Services}" ItemTemplate="{StaticResource SimpleNameTemplate}" TextSearch.TextPath="Name" Controls:ComboUtil.AllowNull="True" />
+                    <ComboBox Name="cmbServiceTypes" Grid.Row="1" Grid.Column="1" SelectedItem="{Binding ServiceType}" ItemTemplate="{StaticResource SimpleNameTemplate}" TextSearch.TextPath="Name" Controls:ComboUtil.AllowNull="True" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgServices, Path=SelectedItem.Company}"  />
 
                     <Label Grid.Row="2" Grid.Column="0">Contact:</Label>
-                    <ComboBox Name="cmbContacts" Grid.Row="2" Grid.Column="1" SelectedItem="{Binding Contact}" ItemsSource="{Binding Company.Contacts}" ItemTemplate="{StaticResource SimpleNameTemplate}" TextSearch.TextPath="Name" />
+                    <Grid Grid.Row="2" Grid.Column="1" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgServices, Path=SelectedItem.Company}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <ComboBox Name="cmbContacts" Grid.Column="0" SelectedItem="{Binding Contact}" ItemTemplate="{StaticResource SimpleNameTemplate}" TextSearch.TextPath="Name" />
+                        <Button Grid.Column="1" Style="{StaticResource Standard}" Click="AddContact_Click" DataContext="{Binding ElementName=cmbContacts}">Add</Button>
+                    </Grid>
+                    
 
                     <Label Grid.Row="3" Grid.Column="0">Location:</Label>
                     <TextBox Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Location}" />

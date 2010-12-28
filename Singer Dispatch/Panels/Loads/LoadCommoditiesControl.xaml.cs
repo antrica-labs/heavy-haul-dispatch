@@ -518,6 +518,8 @@ namespace SingerDispatch.Panels.Loads
 
         private void cmbCommodityName_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if (SelectedLoad == null) return;
+
             SelectedLoad.Notify("LoadedCommodities");
         }
 
