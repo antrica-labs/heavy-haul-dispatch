@@ -48,7 +48,7 @@
                     </Grid.RowDefinitions>
                     
                     <Label Grid.Column="0" Grid.Row="0">Commodity:</Label>
-                    <ComboBox Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="5" Name="cmbCommodities" ItemTemplate="{StaticResource NameAndUnitTemplate}" TextSearch.TextPath="Name" Controls:ComboUtil.AllowNull="True">
+                    <ComboBox Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="5" Name="cmbCommodities" ItemTemplate="{StaticResource NameAndUnitTemplate}" TextSearch.TextPath="Name" IsEditable="False" Controls:ComboUtil.AllowNull="True">
                         <ComboBox.SelectedItem>
                             <Binding Path="Commodity">
                                 <Binding.ValidationRules>

@@ -24,7 +24,7 @@ namespace SingerDispatch.Panels.Quotes
         private void Control_Loaded(object sender, RoutedEventArgs e)
         {
             // refresh the commodity list
-            cmbCommodities.ItemsSource = (SelectedQuote == null) ? null : SelectedQuote.QuoteCommodities;
+            cmbCommodities.ItemsSource = (SelectedQuote == null) ? null : SelectedQuote.QuoteCommodities.ToList();
         }
 
         protected override void SelectedQuoteChanged(Quote newValue, Quote oldValue)
