@@ -49,6 +49,7 @@ namespace SingerDispatch.Panels.Storage
             if (InDesignMode()) return;
                         
             dgStorageItems.ItemsSource = new ObservableCollection<StorageItem>(from si in Database.StorageItems where si.IsVisible == true select si);
+            UpdateComboBoxes();
         }
         
         private void CommitJobChanges_Executed(object sender, ExecutedRoutedEventArgs e)
@@ -117,10 +118,18 @@ namespace SingerDispatch.Panels.Storage
 
         private void Company_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var company = (Company)((ComboBox)sender).SelectedItem;
+            UpdateComboBoxes();
+        }
+
+        private void UpdateComboBoxes()
+        {   
+            var company = (Company)cmbCompanies.SelectedItem;
 
             if (company != null)
+            {
                 cmbCommodities.ItemsSource = new ObservableCollection<Commodity>(company.Commodities);
+                cmbContacts.ItemsSource = new ObservableCollection<Contact>(company.Contacts);
+            }
         }
 
         private void QuickAddCommodity_Click(object sender, RoutedEventArgs e)
@@ -160,6 +169,26 @@ namespace SingerDispatch.Panels.Storage
             {
                 ErrorNoticeWindow.ShowError("Error while adding company to database", ex.Message);
             }
+        }
+
+        private void AddContact_Click(object sender, RoutedEventArgs e)
+        {
+            var cmb = (ComboBox)((Button)sender).DataContext;
+            var item = (StorageItem)dgStorageItems.SelectedItem;
+
+            if (item != null || item.Company == null) return;
+
+            var window = new CreateContactWindow(Database, item.Company, null) { Owner = Application.Current.MainWindow };
+            var contact = window.CreateContact();
+
+            if (contact == null || contact.Company == null) return;
+
+            var list = (ObservableCollection<Contact>)cmb.ItemsSource;
+
+            contact.Company.Contacts.Add(contact);
+            list.Add(contact);
+
+            cmb.SelectedItem = contact;
         }
     }
 }

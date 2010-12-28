@@ -3081,6 +3081,8 @@ namespace SingerDispatch
 		
 		private EntitySet<Invoice> _Invoices;
 		
+		private EntitySet<StorageItem> _StorageItems;
+		
 		private EntityRef<Company> _Company;
 		
 		private EntityRef<ContactMethod> _PreferedContactMethod;
@@ -3122,6 +3124,7 @@ namespace SingerDispatch
 			this._Quotes = new EntitySet<Quote>(new Action<Quote>(this.attach_Quotes), new Action<Quote>(this.detach_Quotes));
 			this._ThirdPartyServices = new EntitySet<ThirdPartyService>(new Action<ThirdPartyService>(this.attach_ThirdPartyServices), new Action<ThirdPartyService>(this.detach_ThirdPartyServices));
 			this._Invoices = new EntitySet<Invoice>(new Action<Invoice>(this.attach_Invoices), new Action<Invoice>(this.detach_Invoices));
+			this._StorageItems = new EntitySet<StorageItem>(new Action<StorageItem>(this.attach_StorageItems), new Action<StorageItem>(this.detach_StorageItems));
 			this._Company = default(EntityRef<Company>);
 			this._PreferedContactMethod = default(EntityRef<ContactMethod>);
 			OnCreated();
@@ -3452,6 +3455,19 @@ namespace SingerDispatch
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Contact_StorageItem", Storage="_StorageItems", ThisKey="ID", OtherKey="ContactID")]
+		public EntitySet<StorageItem> StorageItems
+		{
+			get
+			{
+				return this._StorageItems;
+			}
+			set
+			{
+				this._StorageItems.Assign(value);
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Company_Contact", Storage="_Company", ThisKey="CompanyID", OtherKey="ID", IsForeignKey=true)]
 		public Company Company
 		{
@@ -3643,6 +3659,18 @@ namespace SingerDispatch
 		}
 		
 		private void detach_Invoices(Invoice entity)
+		{
+			this.SendPropertyChanging();
+			entity.Contact = null;
+		}
+		
+		private void attach_StorageItems(StorageItem entity)
+		{
+			this.SendPropertyChanging();
+			entity.Contact = this;
+		}
+		
+		private void detach_StorageItems(StorageItem entity)
 		{
 			this.SendPropertyChanging();
 			entity.Contact = null;
@@ -18510,6 +18538,8 @@ namespace SingerDispatch
 		
 		private System.Nullable<long> _CommodityID;
 		
+		private System.Nullable<long> _ContactID;
+		
 		private System.Nullable<long> _BillingIntervalID;
 		
 		private System.Nullable<System.DateTime> _DateEntered;
@@ -18530,6 +18560,8 @@ namespace SingerDispatch
 		
 		private EntityRef<Commodity> _Commodity;
 		
+		private EntityRef<Contact> _Contact;
+		
 		private EntityRef<BillingInterval> _BillingInterval;
 		
     #region Extensibility Method Definitions
@@ -18544,6 +18576,8 @@ namespace SingerDispatch
     partial void OnCompanyIDChanged();
     partial void OnCommodityIDChanging(System.Nullable<long> value);
     partial void OnCommodityIDChanged();
+    partial void OnContactIDChanging(System.Nullable<long> value);
+    partial void OnContactIDChanged();
     partial void OnBillingIntervalIDChanging(System.Nullable<long> value);
     partial void OnBillingIntervalIDChanged();
     partial void OnDateEnteredChanging(System.Nullable<System.DateTime> value);
@@ -18566,6 +18600,7 @@ namespace SingerDispatch
 		{
 			this._Company = default(EntityRef<Company>);
 			this._Commodity = default(EntityRef<Commodity>);
+			this._Contact = default(EntityRef<Contact>);
 			this._BillingInterval = default(EntityRef<BillingInterval>);
 			OnCreated();
 		}
@@ -18654,6 +18689,30 @@ namespace SingerDispatch
 					this._CommodityID = value;
 					this.SendPropertyChanged("CommodityID");
 					this.OnCommodityIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ContactID")]
+		public System.Nullable<long> ContactID
+		{
+			get
+			{
+				return this._ContactID;
+			}
+			set
+			{
+				if ((this._ContactID != value))
+				{
+					if (this._Contact.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnContactIDChanging(value);
+					this.SendPropertyChanging();
+					this._ContactID = value;
+					this.SendPropertyChanged("ContactID");
+					this.OnContactIDChanged();
 				}
 			}
 		}
@@ -18886,6 +18945,40 @@ namespace SingerDispatch
 						this._CommodityID = default(Nullable<long>);
 					}
 					this.SendPropertyChanged("Commodity");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Contact_StorageItem", Storage="_Contact", ThisKey="ContactID", OtherKey="ID", IsForeignKey=true)]
+		public Contact Contact
+		{
+			get
+			{
+				return this._Contact.Entity;
+			}
+			set
+			{
+				Contact previousValue = this._Contact.Entity;
+				if (((previousValue != value) 
+							|| (this._Contact.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Contact.Entity = null;
+						previousValue.StorageItems.Remove(this);
+					}
+					this._Contact.Entity = value;
+					if ((value != null))
+					{
+						value.StorageItems.Add(this);
+						this._ContactID = value.ID;
+					}
+					else
+					{
+						this._ContactID = default(Nullable<long>);
+					}
+					this.SendPropertyChanged("Contact");
 				}
 			}
 		}

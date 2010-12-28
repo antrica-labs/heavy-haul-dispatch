@@ -130,7 +130,8 @@
       <Association Name="Contact_LoadedCommodity_LoadSite" Member="LoadSiteCommodities" OtherKey="LoadSiteContactID" ThisKey="ID" Type="LoadedCommodity" />
       <Association Name="Contact_LoadedCommodity_UnloadSite" Member="UnloadSiteCommodities" OtherKey="UnloadSiteContactID" ThisKey="ID" Type="LoadedCommodity" />
       <Association Name="Contact_LoadedCommodity_Load" Member="LoadedCommodities" OtherKey="LoadContactID" ThisKey="ID" Type="LoadedCommodity" />
-      <Association Name="Contact_LoadedCommodity_Unload" Member="UnloadedCommodities" OtherKey="UnloadContactID" ThisKey="ID" Type="LoadedCommodity" />      
+      <Association Name="Contact_LoadedCommodity_Unload" Member="UnloadedCommodities" OtherKey="UnloadContactID" ThisKey="ID" Type="LoadedCommodity" />
+      <Association Name="Contact_StorageItem" Member="StorageItems" OtherKey="ContactID" ThisKey="ID" Type="StorageItem" />
     </Type>
   </Table>
   <Table Name="" Member="ContactRoles">
@@ -805,6 +806,7 @@
       <Column Name="IsVisible" Type="System.Boolean" CanBeNull="true"/>
       <Column Name="CompanyID" Type="System.Int64" CanBeNull="true" />
       <Column Name="CommodityID" Type="System.Int64" CanBeNull="true" />
+      <Column Name="ContactID" Type="System.Int64" CanBeNull="true" />
       <Column Name="BillingIntervalID" Type="System.Int64" CanBeNull="true" />
       <Column Name="DateEntered" Type="System.DateTime" CanBeNull="true" />
       <Column Name="DateRemoved" Type="System.DateTime" CanBeNull="true" />
@@ -815,6 +817,7 @@
       <Column Name="Notes" Type="System.String" CanBeNull="true" />
       <Association Name="Company_StorageItem" Member="Company" ThisKey="CompanyID" OtherKey="ID" Type="Company" IsForeignKey="true" />
       <Association Name="Commodity_StorageItem" Member="Commodity" ThisKey="CommodityID" OtherKey="ID" Type="Commodity" IsForeignKey="true" />
+      <Association Name="Contact_StorageItem" Member="Contact" ThisKey="ContactID" OtherKey="ID" Type="Contact" IsForeignKey="true" />
       <Association Name="BillingInterval_StorageItem" Member="BillingInterval" ThisKey="BillingIntervalID" OtherKey="ID" Type="BillingInterval" IsForeignKey="true" />
     </Type>
   </Table>
