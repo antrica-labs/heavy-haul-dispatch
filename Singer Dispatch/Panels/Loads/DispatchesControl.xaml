@@ -116,7 +116,7 @@
                     <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding DepartingUnits}" />
                     
                     <Label Grid.Row="5" Grid.Column="0">Description:</Label>
-                    <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding Description}" Style="{StaticResource AutoFilled}" Height="60" />
+                    <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding Description}" Height="60" />
 
                     <Label Grid.Row="6" Grid.Column="0">Schedule:</Label>
                     <TextBox Grid.Row="6" Grid.Column="1" Text="{Binding Schedule}" Style="{StaticResource MultiLine}" Height="60" />

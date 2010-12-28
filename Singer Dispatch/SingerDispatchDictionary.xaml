@@ -105,8 +105,10 @@
         <Setter Property="Margin" Value="3" />
         <EventSetter Event="GotMouseCapture" Handler="TextBox_GotKeyboardFocus"/>
         <EventSetter Event="GotFocus" Handler="TextBox_GotKeyboardFocus" />
+        <EventSetter Event="TextChanged" Handler="TextBox_TextChanged" />
+        <EventSetter Event="LostFocus" Handler="InputControl_LostFocus" />
     </Style>
-
+    
     <Style TargetType="TextBox" x:Key="BadInfo" BasedOn="{StaticResource {x:Type TextBox}}">
         <Setter Property="Foreground" Value="Red" />
     </Style>
@@ -114,33 +116,45 @@
     <Style TargetType="TextBox" x:Key="GoodInfo" BasedOn="{StaticResource {x:Type TextBox}}">
     </Style>
 
-    <Style TargetType="{x:Type AC:CompletableTextBox}">
-        <Setter Property="Margin" Value="3" />
-        <EventSetter Event="GotMouseCapture" Handler="TextBox_GotKeyboardFocus"/>
-        <EventSetter Event="GotFocus" Handler="TextBox_GotKeyboardFocus" />
-    </Style>
-
-    <Style TargetType="TextBox" x:Key="LongText">
-        <Setter Property="Margin" Value="3" />
+    <Style TargetType="TextBox" x:Key="LongText" BasedOn="{StaticResource {x:Type TextBox}}">        
         <Setter Property="TextWrapping" Value="Wrap" />
     </Style>
 
-    <Style TargetType="TextBox" x:Key="AutoFilled">
-        <Setter Property="Margin" Value="3" />
+    <Style TargetType="TextBox" x:Key="MultiLine" BasedOn="{StaticResource {x:Type TextBox}}">
+        <Setter Property="Height" Value="40" />        
+        <Setter Property="TextWrapping" Value="Wrap" />
+        <Setter Property="AcceptsReturn" Value="True" />
+        <Setter Property="VerticalScrollBarVisibility" Value="Visible" />
     </Style>
 
     <Style TargetType="TextBox" x:Key="ReadOnly">
         <Setter Property="Margin" Value="3" />
         <Setter Property="Background" Value="LightYellow" />
     </Style>
-    
+
+    <Style TargetType="{x:Type AC:CompletableTextBox}">
+        <Setter Property="Margin" Value="3" />
+    </Style>
+
     <Style TargetType="ComboBox">
         <Setter Property="Margin" Value="3" />
         <Setter Property="IsEditable" Value="True" />
+        <EventSetter Event="SelectionChanged" Handler="ComboBox_SelectionChanged" />
+        <EventSetter Event="LostFocus" Handler="InputControl_LostFocus" />
     </Style>
     
     <Style TargetType="CheckBox">
         <Setter Property="Margin" Value="3,6,0,0" />
+        <EventSetter Event="Click" Handler="CheckBox_Click" />
+        <EventSetter Event="LostFocus" Handler="InputControl_LostFocus" />
+    </Style>
+
+    <Style TargetType="{x:Type DatePicker}">
+        <Setter Property="Margin" Value="3" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="Background" Value="White" />
+        <EventSetter Event="SelectedDateChanged" Handler="DatePicker_SelectedDateChanged" />
+        <EventSetter Event="LostFocus" Handler="InputControl_LostFocus" />
     </Style>
 
     <Style TargetType="ColumnDefinition" x:Key="CheckBoxColumn">
@@ -169,14 +183,6 @@
     
     <Style TargetType="Button" x:Key="VerticalEnd">
         <Setter Property="Margin" Value="0,0,0,0" />
-    </Style>    
-    
-    <Style TargetType="TextBox" x:Key="MultiLine">        
-        <Setter Property="Height" Value="40" />
-        <Setter Property="Margin" Value="3" />
-        <Setter Property="TextWrapping" Value="Wrap" />
-        <Setter Property="AcceptsReturn" Value="True" />
-        <Setter Property="VerticalScrollBarVisibility" Value="Visible" />
     </Style>
 
     <Style x:Key="Heading" TargetType="Label">
@@ -248,12 +254,6 @@
         </Style.Resources>
 
         <Setter Property="Margin" Value="3" />
-    </Style>
-
-    <Style TargetType="{x:Type DatePicker}">
-        <Setter Property="Margin" Value="3" />
-        <Setter Property="Padding" Value="0" />
-        <Setter Property="Background" Value="White" />
     </Style>
 
     <BitmapImage x:Key="DragInsertImage" UriSource="Images/DragInsert.png" />

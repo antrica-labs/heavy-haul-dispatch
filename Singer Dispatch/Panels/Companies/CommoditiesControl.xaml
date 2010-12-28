@@ -135,7 +135,7 @@
                 </Grid>
             </GroupBox>
 
-            <Button Style="{StaticResource Bottom}" Name="CommitChangesButton" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgCommodities, Path=SelectedItem}" Click="SaveCommodity_Click">Save commodity</Button>
+            <Button Visibility="Collapsed"  Style="{StaticResource Bottom}" Name="CommitChangesButton" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgCommodities, Path=SelectedItem}" Click="SaveCommodity_Click">Save commodity</Button>
         </StackPanel>
 
 

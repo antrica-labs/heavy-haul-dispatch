@@ -175,14 +175,6 @@ namespace SingerDispatch.Panels.Companies
 
         private void NewContact_Click(object sender, RoutedEventArgs e)
         {
-            var address = (Address)dgAddresses.SelectedItem;
-
-            if (address == null)
-            {
-                MessageBox.Show("You must select an address from the address list before you can add or edit any contacts.");
-                return;
-            }
-
             var contact = new Contact();
 
             SelectedCompany.Contacts.Add(contact);

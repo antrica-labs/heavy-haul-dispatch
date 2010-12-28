@@ -192,8 +192,8 @@
                         <GroupBox Header="Notes" DataContext="{Binding ElementName=dgStorageItems, Path=SelectedItem}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgStorageItems, Path=SelectedItem}">
                             <TextBox Style="{StaticResource MultiLine}" Text="{Binding Notes}" />
                         </GroupBox>
-                        
-                        <Button Name="CommitChangesButton" Style="{StaticResource HorizontalEnd}" Click="CommitChangesButton_Click" LostFocus="CommitChangesButton_LostFocus">Save changes</Button>                        
+
+                        <Button Visibility="Collapsed" Name="CommitChangesButton" Style="{StaticResource HorizontalEnd}" Click="CommitChangesButton_Click" LostFocus="CommitChangesButton_LostFocus">Save changes</Button>                        
                     </StackPanel>
 
                     <DataGrid Name="dgStorageItems" Style="{StaticResource ListDisplay}">

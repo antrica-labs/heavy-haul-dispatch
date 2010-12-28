@@ -141,6 +141,15 @@ namespace SingerDispatch
 
         private void Window_Closing(object sender, CancelEventArgs e)
         {
+            try
+            {
+                Database.SubmitChanges();                
+            }
+            catch (System.Exception ex)
+            {
+                Windows.ErrorNoticeWindow.ShowError("Error while attempting to write changes to database", ex.Message);
+            }
+
             Settings.MainWindowPlacement = WindowPlacement.GetPlacement(new WindowInteropHelper(this).Handle);
             Settings.Save();
         }

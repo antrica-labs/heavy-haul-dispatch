@@ -33,7 +33,7 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition />
-                        <ColumnDefinition />
+                        <ColumnDefinition Width="0.60*" />
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition />
@@ -48,16 +48,15 @@
                     <ComboBox Name="cmbCompanies" Grid.Row="0" Grid.Column="1" SelectedItem="{Binding Company}" ItemsSource="{Binding ElementName=ThePanel,Path=CompanyList}" TextSearch.TextPath="Name" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectionChanged="ServiceCompany_SelectionChanged" Controls:ComboUtil.AllowNull="True" />
 
                     <Label Grid.Row="1" Grid.Column="0">Service type:</Label>
-                    <Grid Grid.Row="1" Grid.Column="1">
+                    <Grid Grid.Row="1" Grid.Column="1" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgServices, Path=SelectedItem.Company}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition />
                             <ColumnDefinition Width="Auto" />                                 
                         </Grid.ColumnDefinitions>
 
                         <ComboBox Name="cmbServiceTypes" Grid.Column="0" SelectedItem="{Binding ServiceType}" ItemTemplate="{StaticResource SimpleNameTemplate}" TextSearch.TextPath="Name" Controls:ComboUtil.AllowNull="True" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgServices, Path=SelectedItem.Company}"  />
-                        <Button Grid.Column="1" Style="{StaticResource Standard}" Click="UpdateServices_Click" DataContext="{Binding ElementName=cmbServiceTypes}">Edit</Button>
+                        <Button Grid.Column="1" Style="{StaticResource Standard}" Click="UpdateServices_Click" DataContext="{Binding ElementName=cmbServiceTypes}">Add</Button>
                     </Grid>
-                    
 
                     <Label Grid.Row="2" Grid.Column="0">Contact:</Label>
                     <Grid Grid.Row="2" Grid.Column="1" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgServices, Path=SelectedItem.Company}">
@@ -80,7 +79,7 @@
                     <Label Grid.Row="5" Grid.Column="0">Notes:</Label>
                     <TextBox Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Notes}" Style="{StaticResource MultiLine}" Height="40" />
 
-                    <GroupBox Grid.Column="2" Grid.Row="0" Grid.RowSpan="3" Header="Departure" Margin="5,0,0,0">
+                    <GroupBox Grid.Column="2" Grid.Row="0" Grid.RowSpan="3" Header="Departure" Margin="3,0,0,0">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto" />

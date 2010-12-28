@@ -16,7 +16,7 @@
         </ResourceDictionary>
     </UserControl.Resources>    
     <DockPanel>
-        <Button DockPanel.Dock="Bottom" Style="{StaticResource Bottom}" Name="CommitChangesButton" Click="Save_Click">Save changes</Button>
+        <Button Visibility="Collapsed" DockPanel.Dock="Bottom" Style="{StaticResource Bottom}" Name="CommitChangesButton" Click="Save_Click">Save changes</Button>
     
         <StackPanel DockPanel.Dock="Bottom">
             <Grid>

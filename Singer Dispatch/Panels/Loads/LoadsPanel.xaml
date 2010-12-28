@@ -49,8 +49,9 @@
 
                     <Label>Job #:</Label>
                     <ComboBox Name="cmbJobList" Grid.Column="1" SelectedItem="{Binding ElementName=ThePanel, Path=SelectedJob}" TextSearch.TextPath="Number" ItemTemplate="{StaticResource SimpleJobTemplate}" />
-                    <Button Grid.Column="3" Style="{StaticResource Horizontal}" Click="EditJob_Click" IsEnabled="{Binding ElementName=ThePanel, Path=SelectedJob, Converter={StaticResource IsEnabledNullConverter}}">Edit job</Button>                    
-                    <Button Name="CommitChangesButton" Grid.Column="4" Style="{StaticResource HorizontalEnd}" Click="CommitChanges_Click" LostFocus="CommitChangesButton_LostFocus" IsEnabled="{Binding ElementName=ThePanel, Path=SelectedLoad, Converter={StaticResource IsEnabledNullConverter}}">Save changes</Button>
+                    <Button Grid.Column="3" Style="{StaticResource Horizontal}" Click="EditJob_Click" IsEnabled="{Binding ElementName=ThePanel, Path=SelectedJob, Converter={StaticResource IsEnabledNullConverter}}">Edit job</Button>
+                    <Button Visibility="Collapsed" Name="CommitChangesButton" Grid.Column="4" Style="{StaticResource HorizontalEnd}" Click="CommitChanges_Click" LostFocus="CommitChangesButton_LostFocus" IsEnabled="{Binding ElementName=ThePanel, Path=SelectedLoad, Converter={StaticResource IsEnabledNullConverter}}">Save changes</Button>
+                    <Button Grid.Column="4" Style="{StaticResource HorizontalEnd}" Click="ViewAllDispatches_Click" IsEnabled="{Binding ElementName=ThePanel, Path=SelectedLoad, Converter={StaticResource IsEnabledNullConverter}}">Vew dispatches</Button>
                 </Grid>
             </StackPanel>
         </Border>
@@ -76,7 +77,6 @@
         <StackPanel Grid.Column="0" Grid.Row="2" Margin="0,3,0,0">
             <Button Style="{StaticResource Vertical}" IsEnabled="{Binding ElementName=ThePanel, Path=SelectedJob, Converter={StaticResource IsEnabledNullConverter}}" Click="NewLoad_Click">New load</Button>
             <Button Style="{StaticResource Vertical}" IsEnabled="{Binding ElementName=ThePanel, Path=SelectedLoad, Converter={StaticResource IsEnabledNullConverter}}" Click="CopyLoad_Click">Copy load</Button>
-            <Button Style="{StaticResource Vertical}" IsEnabled="{Binding ElementName=ThePanel, Path=SelectedLoad, Converter={StaticResource IsEnabledNullConverter}}" Click="ViewAllDispatches_Click">Vew dispatches</Button>            
             <Button Style="{StaticResource VerticalEnd}" IsEnabled="{Binding ElementName=ThePanel, Path=SelectedLoad, Converter={StaticResource IsEnabledNullConverter}}" Click="DeleteLoad_Click">Delete load</Button>
         </StackPanel>
 
