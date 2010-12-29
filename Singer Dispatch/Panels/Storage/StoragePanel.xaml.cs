@@ -15,6 +15,7 @@ using SingerDispatch.Controls;
 using System.Windows.Controls.Primitives;
 using System.Collections.ObjectModel;
 using SingerDispatch.Windows;
+using SingerDispatch.Printing.Documents;
 
 namespace SingerDispatch.Panels.Storage
 {
@@ -176,7 +177,7 @@ namespace SingerDispatch.Panels.Storage
             var cmb = (ComboBox)((Button)sender).DataContext;
             var item = (StorageItem)dgStorageItems.SelectedItem;
 
-            if (item != null || item.Company == null) return;
+            if (item == null || item.Company == null) return;
 
             var window = new CreateContactWindow(Database, item.Company, null) { Owner = Application.Current.MainWindow };
             var contact = window.CreateContact();
@@ -189,6 +190,22 @@ namespace SingerDispatch.Panels.Storage
             list.Add(contact);
 
             cmb.SelectedItem = contact;
+        }
+
+        private void ViewStorageContract_Click(object sender, RoutedEventArgs e)
+        {
+            var item = (StorageItem)dgStorageItems.SelectedItem;
+
+            if (item == null || item.Company == null || item.Commodity == null)
+            {
+                Windows.ErrorNoticeWindow.ShowError("Unable to create storage contract", "Storage items need at least a company and commodity.");
+                return;
+            }
+
+            var title = String.Format("Storage Contract #{0}", item.ID);
+
+            var viewer = new Windows.DocumentViewerWindow(new StorageContractDocument(), item, title) { IsMetric = !UseImperialMeasurements, IsSpecializedDocument = item.Company.CustomerType.IsEnterprise != true };
+            viewer.DisplayPrintout();
         }
     }
 }

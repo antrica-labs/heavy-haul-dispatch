@@ -17,14 +17,36 @@ namespace SingerDispatch.Printing.Documents
         public override string GenerateHTML(object entity)
         {
             if (entity is Quote)
-            {
                 return GenerateHTML((Quote)entity);
-            }
+            else if (entity is StorageItem)
+                return GenerateHTML((StorageItem)entity);
             else
                 throw new Exception("Unknown enity type");
         }
 
+        public string GenerateHTML(StorageItem item)
+        {
+            var content = new StringBuilder();
+
+            content.Append(GenerateHeaderHTML());
+            content.Append(GenerateBodyHTML(item));
+            content.Append(GenerateFooterHTML());
+
+            return content.ToString();
+        }
+       
         public string GenerateHTML(Quote entity)
+        {
+            var content = new StringBuilder();
+
+            content.Append(GenerateHeaderHTML());            
+            content.Append(GenerateBodyHTML(entity));
+            content.Append(GenerateFooterHTML());
+
+            return content.ToString();
+        }
+
+        private string GenerateHeaderHTML()
         {
             var content = new StringBuilder();
 
@@ -36,8 +58,12 @@ namespace SingerDispatch.Printing.Documents
             content.Append("</head>");
             content.Append("<body>");
 
-            // Fill document body...
-            content.Append(GenerateBodyHTML(entity));
+            return content.ToString();
+        }
+
+        private string GenerateFooterHTML()
+        {
+            var content = new StringBuilder();
 
             content.Append("</body>");
             content.Append("</html>");
@@ -45,16 +71,43 @@ namespace SingerDispatch.Printing.Documents
             return content.ToString();
         }
 
-        public string GenerateBodyHTML(Quote entity)
+        public string GenerateBodyHTML(StorageItem item)
         {
             var content = new StringBuilder();
+            var documentNumber = string.Format("SC-{0}", item.ID);
 
-            var documentNumber = string.Format("QS{0}-{1}", entity.Number, entity.Revision);
+            Address address;
+
+            try
+            {
+                address = (from a in item.Company.Addresses where a.AddressType.Name == "Head Office" select a).First();
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Company needs a head office address before a storage contract can be printed from here.");
+            }
 
             content.Append(@"<div class=""storage_contract"">");
             content.Append(GetHeader(documentNumber));
-            content.Append(GetReferenceTable(entity));
-            content.Append(GetCommodities(entity));
+            content.Append(GetReferenceTable(item.Contact, address));
+            content.Append(GetCommodity(item));
+            content.Append(GetLegal());
+            content.Append(GetSignatures());
+            content.Append("</div>");
+
+            return content.ToString();
+        }
+
+        public string GenerateBodyHTML(Quote quote)
+        {
+            var content = new StringBuilder();
+
+            var documentNumber = string.Format("QS-{0}-{1}", quote.Number, quote.Revision);
+
+            content.Append(@"<div class=""storage_contract"">");
+            content.Append(GetHeader(documentNumber));
+            content.Append(GetReferenceTable(quote.Contact, quote.BillingAddress));
+            content.Append(GetCommodities(quote));
             content.Append(GetLegal());
             content.Append(GetSignatures());
             content.Append("</div>");
@@ -396,7 +449,7 @@ namespace SingerDispatch.Printing.Documents
             return string.Format(html, replacements);
         }
 
-        public string GetReferenceTable(Quote entity)
+        public string GetReferenceTable(Contact contact, Address address)
         {
             var html = @"
                 <div class=""reference"">
@@ -445,29 +498,66 @@ namespace SingerDispatch.Printing.Documents
             var replacements = new string[14];
 
             replacements[0] = DateTime.Now.ToString(SingerConfigs.PrintedDateFormatString);
-            replacements[1] = entity.Company.Name;
-            replacements[2] = (entity.Contact != null) ? entity.Contact.Name : "";
-            replacements[3] = (entity.Contact != null && !string.IsNullOrEmpty(entity.Contact.PrimaryPhone)) ? string.Format("Ph: {0}", entity.Contact.PrimaryPhone) : "";
-            replacements[4] = (entity.Contact != null && !string.IsNullOrEmpty(entity.Contact.Fax)) ? string.Format("Fax: {0}", entity.Contact.Fax) : "";
+            replacements[1] = (contact != null) ? contact.Company.Name : "";
+            replacements[2] = (contact != null) ? contact.Name : "";
+            replacements[3] = (contact != null && !string.IsNullOrEmpty(contact.PrimaryPhone)) ? string.Format("Ph: {0}", contact.PrimaryPhone) : "";
+            replacements[4] = (contact != null && !string.IsNullOrEmpty(contact.Fax)) ? string.Format("Fax: {0}", contact.Fax) : "";
             replacements[5] = SingerConfigs.GetConfig("SingerName") ?? "Singer Specialized Ltd.";
             replacements[6] = SingerConfigs.GetConfig("SingerAddress-StreetAddress");
             replacements[7] = SingerConfigs.GetConfig("SingerAddress-City");
-            replacements[8] = SingerConfigs.GetConfig("SingerAddress-Phone");                        
-            replacements[9] = entity.Company.Name;
-            replacements[10] = (entity.BillingAddress != null) ? entity.BillingAddress.Line1 : "";
-            replacements[11] = (entity.BillingAddress != null) ? entity.BillingAddress.Line2 : "";
+            replacements[8] = SingerConfigs.GetConfig("SingerAddress-Phone");
+            replacements[9] = (contact != null) ? contact.Company.Name : "";
+            replacements[10] = (address != null) ? address.Line1 : "";
+            replacements[11] = (address != null) ? address.Line2 : "";
 
-            var city = (entity.BillingAddress != null) ? entity.BillingAddress.City : "";
-            var prov = (entity.BillingAddress != null && entity.BillingAddress.ProvincesAndState != null) ? entity.BillingAddress.ProvincesAndState.Abbreviation : "";
-            var postal = (entity.BillingAddress != null) ? entity.BillingAddress.PostalZip : "";
+            var city = (address != null) ? address.City : "";
+            var prov = (address != null && address.ProvincesAndState != null) ? address.ProvincesAndState.Abbreviation : "";
+            var postal = (address != null) ? address.PostalZip : "";
 
-            replacements[12] = (entity.BillingAddress != null) ? string.Format("{0}, {1} {2}", city, prov, postal) : "";
-            replacements[12] = (entity.BillingAddress != null) ? entity.BillingAddress.PrimaryPhone : "";
+            replacements[12] = (address != null) ? string.Format("{0}, {1} {2}", city, prov, postal) : "";
+            replacements[12] = (address != null) ? address.PrimaryPhone : "";
 
             return string.Format(html, replacements);
         }
 
-        public string GetCommodities(Quote entity)
+        public string GetCommodities(Quote quote)
+        {
+            var html = GetCommodityListHTML();
+            var replacements = new string[3];
+            var rows = new StringBuilder();
+                     
+            foreach (var item in quote.QuoteStorageItems)
+            {
+                var commodity = item.Commodity;
+
+                rows.Append(GetCommodityRow(commodity.NameAndUnit, commodity.Length, commodity.Width, commodity.Height, commodity.Weight, item.Price, item.BillingInterval, item.Notes));             
+            }
+
+            replacements[0] = SingerConfigs.GetConfig("SingerName") ?? "Singer Specialized Ltd.";
+            replacements[1] = quote.Company.Name;
+            replacements[2] = rows.ToString();
+
+            return string.Format(html, replacements);           
+        }
+
+        public string GetCommodity(StorageItem item)
+        {
+            var html = GetCommodityListHTML();
+            var replacements = new string[3];
+            var rows = new StringBuilder();
+
+            var commodity = item.Commodity;
+
+            rows.Append(GetCommodityRow(commodity.NameAndUnit, commodity.Length, commodity.Width, commodity.Height, commodity.Weight, item.BillingRate, item.BillingInterval, item.Notes));            
+
+            replacements[0] = SingerConfigs.GetConfig("SingerName") ?? "Singer Specialized Ltd.";
+            replacements[1] = item.Company.Name;
+            replacements[2] = rows.ToString();
+
+            return string.Format(html, replacements);
+        }
+
+        private string GetCommodityListHTML()
         {
             var html = @"
                 <div class=""commodities"">
@@ -481,7 +571,7 @@ namespace SingerDispatch.Printing.Documents
                                 <th class=""name"">Item Description</th>
                                 <th class=""dimensions"">Dimensions (LxWxH)</th>
                                 <th class=""weight"">Weight</th>
-                                <th class=""price"">Price</th>                    
+                                <th class=""price"">Rate</th>                    
                             </tr>
                         </thead>
                         <tbody>
@@ -490,6 +580,12 @@ namespace SingerDispatch.Printing.Documents
                     </table>
                 </div>
             ";
+
+            return html;
+        }
+
+        private string GetCommodityRow(string name, double? length, double? width, double? height, double? weight, decimal? price, BillingInterval interval, string notes)
+        {
             var noNoteRow = @"
                 <tr class=""no_note"">
                     <td class=""name"">{0}</td>
@@ -508,12 +604,9 @@ namespace SingerDispatch.Printing.Documents
                 <tr class=""note"">
                     <td class=""note"" colspan=""4"">
                         {4}
-                        <p>Some note goes here. This is just a test note. Nothing really to see here.</p>
                     </td>
                 </tr>
             ";
-            var replacements = new string[3];
-            var rows = new StringBuilder();
 
             string lengthUnit, weightUnit;
 
@@ -528,37 +621,28 @@ namespace SingerDispatch.Printing.Documents
                 weightUnit = MeasurementFormater.UKilograms;
             }
 
-            foreach (var item in entity.QuoteStorageItems)
+            var size = (string.IsNullOrEmpty(notes)) ? 4 : 5;
+            var rowReps = new string[size];
+
+            rowReps[0] = name;
+            rowReps[1] = string.Format("{0} x {1} x {2} (LxWxH)", MeasurementFormater.FromMetres(length, lengthUnit), MeasurementFormater.FromMetres(width, lengthUnit), MeasurementFormater.FromMetres(height, lengthUnit));
+            rowReps[2] = string.Format("{0}", MeasurementFormater.FromKilograms(weight, weightUnit));
+
+            if (interval == null)
+                rowReps[3] = string.Format("{0:C}&nbsp;", price);
+            else
+                rowReps[3] = string.Format("{0:C} ({1})", price, interval.Name);
+
+            if (!string.IsNullOrEmpty(notes))
             {
-                var size = (string.IsNullOrEmpty(item.Notes)) ? 4 : 5;
-                var rowReps = new string[size];
+                rowReps[4] = notes;
 
-                rowReps[0] = item.Commodity.NameAndUnit;
-                rowReps[1] = string.Format("{0} x {1} x {2} (LxWxH)", MeasurementFormater.FromMetres(item.Commodity.Length, lengthUnit), MeasurementFormater.FromMetres(item.Commodity.Width, lengthUnit), MeasurementFormater.FromMetres(item.Commodity.Height, lengthUnit));
-                rowReps[2] = string.Format("{0}", MeasurementFormater.FromKilograms(item.Commodity.Weight, weightUnit));
-                
-                if (item.BillingInterval == null)
-                    rowReps[3] = string.Format("{0:C}", item.Price);
-                else
-                    rowReps[3] = string.Format("{0:C} ({1})", item.Price, item.BillingInterval.Name);
-
-                if (!string.IsNullOrEmpty(item.Notes))
-                {
-                    replacements[4] = item.Notes;
-
-                    rows.Append(string.Format(withNoteRow, rowReps));
-                }
-                else
-                {
-                    rows.Append(string.Format(noNoteRow, rowReps));
-                }                
+                return string.Format(withNoteRow, rowReps);
             }
-
-            replacements[0] = SingerConfigs.GetConfig("SingerName") ?? "Singer Specialized Ltd.";
-            replacements[1] = entity.Company.Name;
-            replacements[2] = rows.ToString();
-
-            return string.Format(html, replacements);           
+            else
+            {
+                return string.Format(noNoteRow, rowReps);
+            }       
         }
 
         private static string GetLegal()
@@ -599,6 +683,18 @@ namespace SingerDispatch.Printing.Documents
 
             return html;
         }
+    }
+
+    public class StoredItem
+    {
+        public string Name { get; set; }
+        public double? Length { get; set; }
+        public double? Width { get; set; }
+        public double? Height { get; set; }
+        public double? Weight { get; set; }
+        public decimal? Price { get; set; }
+        public BillingInterval Interval { get; set; }
+        public string Notes { get; set; }
     }
 }
 

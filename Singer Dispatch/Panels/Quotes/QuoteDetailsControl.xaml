@@ -203,7 +203,7 @@
                     </Grid.RowDefinitions>
 
                     <Label Grid.Column="0" Grid.Row="0">Company:</Label>
-                    <Label Grid.Column="1" Grid.Row="0" Content="{Binding Address.Company.Name}" />
+                    <Label Grid.Column="1" Grid.Row="0" Content="{Binding Company.Name}" />
 
                     <Label Grid.Column="0" Grid.Row="1">Email:</Label>
                     <Label Grid.Column="1" Grid.Row="1" Content="{Binding Email}" />

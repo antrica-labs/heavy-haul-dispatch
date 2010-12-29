@@ -25,10 +25,12 @@
                                 <ColumnDefinition />
                                 <ColumnDefinition />
                                 <ColumnDefinition />
+                                <ColumnDefinition />
                             </Grid.ColumnDefinitions>
 
                             <Button Grid.Column="0" Style="{StaticResource Horizontal}" Click="AddItem_Click">Add item</Button>
-                            <Button Grid.Column="3" Style="{StaticResource HorizontalEnd}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgStorageItems, Path=SelectedItem}" Click="RemoveItem_Click">Remove item</Button>
+                            <Button Grid.Column="2" Style="{StaticResource Horizontal}" Click="ViewStorageContract_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgStorageItems, Path=SelectedItem}">View contract</Button>
+                            <Button Grid.Column="4" Style="{StaticResource HorizontalEnd}" Click="RemoveItem_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgStorageItems, Path=SelectedItem}">Remove item</Button>
                         </Grid>
 
                         <Grid>
