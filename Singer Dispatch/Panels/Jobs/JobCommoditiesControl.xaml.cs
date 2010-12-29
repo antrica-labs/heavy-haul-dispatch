@@ -173,6 +173,22 @@ namespace SingerDispatch.Panels.Jobs
                 dgRecordedCommodities.ScrollIntoView(dgRecordedCommodities.SelectedItem);
         }
 
+        private void AddRecordedCommodity_Click(object sender, RoutedEventArgs e)
+        {
+            var commodities = (ObservableCollection<Commodity>)dgRecordedCommodities.ItemsSource;
+
+            if (SelectedJob == null) return;
+
+            var window = new CreateCommodityWindow(Database, SelectedJob.Company, SelectedJob.CareOfCompany) { Owner = Application.Current.MainWindow };
+            var commodity = window.CreateCommodity();
+
+            if (commodity == null) return;
+
+            commodities.Add(commodity);
+
+            dgRecordedCommodities.SelectedItem = commodity;
+        }
+
         
     }
 }

@@ -6,6 +6,7 @@ using System.Collections.ObjectModel;
 using System.Windows.Input;
 using System.Collections.Generic;
 using SingerDispatch.Controls;
+using SingerDispatch.Windows;
 
 namespace SingerDispatch.Panels.Quotes
 {
@@ -62,7 +63,7 @@ namespace SingerDispatch.Panels.Quotes
             if (dgRecordedCommodities.ActualHeight > 0.0)
             {
                 dgRecordedCommodities.MaxHeight = dgRecordedCommodities.ActualHeight;
-                dgRecordedCommodities.ItemsSource = (SelectedQuote == null) ? null : from c in Database.Commodities where c.Company == SelectedCompany || c.Company == SelectedQuote.CareOfCompany orderby c.Name, c.Unit select c;
+                dgRecordedCommodities.ItemsSource = (SelectedQuote == null) ? null : new ObservableCollection<Commodity>(from c in Database.Commodities where c.Company == SelectedCompany || c.Company == SelectedQuote.CareOfCompany orderby c.Name, c.Unit select c);
             }
             
             UpdateAddressesAndSites();
@@ -337,8 +338,21 @@ namespace SingerDispatch.Panels.Quotes
                 dgRecordedCommodities.ScrollIntoView(dgRecordedCommodities.SelectedItem);
         }
 
-        
+        private void AddRecordedCommodity_Click(object sender, RoutedEventArgs e)
+        {            
+            var commodities = (ObservableCollection<Commodity>)dgRecordedCommodities.ItemsSource;
 
+            if (SelectedQuote == null) return;
+
+            var window = new CreateCommodityWindow(Database, SelectedQuote.Company, SelectedQuote.CareOfCompany) { Owner = Application.Current.MainWindow };
+            var commodity = window.CreateCommodity();
+
+            if (commodity == null) return;
+                        
+            commodities.Add(commodity);
+
+            dgRecordedCommodities.SelectedItem = commodity;
+        }
     }
 }
 

@@ -22,13 +22,23 @@ namespace SingerDispatch.Windows
         private SingerDispatchDataContext _database;
         private Boolean _created;
 
-        public CreateCommodityWindow(SingerDispatchDataContext database)
+        public CreateCommodityWindow(SingerDispatchDataContext database, Company company, Company careOfCompany)
         {
             InitializeComponent();
 
             _database = database;
             _commodity = new Commodity();
             _created = false;
+
+            var list = new List<Company>();
+
+            list.Add(company);
+
+            if (careOfCompany != null)
+                list.Add(careOfCompany);
+
+            cmbCompanies.ItemsSource = list;
+            _commodity.Company = list.First();
 
             DataContext = _commodity;
         }

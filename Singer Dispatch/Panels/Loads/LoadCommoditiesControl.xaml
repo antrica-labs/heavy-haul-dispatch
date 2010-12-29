@@ -510,7 +510,7 @@
             </GroupBox>
         </StackPanel>
 
-        <Grid MouseLeftButtonUp="OnMouseLeftButtonUp" MouseMove="OnMouseMove" MinHeight="100">
+        <Grid MouseLeftButtonUp="OnMouseLeftButtonUp" MouseMove="OnMouseMove">
             <DataGrid Name="dgCommodities" Style="{StaticResource ListDisplay}" SelectionChanged="dgCommodities_SelectionChanged" PreviewMouseLeftButtonDown="OnMouseLeftButtonDown">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="#" Binding="{Binding OrderIndex}" Width="30" />

@@ -68,12 +68,16 @@
                     <TextBox Grid.Row="5" Grid.Column="1" Style="{StaticResource MultiLine}" Text="{Binding Notes}" />
 
                     <GroupBox Header="Recorded Commodity" Grid.Row="0" Grid.Column="2" Grid.RowSpan="6" Margin="5,0,0,0">
-                        <DataGrid Style="{StaticResource ListDisplay}" Name="dgRecordedCommodities" SelectedItem="{Binding OriginalCommodity}" DataGridRow.MouseDoubleClick="dgRecordedCommodities_MouseDoubleClick" SelectionChanged="dgRecordedCommodities_SelectionChanged">
-                            <DataGrid.Columns>
-                                <DataGridTextColumn Header="Name" Binding="{Binding Name}" />
-                                <DataGridTextColumn Header="Unit" Binding="{Binding Unit}" Width="0.5*" />
-                            </DataGrid.Columns>
-                        </DataGrid>
+                        <DockPanel>
+                            <Button Style="{StaticResource Standard}" DockPanel.Dock="Bottom" Click="AddRecordedCommodity_Click">Add recorded commodity</Button>
+                            
+                            <DataGrid Style="{StaticResource ListDisplay}" Name="dgRecordedCommodities" SelectedItem="{Binding OriginalCommodity}" DataGridRow.MouseDoubleClick="dgRecordedCommodities_MouseDoubleClick" SelectionChanged="dgRecordedCommodities_SelectionChanged">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="Name" Binding="{Binding Name}" />
+                                    <DataGridTextColumn Header="Unit" Binding="{Binding Unit}" Width="0.5*" />
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </DockPanel>
                     </GroupBox>
                 </Grid>
             </GroupBox>
