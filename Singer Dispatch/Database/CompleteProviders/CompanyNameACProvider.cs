@@ -20,7 +20,7 @@ namespace SingerDispatch.Database.CompleteProviders
         {
             if (textPattern.Length < 3) return null; // Don't bother returning results until more than 2 characters are entered.
 
-            var companies = from c in Companies where c.Name.ToUpper().Contains(textPattern.ToUpper()) orderby c.Name select c;
+            var companies = from c in Companies where c.Name != null && c.Name.ToUpper().Contains(textPattern.ToUpper()) orderby c.Name select c;
 
             return companies;
         }
