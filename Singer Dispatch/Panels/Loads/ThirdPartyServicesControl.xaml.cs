@@ -11,7 +11,20 @@ namespace SingerDispatch.Panels.Loads
     /// </summary>
     public partial class ThirdPartyServicesControl
     {
+        public static DependencyProperty SelectedItemProperty = DependencyProperty.Register("SelectedItem", typeof(ThirdPartyService), typeof(ThirdPartyServicesControl));
         public SingerDispatchDataContext Database { get; set; }
+
+        public ThirdPartyService SelectedItem
+        {
+            get
+            {
+                return (ThirdPartyService)GetValue(SelectedItemProperty);
+            }
+            set
+            {
+                SetValue(SelectedItemProperty, value);
+            }
+        }
 
         public ThirdPartyServicesControl()
         {
@@ -24,12 +37,7 @@ namespace SingerDispatch.Panels.Loads
 
         private void ControlLoaded(object sender, RoutedEventArgs e)
         {
-            var service = (ThirdPartyService)dgServices.SelectedItem;
-            if (service != null && service.Company != null)
-            {
-                cmbServiceTypes.ItemsSource = from st in Database.Services where st.Company == service.Company select st.ServiceType;
-                cmbContacts.ItemsSource = from c in Database.Contacts where c.Company == service.Company orderby c.FirstName, c.LastName select c;
-            }
+            UpdateComboBoxes();
         }
 
         protected override void SelectedLoadChanged(Load newValue, Load oldValue)
@@ -40,12 +48,16 @@ namespace SingerDispatch.Panels.Loads
         }
 
         private void ServiceCompany_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {           
-            var service = (ThirdPartyService)dgServices.SelectedItem;
-            if (service != null && service.Company != null)
+        {
+            UpdateComboBoxes();
+        }
+
+        private void UpdateComboBoxes()
+        {
+            if (SelectedItem != null && SelectedItem.Company != null)
             {
-                cmbServiceTypes.ItemsSource = new ObservableCollection<ServiceType>(from st in Database.Services where st.Company == service.Company select st.ServiceType);
-                cmbContacts.ItemsSource = new ObservableCollection<Contact>(from c in Database.Contacts where c.Company == service.Company orderby c.FirstName, c.LastName select c);
+                cmbServiceTypes.ItemsSource = new ObservableCollection<ServiceType>(from st in Database.Services where st.Company == SelectedItem.Company select st.ServiceType);
+                cmbContacts.ItemsSource = new ObservableCollection<Contact>(from c in Database.Contacts where c.Company == SelectedItem.Company orderby c.FirstName, c.LastName select c);
             }
         }
 
@@ -127,6 +139,14 @@ namespace SingerDispatch.Panels.Loads
             var services = window.UpdateServices();
 
             cmb.ItemsSource = new ObservableCollection<ServiceType>(from s in services select s.ServiceType);
+        }
+
+        private void dgServices_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var item = (ThirdPartyService)dgServices.SelectedItem;
+
+            SelectedItem = null;
+            SelectedItem = item;
         }
     }
 }

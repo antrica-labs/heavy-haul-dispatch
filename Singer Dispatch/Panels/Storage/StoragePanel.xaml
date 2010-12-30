@@ -27,8 +27,8 @@
                             </Grid.ColumnDefinitions>
 
                             <Button Grid.Column="0" Style="{StaticResource Horizontal}" Click="AddItem_Click">Add item</Button>
-                            <Button Grid.Column="1" Style="{StaticResource Horizontal}" Click="ViewStorageContract_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgStorageItems, Path=SelectedItem}">View contract</Button>
-                            <Button Grid.Column="2" Style="{StaticResource HorizontalEnd}" Click="RemoveItem_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgStorageItems, Path=SelectedItem}">Remove item</Button>
+                            <Button Grid.Column="1" Style="{StaticResource Horizontal}" Click="ViewStorageContract_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=ThePanel, Path=SelectedItem}">View contract</Button>
+                            <Button Grid.Column="2" Style="{StaticResource HorizontalEnd}" Click="RemoveItem_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=ThePanel, Path=SelectedItem}">Remove item</Button>
                         </Grid>
 
                         <Grid>
@@ -37,7 +37,7 @@
                                 <ColumnDefinition Width="0.75*" />
                             </Grid.ColumnDefinitions>
 
-                            <GroupBox Header="Stored Item" Grid.Column="0" DataContext="{Binding ElementName=dgStorageItems, Path=SelectedItem}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgStorageItems, Path=SelectedItem}">
+                            <GroupBox Header="Stored Item" Grid.Column="0" DataContext="{Binding ElementName=ThePanel, Path=SelectedItem}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=ThePanel, Path=SelectedItem}">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="Auto" />
@@ -82,7 +82,7 @@
                                 </Grid>
                             </GroupBox>
 
-                            <GroupBox Header="Billing" Grid.Column="1" Margin="3,0,0,0" DataContext="{Binding ElementName=dgStorageItems, Path=SelectedItem}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgStorageItems, Path=SelectedItem}">                                
+                            <GroupBox Header="Billing" Grid.Column="1" Margin="3,0,0,0" DataContext="{Binding ElementName=ThePanel, Path=SelectedItem}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=ThePanel, Path=SelectedItem}">                                
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="Auto" />
@@ -133,7 +133,7 @@
                             </GroupBox>
                         </Grid>
 
-                        <GroupBox Header="Dimensions" DataContext="{Binding ElementName=dgStorageItems, Path=SelectedItem.Commodity}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgStorageItems, Path=SelectedItem}">
+                        <GroupBox Header="Dimensions" DataContext="{Binding ElementName=ThePanel, Path=SelectedItem.Commodity}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=ThePanel, Path=SelectedItem}">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" />
@@ -188,14 +188,12 @@
                             </Grid>
                         </GroupBox>
 
-                        <GroupBox Header="Notes" DataContext="{Binding ElementName=dgStorageItems, Path=SelectedItem}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgStorageItems, Path=SelectedItem}">
+                        <GroupBox Header="Notes" DataContext="{Binding ElementName=ThePanel, Path=SelectedItem}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=ThePanel, Path=SelectedItem}">
                             <TextBox Style="{StaticResource MultiLine}" Text="{Binding Notes}" />
                         </GroupBox>
-
-                        <Button Visibility="Collapsed" Name="CommitChangesButton" Style="{StaticResource HorizontalEnd}" Click="CommitChangesButton_Click" LostFocus="CommitChangesButton_LostFocus">Save changes</Button>                        
                     </StackPanel>
 
-                    <DataGrid Name="dgStorageItems" Style="{StaticResource ListDisplay}">
+                    <DataGrid Name="dgStorageItems" Style="{StaticResource ListDisplay}" SelectionChanged="dgStorageItems_SelectionChanged">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Company" Binding="{Binding Company.Name}" />
                             <DataGridTextColumn Header="Commodity" Binding="{Binding Commodity.NameAndUnit}" />

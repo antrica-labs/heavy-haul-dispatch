@@ -23,11 +23,11 @@
                 </Grid.ColumnDefinitions>
 
                 <Button Style="{StaticResource Horizontal}" Grid.Column="0" Click="NewService_Click">New service</Button>
-                <Button Style="{StaticResource Horizontal}" Grid.Column="1" Click="DuplicateService_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgServices, Path=SelectedItem}">Duplicate service</Button>
-                <Button Style="{StaticResource HorizontalEnd}" Grid.Column="2" Click="RemoveService_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgServices, Path=SelectedItem}">Remove service</Button>
+                <Button Style="{StaticResource Horizontal}" Grid.Column="1" Click="DuplicateService_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=ThePanel, Path=SelectedItem}">Duplicate service</Button>
+                <Button Style="{StaticResource HorizontalEnd}" Grid.Column="2" Click="RemoveService_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=ThePanel, Path=SelectedItem}">Remove service</Button>
             </Grid>
 
-            <GroupBox Header="Service Details" DataContext="{Binding ElementName=dgServices, Path=SelectedItem}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgServices, Path=SelectedItem}">
+            <GroupBox Header="Service Details" DataContext="{Binding ElementName=ThePanel, Path=SelectedItem}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=ThePanel, Path=SelectedItem}">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
@@ -47,18 +47,18 @@
                     <ComboBox Name="cmbCompanies" Grid.Row="0" Grid.Column="1" SelectedItem="{Binding Company}" ItemsSource="{Binding ElementName=ThePanel,Path=CompanyList}" TextSearch.TextPath="Name" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectionChanged="ServiceCompany_SelectionChanged" Controls:ComboUtil.AllowNull="True" />
 
                     <Label Grid.Row="1" Grid.Column="0">Service type:</Label>
-                    <Grid Grid.Row="1" Grid.Column="1" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgServices, Path=SelectedItem.Company}">
+                    <Grid Grid.Row="1" Grid.Column="1" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=ThePanel, Path=SelectedItem.Company}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition />
                             <ColumnDefinition Width="Auto" />                                 
                         </Grid.ColumnDefinitions>
 
-                        <ComboBox Name="cmbServiceTypes" Grid.Column="0" SelectedItem="{Binding ServiceType}" ItemTemplate="{StaticResource SimpleNameTemplate}" TextSearch.TextPath="Name" Controls:ComboUtil.AllowNull="True" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgServices, Path=SelectedItem.Company}"  />
+                        <ComboBox Name="cmbServiceTypes" Grid.Column="0" SelectedItem="{Binding ServiceType}" ItemTemplate="{StaticResource SimpleNameTemplate}" TextSearch.TextPath="Name" Controls:ComboUtil.AllowNull="True" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=ThePanel, Path=SelectedItem.Company}"  />
                         <Button Grid.Column="1" Style="{StaticResource Standard}" Click="UpdateServices_Click" DataContext="{Binding ElementName=cmbServiceTypes}">Add</Button>
                     </Grid>
 
                     <Label Grid.Row="2" Grid.Column="0">Contact:</Label>
-                    <Grid Grid.Row="2" Grid.Column="1" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgServices, Path=SelectedItem.Company}">
+                    <Grid Grid.Row="2" Grid.Column="1" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=ThePanel, Path=SelectedItem.Company}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition />
                             <ColumnDefinition Width="Auto" />
@@ -101,7 +101,7 @@
             </GroupBox>
         </StackPanel>
 
-        <DataGrid Name="dgServices" Style="{StaticResource ListDisplay}">
+        <DataGrid Name="dgServices" Style="{StaticResource ListDisplay}" SelectionChanged="dgServices_SelectionChanged">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Load" Binding="{Binding Load.Name}" Width="0.2*" />
                 <DataGridTextColumn Header="Company" Binding="{Binding Company.Name}" Width="0.4*" />

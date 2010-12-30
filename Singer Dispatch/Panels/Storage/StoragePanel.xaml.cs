@@ -24,9 +24,22 @@ namespace SingerDispatch.Panels.Storage
     /// </summary>
     public partial class StoragePanel 
     {
+        public static DependencyProperty SelectedItemProperty = DependencyProperty.Register("SelectedItem", typeof(StorageItem), typeof(StoragePanel));
         public SingerDispatchDataContext Database { get; set; }
 
         private CommandBinding SaveCommand { get; set; }
+
+        public StorageItem SelectedItem
+        {
+            get
+            {
+                return (StorageItem)GetValue(SelectedItemProperty);               
+            }
+            set
+            {
+                SetValue(SelectedItemProperty, value);   
+            }
+        }
 
         public StoragePanel()
         {
@@ -45,17 +58,10 @@ namespace SingerDispatch.Panels.Storage
 
         private void Control_Loaded(object sender, RoutedEventArgs e)
         {
-            SaveCommand.Executed += CommitJobChanges_Executed;
-
             if (InDesignMode()) return;
                         
             dgStorageItems.ItemsSource = new ObservableCollection<StorageItem>(from si in Database.StorageItems where si.IsVisible == true select si);
             UpdateComboBoxes();
-        }
-        
-        private void CommitJobChanges_Executed(object sender, ExecutedRoutedEventArgs e)
-        {
-            CommitChangesButton.RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent, CommitChangesButton));
         }
 
         private void AddItem_Click(object sender, RoutedEventArgs e)
@@ -90,32 +96,7 @@ namespace SingerDispatch.Panels.Storage
             {
                 Windows.ErrorNoticeWindow.ShowError("Error while attempting to write changes to database", ex.Message);
             }
-        }
-
-        private void CommitChangesButton_Click(object sender, RoutedEventArgs e)
-        {
-            var button = (ButtonBase)sender;
-
-            try
-            {
-                button.Focus();
-
-                Database.SubmitChanges();
-
-                button.IsEnabled = false;
-            }
-            catch (System.Exception ex)
-            {
-                Windows.ErrorNoticeWindow.ShowError("Error while attempting to write changes to database", ex.Message);
-            }
-        }
-
-        private void CommitChangesButton_LostFocus(object sender, RoutedEventArgs e)
-        {
-            var button = (ButtonBase)sender;
-
-            button.IsEnabled = true;
-        }
+        }   
 
         private void Company_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -206,6 +187,14 @@ namespace SingerDispatch.Panels.Storage
 
             var viewer = new Windows.DocumentViewerWindow(new StorageContractDocument(), item, title) { IsMetric = !UseImperialMeasurements, IsSpecializedDocument = item.Company.CustomerType.IsEnterprise != true };
             viewer.DisplayPrintout();
+        }
+
+        private void dgStorageItems_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var item = (StorageItem)dgStorageItems.SelectedItem;
+
+            SelectedItem = null;
+            SelectedItem = item;
         }
     }
 }
