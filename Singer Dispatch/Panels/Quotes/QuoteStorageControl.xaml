@@ -18,15 +18,14 @@
         <StackPanel DockPanel.Dock="Bottom">
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition />
-                    <ColumnDefinition />
+                    <ColumnDefinition />                    
                     <ColumnDefinition />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
 
                 <Button Style="{StaticResource Horizontal}" Grid.Column="0" Click="NewStorageItem_Click">New storage</Button>
                 <Button Style="{StaticResource Horizontal}" Grid.Column="1" Click="DuplicateStorageItem_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgStorageList, Path=SelectedItem}">Duplicate storage</Button>
-                <Button Style="{StaticResource HorizontalEnd}" Grid.Column="3" Click="RemoveStorageItem_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgStorageList, Path=SelectedItem}">Remove storage</Button>
+                <Button Style="{StaticResource HorizontalEnd}" Grid.Column="2" Click="RemoveStorageItem_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgStorageList, Path=SelectedItem}">Remove storage</Button>
             </Grid>
             
             <GroupBox Header="Item Details" DataContext="{Binding ElementName=dgStorageList, Path=SelectedItem}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgStorageList, Path=SelectedItem}">

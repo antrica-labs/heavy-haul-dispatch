@@ -20,12 +20,11 @@
                     <ColumnDefinition />
                     <ColumnDefinition />
                     <ColumnDefinition />
-                    <ColumnDefinition />
                 </Grid.ColumnDefinitions>
 
                 <Button Style="{StaticResource Horizontal}" Grid.Column="0" Click="NewSupplement_Click">New supplement</Button>
                 <Button Style="{StaticResource Horizontal}" Grid.Column="1" Click="DuplicateSupplement_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgSupplements, Path=SelectedItem}">Duplicate supplement</Button>
-                <Button Style="{StaticResource HorizontalEnd}" Grid.Column="3" Click="RemoveSupplement_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgSupplements, Path=SelectedItem}">Remove supplement</Button>
+                <Button Style="{StaticResource HorizontalEnd}" Grid.Column="2" Click="RemoveSupplement_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgSupplements, Path=SelectedItem}">Remove supplement</Button>
             </Grid>
             
             <GroupBox Name="grpSupplementDetails" Header="Supplement Details" DataContext="{Binding ElementName=dgSupplements, Path=SelectedItem}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgSupplements, Path=SelectedItem}">

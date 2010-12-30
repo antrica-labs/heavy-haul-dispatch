@@ -18,14 +18,13 @@
     <DockPanel>
         <Grid DockPanel.Dock="Bottom">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition />
-                <ColumnDefinition Width="1.5*" />
+                <ColumnDefinition />               
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
             
             <Button Style="{StaticResource Horizontal}" Grid.Column="0" Click="NewRate_Click">New rate</Button>
             <Button Visibility="Collapsed" Style="{StaticResource Horizontal}" Name="CommitChangesButton" Grid.Column="1" Click="CommitChanges_Click">Save changes</Button>
-            <Button Style="{StaticResource HorizontalEnd}" Grid.Column="2" Click="RemoveRate_Click">Remove rate</Button>
+            <Button Style="{StaticResource HorizontalEnd}" Grid.Column="1" Click="RemoveRate_Click">Remove rate</Button>
         </Grid>
     
         <DataGrid Name="dgRates" VerticalContentAlignment="Stretch" Style="{StaticResource ListDisplay}" IsReadOnly="False" RowEditEnding="RowEditEnding">

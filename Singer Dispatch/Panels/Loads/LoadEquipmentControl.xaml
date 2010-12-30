@@ -380,13 +380,12 @@
             <DockPanel>
                 <Grid DockPanel.Dock="Bottom">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition />                        
                         <ColumnDefinition />
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
 
                     <Button Grid.Column="0" Style="{StaticResource Horizontal}" Click="AddEquipment_Click">Add equipment</Button>
-                    <Button Grid.Column="2" Style="{StaticResource HorizontalEnd}" Click="RemoveEquipment_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgExtraEquipment, Path=SelectedItem}">Remove equipment</Button>
+                    <Button Grid.Column="1" Style="{StaticResource HorizontalEnd}" Click="RemoveEquipment_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgExtraEquipment, Path=SelectedItem}">Remove equipment</Button>
                 </Grid>
 
                 <DataGrid Name="dgExtraEquipment" Style="{StaticResource ListDisplay}" IsReadOnly="False">

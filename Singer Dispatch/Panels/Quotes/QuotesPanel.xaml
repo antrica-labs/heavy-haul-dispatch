@@ -27,16 +27,14 @@
 
         <Border Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Background="LightGoldenrodYellow" BorderBrush="LightGray" BorderThickness="1" Margin="0,0,0,3">
             <Grid Margin="3">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition />
-                    <ColumnDefinition />
+                <Grid.ColumnDefinitions>                    
                     <ColumnDefinition />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
                 
-                <Button Grid.Column="2" Style="{StaticResource Horizontal}" Click="ViewQuote_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=ThePanel, Path=SelectedQuote}">View quote</Button>
-                <Button Visibility="Collapsed" Grid.Column="3" Style="{StaticResource HorizontalEnd}"  Name="CommitChangesButton" Click="CommitQuoteChanges_Click" LostFocus="CommitChangesButton_LostFocus">Save changes</Button>
-                <Button Grid.Column="3"  Style="{StaticResource HorizontalEnd}" Click="CreateJob_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=ThePanel, Path=SelectedQuote}">Create job</Button>
+                <Button Grid.Column="0" Style="{StaticResource Horizontal}" Click="ViewQuote_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=ThePanel, Path=SelectedQuote}">View quote</Button>
+                <Button Visibility="Collapsed" Grid.Column="1" Style="{StaticResource HorizontalEnd}"  Name="CommitChangesButton" Click="CommitQuoteChanges_Click" LostFocus="CommitChangesButton_LostFocus">Save changes</Button>
+                <Button Grid.Column="1" Style="{StaticResource HorizontalEnd}" Click="CreateJob_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=ThePanel, Path=SelectedQuote}">Create job</Button>
             </Grid>
         </Border>
 

@@ -23,14 +23,13 @@
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
-                    <ColumnDefinition />
-                    <ColumnDefinition />
+                    <ColumnDefinition />                    
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
 
                 <Button Style="{StaticResource Horizontal}" Grid.Column="0" Click="NewCommodity_Click">New commodity</Button>
                 <Button Style="{StaticResource Horizontal}" Grid.Column="1" Click="DuplicateCommodity_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgCommodities, Path=SelectedItem}">Copy to new</Button>
-                <Button Style="{StaticResource HorizontalEnd}" Grid.Column="3" Click="RemoveCommodity_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgCommodities, Path=SelectedItem}">Remove commodity</Button>
+                <Button Style="{StaticResource HorizontalEnd}" Grid.Column="2" Click="RemoveCommodity_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgCommodities, Path=SelectedItem}">Remove commodity</Button>
             </Grid>
 
             <GroupBox Header="Commodity Details" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgCommodities, Path=SelectedItem}" DataContext="{Binding ElementName=dgCommodities, Path=SelectedItem}">
@@ -73,9 +72,9 @@
 
                     <GroupBox Header="Recorded Commodity" Grid.Row="0" Grid.Column="2" Grid.RowSpan="6" Margin="5,0,0,0">
                         <DockPanel>
-                            <Button Style="{StaticResource Standard}" DockPanel.Dock="Bottom" Click="AddRecordedCommodity_Click">Add recorded commodity</Button>
+                            <Button Style="{StaticResource VerticalEnd}" DockPanel.Dock="Bottom" Click="AddRecordedCommodity_Click">Add recorded commodity</Button>
                             
-                            <DataGrid Style="{StaticResource ListDisplay}" Name="dgRecordedCommodities" SelectedItem="{Binding OriginalCommodity}" DataGridRow.MouseDoubleClick="dgRecordedCommodities_MouseDoubleClick" SelectionChanged="dgRecordedCommodities_SelectionChanged">
+                            <DataGrid Style="{StaticResource ListDisplay}" Margin="0,0,0,3" Name="dgRecordedCommodities" SelectedItem="{Binding OriginalCommodity}" DataGridRow.MouseDoubleClick="dgRecordedCommodities_MouseDoubleClick" SelectionChanged="dgRecordedCommodities_SelectionChanged">
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Header="Name" Binding="{Binding Name}" />
                                     <DataGridTextColumn Header="Unit" Binding="{Binding Unit}" Width="0.5*" />

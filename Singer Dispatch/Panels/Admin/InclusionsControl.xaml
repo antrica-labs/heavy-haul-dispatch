@@ -16,14 +16,13 @@
     <DockPanel>
         <Grid DockPanel.Dock="Bottom">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition />
-                <ColumnDefinition Width="1.5*" />
+                <ColumnDefinition />                
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
 
             <Button Style="{StaticResource Horizontal}" Grid.Column="0" Click="NewInclusion_Click">New inclusion</Button>
             <Button Visibility="Collapsed" Style="{StaticResource Horizontal}" Name="CommitChangesButton" Grid.Column="1" Click="CommitChanges_Click">Save changes</Button>
-            <Button Style="{StaticResource HorizontalEnd}" Grid.Column="2" Click="RemoveInclusion_Click">Remove inclusion</Button>
+            <Button Style="{StaticResource HorizontalEnd}" Grid.Column="1" Click="RemoveInclusion_Click">Remove inclusion</Button>
         </Grid>
 
         <DataGrid Name="TheGrid" Style="{StaticResource ListDisplay}" IsReadOnly="False" RowEditEnding="RowEditEnding">

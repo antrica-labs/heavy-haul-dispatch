@@ -20,12 +20,11 @@
                     <ColumnDefinition />
                     <ColumnDefinition />
                     <ColumnDefinition />
-                    <ColumnDefinition />
                 </Grid.ColumnDefinitions>
 
                 <Button Style="{StaticResource Horizontal}" Grid.Column="0" Click="NewService_Click">New service</Button>
                 <Button Style="{StaticResource Horizontal}" Grid.Column="1" Click="DuplicateService_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgServices, Path=SelectedItem}">Duplicate service</Button>
-                <Button Style="{StaticResource HorizontalEnd}" Grid.Column="3" Click="RemoveService_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgServices, Path=SelectedItem}">Remove service</Button>
+                <Button Style="{StaticResource HorizontalEnd}" Grid.Column="2" Click="RemoveService_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgServices, Path=SelectedItem}">Remove service</Button>
             </Grid>
 
             <GroupBox Header="Service Details" DataContext="{Binding ElementName=dgServices, Path=SelectedItem}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgServices, Path=SelectedItem}">

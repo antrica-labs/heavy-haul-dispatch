@@ -15,14 +15,13 @@
     <DockPanel>
         <Grid DockPanel.Dock="Bottom">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition />
-                <ColumnDefinition Width="1.5*" />
+                <ColumnDefinition />                
                 <ColumnDefinition />                
             </Grid.ColumnDefinitions>
 
             <Button Style="{StaticResource Horizontal}" Grid.Column="0" Click="NewEmployee_Click">New employee</Button>
             <Button Visibility="Collapsed" Style="{StaticResource Horizontal}" Grid.Column="1" Name="CommitChangesButton" Click="SaveEmployee_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgEmployees, Path=SelectedItem}">Save changes</Button>
-            <Button Style="{StaticResource HorizontalEnd}" Grid.Column="2" Click="RemoveEmployee_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgEmployees, Path=SelectedItem}">Remove employee</Button>            
+            <Button Style="{StaticResource HorizontalEnd}" Grid.Column="1" Click="RemoveEmployee_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgEmployees, Path=SelectedItem}">Remove employee</Button>            
         </Grid>
 
         <StackPanel DockPanel.Dock="Right" Width="285" Margin="3,0,0,0">
