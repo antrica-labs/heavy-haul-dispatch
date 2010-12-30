@@ -20,8 +20,36 @@ namespace SingerDispatch.Windows
     /// </summary>
     public partial class DocumentViewerWindow
     {
-        public bool IsMetric { get; set; }
-        public bool IsSpecializedDocument { get; set; }
+        private bool HasLoaded = false;
+
+        private bool _isMetric = true;
+        public bool IsMetric 
+        {
+            get
+            {
+                return _isMetric;
+            }
+            set
+            {
+                cmbDisplayUnits.SelectedIndex = value ? 0 : 1;
+                _isMetric = value;
+            }
+        }
+        
+        private bool _isSpecializedDocument = true;        
+        public bool IsSpecializedDocument 
+        { 
+            get
+            {
+                return _isSpecializedDocument;
+            }
+
+            set
+            {
+                cmbCompanyType.SelectedIndex = value ? 0 : 1;                
+                _isSpecializedDocument = value;
+            }
+        }
 
         private UserSettings Settings { get; set; }
         private BackgroundWorker Backgrounder;
@@ -92,10 +120,11 @@ namespace SingerDispatch.Windows
             Backgrounder.DoWork += RenderDocument;
             Backgrounder.RunWorkerCompleted += DisplayDocument;
 
-            cmbDisplayUnits.SelectedIndex = -1;
-            cmbDisplayUnits.SelectedIndex = IsMetric ? 0 : 1;
-
             TheBrowser.NavigateToString(loading.GenerateHTML(null));
+
+            HasLoaded = true;
+
+            Backgrounder.RunWorkerAsync();
         }
 
         private void Window_Closing(object sender, CancelEventArgs e)
@@ -106,7 +135,7 @@ namespace SingerDispatch.Windows
 
         private void MetricMeasurements_Selected(object sender, RoutedEventArgs e)
         {
-            if (Document == null) return;
+            if (!HasLoaded || Document == null) return;
 
             IsMetric = true;
 
@@ -115,7 +144,7 @@ namespace SingerDispatch.Windows
 
         private void ImperialMeasurements_Selected(object sender, RoutedEventArgs e)
         {
-            if (Document == null) return;
+            if (!HasLoaded || Document == null) return;
 
             IsMetric = false;
 
@@ -124,7 +153,7 @@ namespace SingerDispatch.Windows
 
         private void SingerSpecialized_Selected(object sender, RoutedEventArgs e)
         {
-            if (Document == null) return;
+            if (!HasLoaded || Document == null) return;
 
             IsSpecializedDocument = true;
 
@@ -133,7 +162,7 @@ namespace SingerDispatch.Windows
 
         private void SingerEnterprises_Selected(object sender, RoutedEventArgs e)
         {
-            if (Document == null) return;
+            if (!HasLoaded || Document == null) return;
 
             IsSpecializedDocument = false;
 

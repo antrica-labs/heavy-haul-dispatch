@@ -406,23 +406,42 @@ namespace SingerDispatch.Printing.Documents
                                 <span class=""title"">Quote {1}</span>
                             </td>
                             <td id=""hq_location"">
-                                <span class=""address"">{2}</span>
-                                <span class=""phone"">{3}</span>
-                                <span class=""fax"">Phone: {4}</span>                                
+                                <span class=""name"">{2}</span>                                
+                                <span class=""address"">{3}</span>
+                                <span class=""phone"">{4}</span>
+                                <span class=""fax"">Phone: {5}</span>                                
                             </td>
                         </tr>
                     </table>                        
                 </div>
             ";
 
-            var replacements = new object[5];
+            var replacements = new object[6];
+            string cName, cAddress, cCity, cPhone;
+
+            if (SpecializedDocument)
+            {
+                cName = "SingerName";
+                cAddress = "SingerAddress-StreetAddress";
+                cCity = "SingerAddress-City";
+                cPhone = "SingerAddress-Phone";
+            }
+            else
+            {
+                cName = "EnterpriseName";
+                cAddress = "EnterpriseAddress-StreetAddress";
+                cCity = "EnterpriseAddress-City";
+                cPhone = "EnterpriseAddress-Phone";
+            }
+
 
             replacements[0] = GetHeaderImg();
             replacements[1] = quoteName;
-            replacements[2] = SingerConfigs.GetConfig("SingerAddress-StreetAddress");
-            replacements[3] = SingerConfigs.GetConfig("SingerAddress-City");
-            replacements[4] = SingerConfigs.GetConfig("SingerAddress-Phone");
-
+            replacements[2] = SingerConfigs.GetConfig(cName) ?? "Singer Specialized Ltd.";
+            replacements[3] = SingerConfigs.GetConfig(cAddress);
+            replacements[4] = SingerConfigs.GetConfig(cCity);
+            replacements[5] = SingerConfigs.GetConfig(cPhone);
+            
             return string.Format(html, replacements);
         }
 

@@ -17,9 +17,9 @@ namespace SingerDispatch.Printing.Documents
             string img = null;
 
             if (SpecializedDocument)
-                img = SingerConfigs.GetConfig("Documents-SingerHeaderImg") ?? @"Images\SingerHeader.png";
+                img = SingerConfigs.GetConfig("Documents-SingerHeaderImg") ?? @"Images\DocumentHeader.png";
             else
-                img = SingerConfigs.GetConfig("Documents-MEHeaderImg") ?? @"Images\MEHeader.png";
+                img = SingerConfigs.GetConfig("Documents-MEHeaderImg") ?? @"Images\DocumentHeader.png";
 
             try
             {
@@ -34,7 +34,7 @@ namespace SingerDispatch.Printing.Documents
                 {
                     var uri = new System.Uri(process.MainModule.FileName);
                     uri = new System.Uri(uri, img);
-                    img = uri.ToString();
+                    img = uri.LocalPath;
                 }
             }
 

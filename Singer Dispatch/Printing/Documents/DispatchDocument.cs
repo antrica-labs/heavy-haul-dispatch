@@ -438,12 +438,17 @@ namespace SingerDispatch.Printing.Documents
 
                     div.dispatch_doc div.load_and_unload table.details td.date
                     {
-                    	width: 60px;
+                    	width: 70px;
                     }
                     
                     div.dispatch_doc div.load_and_unload table.details td.time
                     {
                     	width: 45px;
+                    }
+
+                    div.dispatch_doc div.load_and_unload table.details td.location span.inner span
+                    {
+                        display: block;
                     }
 
                     div.dispatch_doc div.load_and_unload table.details td.contact
@@ -610,12 +615,28 @@ namespace SingerDispatch.Printing.Documents
             ";
 
             var replacements = new object[8];
-            
+            string cName, cAddress, cCity, cPhone;
+
+            if (SpecializedDocument)
+            {
+                cName = "SingerName";
+                cAddress = "SingerAddress-StreetAddress";
+                cCity = "SingerAddress-City";
+                cPhone = "SingerAddress-Phone";
+            }
+            else
+            {
+                cName = "EnterpriseName";
+                cAddress = "EnterpriseAddress-StreetAddress";
+                cCity = "EnterpriseAddress-City";
+                cPhone = "EnterpriseAddress-Phone";
+            }
+
             replacements[0] = GetHeaderImg();
-            replacements[1] = SingerConfigs.GetConfig("SingerName") ?? "Singer Specialized";
-            replacements[2] = SingerConfigs.GetConfig("SingerAddress-StreetAddress");
-            replacements[3] = SingerConfigs.GetConfig("SingerAddress-City");
-            replacements[4] = SingerConfigs.GetConfig("SingerAddress-Phone");
+            replacements[1] = SingerConfigs.GetConfig(cName) ?? "Singer Specialized Ltd.";
+            replacements[2] = SingerConfigs.GetConfig(cAddress);
+            replacements[3] = SingerConfigs.GetConfig(cCity);
+            replacements[4] = SingerConfigs.GetConfig(cPhone);
             replacements[5] = copyType;
             replacements[6] = (dispatch != null) ? dispatch.Name : "UNKNOWN";
 
@@ -960,7 +981,7 @@ namespace SingerDispatch.Printing.Documents
                 if (item.LoadDate != null)
                 {
                     reps[4] = item.LoadDate.Value.ToString(SingerConfigs.PrintedDateFormatString);
-                    reps[5] = item.LoadDate.Value.ToString(SingerConfigs.PrintedTimeFormatString);
+                    reps[5] = item.LoadTime;
                 }
                 else
                 {
@@ -968,7 +989,9 @@ namespace SingerDispatch.Printing.Documents
                     reps[5] = "";
                 }
 
-                reps[6] = item.LoadLocation;
+                
+
+                reps[6] = string.Format("<span>{0}</span><span>{1}</span>", item.LoadLocation, item.LoadAddress);
                 reps[7] = (item.LoadSiteContact != null) ? string.Format(@"<span class=""contact"">{0}</span><span class=""contact"">{1}</span>", item.LoadSiteContact.Name, item.LoadSiteContact.PrimaryPhone) : "";
                 reps[8] = (item.LoadingCompany != null) ? item.LoadingCompany.Name : "";
                 reps[9] = (item.LoadingContact != null) ? string.Format(@"<span class=""contact"">{0}</span><span class=""contact"">{1}</span>", item.LoadingContact.Name, item.LoadingContact.PrimaryPhone) : ""; ;
@@ -979,7 +1002,7 @@ namespace SingerDispatch.Printing.Documents
                 if (item.UnloadDate != null)
                 {
                     reps[12] = item.UnloadDate.Value.ToString(SingerConfigs.PrintedDateFormatString);
-                    reps[13] = item.UnloadDate.Value.ToString(SingerConfigs.PrintedTimeFormatString);
+                    reps[13] = item.UnloadTime;
                 }
                 else
                 {
@@ -987,7 +1010,7 @@ namespace SingerDispatch.Printing.Documents
                     reps[13] = "";
                 }
 
-                reps[14] = item.UnloadLocation;
+                reps[14] = string.Format("<span>{0}</span><span>{1}</span>", item.UnloadLocation, item.UnloadAddress);
                 reps[15] = (item.UnloadSiteContact != null) ? string.Format(@"<span class=""contact"">{0}</span><span class=""contact"">{1}</span>", item.UnloadSiteContact.Name, item.UnloadSiteContact.PrimaryPhone) : "";
                 reps[16] = (item.UnloadingCompany != null) ? item.UnloadingCompany.Name : "";
                 reps[17] = (item.UnloadingContact != null) ? string.Format(@"<span class=""contact"">{0}</span><span class=""contact"">{1}</span>", item.UnloadingContact.Name, item.UnloadingContact.PrimaryPhone) : ""; ; ;

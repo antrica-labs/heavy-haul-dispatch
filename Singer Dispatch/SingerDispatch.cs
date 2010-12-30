@@ -388,6 +388,27 @@ namespace SingerDispatch
 
     partial class Job
     {
+        partial void OnCreated()
+        {
+            this.PropertyChanged += new System.ComponentModel.PropertyChangedEventHandler(SomePropertyChanged);
+        }
+
+        private void SomePropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "Status")
+                StatusChanged();
+        }
+
+        private void StatusChanged()
+        {
+            if (Status == null || Status.Name != "Completed") return;
+            
+            foreach (var item in Loads)
+            {
+                item.Status = Status;
+            }
+        }
+
         public Job Duplicate()
         {
             var cp = new Job();
@@ -535,7 +556,7 @@ namespace SingerDispatch
     }
 
     partial class LoadedCommodity
-    {
+    {        
         public LoadedCommodity Duplicate()
         {
             var copy = new LoadedCommodity();
@@ -649,15 +670,13 @@ namespace SingerDispatch
         }
 
         private void SomePropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
-        {
-            var other = sender;
-            var f = e;
-
+        {            
             if (e.PropertyName.StartsWith("EWeight"))
                 RecalculateEGross();
             else if (e.PropertyName.StartsWith("SWeight"))
                 RecalculateSGross();
-
+            else if (e.PropertyName == "Status")
+                StatusChanged();
         }
 
         private void RecalculateEGross()
@@ -700,6 +719,29 @@ namespace SingerDispatch
             weight += SWeightGroup10 ?? 0.0;
 
             SGrossWeight = weight;
+        }
+
+        private void StatusChanged()
+        {
+            if (Status == null || Status.Name != "Completed") return;
+
+            foreach (var item in LoadedCommodities)
+            {
+                if (item.JobCommodity != null)
+                {
+                    item.JobCommodity.DepartureSiteName = item.UnloadLocation;
+                    item.JobCommodity.DepartureAddress = item.UnloadAddress;
+                    item.JobCommodity.ArrivalSiteName = null;
+                    item.JobCommodity.ArrivalAddress = null;
+
+                    if (item.JobCommodity.OriginalCommodity != null)
+                    {
+                        item.JobCommodity.OriginalCommodity.LastLocation = item.UnloadLocation;
+                        item.JobCommodity.OriginalCommodity.LastAddress = item.UnloadAddress;
+                    }
+                }
+            }
+            
         }
 
         public void Notify(string property)

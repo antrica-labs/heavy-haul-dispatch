@@ -19,7 +19,7 @@
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
 
-                <ComboBox Grid.Column="0" Margin="4">
+                <ComboBox Name="cmbCompanyType" Grid.Column="0" Margin="4">
                     <ComboBoxItem Selected="SingerSpecialized_Selected" IsSelected="True">Singer Specialized document</ComboBoxItem>
                     <ComboBoxItem Selected="SingerEnterprises_Selected">M.E. Singer Enterprises document</ComboBoxItem>
                 </ComboBox>                

@@ -418,7 +418,7 @@ namespace SingerDispatch.Printing.Documents
                     <table>
                         <tr>
                             <td class=""logo_col"">
-                                <span class=""logo""><img src=""{0}"" alt=""Singer Specialized""></span>
+                                <span class=""logo""><img src=""{0}"" alt=""Singer""></span>
                             </td>
                             <td class=""address_col"">
                                 <span>{1}</span>
@@ -437,13 +437,31 @@ namespace SingerDispatch.Printing.Documents
                 </div>
             ";
 
-            var replacements = new object[7];            
+            var replacements = new object[7];
+
+            string cName, cAddress, cCity, cPhone;
+
+            if (SpecializedDocument)
+            {
+                cName = "SingerName";
+                cAddress = "SingerAddress-StreetAddress";
+                cCity = "SingerAddress-City";
+                cPhone = "SingerAddress-Phone";
+            }
+            else
+            {
+                cName = "EnterpriseName";
+                cAddress = "EnterpriseAddress-StreetAddress";
+                cCity = "EnterpriseAddress-City";
+                cPhone = "EnterpriseAddress-Phone";
+            }
+            
 
             replacements[0] = GetHeaderImg();
-            replacements[1] = SingerConfigs.GetConfig("SingerName") ?? "Singer Specialized";
-            replacements[2] = SingerConfigs.GetConfig("SingerAddress-StreetAddress");
-            replacements[3] = SingerConfigs.GetConfig("SingerAddress-City");
-            replacements[4] = SingerConfigs.GetConfig("SingerAddress-Phone");
+            replacements[1] = SingerConfigs.GetConfig(cName) ?? "Singer Specialized Ltd.";
+            replacements[2] = SingerConfigs.GetConfig(cAddress);
+            replacements[3] = SingerConfigs.GetConfig(cCity);
+            replacements[4] = SingerConfigs.GetConfig(cPhone);
             replacements[5] = documentID;            
 
             return string.Format(html, replacements);
