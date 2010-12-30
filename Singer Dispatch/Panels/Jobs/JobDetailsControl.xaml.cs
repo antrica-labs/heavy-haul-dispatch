@@ -42,6 +42,7 @@ namespace SingerDispatch.Panels.Jobs
             cmbStatuses.ItemsSource = from s in Database.Statuses orderby s.Name select s;
 
             UpdateContacts();
+            UpdateReferenceNumbers();
         }
 
         protected override void SelectedJobChanged(Job newValue, Job oldValue)
@@ -69,15 +70,8 @@ namespace SingerDispatch.Panels.Jobs
         }
 
         private void UpdateReferenceNumbers()
-        {
-            if (SelectedJob != null)
-            {
-                dgReferenceNumbers.ItemsSource = new ObservableCollection<JobReferenceNumber>(SelectedJob.ReferenceNumbers);
-            }
-            else
-            {
-                dgReferenceNumbers.ItemsSource = null;
-            }
+        {            
+            dgReferenceNumbers.ItemsSource = (SelectedJob == null) ? null : new ObservableCollection<JobReferenceNumber>(SelectedJob.ReferenceNumbers);
         }
 
         private void cmbCareOfCompanies_SelectionChanged(object sender, SelectionChangedEventArgs e)

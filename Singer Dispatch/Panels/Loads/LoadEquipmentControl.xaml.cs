@@ -35,7 +35,7 @@ namespace SingerDispatch.Panels.Loads
         private void Control_Loaded(object sender, RoutedEventArgs e)
         {            
             if (InDesignMode()) return;
-            
+
             UpdateComboBoxes();
             UpdateExtras();
             UpdateReferenceNumbers();
@@ -46,7 +46,8 @@ namespace SingerDispatch.Panels.Loads
             base.SelectedLoadChanged(newValue, oldValue);
 
             UpdateComboBoxes();
-            UpdateExtras();            
+            UpdateExtras();
+            UpdateReferenceNumbers();
         }
 
         private void UpdateComboBoxes()
@@ -56,15 +57,10 @@ namespace SingerDispatch.Panels.Loads
 
         private void UpdateReferenceNumbers()
         {
-            if (SelectedLoad != null)
-            {
+            if (dgReferenceNumbers.ActualHeight > 0.0)
                 dgReferenceNumbers.MaxHeight = dgReferenceNumbers.ActualHeight;
-                dgReferenceNumbers.ItemsSource = new ObservableCollection<LoadReferenceNumber>(SelectedLoad.ReferenceNumbers);
-            }
-            else
-            {
-                dgReferenceNumbers.ItemsSource = null;
-            }
+
+            dgReferenceNumbers.ItemsSource = (SelectedLoad == null) ? null : new ObservableCollection<LoadReferenceNumber>(SelectedLoad.ReferenceNumbers);         
         }
 
         private void UpdateExtras()

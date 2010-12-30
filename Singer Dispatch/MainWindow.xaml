@@ -45,7 +45,7 @@
 
             <Border Style="{StaticResource MainNavigation}" DockPanel.Dock="Left">
                 <StackPanel Name="altNavigationStack">
-                    <Label Style="{StaticResource Heading}">Singer Specialized</Label>
+                    <Label Style="{StaticResource Heading}">Singer Dispatch</Label>
                     
                     <Expander Name="expanderCompanies"  Header="Company info" Style="{StaticResource SectionExpander}" Expanded="ExpandCompanies">
                         <StackPanel Name="linksCompanies" Style="{StaticResource SectionExpanderContent}" VerticalAlignment="Top"></StackPanel>

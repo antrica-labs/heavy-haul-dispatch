@@ -22,10 +22,10 @@
             <TabItem Header="Equipment">
                 <Admin:EquipmentControl Width="Auto" CompanyList="{Binding CompanyList}" UseImperialMeasurements="{Binding UseImperialMeasurements}" />
             </TabItem>
-            <TabItem Header="Inclusions">
+            <TabItem Header="Quote inclusions">
                 <Admin:InclusionsControl Width="Auto" CompanyList="{Binding CompanyList}" UseImperialMeasurements="{Binding UseImperialMeasurements}" />
             </TabItem>
-            <TabItem Header="Conditions">
+            <TabItem Header="Quote conditions">
                 <Admin:ConditionsControl Width="Auto" CompanyList="{Binding CompanyList}" UseImperialMeasurements="{Binding UseImperialMeasurements}" />
             </TabItem>
             <TabItem Header="Rates">
