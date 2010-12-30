@@ -20,19 +20,13 @@ namespace SingerDispatch.Panels.Companies
         {
             InitializeComponent();
 
-            
-            SaveCommand = new CommandBinding(CustomCommands.GenericSaveCommand);
-            CommandBindings.Add(SaveCommand);
-
             if (InDesignMode()) return;
 
             Database = SingerConfigs.CommonDataContext;
         }
 
         private void Control_Loaded(object sender, RoutedEventArgs e)
-        {            
-            SaveCommand.Executed += CommitChanges_Executed;
-
+        {
             if (InDesignMode()) return;
 
             cmbCreditPriority.ItemsSource = from l in Database.CompanyPriorityLevels orderby l.Name select l;
@@ -47,28 +41,6 @@ namespace SingerDispatch.Panels.Companies
 
             dgCreditRates.ItemsSource = GetCompanyRates(SelectedCompany);
         }
-
-        private void CommitChanges_Executed(object sender, ExecutedRoutedEventArgs e)
-        {            
-            CommitChangesButton.RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent, CommitChangesButton));
-        }
-
-        private void SaveDetails_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                ((ButtonBase)sender).Focus();
-
-                Database.SubmitChanges();
-            }
-            catch (System.Exception ex)
-            {
-                Windows.ErrorNoticeWindow.ShowError("Error while attempting to write changes to database", ex.Message);
-            }
-
-            dgCreditRates.ItemsSource = GetCompanyRates(SelectedCompany);
-        }
-
 
         private IEnumerable<Rate> GetCompanyRates(Company company)
         {

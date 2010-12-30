@@ -26,8 +26,6 @@
         </ResourceDictionary>
     </UserControl.Resources>
     <DockPanel>
-        <Button Visibility="Collapsed" DockPanel.Dock="Bottom" Style="{StaticResource Bottom}" Name="CommitChangesButton" Click="UpdateServices_Click">Save services</Button>
-        
         <GroupBox Header="Provided Services">
             <ListBox Name="TheList" Padding="10,10,10,0" Margin="5"/>
         </GroupBox>		

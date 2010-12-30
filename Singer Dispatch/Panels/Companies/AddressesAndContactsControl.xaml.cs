@@ -13,16 +13,11 @@ namespace SingerDispatch.Panels.Companies
     /// </summary>
     public partial class AddressesAndContactsControl
     {
-        private CommandBinding SaveCommand { get; set; }
-
         public SingerDispatchDataContext Database { get; set; }
 
         public AddressesAndContactsControl()
         {
             InitializeComponent();
-
-            SaveCommand = new CommandBinding(CustomCommands.GenericSaveCommand);
-            CommandBindings.Add(SaveCommand);
 
             lbContactTypes.ItemsSource = new ObservableCollection<CheckBox>();
 
@@ -32,9 +27,7 @@ namespace SingerDispatch.Panels.Companies
         }
 
         private void Control_Loaded(object sender, RoutedEventArgs e)
-        {            
-            SaveCommand.Executed += CommitChanges_Executed;
-
+        {          
             if (InDesignMode()) return;
 
             lbContactTypes.MaxHeight = lbContactTypes.ActualHeight;
@@ -183,25 +176,6 @@ namespace SingerDispatch.Panels.Companies
             dgContacts.ScrollIntoView(contact);
 
             txtContactFirstName.Focus();
-        }
-
-        private void Save_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                ((ButtonBase)sender).Focus();
-
-                Database.SubmitChanges();
-            }
-            catch (System.Exception ex)
-            {
-                Windows.ErrorNoticeWindow.ShowError("Error while attempting to write changes to database", ex.Message);
-            }
-        }
-
-        private void CommitChanges_Executed(object sender, ExecutedRoutedEventArgs e)
-        {
-            CommitChangesButton.RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent, CommitChangesButton));
         }
     }
 }

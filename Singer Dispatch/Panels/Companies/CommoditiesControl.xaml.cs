@@ -14,16 +14,11 @@ namespace SingerDispatch.Panels.Companies
     /// </summary>
     public partial class CommoditiesControl
     {
-        private CommandBinding SaveCommand { get; set; }
-
         public SingerDispatchDataContext Database { get; set; }
 
         public CommoditiesControl()
         {
             InitializeComponent();
-                        
-            SaveCommand = new CommandBinding(CustomCommands.GenericSaveCommand);
-            CommandBindings.Add(SaveCommand);
 
             if (InDesignMode()) return;
 
@@ -32,7 +27,7 @@ namespace SingerDispatch.Panels.Companies
 
         private void Control_Loaded(object sender, RoutedEventArgs e)
         {
-            SaveCommand.Executed += CommitChanges_Executed;
+           
         }
         
         protected override void SelectedCompanyChanged(Company newValue, Company oldValue)
@@ -70,25 +65,6 @@ namespace SingerDispatch.Panels.Companies
                 Database.SubmitChanges();
 
                 ((ObservableCollection<Commodity>)dgCommodities.ItemsSource).Remove(selected);
-            }
-            catch (System.Exception ex)
-            {
-                Windows.ErrorNoticeWindow.ShowError("Error while attempting to write changes to database", ex.Message);
-            }
-        }
-
-        private void CommitChanges_Executed(object sender, ExecutedRoutedEventArgs e)
-        {            
-            CommitChangesButton.RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent, CommitChangesButton));
-        }
-
-        private void SaveCommodity_Click(object sender, RoutedEventArgs e)
-        {         
-            try
-            {
-                ((ButtonBase)sender).Focus();
-
-                Database.SubmitChanges();
             }
             catch (System.Exception ex)
             {

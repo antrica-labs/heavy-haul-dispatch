@@ -25,16 +25,14 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         
-        <Border Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Background="LightGoldenrodYellow" BorderBrush="LightGray" BorderThickness="1" Margin="0,0,0,3">
-            <Grid Margin="3">
+        <Border Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Padding="6" Background="LightGoldenrodYellow" BorderBrush="LightGray" BorderThickness="1" Margin="0,0,0,3">
+            <Grid>
                 <Grid.ColumnDefinitions>                    
-                    <ColumnDefinition />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
 
-                <Button Grid.Column="0" Style="{StaticResource Horizontal}" Click="ViewLoads_Click" IsEnabled="{Binding ElementName=ThePanel, Path=SelectedJob, Converter={StaticResource IsEnabledNullConverter}}">View loads</Button>
-                <Button Visibility="Collapsed" Grid.Column="1" Style="{StaticResource HorizontalEnd}" Name="CommitChangesButton" Click="CommitJobChanges_Click" LostFocus="CommitChangesButton_LostFocus">Save changes</Button>
-                <Button Grid.Column="2" Style="{StaticResource HorizontalEnd}" Click="ViewQuote_Click" IsEnabled="{Binding SelectedJob, Converter={StaticResource IsEnabledNullConverter}}">View original quote</Button>
+                <Button Grid.Column="0" Click="ViewLoads_Click" IsEnabled="{Binding ElementName=ThePanel, Path=SelectedJob, Converter={StaticResource IsEnabledNullConverter}}">View loads</Button>
+                <!-- <Button Grid.Column="2" Style="{StaticResource HorizontalEnd}" Click="ViewQuote_Click" IsEnabled="{Binding SelectedJob, Converter={StaticResource IsEnabledNullConverter}}">View original quote</Button> -->
             </Grid>
         </Border>
 

@@ -17,8 +17,6 @@ namespace SingerDispatch.Panels.Loads
     /// </summary>
     public partial class LoadsPanel
     {
-        private CommandBinding SaveCommand { get; set; }
-
         public SingerDispatchDataContext Database { get; set; }
 
         public static DependencyProperty SelectedJobProperty = DependencyProperty.Register("SelectedJob", typeof(Job), typeof(LoadsPanel), new PropertyMetadata(null, SelectedJobPropertyChanged));
@@ -39,9 +37,6 @@ namespace SingerDispatch.Panels.Loads
         {
             InitializeComponent();
 
-            SaveCommand = new CommandBinding(CustomCommands.GenericSaveCommand);
-            CommandBindings.Add(SaveCommand);
-
             if (InDesignMode()) return;
 
             Database = SingerConfigs.CommonDataContext;            
@@ -49,8 +44,6 @@ namespace SingerDispatch.Panels.Loads
 
         private void Control_Loaded(object sender, RoutedEventArgs e)
         {
-            SaveCommand.Executed += CommitQuoteChanges_Executed;
-
             if (InDesignMode()) return;
 
             UpdateLoadList();
@@ -191,38 +184,6 @@ namespace SingerDispatch.Panels.Loads
 
             var viewer = new DocumentViewerWindow(new DispatchDocument(printFileCopy), dispatches, string.Format("Dispatches - Load #{0}-{1}", SelectedJob.Number, SelectedLoad.Number)) { IsMetric = !UseImperialMeasurements, IsSpecializedDocument = SelectedCompany.CustomerType.IsEnterprise != true };
             viewer.DisplayPrintout();
-        }
-
-        private void CommitQuoteChanges_Executed(object sender, ExecutedRoutedEventArgs e)
-        {
-            CommitChangesButton.RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent, CommitChangesButton));
-        }
-
-        private void CommitChanges_Click(object sender, RoutedEventArgs e)
-        {
-            if (SelectedLoad == null) return;
-
-            var button = (ButtonBase)sender;
-
-            try
-            {
-                button.Focus();
-
-                Database.SubmitChanges();
-
-                button.IsEnabled = false;
-            }
-            catch (System.Exception ex)
-            {
-                Windows.ErrorNoticeWindow.ShowError("Error while attempting to write changes to database", ex.Message);
-            }
-        }
-
-        private void CommitChangesButton_LostFocus(object sender, RoutedEventArgs e)
-        {
-            var button = (ButtonBase)sender;
-
-            button.IsEnabled = true;
         }
 
         private void EditJob_Click(object sender, RoutedEventArgs e)

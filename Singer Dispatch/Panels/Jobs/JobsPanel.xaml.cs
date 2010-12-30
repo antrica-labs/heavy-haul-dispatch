@@ -19,15 +19,11 @@ namespace SingerDispatch.Panels.Jobs
     {   
         public SingerDispatchDataContext Database { get; set; }
 
-        private CommandBinding SaveCommand { get; set; }
         private Status DefaultJobStatus { get; set; }
         
         public JobsPanel()
         {
             InitializeComponent();
-
-            SaveCommand = new CommandBinding(CustomCommands.GenericSaveCommand);
-            CommandBindings.Add(SaveCommand);
 
             if (InDesignMode()) return;
             // Work below can only be done when the real app is running. It fails during design time.
@@ -38,8 +34,6 @@ namespace SingerDispatch.Panels.Jobs
 
         private void Control_Loaded(object sender, RoutedEventArgs e)
         {
-            SaveCommand.Executed += CommitJobChanges_Executed;
-
             if (InDesignMode()) return;
 
             UpdateJobList();
@@ -75,38 +69,6 @@ namespace SingerDispatch.Panels.Jobs
         protected override void SelectedJobChanged(Job newValue, Job oldValue)
         {
             base.SelectedJobChanged(newValue, oldValue);
-        }
-
-        private void CommitJobChanges_Click(object sender, RoutedEventArgs e)
-        {
-            if (SelectedJob == null) return;
-
-            var button = (ButtonBase)sender;
-
-            try 
-            {
-                button.Focus();
-
-                Database.SubmitChanges();
-                
-                button.IsEnabled = false;
-            }
-            catch (System.Exception ex)
-            {
-                Windows.ErrorNoticeWindow.ShowError("Error while attempting to write changes to database", ex.Message);
-            }
-        }
-
-        private void CommitChangesButton_LostFocus(object sender, RoutedEventArgs e)
-        {
-            var button = (ButtonBase)sender;
-
-            button.IsEnabled = true;
-        }
-
-        private void CommitJobChanges_Executed(object sender, ExecutedRoutedEventArgs e)
-        {            
-            CommitChangesButton.RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent, CommitChangesButton));
         }
 
         private void NewJob_Click(object sender, RoutedEventArgs e)

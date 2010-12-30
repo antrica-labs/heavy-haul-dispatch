@@ -60,8 +60,6 @@
                     </StackPanel>
                 </StackPanel>
             </GroupBox>
-            
-            <Button Visibility="Collapsed" Style="{StaticResource Bottom}" Name="CommitChangesButton" Click="SaveDetails_Click">Save adjustments</Button>
         </StackPanel>
 
         <DataGrid Name="dgCreditRates" Style="{StaticResource ListDisplay}">

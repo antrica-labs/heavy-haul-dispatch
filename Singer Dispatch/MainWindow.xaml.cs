@@ -418,11 +418,6 @@ namespace SingerDispatch
             EditCompanies();
         }
 
-        private void SaveChanges_Click(object sender, RoutedEventArgs e)
-        {
-            
-        }
-
         private void FindQuote()
         {
             var window = new QuoteLocatorWindow { Owner = this };

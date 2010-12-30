@@ -14,17 +14,11 @@ namespace SingerDispatch.Panels.Companies
     /// </summary>
     public partial class ServicesControl
     {
-        private CommandBinding SaveCommand { get; set; }
-
         public SingerDispatchDataContext Database { get; set; }
 
         public ServicesControl()
         {
             InitializeComponent();
-
-            SaveCommand = new CommandBinding(CustomCommands.GenericSaveCommand);
-            CommandBindings.Add(SaveCommand);
-
             TheList.ItemsSource = new ObservableCollection<CheckBox>();
 
             if (InDesignMode()) return;
@@ -34,8 +28,6 @@ namespace SingerDispatch.Panels.Companies
 
         private void ControlLoaded(object sender, RoutedEventArgs e)
         {
-            SaveCommand.Executed += CommitChanges_Executed;
-
             if (InDesignMode()) return;
 
             RefreshServiceList();
@@ -95,25 +87,6 @@ namespace SingerDispatch.Panels.Companies
             foreach (var item in list)
             {
                 SelectedCompany.Services.Remove(item);
-            }
-        }
-
-        private void CommitChanges_Executed(object sender, ExecutedRoutedEventArgs e)
-        {
-            CommitChangesButton.RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent, CommitChangesButton));
-        }
-
-        private void UpdateServices_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                ((ButtonBase)sender).Focus();
-
-                Database.SubmitChanges();
-            }
-            catch (System.Exception ex)
-            {
-                Windows.ErrorNoticeWindow.ShowError("Error while attempting to write changes to database", ex.Message);
             }
         }
     }
