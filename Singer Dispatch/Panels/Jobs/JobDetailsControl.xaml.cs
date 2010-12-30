@@ -94,11 +94,18 @@ namespace SingerDispatch.Panels.Jobs
         private void RemoveReferenceNumber_Click(object sender, RoutedEventArgs e)
         {
             var selected = (JobReferenceNumber)dgReferenceNumbers.SelectedItem;
-
+            var list = (ObservableCollection<JobReferenceNumber>)dgReferenceNumbers.ItemsSource;
             if (SelectedJob == null || selected == null) return;
 
+            var index = dgReferenceNumbers.SelectedIndex;
+
             SelectedJob.ReferenceNumbers.Remove(selected);
-            ((ObservableCollection<JobReferenceNumber>)dgReferenceNumbers.ItemsSource).Remove(selected);
+            list.Remove(selected);
+
+            if (index == list.Count)
+                index = index - 1;
+
+            dgReferenceNumbers.SelectedIndex = index;
         }
         
         private void AddCompany_Click(object sender, RoutedEventArgs e)
