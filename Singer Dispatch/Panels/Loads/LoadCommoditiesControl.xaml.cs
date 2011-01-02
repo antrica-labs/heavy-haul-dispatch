@@ -533,6 +533,11 @@ namespace SingerDispatch.Panels.Loads
             commodity.LoadAddress = commodity.JobCommodity.DepartureAddress;
             commodity.UnloadLocation = commodity.JobCommodity.ArrivalSiteName;
             commodity.UnloadAddress = commodity.JobCommodity.ArrivalAddress;
+
+            if (commodity.JobCommodity.OriginalCommodity == null) return;
+
+            commodity.LoadRoute = commodity.JobCommodity.OriginalCommodity.LastRoute;
+            commodity.LoadInstructions = commodity.JobCommodity.OriginalCommodity.LastLoadInstructions;
         }
 
         private void AddContact_Click(object sender, RoutedEventArgs e)

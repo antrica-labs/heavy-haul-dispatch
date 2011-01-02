@@ -738,6 +738,8 @@ namespace SingerDispatch
                     {
                         item.JobCommodity.OriginalCommodity.LastLocation = item.UnloadLocation;
                         item.JobCommodity.OriginalCommodity.LastAddress = item.UnloadAddress;
+                        item.JobCommodity.OriginalCommodity.LastRoute = item.UnloadRoute;
+                        item.JobCommodity.OriginalCommodity.LastLoadInstructions = item.UnloadInstructions;
                     }
                 }
             }

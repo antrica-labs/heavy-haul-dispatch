@@ -56,6 +56,8 @@
       <Column Name="Unit" Type="System.String" CanBeNull="true" />
       <Column Name="LastLocation" Type="System.String" CanBeNull="true" />
       <Column Name="LastAddress" Type="System.String" CanBeNull="true" />
+      <Column Name="LastLoadInstructions" Type="System.String" CanBeNull="true" />
+      <Column Name="LastRoute" Type="System.String" CanBeNull="true" />
       <Column Name="Length" Type="System.Double" CanBeNull="true" />
       <Column Name="Width" Type="System.Double" CanBeNull="true" />
       <Column Name="Height" Type="System.Double" CanBeNull="true" />

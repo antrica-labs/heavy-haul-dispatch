@@ -1614,6 +1614,10 @@ namespace SingerDispatch
 		
 		private string _LastAddress;
 		
+		private string _LastLoadInstructions;
+		
+		private string _LastRoute;
+		
 		private System.Nullable<double> _Length;
 		
 		private System.Nullable<double> _Width;
@@ -1654,6 +1658,10 @@ namespace SingerDispatch
     partial void OnLastLocationChanged();
     partial void OnLastAddressChanging(string value);
     partial void OnLastAddressChanged();
+    partial void OnLastLoadInstructionsChanging(string value);
+    partial void OnLastLoadInstructionsChanged();
+    partial void OnLastRouteChanging(string value);
+    partial void OnLastRouteChanged();
     partial void OnLengthChanging(System.Nullable<double> value);
     partial void OnLengthChanged();
     partial void OnWidthChanging(System.Nullable<double> value);
@@ -1837,6 +1845,46 @@ namespace SingerDispatch
 					this._LastAddress = value;
 					this.SendPropertyChanged("LastAddress");
 					this.OnLastAddressChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LastLoadInstructions")]
+		public string LastLoadInstructions
+		{
+			get
+			{
+				return this._LastLoadInstructions;
+			}
+			set
+			{
+				if ((this._LastLoadInstructions != value))
+				{
+					this.OnLastLoadInstructionsChanging(value);
+					this.SendPropertyChanging();
+					this._LastLoadInstructions = value;
+					this.SendPropertyChanged("LastLoadInstructions");
+					this.OnLastLoadInstructionsChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LastRoute")]
+		public string LastRoute
+		{
+			get
+			{
+				return this._LastRoute;
+			}
+			set
+			{
+				if ((this._LastRoute != value))
+				{
+					this.OnLastRouteChanging(value);
+					this.SendPropertyChanging();
+					this._LastRoute = value;
+					this.SendPropertyChanged("LastRoute");
+					this.OnLastRouteChanged();
 				}
 			}
 		}

@@ -45,6 +45,8 @@
                         <RowDefinition />
                         <RowDefinition />
                         <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
                     </Grid.RowDefinitions>
 
                     <Label Grid.Row="0" Grid.Column="0">Commodity name:</Label>
@@ -59,14 +61,20 @@
                     <Label Grid.Row="3" Grid.Column="0">Unit number:</Label>
                     <TextBox Name="txtCommodityUnitNumber" Grid.Row="3" Grid.Column="1" Text="{Binding Unit}" />
 
-                    <Label Grid.Row="4" Grid.Column="0">Last location:</Label>
+                    <Label Grid.Row="4" Grid.Column="0">Previous location:</Label>
                     <TextBox Name="txtCommodityLastLocation" Grid.Row="4" Grid.Column="1" Text="{Binding LastLocation}" />
 
-                    <Label Grid.Row="5" Grid.Column="0">Last address:</Label>
+                    <Label Grid.Row="5" Grid.Column="0">Previous address:</Label>
                     <TextBox Name="txtCommodityLastAddress" Grid.Row="5" Grid.Column="1" Text="{Binding LastAddress}" />
 
-                    <Label Grid.Row="6" Grid.Column="0">Notes:</Label>
-                    <TextBox Name="txtCommodityNotes" Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2" Height="40" Style="{StaticResource MultiLine}" Text="{Binding Notes}" />
+                    <Label Grid.Row="6" Grid.Column="0">Previous route:</Label>
+                    <TextBox Name="txtCommodityLastRoute" Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding LastRoute}" />
+
+                    <Label Grid.Row="7" Grid.Column="0">Previous instructions:</Label>
+                    <TextBox Name="txtCommodityLastInstructions" Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding LastLoadInstructions}" />
+
+                    <Label Grid.Row="8" Grid.Column="0">Notes:</Label>
+                    <TextBox Name="txtCommodityNotes" Grid.Row="8" Grid.Column="1" Grid.ColumnSpan="2" Height="40" Style="{StaticResource MultiLine}" Text="{Binding Notes}" />
 
                     <GroupBox Header="Dimentions" Grid.Row="0" Grid.Column="2" Grid.RowSpan="6" Margin="5,0,0,0">
                         <StackPanel>
