@@ -112,8 +112,8 @@ namespace SingerDispatch.Printing.Documents
             output.Append(GetDescription(dispatch.Description));
             output.Append(GetEquipment(dispatch.Load.ExtraEquipment));
             output.Append(GetSchedule(dispatch));
+            output.Append(GetDimensions(dispatch.Load));
             output.Append(GetLoadCommodities(dispatch.Load.LoadedCommodities));
-            output.Append(GetDimensions(dispatch.Load));            
             output.Append(GetTractors(from t in dispatch.Load.Dispatches where t.Equipment != null && t.Equipment.EquipmentClass != null && t.Equipment.EquipmentClass.Name == "Tractor" select t));
             output.Append(GetSingerPilots(from p in dispatch.Load.Dispatches where p.Equipment != null && p.Equipment.EquipmentClass != null && p.Equipment.EquipmentClass.Name == "Pilot" select p));
             output.Append(GetThirdPartyPilots(from s in dispatch.Load.ThirdPartyServices where s.ServiceType != null && s.ServiceType.Name.Contains("Pilot") select s));
@@ -383,7 +383,7 @@ namespace SingerDispatch.Printing.Documents
                     div.dispatch_doc div.load_and_unload div.commodity
                     {
                     	margin: 5px 0;
-                    	padding: 15px;                    	
+                    	padding: 10px;                    	
                     }
 
                     div.dispatch_doc hr
@@ -395,8 +395,23 @@ namespace SingerDispatch.Printing.Documents
 
                     div.dispatch_doc div.load_and_unload span.commodity_name
                     {
+                        font-size: 1.1em;
+                        text-decoration: underline;
+                        display: block;
                         font-weight: bold;
-                        padding-bottom: 5px;          
+                        margin-bottom: 15px;
+                        margin-left: -10px;
+                    }
+
+                    div.dispatch_doc div.load_and_unload div.dimensions
+                    {
+                        display: block;
+                        padding: 1px;
+                    }                    
+
+                    div.dispatch_doc div.load_and_unload span.commodity_name span.unit
+                    {
+                        font-weight: normal;          
                     }
 
                     div.dispatch_doc div.load_and_unload div.loading, div.dispatch_doc div.load_and_unload div.unloading
@@ -500,7 +515,6 @@ namespace SingerDispatch.Printing.Documents
                         padding: 5px;
                         border: solid 1px #A9A9A9;
                     }
-                    
                     
                     div.dispatch_doc div.dimensions table.weights td
                     {
@@ -857,12 +871,17 @@ namespace SingerDispatch.Printing.Documents
             const string foot = "</div>";
             const string commodityHtml = @"                            
                 <div class=""commodity"">
-                    <span class=""commodity_name"">{0}</span> 
-                    <span class=""unit"">{1}</span>
+                    <span class=""commodity_name"">{0} <span class=""unit"">{1}</span></span> 
+                    
 
-                    <div class=""dimensions"">
+                    <div class=""dimensions metric"">
                         <span class=""weight"">{2}</span>
-                        <span class=""size"">{3}</span>                    
+                        <span class=""size"">{3}</span>
+                    </div>
+
+                    <div class=""dimensions imperial"">
+                        <span class=""weight"">{20}</span>
+                        <span class=""size"">{21}</span>
                     </div>
                     
                     <div class=""loading"">
@@ -955,28 +974,19 @@ namespace SingerDispatch.Printing.Documents
 
             html.Append(head);
 
-            string lengthUnit, weightUnit;
-
-            if (PrintMetric != true)
-            {
-                lengthUnit = MeasurementFormater.UFeet;
-                weightUnit = MeasurementFormater.UPounds;
-            }
-            else
-            {
-                lengthUnit = MeasurementFormater.UMetres;
-                weightUnit = MeasurementFormater.UKilograms;
-            }
-
             for (var i = 0; i < commodities.Count; i++)
             {
                 var item = commodities[i];
-                var reps = new object[20];
+                var reps = new object[22];
 
                 reps[0] = item.JobCommodity.Name;
                 reps[1] = (item.JobCommodity.Unit != null) ? string.Format("Unit {0}", item.JobCommodity.Unit) : "";
-                reps[2] = string.Format("{0}", MeasurementFormater.FromKilograms(item.JobCommodity.Weight, weightUnit));
-                reps[3] = string.Format("{0} x {1} x {2} (LxWxH)", MeasurementFormater.FromMetres(item.JobCommodity.Length, lengthUnit), MeasurementFormater.FromMetres(item.JobCommodity.Width, lengthUnit), MeasurementFormater.FromMetres(item.JobCommodity.Height, lengthUnit));
+
+                reps[2] = string.Format("{0}", MeasurementFormater.FromKilograms(item.JobCommodity.Weight, MeasurementFormater.UKilograms));
+                reps[3] = string.Format("{0} x {1} x {2} (LxWxH)", MeasurementFormater.FromMetres(item.JobCommodity.Length, MeasurementFormater.UMetres), MeasurementFormater.FromMetres(item.JobCommodity.Width, MeasurementFormater.UMetres), MeasurementFormater.FromMetres(item.JobCommodity.Height, MeasurementFormater.UMetres));
+                reps[20] = string.Format("{0}", MeasurementFormater.FromKilograms(item.JobCommodity.Weight, MeasurementFormater.UPounds));
+                reps[21] = string.Format("{0} x {1} x {2} (LxWxH)", MeasurementFormater.FromMetres(item.JobCommodity.Length, MeasurementFormater.UFeet), MeasurementFormater.FromMetres(item.JobCommodity.Width, MeasurementFormater.UFeet), MeasurementFormater.FromMetres(item.JobCommodity.Height, MeasurementFormater.UFeet));
+
 
                 if (item.LoadDate != null)
                 {
