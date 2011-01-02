@@ -20,6 +20,12 @@ namespace SingerDispatch.Controls
 
                 for (var i = 0; i < list.Count; i++)
                 {
+                    if (list[i].JobCommodity == null)
+                        continue;
+                 
+                    if (!string.IsNullOrWhiteSpace(list[i].JobCommodity.Unit))
+                        output.Append(list[i].JobCommodity.Unit + " - ");
+
                     output.Append(list[i].JobCommodity.Name);
 
                     if ((i + 1) != list.Count)

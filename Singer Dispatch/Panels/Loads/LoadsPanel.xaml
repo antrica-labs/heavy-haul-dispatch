@@ -56,7 +56,7 @@
 
         <DataGrid Name="dgLoads" Grid.Column="0" Grid.Row="1" Style="{StaticResource ListDisplay}" SelectedItem="{Binding ElementName=ThePanel, Path=SelectedLoad}">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Num" Binding="{Binding Number}" Width="50"/>
+                <DataGridTextColumn Header="Num" Binding="{Binding Number}" Width="Auto"/>
                 <DataGridTextColumn Header="Status" Binding="{Binding Status.Name}" Width="63" />
                 <DataGridTemplateColumn Header="Commodities">
                     <DataGridTemplateColumn.CellTemplate>
