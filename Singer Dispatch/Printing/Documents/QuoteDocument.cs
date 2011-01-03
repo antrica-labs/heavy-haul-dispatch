@@ -59,7 +59,7 @@ namespace SingerDispatch.Printing.Documents
 
             content.Append(@"<div class=""quote_body"">");
             content.Append(GetHeader("#" + quote.NumberAndRev));
-            content.Append(GetRecipient(quote.BillingAddress, quote.Contact));
+            content.Append(GetRecipient(quote));
             content.Append(GetDescription(quote.Contact, quote.Description, quote.CreationDate, quote.ExpirationDate));
             content.Append(GetCommodities(quote));
 
@@ -445,7 +445,7 @@ namespace SingerDispatch.Printing.Documents
             return string.Format(html, replacements);
         }
 
-        private static string GetRecipient(Address address, Contact contact)
+        private static string GetRecipient(Quote quote)
         {
             var content = new StringBuilder();
 
@@ -468,13 +468,17 @@ namespace SingerDispatch.Printing.Documents
                 </div>
             ";
 
-            content.Append(string.Format(header, DateTime.Now.ToString(SingerConfigs.PrintedDateFormatString)));
+            var address = quote.BillingAddress;
+            var contact = quote.Contact;
+
+            content.Append(string.Format(header, DateTime.Now.ToString(SingerConfigs.PrintedDateFormatString)));            
+            content.Append("<span>" + quote.Company.Name + "</span>");
+
+            if (quote.CareOfCompany != null)
+                content.Append("<span>c/o " + quote.CareOfCompany.Name + "</span>");
 
             if (address != null)
             {
-                if (address.Company != null)
-                    content.Append("<span>" + address.Company.Name + "</span>");
-
                 if (address.Line1 != null)
                     content.Append("<span>" + address.Line1 + "</span>");
 
@@ -512,14 +516,14 @@ namespace SingerDispatch.Printing.Documents
                 if (!string.IsNullOrEmpty(contact.SecondaryPhone))
                     secondary = string.Format(secondary, contact.SecondaryPhone);
                 else
-                    secondary = (!string.IsNullOrEmpty(address.SecondaryPhone)) ? string.Format(secondary, address.SecondaryPhone) : "";
+                    secondary = (address != null && !string.IsNullOrEmpty(address.SecondaryPhone)) ? string.Format(secondary, address.SecondaryPhone) : "";
 
                 if (!string.IsNullOrEmpty(contact.Fax))
                     fax = string.Format(fax, contact.Fax);
                 else
-                    fax = (!string.IsNullOrEmpty(address.Fax)) ? string.Format(fax, address.Fax) : "";
+                    fax = (address != null && !string.IsNullOrEmpty(address.Fax)) ? string.Format(fax, address.Fax) : "";
                 
-                email = (!string.IsNullOrEmpty(contact.Email)) ? string.Format(email, contact.Email) : "";                
+                email = (!string.IsNullOrEmpty(contact.Email)) ? string.Format(email, contact.Email) : "";           
                 
 
                 content.Append(telephone);

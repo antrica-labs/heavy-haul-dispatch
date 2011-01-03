@@ -218,7 +218,7 @@
                     <Label Grid.Column="4" Grid.Row="1" FontWeight="Bold" Content="{Binding Fax, Converter={StaticResource PhoneNumberConverter}}" />
 
                     <Label Grid.Column="3" Grid.Row="2">Preferred:</Label>
-                    <Label Grid.Column="4" Grid.Row="2" FontWeight="Bold" Content="{Binding PreferedContactMethod}" />
+                    <Label Grid.Column="4" Grid.Row="2" FontWeight="Bold" Content="{Binding PreferedContactMethod.Name}" />
                 </Grid>
             </StackPanel>
         </GroupBox>
