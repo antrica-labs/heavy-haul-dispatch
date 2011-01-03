@@ -155,7 +155,8 @@
 
         <DataGrid Name="dgEquipment" Style="{StaticResource ListDisplay}">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Unit" Binding="{Binding UnitNumber}" />
+                <DataGridTextColumn Header="Unit" Binding="{Binding UnitNumber}" Width="75" />
+                <DataGridTextColumn Header="Class" Binding="{Binding EquipmentClass.Name}" Width="100" />
                 <DataGridTextColumn Header="Make" Binding="{Binding Make}" />
                 <DataGridTextColumn Header="Model" Binding="{Binding Model}" />
                 <DataGridTextColumn Header="Driver" Binding="{Binding DefaultDriver.Name}" />

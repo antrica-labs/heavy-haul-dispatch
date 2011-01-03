@@ -680,7 +680,7 @@ namespace SingerDispatch.Printing.Documents
                         <tr>
                             <td class=""field_name"">Unit #:</td>
                             <td class=""value"">{1}</td>
-                            <td class=""field_name"">Trailer #:</td>
+                            <td class=""field_name"">{5}:</td>
                             <td class=""value"">{2}</td>
                         </tr>
                         <tr>
@@ -703,19 +703,33 @@ namespace SingerDispatch.Printing.Documents
             ";
             string rowTemplate = @"
                 <tr>                    
-                    <td class=""field_name"">{0}:</td>
+                    <td class=""field_name"">{0}</td>
                     <td class=""value"">{1}</td>
                 </tr>
             ";
 
-            var dispatchReplacements = new object[5];
+            var dispatchReplacements = new object[6];
 
             dispatchReplacements[0] = dispatch.Load.Job.Company.Name;
-            dispatchReplacements[1] = (dispatch.Equipment != null) ? dispatch.Equipment.UnitNumber : "";
-            dispatchReplacements[2] = (dispatch.Load != null && dispatch.Load.Rate != null) ? dispatch.Load.Rate.Name + " - " : "";
 
-            if (dispatch.Load != null && dispatch.Load.TrailerCombination != null)
-                dispatchReplacements[2] += dispatch.Load.TrailerCombination.Combination;
+            if (dispatch.Equipment != null)
+            {
+                dispatchReplacements[1] = dispatch.Equipment.UnitNumber;
+
+                if (dispatch.Equipment.EquipmentClass.Name == "Tractor")
+                {
+                    dispatchReplacements[5] = "Trailer:";
+                    dispatchReplacements[2] = (dispatch.Load != null && dispatch.Load.Rate != null) ? dispatch.Load.Rate.Name + " - " : "";
+
+                    if (dispatch.Load != null && dispatch.Load.TrailerCombination != null)
+                        dispatchReplacements[2] += dispatch.Load.TrailerCombination.Combination;
+                }
+                else
+                {
+                    dispatchReplacements[5] = "Responsibility:";
+                    dispatchReplacements[2] = (dispatch.EquipmentType != null) ? dispatch.EquipmentType.Name : "";
+                }
+            }
 
             dispatchReplacements[3] = (dispatch.Employee != null) ? string.Format("{0} {1}", dispatch.Employee.Name, dispatch.Employee.Phone) : "";
                         

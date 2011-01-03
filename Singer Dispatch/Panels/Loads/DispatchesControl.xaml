@@ -68,7 +68,7 @@
                     </ComboBox>
                     
                     <Label Grid.Row="1" Grid.Column="0">Equipment type:</Label>
-                    <ComboBox Name="cmbEquipmentTypes" Grid.Row="1" Grid.Column="1" ItemTemplate="{StaticResource SimpleNameTemplate}" TextSearch.TextPath="Name" Controls:ComboUtil.AllowNull="True">
+                    <ComboBox Name="cmbEquipmentTypes" Grid.Row="1" Grid.Column="1" ItemTemplate="{StaticResource SimpleNameTemplate}" TextSearch.TextPath="Name" Controls:ComboUtil.AllowNull="True" SelectionChanged="cmbEquipmentTypes_SelectionChanged">
                         <ComboBox.SelectedItem>
                             <Binding Path="EquipmentType">
                                 <Binding.ValidationRules>

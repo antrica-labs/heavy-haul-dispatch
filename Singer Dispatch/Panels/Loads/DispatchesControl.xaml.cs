@@ -95,7 +95,20 @@ namespace SingerDispatch.Panels.Loads
             if (SelectedLoad.Dispatches.Count == 0 && SelectedLoad.Equipment != null)
             {
                 // Assume they want a dispatch for the tractor pulling this load
-                dispatch.EquipmentType = SelectedLoad.Equipment.EquipmentType;
+                var types = (List<EquipmentType>)cmbEquipmentTypes.ItemsSource;
+                var prefix = SelectedLoad.Equipment.UnitNumber;
+
+                if (prefix != null && prefix.IndexOf("-") >= 0)
+                {
+                    prefix = prefix.Substring(0, prefix.IndexOf("-"));
+
+                    try
+                    {
+                        dispatch.EquipmentType = (from t in types where t.Prefix == prefix select t).First();
+                    }
+                    catch { }
+                }
+                
                 dispatch.Equipment = SelectedLoad.Equipment;
                 dispatch.Employee = dispatch.Equipment.DefaultDriver;
             }
@@ -295,6 +308,13 @@ namespace SingerDispatch.Panels.Loads
                     dispatch.OutOfProvinceTravels.Add(opt);
                 }
             }
+        }
+
+        private void cmbEquipmentTypes_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            var type = (EquipmentType)cmbEquipmentTypes.SelectedItem;
+                        
+            cmbUnits.ItemsSource = (type == null) ? null : from eq in Database.Equipment where eq.IsDispatchable == true && eq.Archived != true && eq.UnitNumber.StartsWith(string.Format("{0}-", type.Prefix)) select eq;
         }
     }
 
