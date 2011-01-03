@@ -28,6 +28,7 @@ namespace SingerDispatch.Windows
             Database = database;
             
             Company = new Company();
+            Database.Companies.InsertOnSubmit(Company);
             companyDetails.DataContext = Company;
             
             Address = new Address();
@@ -140,7 +141,12 @@ namespace SingerDispatch.Windows
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             if (!Created)
+            {
+                Database.Companies.DeleteOnSubmit(Company);
                 Company = null;
+            }
+
+            Database.SubmitChanges();
         }        
     }
 }

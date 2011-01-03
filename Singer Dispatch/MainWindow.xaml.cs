@@ -460,16 +460,14 @@ namespace SingerDispatch
 
             try
             {
-                Database.Companies.InsertOnSubmit(newCompany);
-
-                Database.SubmitChanges();                
+                Database.SubmitChanges();
 
                 Companies.Add(newCompany);
                 acCompany.SelectedItem = newCompany;
             }
             catch (Exception ex)
             {
-                ErrorNoticeWindow.ShowError("Error while adding company to database", ex.Message);
+                ErrorNoticeWindow.ShowError("Error while creating company", ex.Message);
             }
                 
         }
