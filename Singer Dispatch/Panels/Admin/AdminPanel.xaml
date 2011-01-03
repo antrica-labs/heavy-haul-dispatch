@@ -31,11 +31,9 @@
             <TabItem Header="Rates">
                 <Admin:RatesControl Width="Auto" CompanyList="{Binding CompanyList}" UseImperialMeasurements="{Binding UseImperialMeasurements}" />
             </TabItem>
-            <!--
             <TabItem Header="Trailer combinations">
                 <Admin:TrailerCombinationsControl Width="Auto" CompanyList="{Binding CompanyList}" UseImperialMeasurements="{Binding UseImperialMeasurements}" />
             </TabItem>
-            -->
         </TabControl>
     </Grid>
 </Panels:BaseUserControl>

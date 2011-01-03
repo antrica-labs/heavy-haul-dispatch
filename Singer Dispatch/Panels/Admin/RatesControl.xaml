@@ -35,7 +35,7 @@
                 <DataGridTextColumn Header="Name" Binding="{Binding Name, UpdateSourceTrigger=PropertyChanged}" Width="175" />
                 <DataGridTextColumn Header="Specialized rate (SS)" Binding="{Binding HourlySpecialized, StringFormat=c, Converter={StaticResource NullableValueConverter}, UpdateSourceTrigger=PropertyChanged}" Width="Auto" />
                 <DataGridTextColumn Header="Enterprise rate (ME)" Binding="{Binding HourlyEnterprise, StringFormat=c, Converter={StaticResource NullableValueConverter}, UpdateSourceTrigger=PropertyChanged}" Width="Auto" />
-                <DataGridComboBoxColumn Header="Rate type" DisplayMemberPath="Name" ItemsSource="{Binding Source={StaticResource RateTypesDropList}}" SelectedItemBinding="{Binding RateType, UpdateSourceTrigger=PropertyChanged}" Width="75" />
+                <DataGridComboBoxColumn Header="Rate type" DisplayMemberPath="Name" ItemsSource="{Binding Source={StaticResource RateTypesDropList}}" SelectedItemBinding="{Binding RateType}" Width="75" />
                 <DataGridTextColumn Header="Notes" Binding="{Binding Notes, UpdateSourceTrigger=PropertyChanged}" />
             </DataGrid.Columns>
         </DataGrid>        
