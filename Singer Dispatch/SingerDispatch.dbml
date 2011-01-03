@@ -717,6 +717,8 @@
       <Column Name="Width" Type="System.Double" CanBeNull="true" />
       <Column Name="Height" Type="System.Double" CanBeNull="true" />
       <Column Name="Tare" Type="System.Double" CanBeNull="true" />
+      <Column Name="Expandable" Type="System.Boolean" CanBeNull="true" />
+      <Column Name="Notes" Type="System.String" CanBeNull="true" />
       <Association Name="TrailerCombination_Load" Member="Loads" ThisKey="ID" OtherKey="TrailerCombinationID" Type="Load" />
       <Association Name="Rate_TrailerCombination" Member="Rate" ThisKey="RateID" OtherKey="ID" Type="Rate" IsForeignKey="true" />
     </Type>

@@ -16684,6 +16684,10 @@ namespace SingerDispatch
 		
 		private System.Nullable<double> _Tare;
 		
+		private System.Nullable<bool> _Expandable;
+		
+		private string _Notes;
+		
 		private EntitySet<Load> _Loads;
 		
 		private EntityRef<Rate> _Rate;
@@ -16710,6 +16714,10 @@ namespace SingerDispatch
     partial void OnHeightChanged();
     partial void OnTareChanging(System.Nullable<double> value);
     partial void OnTareChanged();
+    partial void OnExpandableChanging(System.Nullable<bool> value);
+    partial void OnExpandableChanged();
+    partial void OnNotesChanging(string value);
+    partial void OnNotesChanged();
     #endregion
 		
 		public TrailerCombination()
@@ -16899,6 +16907,46 @@ namespace SingerDispatch
 					this._Tare = value;
 					this.SendPropertyChanged("Tare");
 					this.OnTareChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Expandable")]
+		public System.Nullable<bool> Expandable
+		{
+			get
+			{
+				return this._Expandable;
+			}
+			set
+			{
+				if ((this._Expandable != value))
+				{
+					this.OnExpandableChanging(value);
+					this.SendPropertyChanging();
+					this._Expandable = value;
+					this.SendPropertyChanged("Expandable");
+					this.OnExpandableChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Notes")]
+		public string Notes
+		{
+			get
+			{
+				return this._Notes;
+			}
+			set
+			{
+				if ((this._Notes != value))
+				{
+					this.OnNotesChanging(value);
+					this.SendPropertyChanging();
+					this._Notes = value;
+					this.SendPropertyChanged("Notes");
+					this.OnNotesChanged();
 				}
 			}
 		}

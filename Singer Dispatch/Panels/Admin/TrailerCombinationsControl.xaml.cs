@@ -46,7 +46,7 @@ namespace SingerDispatch.Panels.Admin
                 }            
             }
 
-            dgCombinations.ItemsSource = new ObservableCollection<TrailerCombination>(from tc in Database.TrailerCombinations select tc);         
+            dgCombinations.ItemsSource = new ObservableCollection<TrailerCombination>(from tc in Database.TrailerCombinations orderby tc.Rate.Name select tc);         
         }
 
         protected override void UseImperialMeasurementsChanged(bool value)
@@ -98,12 +98,10 @@ namespace SingerDispatch.Panels.Admin
             }
         }
 
-        private void CommitChanges_Click(object sender, RoutedEventArgs e)
+        private void CommitChanges()
         {
             try
             {
-                ((ButtonBase)sender).Focus();
-
                 Database.SubmitChanges();                
             }
             catch (System.Exception ex)
@@ -114,11 +112,8 @@ namespace SingerDispatch.Panels.Admin
 
         private void RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
         {
-            if (e.EditAction == DataGridEditAction.Commit)
-            {
-                CommitChangesButton.RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent, CommitChangesButton));
-            }
-        }        
+            CommitChanges();
+        }
     }
 
     public class RatesDropList : ObservableCollection<Rate>

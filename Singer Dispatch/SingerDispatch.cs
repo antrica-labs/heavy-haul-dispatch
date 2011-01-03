@@ -928,4 +928,12 @@ namespace SingerDispatch
             ContractSigned = ContractSigned ?? false;
         } 
     }
+
+    partial class TrailerCombination
+    {
+        partial void OnCreated()
+        {
+            Expandable = Expandable ?? false;
+        }
+    }
 }
