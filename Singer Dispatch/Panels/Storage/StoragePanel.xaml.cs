@@ -193,7 +193,7 @@ namespace SingerDispatch.Panels.Storage
                 return;
             }
 
-            var title = String.Format("Storage Contract #{0}", item.ID);
+            var title = String.Format("Storage Contract #{0}", item.Number);
 
             var viewer = new Windows.DocumentViewerWindow(new StorageContractDocument(), item, title) { IsMetric = !UseImperialMeasurements, IsSpecializedDocument = item.Company.CustomerType.IsEnterprise != true };
             viewer.DisplayPrintout();
@@ -205,6 +205,22 @@ namespace SingerDispatch.Panels.Storage
 
             SelectedItem = null;
             SelectedItem = item;
+        }
+
+        private void ViewStorageSticker_Click(object sender, RoutedEventArgs e)
+        {
+            var item = (StorageItem)dgStorageItems.SelectedItem;
+
+            if (item == null || item.Company == null || item.Commodity == null)
+            {
+                Windows.ErrorNoticeWindow.ShowError("Unable to create storage contract", "Storage items need a commodity.");
+                return;
+            }
+
+            var title = string.Format("Storage Sticker #{0}", item.Number);
+
+            var viewer = new Windows.DocumentViewerWindow(new StorageStickerDocument(), item, title) { IsMetric = !UseImperialMeasurements, IsSpecializedDocument = item.Commodity.Company.CustomerType.IsEnterprise != true };
+            viewer.DisplayPrintout();
         }
     }
 }

@@ -112,6 +112,7 @@
     <Compile Include="Controls\Converters\PhoneNumberConverter.cs" />
     <Compile Include="Controls\Converters\TimeConverter.cs" />
     <Compile Include="Controls\Converters\WeightMeasurementConverter.cs" />
+    <Compile Include="Controls\Converters\YesNoBooleanConverter.cs" />
     <Compile Include="Controls\CustomCommands.cs" />
     <Compile Include="Controls\DataGridHelper.cs" />
     <Compile Include="Controls\Converters\EmployeeFriendlyNameConverter.cs" />
@@ -239,6 +240,7 @@
     <Compile Include="Printing\Documents\LoadingDocument.cs" />
     <Compile Include="Printing\Documents\SingerPrintDocument.cs" />
     <Compile Include="Printing\Documents\StorageContractDocument.cs" />
+    <Compile Include="Printing\Documents\StorageStickerDocument.cs" />
     <Compile Include="Printing\FileUtils.cs" />
     <Compile Include="Printing\Documents\InvoiceDocument.cs" />
     <Compile Include="Printing\PDFizer.cs" />

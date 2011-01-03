@@ -18,6 +18,7 @@
     <Controls:PhoneNumberConverter x:Key="PhoneNumberConverter" />
     <Controls:NullableValueConverter x:Key="NullableValueConverter" />
     <Controls:TimeConverter x:Key="TimeConverter" />
+    <Controls:YesNoBooleanConverter x:Key="YesNoBooleanConverter" />
     
     <DataTemplate x:Key="SimpleNameTemplate">
         <TextBlock Text="{Binding Name}" />
