@@ -62,7 +62,7 @@ namespace SingerDispatch.Panels.Jobs
             if (dgRecordedCommodities.ActualHeight > 0.0)
             {
                 dgRecordedCommodities.MaxHeight = dgRecordedCommodities.ActualHeight;
-                dgRecordedCommodities.ItemsSource = (SelectedJob == null) ? null : from c in Database.Commodities where c.Company == SelectedJob.Company || c.Company == SelectedJob.CareOfCompany orderby c.Name, c.Unit select c;
+                dgRecordedCommodities.ItemsSource = (SelectedJob == null) ? null : new ObservableCollection<Commodity>(from c in Database.Commodities where c.Company == SelectedJob.Company || c.Company == SelectedJob.CareOfCompany orderby c.Name, c.Unit select c);
             }
 
             UpdateAddressesAndSites();
