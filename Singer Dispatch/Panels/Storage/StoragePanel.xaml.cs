@@ -25,7 +25,7 @@ namespace SingerDispatch.Panels.Storage
     /// </summary>
     public partial class StoragePanel 
     {
-        public static DependencyProperty SelectedItemProperty = DependencyProperty.Register("SelectedItem", typeof(StorageItem), typeof(StoragePanel));
+        public static DependencyProperty SelectedItemProperty = DependencyProperty.Register("SelectedItem", typeof(StorageItem), typeof(StoragePanel), new PropertyMetadata(null, SelectedItemPropertyChanged));
         public SingerDispatchDataContext Database { get; set; }
 
         private CommandBinding SaveCommand { get; set; }
@@ -60,25 +60,53 @@ namespace SingerDispatch.Panels.Storage
         private void Control_Loaded(object sender, RoutedEventArgs e)
         {
             if (InDesignMode()) return;
-                        
-            dgStorageItems.ItemsSource = new ObservableCollection<StorageItem>(from si in Database.StorageItems where si.IsVisible == true select si);
+
+            var storage = from si in Database.StorageItems orderby si.Number descending select si;
+
+            dgCurrentStorageItems.ItemsSource = new ObservableCollection<StorageItem>(from s in storage where s.Archived != true select s);
+            dgPreviousStorageItems.ItemsSource = new ObservableCollection<StorageItem>(from s in storage where s.Archived == true select s);
+
             UpdateComboBoxes();
+        }
+
+        protected static void SelectedItemPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var control = (StoragePanel)d;
+
+            //control.SelectedItemChanged((StorageItem)e.NewValue, (StorageItem)e.OldValue);                
+        }
+
+        private void SelectedItemChanged(StorageItem newValue, StorageItem oldValue)
+        {
+            if (newValue == null)
+            {
+                dgCurrentStorageItems.SelectedItem = null;
+                dgPreviousStorageItems.SelectedItem = null;
+            }
+            else if (newValue.Archived == true)
+            {
+                dgPreviousStorageItems.SelectedItem = newValue;
+            }
+            else
+            {
+                dgCurrentStorageItems.SelectedItem = newValue;
+            }
         }
 
         private void AddItem_Click(object sender, RoutedEventArgs e)
         {
-            var list = (ObservableCollection<StorageItem>)dgStorageItems.ItemsSource;
+            var list = (ObservableCollection<StorageItem>)dgCurrentStorageItems.ItemsSource;
             var item = new StorageItem { DateEntered = DateTime.Now };
 
-            list.Add(item);
+            list.Insert(0, item);
             Database.StorageItems.InsertOnSubmit(item);
 
             try
             {
                 EntityHelper.SaveAsNewStorageItem(item, Database);
 
-                dgStorageItems.ScrollIntoView(item);
-                dgStorageItems.SelectedItem = item;
+                dgCurrentStorageItems.ScrollIntoView(item);
+                dgCurrentStorageItems.SelectedItem = item;
             }
             catch (Exception ex)
             {
@@ -88,19 +116,21 @@ namespace SingerDispatch.Panels.Storage
 
         private void RemoveItem_Click(object sender, RoutedEventArgs e)
         {
-            var list = (ObservableCollection<StorageItem>)dgStorageItems.ItemsSource;
-            var item = (StorageItem)dgStorageItems.SelectedItem;
+            var list = (ObservableCollection<StorageItem>)dgPreviousStorageItems.ItemsSource;            
 
-            if (item == null) return;
+            if (SelectedItem == null) return;
 
-            item.DateRemoved = item.DateRemoved ?? DateTime.Now;
-            item.IsVisible = false;
+            var confirmation = MessageBox.Show("Are you sure you want to permanently remove this storage item from the archive?", "Delete confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
-            list.Remove(item);
+            if (confirmation != MessageBoxResult.Yes) return;
+
+            Database.StorageItems.DeleteOnSubmit(SelectedItem);
 
             try
             {                
                 Database.SubmitChanges();
+
+                list.Remove(SelectedItem);
             }
             catch (System.Exception ex)
             {
@@ -166,11 +196,10 @@ namespace SingerDispatch.Panels.Storage
         private void AddContact_Click(object sender, RoutedEventArgs e)
         {
             var cmb = (ComboBox)((Button)sender).DataContext;
-            var item = (StorageItem)dgStorageItems.SelectedItem;
 
-            if (item == null || item.Company == null) return;
+            if (SelectedItem == null || SelectedItem.Company == null) return;
 
-            var window = new CreateContactWindow(Database, item.Company, null) { Owner = Application.Current.MainWindow };
+            var window = new CreateContactWindow(Database, SelectedItem.Company, null) { Owner = Application.Current.MainWindow };
             var contact = window.CreateContact();
 
             if (contact == null || contact.Company == null) return;
@@ -185,23 +214,29 @@ namespace SingerDispatch.Panels.Storage
 
         private void ViewStorageContract_Click(object sender, RoutedEventArgs e)
         {
-            var item = (StorageItem)dgStorageItems.SelectedItem;
-
-            if (item == null || item.Company == null || item.Commodity == null)
+            if (SelectedItem == null || SelectedItem.Company == null || SelectedItem.Commodity == null)
             {
                 Windows.ErrorNoticeWindow.ShowError("Unable to create storage contract", "Storage items need at least a company and commodity.");
                 return;
             }
 
-            var title = String.Format("Storage Contract #{0}", item.Number);
+            var title = String.Format("Storage Contract #{0}", SelectedItem.Number);
 
-            var viewer = new Windows.DocumentViewerWindow(new StorageContractDocument(), item, title) { IsMetric = !UseImperialMeasurements, IsSpecializedDocument = item.Company.CustomerType.IsEnterprise != true };
+            var viewer = new Windows.DocumentViewerWindow(new StorageContractDocument(), SelectedItem, title) { IsMetric = !UseImperialMeasurements, IsSpecializedDocument = SelectedItem.Company.CustomerType.IsEnterprise != true };
             viewer.DisplayPrintout();
         }
 
-        private void dgStorageItems_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void dgCurrentStorageItems_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var item = (StorageItem)dgStorageItems.SelectedItem;
+            var item = (StorageItem)dgCurrentStorageItems.SelectedItem;
+
+            SelectedItem = null;
+            SelectedItem = item;
+        }
+
+        private void dgPreviousStorageItems_SelectionChanged(object sender, SelectedCellsChangedEventArgs e)
+        {
+            var item = (StorageItem)dgPreviousStorageItems.SelectedItem;
 
             SelectedItem = null;
             SelectedItem = item;
@@ -209,18 +244,55 @@ namespace SingerDispatch.Panels.Storage
 
         private void ViewStorageSticker_Click(object sender, RoutedEventArgs e)
         {
-            var item = (StorageItem)dgStorageItems.SelectedItem;
-
-            if (item == null || item.Company == null || item.Commodity == null)
+            if (SelectedItem == null || SelectedItem.Company == null || SelectedItem.Commodity == null)
             {
                 Windows.ErrorNoticeWindow.ShowError("Unable to create storage contract", "Storage items need a commodity.");
                 return;
             }
 
-            var title = string.Format("Storage Sticker #{0}", item.Number);
+            var title = string.Format("Storage Sticker #{0}", SelectedItem.Number);
 
-            var viewer = new Windows.DocumentViewerWindow(new StorageStickerDocument(), item, title) { IsMetric = !UseImperialMeasurements, IsSpecializedDocument = item.Commodity.Company.CustomerType.IsEnterprise != true };
+            var viewer = new Windows.DocumentViewerWindow(new StorageStickerDocument(), SelectedItem, title) { IsMetric = !UseImperialMeasurements, IsSpecializedDocument = SelectedItem.Commodity.Company.CustomerType.IsEnterprise != true };
             viewer.DisplayPrintout();
+        }
+
+        private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var tb = (TabControl)sender;
+
+            SelectedItem = null;
+
+            if (tb.SelectedIndex == 0)
+                SelectedItem = (StorageItem)dgCurrentStorageItems.SelectedItem;
+            else if (tb.SelectedIndex == 1)
+                SelectedItem = (StorageItem)dgPreviousStorageItems.SelectedItem;
+        }
+
+        private void ArchiveItem_Click(object sender, RoutedEventArgs e)
+        {
+            var clist = (ObservableCollection<StorageItem>)dgCurrentStorageItems.ItemsSource;
+            var plist = (ObservableCollection<StorageItem>)dgPreviousStorageItems.ItemsSource;
+
+            if (SelectedItem == null) return;
+
+            var confirmation = MessageBox.Show("Are you sure you want to archive this storage item? This cannot be undone.", "Archive confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+            if (confirmation != MessageBoxResult.Yes) return;
+
+            SelectedItem.DateRemoved = SelectedItem.DateRemoved ?? DateTime.Now;
+            SelectedItem.Archived = true;
+
+            try
+            {
+                Database.SubmitChanges();
+
+                clist.Remove(SelectedItem);
+                //plist.Add(SelectedItem);
+            }
+            catch (System.Exception ex)
+            {
+                Windows.ErrorNoticeWindow.ShowError("Error while attempting to write changes to database", ex.Message);
+            }
         }
     }
 }

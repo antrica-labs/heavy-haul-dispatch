@@ -13,16 +13,12 @@ namespace SingerDispatch.Panels.Admin
     /// </summary>
     public partial class EquipmentControl
     {
-        private CommandBinding SaveCommand { get; set; }
-
         public SingerDispatchDataContext Database { get; set; }
 
         public EquipmentControl()
         {
             InitializeComponent();
             
-            SaveCommand = new CommandBinding(CustomCommands.GenericSaveCommand);
-
             if (InDesignMode()) return;
 
             Database = SingerConfigs.CommonDataContext;
@@ -31,12 +27,10 @@ namespace SingerDispatch.Panels.Admin
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            SaveCommand.Executed += CommitChanges_Executed;
-
             if (InDesignMode()) return;
 
-            cmbEmployees.ItemsSource = from emp in Database.Employees orderby emp.FirstName, emp.LastName select emp;            
-            dgEquipment.ItemsSource = new ObservableCollection<Equipment>(from equip in Database.Equipment orderby equip.UnitNumber select equip);            
+            cmbEmployees.ItemsSource = from emp in Database.Employees where emp.Archived != true orderby emp.FirstName, emp.LastName select emp;            
+            dgEquipment.ItemsSource = new ObservableCollection<Equipment>(from equip in Database.Equipment where equip.Archived != true orderby equip.UnitNumber select equip);            
         }
 
         private void NewEquipment_Click(object sender, RoutedEventArgs e)
@@ -63,7 +57,8 @@ namespace SingerDispatch.Panels.Admin
 
             try
             {
-                Database.Equipment.DeleteOnSubmit(unit);
+                unit.Archived = true;
+                
                 Database.SubmitChanges();
 
                 ((ObservableCollection<Equipment>)dgEquipment.ItemsSource).Remove(unit);
@@ -73,21 +68,6 @@ namespace SingerDispatch.Panels.Admin
                 Windows.ErrorNoticeWindow.ShowError("Error while attempting to remove equipment", ex.Message);
             }
 
-        }
-
-
-        private void SaveEquipment_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                ((ButtonBase)sender).Focus();
-
-                Database.SubmitChanges();
-            }
-            catch (System.Exception ex)
-            {
-                Windows.ErrorNoticeWindow.ShowError("Error while attempting to save equipment", ex.Message);
-            }
         }
 
         private void EquipmentClass_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -102,11 +82,6 @@ namespace SingerDispatch.Panels.Admin
             {
                 gbTractorInfo.IsEnabled = false;
             }
-        }
-
-        private void CommitChanges_Executed(object sender, ExecutedRoutedEventArgs e)
-        {            
-            CommitChangesButton.RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent, CommitChangesButton));
         }
         
     }

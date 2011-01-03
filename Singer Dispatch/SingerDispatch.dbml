@@ -163,6 +163,7 @@
   <Table Name="" Member="Employees">
     <Type Name="Employee">
       <Column Name="ID" Type="System.Int64" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Archived" Type="System.Boolean" CanBeNull="true" />
       <Column Name="FirstName" Type="System.String" CanBeNull="true" />
       <Column Name="LastName" Type="System.String" CanBeNull="true" />
       <Column Name="JobTitle" Type="System.String" CanBeNull="true" />
@@ -523,6 +524,7 @@
   <Table Name="" Member="Inclusions">
     <Type Name="Inclusion">
       <Column Name="ID" Type="System.Int64" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Archived" Type="System.Boolean" CanBeNull="true" />
       <Column Name="Line" Type="System.String" CanBeNull="true" />
     </Type>
   </Table>
@@ -538,6 +540,7 @@
   <Table Name="" Member="Conditions">
     <Type Name="Condition">
       <Column Name="ID" Type="System.Int64" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Archived" Type="System.Boolean" CanBeNull="true" />
       <Column Name="Line" Type="System.String" CanBeNull="true" />
       <Column Name="AutoInclude" Type="System.Boolean" CanBeNull="true" />
       <Association Name="Condition_QuoteCondition" Member="QuoteConditions" ThisKey="ID" OtherKey="ConditionID" Type="QuoteCondition" />
@@ -555,8 +558,9 @@
   </Table>
   <Table Name="" Member="Rates">
     <Type Name="Rate">
-      <Column Name="ID" Type="System.Int64" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ID" Type="System.Int64" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />      
       <Column Name="RateTypeID" Type="System.Int64" CanBeNull="true" />
+      <Column Name="Archived" Type="System.Boolean" CanBeNull="true" />
       <Column Name="Name" Type="System.String" CanBeNull="true" />
       <Column Name="HourlySpecialized" Type="System.Decimal" CanBeNull="true" />
       <Column Name="HourlyEnterprise" Type="System.Decimal" CanBeNull="true" />
@@ -619,6 +623,7 @@
   <Table Name="" Member="Equipment">
     <Type Name="Equipment">
       <Column Name="ID" Type="System.Int64" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Archived" Type="System.Boolean" CanBeNull="true" />
       <Column Name="DefaultDriverID" Type="System.Int64" CanBeNull="true" />
       <Column Name="ClassID" Type="System.Int64" CanBeNull="true" />
       <Column Name="TypeID" Type="System.Int64" CanBeNull="true" />
@@ -711,6 +716,7 @@
     <Type Name="TrailerCombination">
       <Column Name="ID" Type="System.Int64" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="RateID" Type="System.Int64" CanBeNull="true" />
+      <Column Name="Archived" Type="System.Boolean" CanBeNull="true" />
       <Column Name="Combination" Type="System.String" CanBeNull="true" />
       <Column Name="LicencePlate" Type="System.String" CanBeNull="true" />
       <Column Name="DeckLength" Type="System.Double" CanBeNull="true" />
@@ -812,7 +818,7 @@
     <Type Name="StorageItem">
       <Column Name="ID" Type="System.Int64" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Number" Type="System.Int64" CanBeNull="true" />
-      <Column Name="IsVisible" Type="System.Boolean" CanBeNull="true"/>
+      <Column Name="Archived" Type="System.Boolean" CanBeNull="true"/>
       <Column Name="CompanyID" Type="System.Int64" CanBeNull="true" />
       <Column Name="CommodityID" Type="System.Int64" CanBeNull="true" />
       <Column Name="ContactID" Type="System.Int64" CanBeNull="true" />

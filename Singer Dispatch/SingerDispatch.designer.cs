@@ -4181,6 +4181,8 @@ namespace SingerDispatch
 		
 		private long _ID;
 		
+		private System.Nullable<bool> _Archived;
+		
 		private string _FirstName;
 		
 		private string _LastName;
@@ -4225,6 +4227,8 @@ namespace SingerDispatch
     partial void OnCreated();
     partial void OnIDChanging(long value);
     partial void OnIDChanged();
+    partial void OnArchivedChanging(System.Nullable<bool> value);
+    partial void OnArchivedChanged();
     partial void OnFirstNameChanging(string value);
     partial void OnFirstNameChanged();
     partial void OnLastNameChanging(string value);
@@ -4281,6 +4285,26 @@ namespace SingerDispatch
 					this._ID = value;
 					this.SendPropertyChanged("ID");
 					this.OnIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Archived")]
+		public System.Nullable<bool> Archived
+		{
+			get
+			{
+				return this._Archived;
+			}
+			set
+			{
+				if ((this._Archived != value))
+				{
+					this.OnArchivedChanging(value);
+					this.SendPropertyChanging();
+					this._Archived = value;
+					this.SendPropertyChanged("Archived");
+					this.OnArchivedChanged();
 				}
 			}
 		}
@@ -12761,6 +12785,8 @@ namespace SingerDispatch
 		
 		private long _ID;
 		
+		private System.Nullable<bool> _Archived;
+		
 		private string _Line;
 		
     #region Extensibility Method Definitions
@@ -12769,6 +12795,8 @@ namespace SingerDispatch
     partial void OnCreated();
     partial void OnIDChanging(long value);
     partial void OnIDChanged();
+    partial void OnArchivedChanging(System.Nullable<bool> value);
+    partial void OnArchivedChanged();
     partial void OnLineChanging(string value);
     partial void OnLineChanged();
     #endregion
@@ -12794,6 +12822,26 @@ namespace SingerDispatch
 					this._ID = value;
 					this.SendPropertyChanged("ID");
 					this.OnIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Archived")]
+		public System.Nullable<bool> Archived
+		{
+			get
+			{
+				return this._Archived;
+			}
+			set
+			{
+				if ((this._Archived != value))
+				{
+					this.OnArchivedChanging(value);
+					this.SendPropertyChanging();
+					this._Archived = value;
+					this.SendPropertyChanged("Archived");
+					this.OnArchivedChanged();
 				}
 			}
 		}
@@ -13023,6 +13071,8 @@ namespace SingerDispatch
 		
 		private long _ID;
 		
+		private System.Nullable<bool> _Archived;
+		
 		private string _Line;
 		
 		private System.Nullable<bool> _AutoInclude;
@@ -13035,6 +13085,8 @@ namespace SingerDispatch
     partial void OnCreated();
     partial void OnIDChanging(long value);
     partial void OnIDChanged();
+    partial void OnArchivedChanging(System.Nullable<bool> value);
+    partial void OnArchivedChanged();
     partial void OnLineChanging(string value);
     partial void OnLineChanged();
     partial void OnAutoIncludeChanging(System.Nullable<bool> value);
@@ -13063,6 +13115,26 @@ namespace SingerDispatch
 					this._ID = value;
 					this.SendPropertyChanged("ID");
 					this.OnIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Archived")]
+		public System.Nullable<bool> Archived
+		{
+			get
+			{
+				return this._Archived;
+			}
+			set
+			{
+				if ((this._Archived != value))
+				{
+					this.OnArchivedChanging(value);
+					this.SendPropertyChanging();
+					this._Archived = value;
+					this.SendPropertyChanged("Archived");
+					this.OnArchivedChanged();
 				}
 			}
 		}
@@ -13379,6 +13451,8 @@ namespace SingerDispatch
 		
 		private System.Nullable<long> _RateTypeID;
 		
+		private System.Nullable<bool> _Archived;
+		
 		private string _Name;
 		
 		private System.Nullable<decimal> _HourlySpecialized;
@@ -13401,6 +13475,8 @@ namespace SingerDispatch
     partial void OnIDChanged();
     partial void OnRateTypeIDChanging(System.Nullable<long> value);
     partial void OnRateTypeIDChanged();
+    partial void OnArchivedChanging(System.Nullable<bool> value);
+    partial void OnArchivedChanged();
     partial void OnNameChanging(string value);
     partial void OnNameChanged();
     partial void OnHourlySpecializedChanging(System.Nullable<decimal> value);
@@ -13459,6 +13535,26 @@ namespace SingerDispatch
 					this._RateTypeID = value;
 					this.SendPropertyChanged("RateTypeID");
 					this.OnRateTypeIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Archived")]
+		public System.Nullable<bool> Archived
+		{
+			get
+			{
+				return this._Archived;
+			}
+			set
+			{
+				if ((this._Archived != value))
+				{
+					this.OnArchivedChanging(value);
+					this.SendPropertyChanging();
+					this._Archived = value;
+					this.SendPropertyChanged("Archived");
+					this.OnArchivedChanged();
 				}
 			}
 		}
@@ -14660,6 +14756,8 @@ namespace SingerDispatch
 		
 		private long _ID;
 		
+		private System.Nullable<bool> _Archived;
+		
 		private System.Nullable<long> _DefaultDriverID;
 		
 		private System.Nullable<long> _ClassID;
@@ -14720,6 +14818,8 @@ namespace SingerDispatch
     partial void OnCreated();
     partial void OnIDChanging(long value);
     partial void OnIDChanged();
+    partial void OnArchivedChanging(System.Nullable<bool> value);
+    partial void OnArchivedChanged();
     partial void OnDefaultDriverIDChanging(System.Nullable<long> value);
     partial void OnDefaultDriverIDChanged();
     partial void OnClassIDChanging(System.Nullable<long> value);
@@ -14792,6 +14892,26 @@ namespace SingerDispatch
 					this._ID = value;
 					this.SendPropertyChanged("ID");
 					this.OnIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Archived")]
+		public System.Nullable<bool> Archived
+		{
+			get
+			{
+				return this._Archived;
+			}
+			set
+			{
+				if ((this._Archived != value))
+				{
+					this.OnArchivedChanging(value);
+					this.SendPropertyChanging();
+					this._Archived = value;
+					this.SendPropertyChanged("Archived");
+					this.OnArchivedChanged();
 				}
 			}
 		}
@@ -16694,6 +16814,8 @@ namespace SingerDispatch
 		
 		private System.Nullable<long> _RateID;
 		
+		private System.Nullable<bool> _Archived;
+		
 		private string _Combination;
 		
 		private string _LicencePlate;
@@ -16724,6 +16846,8 @@ namespace SingerDispatch
     partial void OnIDChanged();
     partial void OnRateIDChanging(System.Nullable<long> value);
     partial void OnRateIDChanged();
+    partial void OnArchivedChanging(System.Nullable<bool> value);
+    partial void OnArchivedChanged();
     partial void OnCombinationChanging(string value);
     partial void OnCombinationChanged();
     partial void OnLicencePlateChanging(string value);
@@ -16791,6 +16915,26 @@ namespace SingerDispatch
 					this._RateID = value;
 					this.SendPropertyChanged("RateID");
 					this.OnRateIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Archived")]
+		public System.Nullable<bool> Archived
+		{
+			get
+			{
+				return this._Archived;
+			}
+			set
+			{
+				if ((this._Archived != value))
+				{
+					this.OnArchivedChanging(value);
+					this.SendPropertyChanging();
+					this._Archived = value;
+					this.SendPropertyChanged("Archived");
+					this.OnArchivedChanged();
 				}
 			}
 		}
@@ -18747,7 +18891,7 @@ namespace SingerDispatch
 		
 		private System.Nullable<long> _Number;
 		
-		private System.Nullable<bool> _IsVisible;
+		private System.Nullable<bool> _Archived;
 		
 		private System.Nullable<long> _CompanyID;
 		
@@ -18787,8 +18931,8 @@ namespace SingerDispatch
     partial void OnIDChanged();
     partial void OnNumberChanging(System.Nullable<long> value);
     partial void OnNumberChanged();
-    partial void OnIsVisibleChanging(System.Nullable<bool> value);
-    partial void OnIsVisibleChanged();
+    partial void OnArchivedChanging(System.Nullable<bool> value);
+    partial void OnArchivedChanged();
     partial void OnCompanyIDChanging(System.Nullable<long> value);
     partial void OnCompanyIDChanged();
     partial void OnCommodityIDChanging(System.Nullable<long> value);
@@ -18862,22 +19006,22 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsVisible")]
-		public System.Nullable<bool> IsVisible
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Archived")]
+		public System.Nullable<bool> Archived
 		{
 			get
 			{
-				return this._IsVisible;
+				return this._Archived;
 			}
 			set
 			{
-				if ((this._IsVisible != value))
+				if ((this._Archived != value))
 				{
-					this.OnIsVisibleChanging(value);
+					this.OnArchivedChanging(value);
 					this.SendPropertyChanging();
-					this._IsVisible = value;
-					this.SendPropertyChanged("IsVisible");
-					this.OnIsVisibleChanged();
+					this._Archived = value;
+					this.SendPropertyChanged("Archived");
+					this.OnArchivedChanged();
 				}
 			}
 		}

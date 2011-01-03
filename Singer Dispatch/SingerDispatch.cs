@@ -73,6 +73,11 @@ namespace SingerDispatch
 
     partial class Employee
     {
+        partial void OnCreated()
+        {
+            Archived = Archived ?? false;
+        }
+
         public string Name
         {
             get
@@ -80,7 +85,14 @@ namespace SingerDispatch
                 return FirstName + " " + LastName;
             }
         }
+    }
 
+    partial class Equipment
+    {
+        partial void OnCreated()
+        {
+            Archived = Archived ?? false;
+        }
     }
 
     partial class Commodity
@@ -325,7 +337,16 @@ namespace SingerDispatch
     {
         partial void OnCreated()        
         {
-            AutoInclude = AutoInclude ?? false;   
+            Archived = Archived ?? false;
+            AutoInclude = AutoInclude ?? false;
+        }
+    }
+
+    partial class Inclusion
+    {
+        partial void OnCreated()
+        {
+            Archived = Archived ?? false;
         }
     }
 
@@ -382,6 +403,11 @@ namespace SingerDispatch
 
     partial class Rate
     {
+        partial void OnCreated()
+        {
+            Archived = Archived ?? false;
+        }
+
         public decimal? Hourly { get; set; }
         public decimal? Adjusted { get; set; }
     }
@@ -924,7 +950,7 @@ namespace SingerDispatch
     {
         partial void OnCreated()
         {
-            IsVisible = IsVisible ?? true;
+            Archived = Archived ?? false;
             ContractSigned = ContractSigned ?? false;
         } 
     }
@@ -934,6 +960,7 @@ namespace SingerDispatch
         partial void OnCreated()
         {
             Expandable = Expandable ?? false;
+            Archived = Archived ?? false;
         }
     }
 }

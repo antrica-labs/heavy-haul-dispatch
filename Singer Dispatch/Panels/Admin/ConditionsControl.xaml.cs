@@ -28,7 +28,7 @@ namespace SingerDispatch.Panels.Admin
         {
             if (InDesignMode()) return;
 
-            TheGrid.ItemsSource = new ObservableCollection<Condition>(from c in Database.Conditions orderby c.ID select c);
+            TheGrid.ItemsSource = new ObservableCollection<Condition>(from c in Database.Conditions where c.Archived != true orderby c.ID select c);
         }
 
         private void NewCondition_Click(object sender, RoutedEventArgs e)
@@ -54,8 +54,9 @@ namespace SingerDispatch.Panels.Admin
             if (confirmation != MessageBoxResult.Yes) return;
 
             try
-            {                
-                Database.Conditions.DeleteOnSubmit(condition);
+            {
+                condition.Archived = true;
+                
                 Database.SubmitChanges();
 
                 list.Remove(condition);
@@ -66,12 +67,10 @@ namespace SingerDispatch.Panels.Admin
             }
         }
 
-        private void CommitChanges_Click(object sender, RoutedEventArgs e)
+        private void CommitChanges()
         {
             try
             {
-                ((ButtonBase)sender).Focus();
-
                 Database.SubmitChanges();
             }
             catch (System.Exception ex)
@@ -84,7 +83,7 @@ namespace SingerDispatch.Panels.Admin
         {
             if (e.EditAction == DataGridEditAction.Commit)
             {
-                CommitChangesButton.RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent, CommitChangesButton));
+                CommitChanges();
             }
         }
         

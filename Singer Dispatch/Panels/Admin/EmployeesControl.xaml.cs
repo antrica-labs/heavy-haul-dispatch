@@ -12,16 +12,12 @@ namespace SingerDispatch.Panels.Admin
     /// </summary>
     public partial class EmployeesControl
     {
-        private CommandBinding SaveCommand { get; set; }
-
         public SingerDispatchDataContext Database { get; set; }
 
         public EmployeesControl()
         {
             InitializeComponent();
-
-            SaveCommand = new CommandBinding(CustomCommands.GenericSaveCommand);
-
+            
             if (InDesignMode()) return;
 
             Database = SingerConfigs.CommonDataContext;            
@@ -29,11 +25,9 @@ namespace SingerDispatch.Panels.Admin
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            SaveCommand.Executed += CommitChanges_Executed;
-
             if (InDesignMode()) return;
 
-            dgEmployees.ItemsSource = new ObservableCollection<Employee>(from emp in Database.Employees orderby emp.FirstName, emp.LastName select emp);            
+            dgEmployees.ItemsSource = new ObservableCollection<Employee>(from emp in Database.Employees where emp.Archived != true orderby emp.FirstName, emp.LastName select emp);            
         }
 
         private void NewEmployee_Click(object sender, RoutedEventArgs e)
@@ -59,10 +53,11 @@ namespace SingerDispatch.Panels.Admin
             MessageBoxResult confirmation = MessageBox.Show("Are you sure you want to remove this employee?", "Delete confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
             if (confirmation != MessageBoxResult.Yes) return;
-
+                        
             try
             {
-                Database.Employees.DeleteOnSubmit(employee);
+                employee.Archived = true;
+
                 Database.SubmitChanges();
 
                 employees.Remove(employee);
@@ -71,25 +66,6 @@ namespace SingerDispatch.Panels.Admin
             {
                 Windows.ErrorNoticeWindow.ShowError("Error while attempting to write changes to database", ex.Message);
             }
-        }
-
-        private void SaveEmployee_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                ((ButtonBase)sender).Focus();
-
-                Database.SubmitChanges();
-            }
-            catch (System.Exception ex)
-            {
-                Windows.ErrorNoticeWindow.ShowError("Error while attempting to write changes to database", ex.Message);
-            }
-        }
-
-        private void CommitChanges_Executed(object sender, ExecutedRoutedEventArgs e)
-        {            
-            CommitChangesButton.RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent, CommitChangesButton));
         }
     }
 }

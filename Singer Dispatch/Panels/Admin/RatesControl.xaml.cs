@@ -44,7 +44,7 @@ namespace SingerDispatch.Panels.Admin
         {
             if (InDesignMode()) return;
 
-            dgRates.ItemsSource = new ObservableCollection<Rate>(from r in Database.Rates orderby r.RateType.Name, r.Name select r);            
+            dgRates.ItemsSource = new ObservableCollection<Rate>(from r in Database.Rates where r.Archived != true orderby r.RateType.Name, r.Name select r);            
         }
 
         private void NewRate_Click(object sender, RoutedEventArgs e)
@@ -71,7 +71,8 @@ namespace SingerDispatch.Panels.Admin
             
             try
             {
-                Database.Rates.DeleteOnSubmit(rate);
+                rate.Archived = true;
+
                 Database.SubmitChanges();
 
                 list.Remove(rate);
@@ -96,7 +97,10 @@ namespace SingerDispatch.Panels.Admin
 
         private void RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
         {
-            CommitChanges();
+            if (e.EditAction == DataGridEditAction.Commit)
+            {
+                CommitChanges();
+            }
         }      
     }
 

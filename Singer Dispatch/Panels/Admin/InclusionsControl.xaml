@@ -20,14 +20,13 @@
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
 
-            <Button Style="{StaticResource Horizontal}" Grid.Column="0" Click="NewInclusion_Click">New inclusion</Button>
-            <Button Visibility="Collapsed" Style="{StaticResource Horizontal}" Name="CommitChangesButton" Grid.Column="1" Click="CommitChanges_Click">Save changes</Button>
+            <Button Style="{StaticResource Horizontal}" Grid.Column="0" Click="NewInclusion_Click">New inclusion</Button>            
             <Button Style="{StaticResource HorizontalEnd}" Grid.Column="1" Click="RemoveInclusion_Click">Remove inclusion</Button>
         </Grid>
 
         <DataGrid Name="TheGrid" Style="{StaticResource ListDisplay}" IsReadOnly="False" RowEditEnding="RowEditEnding">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Inclusion" Binding="{Binding Line}" />
+                <DataGridTextColumn Header="Inclusion" Binding="{Binding Line, UpdateSourceTrigger=PropertyChanged}" />
             </DataGrid.Columns>
         </DataGrid>
     </DockPanel>

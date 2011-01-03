@@ -22,8 +22,7 @@
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
 
-            <Button Style="{StaticResource Horizontal}" Grid.Column="0" Click="NewEquipment_Click">New equipment</Button>
-            <Button Visibility="Collapsed" Style="{StaticResource Horizontal}" Grid.Column="1" Name="CommitChangesButton" Click="SaveEquipment_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgEquipment, Path=SelectedItem}">Save changes</Button>
+            <Button Style="{StaticResource Horizontal}" Grid.Column="0" Click="NewEquipment_Click">New equipment</Button>            
             <Button Style="{StaticResource HorizontalEnd}" Grid.Column="1" Click="RemoveEquipment_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgEquipment, Path=SelectedItem}">Remove equipment</Button>
         </Grid>
 

@@ -35,7 +35,7 @@ namespace SingerDispatch.Panels.Admin
 
             if (provider != null)
             {
-                var rates = from r in Database.Rates select r;
+                var rates = from r in Database.Rates where r.Archived != true && r.RateType.Name == "Trailer" select r;
                 var list = (RatesDropList)provider.Data;
 
                 list.Clear();
@@ -46,7 +46,7 @@ namespace SingerDispatch.Panels.Admin
                 }            
             }
 
-            dgCombinations.ItemsSource = new ObservableCollection<TrailerCombination>(from tc in Database.TrailerCombinations orderby tc.Rate.Name select tc);         
+            dgCombinations.ItemsSource = new ObservableCollection<TrailerCombination>(from tc in Database.TrailerCombinations where tc.Archived != true orderby tc.Rate.Name select tc);         
         }
 
         protected override void UseImperialMeasurementsChanged(bool value)
@@ -61,7 +61,7 @@ namespace SingerDispatch.Panels.Admin
 
             try
             {
-                combination.Rate = (from r in Database.Rates select r).First();
+                combination.Rate = (from r in Database.Rates where r.Archived != true && r.RateType.Name == "Trailer" select r).First();
             }
             catch (Exception ex)
             {
@@ -87,7 +87,8 @@ namespace SingerDispatch.Panels.Admin
                         
             try
             {
-                Database.TrailerCombinations.DeleteOnSubmit(combination);                
+                combination.Archived = true;
+
                 Database.SubmitChanges();
 
                 list.Remove(combination);
@@ -112,7 +113,10 @@ namespace SingerDispatch.Panels.Admin
 
         private void RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
         {
-            CommitChanges();
+            if (e.EditAction == DataGridEditAction.Commit)
+            {
+                CommitChanges();
+            }
         }
     }
 
