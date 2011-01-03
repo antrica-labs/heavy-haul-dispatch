@@ -560,6 +560,7 @@
       <Column Name="Name" Type="System.String" CanBeNull="true" />
       <Column Name="HourlySpecialized" Type="System.Decimal" CanBeNull="true" />
       <Column Name="HourlyEnterprise" Type="System.Decimal" CanBeNull="true" />
+      <Column Name="Notes" Type="System.String" CanBeNull="true" />
       <Association Name="Rate_Load" Member="Loads" ThisKey="ID" OtherKey="RateID" Type="Load" />
       <Association Name="Rate_Dispatch" Member="Dispatches" ThisKey="ID" OtherKey="RateID" Type="Dispatch" />
       <Association Name="Rate_TrailerCombination" Member="TrailerCombinations" ThisKey="ID" OtherKey="RateID" Type="TrailerCombination" />

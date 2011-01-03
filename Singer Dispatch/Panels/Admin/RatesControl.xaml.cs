@@ -44,7 +44,7 @@ namespace SingerDispatch.Panels.Admin
         {
             if (InDesignMode()) return;
 
-            dgRates.ItemsSource = new ObservableCollection<Rate>(from r in Database.Rates select r);            
+            dgRates.ItemsSource = new ObservableCollection<Rate>(from r in Database.Rates orderby r.RateType.Name, r.Name select r);            
         }
 
         private void NewRate_Click(object sender, RoutedEventArgs e)
@@ -82,12 +82,10 @@ namespace SingerDispatch.Panels.Admin
             }
         }
 
-        private void CommitChanges_Click(object sender, RoutedEventArgs e)
+        private void CommitChanges()
         {
             try
             {
-                ((ButtonBase)sender).Focus();
-
                 Database.SubmitChanges();
             }
             catch (System.Exception ex)
@@ -98,10 +96,7 @@ namespace SingerDispatch.Panels.Admin
 
         private void RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
         {
-            if (e.EditAction == DataGridEditAction.Commit)
-            {
-                CommitChangesButton.RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent, CommitChangesButton));
-            }
+            CommitChanges();
         }      
     }
 

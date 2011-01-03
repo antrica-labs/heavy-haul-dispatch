@@ -13385,6 +13385,8 @@ namespace SingerDispatch
 		
 		private System.Nullable<decimal> _HourlyEnterprise;
 		
+		private string _Notes;
+		
 		private EntitySet<Load> _Loads;
 		
 		private EntitySet<TrailerCombination> _TrailerCombinations;
@@ -13405,6 +13407,8 @@ namespace SingerDispatch
     partial void OnHourlySpecializedChanged();
     partial void OnHourlyEnterpriseChanging(System.Nullable<decimal> value);
     partial void OnHourlyEnterpriseChanged();
+    partial void OnNotesChanging(string value);
+    partial void OnNotesChanged();
     #endregion
 		
 		public Rate()
@@ -13515,6 +13519,26 @@ namespace SingerDispatch
 					this._HourlyEnterprise = value;
 					this.SendPropertyChanged("HourlyEnterprise");
 					this.OnHourlyEnterpriseChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Notes")]
+		public string Notes
+		{
+			get
+			{
+				return this._Notes;
+			}
+			set
+			{
+				if ((this._Notes != value))
+				{
+					this.OnNotesChanging(value);
+					this.SendPropertyChanging();
+					this._Notes = value;
+					this.SendPropertyChanged("Notes");
+					this.OnNotesChanged();
 				}
 			}
 		}
