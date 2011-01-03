@@ -16,6 +16,7 @@ using System.Windows.Controls.Primitives;
 using System.Collections.ObjectModel;
 using SingerDispatch.Windows;
 using SingerDispatch.Printing.Documents;
+using SingerDispatch.Database;
 
 namespace SingerDispatch.Panels.Storage
 {
@@ -72,8 +73,17 @@ namespace SingerDispatch.Panels.Storage
             list.Add(item);
             Database.StorageItems.InsertOnSubmit(item);
 
-            dgStorageItems.ScrollIntoView(item);
-            dgStorageItems.SelectedItem = item;
+            try
+            {
+                EntityHelper.SaveAsNewStorageItem(item, Database);
+
+                dgStorageItems.ScrollIntoView(item);
+                dgStorageItems.SelectedItem = item;
+            }
+            catch (Exception ex)
+            {
+                ErrorNoticeWindow.ShowError("Error while attempting to write changes to database", ex.Message);
+            }
         }
 
         private void RemoveItem_Click(object sender, RoutedEventArgs e)

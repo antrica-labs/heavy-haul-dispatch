@@ -5357,7 +5357,7 @@ namespace SingerDispatch
 		
 		private System.Nullable<long> _ContactID;
 		
-		private System.Nullable<int> _Number;
+		private System.Nullable<long> _Number;
 		
 		private string _Name;
 		
@@ -5397,7 +5397,7 @@ namespace SingerDispatch
     partial void OnStatusIDChanged();
     partial void OnContactIDChanging(System.Nullable<long> value);
     partial void OnContactIDChanged();
-    partial void OnNumberChanging(System.Nullable<int> value);
+    partial void OnNumberChanging(System.Nullable<long> value);
     partial void OnNumberChanged();
     partial void OnNameChanging(string value);
     partial void OnNameChanged();
@@ -5560,7 +5560,7 @@ namespace SingerDispatch
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Number")]
-		public System.Nullable<int> Number
+		public System.Nullable<long> Number
 		{
 			get
 			{
@@ -11176,7 +11176,7 @@ namespace SingerDispatch
 		
 		private System.Nullable<long> _ContactID;
 		
-		private System.Nullable<int> _Number;
+		private System.Nullable<long> _Number;
 		
 		private System.Nullable<int> _Revision;
 		
@@ -11238,7 +11238,7 @@ namespace SingerDispatch
     partial void OnAddressIDChanged();
     partial void OnContactIDChanging(System.Nullable<long> value);
     partial void OnContactIDChanged();
-    partial void OnNumberChanging(System.Nullable<int> value);
+    partial void OnNumberChanging(System.Nullable<long> value);
     partial void OnNumberChanged();
     partial void OnRevisionChanging(System.Nullable<int> value);
     partial void OnRevisionChanged();
@@ -11376,7 +11376,7 @@ namespace SingerDispatch
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Number")]
-		public System.Nullable<int> Number
+		public System.Nullable<long> Number
 		{
 			get
 			{
@@ -17211,7 +17211,7 @@ namespace SingerDispatch
 		
 		private System.Nullable<long> _ContactID;
 		
-		private System.Nullable<int> _Number;
+		private System.Nullable<long> _Number;
 		
 		private System.Nullable<int> _Revision;
 		
@@ -17247,7 +17247,7 @@ namespace SingerDispatch
     partial void OnAddressIDChanged();
     partial void OnContactIDChanging(System.Nullable<long> value);
     partial void OnContactIDChanged();
-    partial void OnNumberChanging(System.Nullable<int> value);
+    partial void OnNumberChanging(System.Nullable<long> value);
     partial void OnNumberChanged();
     partial void OnRevisionChanging(System.Nullable<int> value);
     partial void OnRevisionChanged();
@@ -17366,7 +17366,7 @@ namespace SingerDispatch
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Number")]
-		public System.Nullable<int> Number
+		public System.Nullable<long> Number
 		{
 			get
 			{
@@ -18745,6 +18745,8 @@ namespace SingerDispatch
 		
 		private long _ID;
 		
+		private System.Nullable<long> _Number;
+		
 		private System.Nullable<bool> _IsVisible;
 		
 		private System.Nullable<long> _CompanyID;
@@ -18783,6 +18785,8 @@ namespace SingerDispatch
     partial void OnCreated();
     partial void OnIDChanging(long value);
     partial void OnIDChanged();
+    partial void OnNumberChanging(System.Nullable<long> value);
+    partial void OnNumberChanged();
     partial void OnIsVisibleChanging(System.Nullable<bool> value);
     partial void OnIsVisibleChanged();
     partial void OnCompanyIDChanging(System.Nullable<long> value);
@@ -18834,6 +18838,26 @@ namespace SingerDispatch
 					this._ID = value;
 					this.SendPropertyChanged("ID");
 					this.OnIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Number")]
+		public System.Nullable<long> Number
+		{
+			get
+			{
+				return this._Number;
+			}
+			set
+			{
+				if ((this._Number != value))
+				{
+					this.OnNumberChanging(value);
+					this.SendPropertyChanging();
+					this._Number = value;
+					this.SendPropertyChanged("Number");
+					this.OnNumberChanged();
 				}
 			}
 		}

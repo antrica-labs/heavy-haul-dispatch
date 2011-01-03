@@ -74,7 +74,7 @@ namespace SingerDispatch.Printing.Documents
         public string GenerateBodyHTML(StorageItem item)
         {
             var content = new StringBuilder();
-            var documentNumber = string.Format("SC-{0}", item.ID);
+            var documentNumber = string.Format("SC-{0}", item.Number);
 
             Address address;
 

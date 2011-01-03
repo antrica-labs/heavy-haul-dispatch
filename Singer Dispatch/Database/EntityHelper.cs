@@ -110,7 +110,7 @@ namespace SingerDispatch.Database
             var number = (from q in context.Quotes select q.Number).Max() + 1;
 
             quote.Revision = 0;
-            quote.Number = number ?? 10001;
+            quote.Number = number ?? 11001;
 
             context.SubmitChanges();
         }
@@ -119,7 +119,7 @@ namespace SingerDispatch.Database
         {
             var number = (from j in context.Jobs select j.Number).Max() + 1;
 
-            job.Number = number ?? 10001;
+            job.Number = number ?? 11001;
 
             context.SubmitChanges();
         }
@@ -145,12 +145,21 @@ namespace SingerDispatch.Database
             context.SubmitChanges();
         }
 
+        public static void SaveAsNewStorageItem(StorageItem item, SingerDispatchDataContext context)
+        {
+            var number = (from i in context.StorageItems select i.Number).Max() + 1;
+
+            item.Number = number ?? 11001;
+
+            context.SubmitChanges();
+        }
+
         public static void SaveAsNewInvoice(Invoice invoice, SingerDispatchDataContext context)
         {
             var number = (from i in context.Invoices select i.Number).Max() + 1;
 
             invoice.Revision = 0;
-            invoice.Number = number ?? 10001;
+            invoice.Number = number ?? 11001;
 
             context.SubmitChanges();
         }

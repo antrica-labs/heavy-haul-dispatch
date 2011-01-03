@@ -219,7 +219,7 @@
       <Column Name="CareOfCompanyID" Type="System.Int64" CanBeNull="true" />
       <Column Name="StatusID" Type="System.Int64" CanBeNull="true" />
       <Column Name="ContactID" Type="System.Int64" CanBeNull="true" />
-      <Column Name="Number" Type="System.Int32" CanBeNull="true" />
+      <Column Name="Number" Type="System.Int64" CanBeNull="true" />
       <Column Name="Name" Type="System.String" CanBeNull="true" />      
       <Column Name="Notes" Type="System.String" CanBeNull="true" />
       <Association Name="Job_Load" Member="Loads" ThisKey="ID" OtherKey="JobID" Type="Load" />
@@ -459,7 +459,7 @@
       <Column Name="CompanyID" Type="System.Int64" CanBeNull="true" />
       <Column Name="AddressID" Type="System.Int64" CanBeNull="true" />
       <Column Name="ContactID" Type="System.Int64" CanBeNull="true" />
-      <Column Name="Number" Type="System.Int32" CanBeNull="true" />
+      <Column Name="Number" Type="System.Int64" CanBeNull="true" />
       <Column Name="Revision" Type="System.Int32" CanBeNull="true" />
       <Column Name="EmployeeID" Type="System.Int64" CanBeNull="true" />
       <Column Name="CareOfCompanyID" Type="System.Int64" CanBeNull="true" />
@@ -738,7 +738,7 @@
       <Column Name="JobID" Type="System.Int64" CanBeNull="true" />
       <Column Name="AddressID" Type="System.Int64" CanBeNull="true" />
       <Column Name="ContactID" Type="System.Int64" CanBeNull="true" />
-      <Column Name="Number" Type="System.Int32" CanBeNull="true" />
+      <Column Name="Number" Type="System.Int64" CanBeNull="true" />
       <Column Name="Revision" Type="System.Int32" CanBeNull="true" />
       <Column Name="Comment" Type="System.String" CanBeNull="true" />
       <Column Name="InvoiceDate" Type="System.DateTime" CanBeNull="true" />
@@ -811,6 +811,7 @@
   <Table Name="" Member="StorageItems">
     <Type Name="StorageItem">
       <Column Name="ID" Type="System.Int64" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Number" Type="System.Int64" CanBeNull="true" />
       <Column Name="IsVisible" Type="System.Boolean" CanBeNull="true"/>
       <Column Name="CompanyID" Type="System.Int64" CanBeNull="true" />
       <Column Name="CommodityID" Type="System.Int64" CanBeNull="true" />

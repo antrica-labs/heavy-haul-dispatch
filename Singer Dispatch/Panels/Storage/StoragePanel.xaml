@@ -195,6 +195,7 @@
 
                     <DataGrid Name="dgStorageItems" Style="{StaticResource ListDisplay}" SelectionChanged="dgStorageItems_SelectionChanged">
                         <DataGrid.Columns>
+                            <DataGridTextColumn Header="Number" Binding="{Binding Number}" Width="Auto" />
                             <DataGridTextColumn Header="Company" Binding="{Binding Company.Name}" />
                             <DataGridTextColumn Header="Commodity" Binding="{Binding Commodity.NameAndUnit}" />
                             <DataGridTextColumn Header="Location" Binding="{Binding YardLocation}" />                            
