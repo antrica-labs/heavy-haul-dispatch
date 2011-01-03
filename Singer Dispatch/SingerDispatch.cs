@@ -87,6 +87,14 @@ namespace SingerDispatch
         }
     }
 
+    partial class EquipmentType
+    {
+        public override string ToString()
+        {
+            return string.Format("{0} - {1}", Prefix, Name);
+        }
+    }
+
     partial class Equipment
     {
         partial void OnCreated()

@@ -14760,8 +14760,6 @@ namespace SingerDispatch
 		
 		private System.Nullable<long> _DefaultDriverID;
 		
-		private System.Nullable<long> _ClassID;
-		
 		private System.Nullable<long> _TypeID;
 		
 		private string _UnitNumber;
@@ -14806,8 +14804,6 @@ namespace SingerDispatch
 		
 		private EntitySet<Dispatch> _Dispatches;
 		
-		private EntityRef<EquipmentClass> _EquipmentClass;
-		
 		private EntityRef<EquipmentType> _EquipmentType;
 		
 		private EntityRef<Employee> _DefaultDriver;
@@ -14822,8 +14818,6 @@ namespace SingerDispatch
     partial void OnArchivedChanged();
     partial void OnDefaultDriverIDChanging(System.Nullable<long> value);
     partial void OnDefaultDriverIDChanged();
-    partial void OnClassIDChanging(System.Nullable<long> value);
-    partial void OnClassIDChanged();
     partial void OnTypeIDChanging(System.Nullable<long> value);
     partial void OnTypeIDChanged();
     partial void OnUnitNumberChanging(string value);
@@ -14870,7 +14864,6 @@ namespace SingerDispatch
 		{
 			this._Loads = new EntitySet<Load>(new Action<Load>(this.attach_Loads), new Action<Load>(this.detach_Loads));
 			this._Dispatches = new EntitySet<Dispatch>(new Action<Dispatch>(this.attach_Dispatches), new Action<Dispatch>(this.detach_Dispatches));
-			this._EquipmentClass = default(EntityRef<EquipmentClass>);
 			this._EquipmentType = default(EntityRef<EquipmentType>);
 			this._DefaultDriver = default(EntityRef<Employee>);
 			OnCreated();
@@ -14936,30 +14929,6 @@ namespace SingerDispatch
 					this._DefaultDriverID = value;
 					this.SendPropertyChanged("DefaultDriverID");
 					this.OnDefaultDriverIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ClassID")]
-		public System.Nullable<long> ClassID
-		{
-			get
-			{
-				return this._ClassID;
-			}
-			set
-			{
-				if ((this._ClassID != value))
-				{
-					if (this._EquipmentClass.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnClassIDChanging(value);
-					this.SendPropertyChanging();
-					this._ClassID = value;
-					this.SendPropertyChanged("ClassID");
-					this.OnClassIDChanged();
 				}
 			}
 		}
@@ -15394,40 +15363,6 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="EquipmentClass_Equipment", Storage="_EquipmentClass", ThisKey="ClassID", OtherKey="ID", IsForeignKey=true)]
-		public EquipmentClass EquipmentClass
-		{
-			get
-			{
-				return this._EquipmentClass.Entity;
-			}
-			set
-			{
-				EquipmentClass previousValue = this._EquipmentClass.Entity;
-				if (((previousValue != value) 
-							|| (this._EquipmentClass.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._EquipmentClass.Entity = null;
-						previousValue.Equipments.Remove(this);
-					}
-					this._EquipmentClass.Entity = value;
-					if ((value != null))
-					{
-						value.Equipments.Add(this);
-						this._ClassID = value.ID;
-					}
-					else
-					{
-						this._ClassID = default(Nullable<long>);
-					}
-					this.SendPropertyChanged("EquipmentClass");
-				}
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="EquipmentType_Equipment", Storage="_EquipmentType", ThisKey="TypeID", OtherKey="ID", IsForeignKey=true)]
 		public EquipmentType EquipmentType
 		{
@@ -15551,7 +15486,7 @@ namespace SingerDispatch
 		
 		private string _Name;
 		
-		private EntitySet<Equipment> _Equipments;
+		private EntitySet<EquipmentType> _EquipmentTypes;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -15565,7 +15500,7 @@ namespace SingerDispatch
 		
 		public EquipmentClass()
 		{
-			this._Equipments = new EntitySet<Equipment>(new Action<Equipment>(this.attach_Equipments), new Action<Equipment>(this.detach_Equipments));
+			this._EquipmentTypes = new EntitySet<EquipmentType>(new Action<EquipmentType>(this.attach_EquipmentTypes), new Action<EquipmentType>(this.detach_EquipmentTypes));
 			OnCreated();
 		}
 		
@@ -15609,16 +15544,16 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="EquipmentClass_Equipment", Storage="_Equipments", ThisKey="ID", OtherKey="ClassID")]
-		public EntitySet<Equipment> Equipments
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="EquipmentClass_EquipmentType", Storage="_EquipmentTypes", ThisKey="ID", OtherKey="ClassID")]
+		public EntitySet<EquipmentType> EquipmentTypes
 		{
 			get
 			{
-				return this._Equipments;
+				return this._EquipmentTypes;
 			}
 			set
 			{
-				this._Equipments.Assign(value);
+				this._EquipmentTypes.Assign(value);
 			}
 		}
 		
@@ -15642,13 +15577,13 @@ namespace SingerDispatch
 			}
 		}
 		
-		private void attach_Equipments(Equipment entity)
+		private void attach_EquipmentTypes(EquipmentType entity)
 		{
 			this.SendPropertyChanging();
 			entity.EquipmentClass = this;
 		}
 		
-		private void detach_Equipments(Equipment entity)
+		private void detach_EquipmentTypes(EquipmentType entity)
 		{
 			this.SendPropertyChanging();
 			entity.EquipmentClass = null;
@@ -15663,11 +15598,15 @@ namespace SingerDispatch
 		
 		private long _ID;
 		
+		private System.Nullable<long> _ClassID;
+		
 		private string _Prefix;
 		
 		private string _Name;
 		
 		private EntitySet<Equipment> _Equipment;
+		
+		private EntityRef<EquipmentClass> _EquipmentClass;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -15675,6 +15614,8 @@ namespace SingerDispatch
     partial void OnCreated();
     partial void OnIDChanging(long value);
     partial void OnIDChanged();
+    partial void OnClassIDChanging(System.Nullable<long> value);
+    partial void OnClassIDChanged();
     partial void OnPrefixChanging(string value);
     partial void OnPrefixChanged();
     partial void OnNameChanging(string value);
@@ -15684,6 +15625,7 @@ namespace SingerDispatch
 		public EquipmentType()
 		{
 			this._Equipment = new EntitySet<Equipment>(new Action<Equipment>(this.attach_Equipment), new Action<Equipment>(this.detach_Equipment));
+			this._EquipmentClass = default(EntityRef<EquipmentClass>);
 			OnCreated();
 		}
 		
@@ -15703,6 +15645,30 @@ namespace SingerDispatch
 					this._ID = value;
 					this.SendPropertyChanged("ID");
 					this.OnIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ClassID")]
+		public System.Nullable<long> ClassID
+		{
+			get
+			{
+				return this._ClassID;
+			}
+			set
+			{
+				if ((this._ClassID != value))
+				{
+					if (this._EquipmentClass.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnClassIDChanging(value);
+					this.SendPropertyChanging();
+					this._ClassID = value;
+					this.SendPropertyChanged("ClassID");
+					this.OnClassIDChanged();
 				}
 			}
 		}
@@ -15757,6 +15723,40 @@ namespace SingerDispatch
 			set
 			{
 				this._Equipment.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="EquipmentClass_EquipmentType", Storage="_EquipmentClass", ThisKey="ClassID", OtherKey="ID", IsForeignKey=true)]
+		public EquipmentClass EquipmentClass
+		{
+			get
+			{
+				return this._EquipmentClass.Entity;
+			}
+			set
+			{
+				EquipmentClass previousValue = this._EquipmentClass.Entity;
+				if (((previousValue != value) 
+							|| (this._EquipmentClass.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._EquipmentClass.Entity = null;
+						previousValue.EquipmentTypes.Remove(this);
+					}
+					this._EquipmentClass.Entity = value;
+					if ((value != null))
+					{
+						value.EquipmentTypes.Add(this);
+						this._ClassID = value.ID;
+					}
+					else
+					{
+						this._ClassID = default(Nullable<long>);
+					}
+					this.SendPropertyChanged("EquipmentClass");
+				}
 			}
 		}
 		

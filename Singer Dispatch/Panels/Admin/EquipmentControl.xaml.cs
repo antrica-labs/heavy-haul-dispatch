@@ -22,7 +22,8 @@ namespace SingerDispatch.Panels.Admin
             if (InDesignMode()) return;
 
             Database = SingerConfigs.CommonDataContext;
-            cmbEquipmentClasses.ItemsSource = from ec in Database.EquipmentClasses select ec;
+
+            cmbEquipmentTypes.ItemsSource = from et in Database.EquipmentTypes orderby et.Prefix select et;
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
@@ -70,18 +71,14 @@ namespace SingerDispatch.Panels.Admin
 
         }
 
-        private void EquipmentClass_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void cmbEquipmentTypes_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var equipmentClass = (EquipmentClass)cmbEquipmentClasses.SelectedItem;
+            var type = (EquipmentType)cmbEquipmentTypes.SelectedItem;
 
-            if (equipmentClass != null && equipmentClass.Name == "Tractor")
-            {
+            if (type != null && type.EquipmentClass != null && type.EquipmentClass.Name == "Tractor")
                 gbTractorInfo.IsEnabled = true;
-            }
             else
-            {
                 gbTractorInfo.IsEnabled = false;
-            }
         }
         
     }

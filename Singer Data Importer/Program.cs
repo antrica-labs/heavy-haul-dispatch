@@ -366,6 +366,10 @@ namespace SingerDispatch.Importer
         {
             var list = new List<EquipmentType>();
 
+            var pilots = new string[] { "01" };
+            var tractors = new string[] { "02", "03", "04" };
+            var trailers = new string[] { "09", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35", "36", "46", "47", "49" };
+
             const string select = "SELECT * FROM tbl_EquipmentType";
             using (var command = new OleDbCommand(select, connection))
             {
@@ -377,6 +381,15 @@ namespace SingerDispatch.Importer
                         var prefix = reader["equipmentTypePreFix"] == DBNull.Value ? null : (string)reader["equipmentTypePreFix"];
 
                         var type = new EquipmentType { Name = name, Prefix = prefix };
+
+                        if (trailers.Contains(prefix))
+                            type.EquipmentClass = EquipmentClasses["Trailer"];
+                        else if (tractors.Contains(prefix))
+                            type.EquipmentClass = EquipmentClasses["Tractor"];
+                        else if (pilots.Contains(prefix))
+                            type.EquipmentClass = EquipmentClasses["Pilot"];
+                        else
+                            type.EquipmentClass = EquipmentClasses["Other"];
 
                         list.Add(type);
                         EquipmentTypes.Add(prefix, type);
@@ -393,7 +406,7 @@ namespace SingerDispatch.Importer
 
             // Create the quipment classes
             var tractorClass = new EquipmentClass { Name = "Tractor" };
-            var trailorClass = new EquipmentClass { Name = "Trailor" };
+            var trailorClass = new EquipmentClass { Name = "Trailer" };
             var pilotClass = new EquipmentClass { Name = "Pilot" };
             var otherClass = new EquipmentClass { Name = "Other" };
 
@@ -478,14 +491,7 @@ namespace SingerDispatch.Importer
                                 OutOfServiceDate = outServiceDate
                             };
                                                
-                        if (isClassTractor)
-                            equipment.EquipmentClass = EquipmentClasses["Tractor"];
-                        else if (isClassTrailer)
-                            equipment.EquipmentClass = EquipmentClasses["Trailor"];
-                        else if (isClassPilot)
-                            equipment.EquipmentClass = EquipmentClasses["Pilot"];
-                        else
-                            equipment.EquipmentClass = EquipmentClasses["Other"];
+                        
 
                         try
                         {

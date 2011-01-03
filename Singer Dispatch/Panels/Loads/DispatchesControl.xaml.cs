@@ -285,7 +285,7 @@ namespace SingerDispatch.Panels.Loads
         {
             var dispatch = (Dispatch)dgDispatches.SelectedItem;
 
-            if (dispatch == null || dispatch.Equipment == null || dispatch.Equipment.EquipmentClass.Name != "Tractor") return;
+            if (dispatch == null || dispatch.Equipment == null || dispatch.Equipment.EquipmentType == null || dispatch.Equipment.EquipmentType.EquipmentClass.Name != "Tractor") return;
 
             // If this is a tractor, try and fill out the out of province distance.
             // Go through the loaded commodities and add any out of province that can be found

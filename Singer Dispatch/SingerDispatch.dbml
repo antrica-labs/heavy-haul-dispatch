@@ -625,7 +625,6 @@
       <Column Name="ID" Type="System.Int64" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Archived" Type="System.Boolean" CanBeNull="true" />
       <Column Name="DefaultDriverID" Type="System.Int64" CanBeNull="true" />
-      <Column Name="ClassID" Type="System.Int64" CanBeNull="true" />
       <Column Name="TypeID" Type="System.Int64" CanBeNull="true" />
       <Column Name="UnitNumber" Type="System.String" CanBeNull="true" />
       <Column Name="Serial" Type="System.String" CanBeNull="true" />
@@ -645,8 +644,7 @@
       <Column Name="IsOnlyForScheuerle" Type="System.Boolean" CanBeNull="true" />
       <Column Name="IsOnlyForPushing" Type="System.Boolean" CanBeNull="true" />
       <Column Name="InServiceDate" Type="System.DateTime" CanBeNull="true" />
-      <Column Name="OutOfServiceDate" Type="System.DateTime" CanBeNull="true" />
-      <Association Name="EquipmentClass_Equipment" Member="EquipmentClass" ThisKey="ClassID" OtherKey="ID" Type="EquipmentClass" IsForeignKey="true" />
+      <Column Name="OutOfServiceDate" Type="System.DateTime" CanBeNull="true" />      
       <Association Name="EquipmentType_Equipment" Member="EquipmentType" ThisKey="TypeID" OtherKey="ID" Type="EquipmentType" IsForeignKey="true" />
       <Association Name="Equipment_Load" Member="Loads" ThisKey="ID" OtherKey="EquipmentID" Type="Load" />
       <Association Name="Equipment_Dispatch" Member="Dispatches" ThisKey="ID" OtherKey="EquipmentID" Type="Dispatch" />
@@ -657,14 +655,16 @@
     <Type Name="EquipmentClass">
       <Column Name="ID" Type="System.Int64" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Name" Type="System.String" CanBeNull="true" />
-      <Association Name="EquipmentClass_Equipment" Member="Equipments" ThisKey="ID" OtherKey="ClassID" Type="Equipment" />
+      <Association Name="EquipmentClass_EquipmentType" Member="EquipmentTypes" ThisKey="ID" OtherKey="ClassID" Type="EquipmentType" />
     </Type>
   </Table>
   <Table Name="" Member="EquipmentTypes">
     <Type Name="EquipmentType">
       <Column Name="ID" Type="System.Int64" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ClassID" Type="System.Int64" CanBeNull="true" />
       <Column Name="Prefix" Type="System.String" CanBeNull="true" />
       <Column Name="Name" Type="System.String" CanBeNull="true" />
+      <Association Name="EquipmentClass_EquipmentType" Member="EquipmentClass" ThisKey="ClassID" OtherKey="ID" Type="EquipmentClass" IsForeignKey="true" />
       <Association Name="EquipmentType_Equipment" Member="Equipment" ThisKey="ID" OtherKey="TypeID" Type="Equipment" />
     </Type>
   </Table>

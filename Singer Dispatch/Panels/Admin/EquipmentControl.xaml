@@ -13,6 +13,17 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/SingerDispatchDictionary.xaml" />
             </ResourceDictionary.MergedDictionaries>
+
+            <DataTemplate x:Key="EquipmentTypeTemplate">
+                <TextBlock>
+                    <TextBlock.Text>
+                        <MultiBinding StringFormat="{}{0} - {1}">
+                            <Binding Path="Prefix" />
+                            <Binding Path="Name" />
+                        </MultiBinding>
+                    </TextBlock.Text>
+                </TextBlock>
+            </DataTemplate>
         </ResourceDictionary>
     </UserControl.Resources>
     <DockPanel>
@@ -49,12 +60,15 @@
                             <RowDefinition />
                             <RowDefinition />
                         </Grid.RowDefinitions>
+                        
+                        <Label Grid.Row="0" Grid.Column="0">Equipment Type:</Label>
+                        <ComboBox Name="cmbEquipmentTypes" Grid.Row="0" Grid.Column="1" IsEditable="False" SelectedItem="{Binding EquipmentType}" ItemTemplate="{StaticResource EquipmentTypeTemplate}" SelectionChanged="cmbEquipmentTypes_SelectionChanged" />
+                        
+                        <Label Grid.Row="1" Grid.Column="0">Unit #:</Label>
+                        <TextBox Name="txtUnitNumber" Grid.Row="1" Grid.Column="1" Text="{Binding UnitNumber}" />
 
-                        <Label Grid.Row="0" Grid.Column="0">Unit #:</Label>
-                        <TextBox Name="txtUnitNumber" Grid.Row="0" Grid.Column="1" Text="{Binding UnitNumber}" />
-
-                        <Label Grid.Row="1" Grid.Column="0">Default Driver:</Label>
-                        <ComboBox Name="cmbEmployees" Grid.Row="1" Grid.Column="1" ItemTemplate="{StaticResource SimpleNameTemplate}" TextSearch.TextPath="Name" Controls:ComboUtil.AllowNull="True">
+                        <Label Grid.Row="2" Grid.Column="0">Default Driver:</Label>
+                        <ComboBox Name="cmbEmployees" Grid.Row="2" Grid.Column="1" ItemTemplate="{StaticResource SimpleNameTemplate}" TextSearch.TextPath="Name" Controls:ComboUtil.AllowNull="True">
                             <ComboBox.SelectedItem>
                                 <Binding Path="DefaultDriver">
                                     <Binding.ValidationRules>
@@ -64,31 +78,28 @@
                             </ComboBox.SelectedItem>
                         </ComboBox>
 
-                        <Label Grid.Row="2" Grid.Column="0">Serial</Label>
-                        <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Serial}" />
+                        <Label Grid.Row="3" Grid.Column="0">Serial</Label>
+                        <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Serial}" />
 
-                        <Label Grid.Row="3" Grid.Column="0">Year:</Label>
-                        <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Year}" />
+                        <Label Grid.Row="4" Grid.Column="0">Year:</Label>
+                        <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Year}" />
 
-                        <Label Grid.Row="4" Grid.Column="0">Make:</Label>
-                        <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Make}" />
+                        <Label Grid.Row="5" Grid.Column="0">Make:</Label>
+                        <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding Make}" />
 
-                        <Label Grid.Row="5" Grid.Column="0">Model:</Label>
-                        <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding Model}" />
+                        <Label Grid.Row="6" Grid.Column="0">Model:</Label>
+                        <TextBox Grid.Row="6" Grid.Column="1" Text="{Binding Model}" />
 
-                        <Label Grid.Row="6" Grid.Column="0">Engine:</Label>
-                        <TextBox Grid.Row="6" Grid.Column="1" Text="{Binding Engine}" />
+                        <Label Grid.Row="7" Grid.Column="0">Engine:</Label>
+                        <TextBox Grid.Row="7" Grid.Column="1" Text="{Binding Engine}" />
 
-                        <Label Grid.Row="7" Grid.Column="0">Licence:</Label>
-                        <TextBox Grid.Row="7" Grid.Column="1" Text="{Binding LicencePlate}" />
+                        <Label Grid.Row="8" Grid.Column="0">Licence:</Label>
+                        <TextBox Grid.Row="8" Grid.Column="1" Text="{Binding LicencePlate}" />
+                        
+                        <Label Grid.Row="10" Grid.Column="0">Is dispatchable:</Label>
+                        <CheckBox Grid.Row="10" Grid.Column="1" IsChecked="{Binding IsDispatchable}" />
 
-                        <Label Grid.Row="8" Grid.Column="0">Class:</Label>
-                        <ComboBox Name="cmbEquipmentClasses" Grid.Row="8" Grid.Column="1" SelectedItem="{Binding EquipmentClass}" IsEditable="False" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectionChanged="EquipmentClass_SelectionChanged" Controls:ComboUtil.AllowNull="True" />
-
-                        <Label Grid.Row="9" Grid.Column="0">Is dispatchable:</Label>
-                        <CheckBox Grid.Row="9" Grid.Column="1" IsChecked="{Binding IsDispatchable}" />
-
-                        <GroupBox Header="Tractor info" Name="gbTractorInfo" Grid.Row="10" Grid.ColumnSpan="2" IsEnabled="False">
+                        <GroupBox Header="Tractor info" Name="gbTractorInfo" Grid.Row="11" Grid.ColumnSpan="2" IsEnabled="False">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" />
@@ -155,8 +166,8 @@
 
         <DataGrid Name="dgEquipment" Style="{StaticResource ListDisplay}">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Unit" Binding="{Binding UnitNumber}" Width="75" />
-                <DataGridTextColumn Header="Class" Binding="{Binding EquipmentClass.Name}" Width="100" />
+                <DataGridTextColumn Header="Unit" Binding="{Binding UnitNumber}" Width="Auto" />
+                <DataGridTextColumn Header="Type" Binding="{Binding EquipmentType.Name}" Width="Auto" />
                 <DataGridTextColumn Header="Make" Binding="{Binding Make}" />
                 <DataGridTextColumn Header="Model" Binding="{Binding Model}" />
                 <DataGridTextColumn Header="Driver" Binding="{Binding DefaultDriver.Name}" />

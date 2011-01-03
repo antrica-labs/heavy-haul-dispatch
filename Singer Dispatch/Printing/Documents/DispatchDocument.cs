@@ -114,8 +114,8 @@ namespace SingerDispatch.Printing.Documents
             output.Append(GetSchedule(dispatch));
             output.Append(GetDimensions(dispatch.Load));
             output.Append(GetLoadCommodities(dispatch.Load.LoadedCommodities));
-            output.Append(GetTractors(from t in dispatch.Load.Dispatches where t.Equipment != null && t.Equipment.EquipmentClass != null && t.Equipment.EquipmentClass.Name == "Tractor" select t));
-            output.Append(GetSingerPilots(from p in dispatch.Load.Dispatches where p.Equipment != null && p.Equipment.EquipmentClass != null && p.Equipment.EquipmentClass.Name == "Pilot" select p));
+            output.Append(GetTractors(from t in dispatch.Load.Dispatches where t.Equipment != null && t.Equipment.EquipmentType != null && t.Equipment.EquipmentType.EquipmentClass != null && t.Equipment.EquipmentType.EquipmentClass.Name == "Tractor" select t));
+            output.Append(GetSingerPilots(from p in dispatch.Load.Dispatches where p.Equipment != null && p.Equipment.EquipmentType != null && p.Equipment.EquipmentType.EquipmentClass != null && p.Equipment.EquipmentType.EquipmentClass.Name == "Pilot" select p));
             output.Append(GetThirdPartyPilots(from s in dispatch.Load.ThirdPartyServices where s.ServiceType != null && s.ServiceType.Name.Contains("Pilot") select s));
             output.Append(GetThridPartyServices(from s in dispatch.Load.ThirdPartyServices where s.ServiceType == null || (!s.ServiceType.Name.Contains("Pilot") && !s.ServiceType.Name.Contains("Wirelift")) select s));
             output.Append(GetWireLiftInfo(from wl in dispatch.Load.ThirdPartyServices where wl.ServiceType != null && wl.ServiceType.Name.Contains("Wirelift") select wl));
@@ -680,7 +680,7 @@ namespace SingerDispatch.Printing.Documents
                         <tr>
                             <td class=""field_name"">Unit #:</td>
                             <td class=""value"">{1}</td>
-                            <td class=""field_name"">{5}:</td>
+                            <td class=""field_name"">{5}</td>
                             <td class=""value"">{2}</td>
                         </tr>
                         <tr>
@@ -716,7 +716,7 @@ namespace SingerDispatch.Printing.Documents
             {
                 dispatchReplacements[1] = dispatch.Equipment.UnitNumber;
 
-                if (dispatch.Equipment.EquipmentClass.Name == "Tractor")
+                if (dispatch.Equipment.EquipmentType.EquipmentClass.Name == "Tractor")
                 {
                     dispatchReplacements[5] = "Trailer:";
                     dispatchReplacements[2] = (dispatch.Load != null && dispatch.Load.Rate != null) ? dispatch.Load.Rate.Name + " - " : "";
