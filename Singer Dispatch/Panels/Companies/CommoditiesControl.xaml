@@ -21,10 +21,12 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
                     <ColumnDefinition />
+                    <ColumnDefinition />
                 </Grid.ColumnDefinitions>
 
                 <Button Style="{StaticResource Horizontal}" Grid.Column="0" Click="NewCommodity_Click">New commodity</Button>
-                <Button Style="{StaticResource HorizontalEnd}" Grid.Column="1" Click="DeleteCommodity_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgCommodities, Path=SelectedItem}">Remove commodity</Button>
+                <Button Style="{StaticResource Horizontal}" Grid.Column="1" Click="DuplicatedCommodity_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgCommodities, Path=SelectedItem}">Copy to new</Button>
+                <Button Style="{StaticResource HorizontalEnd}" Grid.Column="2" Click="DeleteCommodity_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgCommodities, Path=SelectedItem}">Remove commodity</Button>
             </Grid>
 
             <GroupBox Header="Commodity Details" DataContext="{Binding ElementName=dgCommodities, Path=SelectedItem}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgCommodities, Path=SelectedItem}">

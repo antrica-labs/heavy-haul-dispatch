@@ -114,6 +114,27 @@ namespace SingerDispatch
         {
             DimensionsEstimated = DimensionsEstimated ?? true;
         }
+
+        public Commodity Duplicate()
+        {
+            var copy = new Commodity();
+            
+            copy.Name = Name;
+            copy.Value = Value;
+            copy.Serial = Serial;
+            copy.Unit = Unit;
+            copy.Length = Length;
+            copy.Width = Width;
+            copy.Height = Height;
+            copy.Weight = Weight;
+            copy.DimensionsEstimated = DimensionsEstimated;
+            copy.LastLocation = LastLocation;
+            copy.LastAddress = LastAddress;
+            copy.LastLoadInstructions = LastLoadInstructions;
+            copy.LastRoute = LastRoute;
+
+            return copy;
+        }
     }
 
     partial class Quote

@@ -775,7 +775,7 @@ namespace SingerDispatch.Printing.Documents
                 </div>
             ";           
 
-            var price = (quote.IsItemizedBilling == true) ? "As listed" : string.Format("{0:C}", quote.Price);
+            var price = (quote.IsItemizedBilling == true || quote.Price == 0.0m) ? "As listed" : string.Format("{0:C}", quote.Price);
 
             return string.Format(html, price);
         }

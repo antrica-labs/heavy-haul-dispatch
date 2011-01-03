@@ -49,6 +49,22 @@ namespace SingerDispatch.Panels.Companies
             txtCommodityName.Focus();            
         }
 
+        private void DuplicatedCommodity_Click(object sender, RoutedEventArgs e)
+        {
+            var commodity = (Commodity)dgCommodities.SelectedItem;
+            var list = (ObservableCollection<Commodity>)dgCommodities.ItemsSource;
+
+            if (commodity == null)
+                return;
+
+            commodity = commodity.Duplicate();
+
+            SelectedCompany.Commodities.Add(commodity);
+            list.Add(commodity);
+            dgCommodities.SelectedItem = commodity;
+            dgCommodities.ScrollIntoView(commodity);
+        }
+
         private void DeleteCommodity_Click(object sender, RoutedEventArgs e)
         {
             var selected = (Commodity)dgCommodities.SelectedItem;
@@ -71,5 +87,7 @@ namespace SingerDispatch.Panels.Companies
                 Windows.ErrorNoticeWindow.ShowError("Error while attempting to write changes to database", ex.Message);
             }
         }
+
+        
     }
 }

@@ -33,8 +33,8 @@ namespace SingerDispatch.Importer
 
             // Populate contact methods
             Database.ContactMethods.InsertOnSubmit(new ContactMethod { Name = "Email" });
-            Database.ContactMethods.InsertOnSubmit(new ContactMethod { Name = "Primary phone" });
-            Database.ContactMethods.InsertOnSubmit(new ContactMethod { Name = "Secondary phone" });
+            Database.ContactMethods.InsertOnSubmit(new ContactMethod { Name = "Phone" });
+            Database.ContactMethods.InsertOnSubmit(new ContactMethod { Name = "Fax" });
                         
 
             // Populate address types
