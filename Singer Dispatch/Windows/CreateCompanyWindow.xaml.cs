@@ -114,7 +114,7 @@ namespace SingerDispatch.Windows
                 return;
             }
 
-            if (cmbProvinceOrState.SelectedItem != null)            
+            if (!string.IsNullOrWhiteSpace(txtAddress1.Text))            
                 Company.Addresses.Add(Address);
 
             if (!string.IsNullOrWhiteSpace(txtContactFirstName.Text))

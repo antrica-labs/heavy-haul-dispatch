@@ -154,7 +154,6 @@ namespace SingerDispatch.Panels.Quotes
 
             try
             {
-                Database.Companies.InsertOnSubmit(company);
                 Database.SubmitChanges();
                 CompanyList.Add(company);
 

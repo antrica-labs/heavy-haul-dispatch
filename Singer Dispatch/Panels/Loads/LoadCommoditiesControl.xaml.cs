@@ -7,6 +7,7 @@ using SingerDispatch.Printing.Documents;
 using SingerDispatch.Windows;
 using System.Windows.Input;
 using SingerDispatch.Controls;
+using System;
 
 namespace SingerDispatch.Panels.Loads
 {
@@ -594,6 +595,28 @@ namespace SingerDispatch.Panels.Loads
                 ((ObservableCollection<Address>)cmbConsigneeAddresses.ItemsSource).Add(address);
             
             cmbAddresses.SelectedItem = address;
+        }
+
+        private void AddCompany_Click(object sender, RoutedEventArgs e)
+        {
+            var cmbCompanies = (ComboBox)((Button)sender).DataContext;
+
+            var window = new CreateCompanyWindow(Database) { Owner = Application.Current.MainWindow };
+            var company = window.CreateCompany();
+
+            if (company == null) return;
+
+            try
+            {
+                Database.SubmitChanges();
+                CompanyList.Add(company);
+
+                cmbCompanies.SelectedItem = company;
+            }
+            catch (Exception ex)
+            {
+                ErrorNoticeWindow.ShowError("Error while adding company to database", ex.Message);
+            }
         }        
     }
 }

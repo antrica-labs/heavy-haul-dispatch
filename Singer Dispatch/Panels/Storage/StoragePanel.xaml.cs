@@ -181,7 +181,6 @@ namespace SingerDispatch.Panels.Storage
 
             try
             {
-                Database.Companies.InsertOnSubmit(company);
                 Database.SubmitChanges();
                 CompanyList.Add(company);
 

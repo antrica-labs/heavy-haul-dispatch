@@ -119,7 +119,6 @@ namespace SingerDispatch.Panels.Jobs
 
             try
             {
-                Database.Companies.InsertOnSubmit(company);
                 Database.SubmitChanges();
                 CompanyList.Add(company);
                                 
