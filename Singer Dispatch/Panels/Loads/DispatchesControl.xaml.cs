@@ -53,14 +53,14 @@ namespace SingerDispatch.Panels.Loads
                 dgOutOfProvince.MaxHeight = dgOutOfProvince.ActualHeight;
 
             cmbEquipmentTypes.ItemsSource = (SelectedLoad == null) ? null : (from et in Database.EquipmentTypes orderby et.Prefix select et).ToList();
-            cmbEmployees.ItemsSource = (SelectedLoad == null) ? null : from emp in Database.Employees orderby emp.FirstName, emp.LastName select emp;
-            cmbDispatchedByEmployees.ItemsSource = (SelectedLoad == null) ? null : from emp in Database.Employees orderby emp.FirstName, emp.LastName select emp;
+            cmbEmployees.ItemsSource = (SelectedLoad == null) ? null : from emp in Database.Employees where emp.Archived != true orderby emp.FirstName, emp.LastName select emp;
+            cmbDispatchedByEmployees.ItemsSource = (SelectedLoad == null) ? null : from emp in Database.Employees where emp.Archived != true orderby emp.FirstName, emp.LastName select emp;
 
             var provider = (ObjectDataProvider)FindResource("EmployeeDropList");
 
             if (provider != null)
             {
-                var employees = from emp in Database.Employees orderby emp.FirstName, emp.LastName select emp;
+                var employees = from emp in Database.Employees where emp.Archived != true orderby emp.FirstName, emp.LastName select emp;
                 var list = (EmployeeDropList)provider.Data;
 
                 list.Clear();

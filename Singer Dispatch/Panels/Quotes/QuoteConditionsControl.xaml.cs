@@ -33,7 +33,7 @@ namespace SingerDispatch.Panels.Quotes
 
             if (SelectedQuote == null) return;
 
-            var conditions = from c in Database.Conditions select c;
+            var conditions = from c in Database.Conditions where c.Archived != true select c;
 
             foreach (var condition in conditions)
             {

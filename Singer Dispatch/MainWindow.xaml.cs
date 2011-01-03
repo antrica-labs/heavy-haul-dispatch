@@ -102,7 +102,7 @@ namespace SingerDispatch
             try
             {
                 var username = AuthenticationService.GetCurrentUserName();
-                var employee = (from em in Database.Employees where em.WindowsUserName == username select em).First();
+                var employee = (from em in Database.Employees where em.Archived != true && em.WindowsUserName == username select em).First();
 
                 return employee;
             }

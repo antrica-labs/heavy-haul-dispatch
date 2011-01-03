@@ -122,7 +122,7 @@ namespace SingerDispatch.Panels.Loads
 
             cmbSeasons.ItemsSource = from s in Database.Seasons select s;
             cmbRates.ItemsSource = GetCompanyRates(SelectedCompany);
-            cmbUnits.ItemsSource = (SelectedLoad == null) ? null : from u in Database.Equipment where u.EquipmentClass.Name == "Tractor" orderby u.UnitNumber select u;
+            cmbUnits.ItemsSource = (SelectedLoad == null) ? null : from u in Database.Equipment where u.Archived != true && u.EquipmentClass.Name == "Tractor" orderby u.UnitNumber select u;
 
             if (cmbRates.SelectedItem != null)
             {
@@ -348,7 +348,7 @@ namespace SingerDispatch.Panels.Loads
                 return null;
             }
 
-            var rates = from r in Database.Rates where r.RateType.Name == "Trailer" select r;
+            var rates = from r in Database.Rates where r.Archived != true && r.RateType.Name == "Trailer" select r;
             var discount = company.RateAdjustment ?? 0.00m;
             var enterprise = company.CustomerType != null && company.CustomerType.IsEnterprise == true;
 

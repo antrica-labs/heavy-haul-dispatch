@@ -89,7 +89,7 @@ namespace SingerDispatch.Panels.Quotes
             dgQuoteList.SelectedItem = quote;
 
             // Add any of the default quote conditions            
-            foreach (var condition in (from c in Database.Conditions where c.AutoInclude == true select c))
+            foreach (var condition in (from c in Database.Conditions where c.Archived != true && c.AutoInclude == true select c))
             {
                 quote.QuoteConditions.Add(new QuoteCondition { ConditionID = condition.ID, Line = condition.Line });
             }

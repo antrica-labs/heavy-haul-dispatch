@@ -31,7 +31,7 @@ namespace SingerDispatch.Panels.Quotes
 
             if (SelectedQuote == null) return;
 
-            var inclusions = from c in Database.Inclusions select c;
+            var inclusions = from c in Database.Inclusions where c.Archived != true select c;
             var selected = from qc in SelectedQuote.QuoteInclusions select qc.Inclusion;
 
             foreach (var inclusion in inclusions)

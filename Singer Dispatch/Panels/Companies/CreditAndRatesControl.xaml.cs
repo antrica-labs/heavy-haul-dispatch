@@ -47,7 +47,7 @@ namespace SingerDispatch.Panels.Companies
             if (company == null)
                 return null;
 
-            var rates = from r in Database.Rates select r;
+            var rates = from r in Database.Rates where r.Archived != true select r;
             var discount = company.RateAdjustment ?? 0.00m;
             var enterprise = company.CustomerType != null && company.CustomerType.IsEnterprise == true;
 

@@ -59,7 +59,7 @@ namespace SingerDispatch.Panels.Quotes
         private void UpdateAuthorList()
         {
             //var selected = cmbQuotedBy.SelectedItem;
-            cmbQuotedBy.ItemsSource = from emp in Database.Employees orderby emp.FirstName, emp.LastName select emp;
+            cmbQuotedBy.ItemsSource = from emp in Database.Employees where emp.Archived != true orderby emp.FirstName, emp.LastName select emp;
             //cmbQuotedBy.SelectedItem = selected;
         }
 
