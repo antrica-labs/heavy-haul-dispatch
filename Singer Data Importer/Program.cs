@@ -589,6 +589,7 @@ namespace SingerDispatch.Importer
                                                 
                         company.Name = reader["permitCompanyName"] == DBNull.Value ? null : (string)reader["permitCompanyName"];
                         company.Notes = reader["permitCompanyNote"] == DBNull.Value ? null : (string)reader["permitCompanyNote"];
+                        company.CustomerTypeID = 1;
 
                         var address = new Address();
 
