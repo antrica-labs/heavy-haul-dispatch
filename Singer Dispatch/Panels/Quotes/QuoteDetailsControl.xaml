@@ -203,22 +203,22 @@
                     </Grid.RowDefinitions>
 
                     <Label Grid.Column="0" Grid.Row="0">Company:</Label>
-                    <Label Grid.Column="1" Grid.Row="0" Content="{Binding Company.Name}" />
+                    <Label Grid.Column="1" Grid.Row="0" FontWeight="Bold" Content="{Binding Company.Name}" />
 
                     <Label Grid.Column="0" Grid.Row="1">Email:</Label>
-                    <Label Grid.Column="1" Grid.Row="1" Content="{Binding Email}" />
+                    <Label Grid.Column="1" Grid.Row="1" FontWeight="Bold" Content="{Binding Email}" />
 
                     <Label Grid.Column="0" Grid.Row="2">Phone 1:</Label>
-                    <Label Grid.Column="1" Grid.Row="2" Content="{Binding PrimaryPhone, Converter={StaticResource PhoneNumberConverter}}" />
+                    <Label Grid.Column="1" Grid.Row="2" FontWeight="Bold" Content="{Binding PrimaryPhone, Converter={StaticResource PhoneNumberConverter}}" />
 
                     <Label Grid.Column="3" Grid.Row="0">Phone 2:</Label>
-                    <Label Grid.Column="4" Grid.Row="0" Content="{Binding SecondaryPhone, Converter={StaticResource PhoneNumberConverter}}" />
+                    <Label Grid.Column="4" Grid.Row="0" FontWeight="Bold" Content="{Binding SecondaryPhone, Converter={StaticResource PhoneNumberConverter}}" />
 
                     <Label Grid.Column="3" Grid.Row="1">Fax:</Label>
-                    <Label Grid.Column="4" Grid.Row="1" Content="{Binding Fax, Converter={StaticResource PhoneNumberConverter}}" />
+                    <Label Grid.Column="4" Grid.Row="1" FontWeight="Bold" Content="{Binding Fax, Converter={StaticResource PhoneNumberConverter}}" />
 
                     <Label Grid.Column="3" Grid.Row="2">Preferred:</Label>
-                    <Label Grid.Column="4" Grid.Row="2" Content="{Binding PreferedContactMethod}" />
+                    <Label Grid.Column="4" Grid.Row="2" FontWeight="Bold" Content="{Binding PreferedContactMethod}" />
                 </Grid>
             </StackPanel>
         </GroupBox>
