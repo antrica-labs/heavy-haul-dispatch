@@ -44,6 +44,12 @@ namespace SingerDispatch.Windows
                 Company.CustomerType = (from ct in Database.CustomerType where ct.IsEnterprise == false select ct).First();
             }
             catch { }
+
+            try
+            {
+                Company.CompanyPriorityLevel = (from p in Database.CompanyPriorityLevels where p.Name.EndsWith("Regular") select p).First();
+            }
+            catch { }
         }
 
         public Company CreateCompany()

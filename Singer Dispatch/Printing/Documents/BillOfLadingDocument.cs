@@ -825,7 +825,7 @@ namespace SingerDispatch.Printing.Documents
             replacements[3] = MeasurementFormater.FromMetres(commodity.JobCommodity.Height, lengthUnit);
             replacements[4] = MeasurementFormater.FromKilograms(commodity.JobCommodity.Weight, weightUnit);
 
-            if (commodity.Load.Job.Company.CompanyPriorityLevel.Name.EndsWith("Cash on Delivery"))
+            if (commodity.Load.Job.Company.CompanyPriorityLevel != null && commodity.Load.Job.Company.CompanyPriorityLevel.Name.EndsWith("Cash on Delivery"))
                 replacements[5] = "&#9745;";
             else
                 replacements[5] = "&#9744;";

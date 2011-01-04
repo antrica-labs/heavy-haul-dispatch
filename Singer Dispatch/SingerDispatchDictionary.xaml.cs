@@ -9,7 +9,7 @@ namespace SingerDispatch
         
         private void TextBox_GotKeyboardFocus(object sender, RoutedEventArgs e)
         {
-            ((TextBox)sender).SelectAll();
+            //((TextBox)sender).SelectAll();
         }
 
         private void InputControl_LostFocus(object sender, RoutedEventArgs e)

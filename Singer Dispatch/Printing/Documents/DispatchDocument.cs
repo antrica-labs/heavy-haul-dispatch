@@ -654,7 +654,7 @@ namespace SingerDispatch.Printing.Documents
             replacements[5] = copyType;
             replacements[6] = (dispatch != null) ? dispatch.Name : "UNKNOWN";
 
-            if (dispatch.Load.Job.Company.CompanyPriorityLevel.Name.EndsWith("Cash on Delivery"))
+            if (dispatch.Load.Job.Company.CompanyPriorityLevel != null && dispatch.Load.Job.Company.CompanyPriorityLevel.Name.EndsWith("Cash on Delivery"))
                 replacements[7] = "<span>C.O.D.<br>Collect</span>";            
 
             return string.Format(html, replacements);
@@ -731,7 +731,7 @@ namespace SingerDispatch.Printing.Documents
                 }
             }
 
-            dispatchReplacements[3] = (dispatch.Employee != null) ? string.Format("{0} {1}", dispatch.Employee.Name, dispatch.Employee.Phone) : "";
+            dispatchReplacements[3] = (dispatch.Employee != null) ? string.Format("{0} {1}", dispatch.Employee.Name, dispatch.Employee.Mobile) : "";
                         
             
             var swampers = new StringBuilder();
@@ -1206,7 +1206,7 @@ namespace SingerDispatch.Printing.Documents
                 var replacements = new object[3];
 
                 replacements[0] = (item.Equipment != null) ? item.Equipment.UnitNumber : "";
-                replacements[1] = (item.Employee == null) ? "" : string.Format("{0} {1}", item.Employee.Name, item.Employee.Phone);
+                replacements[1] = (item.Employee == null) ? "" : string.Format("{0} {1}", item.Employee.Name, item.Employee.Mobile);
                 replacements[2] = (item.Load != null && item.Load.TrailerCombination != null) ? item.Load.TrailerCombination.Combination : "";
 
                 rows.Append(string.Format(row, replacements));
@@ -1251,7 +1251,8 @@ namespace SingerDispatch.Printing.Documents
             foreach (var item in dispatches)
             {
                 var replacements = new object[2];
-                var contact = (item.Employee == null) ? "" : string.Format("{0} {1}", item.Employee.Name, item.Employee.Phone);
+                                
+                var contact = (item.Employee == null) ? "" : string.Format("{0} {1}", item.Employee.Name, item.Employee.Mobile);
                                 
                 replacements[0] = (item.Equipment == null) ? "" : item.Equipment.UnitNumber;
                 replacements[1] = contact;
