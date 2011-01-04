@@ -558,13 +558,13 @@ namespace SingerDispatch.Panels.Loads
             contact.Company.Contacts.Add(contact);
                         
             if ((Company)cmbLoadingSiteContactCompanies.SelectedItem == contact.Company)
-                ((ObservableCollection<Contact>)cmbUnloadingSiteContacts.ItemsSource).Add(contact);
+                ((ObservableCollection<Contact>)cmbLoadingSiteContacts.ItemsSource).Add(contact);
 
             if ((Company)cmbUnloadingSiteContactCompanies.SelectedItem == contact.Company)
-                ((ObservableCollection<Contact>)cmbLoadingContacts.ItemsSource).Add(contact);
+                ((ObservableCollection<Contact>)cmbUnloadingSiteContacts.ItemsSource).Add(contact);
 
             if ((Company)cmbLoadingContactCompanies.SelectedItem == contact.Company)
-                ((ObservableCollection<Contact>)cmbLoadingSiteContacts.ItemsSource).Add(contact);
+                ((ObservableCollection<Contact>)cmbLoadingContacts.ItemsSource).Add(contact);
 
             if ((Company)cmbUnloadingContactCompanies.SelectedItem == contact.Company)
                 ((ObservableCollection<Contact>)cmbUnloadingContacts.ItemsSource).Add(contact);
