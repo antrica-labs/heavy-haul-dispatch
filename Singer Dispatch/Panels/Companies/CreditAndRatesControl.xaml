@@ -36,13 +36,13 @@
                         </Grid.RowDefinitions>
 
                         <Label Grid.Column="0" Grid.Row="0">Rate Adjustment ($):</Label>
-                        <TextBox Name="txtCreditRateHourly" Grid.Column="1" Grid.Row="0" Text="{Binding RateAdjustment, StringFormat=C, Converter={StaticResource NullableValueConverter}}" />
+                        <TextBox Name="txtCreditRateHourly" Grid.Column="1" Grid.Row="0" Text="{Binding RateAdjustment, StringFormat=C, Converter={StaticResource NullableValueConverter}}" TextChanged="txtCreditRateHourly_TextChanged" KeyDown="txtCreditRateHourly_KeyDown" GotFocus="txtCreditRateHourly_GotFocus" LostFocus="txtCreditRateHourly_LostFocus" />
 
                         <Label Grid.Row="1" Grid.Column="0">Customer type</Label>
                         <ComboBox Name="cmbCreditCustomerType" Grid.Row="1" Grid.Column="1" SelectedItem="{Binding CustomerType}" IsEditable="False" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectionChanged="cmbCreditCustomerType_SelectionChanged" />
                         
                         <Label Grid.Row="2" Grid.Column="0">Available credit:</Label>
-                        <TextBox Name="txtCreditAvailableCredit" Grid.Row="2" Grid.Column="1" Text="{Binding AvailableCredit, StringFormat=c, Converter={StaticResource NullableValueConverter}}" Controls:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" />
+                        <TextBox Name="txtCreditAvailableCredit" Grid.Row="2" Grid.Column="1" Text="{Binding AvailableCredit, StringFormat=c, Converter={StaticResource NullableValueConverter}}" />
                        
                         <Label Grid.Row="3" Grid.Column="0">Priority level:</Label>
                         <ComboBox Name="cmbCreditPriority" Grid.Row="3" Grid.Column="1" ItemTemplate="{StaticResource nameTemplate}" SelectedItem="{Binding CompanyPriorityLevel}" IsEditable="False" />

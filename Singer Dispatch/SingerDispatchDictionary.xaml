@@ -104,6 +104,7 @@
     
     <Style TargetType="TextBox">
         <Setter Property="Margin" Value="3" />
+        <EventSetter Event="KeyDown" Handler="TextBox_KeyDown" />
         <EventSetter Event="GotMouseCapture" Handler="TextBox_GotKeyboardFocus"/>
         <EventSetter Event="GotFocus" Handler="TextBox_GotKeyboardFocus" />
         <EventSetter Event="TextChanged" Handler="TextBox_TextChanged" />

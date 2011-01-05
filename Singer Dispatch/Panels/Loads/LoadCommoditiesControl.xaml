@@ -56,7 +56,7 @@
                 </Grid.RowDefinitions>
 
                 <Label Grid.Column="0" Grid.Row="0">Unit:</Label>
-                <ComboBox Name="cmbUnits" Grid.Column="0" Grid.Row="1" ItemTemplate="{StaticResource EquipmentNameTemplate}" TextSearch.TextPath="UnitNumber" Controls:ComboUtil.AllowNull="True">
+                <ComboBox Name="cmbUnits" Grid.Column="0" Grid.Row="1" ItemTemplate="{StaticResource EquipmentNameTemplate}" TextSearch.TextPath="UnitNumber">
                     <ComboBox.SelectedItem>
                         <Binding Path="Equipment">
                             <Binding.ValidationRules>
@@ -67,7 +67,7 @@
                 </ComboBox>
 
                 <Label Grid.Column="1" Grid.Row="0">Wheel type:</Label>
-                <ComboBox Name="cmbRates" Grid.Column="1" Grid.Row="1" SelectionChanged="cmbRates_SelectionChanged" ItemTemplate="{StaticResource WheelTypeTemplate}" TextSearch.TextPath="Name" Controls:ComboUtil.AllowNull="True">
+                <ComboBox Name="cmbRates" Grid.Column="1" Grid.Row="1" SelectionChanged="cmbRates_SelectionChanged" ItemTemplate="{StaticResource WheelTypeTemplate}" TextSearch.TextPath="Name">
                     <ComboBox.SelectedItem>
                         <Binding Path="Rate">
                             <Binding.ValidationRules>
@@ -81,7 +81,7 @@
                 <TextBox Grid.Column="2" Grid.Row="1" Text="{Binding ElementName=cmbRates, Path=SelectedItem.Adjusted, StringFormat=c}" />
 
                 <Label Grid.Column="3" Grid.Row="0">Combination:</Label>
-                <ComboBox Name="cmbTrailerCombinations" Grid.Column="3" Grid.Row="1" TextSearch.TextPath="Combination" ItemTemplate="{StaticResource TrailerCombinationTemplate}" Controls:ComboUtil.AllowNull="True">
+                <ComboBox Name="cmbTrailerCombinations" Grid.Column="3" Grid.Row="1" TextSearch.TextPath="Combination" ItemTemplate="{StaticResource TrailerCombinationTemplate}">
                     <ComboBox.SelectedItem>
                         <Binding Path="TrailerCombination">
                             <Binding.ValidationRules>
@@ -224,7 +224,7 @@
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
                             
-                            <ComboBox Name="cmbLoadingSiteContactCompanies" Grid.Column="0" TextSearch.TextPath="Name" ItemsSource="{Binding ElementName=ThePanel, Path=CompanyList}" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectionChanged="cmbLoadingSiteContactCompanies_SelectionChanged" Controls:ComboUtil.AllowNull="True">
+                            <ComboBox Name="cmbLoadingSiteContactCompanies" Grid.Column="0" TextSearch.TextPath="Name" ItemsSource="{Binding ElementName=ThePanel, Path=CompanyList}" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectionChanged="cmbLoadingSiteContactCompanies_SelectionChanged">
                                 <ComboBox.SelectedItem>
                                     <Binding Path="LoadSiteCompany">
                                         <Binding.ValidationRules>
@@ -241,7 +241,7 @@
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
 
-                            <ComboBox Name="cmbLoadingSiteContacts" Grid.Column="0" TextSearch.TextPath="Name" ItemTemplate="{StaticResource ContactTemplate}" Controls:ComboUtil.AllowNull="True" DataContext="{Binding ElementName=cmbLoadingSiteContactCompanies}">
+                            <ComboBox Name="cmbLoadingSiteContacts" Grid.Column="0" TextSearch.TextPath="Name" ItemTemplate="{StaticResource ContactTemplate}" DataContext="{Binding ElementName=cmbLoadingSiteContactCompanies}">
                                 <ComboBox.SelectedItem>
                                     <Binding ElementName="dgCommodities" Path="SelectedItem.LoadSiteContact">
                                         <Binding.ValidationRules>
@@ -271,7 +271,7 @@
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
 
-                            <ComboBox Name="cmbUnloadingSiteContactCompanies" Grid.Column="0" TextSearch.TextPath="Name" ItemsSource="{Binding ElementName=ThePanel, Path=CompanyList}" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectionChanged="cmbUnloadingSiteContactCompanies_SelectionChanged" Controls:ComboUtil.AllowNull="True">
+                            <ComboBox Name="cmbUnloadingSiteContactCompanies" Grid.Column="0" TextSearch.TextPath="Name" ItemsSource="{Binding ElementName=ThePanel, Path=CompanyList}" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectionChanged="cmbUnloadingSiteContactCompanies_SelectionChanged">
                                 <ComboBox.SelectedItem>
                                     <Binding Path="UnloadSiteCompany">
                                         <Binding.ValidationRules>
@@ -289,7 +289,7 @@
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
 
-                            <ComboBox Name="cmbUnloadingSiteContacts" Grid.Column="0" TextSearch.TextPath="Name" ItemTemplate="{StaticResource ContactTemplate}" Controls:ComboUtil.AllowNull="True" DataContext="{Binding ElementName=cmbUnloadingSiteContactCompanies}">
+                            <ComboBox Name="cmbUnloadingSiteContacts" Grid.Column="0" TextSearch.TextPath="Name" ItemTemplate="{StaticResource ContactTemplate}" DataContext="{Binding ElementName=cmbUnloadingSiteContactCompanies}">
                                 <ComboBox.SelectedItem>
                                     <Binding ElementName="dgCommodities" Path="SelectedItem.UnloadSiteContact">
                                         <Binding.ValidationRules>
@@ -332,7 +332,7 @@
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
 
-                            <ComboBox Name="cmbLoadingContactCompanies" Grid.Column="0" ItemsSource="{Binding ElementName=ThePanel, Path=CompanyList}" TextSearch.TextPath="Name" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectionChanged="cmbLoadingContactCompanies_SelectionChanged" Controls:ComboUtil.AllowNull="True">
+                            <ComboBox Name="cmbLoadingContactCompanies" Grid.Column="0" ItemsSource="{Binding ElementName=ThePanel, Path=CompanyList}" TextSearch.TextPath="Name" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectionChanged="cmbLoadingContactCompanies_SelectionChanged">
                                 <ComboBox.SelectedItem>
                                     <Binding Path="LoadingCompany">
                                         <Binding.ValidationRules>
@@ -350,7 +350,7 @@
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
 
-                            <ComboBox Name="cmbLoadingContacts" Grid.Column="0" TextSearch.TextPath="Name" ItemTemplate="{StaticResource ContactTemplate}" Controls:ComboUtil.AllowNull="True" DataContext="{Binding ElementName=cmbLoadingContactCompanies}">
+                            <ComboBox Name="cmbLoadingContacts" Grid.Column="0" TextSearch.TextPath="Name" ItemTemplate="{StaticResource ContactTemplate}" DataContext="{Binding ElementName=cmbLoadingContactCompanies}">
                                 <ComboBox.SelectedItem>
                                     <Binding ElementName="dgCommodities" Path="SelectedItem.LoadingContact">
                                         <Binding.ValidationRules>
@@ -362,7 +362,7 @@
                             <Button Grid.Column="1" Style="{StaticResource Standard}" Click="AddContact_Click" DataContext="{Binding ElementName=cmbLoadingContacts}">Add</Button>
                         </Grid>
                         
-                        <ComboBox Name="cmbLoadMethods" Grid.Column="3" Grid.Row="1" ItemTemplate="{StaticResource SimpleNameTemplate}" TextSearch.TextPath="Name" Controls:ComboUtil.AllowNull="True">
+                        <ComboBox Name="cmbLoadMethods" Grid.Column="3" Grid.Row="1" ItemTemplate="{StaticResource SimpleNameTemplate}" TextSearch.TextPath="Name">
                             <ComboBox.SelectedItem>
                                 <Binding Path="LoadMethod">
                                     <Binding.ValidationRules>
@@ -380,7 +380,7 @@
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
 
-                            <ComboBox Name="cmbUnloadingContactCompanies" Grid.Column="0" ItemsSource="{Binding ElementName=ThePanel, Path=CompanyList}" TextSearch.TextPath="Name" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectionChanged="cmbUnloadingContactCompanies_SelectionChanged" Controls:ComboUtil.AllowNull="True">
+                            <ComboBox Name="cmbUnloadingContactCompanies" Grid.Column="0" ItemsSource="{Binding ElementName=ThePanel, Path=CompanyList}" TextSearch.TextPath="Name" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectionChanged="cmbUnloadingContactCompanies_SelectionChanged">
                                 <ComboBox.SelectedItem>
                                     <Binding Path="UnloadingCompany">
                                         <Binding.ValidationRules>
@@ -398,7 +398,7 @@
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
 
-                            <ComboBox Name="cmbUnloadingContacts" Grid.Column="0" TextSearch.TextPath="Name" ItemTemplate="{StaticResource ContactTemplate}" Controls:ComboUtil.AllowNull="True" DataContext="{Binding ElementName=cmbUnloadingContactCompanies}">
+                            <ComboBox Name="cmbUnloadingContacts" Grid.Column="0" TextSearch.TextPath="Name" ItemTemplate="{StaticResource ContactTemplate}" DataContext="{Binding ElementName=cmbUnloadingContactCompanies}">
                                 <ComboBox.SelectedItem>
                                     <Binding ElementName="dgCommodities" Path="SelectedItem.UnloadingContact">
                                         <Binding.ValidationRules>
@@ -410,7 +410,7 @@
                             <Button Grid.Column="1" Style="{StaticResource Standard}" Click="AddContact_Click" DataContext="{Binding ElementName=cmbUnloadingContacts}">Add</Button>
                         </Grid>
                         
-                        <ComboBox Name="cmbUnloadMethods" Grid.Column="3" Grid.Row="2" ItemTemplate="{StaticResource SimpleNameTemplate}" TextSearch.TextPath="Name" Controls:ComboUtil.AllowNull="True">
+                        <ComboBox Name="cmbUnloadMethods" Grid.Column="3" Grid.Row="2" ItemTemplate="{StaticResource SimpleNameTemplate}" TextSearch.TextPath="Name">
                             <ComboBox.SelectedItem>
                                 <Binding Path="UnloadMethod">
                                     <Binding.ValidationRules>
@@ -475,7 +475,7 @@
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
 
-                        <ComboBox Grid.Column="0" Name="cmbShipperCompanies" TextSearch.TextPath="Name" ItemsSource="{Binding ElementName=ThePanel, Path=CompanyList}" SelectionChanged="ShipperCompany_SelectionChanged" ItemTemplate="{StaticResource SimpleNameTemplate}" Controls:ComboUtil.AllowNull="True">
+                        <ComboBox Grid.Column="0" Name="cmbShipperCompanies" TextSearch.TextPath="Name" ItemsSource="{Binding ElementName=ThePanel, Path=CompanyList}" SelectionChanged="ShipperCompany_SelectionChanged" ItemTemplate="{StaticResource SimpleNameTemplate}">
                             <ComboBox.SelectedItem>
                                 <Binding Path="ShipperCompany">
                                     <Binding.ValidationRules>
@@ -492,7 +492,7 @@
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
 
-                        <ComboBox Grid.Column="0" Name="cmbShipperAddresses" TextSearch.TextPath="Line1" ItemTemplate="{StaticResource AddressTemplate}" Controls:ComboUtil.AllowNull="True" DataContext="{Binding ElementName=cmbShipperCompanies}">
+                        <ComboBox Grid.Column="0" Name="cmbShipperAddresses" TextSearch.TextPath="Line1" ItemTemplate="{StaticResource AddressTemplate}" DataContext="{Binding ElementName=cmbShipperCompanies}">
                             <ComboBox.SelectedItem>
                                 <Binding ElementName="dgCommodities" Path="SelectedItem.ShipperAddress">
                                     <Binding.ValidationRules>
@@ -510,7 +510,7 @@
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
 
-                        <ComboBox Grid.Column="0" Name="cmbConsigneeCompanies" TextSearch.TextPath="Name" ItemsSource="{Binding ElementName=ThePanel, Path=CompanyList}" SelectionChanged="ConsigneeCompany_SelectionChanged" ItemTemplate="{StaticResource SimpleNameTemplate}" Controls:ComboUtil.AllowNull="True">
+                        <ComboBox Grid.Column="0" Name="cmbConsigneeCompanies" TextSearch.TextPath="Name" ItemsSource="{Binding ElementName=ThePanel, Path=CompanyList}" SelectionChanged="ConsigneeCompany_SelectionChanged" ItemTemplate="{StaticResource SimpleNameTemplate}">
                             <ComboBox.SelectedItem>
                                 <Binding Path="ConsigneeCompany">
                                     <Binding.ValidationRules>
@@ -528,7 +528,7 @@
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
 
-                        <ComboBox Grid.Column="0" Name="cmbConsigneeAddresses" TextSearch.TextPath="Line1" ItemTemplate="{StaticResource AddressTemplate}" Controls:ComboUtil.AllowNull="True" DataContext="{Binding ElementName=cmbConsigneeCompanies}">
+                        <ComboBox Grid.Column="0" Name="cmbConsigneeAddresses" TextSearch.TextPath="Line1" ItemTemplate="{StaticResource AddressTemplate}" DataContext="{Binding ElementName=cmbConsigneeCompanies}">
                             <ComboBox.SelectedItem>
                                 <Binding ElementName="dgCommodities" Path="SelectedItem.ConsigneeAddress">
                                     <Binding.ValidationRules>

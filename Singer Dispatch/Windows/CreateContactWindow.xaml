@@ -59,7 +59,7 @@
                 <TextBox Name="txtContactSecondaryPhone" Grid.Row="9" Grid.Column="0" Text="{Binding SecondaryPhone, Converter={StaticResource PhoneNumberConverter}}" />
 
                 <Label Grid.Row="10" Grid.Column="0">Preferred contact method:</Label>
-                <ComboBox Name="cmbContactPreferedContactMethod" Grid.Row="11" Grid.Column="0" SelectedItem="{Binding PreferedContactMethod}" IsEditable="False" ItemTemplate="{StaticResource SimpleNameTemplate}" Controls:ComboUtil.AllowNull="True" />
+                <ComboBox Name="cmbContactPreferedContactMethod" Grid.Row="11" Grid.Column="0" SelectedItem="{Binding PreferedContactMethod}" IsEditable="False" ItemTemplate="{StaticResource SimpleNameTemplate}" />
 
                 <Label Grid.Row="12" Grid.Column="0" Grid.ColumnSpan="2">Contact notes:</Label>
                 <TextBox Name="txtContactNotes" Grid.Row="13" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource MultiLine}" Text="{Binding Notes}" />

@@ -87,7 +87,6 @@ namespace SingerDispatch.Panels.Companies
                 Windows.ErrorNoticeWindow.ShowError("Error while attempting to write changes to database", ex.Message);
             }
         }
-
         
     }
 }

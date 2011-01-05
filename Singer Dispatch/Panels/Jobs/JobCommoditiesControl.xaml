@@ -56,10 +56,10 @@
                     <TextBox Name="txtCommodityName" Text="{Binding Name}" Grid.Row="0" Grid.Column="1" />
 
                     <Label Grid.Row="2" Grid.Column="0" Style="{StaticResource Important}">Declared value:</Label>
-                    <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Value, StringFormat=c, Converter={StaticResource NullableValueConverter}}" Controls:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" />
+                    <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Value, StringFormat=c, Converter={StaticResource NullableValueConverter}}" />
 
                     <Label Grid.Row="3" Grid.Column="0">Hauling cost:</Label>
-                    <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Cost, StringFormat=c, Converter={StaticResource NullableValueConverter}}" Controls:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" />
+                    <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Cost, StringFormat=c, Converter={StaticResource NullableValueConverter}}" />
                     
                     <Label Grid.Row="4" Grid.Column="0">Serial number:</Label>
                     <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Serial}" />

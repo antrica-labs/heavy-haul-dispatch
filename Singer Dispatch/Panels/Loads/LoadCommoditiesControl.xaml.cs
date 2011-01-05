@@ -355,15 +355,21 @@ namespace SingerDispatch.Panels.Loads
 
             foreach (var rate in rates)
             {
-                if (enterprise && rate.HourlyEnterprise != null)
+                if (enterprise)
                 {
-                    rate.Hourly = rate.HourlySpecialized;
-                    rate.Adjusted = rate.Hourly + discount;
+                    if (rate.HourlyEnterprise != null)
+                    {
+                        rate.Hourly = rate.HourlyEnterprise;
+                        rate.Adjusted = rate.Hourly + discount;
+                    }
                 }
-                else if (!enterprise && rate.HourlySpecialized != null)
+                else
                 {
-                    rate.Hourly = rate.HourlyEnterprise;
-                    rate.Adjusted = rate.Hourly + discount;
+                    if (rate.HourlySpecialized != null)
+                    {
+                        rate.Hourly = rate.HourlySpecialized;
+                        rate.Adjusted = rate.Hourly + discount;
+                    }
                 }
             }
 

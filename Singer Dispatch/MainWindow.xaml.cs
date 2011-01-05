@@ -86,7 +86,7 @@ namespace SingerDispatch
 
                 if (!Database.DatabaseExists()) 
                     throw new Exception("Unable to connect to the required database!");
-
+                                
                 SingerConfigs.OperatingEmployee = GetOperatingEmployee();
             }
             catch (Exception e)
@@ -121,9 +121,7 @@ namespace SingerDispatch
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            Companies = new ObservableCollection<Company>(
-                from c in Database.Companies where c.IsVisible == true orderby c.Name select c
-            );
+            RefreshCompanies();
 
             expanderCompanies.IsExpanded = true;            
             acCompany.Focus();
@@ -377,6 +375,11 @@ namespace SingerDispatch
             EditCompanies();   
         }
 
+        private void RefreshCompaniesMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            RefreshCompanies();
+        }
+
         private void FindQuote_Click(object sender, RoutedEventArgs e)
         {
             FindQuote();
@@ -391,7 +394,6 @@ namespace SingerDispatch
         {
             FindInvoices();
         }
-
 
         private void QuoteLoookupCommandHandler(object sender, ExecutedRoutedEventArgs e)
         {
@@ -479,6 +481,11 @@ namespace SingerDispatch
                         
             acCompany.SelectedItem = null;
 
+            RefreshCompanies();            
+        }
+
+        private void RefreshCompanies()
+        {
             Companies = new ObservableCollection<Company>(
                 from c in Database.Companies where c.IsVisible == true orderby c.Name select c
             );
@@ -491,7 +498,7 @@ namespace SingerDispatch
             if (box.Text.ToUpper().Contains("DO NOT HAUL"))
                 box.Style = TryFindResource("BadInfo") as Style;
             else
-                box.Style = TryFindResource("GoodInfo") as Style; ;
+                box.Style = TryFindResource("GoodInfo") as Style;
         }
         
     }

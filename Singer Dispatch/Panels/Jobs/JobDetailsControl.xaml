@@ -44,7 +44,7 @@
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
 
-                    <ComboBox Name="cmbCareOfCompanies" Grid.Column="0" ItemsSource="{Binding ElementName=ThePanel, Path=CompanyList}" ItemTemplate="{StaticResource SimpleNameTemplate}" TextSearch.TextPath="Name" SelectionChanged="cmbCareOfCompanies_SelectionChanged" Controls:ComboUtil.AllowNull="True">
+                    <ComboBox Name="cmbCareOfCompanies" Grid.Column="0" ItemsSource="{Binding ElementName=ThePanel, Path=CompanyList}" ItemTemplate="{StaticResource SimpleNameTemplate}" TextSearch.TextPath="Name" SelectionChanged="cmbCareOfCompanies_SelectionChanged">
                         <ComboBox.SelectedItem>
                             <Binding Path="CareOfCompany">
                                 <Binding.ValidationRules>
@@ -63,7 +63,7 @@
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
 
-                    <ComboBox Name="cmbContacts" Grid.Column="0" ItemTemplate="{StaticResource ContactTemplate}" Controls:ComboUtil.AllowNull="True" TextSearch.TextPath="Name">
+                    <ComboBox Name="cmbContacts" Grid.Column="0" ItemTemplate="{StaticResource ContactTemplate}" TextSearch.TextPath="Name">
                         <ComboBox.SelectedItem>
                             <Binding Path="Contact">
                                 <Binding.ValidationRules>

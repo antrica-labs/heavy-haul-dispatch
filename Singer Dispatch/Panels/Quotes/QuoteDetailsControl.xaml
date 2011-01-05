@@ -44,7 +44,7 @@
                         </Grid.RowDefinitions>
 
                         <Label Grid.Row="0" Grid.Column="0">Quote price:</Label>
-                        <TextBox Name="txtPrice" Grid.Row="2" Grid.Column="0" Text="{Binding Price, StringFormat=c, Converter={StaticResource NullableValueConverter}}" Controls:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" />
+                        <TextBox Name="txtPrice" Grid.Row="2" Grid.Column="0" Text="{Binding Price, StringFormat=c, Converter={StaticResource NullableValueConverter}}" />
 
                         <Label Grid.Row="0" Grid.Column="1">Price breakdown:</Label>
                         <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding PrintoutCostHeading}" IsEnabled="{Binding ElementName=cbItemized, Path=IsChecked}" />
@@ -69,7 +69,7 @@
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
 
-                            <ComboBox Name="cmbCareOfCompanies" Grid.Column="0" ItemsSource="{Binding ElementName=ThePanel, Path=CompanyList}" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectionChanged="CareOfCompanies_SelectionChanged" TextSearch.TextPath="Name" Controls:ComboUtil.AllowNull="True">
+                            <ComboBox Name="cmbCareOfCompanies" Grid.Column="0" ItemsSource="{Binding ElementName=ThePanel, Path=CompanyList}" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectionChanged="CareOfCompanies_SelectionChanged" TextSearch.TextPath="Name">
                                 <ComboBox.SelectedItem>
                                     <Binding Path="CareOfCompany">
                                         <Binding.ValidationRules>
@@ -82,7 +82,7 @@
                         </Grid>
 
                         <Label Grid.Row="0" Grid.Column="1">Author:</Label>
-                        <ComboBox Name="cmbQuotedBy" Grid.Row="1" Grid.Column="1" ItemTemplate="{StaticResource SimpleNameTemplate}" TextSearch.TextPath="Name" Controls:ComboUtil.AllowNull="True">
+                        <ComboBox Name="cmbQuotedBy" Grid.Row="1" Grid.Column="1" ItemTemplate="{StaticResource SimpleNameTemplate}" TextSearch.TextPath="Name">
                             <ComboBox.SelectedItem>
                                 <Binding Path="Employee">
                                     <Binding.ValidationRules>
@@ -155,7 +155,7 @@
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
 
-                        <ComboBox Grid.Column="0" Name="cmbAddresses" ItemTemplate="{StaticResource AddressTemplate}" TextSearch.TextPath="Line1" Controls:ComboUtil.AllowNull="True">
+                        <ComboBox Grid.Column="0" Name="cmbAddresses" ItemTemplate="{StaticResource AddressTemplate}" TextSearch.TextPath="Line1">
                             <ComboBox.SelectedItem>
                                 <Binding Path="BillingAddress">
                                     <Binding.ValidationRules>
@@ -174,7 +174,7 @@
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
 
-                        <ComboBox Grid.Column="0" Name="cmbContacts" ItemTemplate="{StaticResource ContactTemplate}" TextSearch.TextPath="Name" Controls:ComboUtil.AllowNull="True">
+                        <ComboBox Grid.Column="0" Name="cmbContacts" ItemTemplate="{StaticResource ContactTemplate}" TextSearch.TextPath="Name">
                             <ComboBox.SelectedItem>
                                 <Binding Path="Contact">
                                     <Binding.ValidationRules>

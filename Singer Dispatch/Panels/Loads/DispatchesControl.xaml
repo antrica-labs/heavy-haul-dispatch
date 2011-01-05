@@ -57,7 +57,7 @@
                     </Grid.RowDefinitions>
 
                     <Label Grid.Row="0" Grid.Column="0">Dispatched by:</Label>
-                    <ComboBox Name="cmbDispatchedByEmployees" Grid.Row="0" Grid.Column="1" ItemTemplate="{StaticResource SimpleNameTemplate}" TextSearch.TextPath="Name" Controls:ComboUtil.AllowNull="True">
+                    <ComboBox Name="cmbDispatchedByEmployees" Grid.Row="0" Grid.Column="1" ItemTemplate="{StaticResource SimpleNameTemplate}" TextSearch.TextPath="Name">
                         <ComboBox.SelectedItem>
                             <Binding Path="DispatchedBy">
                                 <Binding.ValidationRules>
@@ -68,7 +68,7 @@
                     </ComboBox>
                     
                     <Label Grid.Row="1" Grid.Column="0">Equipment type:</Label>
-                    <ComboBox Name="cmbEquipmentTypes" Grid.Row="1" Grid.Column="1" ItemTemplate="{StaticResource SimpleNameTemplate}" TextSearch.TextPath="Name" Controls:ComboUtil.AllowNull="True" SelectionChanged="cmbEquipmentTypes_SelectionChanged">
+                    <ComboBox Name="cmbEquipmentTypes" Grid.Row="1" Grid.Column="1" ItemTemplate="{StaticResource SimpleNameTemplate}" TextSearch.TextPath="Name" SelectionChanged="cmbEquipmentTypes_SelectionChanged">
                         <ComboBox.SelectedItem>
                             <Binding Path="EquipmentType">
                                 <Binding.ValidationRules>
@@ -88,7 +88,7 @@
                             <RowDefinition />
                         </Grid.RowDefinitions>
 
-                        <ComboBox Name="cmbUnits" Grid.Column="0" ItemTemplate="{StaticResource EquipmentNameTemplate}" TextSearch.TextPath="UnitNumber" Controls:ComboUtil.AllowNull="True" ItemsSource="{Binding EquipmentType.Equipment}">
+                        <ComboBox Name="cmbUnits" Grid.Column="0" ItemTemplate="{StaticResource EquipmentNameTemplate}" TextSearch.TextPath="UnitNumber" ItemsSource="{Binding EquipmentType.Equipment}">
                             <ComboBox.SelectedItem>
                                 <Binding Path="Equipment">
                                     <Binding.ValidationRules>
@@ -102,7 +102,7 @@
                     
                     
                     <Label Grid.Row="3" Grid.Column="0">Driver:</Label>
-                    <ComboBox Name="cmbEmployees" Grid.Row="3" Grid.Column="1" ItemTemplate="{StaticResource SimpleNameTemplate}" TextSearch.TextPath="Name" Controls:ComboUtil.AllowNull="True">
+                    <ComboBox Name="cmbEmployees" Grid.Row="3" Grid.Column="1" ItemTemplate="{StaticResource SimpleNameTemplate}" TextSearch.TextPath="Name">
                         <ComboBox.SelectedItem>
                             <Binding Path="Employee">
                                 <Binding.ValidationRules>
@@ -144,7 +144,7 @@
                                 </Grid.ColumnDefinitions>
 
                                 <DatePicker Grid.Column="0" SelectedDate="{Binding MeetingDate}" />
-                                <TextBox Grid.Column="1" Text="{Binding Converter={StaticResource TimeConverter}, Path=MeetingTime}" Controls:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" />
+                                <TextBox Grid.Column="1" Text="{Binding Converter={StaticResource TimeConverter}, Path=MeetingTime}" />
                             </Grid>
 
                             <Label Grid.Row="1" Grid.Column="0">Location:</Label>

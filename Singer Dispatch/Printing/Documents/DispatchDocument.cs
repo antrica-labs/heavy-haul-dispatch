@@ -129,7 +129,7 @@ namespace SingerDispatch.Printing.Documents
             output.Append(GetTractors(from t in dispatch.Load.Dispatches where t.Equipment != null && t.Equipment.EquipmentType != null && t.Equipment.EquipmentType.EquipmentClass != null && t.Equipment.EquipmentType.EquipmentClass.Name == "Tractor" select t));
             output.Append(GetSingerPilots(from p in dispatch.Load.Dispatches where p.Equipment != null && p.Equipment.EquipmentType != null && p.Equipment.EquipmentType.EquipmentClass != null && p.Equipment.EquipmentType.EquipmentClass.Name == "Pilot" select p));
             output.Append(GetThirdPartyPilots(from s in dispatch.Load.ThirdPartyServices where s.ServiceType != null && s.ServiceType.Name.Contains("Pilot") select s));
-            output.Append(GetThridPartyServices(from s in dispatch.Load.ThirdPartyServices where s.ServiceType == null || (!s.ServiceType.Name.Contains("Pilot") && !s.ServiceType.Name.Contains("Wirelift")) select s));
+            output.Append(GetThirdPartyServices(from s in dispatch.Load.ThirdPartyServices where s.ServiceType == null || (!s.ServiceType.Name.Contains("Pilot") && !s.ServiceType.Name.Contains("Wirelift")) select s));
             output.Append(GetWireLiftInfo(from wl in dispatch.Load.ThirdPartyServices where wl.ServiceType != null && wl.ServiceType.Name.Contains("Wirelift") select wl));
             output.Append(GetPermits(dispatch.Load.Permits));
             output.Append(GetOtherInfo(dispatch));
@@ -1281,7 +1281,7 @@ namespace SingerDispatch.Printing.Documents
         {
             const string html = @"
                 <div class=""third_party_pilot section"">
-                    <span class=""heading"">Pilot Car (Thrid Party)</span>
+                    <span class=""heading"">Pilot Car (Third Party)</span>
                 
                     {0}
                 </div>
@@ -1343,7 +1343,7 @@ namespace SingerDispatch.Printing.Documents
             return string.Format(html, string.Format(table, rows.ToString()));
         }
 
-        private static string GetThridPartyServices(IEnumerable<ThirdPartyService> services)
+        private static string GetThirdPartyServices(IEnumerable<ThirdPartyService> services)
         {
             const string html = @"
                 <div class=""thid_party_services section"">

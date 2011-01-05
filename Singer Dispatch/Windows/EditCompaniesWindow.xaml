@@ -18,8 +18,7 @@
         <DataGrid Name="CompaniesGrid" Margin="5" Style="{StaticResource ListDisplay}" IsReadOnly="False" RowEditEnding="CompaniesGrid_RowEditEnding">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Name" Binding="{Binding Name}" />
-                <DataGridTextColumn Header="Operating As" Binding="{Binding OperatingAs}" />
-                <DataGridCheckBoxColumn Header="Visible" Binding="{Binding IsVisible}" Width="60" />
+                <DataGridCheckBoxColumn Header="Visible" Binding="{Binding IsVisible}" Width="Auto" />
             </DataGrid.Columns>
         </DataGrid>
     </DockPanel>

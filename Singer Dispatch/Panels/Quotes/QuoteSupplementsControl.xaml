@@ -54,7 +54,7 @@
                     <TextBox Name="txtQuantity" Grid.Row="1" Grid.Column="3" Text="{Binding Quantity}" />
 
                     <Label Grid.Row="2" Grid.Column="2">Cost:</Label>
-                    <TextBox Name="txtCost" Grid.Row="2" Grid.Column="3" Text="{Binding Cost, StringFormat=c, Converter={StaticResource NullableValueConverter}}" Controls:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" />
+                    <TextBox Name="txtCost" Grid.Row="2" Grid.Column="3" Text="{Binding Cost, StringFormat=c, Converter={StaticResource NullableValueConverter}}" />
                 </Grid>
             </GroupBox>
         </StackPanel>

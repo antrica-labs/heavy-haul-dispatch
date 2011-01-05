@@ -101,7 +101,7 @@
                                             <ColumnDefinition Width="1.2*"/>
                                         </Grid.ColumnDefinitions>
 
-                                        <TextBox Grid.Column="0" Text="{Binding BillingRate, StringFormat=C}" Controls:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" />
+                                        <TextBox Grid.Column="0" Text="{Binding BillingRate, StringFormat=C}" />
                                         <ComboBox Grid.Column="1" Name="cmbBillingIntervals" SelectedItem="{Binding BillingInterval}" ItemTemplate="{StaticResource SimpleNameTemplate}" IsEditable="False" />
                                     </Grid>
 

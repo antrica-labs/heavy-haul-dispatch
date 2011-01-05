@@ -42,16 +42,16 @@
                     </Grid.RowDefinitions>
 
                     <Label Grid.Row="0" Grid.Column="0">Issuer:</Label>
-                    <ComboBox Name="cmbCompanies" Grid.Row="0" Grid.Column="1" ItemsSource="{Binding ElementName=ThePanel, Path=CompanyList}"  SelectedItem="{Binding IssuingCompany}" TextSearch.TextPath="Name" ItemTemplate="{StaticResource SimpleNameTemplate}" Controls:ComboUtil.AllowNull="True" />
+                    <ComboBox Name="cmbCompanies" Grid.Row="0" Grid.Column="1" ItemsSource="{Binding ElementName=ThePanel, Path=CompanyList}"  SelectedItem="{Binding IssuingCompany}" TextSearch.TextPath="Name" ItemTemplate="{StaticResource SimpleNameTemplate}" />
 
                     <Label Grid.Row="1" Grid.Column="0">Permit type:</Label>
-                    <ComboBox Name="cmbPermitTypes" Grid.Row="1" Grid.Column="1" SelectedItem="{Binding PermitType}" ItemTemplate="{StaticResource SimpleNameTemplate}" TextSearch.TextPath="Name" Controls:ComboUtil.AllowNull="True" />
+                    <ComboBox Name="cmbPermitTypes" Grid.Row="1" Grid.Column="1" SelectedItem="{Binding PermitType}" ItemTemplate="{StaticResource SimpleNameTemplate}" TextSearch.TextPath="Name" />
                     
                     <Label Grid.Row="2" Grid.Column="0">Permit #:</Label>
                     <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Reference}" />
 
                     <Label Grid.Row="3" Grid.Column="0">Cost:</Label>
-                    <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Cost, StringFormat=c, Converter={StaticResource NullableValueConverter}}" Controls:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" />
+                    <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Cost, StringFormat=c, Converter={StaticResource NullableValueConverter}}" />
 
                     <Label Grid.Row="0" Grid.Column="2">Conditions:</Label>
                     <TextBox Grid.Row="1" Grid.Column="2" Grid.RowSpan="3" Text="{Binding Conditions}" />

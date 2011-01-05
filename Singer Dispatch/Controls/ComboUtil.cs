@@ -18,9 +18,8 @@ namespace SingerDispatch.Controls
 
             if (combo != null)
             {
-                combo.SelectedItem = null;
-                combo.MoveFocus(new TraversalRequest(FocusNavigationDirection.Next));
-                combo.Focus();
+                combo.SelectedIndex = -1;
+                combo.IsDropDownOpen = false;
             }
         }
 

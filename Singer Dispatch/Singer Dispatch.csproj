@@ -181,7 +181,6 @@
       <DependentUpon>ServicesControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Panels\CompanyUserControl.cs" />
-    <Compile Include="Controls\InputBindingsManager.cs" />
     <Compile Include="Panels\InvoiceUserControl.cs" />
     <Compile Include="Panels\Invoicing\InvoiceLineItemsControl.xaml.cs">
       <DependentUpon>InvoiceLineItemsControl.xaml</DependentUpon>

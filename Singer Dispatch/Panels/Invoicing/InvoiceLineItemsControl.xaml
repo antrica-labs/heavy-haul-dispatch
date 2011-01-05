@@ -84,7 +84,7 @@
                         <TextBox Grid.Column="0" Grid.Row="1" Text="{Binding Hours}" />
 
                         <Label Grid.Column="1" Grid.Row="0">Cost:</Label>
-                        <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding Cost, StringFormat=c, Converter={StaticResource NullableValueConverter}}" Controls:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" />
+                        <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding Cost, StringFormat=c, Converter={StaticResource NullableValueConverter}}" />
                     </Grid>
                 </Grid>
             </GroupBox>

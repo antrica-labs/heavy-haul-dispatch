@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using SingerDispatch.Controls;
+using System.Windows.Controls;
 
 namespace SingerDispatch.Panels.Companies
 {
@@ -50,25 +51,73 @@ namespace SingerDispatch.Panels.Companies
             if (company == null)
                 return null;
 
-            var rates = from r in Database.Rates where r.Archived != true select r;
+            var rates = from r in Database.Rates where r.Archived != true orderby r.RateType.Name, r.Name select r;
             var discount = company.RateAdjustment ?? 0.00m;
             var enterprise = company.CustomerType != null && company.CustomerType.IsEnterprise == true;
 
             foreach (var rate in rates)
             {
-                if (enterprise && rate.HourlyEnterprise != null)
+                if (enterprise)
                 {
-                    rate.Hourly = rate.HourlySpecialized;
-                    rate.Adjusted = rate.Hourly + discount;
+                    if (rate.HourlyEnterprise != null)
+                    {
+                        rate.Hourly = rate.HourlyEnterprise;
+                        rate.Adjusted = rate.Hourly + discount;
+                    }
                 }
-                else if (!enterprise && rate.HourlySpecialized != null)
+                else
                 {
-                    rate.Hourly = rate.HourlyEnterprise;
-                    rate.Adjusted = rate.Hourly + discount;
+                    if (rate.HourlySpecialized != null)
+                    {
+                        rate.Hourly = rate.HourlySpecialized;
+                        rate.Adjusted = rate.Hourly + discount;
+                    }
                 }
             }
 
             return rates.ToList();
+        }
+
+        private bool _adjustmentChanged;
+
+        private void txtCreditRateHourly_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                UpdateAdjustment(sender as TextBox);                
+            }
+        }
+
+        private void txtCreditRateHourly_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (_adjustmentChanged)
+            {
+                UpdateAdjustment(sender as TextBox);
+                _adjustmentChanged = false;
+            }
+        }
+
+        private void txtCreditRateHourly_GotFocus(object sender, RoutedEventArgs e)
+        {
+            _adjustmentChanged = false;
+        }
+
+        private void txtCreditRateHourly_TextChanged(object sender, TextChangedEventArgs e)
+        {   
+            _adjustmentChanged = true;
+        }
+
+        private void UpdateAdjustment(TextBox tb)
+        {
+            var expr = System.Windows.Data.BindingOperations.GetBindingExpressionBase(tb, TextBox.TextProperty);
+
+            if (expr != null)
+            {
+                expr.UpdateSource();
+            }
+
+            dgCreditRates.ItemsSource = GetCompanyRates(SelectedCompany);
+            _adjustmentChanged = false;
         }
     }
 }
