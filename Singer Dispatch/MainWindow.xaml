@@ -27,7 +27,7 @@
                 </MenuItem>
                 <MenuItem Header="_Companies">
                     <MenuItem Header="_Create" Click="CreateCompanyMenuItem_Click" InputGestureText="Ctrl+Shift+N" />                    
-                    <MenuItem Header="_Rename or Remove" Click="EditCompaniesMenuItem_Click" InputGestureText="Ctrl+Shift+E" />
+                    <MenuItem Header="_Rename/Remove" Click="EditCompaniesMenuItem_Click" InputGestureText="Ctrl+Shift+E" />
                     <MenuItem Header="_Refresh" Click="RefreshCompaniesMenuItem_Click" />
                 </MenuItem>
                 <MenuItem Header="Quotes">

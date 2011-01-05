@@ -377,6 +377,8 @@ namespace SingerDispatch
 
         private void RefreshCompaniesMenuItem_Click(object sender, RoutedEventArgs e)
         {
+            acCompany.SelectedItem = null;
+
             RefreshCompanies();
         }
 
