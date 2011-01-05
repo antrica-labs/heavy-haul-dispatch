@@ -141,6 +141,7 @@
         <Setter Property="Margin" Value="3" />
         <Setter Property="IsEditable" Value="True" />
         <EventSetter Event="SelectionChanged" Handler="ComboBox_SelectionChanged" />
+        <EventSetter Event="GotFocus" Handler="ComboBox_GotFocus" />
         <EventSetter Event="LostFocus" Handler="InputControl_LostFocus" />
     </Style>
     

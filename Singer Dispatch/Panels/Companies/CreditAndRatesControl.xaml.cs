@@ -31,14 +31,17 @@ namespace SingerDispatch.Panels.Companies
 
             cmbCreditPriority.ItemsSource = from l in Database.CompanyPriorityLevels orderby l.Name select l;
             cmbCreditCustomerType.ItemsSource = from ct in Database.CustomerType select ct;
-
-            dgCreditRates.ItemsSource = GetCompanyRates(SelectedCompany);
         }
 
         protected override void SelectedCompanyChanged(Company newValue, Company oldValue)
         {
             base.SelectedCompanyChanged(newValue, oldValue);
 
+            dgCreditRates.ItemsSource = GetCompanyRates(SelectedCompany);
+        }
+
+        private void cmbCreditCustomerType_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
             dgCreditRates.ItemsSource = GetCompanyRates(SelectedCompany);
         }
 

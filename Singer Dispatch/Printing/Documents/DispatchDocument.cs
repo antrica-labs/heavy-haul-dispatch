@@ -58,6 +58,12 @@ namespace SingerDispatch.Printing.Documents
                 content.Append(FillDispatchBody(dispatch, "File Copy"));
             }
 
+            foreach (var swamper in dispatch.Swampers)
+            {
+                content.Append(PageBreak);
+                content.Append(FillDispatchBody(dispatch, "Swamper Copy"));
+            }
+
             content.Append("</body>");
             content.Append("</html>");
 
@@ -88,7 +94,13 @@ namespace SingerDispatch.Printing.Documents
                     content.Append(PageBreak);
                     content.Append(FillDispatchBody(dispatch, "File Copy"));    
                 }
-                                
+
+                foreach (var swamper in dispatch.Swampers)
+                {
+                    content.Append(PageBreak);
+                    content.Append(FillDispatchBody(dispatch, "Swamper Copy"));
+                }
+
                 if ((i + 1) != dispatches.Count)
                     content.Append(PageBreak);
             }
@@ -134,13 +146,15 @@ namespace SingerDispatch.Printing.Documents
                     else
                         copies = Convert.ToInt32(SingerConfigs.GetConfig("Dispatch-EnterpriseBoLDriverCopies") ?? "1");
                 }
-                else
+                else if (copyType == "File Copy")
                 {
                     if (SpecializedDocument)
                         copies = Convert.ToInt32(SingerConfigs.GetConfig("Dispatch-SingerBoLFileCopies") ?? "1");
                     else
                         copies = Convert.ToInt32(SingerConfigs.GetConfig("Dispatch-EnterpriseBoLFileCopies") ?? "1");
                 }
+                else
+                    copies = 0;
 
                 for (var i = 0; i < copies; i++)
                 {
