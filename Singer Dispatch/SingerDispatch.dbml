@@ -297,6 +297,7 @@
       <Column Name="LoadedLength" Type="System.Double" CanBeNull="true" />
       <Column Name="LoadedWidth" Type="System.Double" CanBeNull="true" />
       <Column Name="LoadedHeight" Type="System.Double" CanBeNull="true" />
+      <Column Name="CalculatedWeight" Type="System.Double" CanBeNull="true" />
       <Association Name="Job_Load" Member="Job" ThisKey="JobID" OtherKey="ID" Type="Job" IsForeignKey="true" />
       <Association Name="Load_LoadedCommodity" Member="LoadedCommodities" ThisKey="ID" OtherKey="LoadID" Type="LoadedCommodity" />
       <Association Name="Load_Permit" Member="Permits" ThisKey="ID" OtherKey="LoadID" Type="Permit" />      

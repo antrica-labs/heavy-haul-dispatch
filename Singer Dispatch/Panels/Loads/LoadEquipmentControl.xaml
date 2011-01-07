@@ -89,7 +89,7 @@
             <StackPanel>
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>                        
+                        <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition />
                         <ColumnDefinition />
                         <ColumnDefinition />
@@ -116,6 +116,7 @@
                     <Label Grid.Row="0">Weights</Label>
                     <Label Grid.Row="1">Estimated:</Label>
                     <Label Grid.Row="2">Scaled:</Label>
+
 
                     <Label Grid.Column="1">Steer:</Label>
                     <Label Grid.Column="2">Drive:</Label>
@@ -341,8 +342,8 @@
                         </TextBox.Text>
                     </TextBox>
 
-                    <Label Grid.Column="2" Grid.Row="3" FontWeight="Bold">Length:</Label>
-                    <TextBox Grid.Column="3" Grid.Row="3" Grid.ColumnSpan="2" Style="{StaticResource Grid}" FontWeight="Bold">
+                    <Label Grid.Column="1" Grid.Row="3" FontWeight="Bold">Length:</Label>
+                    <TextBox Grid.Column="2" Grid.Row="3" Grid.ColumnSpan="2" Style="{StaticResource Grid}" FontWeight="Bold">
                         <TextBox.Text>
                             <MultiBinding Converter="{StaticResource LengthMeasurementConverter}">
                                 <Binding Path="LoadedLength" />
@@ -351,8 +352,8 @@
                         </TextBox.Text>
                     </TextBox>
 
-                    <Label Grid.Column="5" Grid.Row="3" FontWeight="Bold">Width:</Label>
-                    <TextBox Grid.Column="6" Grid.Row="3" Grid.ColumnSpan="2" Style="{StaticResource Grid}" FontWeight="Bold">
+                    <Label Grid.Column="4" Grid.Row="3" FontWeight="Bold">Width:</Label>
+                    <TextBox Grid.Column="5" Grid.Row="3" Grid.ColumnSpan="2" Style="{StaticResource Grid}" FontWeight="Bold">
                         <TextBox.Text>
                             <MultiBinding Converter="{StaticResource LengthMeasurementConverter}">
                                 <Binding Path="LoadedWidth" />
@@ -361,8 +362,8 @@
                         </TextBox.Text>
                     </TextBox>
 
-                    <Label Grid.Column="8" Grid.Row="3" FontWeight="Bold">Height:</Label>
-                    <TextBox Grid.Column="9" Grid.Row="3" Grid.ColumnSpan="2" Style="{StaticResource Grid}" FontWeight="Bold">
+                    <Label Grid.Column="7" Grid.Row="3" FontWeight="Bold">Height:</Label>
+                    <TextBox Grid.Column="8" Grid.Row="3" Grid.ColumnSpan="2" Style="{StaticResource Grid}" FontWeight="Bold">
                         <TextBox.Text>
                             <MultiBinding Converter="{StaticResource LengthMeasurementConverter}">
                                 <Binding Path="LoadedHeight" />
@@ -371,11 +372,21 @@
                         </TextBox.Text>
                     </TextBox>
 
-                    <Button Grid.Column="11" Grid.Row="3" Grid.ColumnSpan="2" Margin="2" Click="GuessLoadWeights_Click">Estimate dimensions</Button>
+                    <Label Grid.Column="10" Grid.Row="3" FontWeight="Bold">Weight:</Label>
+                    <TextBox Grid.Column="11" Grid.Row="3" Grid.ColumnSpan="2" Style="{StaticResource Grid}" FontWeight="Bold">
+                        <TextBox.Text>
+                            <MultiBinding Converter="{StaticResource WeightMeasurementConverter}">
+                                <Binding Path="CalculatedWeight" />
+                                <Binding ElementName="ThePanel" Path="UseImperialMeasurements" />
+                            </MultiBinding>
+                        </TextBox.Text>
+                    </TextBox>
+
+                    <Button Grid.Column="13" Grid.Row="3" Margin="2" Click="GuessLoadWeights_Click">Estimate</Button>
                 </Grid>
             </StackPanel>
         </GroupBox>
-        
+
         <GroupBox Header="Extra Equipment" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=ThePanel, Path=SelectedLoad}">
             <DockPanel>
                 <Grid DockPanel.Dock="Bottom">

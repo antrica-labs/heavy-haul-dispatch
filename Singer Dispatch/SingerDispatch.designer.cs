@@ -6345,6 +6345,8 @@ namespace SingerDispatch
 		
 		private System.Nullable<double> _LoadedHeight;
 		
+		private System.Nullable<double> _CalculatedWeight;
+		
 		private EntitySet<LoadReferenceNumber> _ReferenceNumbers;
 		
 		private EntitySet<LoadedCommodity> _LoadedCommodities;
@@ -6461,6 +6463,8 @@ namespace SingerDispatch
     partial void OnLoadedWidthChanged();
     partial void OnLoadedHeightChanging(System.Nullable<double> value);
     partial void OnLoadedHeightChanged();
+    partial void OnCalculatedWeightChanging(System.Nullable<double> value);
+    partial void OnCalculatedWeightChanged();
     #endregion
 		
 		public Load()
@@ -7380,6 +7384,26 @@ namespace SingerDispatch
 					this._LoadedHeight = value;
 					this.SendPropertyChanged("LoadedHeight");
 					this.OnLoadedHeightChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CalculatedWeight")]
+		public System.Nullable<double> CalculatedWeight
+		{
+			get
+			{
+				return this._CalculatedWeight;
+			}
+			set
+			{
+				if ((this._CalculatedWeight != value))
+				{
+					this.OnCalculatedWeightChanging(value);
+					this.SendPropertyChanging();
+					this._CalculatedWeight = value;
+					this.SendPropertyChanged("CalculatedWeight");
+					this.OnCalculatedWeightChanged();
 				}
 			}
 		}
