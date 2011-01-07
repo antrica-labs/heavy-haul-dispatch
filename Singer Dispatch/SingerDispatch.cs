@@ -611,7 +611,56 @@ namespace SingerDispatch
     }
 
     partial class LoadedCommodity
-    {        
+    {
+        partial void OnCreated()
+        {
+            this.PropertyChanged += new System.ComponentModel.PropertyChangedEventHandler(SomePropertyChanged);
+        }
+
+        private void SomePropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {            
+            switch (e.PropertyName)
+            {
+                case "UnloadLocation":
+                    UpdateLastKnownLocation(UnloadLocation);
+                    break;
+                case "UnloadAddress":
+                    UpdateLastKnownAddress(UnloadAddress);
+                    break;
+                case "UnloadRoute":
+                    UpdateLastKnownRoute(UnloadRoute);
+                    break;
+                case "UnloadInstructions":
+                    UpdateLastKnownInstructions(UnloadInstructions);
+                    break;
+            }  
+        }
+
+        public void UpdateLastKnownLocation(string location)
+        {
+            if (JobCommodity != null && JobCommodity.OriginalCommodity != null)
+                JobCommodity.OriginalCommodity.LastLocation = location;
+        }
+
+        public void UpdateLastKnownAddress(string address)
+        {
+            if (JobCommodity != null && JobCommodity.OriginalCommodity != null)
+                JobCommodity.OriginalCommodity.LastAddress = address;
+        }
+
+        public void UpdateLastKnownRoute(string route)
+        {
+            if (JobCommodity != null && JobCommodity.OriginalCommodity != null)
+                JobCommodity.OriginalCommodity.LastRoute = route;
+        }
+
+        public void UpdateLastKnownInstructions(string instructions)
+        {
+            if (JobCommodity != null && JobCommodity.OriginalCommodity != null)
+                JobCommodity.OriginalCommodity.LastLoadInstructions = instructions;
+
+        }
+
         public LoadedCommodity Duplicate()
         {
             var copy = new LoadedCommodity();
@@ -730,8 +779,8 @@ namespace SingerDispatch
                 RecalculateEGross();
             else if (e.PropertyName.StartsWith("SWeight"))
                 RecalculateSGross();
-            else if (e.PropertyName == "Status")
-                StatusChanged();
+            //else if (e.PropertyName == "Status")
+            //    StatusChanged();
         }
 
         private void RecalculateEGross()
@@ -798,7 +847,6 @@ namespace SingerDispatch
                     }
                 }
             }
-            
         }
 
         public void Notify(string property)
