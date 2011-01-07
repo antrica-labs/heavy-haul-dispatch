@@ -150,7 +150,7 @@
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
 
-                <GroupBox Header="Origin" Grid.Column="0" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgCommodities, Path=SelectedItem}" DataContext="{Binding ElementName=dgCommodities, Path=SelectedItem}">
+                <GroupBox Header="Current Location" Grid.Column="0" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgCommodities, Path=SelectedItem}" DataContext="{Binding ElementName=dgCommodities, Path=SelectedItem}">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
@@ -179,7 +179,6 @@
                             <RowDefinition />
                             <RowDefinition />
                         </Grid.RowDefinitions>
-
 
                         <Label Grid.Column="0" Grid.Row="0">Site name:</Label>
                         <ComboBox Grid.Column="1" Grid.Row="0" Text="{Binding ArrivalSiteName}" ItemsSource="{Binding ElementName=ThePanel, Path=CommonSiteNames}" />

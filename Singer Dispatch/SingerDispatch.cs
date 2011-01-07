@@ -638,14 +638,26 @@ namespace SingerDispatch
 
         public void UpdateLastKnownLocation(string location)
         {
-            if (JobCommodity != null && JobCommodity.OriginalCommodity != null)
-                JobCommodity.OriginalCommodity.LastLocation = location;
+            if (JobCommodity != null)
+            {
+                JobCommodity.DepartureSiteName = location;
+                JobCommodity.ArrivalSiteName = null;
+
+                if (JobCommodity.OriginalCommodity != null)
+                    JobCommodity.OriginalCommodity.LastLocation = location;
+            }
         }
 
         public void UpdateLastKnownAddress(string address)
         {
-            if (JobCommodity != null && JobCommodity.OriginalCommodity != null)
-                JobCommodity.OriginalCommodity.LastAddress = address;
+            if (JobCommodity != null)
+            {
+                JobCommodity.DepartureAddress = address;
+                JobCommodity.ArrivalAddress = null;
+
+                if (JobCommodity.OriginalCommodity != null)
+                    JobCommodity.OriginalCommodity.LastAddress = address;
+            }
         }
 
         public void UpdateLastKnownRoute(string route)
