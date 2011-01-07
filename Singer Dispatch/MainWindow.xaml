@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:AC="clr-namespace:WPFAutoCompleteBox.Controls;assembly=WPFAutoCompleteBox"
         xmlns:Controls="clr-namespace:SingerDispatch.Controls"
-        Title="Singer Dispatch" MinWidth="780" MinHeight="750"
+        Title="Singer Dispatch" MinWidth="1000" MinHeight="750"
         Loaded="Window_Loaded" Closing="Window_Closing"       
         x:Name="ThisWindow">
     <Window.Resources>

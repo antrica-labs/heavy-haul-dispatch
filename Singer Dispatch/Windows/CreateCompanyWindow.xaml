@@ -127,8 +127,8 @@
                     <Label Grid.Row="4" Grid.Column="1">Contact type:</Label>
                     <ListBox Name="lbContactTypes" Grid.Row="5" Grid.Column="1" Grid.RowSpan="5" Style="{StaticResource MultiSelect}" />
 
-                    <Label Grid.Row="6" Grid.Column="0">Secondary phone:</Label>
-                    <TextBox Name="txtContactSecondaryPhone" Grid.Row="7" Grid.Column="0" Text="{Binding SecondaryPhone, Converter={StaticResource PhoneNumberConverter}}" />
+                    <Label Grid.Row="6" Grid.Column="0">Fax:</Label>
+                    <TextBox Name="txtContactSecondaryPhone" Grid.Row="7" Grid.Column="0" Text="{Binding Fax, Converter={StaticResource PhoneNumberConverter}}" />
 
                     <Label Grid.Row="8" Grid.Column="0">Preferred contact method:</Label>
                     <ComboBox Name="cmbContactPreferedContactMethod" Grid.Row="9" Grid.Column="0" SelectedItem="{Binding PreferedContactMethod}" IsEditable="False" ItemTemplate="{StaticResource SimpleNameTemplate}" />
