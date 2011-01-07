@@ -349,7 +349,14 @@ namespace SingerDispatch.Panels.Loads
                 return null;
             }
 
-            var rates = from r in Database.Rates where r.Archived != true && r.RateType.Name == "Trailer" select r;
+            var rates = new List<Rate>();
+
+            var trailers = from t in Database.RateTypes where t.Name == "Trailer" select t;
+            var tractors = from t in Database.RateTypes where t.Name == "Tractor" select t;
+
+            rates.AddRange((from r in Database.Rates where r.Archived != true && trailers.Contains(r.RateType) orderby r.Name select r).ToList());
+            rates.AddRange((from r in Database.Rates where r.Archived != true && tractors.Contains(r.RateType) orderby r.Name select r).ToList());
+                        
             var discount = company.RateAdjustment ?? 0.00m;
             var enterprise = company.CustomerType != null && company.CustomerType.IsEnterprise == true;
 

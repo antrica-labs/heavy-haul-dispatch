@@ -66,7 +66,7 @@
                     </ComboBox.SelectedItem>
                 </ComboBox>
 
-                <Label Grid.Column="1" Grid.Row="0">Wheel type:</Label>
+                <Label Grid.Column="1" Grid.Row="0">Rate type:</Label>
                 <ComboBox Name="cmbRates" Grid.Column="1" Grid.Row="1" SelectionChanged="cmbRates_SelectionChanged" ItemTemplate="{StaticResource WheelTypeTemplate}" TextSearch.TextPath="Name">
                     <ComboBox.SelectedItem>
                         <Binding Path="Rate">
@@ -77,10 +77,10 @@
                     </ComboBox.SelectedItem>
                 </ComboBox>
 
-                <Label Grid.Column="2" Grid.Row="0">Rate:</Label>
+                <Label Grid.Column="2" Grid.Row="0">Billing rate:</Label>
                 <TextBox Grid.Column="2" Grid.Row="1" Text="{Binding ElementName=cmbRates, Path=SelectedItem.Adjusted, StringFormat=c}" />
 
-                <Label Grid.Column="3" Grid.Row="0">Combination:</Label>
+                <Label Grid.Column="3" Grid.Row="0">Trailer combination:</Label>
                 <ComboBox Name="cmbTrailerCombinations" Grid.Column="3" Grid.Row="1" TextSearch.TextPath="Combination" ItemTemplate="{StaticResource TrailerCombinationTemplate}">
                     <ComboBox.SelectedItem>
                         <Binding Path="TrailerCombination">

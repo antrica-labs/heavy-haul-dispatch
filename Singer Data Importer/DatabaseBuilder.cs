@@ -98,7 +98,11 @@ namespace SingerDispatch.Importer
             // Insert the rate types
             var servicerate = new RateType { Name = "Service" };
             var trailerrate = new RateType { Name = "Trailer" };
-            
+            var tractorrate = new RateType { Name = "Tractor" };
+
+            Database.RateTypes.InsertOnSubmit(servicerate);
+            Database.RateTypes.InsertOnSubmit(trailerrate);
+            Database.RateTypes.InsertOnSubmit(tractorrate);
 
             // Populate rates
             var rates = new List<Rate>();
