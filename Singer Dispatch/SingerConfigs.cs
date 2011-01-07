@@ -123,7 +123,7 @@ namespace SingerDispatch
         {
             get
             {
-                return 4.1; // In metres
+                return 4.15; // In metres
             }
         }
 
