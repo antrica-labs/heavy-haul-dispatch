@@ -72,9 +72,18 @@ namespace SingerDispatch.Printing.Documents
             {
                 var replacements = new String[5];
 
+                var company = job.Company.Name;
+                var careof = (job.CareOfCompany != null) ? job.CareOfCompany.Name : "";
+                
+                if (!string.IsNullOrEmpty(job.Company.AccPacVendorCode))
+                    company = string.Format("{0} ({1})", company, job.Company.AccPacVendorCode);
+
+                if (job.CareOfCompany != null && !string.IsNullOrEmpty(job.CareOfCompany.AccPacVendorCode))
+                    careof = string.Format("{0} ({1})", careof, job.CareOfCompany.AccPacVendorCode);
+
                 replacements[0] = job.Number.ToString();
-                replacements[1] = job.Company.Name;
-                replacements[2] = (job.CareOfCompany != null) ? job.CareOfCompany.Name : "";
+                replacements[1] = company;
+                replacements[2] = careof;
                 replacements[3] = job.Name;
 
                 if (i == total - 1)

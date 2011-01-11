@@ -47,7 +47,7 @@
                         <Label Grid.Row="3" Grid.Column="0">Priority level:</Label>
                         <ComboBox Name="cmbCreditPriority" Grid.Row="3" Grid.Column="1" ItemTemplate="{StaticResource nameTemplate}" SelectedItem="{Binding CompanyPriorityLevel}" IsEditable="False" />
 
-                        <Label Grid.Row="4" Grid.Column="0">AccPac vendor code:</Label>
+                        <Label Grid.Row="4" Grid.Column="0">AccPac customer code:</Label>
                         <TextBox Name="txtCreditAccPacCode" Grid.Row="4" Grid.Column="1"  Text="{Binding AccPacVendorCode}" />
 
                         <Label Grid.Row="5" Grid.Column="0">Equifax report complete:</Label>
