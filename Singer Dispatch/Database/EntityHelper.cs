@@ -147,9 +147,9 @@ namespace SingerDispatch.Database
 
         public static void SaveAsNewStorageItem(StorageItem item, SingerDispatchDataContext context)
         {
-            var number = (from i in context.StorageItems select i.Number).Max() + 1;
+            var number = (from i in context.StorageItems where i.Job == item.Job select i.Number).Max() + 1;
 
-            item.Number = number ?? 11001;
+            item.Number = number ?? 1;
 
             context.SubmitChanges();
         }

@@ -1634,8 +1634,6 @@ namespace SingerDispatch
 		
 		private EntitySet<QuoteCommodity> _QuoteCommodities;
 		
-		private EntitySet<StorageItem> _Storage;
-		
 		private EntityRef<Company> _Company;
 		
     #region Extensibility Method Definitions
@@ -1680,7 +1678,6 @@ namespace SingerDispatch
 		{
 			this._JobCommodities = new EntitySet<JobCommodity>(new Action<JobCommodity>(this.attach_JobCommodities), new Action<JobCommodity>(this.detach_JobCommodities));
 			this._QuoteCommodities = new EntitySet<QuoteCommodity>(new Action<QuoteCommodity>(this.attach_QuoteCommodities), new Action<QuoteCommodity>(this.detach_QuoteCommodities));
-			this._Storage = new EntitySet<StorageItem>(new Action<StorageItem>(this.attach_Storage), new Action<StorageItem>(this.detach_Storage));
 			this._Company = default(EntityRef<Company>);
 			OnCreated();
 		}
@@ -2035,19 +2032,6 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Commodity_StorageItem", Storage="_Storage", ThisKey="ID", OtherKey="CommodityID")]
-		public EntitySet<StorageItem> Storage
-		{
-			get
-			{
-				return this._Storage;
-			}
-			set
-			{
-				this._Storage.Assign(value);
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Company_Commodity", Storage="_Company", ThisKey="CompanyID", OtherKey="ID", IsForeignKey=true)]
 		public Company Company
 		{
@@ -2125,18 +2109,6 @@ namespace SingerDispatch
 			this.SendPropertyChanging();
 			entity.OriginalCommodity = null;
 		}
-		
-		private void attach_Storage(StorageItem entity)
-		{
-			this.SendPropertyChanging();
-			entity.Commodity = this;
-		}
-		
-		private void detach_Storage(StorageItem entity)
-		{
-			this.SendPropertyChanging();
-			entity.Commodity = null;
-		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="")]
@@ -2199,8 +2171,6 @@ namespace SingerDispatch
 		
 		private EntitySet<ThirdPartyService> _ThirdPartyServices;
 		
-		private EntitySet<StorageItem> _StoredItems;
-		
 		private EntityRef<CompanyPriorityLevel> _CompanyPriorityLevel;
 		
 		private EntityRef<CustomerType> _CustomerType;
@@ -2251,7 +2221,6 @@ namespace SingerDispatch
 			this._CareOfQuotes = new EntitySet<Quote>(new Action<Quote>(this.attach_CareOfQuotes), new Action<Quote>(this.detach_CareOfQuotes));
 			this._Services = new EntitySet<Service>(new Action<Service>(this.attach_Services), new Action<Service>(this.detach_Services));
 			this._ThirdPartyServices = new EntitySet<ThirdPartyService>(new Action<ThirdPartyService>(this.attach_ThirdPartyServices), new Action<ThirdPartyService>(this.detach_ThirdPartyServices));
-			this._StoredItems = new EntitySet<StorageItem>(new Action<StorageItem>(this.attach_StoredItems), new Action<StorageItem>(this.detach_StoredItems));
 			this._CompanyPriorityLevel = default(EntityRef<CompanyPriorityLevel>);
 			this._CustomerType = default(EntityRef<CustomerType>);
 			OnCreated();
@@ -2693,19 +2662,6 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Company_StorageItem", Storage="_StoredItems", ThisKey="ID", OtherKey="CompanyID")]
-		public EntitySet<StorageItem> StoredItems
-		{
-			get
-			{
-				return this._StoredItems;
-			}
-			set
-			{
-				this._StoredItems.Assign(value);
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="CompanyPriorityLevel_Company", Storage="_CompanyPriorityLevel", ThisKey="PriorityLevelID", OtherKey="ID", IsForeignKey=true)]
 		public CompanyPriorityLevel CompanyPriorityLevel
 		{
@@ -2981,18 +2937,6 @@ namespace SingerDispatch
 		}
 		
 		private void detach_ThirdPartyServices(ThirdPartyService entity)
-		{
-			this.SendPropertyChanging();
-			entity.Company = null;
-		}
-		
-		private void attach_StoredItems(StorageItem entity)
-		{
-			this.SendPropertyChanging();
-			entity.Company = this;
-		}
-		
-		private void detach_StoredItems(StorageItem entity)
 		{
 			this.SendPropertyChanging();
 			entity.Company = null;
@@ -4743,6 +4687,8 @@ namespace SingerDispatch
 		
 		private long _ID;
 		
+		private System.Nullable<long> _CompanyID;
+		
 		private int _OrderIndex;
 		
 		private System.Nullable<long> _JobID;
@@ -4783,6 +4729,8 @@ namespace SingerDispatch
 		
 		private EntitySet<LoadedCommodity> _LoadedCommodities;
 		
+		private EntityRef<Company> _Owner;
+		
 		private EntityRef<Commodity> _OriginalCommodity;
 		
 		private EntityRef<Job> _Job;
@@ -4793,6 +4741,8 @@ namespace SingerDispatch
     partial void OnCreated();
     partial void OnIDChanging(long value);
     partial void OnIDChanged();
+    partial void OnCompanyIDChanging(System.Nullable<long> value);
+    partial void OnCompanyIDChanged();
     partial void OnOrderIndexChanging(int value);
     partial void OnOrderIndexChanged();
     partial void OnJobIDChanging(System.Nullable<long> value);
@@ -4836,6 +4786,7 @@ namespace SingerDispatch
 		public JobCommodity()
 		{
 			this._LoadedCommodities = new EntitySet<LoadedCommodity>(new Action<LoadedCommodity>(this.attach_LoadedCommodities), new Action<LoadedCommodity>(this.detach_LoadedCommodities));
+			this._Owner = default(EntityRef<Company>);
 			this._OriginalCommodity = default(EntityRef<Commodity>);
 			this._Job = default(EntityRef<Job>);
 			OnCreated();
@@ -4857,6 +4808,30 @@ namespace SingerDispatch
 					this._ID = value;
 					this.SendPropertyChanged("ID");
 					this.OnIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CompanyID")]
+		public System.Nullable<long> CompanyID
+		{
+			get
+			{
+				return this._CompanyID;
+			}
+			set
+			{
+				if ((this._CompanyID != value))
+				{
+					if (this._Owner.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnCompanyIDChanging(value);
+					this.SendPropertyChanging();
+					this._CompanyID = value;
+					this.SendPropertyChanged("CompanyID");
+					this.OnCompanyIDChanged();
 				}
 			}
 		}
@@ -5262,6 +5237,24 @@ namespace SingerDispatch
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Company_JobCommodity", Storage="_Owner", ThisKey="CompanyID", OtherKey="ID", IsForeignKey=true)]
+		public Company Owner
+		{
+			get
+			{
+				return this._Owner.Entity;
+			}
+			set
+			{
+				if ((this._Owner.Entity != value))
+				{
+					this.SendPropertyChanging();
+					this._Owner.Entity = value;
+					this.SendPropertyChanged("Owner");
+				}
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Commodity_JobCommodity", Storage="_OriginalCommodity", ThisKey="OriginalCommodityID", OtherKey="ID", IsForeignKey=true)]
 		public Commodity OriginalCommodity
 		{
@@ -5395,6 +5388,8 @@ namespace SingerDispatch
 		
 		private EntitySet<Invoice> _Invoices;
 		
+		private EntitySet<StorageItem> _StoredItems;
+		
 		private EntityRef<Company> _Company;
 		
 		private EntityRef<Company> _CareOfCompany;
@@ -5435,6 +5430,7 @@ namespace SingerDispatch
 			this._ReferenceNumbers = new EntitySet<JobReferenceNumber>(new Action<JobReferenceNumber>(this.attach_ReferenceNumbers), new Action<JobReferenceNumber>(this.detach_ReferenceNumbers));
 			this._Loads = new EntitySet<Load>(new Action<Load>(this.attach_Loads), new Action<Load>(this.detach_Loads));
 			this._Invoices = new EntitySet<Invoice>(new Action<Invoice>(this.attach_Invoices), new Action<Invoice>(this.detach_Invoices));
+			this._StoredItems = new EntitySet<StorageItem>(new Action<StorageItem>(this.attach_StoredItems), new Action<StorageItem>(this.detach_StoredItems));
 			this._Company = default(EntityRef<Company>);
 			this._CareOfCompany = default(EntityRef<Company>);
 			this._Status = default(EntityRef<Status>);
@@ -5695,6 +5691,19 @@ namespace SingerDispatch
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Job_StorageItem", Storage="_StoredItems", ThisKey="ID", OtherKey="JobID")]
+		public EntitySet<StorageItem> StoredItems
+		{
+			get
+			{
+				return this._StoredItems;
+			}
+			set
+			{
+				this._StoredItems.Assign(value);
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Company_Job", Storage="_Company", ThisKey="CompanyID", OtherKey="ID", IsForeignKey=true)]
 		public Company Company
 		{
@@ -5928,6 +5937,18 @@ namespace SingerDispatch
 		}
 		
 		private void detach_Invoices(Invoice entity)
+		{
+			this.SendPropertyChanging();
+			entity.Job = null;
+		}
+		
+		private void attach_StoredItems(StorageItem entity)
+		{
+			this.SendPropertyChanging();
+			entity.Job = this;
+		}
+		
+		private void detach_StoredItems(StorageItem entity)
 		{
 			this.SendPropertyChanging();
 			entity.Job = null;
@@ -10616,6 +10637,8 @@ namespace SingerDispatch
 		
 		private System.Nullable<long> _QuoteID;
 		
+		private System.Nullable<long> _CompanyID;
+		
 		private int _OrderIndex;
 		
 		private System.Nullable<long> _OriginalCommodityID;
@@ -10654,6 +10677,8 @@ namespace SingerDispatch
 		
 		private EntityRef<Quote> _Quote;
 		
+		private EntityRef<Company> _Owner;
+		
 		private EntityRef<Commodity> _OriginalCommodity;
 		
     #region Extensibility Method Definitions
@@ -10664,6 +10689,8 @@ namespace SingerDispatch
     partial void OnIDChanged();
     partial void OnQuoteIDChanging(System.Nullable<long> value);
     partial void OnQuoteIDChanged();
+    partial void OnCompanyIDChanging(System.Nullable<long> value);
+    partial void OnCompanyIDChanged();
     partial void OnOrderIndexChanging(int value);
     partial void OnOrderIndexChanged();
     partial void OnOriginalCommodityIDChanging(System.Nullable<long> value);
@@ -10704,6 +10731,7 @@ namespace SingerDispatch
 		{
 			this._StorageQuotes = new EntitySet<QuoteStorageItem>(new Action<QuoteStorageItem>(this.attach_StorageQuotes), new Action<QuoteStorageItem>(this.detach_StorageQuotes));
 			this._Quote = default(EntityRef<Quote>);
+			this._Owner = default(EntityRef<Company>);
 			this._OriginalCommodity = default(EntityRef<Commodity>);
 			OnCreated();
 		}
@@ -10748,6 +10776,30 @@ namespace SingerDispatch
 					this._QuoteID = value;
 					this.SendPropertyChanged("QuoteID");
 					this.OnQuoteIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CompanyID")]
+		public System.Nullable<long> CompanyID
+		{
+			get
+			{
+				return this._CompanyID;
+			}
+			set
+			{
+				if ((this._CompanyID != value))
+				{
+					if (this._Owner.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnCompanyIDChanging(value);
+					this.SendPropertyChanging();
+					this._CompanyID = value;
+					this.SendPropertyChanged("CompanyID");
+					this.OnCompanyIDChanged();
 				}
 			}
 		}
@@ -11139,6 +11191,24 @@ namespace SingerDispatch
 						this._QuoteID = default(Nullable<long>);
 					}
 					this.SendPropertyChanged("Quote");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Company_QuoteCommodity", Storage="_Owner", ThisKey="CompanyID", OtherKey="ID", IsForeignKey=true)]
+		public Company Owner
+		{
+			get
+			{
+				return this._Owner.Entity;
+			}
+			set
+			{
+				if ((this._Owner.Entity != value))
+				{
+					this.SendPropertyChanging();
+					this._Owner.Entity = value;
+					this.SendPropertyChanged("Owner");
 				}
 			}
 		}
@@ -18913,13 +18983,11 @@ namespace SingerDispatch
 		
 		private long _ID;
 		
+		private System.Nullable<long> _JobID;
+		
+		private System.Nullable<long> _JobCommodityID;
+		
 		private System.Nullable<long> _Number;
-		
-		private System.Nullable<bool> _Archived;
-		
-		private System.Nullable<long> _CompanyID;
-		
-		private System.Nullable<long> _CommodityID;
 		
 		private System.Nullable<long> _ContactID;
 		
@@ -18939,9 +19007,9 @@ namespace SingerDispatch
 		
 		private string _Notes;
 		
-		private EntityRef<Company> _Company;
+		private EntityRef<Job> _Job;
 		
-		private EntityRef<Commodity> _Commodity;
+		private EntityRef<JobCommodity> _JobCommodity;
 		
 		private EntityRef<Contact> _Contact;
 		
@@ -18953,14 +19021,12 @@ namespace SingerDispatch
     partial void OnCreated();
     partial void OnIDChanging(long value);
     partial void OnIDChanged();
+    partial void OnJobIDChanging(System.Nullable<long> value);
+    partial void OnJobIDChanged();
+    partial void OnJobCommodityIDChanging(System.Nullable<long> value);
+    partial void OnJobCommodityIDChanged();
     partial void OnNumberChanging(System.Nullable<long> value);
     partial void OnNumberChanged();
-    partial void OnArchivedChanging(System.Nullable<bool> value);
-    partial void OnArchivedChanged();
-    partial void OnCompanyIDChanging(System.Nullable<long> value);
-    partial void OnCompanyIDChanged();
-    partial void OnCommodityIDChanging(System.Nullable<long> value);
-    partial void OnCommodityIDChanged();
     partial void OnContactIDChanging(System.Nullable<long> value);
     partial void OnContactIDChanged();
     partial void OnBillingIntervalIDChanging(System.Nullable<long> value);
@@ -18983,8 +19049,8 @@ namespace SingerDispatch
 		
 		public StorageItem()
 		{
-			this._Company = default(EntityRef<Company>);
-			this._Commodity = default(EntityRef<Commodity>);
+			this._Job = default(EntityRef<Job>);
+			this._JobCommodity = default(EntityRef<JobCommodity>);
 			this._Contact = default(EntityRef<Contact>);
 			this._BillingInterval = default(EntityRef<BillingInterval>);
 			OnCreated();
@@ -19010,6 +19076,54 @@ namespace SingerDispatch
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_JobID")]
+		public System.Nullable<long> JobID
+		{
+			get
+			{
+				return this._JobID;
+			}
+			set
+			{
+				if ((this._JobID != value))
+				{
+					if (this._Job.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnJobIDChanging(value);
+					this.SendPropertyChanging();
+					this._JobID = value;
+					this.SendPropertyChanged("JobID");
+					this.OnJobIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_JobCommodityID")]
+		public System.Nullable<long> JobCommodityID
+		{
+			get
+			{
+				return this._JobCommodityID;
+			}
+			set
+			{
+				if ((this._JobCommodityID != value))
+				{
+					if (this._JobCommodity.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnJobCommodityIDChanging(value);
+					this.SendPropertyChanging();
+					this._JobCommodityID = value;
+					this.SendPropertyChanged("JobCommodityID");
+					this.OnJobCommodityIDChanged();
+				}
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Number")]
 		public System.Nullable<long> Number
 		{
@@ -19026,74 +19140,6 @@ namespace SingerDispatch
 					this._Number = value;
 					this.SendPropertyChanged("Number");
 					this.OnNumberChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Archived")]
-		public System.Nullable<bool> Archived
-		{
-			get
-			{
-				return this._Archived;
-			}
-			set
-			{
-				if ((this._Archived != value))
-				{
-					this.OnArchivedChanging(value);
-					this.SendPropertyChanging();
-					this._Archived = value;
-					this.SendPropertyChanged("Archived");
-					this.OnArchivedChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CompanyID")]
-		public System.Nullable<long> CompanyID
-		{
-			get
-			{
-				return this._CompanyID;
-			}
-			set
-			{
-				if ((this._CompanyID != value))
-				{
-					if (this._Company.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnCompanyIDChanging(value);
-					this.SendPropertyChanging();
-					this._CompanyID = value;
-					this.SendPropertyChanged("CompanyID");
-					this.OnCompanyIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CommodityID")]
-		public System.Nullable<long> CommodityID
-		{
-			get
-			{
-				return this._CommodityID;
-			}
-			set
-			{
-				if ((this._CommodityID != value))
-				{
-					if (this._Commodity.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnCommodityIDChanging(value);
-					this.SendPropertyChanging();
-					this._CommodityID = value;
-					this.SendPropertyChanged("CommodityID");
-					this.OnCommodityIDChanged();
 				}
 			}
 		}
@@ -19286,70 +19332,54 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Company_StorageItem", Storage="_Company", ThisKey="CompanyID", OtherKey="ID", IsForeignKey=true)]
-		public Company Company
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Job_StorageItem", Storage="_Job", ThisKey="JobID", OtherKey="ID", IsForeignKey=true)]
+		public Job Job
 		{
 			get
 			{
-				return this._Company.Entity;
+				return this._Job.Entity;
 			}
 			set
 			{
-				Company previousValue = this._Company.Entity;
+				Job previousValue = this._Job.Entity;
 				if (((previousValue != value) 
-							|| (this._Company.HasLoadedOrAssignedValue == false)))
+							|| (this._Job.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._Company.Entity = null;
+						this._Job.Entity = null;
 						previousValue.StoredItems.Remove(this);
 					}
-					this._Company.Entity = value;
+					this._Job.Entity = value;
 					if ((value != null))
 					{
 						value.StoredItems.Add(this);
-						this._CompanyID = value.ID;
+						this._JobID = value.ID;
 					}
 					else
 					{
-						this._CompanyID = default(Nullable<long>);
+						this._JobID = default(Nullable<long>);
 					}
-					this.SendPropertyChanged("Company");
+					this.SendPropertyChanged("Job");
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Commodity_StorageItem", Storage="_Commodity", ThisKey="CommodityID", OtherKey="ID", IsForeignKey=true)]
-		public Commodity Commodity
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="JobCommodity_StorageItem", Storage="_JobCommodity", ThisKey="JobCommodityID", OtherKey="ID", IsForeignKey=true)]
+		public JobCommodity JobCommodity
 		{
 			get
 			{
-				return this._Commodity.Entity;
+				return this._JobCommodity.Entity;
 			}
 			set
 			{
-				Commodity previousValue = this._Commodity.Entity;
-				if (((previousValue != value) 
-							|| (this._Commodity.HasLoadedOrAssignedValue == false)))
+				if ((this._JobCommodity.Entity != value))
 				{
 					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Commodity.Entity = null;
-						previousValue.Storage.Remove(this);
-					}
-					this._Commodity.Entity = value;
-					if ((value != null))
-					{
-						value.Storage.Add(this);
-						this._CommodityID = value.ID;
-					}
-					else
-					{
-						this._CommodityID = default(Nullable<long>);
-					}
-					this.SendPropertyChanged("Commodity");
+					this._JobCommodity.Entity = value;
+					this.SendPropertyChanged("JobCommodity");
 				}
 			}
 		}

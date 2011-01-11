@@ -65,6 +65,7 @@ namespace SingerDispatch.Panels.Jobs
                 dgRecordedCommodities.ItemsSource = (SelectedJob == null) ? null : new ObservableCollection<Commodity>(from c in Database.Commodities where c.Company == SelectedJob.Company || c.Company == SelectedJob.CareOfCompany orderby c.Name, c.Unit select c);
             }
 
+            UpdateOwnersList();
             UpdateAddressesAndSites();
         }
 
@@ -73,6 +74,20 @@ namespace SingerDispatch.Panels.Jobs
             base.SelectedJobChanged(newValue, oldValue);
 
             dgCommodities.ItemsSource = (newValue == null) ? null : new ObservableCollection<JobCommodity>(newValue.JobCommodities);
+        }
+
+        private void UpdateOwnersList()
+        {
+            if (SelectedJob == null) return;
+
+            var list = new List<Company>();
+
+            list.Add(SelectedJob.Company);
+
+            if (SelectedJob.CareOfCompany != null)
+                list.Add(SelectedJob.CareOfCompany);
+
+            cmbOwners.ItemsSource = list;
         }
 
         private void UpdateAddressesAndSites()
@@ -112,7 +127,7 @@ namespace SingerDispatch.Panels.Jobs
         {
             if (SelectedJob == null) return;
 
-            var commodity = new JobCommodity { JobID = SelectedJob.ID };
+            var commodity = new JobCommodity { Job = SelectedJob, Owner = SelectedJob.Company };
             var list = (ObservableCollection<JobCommodity>)dgCommodities.ItemsSource;
                         
             SelectedJob.JobCommodities.Add(commodity);

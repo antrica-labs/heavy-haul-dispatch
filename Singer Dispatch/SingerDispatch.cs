@@ -1038,8 +1038,7 @@ namespace SingerDispatch
     partial class StorageItem
     {
         partial void OnCreated()
-        {
-            Archived = Archived ?? false;
+        {            
             ContractSigned = ContractSigned ?? false;
         } 
     }

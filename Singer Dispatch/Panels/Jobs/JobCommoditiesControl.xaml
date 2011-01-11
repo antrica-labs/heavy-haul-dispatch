@@ -48,31 +48,32 @@
                         <RowDefinition />
                         <RowDefinition />
                         <RowDefinition />
-                        <RowDefinition />
-                        <RowDefinition />
                     </Grid.RowDefinitions>
 
-                    <Label Grid.Row="0" Grid.Column="0" Style="{StaticResource Important}">Commodity name:</Label>
-                    <TextBox Name="txtCommodityName" Text="{Binding Name}" Grid.Row="0" Grid.Column="1" />
-
-                    <Label Grid.Row="2" Grid.Column="0" Style="{StaticResource Important}">Declared value:</Label>
-                    <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Value, StringFormat=c, Converter={StaticResource NullableValueConverter}}" />
-
-                    <Label Grid.Row="3" Grid.Column="0">Hauling cost:</Label>
-                    <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Cost, StringFormat=c, Converter={StaticResource NullableValueConverter}}" />
+                    <Label Grid.Row="0" Grid.Column="0">Owner:</Label>
+                    <ComboBox Grid.Row="0" Grid.Column="1" Name="cmbOwners" IsEditable="False" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectedItem="{Binding Owner}" />
                     
-                    <Label Grid.Row="4" Grid.Column="0">Serial number:</Label>
-                    <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Serial}" />
+                    <Label Grid.Row="1" Grid.Column="0" Style="{StaticResource Important}">Name:</Label>
+                    <TextBox Name="txtCommodityName" Text="{Binding Name}" Grid.Row="1" Grid.Column="1" />
 
-                    <Label Grid.Row="1" Grid.Column="0" Style="{StaticResource Important}">Unit number:</Label>
-                    <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Unit}" />
+                    <Label Grid.Row="2" Grid.Column="0" Style="{StaticResource Important}">Unit number:</Label>
+                    <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Unit}" />
+                    
+                    <Label Grid.Row="3" Grid.Column="0" Style="{StaticResource Important}">Declared value:</Label>
+                    <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Value, StringFormat=c, Converter={StaticResource NullableValueConverter}}" />
 
-                    <Label Grid.Row="5" Grid.Column="0">Notes:</Label>
-                    <TextBox Grid.Row="5" Grid.Column="1" Style="{StaticResource MultiLine}" Text="{Binding Notes}" />
+                    <Label Grid.Row="4" Grid.Column="0">Hauling cost:</Label>
+                    <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Cost, StringFormat=c, Converter={StaticResource NullableValueConverter}}" />
+                    
+                    <Label Grid.Row="5" Grid.Column="0">Serial number:</Label>
+                    <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding Serial}" />
 
-                    <GroupBox Header="Recorded Commodity" Grid.Row="0" Grid.Column="2" Grid.RowSpan="6" Margin="5,0,0,0">
+                    <Label Grid.Row="6" Grid.Column="0">Notes:</Label>
+                    <TextBox Grid.Row="6" Grid.Column="1" Style="{StaticResource MultiLine}" Text="{Binding Notes}" />
+
+                    <GroupBox Header="Recorded Commodity" Grid.Row="0" Grid.Column="2" Grid.RowSpan="7" Margin="5,0,0,0">
                         <DockPanel>
-                            <Button Style="{StaticResource VerticalEnd}" DockPanel.Dock="Bottom" Click="AddRecordedCommodity_Click">Add recorded commodity</Button>
+                            <Button Style="{StaticResource VerticalEnd}" DockPanel.Dock="Bottom" Click="AddRecordedCommodity_Click">Create recorded commodity</Button>
                             
                             <DataGrid Style="{StaticResource ListDisplay}" Margin="0,0,0,3" Name="dgRecordedCommodities" SelectedItem="{Binding OriginalCommodity}" DataGridRow.MouseDoubleClick="dgRecordedCommodities_MouseDoubleClick" SelectionChanged="dgRecordedCommodities_SelectionChanged">
                                 <DataGrid.Columns>

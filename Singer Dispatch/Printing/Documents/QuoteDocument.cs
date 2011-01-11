@@ -33,19 +33,6 @@ namespace SingerDispatch.Printing.Documents
             content.Append("</head>");
             content.Append("<body>");
             content.Append(GetQuoteBody(quote));
-
-            if (quote.QuoteStorageItems.Count > 0)
-            {
-                content.Append(PageBreak);
-
-                var doc = new StorageContractDocument();
-
-                doc.SpecializedDocument = SpecializedDocument;
-                doc.PrintMetric = PrintMetric;
-
-                content.Append(doc.GenerateBodyHTML(quote));
-            }
-
             content.Append("</body>");
             content.Append("</html>");
 
@@ -83,7 +70,7 @@ namespace SingerDispatch.Printing.Documents
 
         private static string GetStyles()
         {
-            const string content = @"
+            const string css = @"
                 <style type=""text/css"">
                     /***** RESET DEFAULT BROWSER STYLES *****/
                     html, body, div, span, applet, object, iframe,
@@ -361,8 +348,6 @@ namespace SingerDispatch.Printing.Documents
                         padding: 2px 0;
                     }
                 
-                    %SC_SCREEN_STYLES%
-                
                     div.page_break
                     {
                         display: block;
@@ -378,8 +363,6 @@ namespace SingerDispatch.Printing.Documents
                         padding: 0;
                     }
 
-                    %SC_PRINT_STYLES%
-
                     div.page_break
                     {
                         border: none;
@@ -390,7 +373,7 @@ namespace SingerDispatch.Printing.Documents
                 </style>
             ";
 
-            return content.Replace("%SC_SCREEN_STYLES%", StorageContractDocument.GetDocSpecificScreenStyles()).Replace("%SC_PRINT_STYLES%", StorageContractDocument.GetDocSpecificPrintStyles());
+            return css;
         }
 
         private string GetHeader(string quoteName)

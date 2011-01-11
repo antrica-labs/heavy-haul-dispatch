@@ -66,8 +66,7 @@
       <Column Name="Notes" Type="System.String" CanBeNull="true" UpdateCheck="Never" />
       <Association Name="Commodity_JobCommodity" Member="JobCommodities" ThisKey="ID" OtherKey="OriginalCommodityID" Type="JobCommodity" />
       <Association Name="Commodity_QuoteCommodity" Member="QuoteCommodities" ThisKey="ID" OtherKey="OriginalCommodityID" Type="QuoteCommodity" />
-      <Association Name="Company_Commodity" Member="Company" ThisKey="CompanyID" OtherKey="ID" Type="Company" IsForeignKey="true" />
-      <Association Name="Commodity_StorageItem" Member="Storage" ThisKey="ID" OtherKey="CommmodityID" Type="StorageItem" />
+      <Association Name="Company_Commodity" Member="Company" ThisKey="CompanyID" OtherKey="ID" Type="Company" IsForeignKey="true" />      
     </Type>
   </Table>
   <Table Name="" Member="Companies">
@@ -100,8 +99,7 @@
       <Association Name="Company_LoadedCommodity_LoadSite" Member="LoadSites" OtherKey="LoadSiteCompanyID" ThisKey="ID" Type="LoadedCommodity" />
       <Association Name="Company_LoadedCommodity_UnloadSite" Member="UnloadSite" OtherKey="UnloadSiteCompanyID" ThisKey="ID" Type="LoadedCommodity" />
       <Association Name="Company_LoadedCommodity_Load" Member="Loading" OtherKey="LoadingCompanyID" ThisKey="ID" Type="LoadedCommodity" />
-      <Association Name="Company_LoadedCommodity_Unload" Member="Unloading" OtherKey="UnloadingCompanyID" ThisKey="ID" Type="LoadedCommodity" />
-      <Association Name="Company_StorageItem" Member="StoredItems" ThisKey="ID" OtherKey="CompanyID" Type="StorageItem" />
+      <Association Name="Company_LoadedCommodity_Unload" Member="Unloading" OtherKey="UnloadingCompanyID" ThisKey="ID" Type="LoadedCommodity" />      
     </Type>
   </Table>
   <Table Name="" Member="CompanyPriorityLevels">
@@ -188,6 +186,7 @@
   <Table Name="" Member="JobCommodities">
     <Type Name="JobCommodity">
       <Column Name="ID" Type="System.Int64" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="CompanyID" Type="System.Int64" CanBeNull="true" />
       <Column Name="OrderIndex" Type="System.Int32" CanBeNull="false" />
       <Column Name="JobID" Type="System.Int64" CanBeNull="true" />
       <Column Name="LoadID" Type="System.Int64" CanBeNull="true" />
@@ -208,8 +207,10 @@
       <Column Name="Cost" Type="System.Decimal" CanBeNull="true" />      
       <Column Name="Notes" Type="System.String" CanBeNull="true" UpdateCheck="Never" />      
       <Association Name="JobCommodity_LoadedCommodity" Member="LoadedCommodities" ThisKey="ID" OtherKey="JobCommodityID" Type="LoadedCommodity" />
+      <Association Name="Company_JobCommodity" Member="Owner" ThisKey="CompanyID" OtherKey="ID" Type="Company" IsForeignKey="true" />
       <Association Name="Commodity_JobCommodity" Member="OriginalCommodity" ThisKey="OriginalCommodityID" OtherKey="ID" Type="Commodity" IsForeignKey="true" />
       <Association Name="Job_JobCommodity" Member="Job" ThisKey="JobID" OtherKey="ID" Type="Job" IsForeignKey="true" />
+      <Association Name="JobCommodityCommodity_StorageItem" Member="Storage" ThisKey="ID" OtherKey="JobCommmodityID" Type="StorageItem" />
     </Type>
   </Table>
   <Table Name="" Member="Jobs">
@@ -232,6 +233,7 @@
       <Association Name="Contact_Job" Member="Contact" ThisKey="ContactID" OtherKey="ID" Type="Contact" IsForeignKey="true" />
       <Association Name="Quote_Job" Member="Quote" ThisKey="QuoteID" OtherKey="ID" Type="Quote" IsForeignKey="true" />
       <Association Name="Job_JobReferenceNumber" Member="ReferenceNumbers" ThisKey="ID" OtherKey="JobID" Type="JobReferenceNumber" />
+      <Association Name="Job_StorageItem" Member="StoredItems" ThisKey="ID" OtherKey="JobID" Type="StorageItem" />
     </Type>
   </Table>
   <Table Name="" Member="JobReferenceNumbers">
@@ -433,6 +435,7 @@
     <Type Name="QuoteCommodity">
       <Column Name="ID" Type="System.Int64" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="QuoteID" Type="System.Int64" CanBeNull="true" />
+      <Column Name="CompanyID" Type="System.Int64" CanBeNull="true" />
       <Column Name="OrderIndex" Type="System.Int32" CanBeNull="false" />
       <Column Name="OriginalCommodityID" Type="System.Int64" CanBeNull="true" />
       <Column Name="DepartureSiteName" Type="System.String" CanBeNull="true" />
@@ -452,6 +455,7 @@
       <Column Name="Notes" Type="System.String" CanBeNull="true" UpdateCheck="Never" />
       <Association Name="Quote_QuoteCommodity" Member="Quote" ThisKey="QuoteID" OtherKey="ID" Type="Quote" IsForeignKey="true" />
       <Association Name="QuoteCommodity_QuoteStorageItem" Member="StorageQuotes" ThisKey="ID" OtherKey="QuoteCommodityID" Type="QuoteStorageItem" />
+      <Association Name="Company_QuoteCommodity" Member="Owner" ThisKey="CompanyID" OtherKey="ID" Type="Company" IsForeignKey="true" />
       <Association Name="Commodity_QuoteCommodity" Member="OriginalCommodity" ThisKey="OriginalCommodityID" OtherKey="ID" Type="Commodity" IsForeignKey="true" />
     </Type>
   </Table>
@@ -818,10 +822,9 @@
   <Table Name="" Member="StorageItems">
     <Type Name="StorageItem">
       <Column Name="ID" Type="System.Int64" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Number" Type="System.Int64" CanBeNull="true" />
-      <Column Name="Archived" Type="System.Boolean" CanBeNull="true"/>
-      <Column Name="CompanyID" Type="System.Int64" CanBeNull="true" />
-      <Column Name="CommodityID" Type="System.Int64" CanBeNull="true" />
+      <Column Name="JobID" Type="System.Int64" CanBeNull="true" />
+      <Column Name="JobCommodityID" Type="System.Int64" CanBeNull="true" />
+      <Column Name="Number" Type="System.Int64" CanBeNull="true" />      
       <Column Name="ContactID" Type="System.Int64" CanBeNull="true" />
       <Column Name="BillingIntervalID" Type="System.Int64" CanBeNull="true" />
       <Column Name="DateEntered" Type="System.DateTime" CanBeNull="true" />
@@ -831,8 +834,8 @@
       <Column Name="ReferenceCode" Type="System.String" CanBeNull="true" />
       <Column Name="ContractSigned" Type="System.Boolean" CanBeNull="true" />
       <Column Name="Notes" Type="System.String" CanBeNull="true" />
-      <Association Name="Company_StorageItem" Member="Company" ThisKey="CompanyID" OtherKey="ID" Type="Company" IsForeignKey="true" />
-      <Association Name="Commodity_StorageItem" Member="Commodity" ThisKey="CommodityID" OtherKey="ID" Type="Commodity" IsForeignKey="true" />
+      <Association Name="Job_StorageItem" Member="Job" ThisKey="JobID" OtherKey="ID" Type="Job" IsForeignKey="true" />
+      <Association Name="JobCommodity_StorageItem" Member="JobCommodity" ThisKey="JobCommodityID" OtherKey="ID" Type="JobCommodity" IsForeignKey="true" />
       <Association Name="Contact_StorageItem" Member="Contact" ThisKey="ContactID" OtherKey="ID" Type="Contact" IsForeignKey="true" />
       <Association Name="BillingInterval_StorageItem" Member="BillingInterval" ThisKey="BillingIntervalID" OtherKey="ID" Type="BillingInterval" IsForeignKey="true" />
     </Type>

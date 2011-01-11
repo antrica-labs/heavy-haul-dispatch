@@ -65,7 +65,8 @@ namespace SingerDispatch.Panels.Quotes
                 dgRecordedCommodities.MaxHeight = dgRecordedCommodities.ActualHeight;
                 dgRecordedCommodities.ItemsSource = (SelectedQuote == null) ? null : new ObservableCollection<Commodity>(from c in Database.Commodities where c.Company == SelectedCompany || c.Company == SelectedQuote.CareOfCompany orderby c.Name, c.Unit select c);
             }
-            
+
+            UpdateOwnersList();
             UpdateAddressesAndSites();
         }
 
@@ -79,6 +80,20 @@ namespace SingerDispatch.Panels.Quotes
         private void dgQuoteCommodities_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             UpdateAddressesAndSites();
+        }
+
+        private void UpdateOwnersList()
+        {
+            if (SelectedQuote == null) return;
+
+            var list = new List<Company>();
+
+            list.Add(SelectedQuote.Company);
+
+            if (SelectedQuote.CareOfCompany != null)
+                list.Add(SelectedQuote.CareOfCompany);
+
+            cmbOwners.ItemsSource = list;
         }
 
         private void UpdateAddressesAndSites()
@@ -127,7 +142,7 @@ namespace SingerDispatch.Panels.Quotes
             UpdateAddressesAndSites();
 
             var list = (ObservableCollection<QuoteCommodity>)dgQuoteCommodities.ItemsSource;
-            var commodity = new QuoteCommodity { QuoteID = SelectedQuote.ID };
+            var commodity = new QuoteCommodity { Quote = SelectedQuote, Owner = SelectedQuote.Company };
 
             SelectedQuote.QuoteCommodities.Add(commodity);
             list.Add(commodity);            

@@ -247,6 +247,10 @@
     <Compile Include="Panels\QuoteUserControl.cs" />
     <Compile Include="Panels\Storage\StoragePanel.xaml.cs">
       <DependentUpon>StoragePanel.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Panels\Jobs\StoredItemsControl.xaml.cs">
+      <DependentUpon>StoredItemsControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Printing\Documents\BillOfLadingDocument.cs" />
     <Compile Include="Printing\Documents\DispatchDocument.cs" />
@@ -530,6 +534,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Panels\Storage\StoragePanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Panels\Jobs\StoredItemsControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

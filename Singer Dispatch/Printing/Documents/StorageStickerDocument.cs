@@ -254,7 +254,7 @@ namespace SingerDispatch.Printing.Documents
                 </div>
             ";
 
-            if (item.Commodity == null) return "";
+            if (item.JobCommodity == null) return "";
 
             string distance, weight;
 
@@ -271,10 +271,10 @@ namespace SingerDispatch.Printing.Documents
 
             var replacements = new string[4];
 
-            replacements[0] = item.Commodity.Name;
-            replacements[1] = string.Format("[{0}]", item.Commodity.Unit);
-            replacements[2] = string.Format("{0} x {1} x {2} (LxWxH)", MeasurementFormater.FromMetres(item.Commodity.Length, distance), MeasurementFormater.FromMetres(item.Commodity.Width, distance), MeasurementFormater.FromMetres(item.Commodity.Height, distance));
-            replacements[3] = string.Format("{0}", MeasurementFormater.FromKilograms(item.Commodity.Weight, weight));
+            replacements[0] = item.JobCommodity.Name;
+            replacements[1] = string.Format("[{0}]", item.JobCommodity.Unit);
+            replacements[2] = string.Format("{0} x {1} x {2} (LxWxH)", MeasurementFormater.FromMetres(item.JobCommodity.Length, distance), MeasurementFormater.FromMetres(item.JobCommodity.Width, distance), MeasurementFormater.FromMetres(item.JobCommodity.Height, distance));
+            replacements[3] = string.Format("{0}", MeasurementFormater.FromKilograms(item.JobCommodity.Weight, weight));
 
             return string.Format(html, replacements);
         }
