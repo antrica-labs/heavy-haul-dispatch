@@ -818,7 +818,7 @@ namespace SingerDispatch.Printing.Documents
 
             var replacements = new object[9];
 
-            replacements[0] = commodity.JobCommodity.Name;
+            replacements[0] = commodity.JobCommodity.NameAndUnit;
 
             replacements[1] = MeasurementFormater.FromMetres(commodity.JobCommodity.Length, lengthUnit);
             replacements[2] = MeasurementFormater.FromMetres(commodity.JobCommodity.Width, lengthUnit);

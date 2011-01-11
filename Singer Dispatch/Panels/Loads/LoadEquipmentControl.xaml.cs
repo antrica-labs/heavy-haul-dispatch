@@ -122,14 +122,6 @@ namespace SingerDispatch.Panels.Loads
             if (load.Equipment != null)
                 load.CalculatedWeight += load.Equipment.Tare ?? 0.0;
 
-            if (load.TrailerCombination != null)
-            {
-                load.LoadedWidth += load.TrailerCombination.Width ?? 0.0;
-                load.LoadedLength += load.TrailerCombination.Length ?? 0.0;
-                load.LoadedHeight += load.TrailerCombination.Height ?? 0.0;
-                load.CalculatedWeight += load.TrailerCombination.Tare ?? 0.0;
-            }
-
             var widest = 0.0;
             var longest = 0.0;
             var highest = 0.0;
@@ -153,6 +145,14 @@ namespace SingerDispatch.Panels.Loads
             }
 
             load.LoadedHeight += highest;
+
+            if (load.TrailerCombination != null)
+            {
+                load.LoadedWidth += load.TrailerCombination.Width ?? 0.0;
+                load.LoadedLength += load.TrailerCombination.Length ?? 0.0;
+                load.LoadedHeight += load.TrailerCombination.Height ?? 0.0;
+                load.CalculatedWeight += load.TrailerCombination.Tare ?? 0.0;
+            }
 
             if (load.LoadedHeight < SingerConfigs.MinLoadHeight)
                 load.LoadedHeight = SingerConfigs.MinLoadHeight;

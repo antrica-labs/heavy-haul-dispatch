@@ -909,7 +909,7 @@ namespace SingerDispatch
 
             for (var i = 0; i < list.Count; i++)
             {
-                output.Append(list[i].JobCommodity.Name);
+                output.Append(list[i].JobCommodity.NameAndUnit);
 
                 if ((i + 1) != list.Count)
                     output.Append(", ");

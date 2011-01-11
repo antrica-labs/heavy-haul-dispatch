@@ -85,12 +85,9 @@ namespace SingerDispatch.Panels.Loads
 
             var list = (ObservableCollection<Dispatch>)dgDispatches.ItemsSource;
             var dispatch = new Dispatch { LoadID = SelectedLoad.ID, DispatchedBy = SingerConfigs.OperatingEmployee };
-
-            if (!String.IsNullOrEmpty(SelectedLoad.Schedule))
-            {   
-                dispatch.Description = string.Format(SingerConfigs.DefaultDispatchDescription, Load.PrintCommodityList(SelectedLoad));
-                dispatch.Schedule = SelectedLoad.Schedule;
-            }
+                        
+            dispatch.Description = string.Format(SingerConfigs.DefaultDispatchDescription, Load.PrintCommodityList(SelectedLoad));
+            dispatch.Schedule = SelectedLoad.Schedule;            
 
             if (SelectedLoad.Dispatches.Count == 0 && SelectedLoad.Equipment != null)
             {
