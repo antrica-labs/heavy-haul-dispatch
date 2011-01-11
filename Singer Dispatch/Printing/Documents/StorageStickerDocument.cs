@@ -237,7 +237,7 @@ namespace SingerDispatch.Printing.Documents
             var replacements = new string[3];
 
             replacements[0] = GetHeaderImg();
-            replacements[1] = item.Number.ToString();
+            replacements[1] = string.Format("{0}-{1}", item.Job.Number, item.Number);
             replacements[2] = (item.DateEntered != null) ? item.DateEntered.Value.ToString(SingerConfigs.PrintedDateFormatString) : "";
 
             return string.Format(html, replacements);
