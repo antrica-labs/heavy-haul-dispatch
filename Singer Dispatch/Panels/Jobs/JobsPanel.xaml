@@ -59,7 +59,7 @@
             <TabItem Header="Commodities" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, Path=SelectedJob}">
                 <Jobs:JobCommoditiesControl CompanyList="{Binding CompanyList}" SelectedCompany="{Binding SelectedCompany}"  SelectedJob="{Binding SelectedJob}" UseImperialMeasurements="{Binding UseImperialMeasurements}" />
             </TabItem>
-            <TabItem Header="Storage">
+            <TabItem Header="Storage" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, Path=SelectedJob}">
                 <Jobs:StoredItemsControl CompanyList="{Binding CompanyList}" SelectedCompany="{Binding SelectedCompany}"  SelectedJob="{Binding SelectedJob}" UseImperialMeasurements="{Binding UseImperialMeasurements}" />                
             </TabItem>            
         </TabControl>
