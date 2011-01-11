@@ -72,7 +72,7 @@
 
                     <GroupBox Header="Recorded Commodity" Grid.Row="0" Grid.Column="2" Grid.RowSpan="7" Margin="5,0,0,0">
                         <DockPanel>
-                            <Button Style="{StaticResource VerticalEnd}" DockPanel.Dock="Bottom" Click="AddRecordedCommodity_Click">Create recorded commodity</Button>
+                            <Button Style="{StaticResource VerticalEnd}" DockPanel.Dock="Bottom" Click="AddRecordedCommodity_Click">Add to recorded commodities</Button>
 
                             <DataGrid Style="{StaticResource ListDisplay}" Margin="0,0,0,3" Name="dgRecordedCommodities" SelectedItem="{Binding OriginalCommodity}" DataGridRow.MouseDoubleClick="dgRecordedCommodities_MouseDoubleClick" SelectionChanged="dgRecordedCommodities_SelectionChanged">
                                 <DataGrid.Columns>

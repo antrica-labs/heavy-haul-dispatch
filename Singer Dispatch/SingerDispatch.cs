@@ -323,6 +323,27 @@ namespace SingerDispatch
             return copy;
         }
 
+        public Commodity ToRecordedCommodity()
+        {
+            var commodity = new Commodity();
+
+            commodity.Company = Owner;
+            commodity.Name = Name;
+            commodity.Unit = Unit;
+            commodity.Value = Value;
+            commodity.Serial = Serial;
+            commodity.Notes = Notes;
+            commodity.Length = Length;
+            commodity.Width = Width;
+            commodity.Height = Height;
+            commodity.Weight = Weight;
+            commodity.DimensionsEstimated = DimensionsEstimated;
+            commodity.LastLocation = DepartureSiteName;
+            commodity.LastAddress = DepartureAddress;
+
+            return commodity;
+        }
+
         public JobCommodity ToJobCommodity()
         {
             var jc = new JobCommodity();
@@ -557,6 +578,27 @@ namespace SingerDispatch
             OriginalCommodity.DimensionsEstimated = DimensionsEstimated;
             OriginalCommodity.LastAddress = DepartureAddress;
             OriginalCommodity.LastLocation = DepartureSiteName;
+        }
+
+        public Commodity ToRecordedCommodity()
+        {
+            var commodity = new Commodity();
+
+            commodity.Company = Owner;
+            commodity.Name = Name;
+            commodity.Unit = Unit;
+            commodity.Value = Value;
+            commodity.Serial = Serial;
+            commodity.Notes = Notes;
+            commodity.Length = Length;
+            commodity.Width = Width;
+            commodity.Height = Height;
+            commodity.Weight = Weight;
+            commodity.DimensionsEstimated = DimensionsEstimated;
+            commodity.LastLocation = DepartureSiteName;
+            commodity.LastAddress = DepartureAddress;
+
+            return commodity;
         }
 
         public string NameAndUnit

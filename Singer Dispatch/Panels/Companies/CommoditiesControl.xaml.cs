@@ -27,14 +27,12 @@ namespace SingerDispatch.Panels.Companies
 
         private void Control_Loaded(object sender, RoutedEventArgs e)
         {
-           
+            dgCommodities.ItemsSource = (SelectedCompany == null) ? null : new ObservableCollection<Commodity>(from c in Database.Commodities where c.Company == SelectedCompany orderby c.Name, c.Unit select c);
         }
         
         protected override void SelectedCompanyChanged(Company newValue, Company oldValue)
         {
-            base.SelectedCompanyChanged(newValue, oldValue);
-                        
-            dgCommodities.ItemsSource = (newValue == null) ? null : new ObservableCollection<Commodity>(from c in Database.Commodities where c.CompanyID == newValue.ID orderby c.Name, c.Unit select c);
+            base.SelectedCompanyChanged(newValue, oldValue);            
         }
 
         private void NewCommodity_Click(object sender, RoutedEventArgs e)

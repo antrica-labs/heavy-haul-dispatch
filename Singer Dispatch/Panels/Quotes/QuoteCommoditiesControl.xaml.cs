@@ -354,19 +354,21 @@ namespace SingerDispatch.Panels.Quotes
         }
 
         private void AddRecordedCommodity_Click(object sender, RoutedEventArgs e)
-        {            
-            var commodities = (ObservableCollection<Commodity>)dgRecordedCommodities.ItemsSource;
+        {
+            var quoteCommodity = (QuoteCommodity)dgQuoteCommodities.SelectedItem;
 
-            if (SelectedQuote == null) return;
+            if (quoteCommodity == null) return;
 
-            var window = new CreateCommodityWindow(Database, SelectedQuote.Company, SelectedQuote.CareOfCompany) { Owner = Application.Current.MainWindow };
-            var commodity = window.CreateCommodity();
+            var confirmation = MessageBox.Show("Are you sure you want to move this quote commodity to the recorded commondity list? If so, please ensure that this commodity does not already exist", "Add confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
-            if (commodity == null) return;
-                        
-            commodities.Add(commodity);
+            if (confirmation != MessageBoxResult.Yes) return;
 
-            dgRecordedCommodities.SelectedItem = commodity;
+            var recorded = quoteCommodity.ToRecordedCommodity();
+
+            quoteCommodity.Owner.Commodities.Add(recorded);
+            ((ObservableCollection<Commodity>)dgRecordedCommodities.ItemsSource).Add(recorded);
+            dgRecordedCommodities.ScrollIntoView(recorded);
+            dgRecordedCommodities.SelectedItem = recorded;
         }
     }
 }

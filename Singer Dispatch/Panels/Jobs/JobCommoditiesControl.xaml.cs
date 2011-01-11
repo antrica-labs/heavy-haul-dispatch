@@ -189,19 +189,21 @@ namespace SingerDispatch.Panels.Jobs
         }
 
         private void AddRecordedCommodity_Click(object sender, RoutedEventArgs e)
-        {
-            var commodities = (ObservableCollection<Commodity>)dgRecordedCommodities.ItemsSource;
+        {            
+            var jobCommodity = (JobCommodity)dgCommodities.SelectedItem;
 
-            if (SelectedJob == null) return;
+            if (jobCommodity == null) return;
 
-            var window = new CreateCommodityWindow(Database, SelectedJob.Company, SelectedJob.CareOfCompany) { Owner = Application.Current.MainWindow };
-            var commodity = window.CreateCommodity();
+            var confirmation = MessageBox.Show("Are you sure you want to add this job commodity as a recorded commondity? If so, please ensure that this commodity does not already exist", "Add confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
-            if (commodity == null) return;
+            if (confirmation != MessageBoxResult.Yes) return;
 
-            commodities.Add(commodity);
+            var recorded = jobCommodity.ToRecordedCommodity();
 
-            dgRecordedCommodities.SelectedItem = commodity;
+            jobCommodity.Owner.Commodities.Add(recorded);
+            ((ObservableCollection<Commodity>)dgRecordedCommodities.ItemsSource).Add(recorded);
+            dgRecordedCommodities.ScrollIntoView(recorded);
+            dgRecordedCommodities.SelectedItem = recorded;
         }
 
         
