@@ -163,14 +163,19 @@ namespace SingerDispatch.Printing.Documents
 
                     div.commodity_details
                     {
-                        padding: 10px;
-                        margin-bottom: 30px;
+                        padding: 10px;                        
                     }
 
                     div.commodity_details span
                     {
                         display: block;
                         margin-bottom: 2px;
+                    }
+
+                    div.location
+                    {
+                        padding: 10px;
+                        margin-bottom: 30px;
                     }
 
                     div.contact
@@ -227,7 +232,7 @@ namespace SingerDispatch.Printing.Documents
                             </td>
                             <td id=""document_name"">
                                 <span class=""title"">Storage #{1}</span>
-                                <span class=""date"">{2}</span>
+                                <span class=""date"">Arrival: {2}</span>
                             </td>
                         </tr>
                     </table>                        
@@ -252,6 +257,10 @@ namespace SingerDispatch.Printing.Documents
                     <span class=""dimensions"">{2}</span>
                     <span class=""weight"">{3}</span>
                 </div>
+
+                <div class=""location"">
+                    <p>{4}</p>
+                </div>
             ";
 
             if (item.JobCommodity == null) return "";
@@ -269,12 +278,13 @@ namespace SingerDispatch.Printing.Documents
                 weight = MeasurementFormater.UKilograms;
             }
 
-            var replacements = new string[4];
+            var replacements = new string[5];
 
             replacements[0] = item.JobCommodity.Name;
             replacements[1] = string.Format("[{0}]", item.JobCommodity.Unit);
             replacements[2] = string.Format("{0} x {1} x {2} (LxWxH)", MeasurementFormater.FromMetres(item.JobCommodity.Length, distance), MeasurementFormater.FromMetres(item.JobCommodity.Width, distance), MeasurementFormater.FromMetres(item.JobCommodity.Height, distance));
             replacements[3] = string.Format("{0}", MeasurementFormater.FromKilograms(item.JobCommodity.Weight, weight));
+            replacements[4] = item.YardLocation;
 
             return string.Format(html, replacements);
         }
