@@ -34,10 +34,14 @@
                     <MenuItem Header="_Find quote" Click="FindQuote_Click" InputGestureText="Ctrl+Shift+Q" />
                 </MenuItem>
                 <MenuItem Header="Jobs">
+                    <MenuItem Header="_Job list" Click="ViewJobList_Click" />
                     <MenuItem Header="_Find job" Click="FindJob_Click" InputGestureText="Ctrl+Shift+J" />                    
                 </MenuItem>
                 <MenuItem Header="Invoicing" Visibility="Collapsed">
                     <MenuItem Header="_View job invoices" Click="FindJobForInvoice_Click" InputGestureText="Ctrl+Shift+I" />
+                </MenuItem>
+                <MenuItem Header="Storage" Visibility="Collapsed">
+                    <MenuItem Header="Storage List" Click="ViewStorageList_Click" />
                 </MenuItem>
                 <MenuItem Header="Tools">
                     <!-- <MenuItem Header="Global search" /> -->

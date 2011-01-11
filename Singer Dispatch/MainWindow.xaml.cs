@@ -22,6 +22,7 @@ using System.ComponentModel;
 using SingerDispatch.Security;
 using SingerDispatch.Panels.Loads;
 using WPFAutoCompleteBox.Controls;
+using SingerDispatch.Printing.Documents;
 
 namespace SingerDispatch
 {
@@ -395,6 +396,20 @@ namespace SingerDispatch
         private void FindJobForInvoice_Click(object sender, RoutedEventArgs e)
         {
             FindInvoices();
+        }
+
+        private void ViewStorageList_Click(object sender, RoutedEventArgs e)
+        { 
+
+        }
+
+        private void ViewJobList_Click(object sender, RoutedEventArgs e)
+        {
+            var jobs = from j in Database.Jobs orderby j.Number select j;
+            var title = "Singer Job List";
+
+            var viewer = new Windows.DocumentViewerWindow(new JobListDocument(), jobs, title) { IsMetric = !UseImperialMeasurements };
+            viewer.DisplayPrintout();
         }
 
         private void QuoteLoookupCommandHandler(object sender, ExecutedRoutedEventArgs e)

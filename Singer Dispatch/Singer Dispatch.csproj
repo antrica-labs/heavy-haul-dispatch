@@ -255,6 +255,7 @@
     <Compile Include="Printing\Documents\BillOfLadingDocument.cs" />
     <Compile Include="Printing\Documents\DispatchDocument.cs" />
     <Compile Include="Printing\Documents\FuelReportDocument.cs" />
+    <Compile Include="Printing\Documents\JobListDocument.cs" />
     <Compile Include="Printing\Documents\LoadingDocument.cs" />
     <Compile Include="Printing\Documents\SingerPrintDocument.cs" />
     <Compile Include="Printing\Documents\StorageContractDocument.cs" />
