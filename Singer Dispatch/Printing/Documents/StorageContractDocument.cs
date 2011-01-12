@@ -78,14 +78,10 @@ namespace SingerDispatch.Printing.Documents
 
             Address address;
             Contact contact;
+            var company = job.CareOfCompany ?? job.Company;
 
             try
-            {
-                var company = job.CareOfCompany;
-
-                if (company == null)
-                    company = job.Company;
-
+            {   
                 address = (from a in company.Addresses where a.AddressType.Name == "Head Office" select a).First();
             }
             catch (Exception e)
@@ -104,7 +100,7 @@ namespace SingerDispatch.Printing.Documents
 
             content.Append(@"<div class=""storage_contract"">");
             content.Append(GetHeader(documentNumber));
-            content.Append(GetReferenceTable(contact, address));
+            content.Append(GetReferenceTable(company, contact, address));
             content.Append(GetCommodities(job));
             content.Append(GetLegal());
             content.Append(GetSignatures());
@@ -121,11 +117,14 @@ namespace SingerDispatch.Printing.Documents
             var content = new StringBuilder();
             var documentNumber = string.Format("SC-{0}-{1}", item.Job.Number, item.Number);
 
+            var company = item.Job.CareOfCompany ?? item.Job.Company;
+            var contact = item.Contact;
+
             Address address;
 
             try
             {
-                address = (from a in item.JobCommodity.Owner.Addresses where a.AddressType.Name == "Head Office" select a).First();
+                address = (from a in company.Addresses where a.AddressType.Name == "Head Office" select a).First();
             }
             catch (Exception e)
             {
@@ -134,7 +133,7 @@ namespace SingerDispatch.Printing.Documents
 
             content.Append(@"<div class=""storage_contract"">");
             content.Append(GetHeader(documentNumber));
-            content.Append(GetReferenceTable(item.Contact, address));
+            content.Append(GetReferenceTable(company, contact, address));
             content.Append(GetCommodity(item));
             content.Append(GetLegal());
             content.Append(GetSignatures());
@@ -210,7 +209,7 @@ namespace SingerDispatch.Printing.Documents
 
                     body
                     {
-                        font-size: 10pt;
+                        font-size: 12px;
                         font-family: Verdana, Arial, Helvetica, sans-serif;
                         padding: 10px;
                     }
@@ -220,7 +219,6 @@ namespace SingerDispatch.Printing.Documents
                 <style type=""text/css"" media=""print"">
                     body
                     {
-                    	font-size: 10pt;
                         padding: 0;
                     }
 
@@ -292,51 +290,54 @@ namespace SingerDispatch.Printing.Documents
                     border-left: 1px #000000 solid;
                     border-right: 1px #000000 solid;                    
                 }             
+                
+                div.storage_contract div.reference div.customer span.date,
+                div.storage_contract div.reference div.customer span.customer,
+                div.storage_contract div.reference div.customer span.contact
+                {
+                    display: block;
+                    border-bottom: 1px #000000 solid;
+                    padding: 3px 7px;
+                    font-weight: bold;
+                }
+                
+                div.storage_contract div.reference div.customer span.date span,
+                div.storage_contract div.reference div.customer span.customer span,
+                div.storage_contract div.reference div.customer span.contact span
+                {
+                    font-weight: normal;
+                }
+            
+                div.storage_contract div.reference div.customer span.contact span.phone
+                {
+                    padding-left: 10px;
+                }
             
                 div.storage_contract div.reference table
                 {
                     width: 100%;
                     border-collapse: collapse;
                 }
-                    
-                div.storage_contract div.reference td.secondary
+                                
+                div.storage_contract div.reference td
                 {
                     width: 50%;
-                    border-left: 1px #000000 solid;
-                }    
-            
-                div.storage_contract div.reference td div.store span, 
-                div.storage_contract div.reference td div.owner span,
-                div.storage_contract div.reference td div.contact span
-                {
-                    display: block;                
+                    padding: 3px 7px 5px 7px;
                 }
-            
-                div.storage_contract div.reference td span.date, 
-                div.storage_contract div.reference td span.customer                
+                
+                div.storage_contract div.reference td span.heading
+                {
+                    margin-bottom: 3px;
+                }
+                   
+                div.storage_contract div.reference td span
                 {
                     display: block;
-                    font-weight: bold;
-                    padding: 3px 7px;
-                    border-bottom: 1px #000000 solid;
                 }
-            
-                div.storage_contract div.reference td span.date span, 
-                div.storage_contract div.reference td span.customer span
-                {
-                    font-weight: normal;
-                }
-                
-                div.storage_contract div.reference td div.store,
-                div.storage_contract div.reference td div.owner,
-                div.storage_contract div.reference td div.contact
-                {
-                    padding: 3px 7px;
-                }
-                
-                div.storage_contract div.reference td div.store 
+                    
+                div.storage_contract div.reference td.secondary
                 {   
-                    border-top: 1px #000000 solid;
+                    border-left: 1px #000000 solid;
                 }
                 
                 div.storage_contract div.commodities
@@ -346,38 +347,60 @@ namespace SingerDispatch.Printing.Documents
                     min-height: 125px;
                 }
                 
+                div.storage_contract div.commodities span.between
+                {
+                    display: block;
+                    margin-bottom: 3px;    
+                }
+                
                 div.storage_contract div.commodities table
                 {
+                    margin-top: 7px;
                     width: 100%;
+                    border-collapse: collapse;
                 }
                 
                 div.storage_contract div.commodities th
                 {
                 }
                 
-                div.storage_contract div.commodities th.name
-                {
+                div.storage_contract div.commodities th.name,
+                div.storage_contract div.commodities th.owner
+                {                    
                     text-align: left;
+                }
+                
+                div.storage_contract div.commodities td.name,
+                div.storage_contract div.commodities td.owner
+                {                    
+                    text-align: left;
+                    padding-top: 5px;
                 }
                 
                 div.storage_contract div.commodities td.dimensions,
                 div.storage_contract div.commodities td.weight,
                 div.storage_contract div.commodities td.price
                 {
+                    padding-top: 5px;
                     text-align: center;
                 }
                 
                 div.storage_contract div.commodities tr.with_note td
                 {
-                    padding: 5px;
-                    padding-bottom: 0;
+                    
+                }
+                
+                div.storage_contract div.commodities tr.note td
+                {
+                    padding-top: 5px;
+                    font-style: italic;
                 }
                 
                 div.storage_contract div.commodities tr.note td,
                 div.storage_contract div.commodities tr.no_note td 
                 {
                     border-bottom: 1px #000000 dashed;
-                    padding: 5px;
+                    padding-bottom: 5px;
                 }
                 
                 div.storage_contract div.legal
@@ -410,8 +433,9 @@ namespace SingerDispatch.Printing.Documents
                 
                 div.storage_contract div.signatures span.signline
                 {
+                    clear: both;
                     display: block;
-                    padding-top: 25px;
+                    padding-top: 20px;
                     border-bottom: 1px #000000 dotted;
                 }
                 
@@ -421,6 +445,11 @@ namespace SingerDispatch.Printing.Documents
                     font-size: 0.8em;
                     padding: 0 10px;
                 }
+                
+                div.storage_contract div.signatures span.subtext span
+                {
+                    float: left;
+                }               
                 
                 div.storage_contract div.signatures span.subtext span.date
                 {
@@ -495,29 +524,21 @@ namespace SingerDispatch.Printing.Documents
             return string.Format(html, replacements);
         }
 
-        public string GetReferenceTable(Contact contact, Address address)
+        public string GetReferenceTable(Company company, Contact contact, Address address)
         {
             var html = @"
                 <div class=""reference"">
+                    <div class=""customer"">
+                        <span class=""date"">Date: <span>{0}</span></span>
+
+                        <span class=""customer"">Customer: <span>{1}</span></span>
+
+                        <span class=""contact"">Contact: <span class=""name"">{2}</span><span class=""phone"">{3}</span><span class=""phone"">{4}</span></span>                        
+                    </div>
+
                     <table>
                         <tr>
-                            <td>
-                                <div>
-                                    <span class=""date"">Date: <span>{0}</span></span>
-
-                                    <span class=""customer"">Customer: <span>{1}</span></span>
-
-                                    <div class=""contact"">
-                                        <span class=""heading"">Customer Contact</span>
-
-                                        <span>{2}</span>
-                                        <span>{3}</span>
-                                        <span>{4}</span>
-                                    </div>
-                                
-                                </div>
-                            </td>
-                            <td class=""secondary"">
+                            <td class=""primary"">
                                 <div class=""owner"">
                                     <span class=""heading"">Owner/Agent (Name Address)</span>
 
@@ -525,11 +546,13 @@ namespace SingerDispatch.Printing.Documents
                                     <span>{6}</span>
                                     <span>{7}</span>
                                     <span>{8}</span>
+                                    <span>{9}</span>
                                 </div>
+                            </td>
+                            <td class=""secondary"">                                
                                 <div class=""store"">
                                     <span class=""heading"">Singer Storage (Name Address)</span>
-
-                                    <span>{9}</span>
+                                    
                                     <span>{10}</span>
                                     <span>{11}</span>
                                     <span>{12}</span>
@@ -537,31 +560,33 @@ namespace SingerDispatch.Printing.Documents
                                 </div>
                             </td>
                         </tr>
-                    </table>
+                    </table>                    
                 </div>
             ";
 
             var replacements = new string[14];
 
             replacements[0] = DateTime.Now.ToString(SingerConfigs.PrintedDateFormatString);
-            replacements[1] = (contact != null) ? contact.Company.Name : "";
+            replacements[1] = (company != null) ? company.Name : "";
+
             replacements[2] = (contact != null) ? contact.Name : "";
-            replacements[3] = (contact != null && !string.IsNullOrEmpty(contact.PrimaryPhone)) ? string.Format("Ph: {0}", contact.PrimaryPhone) : "";
-            replacements[4] = (contact != null && !string.IsNullOrEmpty(contact.Fax)) ? string.Format("Fax: {0}", contact.Fax) : "";
-            replacements[5] = SingerConfigs.GetConfig("SingerName") ?? "Singer Specialized Ltd.";
-            replacements[6] = SingerConfigs.GetConfig("SingerAddress-StreetAddress");
-            replacements[7] = SingerConfigs.GetConfig("SingerAddress-City");
-            replacements[8] = SingerConfigs.GetConfig("SingerAddress-Phone");
-            replacements[9] = (contact != null) ? contact.Company.Name : "";
-            replacements[10] = (address != null) ? address.Line1 : "";
-            replacements[11] = (address != null) ? address.Line2 : "";
+            replacements[3] = (contact != null && !string.IsNullOrEmpty(contact.PrimaryPhone)) ? string.Format("[ Ph: {0} ]", contact.PrimaryPhone) : "";
+            replacements[4] = (contact != null && !string.IsNullOrEmpty(contact.Fax)) ? string.Format("[ Fax: {0} ]", contact.Fax) : "";
 
             var city = (address != null) ? address.City : "";
             var prov = (address != null && address.ProvincesAndState != null) ? address.ProvincesAndState.Abbreviation : "";
             var postal = (address != null) ? address.PostalZip : "";
 
-            replacements[12] = (address != null) ? string.Format("{0}, {1} {2}", city, prov, postal) : "";
-            replacements[12] = (address != null) ? address.PrimaryPhone : "";
+            replacements[5] = (company != null) ? company.Name : "";
+            replacements[6] = (address != null) ? address.Line1 : "";
+            replacements[7] = (address != null) ? address.Line2 : "";
+            replacements[8] = (address != null) ? string.Format("{0}, {1} {2}", city, prov, postal) : "";
+            replacements[9] = (address != null) ? address.PrimaryPhone : "";
+
+            replacements[10] = SingerConfigs.GetConfig("SingerName") ?? "Singer Specialized Ltd.";
+            replacements[11] = SingerConfigs.GetConfig("SingerAddress-StreetAddress");
+            replacements[12] = SingerConfigs.GetConfig("SingerAddress-City");
+            replacements[13] = SingerConfigs.GetConfig("SingerAddress-Phone");
 
             return string.Format(html, replacements);
         }
@@ -572,25 +597,21 @@ namespace SingerDispatch.Printing.Documents
             var replacements = new string[3];
             var rows = new StringBuilder();
 
-            var owner = job.CareOfCompany;
-
-            if (owner == null)
-                owner = job.Company;
+            var company = job.CareOfCompany ?? job.Company;
 
             foreach (var item in job.StoredItems)
             {
                 var commodity = item.JobCommodity;
 
                 if (commodity != null)                
-                    rows.Append(GetCommodityRow(commodity.NameAndUnit, owner.Name, commodity.Length, commodity.Width, commodity.Height, commodity.Weight, item.BillingRate, item.BillingInterval, item.Notes));
+                    rows.Append(GetCommodityRow(commodity.NameAndUnit, company.Name, commodity.Length, commodity.Width, commodity.Height, commodity.Weight, item.BillingRate, item.BillingInterval, item.Notes));
             }
 
             replacements[0] = SingerConfigs.GetConfig("SingerName") ?? "Singer Specialized Ltd.";
-            replacements[1] = job.Company.Name;
+            replacements[1] = company.Name;
             replacements[2] = rows.ToString();
 
-            return string.Format(html, replacements);  
-
+            return string.Format(html, replacements);
         }
 
         public string GetCommodity(StorageItem item)
@@ -600,13 +621,13 @@ namespace SingerDispatch.Printing.Documents
             var rows = new StringBuilder();
 
             var commodity = item.JobCommodity;
-            var owner = item.JobCommodity.Owner;
+            var company = item.Job.CareOfCompany ?? item.Job.Company;
 
             if (commodity != null)
-                rows.Append(GetCommodityRow(commodity.NameAndUnit, owner.Name, commodity.Length, commodity.Width, commodity.Height, commodity.Weight, item.BillingRate, item.BillingInterval, item.Notes));            
+                rows.Append(GetCommodityRow(commodity.NameAndUnit, company.Name, commodity.Length, commodity.Width, commodity.Height, commodity.Weight, item.BillingRate, item.BillingInterval, item.Notes));            
 
             replacements[0] = SingerConfigs.GetConfig("SingerName") ?? "Singer Specialized Ltd.";
-            replacements[1] = (commodity != null && commodity.Owner != null) ? commodity.Owner.Name : ""; 
+            replacements[1] = company.Name;
             replacements[2] = rows.ToString();
 
             return string.Format(html, replacements);

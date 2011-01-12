@@ -930,7 +930,10 @@ namespace SingerDispatch
 
             foreach (var item in ThirdPartyServices)
                 cp.ThirdPartyServices.Add(item.Duplicate());
-            
+
+            foreach (var item in ReferenceNumbers)
+                cp.ReferenceNumbers.Add(item.Duplicate());
+
             return cp;
         }
 
@@ -958,6 +961,19 @@ namespace SingerDispatch
             }
 
             return output.ToString();
+        }
+    }
+
+    partial class LoadReferenceNumber
+    {
+        public LoadReferenceNumber Duplicate()
+        {
+            var cp = new LoadReferenceNumber();
+
+            cp.Field = Field;
+            cp.Value = Value;
+
+            return cp;
         }
     }
 
