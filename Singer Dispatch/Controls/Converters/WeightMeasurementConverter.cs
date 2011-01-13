@@ -35,8 +35,7 @@ namespace SingerDispatch.Controls
 
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, System.Globalization.CultureInfo culture)
         {
-            var result = new object[1];
-            double kg;
+            var result = new object[1];            
             var measurement = (string)value;
 
             measurement = measurement.Trim();
@@ -45,30 +44,29 @@ namespace SingerDispatch.Controls
             {
                 if (measurement.Length == 0)
                 {
-                    kg = 0;
-                }
-
-                if (measurement.EndsWith(MeasurementFormater.UPounds))
+                    result[0] = null;
+                } 
+                else if (measurement.EndsWith(MeasurementFormater.UPounds))
                 {
                     double pounds = Double.Parse(measurement.Replace(MeasurementFormater.UPounds, ""));
 
-                    kg = pounds * 0.45359237;
+                    result[0] = pounds * 0.45359237;
                 }
                 else if (measurement.EndsWith(MeasurementFormater.UKilograms))
                 {
-                    kg = Double.Parse(measurement.Replace(MeasurementFormater.UKilograms, ""));
+                    result[0] = Double.Parse(measurement.Replace(MeasurementFormater.UKilograms, "")); ;
                 }
                 else
                 {   
-                    kg = Double.Parse(measurement);
+                    var kg = Double.Parse(measurement);
 
                     // No unit was entered, so check what the users preference is
                     var settings = new UserSettings();
                     if (!settings.MetricMeasurements)
                         kg *= 0.45359237;
-                }
 
-                result[0] = kg;
+                    result[0] = kg;
+                }
             }
             catch
             {

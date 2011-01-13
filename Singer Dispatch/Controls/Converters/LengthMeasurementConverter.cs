@@ -37,8 +37,7 @@ namespace SingerDispatch.Controls
 
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, System.Globalization.CultureInfo culture)
         {
-            var result = new object[1];
-            double meters;
+            var result = new object[1];            
             var measurement = (string)value;
 
             measurement = measurement.Trim();
@@ -47,15 +46,15 @@ namespace SingerDispatch.Controls
             {
                 if (measurement.Length == 0)
                 {
-                    meters = 0;
+                    result[0] = null;
                 }
                 else if (measurement.EndsWith(MeasurementFormater.UMetres))
                 {
-                    meters = Double.Parse(measurement.Replace(MeasurementFormater.UMetres, ""));
+                    result[0] = Double.Parse(measurement.Replace(MeasurementFormater.UMetres, ""));
                 }
                 else if (measurement.EndsWith(MeasurementFormater.UCentimetres))
                 {
-                    meters = Double.Parse(measurement.Replace(MeasurementFormater.UCentimetres, "")) / 100;
+                    result[0] = Double.Parse(measurement.Replace(MeasurementFormater.UCentimetres, "")) / 100;
                 }
                 else if (measurement.Contains(MeasurementFormater.UFeet) || measurement.Contains(MeasurementFormater.UInches))
                 {
@@ -76,19 +75,19 @@ namespace SingerDispatch.Controls
                         inches = Double.Parse(tokens[0]);
                     }
 
-                    meters = inches / 39.37;
+                    result[0] = inches / 39.37;
                 }
                 else 
                 {
-                    meters = Double.Parse(measurement);
+                    var meters = Double.Parse(measurement);
 
                     // They didn't actually enter a unit, so we need to check what their preference is to see if feet was expected.
                     var settings = new UserSettings();
                     if (!settings.MetricMeasurements)
                         meters *= 0.3048;
-                }
 
-                result[0] = meters;
+                    result[0] = meters;
+                }
             }
             catch 
             {
