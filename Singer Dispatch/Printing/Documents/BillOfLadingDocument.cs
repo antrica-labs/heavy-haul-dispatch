@@ -251,6 +251,7 @@ namespace SingerDispatch.Printing.Documents
                     {
                         width: 60%;
                         border-left: 1px #000000 solid;
+                        font-size: 0.7em;
                     }    
             
                     div.bol_doc div.reference td.recipient div.shipper span, 
@@ -479,7 +480,7 @@ namespace SingerDispatch.Printing.Documents
                     div.bol_doc td.notice_of_claim p,
                     div.bol_doc td.declared_value span.subtext
                     {
-                        font-size: 0.8em;
+                        font-size: 0.7em;
                     }
             
                     div.bol_doc td.declared_value span.value
@@ -562,6 +563,15 @@ namespace SingerDispatch.Printing.Documents
                     {
                         width: 100%;
                         border: 1px #000000 solid;
+                    }
+            
+
+                    div.page_break
+                    {
+                        display: block;
+                        margin: 35px;
+                        height: 1px;
+                        border-top: 1px #454545 solid;
                     }
             
 

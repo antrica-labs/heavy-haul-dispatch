@@ -604,7 +604,7 @@ namespace SingerDispatch.Printing.Documents
                 <style type=""text/css"" media=""print"">
                     body
                     {
-                    	font-size: 10pt;
+                    	font-size: 8pt;
                         padding: 0;
                     }
                     
@@ -1574,7 +1574,10 @@ namespace SingerDispatch.Printing.Documents
                 </div>
             ";
 
-            return string.Format(content, dispatch.Notes);
+            if (!string.IsNullOrWhiteSpace(dispatch.Notes))
+                return string.Format(content, dispatch.Notes);
+            else
+                return "";
         }
     }
 }
