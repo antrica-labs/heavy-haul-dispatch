@@ -350,7 +350,7 @@ namespace SingerDispatch.Printing.Documents
                     div.dispatch_doc div.details span.customer
                     {
                         display: block;
-                        margin-bottom: 1em;
+                        margin-bottom: 0.8em;
                         font-weight: bold;
                     }
 
@@ -359,17 +359,16 @@ namespace SingerDispatch.Printing.Documents
                         font-weight: normal;
                     }
                     
-                    div.dispatch_doc div.details table.departure_info div.inner,
-                    div.dispatch_doc div.details table.customer_references div.inner 
+                    div.dispatch_doc div.details div.departure_info table,
+                    div.dispatch_doc div.details div.customer_references table
                     {
-                        margin-top: 1em;
+                        margin-top: 0.8em;
                     }
                     
                     div.dispatch_doc div.details td.field_name
                     {
                         font-weight: bold;
-                        white-space: nowrap;
-                        padding-bottom: 0.2em;
+                        white-space: nowrap;                        
                         padding-right: 0.75em;
                     }
                     
@@ -1236,7 +1235,7 @@ namespace SingerDispatch.Printing.Documents
 
                 replacements[0] = (item.Equipment != null) ? item.Equipment.UnitNumber : "";
                 replacements[1] = (item.Employee == null) ? "" : string.Format("{0} {1}", item.Employee.Name, item.Employee.Mobile);
-                replacements[2] = (item.Load != null && item.Load.TrailerCombination != null) ? item.Load.TrailerCombination.Combination : "";
+                replacements[2] = (item.Equipment != null && item.Equipment == item.Load.Equipment && item.Load.TrailerCombination != null) ? item.Load.TrailerCombination.Combination : "";
 
                 rows.Append(string.Format(row, replacements));
             }
