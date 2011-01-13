@@ -1353,7 +1353,7 @@ namespace SingerDispatch.Printing.Documents
             {
                 var replacements = new object[7];
 
-                replacements[0] = (item.ServiceDate == null) ? "" : item.ServiceDate.Value.ToString(SingerConfigs.PrintedDateFormatString) + " " + item.ServiceDate.Value.ToString(SingerConfigs.PrintedTimeFormatString);                
+                replacements[0] = (item.ServiceDate == null) ? "" : item.ServiceDate.Value.ToString(SingerConfigs.PrintedDateFormatString) + " " + item.ServiceTime;
                 replacements[1] = (item.Company == null) ? "" : item.Company.Name;
                 replacements[2] = (item.Contact == null) ? "" : item.Contact.Name;
                 replacements[3] = item.Location;
@@ -1421,7 +1421,7 @@ namespace SingerDispatch.Printing.Documents
             {
                 var replacements = new object[7];
 
-                replacements[0] = (item.ServiceDate == null) ? "" : item.ServiceDate.Value.ToString(SingerConfigs.PrintedDateFormatString) + " " + item.ServiceDate.Value.ToString(SingerConfigs.PrintedTimeFormatString);
+                replacements[0] = (item.ServiceDate == null) ? "" : item.ServiceDate.Value.ToString(SingerConfigs.PrintedDateFormatString) + " " + item.ServiceTime;
                 replacements[1] = (item.ServiceType == null) ? "" : item.ServiceType.Name;
                 replacements[2] = (item.Company == null) ? "" : item.Company.Name;
                 replacements[3] = (item.Contact == null) ? "" : item.Contact.Name;
@@ -1488,7 +1488,7 @@ namespace SingerDispatch.Printing.Documents
             {
                 var replacements = new object[6];
 
-                replacements[0] = (item.ServiceDate == null) ? "" : item.ServiceDate.Value.ToString(SingerConfigs.PrintedDateFormatString) + " " + item.ServiceDate.Value.ToString(SingerConfigs.PrintedTimeFormatString);
+                replacements[0] = (item.ServiceDate == null) ? "" : item.ServiceDate.Value.ToString(SingerConfigs.PrintedDateFormatString) + " " + item.ServiceTime;
                 replacements[1] = (item.Company == null)  ? "" : item.Company.Name;
                 replacements[2] = (item.Contact == null) ? "" : item.Contact.Name;
                 replacements[3] = item.Location;
