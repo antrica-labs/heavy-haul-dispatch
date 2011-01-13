@@ -273,8 +273,7 @@ namespace SingerDispatch.Printing.Documents
                     table.itemized th 
                     {
                         text-align: left;
-                        text-transform: uppercase;
-                        border-bottom: 1px #000000 solid;
+                        text-transform: uppercase;                        
                         padding: 0.2em;
                         padding-right: 0.5em;
                     }
@@ -293,7 +292,7 @@ namespace SingerDispatch.Printing.Documents
                     
                     table.itemized tr.details
                     {
-                        border-top: 1px #000000 solid;                       
+                                               
                     }
 
                     table.itemized tr.notes
@@ -304,6 +303,7 @@ namespace SingerDispatch.Printing.Documents
                     table.itemized tr.notes td
                     {
                         padding-bottom: 0.5em;
+                        border-top: none;
                     }
 
                     table.itemized tbody 
