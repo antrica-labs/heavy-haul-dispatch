@@ -342,9 +342,14 @@ namespace SingerDispatch.Printing.Documents
                         border-top: 1px #808080 solid;                        
                     }
                     
-                    div.dispatch_doc div.details
+                    div.dispatch_doc div.details table
                     {
-                        
+                        border-collapse: collapse;
+                    }
+
+                    div.dispatch_doc div.details table td
+                    {
+                        padding: 0.1em 0;
                     }
 
                     div.dispatch_doc div.details span.customer
@@ -700,7 +705,7 @@ namespace SingerDispatch.Printing.Documents
                         <tr>
                             <td class=""field_name"">Unit #:</td>
                             <td class=""value"">{1}</td>
-                            <td class=""field_name"">Type:</td>
+                            <td class=""field_name"">Equip. Type:</td>
                             <td class=""value"">{2}</td>
                         </tr>
                         <tr>
@@ -748,6 +753,11 @@ namespace SingerDispatch.Printing.Documents
 
                     if (dispatch.Load.TrailerCombination != null)
                         dispatchReplacements[4] += " - " + dispatch.Load.TrailerCombination.Combination;
+                }
+                else if (!string.IsNullOrWhiteSpace(dispatch.Responsibility))
+                {
+                    dispatchReplacements[3] = "Responsibility:";
+                    dispatchReplacements[4] = dispatch.Responsibility;
                 }
                 else
                 {

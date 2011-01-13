@@ -15907,6 +15907,8 @@ namespace SingerDispatch
 		
 		private System.Nullable<int> _Number;
 		
+		private string _Responsibility;
+		
 		private string _Description;
 		
 		private string _Schedule;
@@ -15953,6 +15955,8 @@ namespace SingerDispatch
     partial void OnEquipmentIDChanged();
     partial void OnNumberChanging(System.Nullable<int> value);
     partial void OnNumberChanged();
+    partial void OnResponsibilityChanging(string value);
+    partial void OnResponsibilityChanged();
     partial void OnDescriptionChanging(string value);
     partial void OnDescriptionChanged();
     partial void OnScheduleChanging(string value);
@@ -16137,6 +16141,26 @@ namespace SingerDispatch
 					this._Number = value;
 					this.SendPropertyChanged("Number");
 					this.OnNumberChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Responsibility")]
+		public string Responsibility
+		{
+			get
+			{
+				return this._Responsibility;
+			}
+			set
+			{
+				if ((this._Responsibility != value))
+				{
+					this.OnResponsibilityChanging(value);
+					this.SendPropertyChanging();
+					this._Responsibility = value;
+					this.SendPropertyChanged("Responsibility");
+					this.OnResponsibilityChanged();
 				}
 			}
 		}
