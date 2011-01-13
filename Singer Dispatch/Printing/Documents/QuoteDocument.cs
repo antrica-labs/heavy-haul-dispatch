@@ -130,9 +130,9 @@ namespace SingerDispatch.Printing.Documents
 
                     body
                     {
-                        font-size: 10pt;
-                        font-family: Verdana, Arial, Helvetica, sans-serif;
-                        padding: 10px;
+                        font-size: 12px;
+                        font-family: sans-serif;
+                        padding: 1em;
                     }
 
                     /***** SECTION STYLES *****/
@@ -165,7 +165,7 @@ namespace SingerDispatch.Printing.Documents
                     div#header td#quote_name span.title 
                     {                
                         font-size: 1.6em;
-                        margin: 20px 0;
+                        margin: 1em 0;
                     }
                     
                     div#header td#hq_location 
@@ -176,7 +176,7 @@ namespace SingerDispatch.Printing.Documents
                     
                     div#recipient 
                     {             
-                        margin-top: 50px;
+                        margin-top: 2.5em;
                     }
                     
                     div#recipient table
@@ -191,7 +191,7 @@ namespace SingerDispatch.Printing.Documents
                      
                     div#recipient span#quote_date
                     {
-                        margin-bottom: 20px;
+                        margin-bottom: 1em;
                     }
                     
                     div#recipient td#address 
@@ -208,35 +208,35 @@ namespace SingerDispatch.Printing.Documents
                     div#description 
                     {
                         clear: both;
-                        padding-top: 30px;
-                        margin-bottom: 25px;
+                        padding-top: 1.5em;
+                        margin-bottom: 1em;
                     }
                     
                     div#description table
                     {
-                    	margin-bottom: 10px;
+                    	margin-bottom: 0.5em;
                     }
                     
                     div#description td.fieldname 
                     {                        
                         font-weight: bold;
-                        padding-right: 10px;                        
+                        padding-right: 0.5em;                        
                     }
                     
                     div#commodities 
                     {
                         clear: both;
-                        margin-bottom: 30px;
+                        margin-bottom: 1.5em;
                     }
 
                     div#supplements 
                     {
-                        margin-bottom: 20px;
+                        margin-bottom: 1.5em;
                     }
                    
                     div#notes
                     {
-                        margin-bottom: 20px;
+                        margin-bottom: 1em;
                     }
 
 
@@ -249,7 +249,7 @@ namespace SingerDispatch.Printing.Documents
 
                     p
                     {
-                        margin-bottom: 15px;
+                        margin-bottom: 1em;
                     }
 
                     td
@@ -275,8 +275,8 @@ namespace SingerDispatch.Printing.Documents
                         text-align: left;
                         text-transform: uppercase;
                         border-bottom: 1px #000000 solid;
-                        padding: 4px;
-                        padding-right: 15px;                
+                        padding: 0.2em;
+                        padding-right: 0.5em;
                     }
 
                     table.itemized th span.sub 
@@ -286,9 +286,9 @@ namespace SingerDispatch.Printing.Documents
 
                     table.itemized td 
                     {
-                    	border-top: 1px;
-                        padding: 4px;                
-                        padding-right: 25px;
+                    	border-top: 1px #000000 solid;
+                        padding: 0.4em;                
+                        padding-right: 1.1em;
                     }
                     
                     table.itemized tr.details
@@ -303,7 +303,7 @@ namespace SingerDispatch.Printing.Documents
 
                     table.itemized tr.notes td
                     {
-                        padding-bottom: 10px;
+                        padding-bottom: 0.5em;
                     }
 
                     table.itemized tbody 
@@ -323,7 +323,7 @@ namespace SingerDispatch.Printing.Documents
 
                     div#price
                     {
-                        margin: 20px 0;
+                        margin: 1em 0;
                     }
                     
                     div#price span.heading
@@ -332,34 +332,34 @@ namespace SingerDispatch.Printing.Documents
                         display: inline;
                         text-transform: uppercase;
                         text-decoration: underline;
-                        padding-right: 15px;
+                        padding-right: 1em;
                     }                    
 
                     ol.conditions
                     {
                         list-style-type: decimal;
                         list-style-position: outside;
-                        padding-left: 25px;
-                        margin: 15px 25px;
+                        padding-left: 1em;
+                        margin: 1em 1.25em;
                     }
                     
                     ol.conditions li 
                     {
-                        padding: 2px 0;
+                        padding: 0.2em 0;
                     }
                 
                     div.page_break
                     {
                         display: block;
-                        margin: 35px;
+                        margin: 3em;
                         height: 1px;
                         border-top: 1px #454545 solid;
-                    } 
+                    }
                 </style>
                 <style type=""text/css"" media=""print"">
                     body
                     {
-                    	font-size: 13pt;
+                    	font-size: 9pt;
                         padding: 0;
                     }
 

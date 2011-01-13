@@ -166,9 +166,9 @@ namespace SingerDispatch.Printing.Documents
 
                     body
                     {
-                        font-size: 10pt;
-                        font-family: Verdana, Arial, Helvetica, sans-serif;
-                        padding: 10px;
+                        font-size: 12px;
+                        font-family: sans-serif;
+                        padding: 1em;
                     }
                     
                     table.jobs
@@ -192,7 +192,7 @@ namespace SingerDispatch.Printing.Documents
                     table.jobs td                    
                     {
                         border-bottom: 1px #000000 dotted;
-                        padding: 0.5em 0;
+                        padding: 0.5em 0.5em 0.5em 0;
                     }
                     
                     table.jobs tr.last td
@@ -201,9 +201,9 @@ namespace SingerDispatch.Printing.Documents
                     }
                 </style>
                 <style type=""text/css"" media=""print"">
-                    body
+                     body
                     {
-                    	font-size: 10pt;
+                    	font-size: 9pt;
                         padding: 0;
                     }
                 </style>

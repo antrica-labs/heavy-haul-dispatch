@@ -219,40 +219,13 @@ namespace SingerDispatch.Windows
         {
             try
             {
-                var document = (IHTMLDocument2)TheBrowser.Document;
-                var psKey = Registry.CurrentUser.CreateSubKey("SOFTWARE\\MICROSOFT\\Internet Explorer\\PageSetup");
-
-                var font = psKey.GetValue("font");
-                var header = psKey.GetValue("header");
-                var footer = psKey.GetValue("footer");
-                var mTop = psKey.GetValue("margin_top");
-                var mBottom = psKey.GetValue("margin_bottom");
-                var mLeft = psKey.GetValue("margin_left");
-                var mRight = psKey.GetValue("margin_right");
-                var printBackground = psKey.GetValue("Print_Background");
-                var srinkToFit = psKey.GetValue("Shrink_To_Fit");
-
-                psKey.SetValue("font", "");
-                psKey.SetValue("header", "");
-                psKey.SetValue("footer", "");
-                psKey.SetValue("margin_top", "0.39370");
-                psKey.SetValue("margin_bottom", "0.39370");
-                psKey.SetValue("margin_left", "0.39370");
-                psKey.SetValue("margin_right", "0.39370");
-                psKey.SetValue("Print_Background", "yes");
-                psKey.SetValue("Shrink_To_Fit", "yes");
-
-                document.execCommand("Print", true, null);
-
-                // The registry values actually need to be set back to way they original values AFTER the print job is done... not sure how to tell when printing is done though.
+                new PrintInProgressWindow((IHTMLDocument2)TheBrowser.Document).Run();
             }
             catch (Exception ex)
             {
                 ErrorNoticeWindow.ShowError("Printing error", ex.Message);
             }
-
         }
-
 
         private static string MakeValidFileName( string name )
         {

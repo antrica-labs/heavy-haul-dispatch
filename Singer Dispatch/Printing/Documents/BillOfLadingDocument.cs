@@ -155,8 +155,8 @@ namespace SingerDispatch.Printing.Documents
                     body
                     {
                         font-size: 8pt;
-                        font-family: Verdana, Arial, Helvetica, sans-serif;
-                        padding: 10px;
+                        font-family: sans-serif;
+                        padding: 1em;
                     } 
             
                     /*******/
@@ -191,7 +191,7 @@ namespace SingerDispatch.Printing.Documents
             
                     div.bol_doc p
                     {
-                        margin-bottom: 5px;
+                        margin-bottom: 0.25em;
                     }
             
                     div.bol_doc div.header table 
@@ -203,12 +203,12 @@ namespace SingerDispatch.Printing.Documents
                     div.bol_doc div.header td
                     {                
                         vertical-align: top;
-                        padding: 10px;
+                        padding: 0.5em;
                     }
                     
                     div.bol_doc div.header td.logo_col
                     {
-                        width: 200px;
+                        width: 300px;
                         
                     }
                     
@@ -216,7 +216,7 @@ namespace SingerDispatch.Printing.Documents
                     {             
                         text-align: center;
                         font-weight: bold;
-                        line-height: 1.35em;                  
+                        line-height: 1.35em;
                     }
                     
                     div.bol_doc div.header span
@@ -265,7 +265,7 @@ namespace SingerDispatch.Printing.Documents
                     {
                         display: block;
                         font-weight: bold;
-                        padding: 3px 7px;
+                        padding: 0.25em 0.4em;
                         border-bottom: 1px #000000 solid;
                     }
             
@@ -284,18 +284,18 @@ namespace SingerDispatch.Printing.Documents
             
                     div.bol_doc div.reference td.recipient div.shipper 
                     {
-                        padding: 3px 7px;
+                        padding: 0.25em 0.4em;
                         border-bottom: 1px #000000 solid;
                     }
             
                     div.bol_doc div.reference td.recipient div.consignee
                     {
-                        padding: 3px 7px;
+                        padding: 0.25em 0.4em;
                     }
             
                     div.bol_doc div.reference td.legal div
                     {                
-                        padding: 5px 7px;
+                        padding: 0.3em 0.4em;
                     }
             
                     div.bol_doc div.glass_damage
@@ -303,7 +303,7 @@ namespace SingerDispatch.Printing.Documents
                         clear: both;
                         text-align: center;
                         text-transform: uppercase;
-                        padding: 1px;
+                        padding: 0.1em;
                         border: 1px #000000 solid;                
                     }
             
@@ -330,7 +330,7 @@ namespace SingerDispatch.Printing.Documents
                     div.bol_doc div.commodity div.dangerous_goods,
                     div.bol_doc div.commodity div.weight
                     {
-                        padding: 5px;                
+                        padding: 0.3em;                
                     }
 
                     div.bol_doc div.commodity div.identification,
@@ -348,7 +348,7 @@ namespace SingerDispatch.Printing.Documents
                     div.bol_doc div.commodity div.dangerous_goods p
                     {
                         font-weight: bold;
-                        margin: 5px 0 15px 0;
+                        margin: 0.25em 0 0.8em 0;
                     }
             
                     div.bol_doc div.commodity table.dimensions
@@ -358,7 +358,7 @@ namespace SingerDispatch.Printing.Documents
             
                     div.bol_doc div.commodity table.dimensions td
                     {
-                        padding-bottom: 3px;
+                        padding-bottom: 0.25em;
                     }
             
                     div.bol_doc div.commodity table.dimensions td.heading
@@ -376,14 +376,14 @@ namespace SingerDispatch.Printing.Documents
             
                     div.bol_doc div.commodity td.charges
                     {
-                        padding: 5px;
+                        padding: 0.3em;
                         border-left: 1px #000000 solid;
                     }
             
                     div.bol_doc div.commodity table.payment_types
                     {
                         width: 100%;
-                        margin-top: 3px;
+                        margin-top: 0.25em;
                     }
             
                     div.bol_doc div.commodity table.payment_types span.checkbox span.ballet
@@ -395,7 +395,7 @@ namespace SingerDispatch.Printing.Documents
                     {
                         display: block;
                         font-size: 0.8em;
-                        margin: 3px 0;
+                        margin: 0.25em 0;
                     }
                        
                     div.bol_doc div.commodity table.amounts
@@ -410,7 +410,7 @@ namespace SingerDispatch.Printing.Documents
                         width: 25%;
                         border-right: 1px #000000 dotted;
                         border-top: 1px #000000 dotted;
-                        padding: 5px;
+                        padding: 0.3em;
                         font-weight: normal;
                     }
             
@@ -436,8 +436,8 @@ namespace SingerDispatch.Printing.Documents
 
                     div.bol_doc table.additional_info td div.content
                     {
-                        padding: 5px;
-                        min-height: 60px;
+                        padding: 0.3em;
+                        min-height: 1.5em;
                     }
 
                     div.bol_doc td.dangerous_goods, 
@@ -462,14 +462,15 @@ namespace SingerDispatch.Printing.Documents
 
                     div.bol_doc td.comments_and_initials p
                     {
-                        margin-top: 5px;
+                        margin-top: 0.3em;
                     }
                     
                     div.bol_doc td.comments_and_initials div.initials
                     {
-                        float:right;
-                        padding: 20px 0;
+                        float: right;
+                        padding: 1em 0;
                         width: 15%;
+                        margin-bottom: 0.1em;
                         border: 1px #000000 solid;
                     }
                    
@@ -499,8 +500,8 @@ namespace SingerDispatch.Printing.Documents
                         display: block;
                         border-bottom: 1px dotted #000000;
                         font-weight: bold;
-                        padding: 5px 0;
-                        margin: 5px;
+                        padding: 0.3em 0;
+                        margin: 0.3em;
                     }
             
                     div.bol_doc div.declared_value
@@ -519,7 +520,7 @@ namespace SingerDispatch.Printing.Documents
                     div.bol_doc table.declaration
                     {
                         width: 100%;
-                        margin-bottom: 10px;
+                        margin-bottom: 0.5em;
                     }            
             
                     div.bol_doc table.declaration th.date, 
@@ -532,7 +533,7 @@ namespace SingerDispatch.Printing.Documents
                     div.bol_doc table.declaration td span
                     {
                         display: block;
-                        padding: 5px;
+                        padding: 0.3em;
                     }
             
                     div.bol_doc table.declaration td.title
@@ -543,7 +544,7 @@ namespace SingerDispatch.Printing.Documents
             
                     div.bol_doc table.declaration td.date
                     {
-                        width: 200px;
+                        
                     }
             
                     div.bol_doc table.declaration td.fill

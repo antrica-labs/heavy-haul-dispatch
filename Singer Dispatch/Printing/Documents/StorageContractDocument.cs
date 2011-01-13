@@ -210,7 +210,7 @@ namespace SingerDispatch.Printing.Documents
                     body
                     {
                         font-size: 12px;
-                        font-family: Verdana, Arial, Helvetica, sans-serif;
+                        font-family: sans-serif;
                         padding: 10px;
                     }
 
@@ -219,6 +219,7 @@ namespace SingerDispatch.Printing.Documents
                 <style type=""text/css"" media=""print"">
                     body
                     {
+                        font-size: 10px;
                         padding: 0;
                     }
 
@@ -435,7 +436,6 @@ namespace SingerDispatch.Printing.Documents
                 {
                     clear: both;
                     display: block;
-                    padding-top: 20px;
                     border-bottom: 1px #000000 dotted;
                 }
                 
@@ -743,15 +743,23 @@ namespace SingerDispatch.Printing.Documents
                     <table>
                         <tr>
                             <td>
+                                <br><br>
+
                                 <span class=""signline"">x</span>
                                 <span class=""subtext""><span>Certification - (Singer Print)</span> <span class=""date"">Date</span></span>
+
+                                <br><br><br>
 
                                 <span class=""signline"">x</span>
                                 <span class=""subtext""><span>Certification - (Singer Sign)</span> <span class=""date"">Date</span></span>
                             </td>
                             <td class=""secondary"">
+                                <br><br>
+
                                 <span class=""signline"">x</span>
                                 <span class=""subtext""><span>Certification - (Owner/Agent Print)</span> <span class=""date"">Date</span></span>
+
+                                <br><br><br>
 
                                 <span class=""signline"">x</span>
                                 <span class=""subtext""><span>Certification - (Owner/Agent Sign)</span> <span class=""date"">Date</span></span>

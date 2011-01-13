@@ -105,10 +105,10 @@ namespace SingerDispatch.Printing.Documents
 
                     body
                     {
-                        font-size: 14pt;
-                        font-family: Verdana, Arial, Helvetica, sans-serif;
+                        font-size: 18px;
+                        font-family: sans-serif;
                         line-height: 1.5em;                
-                        padding: 10px;
+                        padding: 2em;
                     }
                     
                     div#header span 
@@ -129,7 +129,7 @@ namespace SingerDispatch.Printing.Documents
                     
                     div#header td#document_name 
                     {                
-                        text-align: center;                
+                        text-align: right;                
                     }
                     
                     div#header td#document_name span.title 
@@ -140,7 +140,7 @@ namespace SingerDispatch.Printing.Documents
                     div#header td#document_name span.date
                     {
                         font-size: 1.1em;
-                        margin-top: 10px;   
+                        margin-top: 0.5em;   
                     }
                     
                     div#header td#hq_location 
@@ -153,7 +153,7 @@ namespace SingerDispatch.Printing.Documents
                         font-size: 1.2em;
                         display: block;
                         font-weight: bold;
-                        margin-top: 30px;
+                        margin-top: 1.5em;
                     }      
             
                     span.commodity_name span.unit
@@ -163,30 +163,30 @@ namespace SingerDispatch.Printing.Documents
 
                     div.commodity_details
                     {
-                        padding: 10px;                        
+                        padding: 0.5em;                        
                     }
 
                     div.commodity_details span
                     {
                         display: block;
-                        margin-bottom: 2px;
+                        margin-bottom: 0.1em;
                     }
 
                     div.location
                     {
-                        padding: 10px;
-                        margin-bottom: 30px;
+                        padding: 0.5em;
+                        margin-bottom: 1.5em;
                     }
 
                     div.contact
                     {
-                        margin-bottom: 40px;
+                        margin-bottom: 2.5em;
                     }
 
                     div.contact span
                     {
                         display: block;
-                        margin-bottom: 2px;
+                        margin-bottom: 0.1em;
                     }
 
                     div.contact span.company
@@ -204,8 +204,7 @@ namespace SingerDispatch.Printing.Documents
                 <style type=""text/css"" media=""print"">
                     body
                     {
-                        font-size: 24pt;
-                        padding: 0;
+                        font-size: 16pt;
                     }
                     
                     div.page_break

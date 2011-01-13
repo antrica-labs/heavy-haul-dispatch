@@ -323,6 +323,9 @@
     <Compile Include="Windows\PdfCreationWindow.xaml.cs">
       <DependentUpon>PdfCreationWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Windows\PrintInProgressWindow.xaml.cs">
+      <DependentUpon>PrintInProgressWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\QuoteLocatorWindow.xaml.cs">
       <DependentUpon>QuoteLocatorWindow.xaml</DependentUpon>
     </Compile>
@@ -595,6 +598,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Windows\PdfCreationWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\PrintInProgressWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

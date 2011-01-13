@@ -219,7 +219,6 @@ namespace SingerDispatch.Printing.Documents
                     body 
                     {
                         line-height: 1.2em;
-                        padding: 5px;
                     }
                     ol, ul 
                     {
@@ -261,15 +260,15 @@ namespace SingerDispatch.Printing.Documents
                     body
                     {                        
                         font-size: 8pt;
-                        font-family: Verdana, Arial, Helvetica, sans-serif;
-                        padding: 10px;
+                        font-family: sans-serif;
+                        padding: 1em;
                     }
                     
                     /*******/                    
                     div.dispatch_doc span.error
                     {
                         display: block;
-                        font-weight; bold;
+                        font-weight: bold;
                         text-align: center;
                     }
 
@@ -292,13 +291,12 @@ namespace SingerDispatch.Printing.Documents
                     div.dispatch_doc div.header td
                     {                
                         vertical-align: top;
-                        padding: 10px;
+                        padding: 0.5em;
                     }
                     
                     div.dispatch_doc div.header td.logo_col
                     {
-                        width: 200px;
-                        
+                        width: 300px;
                     }
                     
                     div.dispatch_doc div.header td.address_col
@@ -313,7 +311,7 @@ namespace SingerDispatch.Printing.Documents
                         font-weight: bold;
                         font-size: 2.5em;                        
                         line-height: 1.1em;
-                        padding: 15px 5px;
+                        padding: 0.75em 0.25px;
                         border: 1px #565656 solid;
                     }
                     
@@ -347,35 +345,35 @@ namespace SingerDispatch.Printing.Documents
                     
                     div.dispatch_doc div.details
                     {
-                        padding: 10px;                
+                        padding: 0.5em;                
                     }            
                     
                     div.dispatch_doc div.details table.dispatch_info, div.details table.departure_info
                     {   
-                        margin-bottom: 10px;
+                        margin-bottom: 0.5em;
                     }
                     
                     div.dispatch_doc div.details td.field_name
                     {
                         font-weight: bold;
                         white-space: nowrap;
-                        padding-bottom: 5px;
-                        padding-right: 10px;
+                        padding-bottom: 0.2em;
+                        padding-right: 0.75em;
                     }
                     
                     div.dispatch_doc div.details td.value
                     {
-                        padding-right: 15px;
+                        padding-right: 1em;
                     }
 
                     div.dispatch_doc div.details table.dispatch_info td.value
                     {
-                        padding-right: 35px;
+                        padding-right: 2.5em;
                     }
                     
                     div.dispatch_doc div.section
                     {
-                        padding: 10px;
+                        padding: 0.75em;
                         margin-top: 2px;
                         border-top: 2px #808080 solid;
                     }
@@ -385,7 +383,7 @@ namespace SingerDispatch.Printing.Documents
                     	text-decoration: underline;
                         font-weight: bold;
                         display: block;                
-                        margin-bottom: 10px;
+                        margin-bottom: 0.6em;
                     }
 
                     div.dispatch_doc div.section span.subheading
@@ -396,8 +394,8 @@ namespace SingerDispatch.Printing.Documents
 
                     div.dispatch_doc div.load_and_unload div.commodity
                     {
-                    	margin: 5px 0;
-                    	padding: 10px;                    	
+                    	margin: 0.3em 0;
+                    	padding: 0.5em;                    	
                     }
 
                     div.dispatch_doc hr
@@ -413,8 +411,8 @@ namespace SingerDispatch.Printing.Documents
                         text-decoration: underline;
                         display: block;
                         font-weight: bold;
-                        margin-bottom: 15px;
-                        margin-left: -10px;
+                        margin-bottom: 0.75em;
+                        margin-left: -0.5em;
                     }
 
                     div.dispatch_doc div.load_and_unload div.dimensions
@@ -430,18 +428,18 @@ namespace SingerDispatch.Printing.Documents
 
                     div.dispatch_doc div.load_and_unload div.loading, div.dispatch_doc div.load_and_unload div.unloading
                     {
-                        margin-top: 15px;
+                        margin-top: 0.75em;
                     }
                     
                     div.dispatch_doc div.load_and_unload div.loading span.subheading, div.dispatch_doc div.load_and_unload div.unloading span.subheading
                     {
                         text-decoration: underline;
-                        margin-bottom: 5px;
+                        margin-bottom: 0.3em;
                     }
 
                     div.dispatch_doc div.load_and_unload td
                     {
-                        padding: 3px 10px;
+                        padding: 0.3em 0.5em;
                     }
 
                     div.dispatch_doc div.load_and_unload table.details
@@ -457,7 +455,7 @@ namespace SingerDispatch.Printing.Documents
                     div.dispatch_doc div.load_and_unload table.details td span.inner
                     {
                         display: block;
-                        min-height: 25px;
+                        min-height: 1em;
                     }
 
                     div.dispatch_doc div.load_and_unload table.details td span.contact
@@ -467,12 +465,12 @@ namespace SingerDispatch.Printing.Documents
 
                     div.dispatch_doc div.load_and_unload table.details td.date
                     {
-                    	width: 70px;
+                    	width: 6em;
                     }
                     
                     div.dispatch_doc div.load_and_unload table.details td.time
                     {
-                    	width: 45px;
+                    	width: 4em;
                     }
 
                     div.dispatch_doc div.load_and_unload table.details td.location span.inner span
@@ -482,17 +480,17 @@ namespace SingerDispatch.Printing.Documents
 
                     div.dispatch_doc div.load_and_unload table.details td.contact
                     {
-                    	width: 130px;
+                    	width: 10em;
                     }
                     
                     div.dispatch_doc div.load_and_unload table.details td.company
                     {
-                    	width: 120px;
+                    	width: 10em;
                     }
 
                     div.dispatch_doc div.load_and_unload table.instructions
                     {
-                        margin-top: 10px;
+                        margin-top: 0.5em;
                         width: 100%;
                     }
 
@@ -504,18 +502,18 @@ namespace SingerDispatch.Printing.Documents
                     div.dispatch_doc div.load_and_unload table.instructions td span.inner
                     {
                         display: block;
-                        min-height: 25px;
+                        min-height: 1em;
                     }
 
                     div.dispatch_doc div.dimensions span
                     {
-                        padding-right: 15px;
+                        padding-right: 0.75em;
                     }
 
                     div.dispatch_doc div.dimensions table.dimensions
                     {
                         width: 100%;
-                        margin-bottom: 10px;
+                        margin-bottom: 0.5em;
                     }                    
                     
                     div.dispatch_doc div.dimensions table.weights th
@@ -526,13 +524,13 @@ namespace SingerDispatch.Printing.Documents
                     div.dispatch_doc div.dimensions table.weights td
                     {
                         text-align: center;
-                        padding: 5px;
+                        padding: 0.3em;
                         border: solid 1px #A9A9A9;
                     }
                     
                     div.dispatch_doc div.dimensions table.weights td
                     {
-                    	width: 75px;
+                    	width: 8em;
                     }
                     
                     div.dispatch_doc div.dimensions table.weights td.row_name
@@ -541,13 +539,13 @@ namespace SingerDispatch.Printing.Documents
                         width: auto;
                         font-weight: bold;
                         border: none;
-                        padding-right: 3px;
+                        padding-right: 0.2em;
                     }
                                         
                     div.dispatch_doc table.simple_breakdown th, div.dispatch_doc table.simple_breakdown td
                     {
-                        padding-right: 20px;
-                        padding-bottom: 5px;
+                        padding-right: 0.9em;
+                        padding-bottom: 0.3em;
                     }
 
                     div.dispatch_doc table.simple_breakdown td.quantity
@@ -563,19 +561,19 @@ namespace SingerDispatch.Printing.Documents
 
                     div.dispatch_doc table.commented_breakdown th
                     {
-                        padding-bottom: 10px;
+                        padding-bottom: 0.5em;
                     }
 
                     div.dispatch_doc table.commented_breakdown tr.details td
                     {
                     	border-top: 1px solid #E9E9E9;  
-                    	padding-top: 10px;                  	
+                    	padding-top: 0.5em;                  	
                     }
 
                     div.dispatch_doc table.commented_breakdown tr.comments td
                     {
-                        padding: 5px 10px;
-                        padding-bottom: 10px;                        
+                        padding: 0.25em 0.5em;
+                        padding-bottom: 0.5em;                        
                     }
                     
                     %BOL_SCREEN%
