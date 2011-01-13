@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Collections.ObjectModel;
 using SingerDispatch.Windows;
+using System;
 
 namespace SingerDispatch.Panels.Loads
 {
@@ -147,6 +148,30 @@ namespace SingerDispatch.Panels.Loads
 
             SelectedItem = null;
             SelectedItem = item;
+        }
+
+        private void UpdateCompanies_Click(object sender, RoutedEventArgs e)
+        {
+            var service = (ThirdPartyService)dgServices.SelectedItem;
+
+            if (service == null) return;
+
+            var window = new CreateCompanyWindow(Database) { Owner = Application.Current.MainWindow };
+            var company = window.CreateCompany();
+
+            if (company == null) return;
+
+            try
+            {
+                Database.SubmitChanges();
+                CompanyList.Add(company);
+
+                service.Company = company;
+            }
+            catch (Exception ex)
+            {
+                ErrorNoticeWindow.ShowError("Error while adding company to database", ex.Message);
+            }
         }
     }
 }
