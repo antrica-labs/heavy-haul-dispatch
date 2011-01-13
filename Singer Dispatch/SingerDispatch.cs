@@ -614,19 +614,6 @@ namespace SingerDispatch
             }
         }
 
-        public string UnitAndName
-        {
-            get
-            {
-                var name = Name;
-
-                if (!string.IsNullOrEmpty(Unit))
-                    name = Unit + " - " + name;
-
-                return name;
-            }
-        }
-
         public JobCommodity Duplicate()
         {
             var copy = new JobCommodity();
@@ -844,7 +831,7 @@ namespace SingerDispatch
             weight = 0;
             weight += EWeightSteer ?? 0.0;
             weight += EWeightDrive ?? 0.0;
-            weight += EWeightGroup1 ?? 0.0;
+            weight += EWeightGroup1 ?? 0.0; 
             weight += EWeightGroup2 ?? 0.0;
             weight += EWeightGroup3 ?? 0.0;
             weight += EWeightGroup4 ?? 0.0;

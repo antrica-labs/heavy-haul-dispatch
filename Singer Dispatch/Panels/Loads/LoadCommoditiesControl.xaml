@@ -13,9 +13,7 @@
                 <ResourceDictionary Source="/SingerDispatchDictionary.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
-            <DataTemplate x:Key="UnitAndNameTemplate">
-                <TextBlock Text="{Binding UnitAndName}" />
-            </DataTemplate>
+            
             <DataTemplate x:Key="EquipmentNameTemplate">
                 <TextBlock Text="{Binding UnitNumber}" />
             </DataTemplate>
@@ -133,7 +131,7 @@
                     </Grid.RowDefinitions>
 
                     <Label Grid.Column="0" Grid.Row="0">Name:</Label>
-                    <ComboBox Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="7" Name="cmbCommodityName" ItemTemplate="{StaticResource UnitAndNameTemplate}" TextSearch.TextPath="Name" IsEditable="False" SelectedItem="{Binding JobCommodity}" Controls:ComboUtil.AllowNull="True" SelectionChanged="cmbCommodityName_SelectionChanged" />
+                    <ComboBox Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="7" Name="cmbCommodityName" ItemTemplate="{StaticResource NameAndUnitTemplate}" TextSearch.TextPath="Name" IsEditable="False" SelectedItem="{Binding JobCommodity}" Controls:ComboUtil.AllowNull="True" SelectionChanged="cmbCommodityName_SelectionChanged" />
 
                     <Button Grid.Column="8" Grid.Row="0" Style="{StaticResource HorizontalEnd}" Padding="3,0,3,0" Click="FillLocations_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=cmbCommodityName, Path=SelectedItem}">Fill locations</Button>
                     

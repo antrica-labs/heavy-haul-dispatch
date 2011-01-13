@@ -22,11 +22,8 @@ namespace SingerDispatch.Controls
                 {
                     if (list[i].JobCommodity == null)
                         continue;
-                 
-                    if (!string.IsNullOrWhiteSpace(list[i].JobCommodity.Unit))
-                        output.Append(list[i].JobCommodity.Unit + " - ");
-
-                    output.Append(list[i].JobCommodity.Name);
+                                     
+                    output.Append(list[i].JobCommodity.NameAndUnit);
 
                     if ((i + 1) != list.Count)
                         output.Append(", ");
