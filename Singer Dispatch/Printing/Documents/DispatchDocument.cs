@@ -336,21 +336,21 @@ namespace SingerDispatch.Printing.Documents
                     {
                         display: block;
                         font-weight: bold;
-                        font-size: 1.5em;
-                        padding: 0.5em 0.3em;
+                        font-size: 1.4em;
+                        padding: 0.3em;
                         text-align: center;
-                        border-top: 2px #808080 solid;
-                        border-bottom: 2px #808080 solid;
+                        border-top: 1px #808080 solid;                        
                     }
                     
                     div.dispatch_doc div.details
                     {
-                        padding: 0.5em;                
+                        
                     }            
                     
-                    div.dispatch_doc div.details table.dispatch_info, div.details table.departure_info
-                    {   
-                        margin-bottom: 0.5em;
+                    div.dispatch_doc div.details table.departure_info div.inner,
+                    div.dispatch_doc div.details table.customer_references div.inner 
+                    {
+                        margin-top: 0.6em;
                     }
                     
                     div.dispatch_doc div.details td.field_name
@@ -374,8 +374,7 @@ namespace SingerDispatch.Printing.Documents
                     div.dispatch_doc div.section
                     {
                         padding: 0.75em;
-                        margin-top: 2px;
-                        border-top: 2px #808080 solid;
+                        border-top: 1px #808080 solid;
                     }
                     
                     div.dispatch_doc div.section span.heading
@@ -675,7 +674,7 @@ namespace SingerDispatch.Printing.Documents
         private static string GetDetails(Dispatch dispatch)
         {
             const string html = @"
-                <div class=""details"">
+                <div class=""details section"">
                     {0}
                     
                     {1}
@@ -805,7 +804,10 @@ namespace SingerDispatch.Printing.Documents
             var referenceReplacement = (references.Length > 0) ? string.Format(rowTemplate, "Customer References", references.ToString()) : "";
 
 
-            return string.Format(html, string.Format(dispatchInfo, dispatchReplacements), string.Format(departureInfo, departureReplacement), string.Format(referenceInfo, referenceReplacement));
+            var dispatchSection = @"<div class=""inner"">" + string.Format(departureInfo, departureReplacement) + "</div>";
+            var referenceSection = @"<div class=""inner"">" + string.Format(referenceInfo, referenceReplacement) + "</div>";
+
+            return string.Format(html, string.Format(dispatchInfo, dispatchReplacements), dispatchSection, referenceSection);
         }
 
         private static string GetDescription(string description)
@@ -862,7 +864,7 @@ namespace SingerDispatch.Printing.Documents
 
             foreach (var item in equipment)
             {
-                var replacements = new object[3];
+                var replacements = new object[3]; 
 
                 replacements[0] = (item.ExtraEquipmentType != null) ? item.ExtraEquipmentType.Name : "";
                 replacements[1] = item.Quantity;

@@ -228,10 +228,10 @@ namespace SingerDispatch.Printing.Documents
                     {
                         display: block;
                         font-weight: bold;
-                        font-size: 1.5em;
+                        font-size: 1.4em;
                         padding: 0.5em 0.3em;
                         text-align: center;
-                        border-top: 2px #000000 solid;
+                        border-top: 1px #000000 solid;
                         border-bottom: 1px #000000 solid;
                     }
             
