@@ -47,7 +47,7 @@ namespace SingerDispatch.Windows
 
             try
             {
-                Company.CompanyPriorityLevel = (from p in Database.CompanyPriorityLevels where p.Name.EndsWith("Regular") select p).First();
+                Company.CompanyPriorityLevel = (from p in Database.CompanyPriorityLevels where p.Level == 8 select p).First();
             }
             catch { }
         }

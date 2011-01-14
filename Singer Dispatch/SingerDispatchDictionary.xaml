@@ -113,6 +113,7 @@
     
     <Style TargetType="TextBox" x:Key="BadInfo" BasedOn="{StaticResource {x:Type TextBox}}">
         <Setter Property="Foreground" Value="Red" />
+        <Setter Property="FontWeight" Value="Bold" />
     </Style>
 
     <Style TargetType="TextBox" x:Key="GoodInfo" BasedOn="{StaticResource {x:Type TextBox}}">

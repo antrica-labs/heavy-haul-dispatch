@@ -511,8 +511,9 @@ namespace SingerDispatch
         private void txtCompanyPriorityLevel_TextChanged(object sender, TextChangedEventArgs e)
         {
             var box = (TextBox)sender;
+            var company = acCompany.SelectedItem as Company;
 
-            if (box.Text.ToUpper().Contains("DO NOT HAUL"))
+            if (company != null && company.CompanyPriorityLevel.Level >= 6)
                 box.Style = TryFindResource("BadInfo") as Style;
             else
                 box.Style = TryFindResource("GoodInfo") as Style;

@@ -51,12 +51,14 @@ namespace SingerDispatch.Importer
             // Populate priority levels
             var levels = new List<CompanyPriorityLevel>();
 
-            levels.Add(new CompanyPriorityLevel { Name = "1. Elite" });
-            levels.Add(new CompanyPriorityLevel { Name = "2. Prestige" });
-            levels.Add(new CompanyPriorityLevel { Name = "3. Premier" });
-            levels.Add(new CompanyPriorityLevel { Name = "4. Regular" });
-            levels.Add(new CompanyPriorityLevel { Name = "5. Cash on Delivery" });
-            levels.Add(new CompanyPriorityLevel { Name = "6. Do not haul" });
+            levels.Add(new CompanyPriorityLevel { Name = "Elite", Level = 1 });
+            levels.Add(new CompanyPriorityLevel { Name = "Prestige", Level = 2 });
+            levels.Add(new CompanyPriorityLevel { Name = "Premier", Level = 3 });
+            levels.Add(new CompanyPriorityLevel { Name = "Regular", Level = 4 });
+            levels.Add(new CompanyPriorityLevel { Name = "Cash on Delivery", Level = 5 });
+            levels.Add(new CompanyPriorityLevel { Name = "Do Not Haul", Level = 6 });
+            levels.Add(new CompanyPriorityLevel { Name = "Arrears", Level = 7 });
+            levels.Add(new CompanyPriorityLevel { Name = "Not Approved", Level = 8 });
 
             Database.CompanyPriorityLevels.InsertAllOnSubmit(levels);
 
@@ -64,12 +66,12 @@ namespace SingerDispatch.Importer
             // Populate seasons
             var seasons = new List<Season>();
 
-            seasons.Add(new Season { Name = "%  Weight Restriction" });
-            seasons.Add(new Season { Name = "Fall Weight Restriction" });
-            seasons.Add(new Season { Name = "Post Weight Restriction" });
-            seasons.Add(new Season { Name = "Spring Weight Restriction" });
-            seasons.Add(new Season { Name = "Summer Weight Restriction" });
-            seasons.Add(new Season { Name = "Winter Weight Restriction" });
+            seasons.Add(new Season { Name = "%  Weight Restriction", SortOrder = 0 });
+            seasons.Add(new Season { Name = "Fall Weight Restriction",SortOrder = 4  });
+            seasons.Add(new Season { Name = "Post Weight Restriction", SortOrder = 2 });
+            seasons.Add(new Season { Name = "Spring Weight Restriction", SortOrder = 1 });
+            seasons.Add(new Season { Name = "Summer Weight Restriction", SortOrder = 3 });
+            seasons.Add(new Season { Name = "Winter Weight Restriction", SortOrder = 5 });
 
             Database.Seasons.InsertAllOnSubmit(seasons);
 

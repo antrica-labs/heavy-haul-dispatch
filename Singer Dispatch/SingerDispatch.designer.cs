@@ -2953,6 +2953,8 @@ namespace SingerDispatch
 		
 		private string _Name;
 		
+		private System.Nullable<int> _Level;
+		
 		private EntitySet<Company> _Companies;
 		
     #region Extensibility Method Definitions
@@ -2963,6 +2965,8 @@ namespace SingerDispatch
     partial void OnIDChanged();
     partial void OnNameChanging(string value);
     partial void OnNameChanged();
+    partial void OnLevelChanging(System.Nullable<int> value);
+    partial void OnLevelChanged();
     #endregion
 		
 		public CompanyPriorityLevel()
@@ -3007,6 +3011,26 @@ namespace SingerDispatch
 					this._Name = value;
 					this.SendPropertyChanged("Name");
 					this.OnNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Level")]
+		public System.Nullable<int> Level
+		{
+			get
+			{
+				return this._Level;
+			}
+			set
+			{
+				if ((this._Level != value))
+				{
+					this.OnLevelChanging(value);
+					this.SendPropertyChanging();
+					this._Level = value;
+					this.SendPropertyChanged("Level");
+					this.OnLevelChanged();
 				}
 			}
 		}
@@ -13962,6 +13986,8 @@ namespace SingerDispatch
 		
 		private string _Name;
 		
+		private System.Nullable<int> _SortOrder;
+		
 		private EntitySet<Load> _Loads;
 		
     #region Extensibility Method Definitions
@@ -13972,6 +13998,8 @@ namespace SingerDispatch
     partial void OnIDChanged();
     partial void OnNameChanging(string value);
     partial void OnNameChanged();
+    partial void OnSortOrderChanging(System.Nullable<int> value);
+    partial void OnSortOrderChanged();
     #endregion
 		
 		public Season()
@@ -14016,6 +14044,26 @@ namespace SingerDispatch
 					this._Name = value;
 					this.SendPropertyChanged("Name");
 					this.OnNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SortOrder")]
+		public System.Nullable<int> SortOrder
+		{
+			get
+			{
+				return this._SortOrder;
+			}
+			set
+			{
+				if ((this._SortOrder != value))
+				{
+					this.OnSortOrderChanging(value);
+					this.SendPropertyChanging();
+					this._SortOrder = value;
+					this.SendPropertyChanged("SortOrder");
+					this.OnSortOrderChanged();
 				}
 			}
 		}

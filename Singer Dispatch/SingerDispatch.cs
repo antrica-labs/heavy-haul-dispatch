@@ -768,7 +768,6 @@ namespace SingerDispatch
             cp.IssuingCompany = IssuingCompany;
             cp.PermitType = PermitType;            
             cp.Conditions = Conditions;
-            cp.Cost = Cost;
 
             return cp;
         }

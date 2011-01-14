@@ -121,7 +121,7 @@ namespace SingerDispatch.Panels.Loads
         {
             if (SelectedLoad == null) return;
 
-            cmbSeasons.ItemsSource = from s in Database.Seasons select s;
+            cmbSeasons.ItemsSource = from s in Database.Seasons orderby s.SortOrder select s;
             cmbRates.ItemsSource = GetCompanyRates(SelectedCompany);
             cmbUnits.ItemsSource = (SelectedLoad == null) ? null : from u in Database.Equipment where u.Archived != true && u.EquipmentType.EquipmentClass.Name == "Tractor" orderby u.UnitNumber select u;
 

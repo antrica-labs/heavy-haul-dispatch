@@ -106,6 +106,7 @@
     <Type Name="CompanyPriorityLevel">
       <Column Name="ID" Type="System.Int64" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Name" Type="System.String" CanBeNull="true" />
+      <Column Name="Level" Type="System.Int32" CanBeNull="true" />
       <Association Name="CompanyPriorityLevel_Company" Member="Companies" ThisKey="ID" OtherKey="PriorityLevelID" Type="Company" />
     </Type>
   </Table>
@@ -587,6 +588,7 @@
     <Type Name="Season">
       <Column Name="ID" Type="System.Int64" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Name" Type="System.String" CanBeNull="true" />
+      <Column Name="SortOrder" Type="System.Int32" CanBeNull="true" />
       <Association Name="Season_Load" Member="Loads" ThisKey="ID" OtherKey="SeasonID" Type="Load" />
     </Type>
   </Table>

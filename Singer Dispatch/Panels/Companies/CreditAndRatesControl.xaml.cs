@@ -30,7 +30,7 @@ namespace SingerDispatch.Panels.Companies
         {
             if (InDesignMode()) return;
 
-            cmbCreditPriority.ItemsSource = from l in Database.CompanyPriorityLevels orderby l.Name select l;
+            cmbCreditPriority.ItemsSource = from l in Database.CompanyPriorityLevels orderby l.Level select l;
             cmbCreditCustomerType.ItemsSource = from ct in Database.CustomerType select ct;
         }
 
