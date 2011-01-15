@@ -303,7 +303,7 @@ namespace SingerDispatch
         {
             var copy = new QuoteCommodity();
 
-            copy.OriginalCommodity = OriginalCommodity;
+            copy.Owner = Owner;
             copy.DepartureSiteName = DepartureSiteName;
             copy.DepartureAddress = DepartureAddress;
             copy.ArrivalSiteName = ArrivalSiteName;
@@ -583,7 +583,7 @@ namespace SingerDispatch
         public Commodity ToRecordedCommodity()
         {
             var commodity = new Commodity();
-
+                        
             commodity.Company = Owner;
             commodity.Name = Name;
             commodity.Unit = Unit;
@@ -617,8 +617,8 @@ namespace SingerDispatch
         public JobCommodity Duplicate()
         {
             var copy = new JobCommodity();
-                        
-            copy.OriginalCommodity = OriginalCommodity;
+            
+            copy.Owner = Owner;
             copy.Name = Name;
             copy.Value = Value;
             copy.Serial = Serial;

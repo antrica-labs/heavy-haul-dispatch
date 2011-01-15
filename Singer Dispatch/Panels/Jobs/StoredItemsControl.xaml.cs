@@ -55,20 +55,20 @@ namespace SingerDispatch.Panels.Jobs
             var list = (ObservableCollection<StorageItem>)dgStorageItems.ItemsSource;
             var item = new StorageItem { DateEntered = DateTime.Now, Job = SelectedJob };
 
-            SelectedJob.StoredItems.Add(item);
-            list.Insert(0, item);
-            dgStorageItems.SelectedItem = item;
-
             try
             {
                 EntityHelper.SaveAsNewStorageItem(item, Database);
+
+                SelectedJob.StoredItems.Add(item);
+                list.Insert(0, item);
+                dgStorageItems.SelectedItem = item;
 
                 dgStorageItems.ScrollIntoView(item);
                 dgStorageItems.SelectedItem = item;
             }
             catch (Exception ex)
             {
-                ErrorNoticeWindow.ShowError("Error while attempting to write changes to database", ex.Message);
+                NoticeWindow.ShowError("Error while attempting to write changes to database", ex.Message);
             }
         }
 
@@ -114,7 +114,7 @@ namespace SingerDispatch.Panels.Jobs
 
             if (item == null || item.JobCommodity == null)
             {
-                Windows.ErrorNoticeWindow.ShowError("Unable to create storage contract", "Storage items need an associated commodity.");
+                Windows.NoticeWindow.ShowError("Unable to create storage contract", "Storage items need an associated commodity.");
                 return;
             }
 
@@ -133,7 +133,7 @@ namespace SingerDispatch.Panels.Jobs
 
             if (item == null || item.JobCommodity == null)
             {
-                Windows.ErrorNoticeWindow.ShowError("Unable to create storage contract", "Storage items need a commodity.");
+                Windows.NoticeWindow.ShowError("Unable to create storage contract", "Storage items need a commodity.");
                 return;
             }
 

@@ -211,7 +211,7 @@ namespace SingerDispatch.Windows
             }
             catch (Exception ex)
             {
-                ErrorNoticeWindow.ShowError("Problem saving to PDF", ex.ToString());
+                NoticeWindow.ShowError("Problem saving to PDF", ex.ToString());
             }
         }
 
@@ -223,7 +223,7 @@ namespace SingerDispatch.Windows
             }
             catch (Exception ex)
             {
-                ErrorNoticeWindow.ShowError("Printing error", ex.Message);
+                NoticeWindow.ShowError("Printing error", ex.Message);
             }
         }
 

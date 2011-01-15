@@ -92,7 +92,7 @@ namespace SingerDispatch
             }
             catch (Exception e)
             {
-                ErrorNoticeWindow.ShowError("Startup error", e.ToString());                
+                NoticeWindow.ShowError("Startup error", e.ToString());                
 
                 Application.Current.Shutdown();
             }
@@ -146,7 +146,7 @@ namespace SingerDispatch
             }
             catch (System.Exception ex)
             {
-                Windows.ErrorNoticeWindow.ShowError("Error while attempting to write changes to database", ex.Message);
+                Windows.NoticeWindow.ShowError("Error while attempting to write changes to database", ex.Message);
             }
 
             Settings.MainWindowPlacement = WindowPlacement.GetPlacement(new WindowInteropHelper(this).Handle);
@@ -298,7 +298,7 @@ namespace SingerDispatch
             }
             catch (Exception ex)
             {
-                ErrorNoticeWindow.ShowError(ex.Message, ex.ToString());
+                NoticeWindow.ShowError(ex.Message, ex.ToString());
             }
         }
 
@@ -486,7 +486,7 @@ namespace SingerDispatch
             }
             catch (Exception ex)
             {
-                ErrorNoticeWindow.ShowError("Error while creating company", ex.Message);
+                NoticeWindow.ShowError("Error while creating company", ex.Message);
             }
                 
         }
@@ -513,7 +513,7 @@ namespace SingerDispatch
             var box = (TextBox)sender;
             var company = acCompany.SelectedItem as Company;
 
-            if (company != null && company.CompanyPriorityLevel.Level >= 6)
+            if (company != null && company.CompanyPriorityLevel != null && company.CompanyPriorityLevel.Level >= 6)
                 box.Style = TryFindResource("BadInfo") as Style;
             else
                 box.Style = TryFindResource("GoodInfo") as Style;

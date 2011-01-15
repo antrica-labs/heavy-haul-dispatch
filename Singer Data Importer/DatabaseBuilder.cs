@@ -58,7 +58,7 @@ namespace SingerDispatch.Importer
             levels.Add(new CompanyPriorityLevel { Name = "Cash on Delivery", Level = 5 });
             levels.Add(new CompanyPriorityLevel { Name = "Do Not Haul", Level = 6 });
             levels.Add(new CompanyPriorityLevel { Name = "Arrears", Level = 7 });
-            levels.Add(new CompanyPriorityLevel { Name = "Not Approved", Level = 8 });
+            levels.Add(new CompanyPriorityLevel { Name = "Not Approved", Level = 8 }); 
 
             Database.CompanyPriorityLevels.InsertAllOnSubmit(levels);
 
@@ -283,7 +283,7 @@ namespace SingerDispatch.Importer
             employees.Add(new Employee { FirstName = "Corey", LastName = "Cuthill", Phone = PhoneNumberCleanup("(403)797-3018"), Mobile = PhoneNumberCleanup("(403)999-5859"), IsAvailable = true, IsSupervisor = false, IsSingerStaff = true, StartDate = DateTime.ParseExact("11/18/2008", dateFormat, provider), EndDate = null, Responsibilities = null });
             employees.Add(new Employee { FirstName = "Cody", LastName = "Hanna", Phone = PhoneNumberCleanup("(403)285-7318"), Mobile = PhoneNumberCleanup("(403)465-6702"), IsAvailable = true, IsSupervisor = false, IsSingerStaff = true, StartDate = DateTime.ParseExact("1/26/2009", dateFormat, provider), EndDate = null, Responsibilities = null });
             employees.Add(new Employee { FirstName = "Julien", LastName = "Barré", Phone = null, Mobile = PhoneNumberCleanup("(403)921-8294"), IsAvailable = true, IsSupervisor = false, IsSingerStaff = true, StartDate = DateTime.ParseExact("8/1/2005", dateFormat, provider), EndDate = null, Responsibilities = "Tractor" });
-            employees.Add(new Employee { FirstName = "Simon", LastName = "Twogood", WindowsUserName = "stwogood" });
+            employees.Add(new Employee { FirstName = "Simon", LastName = "Twogood", WindowsUserName = "Simon" });
 
             Database.Employees.InsertAllOnSubmit(employees);
 

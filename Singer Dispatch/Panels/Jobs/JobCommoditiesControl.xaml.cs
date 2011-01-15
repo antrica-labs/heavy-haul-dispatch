@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using SingerDispatch.Windows;
 using SingerDispatch.Printing.Documents;
 using System.Windows.Input;
+using System;
+using SingerDispatch.Database;
 
 namespace SingerDispatch.Panels.Jobs
 {
@@ -204,6 +206,36 @@ namespace SingerDispatch.Panels.Jobs
             ((ObservableCollection<Commodity>)dgRecordedCommodities.ItemsSource).Add(recorded);
             dgRecordedCommodities.ScrollIntoView(recorded);
             dgRecordedCommodities.SelectedItem = recorded;
+        }
+
+        private void MoveToStorage_Click(object sender, RoutedEventArgs e)
+        {
+            var jobCommodity = (JobCommodity)dgCommodities.SelectedItem;
+
+            if (jobCommodity == null) return;
+
+            var existing = from s in SelectedJob.StoredItems where s.JobCommodity == jobCommodity select s;
+
+            if (existing.Count() > 0)
+            {
+                NoticeWindow.ShowError("Item already exists", "Item already exists in storage - Switch to the storage tab to view stored items for this job.");
+                return;
+            }
+
+            var item = new StorageItem { DateEntered = DateTime.Now, Job = SelectedJob, JobCommodity = jobCommodity };
+
+            try
+            {
+                EntityHelper.SaveAsNewStorageItem(item, Database);
+                SelectedJob.StoredItems.Add(item);
+
+                NoticeWindow.ShowMessage("Assigned to storage", "Commodity assigned to storage - Switch to the storage tab to view stored items for this job.");
+            }
+            catch (Exception ex)
+            {
+                NoticeWindow.ShowError("Error while attempting to write changes to database", ex.Message);
+            }
+
         }
 
         

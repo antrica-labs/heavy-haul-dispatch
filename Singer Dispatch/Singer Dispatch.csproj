@@ -314,8 +314,8 @@
     <Compile Include="Windows\EditCompaniesWindow.xaml.cs">
       <DependentUpon>EditCompaniesWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Windows\ErrorNoticeWindow.xaml.cs">
-      <DependentUpon>ErrorNoticeWindow.xaml</DependentUpon>
+    <Compile Include="Windows\NoticeWindow.xaml.cs">
+      <DependentUpon>NoticeWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\JobLocatorWindow.xaml.cs">
       <DependentUpon>JobLocatorWindow.xaml</DependentUpon>
@@ -585,7 +585,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Windows\ErrorNoticeWindow.xaml">
+    <Page Include="Windows\NoticeWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

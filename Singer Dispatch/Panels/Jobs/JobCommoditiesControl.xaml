@@ -189,6 +189,8 @@
                     </Grid>
                 </GroupBox>
             </Grid>
+
+            <Button Style="{StaticResource Standard}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgCommodities, Path=SelectedItem}" Click="MoveToStorage_Click">Move to storage</Button>
         </StackPanel>
 
         <DataGrid Name="dgCommodities" Style="{StaticResource ListDisplay}" SelectionChanged="dgCommodities_SelectionChanged">

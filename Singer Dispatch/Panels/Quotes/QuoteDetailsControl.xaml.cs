@@ -163,7 +163,7 @@ namespace SingerDispatch.Panels.Quotes
             }
             catch (Exception ex)
             {
-                ErrorNoticeWindow.ShowError("Error while adding company to database", ex.Message);
+                NoticeWindow.ShowError("Error while adding company to database", ex.Message);
             }
         }
 

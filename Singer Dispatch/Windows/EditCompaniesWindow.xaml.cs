@@ -39,7 +39,7 @@ namespace SingerDispatch.Windows
             }
             catch (System.Exception ex)
             {
-                ErrorNoticeWindow.ShowError("Error while attempting to write changes to database", ex.Message);
+                NoticeWindow.ShowError("Error while attempting to write changes to database", ex.Message);
             }
         }
 

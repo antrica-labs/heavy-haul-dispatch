@@ -87,7 +87,7 @@ namespace SingerDispatch.Panels.Jobs
             }
             catch (Exception ex)
             {
-                ErrorNoticeWindow.ShowError("Error while attempting to write changes to database", ex.Message);
+                NoticeWindow.ShowError("Error while attempting to write changes to database", ex.Message);
             }
         }
 
@@ -109,7 +109,7 @@ namespace SingerDispatch.Panels.Jobs
             }
             catch (Exception ex)
             {
-                ErrorNoticeWindow.ShowError("Error while attempting to write changes to database", ex.Message);
+                NoticeWindow.ShowError("Error while attempting to write changes to database", ex.Message);
             }
         }
 
@@ -133,7 +133,7 @@ namespace SingerDispatch.Panels.Jobs
             }
             catch (System.Exception ex)
             {
-                Windows.ErrorNoticeWindow.ShowError("Error while attempting to write changes to database", ex.Message);
+                Windows.NoticeWindow.ShowError("Error while attempting to write changes to database", ex.Message);
             }
         }
 

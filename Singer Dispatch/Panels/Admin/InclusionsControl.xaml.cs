@@ -64,7 +64,7 @@ namespace SingerDispatch.Panels.Admin
             }
             catch (Exception ex)
             {
-                Windows.ErrorNoticeWindow.ShowError("Error while attempting to write changes to database", ex.Message);
+                Windows.NoticeWindow.ShowError("Error while attempting to write changes to database", ex.Message);
             }
         }
 
@@ -76,7 +76,7 @@ namespace SingerDispatch.Panels.Admin
             }
             catch (System.Exception ex)
             {
-                Windows.ErrorNoticeWindow.ShowError("Error while attempting to write changes to database", ex.Message);
+                Windows.NoticeWindow.ShowError("Error while attempting to write changes to database", ex.Message);
             }
         }
 

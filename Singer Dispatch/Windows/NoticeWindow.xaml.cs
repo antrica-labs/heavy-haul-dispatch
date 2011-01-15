@@ -3,14 +3,14 @@
 namespace SingerDispatch.Windows
 {
     /// <summary>
-    /// Interaction logic for ErrorNoticeWindow.xaml
+    /// Interaction logic for NoticeWindow.xaml
     /// </summary>
-    public partial class ErrorNoticeWindow
+    public partial class NoticeWindow
     {
         public string Heading { get; set; }
         public string Message { get; set; }
         
-        public ErrorNoticeWindow(string heading, string message)
+        public NoticeWindow(string heading, string message)
         {
             Heading = heading;
             Message = message;
@@ -25,7 +25,13 @@ namespace SingerDispatch.Windows
 
         public static void ShowError(string heading, string message)
         {
-            var window = new ErrorNoticeWindow(heading, message);
+            var window = new NoticeWindow(heading, message);
+            window.ShowDialog();
+        }
+
+        public static void ShowMessage(string heading, string message)
+        {
+            var window = new NoticeWindow(heading, message);
             window.ShowDialog();
         }
     }

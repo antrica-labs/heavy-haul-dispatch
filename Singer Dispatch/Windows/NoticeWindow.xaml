@@ -1,8 +1,8 @@
-﻿<Window x:Class="SingerDispatch.Windows.ErrorNoticeWindow"
+﻿<Window x:Class="SingerDispatch.Windows.NoticeWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    Title="Error Notice" SizeToContent="Height" Width="500" ResizeMode="NoResize" WindowStartupLocation="CenterScreen"
-    x:Name="ErrorNotice">
+    Title="Notice" SizeToContent="Height" Width="500" ResizeMode="NoResize" WindowStartupLocation="CenterScreen"
+    x:Name="Notice">
     <Window.Resources>
         <Style TargetType="Border" x:Key="Content">
             <Setter Property="Padding" Value="10" />
@@ -24,7 +24,7 @@
             
         </Style>
     </Window.Resources>
-    <StackPanel DataContext="{Binding ElementName=ErrorNotice}">
+    <StackPanel DataContext="{Binding ElementName=Notice}">
         <Border Style="{StaticResource Content}">
             <StackPanel>
                 <Label Style="{StaticResource Title}" Content="{Binding Heading}" />

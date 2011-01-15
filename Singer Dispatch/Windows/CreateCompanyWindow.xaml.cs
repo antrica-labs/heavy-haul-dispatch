@@ -115,7 +115,7 @@ namespace SingerDispatch.Windows
         {
             if (string.IsNullOrWhiteSpace(Company.Name))
             {
-                ErrorNoticeWindow.ShowError("Company name missing", "A company cannot be created without at least a name.");
+                NoticeWindow.ShowError("Company name missing", "A company cannot be created without at least a name.");
                 txtName.Focus();
                 return;
             }

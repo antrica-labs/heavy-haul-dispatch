@@ -107,7 +107,7 @@ namespace SingerDispatch.Panels.Loads
             }
             catch (Exception ex)
             {
-                ErrorNoticeWindow.ShowError("Error while attempting to write changes to database", ex.Message);
+                NoticeWindow.ShowError("Error while attempting to write changes to database", ex.Message);
             }
         }
 
@@ -133,7 +133,7 @@ namespace SingerDispatch.Panels.Loads
             }
             catch (Exception ex)
             {
-                ErrorNoticeWindow.ShowError("Error while attempting to write changes to database", ex.Message);
+                NoticeWindow.ShowError("Error while attempting to write changes to database", ex.Message);
             }
         }
 
@@ -161,7 +161,7 @@ namespace SingerDispatch.Panels.Loads
             }
             catch (Exception ex)
             {
-                ErrorNoticeWindow.ShowError("Error while attempting to delete load", ex.Message);
+                NoticeWindow.ShowError("Error while attempting to delete load", ex.Message);
             }
         }
 
