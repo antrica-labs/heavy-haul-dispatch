@@ -150,5 +150,16 @@ namespace SingerDispatch.Panels.Jobs
             var viewer = new Windows.DocumentViewerWindow(new StorageStickerDocument(), item, title) { IsMetric = !UseImperialMeasurements, IsSpecializedDocument = specialized };
             viewer.DisplayPrintout();
         }
+
+        private void ViewCombinedContract_Click(object sender, RoutedEventArgs e)
+        {
+            if (SelectedJob == null) return;
+
+            var title = String.Format("Storage Contract #{0}", string.Format("{0}", SelectedJob.Number));
+            var specialized = SelectedJob.Company.CustomerType.IsEnterprise != true;
+
+            var viewer = new Windows.DocumentViewerWindow(new StorageContractDocument(), SelectedJob, title) { IsMetric = !UseImperialMeasurements, IsSpecializedDocument = specialized };
+            viewer.DisplayPrintout();
+        }
     }
 }

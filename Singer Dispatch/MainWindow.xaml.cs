@@ -169,10 +169,6 @@ namespace SingerDispatch
             cb2.Executed += JobLookupCommandHandler;
             CommandBindings.Add(cb2);
 
-            var cb3 = new CommandBinding(CustomCommands.InvoiceLookupCommand);
-            cb3.Executed += InvoiceLookupCommandHandler;
-            CommandBindings.Add(cb3);
-
             var cb4 = new CommandBinding(CustomCommands.CreateCompanyCommand);
             cb4.Executed += CreateCompanyCommandHandler;
             CommandBindings.Add(cb4);
@@ -314,7 +310,7 @@ namespace SingerDispatch
         
         private void ExpandInvoicing(object sender, RoutedEventArgs e)
         {
-            ExpandSection(expanderInvoicing, typeof(JobInvoicingPanel));
+            ExpandSection(expanderInvoicing, typeof(InvoicingPanel));
         }        
 
         private void ExpandStorage(object sender, RoutedEventArgs e)
@@ -326,18 +322,7 @@ namespace SingerDispatch
         {
             ExpandSection(expanderAdmin, typeof(AdminPanel));
         }
-        
-        public void ViewInvoices(Job job)
-        {
-            if (job == null || job.Company == null) return;
-
-            expanderInvoicing.IsExpanded = true;
-            acCompany.SelectedItem = job.Company;
-
-            ((JobInvoicingPanel)panelMainContent.Child).UpdateLayout();
-            ((JobInvoicingPanel)panelMainContent.Child).SelectedJob = job;
-        }
-        
+                
         public void ViewJob(Job job)
         {
             if (job == null || job.Company == null) return;
@@ -393,11 +378,6 @@ namespace SingerDispatch
             FindJob();
         }
 
-        private void FindJobForInvoice_Click(object sender, RoutedEventArgs e)
-        {
-            FindInvoices();
-        }
-
         private void ViewStorageList_Click(object sender, RoutedEventArgs e)
         { 
 
@@ -421,12 +401,7 @@ namespace SingerDispatch
         {
             FindJob();
         }
-
-        private void InvoiceLookupCommandHandler(object sender, ExecutedRoutedEventArgs e)
-        {
-            FindInvoices();
-        }
-
+        
         private void CreateCompanyCommandHandler(object sender, ExecutedRoutedEventArgs e)
         {
             CreateCompany();
@@ -456,17 +431,6 @@ namespace SingerDispatch
             if (job != null)
             {
                 ViewJob(job);
-            }
-        }
-        
-        private void FindInvoices()
-        {
-            var window = new JobLocatorWindow { Owner = this };
-            var job = window.GetJob();
-
-            if (job != null)
-            {
-                ViewInvoices(job);
             }
         }
         

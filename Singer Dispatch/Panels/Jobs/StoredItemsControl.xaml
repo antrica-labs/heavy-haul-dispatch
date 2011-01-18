@@ -208,6 +208,8 @@
             </Grid>
         </StackPanel>
         
+        <Button DockPanel.Dock="Top" Margin="0,0,0,3" Click="ViewCombinedContract_Click">Create combined storage contract</Button>
+                
         <DataGrid Name="dgStorageItems" Style="{StaticResource ListDisplay}">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Number" Binding="{Binding Number}" Width="Auto" />                

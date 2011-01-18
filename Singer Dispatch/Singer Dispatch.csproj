@@ -182,14 +182,11 @@
     </Compile>
     <Compile Include="Panels\CompanyUserControl.cs" />
     <Compile Include="Panels\InvoiceUserControl.cs" />
-    <Compile Include="Panels\Invoicing\InvoiceLineItemsControl.xaml.cs">
-      <DependentUpon>InvoiceLineItemsControl.xaml</DependentUpon>
+    <Compile Include="Panels\Invoicing\InvoiceDetailsControl.xaml.cs">
+      <DependentUpon>InvoiceDetailsControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Panels\Invoicing\JobInvoiceHistoryControl.xaml.cs">
-      <DependentUpon>JobInvoiceHistoryControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Panels\Invoicing\JobInvoicingPanel.xaml.cs">
-      <DependentUpon>JobInvoicingPanel.xaml</DependentUpon>
+    <Compile Include="Panels\Invoicing\InvoicingPanel.xaml.cs">
+      <DependentUpon>InvoicingPanel.xaml</DependentUpon>
     </Compile>
     <Compile Include="Panels\Jobs\JobCommoditiesControl.xaml.cs">
       <DependentUpon>JobCommoditiesControl.xaml</DependentUpon>
@@ -435,23 +432,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Panels\Invoicing\InvoiceLineItemsControl.xaml">
+    <Page Include="Panels\Invoicing\InvoiceDetailsControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
-    <Page Include="Panels\Invoicing\JobInvoiceHistoryControl.xaml">
+    <Page Include="Panels\Invoicing\InvoicingPanel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Panels\Invoicing\JobInvoicingPanel.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
     <Page Include="Panels\Jobs\JobCommoditiesControl.xaml">
       <Generator>MSBuild:Compile</Generator>

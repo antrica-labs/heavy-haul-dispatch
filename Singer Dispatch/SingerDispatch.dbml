@@ -99,7 +99,8 @@
       <Association Name="Company_LoadedCommodity_LoadSite" Member="LoadSites" OtherKey="LoadSiteCompanyID" ThisKey="ID" Type="LoadedCommodity" />
       <Association Name="Company_LoadedCommodity_UnloadSite" Member="UnloadSite" OtherKey="UnloadSiteCompanyID" ThisKey="ID" Type="LoadedCommodity" />
       <Association Name="Company_LoadedCommodity_Load" Member="Loading" OtherKey="LoadingCompanyID" ThisKey="ID" Type="LoadedCommodity" />
-      <Association Name="Company_LoadedCommodity_Unload" Member="Unloading" OtherKey="UnloadingCompanyID" ThisKey="ID" Type="LoadedCommodity" />      
+      <Association Name="Company_LoadedCommodity_Unload" Member="Unloading" OtherKey="UnloadingCompanyID" ThisKey="ID" Type="LoadedCommodity" />
+      <Association Name="Company_Invoice" Member="Invoices" OtherKey="CompanyID" ThisKey="ID" Type="Invoice" />
     </Type>
   </Table>
   <Table Name="" Member="CompanyPriorityLevels">
@@ -749,6 +750,7 @@
   <Table Name="" Member="Invoices">
     <Type Name="Invoice">
       <Column Name="ID" Type="System.Int64" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="CompanyID" Type="System.Int64" CanBeNull="true" />
       <Column Name="JobID" Type="System.Int64" CanBeNull="true" />
       <Column Name="AddressID" Type="System.Int64" CanBeNull="true" />
       <Column Name="ContactID" Type="System.Int64" CanBeNull="true" />
@@ -764,6 +766,7 @@
       <Association Name="Address_Invoice" Member="BillingAddress" ThisKey="AddressID" OtherKey="ID" Type="Address" IsForeignKey="true" />
       <Association Name="Contact_Invoice" Member="Contact" ThisKey="ContactID" OtherKey="ID" Type="Contact" IsForeignKey="true" />
       <Association Name="Job_Invoice" Member="Job" ThisKey="JobID" OtherKey="ID" Type="Job" IsForeignKey="true" />
+      <Association Name="Company_Invoice" Member="Company" ThisKey="CompanyID" OtherKey="ID" Type="Company" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="" Member="InvoiceReferenceNumbers">
