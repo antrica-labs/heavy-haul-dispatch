@@ -24,7 +24,7 @@ namespace SingerDispatch.Panels.Loads
         {
             if (InDesignMode()) return;
 
-            cmbCompanies.ItemsSource = from s in Database.Services where s.ServiceType == (from st in Database.ServiceTypes where st.Name == "Permits" select st).First() select s.Company;
+            cmbCompanies.ItemsSource = from s in Database.Services where s.ServiceType == (from st in Database.ServiceTypes where st.Name == "Permits" select st).First() orderby s.Company.Name select s.Company;
             cmbPermitTypes.ItemsSource = (SelectedLoad == null) ? null : from pt in Database.PermitTypes select pt;            
         }
 

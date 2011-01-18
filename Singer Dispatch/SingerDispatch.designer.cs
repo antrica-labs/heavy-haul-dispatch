@@ -11338,6 +11338,8 @@ namespace SingerDispatch
 		
 		private System.Nullable<decimal> _Price;
 		
+		private string _PriceNote;
+		
 		private System.Nullable<bool> _IsPrinted;
 		
 		private string _PrintoutCostHeading;
@@ -11400,6 +11402,8 @@ namespace SingerDispatch
     partial void OnEndDateChanged();
     partial void OnPriceChanging(System.Nullable<decimal> value);
     partial void OnPriceChanged();
+    partial void OnPriceNoteChanging(string value);
+    partial void OnPriceNoteChanged();
     partial void OnIsPrintedChanging(System.Nullable<bool> value);
     partial void OnIsPrintedChanged();
     partial void OnPrintoutCostHeadingChanging(string value);
@@ -11721,6 +11725,26 @@ namespace SingerDispatch
 					this._Price = value;
 					this.SendPropertyChanged("Price");
 					this.OnPriceChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PriceNote")]
+		public string PriceNote
+		{
+			get
+			{
+				return this._PriceNote;
+			}
+			set
+			{
+				if ((this._PriceNote != value))
+				{
+					this.OnPriceNoteChanging(value);
+					this.SendPropertyChanging();
+					this._PriceNote = value;
+					this.SendPropertyChanged("PriceNote");
+					this.OnPriceNoteChanged();
 				}
 			}
 		}

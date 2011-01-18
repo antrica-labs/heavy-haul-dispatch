@@ -758,13 +758,14 @@ namespace SingerDispatch.Printing.Documents
         {
             var html = @"
                 <div id=""price"">
-                    <p><span class=""heading"">Quoted Price:</span><span class=""price"">{0}</span></p>
+                    <p><span class=""heading"">Quoted Price:</span><span class=""price"">{0}</span> <span class=""price_note"">{1}</span></p>
                 </div>
             ";           
 
             var price = (quote.IsItemizedBilling == true || quote.Price == 0.0m) ? "As listed" : string.Format("{0:C}", quote.Price);
+            var note = quote.PriceNote;
 
-            return string.Format(html, price);
+            return string.Format(html, price, note);
         }
 
         private static string GetInclusions(Quote quote)

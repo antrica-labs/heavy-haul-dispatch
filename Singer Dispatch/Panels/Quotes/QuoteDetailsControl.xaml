@@ -36,7 +36,8 @@
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition />
                             <ColumnDefinition />
-                            <ColumnDefinition Width="115"/>
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition />
@@ -46,10 +47,13 @@
                         <Label Grid.Row="0" Grid.Column="0">Quote price:</Label>
                         <TextBox Name="txtPrice" Grid.Row="2" Grid.Column="0" Text="{Binding Price, StringFormat=c, Converter={StaticResource NullableValueConverter}}" />
 
-                        <Label Grid.Row="0" Grid.Column="1">Price breakdown:</Label>
-                        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding PrintoutCostHeading}" IsEnabled="{Binding ElementName=cbItemized, Path=IsChecked}" />
-
-                        <CheckBox Name="cbItemized" Grid.Row="1" Grid.Column="2" IsChecked="{Binding IsItemizedBilling}" Checked="ItemizedBilling_Checked" Unchecked="ItemizedBilling_Unchecked">Itemized billing</CheckBox>
+                        <Label Grid.Row="0" Grid.Column="1">Price note:</Label>
+                        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding PriceNote}" />
+                        
+                        <Label Grid.Row="0" Grid.Column="2">Cost column name:</Label>
+                        <TextBox Grid.Row="1" Grid.Column="2" Text="{Binding PrintoutCostHeading}" IsEnabled="{Binding ElementName=cbItemized, Path=IsChecked}" />
+                        
+                        <CheckBox Name="cbItemized" Grid.Row="1" Grid.Column="3" IsChecked="{Binding IsItemizedBilling}" Checked="ItemizedBilling_Checked" Unchecked="ItemizedBilling_Unchecked">Itemized billing</CheckBox>
                     </Grid>
 
                     <Grid>

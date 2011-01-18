@@ -476,6 +476,7 @@
       <Column Name="StartDate" Type="System.DateTime" CanBeNull="true" />
       <Column Name="EndDate" Type="System.DateTime" CanBeNull="true" />
       <Column Name="Price" Type="System.Decimal" CanBeNull="true" />
+      <Column Name="PriceNote" Type="System.String" CanBeNull="true" />
       <Column Name="IsPrinted" Type="System.Boolean" CanBeNull="true" />
       <Column Name="PrintoutCostHeading" Type="System.String" CanBeNull="true" />
       <Column Name="IsItemizedBilling" Type="System.Boolean" CanBeNull="true" />
