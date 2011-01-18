@@ -1009,10 +1009,46 @@ namespace SingerDispatch
             GSTExempt = GSTExempt ?? false;
         }
 
+        public void UpdateTotalCost()
+        {
+            TotalCost = 0.00m;
+
+            foreach (var item in InvoiceLineItems)
+            {
+                if (item.Cost != null)
+                    TotalCost += item.Cost;
+
+                foreach (var extra in item.Extras)
+                {
+                    if (extra.Cost != null)
+                        TotalCost += extra.Cost;
+                }
+            }
+        }
+
+        public void UpdateTotalHours()
+        {            
+            TotalHours = 0.0;
+
+            foreach (var item in InvoiceLineItems)
+            {
+                if (item.Hours != null)
+                    TotalHours += item.Hours;
+
+                foreach (var extra in item.Extras)
+                {
+                    if (extra.Hours != null)
+                        TotalHours += extra.Hours;
+                }
+            }
+        }
+
         public Invoice Duplicate()
         {
             var copy = new Invoice();
 
+            copy.Job = Job;
+            copy.Company = Company;
             copy.Number = Number;
             copy.Comment = Comment;
             copy.Contact = Contact;
@@ -1039,8 +1075,39 @@ namespace SingerDispatch
             return string.Format("{0}-{1}", Number, Revision);
         }
     }
+
     partial class InvoiceLineItem
     {
+        partial void OnCreated()
+        {
+            this.PropertyChanged += new System.ComponentModel.PropertyChangedEventHandler(SomePropertyChanged);
+        }
+
+        private void SomePropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            switch (e.PropertyName)
+            {
+                case "Cost":
+                    UpdateTotalCost();
+                    break;
+                case "Hours":
+                    UpdateTotalHours();
+                    break;
+            }
+        }
+
+        public void UpdateTotalCost()
+        {
+            if (Invoice != null)
+                Invoice.UpdateTotalCost();
+        }
+
+        public void UpdateTotalHours()
+        {
+            if (Invoice != null)
+                Invoice.UpdateTotalHours();
+        }
+
         public InvoiceLineItem Duplicate()
         {
             var copy = new InvoiceLineItem();
@@ -1059,6 +1126,36 @@ namespace SingerDispatch
 
     partial class InvoiceExtra
     {
+        partial void OnCreated()
+        {
+            this.PropertyChanged += new System.ComponentModel.PropertyChangedEventHandler(SomePropertyChanged);
+        }
+
+        private void SomePropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            switch (e.PropertyName)
+            {
+                case "Cost":
+                    UpdateTotalCost();
+                    break;
+                case "Hours":
+                    UpdateTotalHours();
+                    break;
+            }
+        }
+
+        public void UpdateTotalCost()
+        {
+            if (LineItem != null)
+                LineItem.UpdateTotalCost();
+        }
+
+        public void UpdateTotalHours()
+        {
+            if (LineItem != null)
+                LineItem.UpdateTotalHours();
+        }
+
         public InvoiceExtra Duplicate()
         {
             var copy = new InvoiceExtra();

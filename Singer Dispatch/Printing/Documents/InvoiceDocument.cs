@@ -29,10 +29,7 @@ namespace SingerDispatch.Printing.Documents
             content.Append(GetStyles());            
             content.Append("</head>");
             content.Append("<body>");
-            content.Append("<h1>Invoice</h1>");
-            content.Append(GetDetails(invoice));
-            content.Append(GetHeaderLogo());
-            content.Append("<h3>GST Registration #883578023</h3>");
+            content.Append(GetHeader(invoice));
             content.Append(GetBillFrom(invoice));
             content.Append(GetAttention(invoice));
             content.Append(GetBillTo(invoice));
@@ -43,6 +40,35 @@ namespace SingerDispatch.Printing.Documents
             return content.ToString();
         }
 
+        private string GetHeader(Invoice invoice)
+        {
+            var html = @"
+                <div id=""header"">
+                    <table class=""header"">
+                        <tr>
+                            <td id=""logo"">
+                                <span class=""logo""><img src=""{0}"" alt=""Singer""></span>
+                                <h3>GST Registration #{1}</h3>
+                            </td>
+                            <td id=""document_name"">
+                                <span class=""title"">Invoice</span>
+                            </td>
+                            <td id=""details"">
+                                {2}                             
+                            </td>
+                        </tr>
+                    </table>                        
+                </div>
+            ";
+
+            var replacements = new object[3];
+
+            replacements[0] = GetHeaderImg();
+            replacements[1] = SingerConfigs.GetConfig("SingerGSTRegistrationNumber") ?? "883578023";
+            replacements[2] = GetDetails(invoice);
+
+            return string.Format(html, replacements);
+        }
 
         private string GetDetails(Invoice invoice)
         {
@@ -55,10 +81,7 @@ namespace SingerDispatch.Printing.Documents
                 </tr>    
             ";
 
-            builder.Append(@"
-                <div id=""details"">
-                    <table class=""details"">
-            ");
+            builder.Append(@"<table>");
 
             
             builder.Append(row.Replace("%NAME%", "Date").Replace("%VALUE%", String.Format("{0:MMMM d, yyyy}", invoice.InvoiceDate)));
@@ -70,25 +93,9 @@ namespace SingerDispatch.Printing.Documents
                 builder.Append(row.Replace("%NAME%", item.Field).Replace("%VALUE%", item.Value));
             }
 
-
-            builder.Append(@"
-                    </table>
-                </div>
-            ");
-
+            builder.Append(@"</table>");
 
             return builder.ToString();
-        }
-
-        private string GetHeaderLogo()
-        {            
-            var html = @"<span class=""logo""><img src=""{0}"" alt=""Singer Specialized""></span>";            
-            var img = GetHeaderImg();
-
-            if (img != null)
-                return string.Format(html, img);
-            else
-                return "<h2>Singer Specialized</h2>";
         }
 
         private string GetBillFrom(Invoice invoice)
@@ -364,9 +371,10 @@ namespace SingerDispatch.Printing.Documents
 
                     body
                     {          
-                        margin: 10px;         
-                        font-size: 10pt;
-                        font-family: Verdana, Arial, Helvetica, sans-serif;
+                        padding: 1em;       
+                        font-size: 13px;
+                        font-family: sans-serif;
+                        background-color: #FFFFFF;
                     }
 
                     th
@@ -378,15 +386,9 @@ namespace SingerDispatch.Printing.Documents
                     {
                         font-size: 2.0em;
                         text-transform: uppercase;
-                        color: #8393C9;
+                        color: #004127;
                         text-align: center;
                         margin-bottom: 0.2em;
-                    }
-
-                    span.logo 
-                    {
-                        display: block;
-                        margin-bottom: 0.3em;
                     }
 
                     h2
@@ -402,24 +404,64 @@ namespace SingerDispatch.Printing.Documents
                         font-weight: normal;
                     }
 
-                    div#details
+                    div#header 
+                    {                                
+                        
+                    }
+                                
+                    div#header span 
                     {
-                        float: right;
+                        display: block;
+                    }
+                    
+                    div#header table.header
+                    {
+                        width: 100%;
+                    }
+                    
+                    div#header table.header td#logo,
+                    div#header table.header td#document_name,
+                    div#header table.header td#details
+                    {                
+                        width: 33%; 
+                        vertical-align: top;
+                    }
+                    
+                    div#header table.header td#logo
+                    {
+                        text-align: left;
+                    }
+                    
+                    div#header td#document_name 
+                    {                
+                        text-align: center;              
+                    }
+                    
+                    div#header td#document_name span.title 
+                    {                
+                        font-size: 2em;
+                        text-transform: uppercase;
+                        padding-top: 1em;
+                    }
+                    
+                    div#header td#details 
+                    {                
+                        
                     }
 
-
-                    div#details table.details 
+                    div#header td#details table
                     {
+                        float: right;
                         border-collapse: collapse;
                     }
 
-                    div#details table.details th
+                    div#header td#details table th
                     {
                         padding: 0.2em 0.9em 0.2em;
                     }
 
-                    div#details td
-                    {
+                    div#header td#details td
+                    {   
                         border-bottom: 1px #CACACA solid;
                         text-align: center;
                         padding: 0 0.2em;
@@ -478,7 +520,7 @@ namespace SingerDispatch.Printing.Documents
                     {
                         text-align: center;
                         text-transform: uppercase;	
-                        background-color: #3A4D86;
+                        background-color: #004127;
                         color: #FFFFFF;
                         font-weight: bold;
                     }
@@ -512,12 +554,12 @@ namespace SingerDispatch.Printing.Documents
 
                     div#breakdown table.breakdown tr.summary th
                     {
-                        color: #000000;
-                        background-color: transparent;
+                        color: #000000;                        
                         text-align: left;
+                        background-color: transparent;
                     }
 
-                    div#breakdown table.breakdown tr.summary td
+                    div#breakdown table.breakdown tr.summary td.dollars
                     {
                         padding: 0.2em 0.8em;
                         background-color: #EDEDED;
@@ -526,7 +568,7 @@ namespace SingerDispatch.Printing.Documents
                     div#breakdown table.breakdown td.comments
                     {
                         text-align: left;
-                        background-color: transparent !important;
+                        padding-right: 1em;
                     }
 
                     div#breakdown table.breakdown td.comments span
@@ -550,7 +592,7 @@ namespace SingerDispatch.Printing.Documents
                 <style type=""text/css"" media=""print"">
                     body
                     {
-                        font-size: 12pt;
+                        font-size: 10pt;
                         padding: 0;
                     }
                 </style>

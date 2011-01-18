@@ -24,13 +24,13 @@
             <RowDefinition />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        
-        <Grid Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Margin="0,0,0,3">
-            <Grid.ColumnDefinitions>                    
+
+        <Grid Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Margin="0,0,0,2">
+            <Grid.ColumnDefinitions>
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
 
-            <Button Grid.Column="0" Click="ViewLoads_Click" Margin="0,0,3,0"  IsEnabled="{Binding ElementName=ThePanel, Path=SelectedJob, Converter={StaticResource IsEnabledNullConverter}}">Build loads</Button>            
+            <Button Grid.Column="0" Style="{StaticResource HorizontalEnd}" Click="ViewLoads_Click"  IsEnabled="{Binding ElementName=ThePanel, Path=SelectedJob, Converter={StaticResource IsEnabledNullConverter}}">Build loads</Button>            
         </Grid>
 
         <DataGrid Name="dgJobs" Grid.Column="0" Grid.Row="1" Style="{StaticResource ListDisplay}" SelectedItem="{Binding ElementName=ThePanel, Path=SelectedJob}" SelectionChanged="dgJobs_SelectionChanged">

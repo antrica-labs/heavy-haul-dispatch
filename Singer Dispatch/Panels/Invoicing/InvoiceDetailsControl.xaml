@@ -15,7 +15,7 @@
         </ResourceDictionary>
     </UserControl.Resources>
     <DockPanel>
-        <StackPanel DockPanel.Dock="Top" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=ThePanel, Path=SelectedInvoice}" DataContext="{Binding ElementName=ThePanel, Path=SelectedInvoice}">
+        <StackPanel DockPanel.Dock="Top" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=ThePanel, Path=SelectedInvoice}">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
@@ -23,7 +23,7 @@
                 </Grid.ColumnDefinitions>
 
                 <StackPanel Grid.Column="0" Margin="0,0,5,0">
-                    <GroupBox Header="Invoice Details" DataContext="{Binding SelectedInvoice}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=ThePanel, Path=SelectedInvoice}">
+                    <GroupBox Header="Invoice Details" DataContext="{Binding ElementName=ThePanel, Path=SelectedInvoice}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=ThePanel, Path=SelectedInvoice}">
                         <StackPanel>
                             <Grid>
                                 <Grid.ColumnDefinitions>
@@ -51,7 +51,7 @@
                         </StackPanel>
                     </GroupBox>
 
-                    <GroupBox Header="Billing Contact" DataContext="{Binding SelectedInvoice}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=ThePanel, Path=SelectedInvoice}">
+                    <GroupBox Header="Billing Contact" DataContext="{Binding ElementName=ThePanel, Path=SelectedInvoice}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=ThePanel, Path=SelectedInvoice}">
                         <Grid Margin="0,0,0,5">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto" />
@@ -63,7 +63,7 @@
                             </Grid.RowDefinitions>
 
                             <Label Grid.Column="0" Grid.Row="0">Address:</Label>
-                            <ComboBox Grid.Column="1" Grid.Row="0" Name="cmbAddresses" ItemTemplate="{StaticResource AddressTemplate}">
+                            <ComboBox Grid.Column="1" Grid.Row="0" Name="cmbAddresses" ItemTemplate="{StaticResource AddressTemplate}" TextSearch.TextPath="Line1">
                                 <ComboBox.SelectedItem>
                                     <Binding Path="BillingAddress">
                                         <Binding.ValidationRules>
@@ -74,7 +74,7 @@
                             </ComboBox>
 
                             <Label Grid.Column="0" Grid.Row="1">Name:</Label>
-                            <ComboBox Grid.Column="1" Grid.Row="1" Name="cmbContacts" ItemTemplate="{StaticResource SimpleNameTemplate}">
+                            <ComboBox Grid.Column="1" Grid.Row="1" Name="cmbContacts" ItemTemplate="{StaticResource ContactTemplate}" TextSearch.TextPath="Name">
                                 <ComboBox.SelectedItem>
                                     <Binding Path="Contact">
                                         <Binding.ValidationRules>

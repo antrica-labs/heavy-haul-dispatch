@@ -25,13 +25,19 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <Button Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,0,0,3" Click="ViewInvoice_Click" IsEnabled="{Binding ElementName=ThePanel, Path=SelectedInvoice, Converter={StaticResource IsEnabledNullConverter}}">View invoice</Button>
-
+        <Grid Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Margin="0,0,0,2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            
+            <Button Grid.Column="0" Style="{StaticResource HorizontalEnd}" Click="ViewInvoice_Click" IsEnabled="{Binding ElementName=ThePanel, Path=SelectedInvoice, Converter={StaticResource IsEnabledNullConverter}}">View invoice</Button>
+        </Grid>
+        
         <DataGrid Grid.Column="0" Grid.Row="1" Style="{StaticResource ListDisplay}" SelectedItem="{Binding ElementName=ThePanel, Path=SelectedInvoice}" Name="dgInvoices" SelectionChanged="dgInvoices_SelectionChanged">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Number" Width="Auto" />
-                <DataGridTextColumn Header="Job" Width="Auto" />
-                <DataGridTextColumn Header="Date" />
+                <DataGridTextColumn Header="Number" Width="Auto" Binding="{Binding Number}" />
+                <DataGridTextColumn Header="Job" Width="Auto" Binding="{Binding Job.Number}" />
+                <DataGridTextColumn Header="Date" Binding="{Binding InvoiceDate}" />
             </DataGrid.Columns>
         </DataGrid>
         

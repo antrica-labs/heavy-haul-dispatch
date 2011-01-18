@@ -42,9 +42,10 @@
     <DataTemplate x:Key="ContactTemplate">
         <TextBlock>
             <TextBlock.Text>
-                <MultiBinding StringFormat="{}{0} - {1}">
+                <MultiBinding StringFormat="{}{0} - {1} - {2}">                    
                     <Binding Path="Name" />
                     <Binding Path="PrimaryPhone" Converter="{StaticResource PhoneNumberConverter}" />
+                    <Binding Path="Company.Name" />
                 </MultiBinding>
             </TextBlock.Text>
         </TextBlock>
@@ -68,11 +69,13 @@
     <DataTemplate x:Key="AddressTemplate">
         <TextBlock>
             <TextBlock.Text>
-                <MultiBinding StringFormat="{}{0}, {1}, {2}">
+                <MultiBinding StringFormat="{}{0} - {1}, {2}, {3} - {4}">
+                    <Binding Path="AddressType.Name" />
                     <Binding Path="Line1" />
                     <Binding Path="City" />
                     <Binding Path="PostalZip" />
-                </MultiBinding>
+                    <Binding Path="Company.Name" />
+                </MultiBinding>                
             </TextBlock.Text>
         </TextBlock>
     </DataTemplate>

@@ -45,6 +45,7 @@ namespace SingerDispatch.Panels.Invoicing
             base.SelectedInvoiceChanged(newValue, oldValue);
 
             UpdateLists();
+            UpdatePriceAndHours();
         }
 
         private void UpdateLists()
@@ -54,12 +55,27 @@ namespace SingerDispatch.Panels.Invoicing
                 dgReferenceNumbers.ItemsSource = new ObservableCollection<InvoiceReferenceNumber>(from r in Database.InvoiceReferenceNumbers where r.Invoice == SelectedInvoice select r);
                 dgLineItems.ItemsSource = new ObservableCollection<InvoiceLineItem>(from l in Database.InvoiceLineItems where l.Invoice == SelectedInvoice select l);
 
+                var company = SelectedInvoice.Company;
+                var careOf = (SelectedInvoice.Job != null) ? SelectedInvoice.Job.CareOfCompany : null;
                 
+                if (careOf == null)
+                {
+                    cmbAddresses.ItemsSource = new ObservableCollection<Address>(from a in Database.Addresses where a.Company == company select a);
+                    cmbContacts.ItemsSource = new ObservableCollection<Contact>(from c in Database.Contacts where c.Company == company select c);
+                }
+                else
+                {
+                    cmbAddresses.ItemsSource = new ObservableCollection<Address>(from a in Database.Addresses where a.Company == company || a.Company == careOf select a);
+                    cmbContacts.ItemsSource = new ObservableCollection<Contact>(from c in Database.Contacts where c.Company == company || c.Company == careOf select c);
+                }
             }
             else
             {
                 dgReferenceNumbers.ItemsSource = null;
                 dgLineItems.ItemsSource = null;
+
+                cmbAddresses.ItemsSource = null;
+                cmbContacts.ItemsSource = null;
             }
         }
 
@@ -169,6 +185,14 @@ namespace SingerDispatch.Panels.Invoicing
                     Windows.NoticeWindow.ShowError("Error while attempting to write changes to database", ex.Message);
                 }
             }
+        }
+
+        private void UpdatePriceAndHours()
+        {
+            if (SelectedInvoice == null) return;
+
+            SelectedInvoice.UpdateTotalCost();
+            SelectedInvoice.UpdateTotalHours();
         }
     }
 }

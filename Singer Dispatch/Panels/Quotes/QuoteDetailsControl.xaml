@@ -13,19 +13,6 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/SingerDispatchDictionary.xaml" />
             </ResourceDictionary.MergedDictionaries>
-
-            <DataTemplate x:Key="AddressTemplate">
-                <TextBlock>
-                    <TextBlock.Text>
-                        <MultiBinding StringFormat="{}{0} - {1}, {2}, {3}">
-                            <Binding Path="AddressType.Name" />
-                            <Binding Path="Line1" />
-                            <Binding Path="City" />
-                            <Binding Path="PostalZip" />
-                        </MultiBinding>
-                    </TextBlock.Text>
-                </TextBlock>
-            </DataTemplate>
         </ResourceDictionary>
     </UserControl.Resources>
     <DockPanel>
