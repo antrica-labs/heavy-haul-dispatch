@@ -1,0 +1,33 @@
+﻿<Window x:Class="SingerDispatch.Windows.JobAndLoadSelectorWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Width="386" SizeToContent="Height" WindowStartupLocation="CenterOwner"
+        FocusManager.FocusedElement="{Binding ElementName=txtJobNumber}" KeyDown="Window_KeyDown" Loaded="Window_Loaded">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/SingerDispatchDictionary.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <StackPanel Margin="5">
+        <Label Style="{StaticResource Heading}" Name="lblHeading">Select a job and load</Label>        
+        
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            
+            <Label Grid.Column="0">Job #:</Label>
+            <ComboBox Grid.Column="1" Name="cmbJobs" SelectionChanged="cmbJobs_SelectionChanged" ItemTemplate="{StaticResource JobTemplate}" TextSearch.TextPath="Number" />
+            
+            <Label Grid.Column="2">Load #:</Label>
+            <ComboBox Grid.Column="3" Name="cmbLoads" ItemsSource="{Binding ElementName=cmbJobs, Path=SelectedItem.Loads}" ItemTemplate="{StaticResource LoadTemplate}" TextSearch.TextPath="Number" SelectionChanged="cmbLoads_SelectionChanged" />
+        </Grid>
+
+        <Button Style="{StaticResource Standard}" Click="Button_Click" Name="btnSubmit">Skip this step</Button>
+    </StackPanel>
+</Window>

@@ -50,7 +50,18 @@
             </TextBlock.Text>
         </TextBlock>
     </DataTemplate>
-    
+
+    <DataTemplate x:Key="JobTemplate">
+        <TextBlock>
+            <TextBlock.Text>
+                <MultiBinding StringFormat="{}{0} - {1}">
+                    <Binding Path="Number" />
+                    <Binding Path="Name" />
+                </MultiBinding>
+            </TextBlock.Text>
+        </TextBlock>
+    </DataTemplate>
+
     <DataTemplate x:Key="LoadTemplate">
         <TextBlock>
             <TextBlock.Text>

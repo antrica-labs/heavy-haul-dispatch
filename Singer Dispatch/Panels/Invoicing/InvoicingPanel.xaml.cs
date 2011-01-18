@@ -66,9 +66,21 @@ namespace SingerDispatch.Panels.Invoicing
 
         private void NewInvoice_Click(object sender, RoutedEventArgs e)
         {
+            if (SelectedCompany == null) return;
+
             var invoice = new Invoice { Company = SelectedCompany, InvoiceDate = DateTime.Now };
             var list = (ObservableCollection<Invoice>)dgInvoices.ItemsSource;
 
+            var window = new JobAndLoadSelectorWindow(SelectedCompany, Database) { Owner = Application.Current.MainWindow };
+            var reference = window.GetJobAndLoad("Create invoice from job or load?");
+
+            if (reference == null || reference.Job == null) return;
+
+            if (reference.Load != null)
+                invoice.FillFrom(reference.Load);
+            else
+                invoice.FillFrom(reference.Job);
+            
             try
             {
                 EntityHelper.SaveAsNewInvoice(invoice, Database);

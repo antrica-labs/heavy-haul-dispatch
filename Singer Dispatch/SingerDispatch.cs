@@ -1070,6 +1070,15 @@ namespace SingerDispatch
             return copy;
         }
 
+        public void FillFrom(Job job)
+        {
+            
+        }
+
+        public void FillFrom(Load load)
+        {
+        }
+
         public override string ToString()
         {
             return string.Format("{0}-{1}", Number, Revision);
