@@ -75,13 +75,13 @@ namespace SingerDispatch.Panels.Jobs
         {
             var list = (ObservableCollection<Job>)dgJobs.ItemsSource;
             var job = new Job { Status = DefaultJobStatus, Company = SelectedCompany };
-
-            list.Insert(0, job);
-            SelectedCompany.Jobs.Add(job);
-
+            
             try
             {
                 EntityHelper.SaveAsNewJob(job, Database);
+
+                list.Insert(0, job);
+                SelectedCompany.Jobs.Add(job);
 
                 SelectedJob = job;
             }
@@ -161,17 +161,6 @@ namespace SingerDispatch.Panels.Jobs
 
             var window = (MainWindow)Application.Current.MainWindow;
             window.ViewLoads(SelectedJob);
-        }
-
-        private void ViewStorageContract_Click(object sender, RoutedEventArgs e)
-        {
-            if (SelectedJob == null) return;
-
-            var title = String.Format("Storage Contract #{0}", string.Format("{0}", SelectedJob.Number));
-            var specialized = SelectedJob.Company.CustomerType.IsEnterprise != true;
-
-            var viewer = new Windows.DocumentViewerWindow(new StorageContractDocument(), SelectedJob, title) { IsMetric = !UseImperialMeasurements, IsSpecializedDocument = specialized };
-            viewer.DisplayPrintout();
-        }        
+        }     
     }
 }

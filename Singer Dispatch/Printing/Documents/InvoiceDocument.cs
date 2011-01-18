@@ -141,7 +141,7 @@ namespace SingerDispatch.Printing.Documents
             ";
 
 
-            var company = (invoice.Job.CareOfCompany != null) ? invoice.Job.CareOfCompany : invoice.Job.Company;
+            var company = (invoice.Job != null && invoice.Job.CareOfCompany != null) ? invoice.Job.CareOfCompany : invoice.Company;
             
             builder.Append(header);
             builder.Append(line.Replace("%LINE%", company.Name));

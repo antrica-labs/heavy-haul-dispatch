@@ -159,7 +159,7 @@ namespace SingerDispatch.Database
             var number = (from i in context.Invoices select i.Number).Max() + 1;
 
             invoice.Revision = 0;
-            invoice.Number = number ?? 11001;
+            invoice.Number = number ?? 12001;
 
             context.SubmitChanges();
         }
@@ -168,7 +168,7 @@ namespace SingerDispatch.Database
         {
             var revision = (from i in context.Invoices where i.Number == invoice.Number select i.Revision).Max() + 1;
 
-            invoice.Revision = revision ?? 0;
+            invoice.Revision = revision ?? 1;
 
             context.SubmitChanges();
         }

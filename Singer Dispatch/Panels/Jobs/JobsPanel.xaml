@@ -25,18 +25,13 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         
-        <Border Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Padding="6,3,6,3" Background="LightGoldenrodYellow" BorderBrush="LightGray" BorderThickness="1" Margin="0,0,0,3">
-            <Grid>
-                <Grid.ColumnDefinitions>                    
-                    <ColumnDefinition />
-                    <ColumnDefinition />
-                </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Margin="0,0,0,3">
+            <Grid.ColumnDefinitions>                    
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
 
-                <Button Grid.Column="0" Click="ViewLoads_Click" Style="{StaticResource Horizontal}" IsEnabled="{Binding ElementName=ThePanel, Path=SelectedJob, Converter={StaticResource IsEnabledNullConverter}}">Build loads</Button>
-                <Button Grid.Column="1" Click="ViewStorageContract_Click" Style="{StaticResource HorizontalEnd}" IsEnabled="{Binding ElementName=ThePanel, Path=SelectedJob, Converter={StaticResource IsEnabledNullConverter}}">Create storage contract</Button>
-                <!-- <Button Grid.Column="2" Style="{StaticResource HorizontalEnd}" Click="ViewQuote_Click" IsEnabled="{Binding SelectedJob, Converter={StaticResource IsEnabledNullConverter}}">View original quote</Button> -->
-            </Grid>
-        </Border>
+            <Button Grid.Column="0" Click="ViewLoads_Click" Margin="0,0,3,0"  IsEnabled="{Binding ElementName=ThePanel, Path=SelectedJob, Converter={StaticResource IsEnabledNullConverter}}">Build loads</Button>            
+        </Grid>
 
         <DataGrid Name="dgJobs" Grid.Column="0" Grid.Row="1" Style="{StaticResource ListDisplay}" SelectedItem="{Binding ElementName=ThePanel, Path=SelectedJob}" SelectionChanged="dgJobs_SelectionChanged">
             <DataGrid.Columns>

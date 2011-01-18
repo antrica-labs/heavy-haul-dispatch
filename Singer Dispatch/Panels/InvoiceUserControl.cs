@@ -2,7 +2,7 @@
 
 namespace SingerDispatch.Panels
 {
-    public class InvoiceUserControl : JobUserControl
+    public class InvoiceUserControl : CompanyUserControl
     {
         public static DependencyProperty SelectedInvoiceProperty = DependencyProperty.Register("SelectedInvoice", typeof(Invoice), typeof(InvoiceUserControl), new PropertyMetadata(null, SelectedInvoicePropertyChanged));
 

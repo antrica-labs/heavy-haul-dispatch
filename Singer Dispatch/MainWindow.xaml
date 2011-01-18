@@ -37,9 +37,10 @@
                     <MenuItem Header="_Job list" Click="ViewJobList_Click" />
                     <MenuItem Header="_Find job" Click="FindJob_Click" InputGestureText="Ctrl+Shift+J" />                    
                 </MenuItem>
-                <MenuItem Header="Invoicing" Visibility="Collapsed">
-                    <MenuItem Header="_View job invoices" Click="FindJobForInvoice_Click" InputGestureText="Ctrl+Shift+I" />
+                <!--
+                <MenuItem Header="Invoicing" Visibility="Collapsed">                    
                 </MenuItem>
+                -->
                 <MenuItem Header="Storage" Visibility="Collapsed">
                     <MenuItem Header="Storage List" Click="ViewStorageList_Click" />
                 </MenuItem>
@@ -65,7 +66,7 @@
                     <Expander Name="expanderLoads" Header="Loads" Style="{StaticResource SectionExpander}" Expanded="ExpandLoads">
                         <StackPanel Name="linksLoads" Style="{StaticResource SectionExpanderContent}" VerticalAlignment="Top"></StackPanel>
                     </Expander>
-                    <Expander  Visibility="Collapsed" Name="expanderInvoicing" Header="Invoicing" Style="{StaticResource SectionExpander}" Expanded="ExpandInvoicing">
+                    <Expander Name="expanderInvoicing" Header="Invoicing" Style="{StaticResource SectionExpander}" Expanded="ExpandInvoicing">
                         <StackPanel Name="linksPricing" Style="{StaticResource SectionExpanderContent}" VerticalAlignment="Top"></StackPanel>
                     </Expander>
                     <Expander Name="expanderStorage" Header="Storage" Style="{StaticResource SectionExpander}" Expanded="ExpandStorage" Visibility="Collapsed">
