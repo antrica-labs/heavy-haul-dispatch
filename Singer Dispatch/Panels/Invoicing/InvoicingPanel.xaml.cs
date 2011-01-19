@@ -73,12 +73,10 @@ namespace SingerDispatch.Panels.Invoicing
 
             var window = new JobAndLoadSelectorWindow(SelectedCompany, Database) { Owner = Application.Current.MainWindow };
             var reference = window.GetJobAndLoad("Create invoice from job or load?");
-
-            if (reference == null || reference.Job == null) return;
-
-            if (reference.Load != null)
+            
+            if (reference != null && reference.Load != null)
                 invoice.FillFrom(reference.Load);
-            else
+            else if (reference != null && reference.Job != null)
                 invoice.FillFrom(reference.Job);
             
             try
