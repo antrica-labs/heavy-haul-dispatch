@@ -18302,7 +18302,7 @@ namespace SingerDispatch
 		
 		private System.Nullable<double> _Hours;
 		
-		private System.Nullable<decimal> _Cost;
+		private System.Nullable<decimal> _Rate;
 		
 		private EntitySet<InvoiceExtra> _Extras;
 		
@@ -18328,8 +18328,8 @@ namespace SingerDispatch
     partial void OnDestinationChanged();
     partial void OnHoursChanging(System.Nullable<double> value);
     partial void OnHoursChanged();
-    partial void OnCostChanging(System.Nullable<decimal> value);
-    partial void OnCostChanged();
+    partial void OnRateChanging(System.Nullable<decimal> value);
+    partial void OnRateChanged();
     #endregion
 		
 		public InvoiceLineItem()
@@ -18503,22 +18503,22 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Cost")]
-		public System.Nullable<decimal> Cost
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Rate")]
+		public System.Nullable<decimal> Rate
 		{
 			get
 			{
-				return this._Cost;
+				return this._Rate;
 			}
 			set
 			{
-				if ((this._Cost != value))
+				if ((this._Rate != value))
 				{
-					this.OnCostChanging(value);
+					this.OnRateChanging(value);
 					this.SendPropertyChanging();
-					this._Cost = value;
-					this.SendPropertyChanged("Cost");
-					this.OnCostChanged();
+					this._Rate = value;
+					this.SendPropertyChanged("Rate");
+					this.OnRateChanged();
 				}
 			}
 		}

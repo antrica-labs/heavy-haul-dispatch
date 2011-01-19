@@ -789,7 +789,7 @@
       <Column Name="Departure" Type="System.String" CanBeNull="true" />
       <Column Name="Destination" Type="System.String" CanBeNull="true" />
       <Column Name="Hours" Type="System.Double" CanBeNull="true" />
-      <Column Name="Cost" Type="System.Decimal" CanBeNull="true" />
+      <Column Name="Rate" Type="System.Decimal" CanBeNull="true" />
       <Association Name="Invoice_InvoiceLineItem" Member="Invoice" ThisKey="InvoiceID" OtherKey="ID" Type="Invoice" IsForeignKey="true" />
       <Association Name="InvoiceLineItem_InvoiceExtra" Member="Extras" ThisKey="ID" OtherKey="InvoiceLineItemID" Type="InvoiceExtra" />
     </Type>

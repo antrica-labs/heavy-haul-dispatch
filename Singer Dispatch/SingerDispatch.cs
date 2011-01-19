@@ -1,5 +1,6 @@
 using System;
 using System.Text;
+using System.Linq;
 
 namespace SingerDispatch
 {
@@ -1015,8 +1016,8 @@ namespace SingerDispatch
 
             foreach (var item in InvoiceLineItems)
             {
-                if (item.Cost != null)
-                    TotalCost += item.Cost;
+                if (item.Rate != null)
+                    TotalCost += item.Rate;
 
                 foreach (var extra in item.Extras)
                 {
@@ -1070,13 +1071,38 @@ namespace SingerDispatch
             return copy;
         }
 
-        public void FillFrom(Job job)
+        public void Add(Job job)
+        {
+            var loads = from l in job.Loads where l.Status.Name != "Billed" select l;
+
+            foreach (var load in loads)
+            {
+                Add(load);
+
+                foreach (var permit in load.Permits)
+                    Add(permit);
+            }
+        }
+
+        public void Add(Load load)
+        {
+            var line = new InvoiceLineItem();
+
+            line.Description = string.Format("Supply men and equipment to transport {0}", load.ToString());
+            line.Rate = load.Rate.HourlySpecialized; // TODO: Provide their adjusted rate (also check if they are an S.S. or M.E. cust)
+            line.StartDate = load.StartDate;
+            
+            // TODO: figure out the from and to by looking at each commodity on this load. If it varies, put "Various"
+        }
+
+        public void Add(Permit permit)
         {
             
         }
 
-        public void FillFrom(Load load)
+        public void Add(ThirdPartyService service)
         {
+
         }
 
         public override string ToString()
@@ -1127,7 +1153,7 @@ namespace SingerDispatch
             copy.Departure = Departure;
             copy.Destination = Destination;
             copy.Hours = Hours;
-            copy.Cost = Cost;
+            copy.Rate = Rate;
 
             return copy;
         }        

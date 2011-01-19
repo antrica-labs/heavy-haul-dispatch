@@ -214,8 +214,8 @@
                                 <Label Grid.Column="0" Grid.Row="0">Hours:</Label>
                                 <TextBox Grid.Column="0" Grid.Row="1" Text="{Binding Hours}" />
 
-                                <Label Grid.Column="1" Grid.Row="0">Cost:</Label>
-                                <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding Cost, StringFormat=c, Converter={StaticResource NullableValueConverter}}" />
+                                <Label Grid.Column="1" Grid.Row="0">Rate:</Label>
+                                <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding Rate, StringFormat=c, Converter={StaticResource NullableValueConverter}}" />
                             </Grid>
                         </Grid>
                     </GroupBox>
@@ -252,7 +252,7 @@
                         <DataGridTextColumn Header="From" Binding="{Binding Departure}" />
                         <DataGridTextColumn Header="To" Binding="{Binding Destination}" />
                         <DataGridTextColumn Header="Hours" Binding="{Binding Hours}" Width="0.5*" />
-                        <DataGridTextColumn Header="Cost" Binding="{Binding Cost, StringFormat=c}" Width="0.5*" />
+                        <DataGridTextColumn Header="Rate" Binding="{Binding Rate, StringFormat=c}" Width="0.5*" />
                     </DataGrid.Columns>
                 </DataGrid>
             </DockPanel>
