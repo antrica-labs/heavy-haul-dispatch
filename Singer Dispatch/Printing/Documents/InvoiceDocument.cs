@@ -281,7 +281,7 @@ namespace SingerDispatch.Printing.Documents
             builder.Append(@"<td class=""description"">%DESCRIPTION%</td>".Replace("%DESCRIPTION%", item.Description));
             builder.Append(@"<td class=""departure"">%DEPARTURE%</td>".Replace("%DEPARTURE%", item.Departure));
             builder.Append(@"<td class=""destination"">%DESTINATION%</td>".Replace("%DESTINATION%", item.Destination));
-            builder.Append(@"<td class=""hours"">%HOURS%</td>".Replace("%HOURS%", hours.ToString()));
+            builder.Append(@"<td class=""hours"">%HOURS%</td>".Replace("%HOURS%", (item.Hours != null) ? item.Hours.ToString() : ""));
             builder.Append(@"<td class=""cost"">%COST%</td>".Replace("%COST%", String.Format("{0:C}", cost)));
             builder.Append(@"<td class=""line_tax"">%LINE_TAX%</td>".Replace("%LINE_TAX%", String.Format("{0:C}", cost * gst)));
             builder.Append(@"<td class=""amount"">%AMOUNT%</td>".Replace("%AMOUNT%", String.Format("{0:C}", cost * (1 + gst))));
@@ -302,7 +302,7 @@ namespace SingerDispatch.Printing.Documents
             builder.Append(@"<td class=""description"">%DESCRIPTION%</td>".Replace("%DESCRIPTION%", item.Description));
             builder.Append(@"<td class=""departure""></td>");
             builder.Append(@"<td class=""destination""></td>");
-            builder.Append(@"<td class=""hours"">%HOURS%</td>".Replace("%HOURS%", hours.ToString()));
+            builder.Append(@"<td class=""hours"">%HOURS%</td>".Replace("%HOURS%", (item.Hours != null) ? item.Hours.ToString() : ""));
             builder.Append(@"<td class=""cost"">%COST%</td>".Replace("%COST%", String.Format("{0:C}", cost)));
             builder.Append(@"<td class=""line_tax"">%LINE_TAX%</td>".Replace("%LINE_TAX%", String.Format("{0:C}", cost * gst)));
             builder.Append(@"<td class=""amount"">%AMOUNT%</td>".Replace("%AMOUNT%", String.Format("{0:C}", cost * (1 + gst))));
