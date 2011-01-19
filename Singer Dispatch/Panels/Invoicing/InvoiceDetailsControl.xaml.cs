@@ -168,7 +168,9 @@ namespace SingerDispatch.Panels.Invoicing
         {
             var line = (InvoiceLineItem)dgLineItems.SelectedItem;
 
-            dgLineItems.ScrollIntoView(dgLineItems.SelectedItem);
+            if (dgLineItems.SelectedItem != null)
+                dgLineItems.ScrollIntoView(dgLineItems.SelectedItem);
+
             dgLineExtras.ItemsSource = (line == null) ? null : new ObservableCollection<InvoiceExtra>(from ex in Database.InvoiceExtras where ex.LineItem == line select ex);
         }
 

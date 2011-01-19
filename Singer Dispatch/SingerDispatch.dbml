@@ -784,8 +784,7 @@
       <Column Name="ID" Type="System.Int64" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="InvoiceID" Type="System.Int64" CanBeNull="true" />
       <Column Name="Description" Type="System.String" CanBeNull="true" />
-      <Column Name="StartDate" Type="System.DateTime" CanBeNull="true" />
-      <Column Name="EndDate" Type="System.DateTime" CanBeNull="true" />
+      <Column Name="ItemDate" Type="System.DateTime" CanBeNull="true" />
       <Column Name="Departure" Type="System.String" CanBeNull="true" />
       <Column Name="Destination" Type="System.String" CanBeNull="true" />
       <Column Name="Hours" Type="System.Double" CanBeNull="true" />
@@ -800,7 +799,7 @@
       <Column Name="InvoiceLineItemID" Type="System.Int64" CanBeNull="true" />
       <Column Name="Description" Type="System.String" CanBeNull="true" />      
       <Column Name="Hours" Type="System.Double" CanBeNull="true" />
-      <Column Name="Cost" Type="System.Decimal" CanBeNull="true" />
+      <Column Name="Rate" Type="System.Decimal" CanBeNull="true" />
       <Association Name="InvoiceLineItem_InvoiceExtra" Member="LineItem" ThisKey="InvoiceLineItemID" OtherKey="ID" Type="InvoiceLineItem" IsForeignKey="true" />
     </Type>
   </Table>

@@ -18292,9 +18292,7 @@ namespace SingerDispatch
 		
 		private string _Description;
 		
-		private System.Nullable<System.DateTime> _StartDate;
-		
-		private System.Nullable<System.DateTime> _EndDate;
+		private System.Nullable<System.DateTime> _ItemDate;
 		
 		private string _Departure;
 		
@@ -18318,10 +18316,8 @@ namespace SingerDispatch
     partial void OnInvoiceIDChanged();
     partial void OnDescriptionChanging(string value);
     partial void OnDescriptionChanged();
-    partial void OnStartDateChanging(System.Nullable<System.DateTime> value);
-    partial void OnStartDateChanged();
-    partial void OnEndDateChanging(System.Nullable<System.DateTime> value);
-    partial void OnEndDateChanged();
+    partial void OnItemDateChanging(System.Nullable<System.DateTime> value);
+    partial void OnItemDateChanged();
     partial void OnDepartureChanging(string value);
     partial void OnDepartureChanged();
     partial void OnDestinationChanging(string value);
@@ -18403,42 +18399,22 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_StartDate")]
-		public System.Nullable<System.DateTime> StartDate
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ItemDate")]
+		public System.Nullable<System.DateTime> ItemDate
 		{
 			get
 			{
-				return this._StartDate;
+				return this._ItemDate;
 			}
 			set
 			{
-				if ((this._StartDate != value))
+				if ((this._ItemDate != value))
 				{
-					this.OnStartDateChanging(value);
+					this.OnItemDateChanging(value);
 					this.SendPropertyChanging();
-					this._StartDate = value;
-					this.SendPropertyChanged("StartDate");
-					this.OnStartDateChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EndDate")]
-		public System.Nullable<System.DateTime> EndDate
-		{
-			get
-			{
-				return this._EndDate;
-			}
-			set
-			{
-				if ((this._EndDate != value))
-				{
-					this.OnEndDateChanging(value);
-					this.SendPropertyChanging();
-					this._EndDate = value;
-					this.SendPropertyChanged("EndDate");
-					this.OnEndDateChanged();
+					this._ItemDate = value;
+					this.SendPropertyChanged("ItemDate");
+					this.OnItemDateChanged();
 				}
 			}
 		}
@@ -18617,7 +18593,7 @@ namespace SingerDispatch
 		
 		private System.Nullable<double> _Hours;
 		
-		private System.Nullable<decimal> _Cost;
+		private System.Nullable<decimal> _Rate;
 		
 		private EntityRef<InvoiceLineItem> _LineItem;
 		
@@ -18633,8 +18609,8 @@ namespace SingerDispatch
     partial void OnDescriptionChanged();
     partial void OnHoursChanging(System.Nullable<double> value);
     partial void OnHoursChanged();
-    partial void OnCostChanging(System.Nullable<decimal> value);
-    partial void OnCostChanged();
+    partial void OnRateChanging(System.Nullable<decimal> value);
+    partial void OnRateChanged();
     #endregion
 		
 		public InvoiceExtra()
@@ -18727,22 +18703,22 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Cost")]
-		public System.Nullable<decimal> Cost
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Rate")]
+		public System.Nullable<decimal> Rate
 		{
 			get
 			{
-				return this._Cost;
+				return this._Rate;
 			}
 			set
 			{
-				if ((this._Cost != value))
+				if ((this._Rate != value))
 				{
-					this.OnCostChanging(value);
+					this.OnRateChanging(value);
 					this.SendPropertyChanging();
-					this._Cost = value;
-					this.SendPropertyChanged("Cost");
-					this.OnCostChanged();
+					this._Rate = value;
+					this.SendPropertyChanged("Rate");
+					this.OnRateChanged();
 				}
 			}
 		}

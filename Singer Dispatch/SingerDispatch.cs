@@ -1,6 +1,7 @@
 using System;
 using System.Text;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace SingerDispatch
 {
@@ -949,6 +950,28 @@ namespace SingerDispatch
 
             return output.ToString();
         }
+
+        public override string ToString()
+        {
+            var commodities = LoadedCommodities.ToList();
+            var output = new StringBuilder();
+
+            if (commodities.Count == 0)
+                return "[Empty]";
+
+            for (var i = 0; i < commodities.Count; i++)
+            {
+                if (commodities[i].JobCommodity == null)
+                    continue;
+
+                output.Append(commodities[i].JobCommodity.NameAndUnit);
+
+                if ((i + 1) != commodities.Count)
+                    output.Append(", ");
+            }
+
+            return output.ToString();
+        }
     }
 
     partial class LoadReferenceNumber
@@ -1016,13 +1039,17 @@ namespace SingerDispatch
 
             foreach (var item in InvoiceLineItems)
             {
+                var hours = item.Hours ?? 1;
+
                 if (item.Rate != null)
-                    TotalCost += item.Rate;
+                    TotalCost += (item.Rate * (decimal)hours);
 
                 foreach (var extra in item.Extras)
                 {
-                    if (extra.Cost != null)
-                        TotalCost += extra.Cost;
+                    hours = extra.Hours ?? 1;
+
+                    if (extra.Rate != null)
+                        TotalCost += (extra.Rate * (decimal)hours);
                 }
             }
         }
@@ -1042,6 +1069,8 @@ namespace SingerDispatch
                         TotalHours += extra.Hours;
                 }
             }
+
+            UpdateTotalCost();
         }
 
         public Invoice Duplicate()
@@ -1078,26 +1107,76 @@ namespace SingerDispatch
             foreach (var load in loads)
             {
                 Add(load);
-
-                foreach (var permit in load.Permits)
-                    Add(permit);
             }
         }
 
         public void Add(Load load)
         {
-            var line = new InvoiceLineItem();
+            InvoiceLineItem line;
+            
+            line = new InvoiceLineItem();
 
             line.Description = string.Format("Supply men and equipment to transport {0}", load.ToString());
-            line.Rate = load.Rate.HourlySpecialized; // TODO: Provide their adjusted rate (also check if they are an S.S. or M.E. cust)
-            line.StartDate = load.StartDate;
+            line.Rate = load.Rate.HourlySpecialized; // TODO: Provide their adjusted rate (also check if they are an S.S. or M.E. cust)            
             
-            // TODO: figure out the from and to by looking at each commodity on this load. If it varies, put "Various"
-        }
+            var fromDiffers = false;
+            var toDiffers = false;            
+            
+            foreach (var commodity in load.LoadedCommodities)
+            {
+                line.ItemDate = line.ItemDate ?? commodity.LoadDate;
+                line.Departure = line.Departure ?? commodity.LoadLocation;
+                line.Destination = line.Destination ?? commodity.UnloadLocation;
+                var loading = commodity.LoadLocation ?? "";
+                var unloading = commodity.UnloadLocation ?? "";
 
-        public void Add(Permit permit)
-        {
+                if (fromDiffers == false && line.Departure != loading.Trim())
+                    fromDiffers = true;
+
+                if (toDiffers == false && line.Destination != unloading.Trim())
+                    toDiffers = true;                
+            }
+
+            if (fromDiffers)
+                line.Departure = "Various";
+
+            if (toDiffers)
+                line.Destination = "Various";
+
+           
+            InvoiceLineItems.Add(line);
+
             
+            var permitTotal = 0.00m;
+
+            foreach (var permit in load.Permits)
+            {
+                line = new InvoiceLineItem();
+
+                var company = (permit.IssuingCompany != null) ? permit.IssuingCompany.Name : "";
+                var type = (permit.PermitType != null) ? permit.PermitType.Name : "";
+
+                line.Description = string.Format("{0} - {1}", company, type);
+                line.Rate = permit.Cost;
+
+                InvoiceLineItems.Add(line);
+
+                permitTotal += permit.Cost ?? 0.0m;
+            }
+
+            line = new InvoiceLineItem();
+
+            line.Description = "Permit acquisition fee";
+
+            if (permitTotal > 0.0m)
+            {
+                if (permitTotal < 100m)
+                    line.Rate = permitTotal + 15m;
+                else
+                    line.Rate = permitTotal * 1.10m;
+                
+                InvoiceLineItems.Add(line);
+            }
         }
 
         public void Add(ThirdPartyService service)
@@ -1122,7 +1201,7 @@ namespace SingerDispatch
         {
             switch (e.PropertyName)
             {
-                case "Cost":
+                case "Rate":
                     UpdateTotalCost();
                     break;
                 case "Hours":
@@ -1148,8 +1227,7 @@ namespace SingerDispatch
             var copy = new InvoiceLineItem();
 
             copy.Description = Description;
-            copy.StartDate = StartDate;
-            copy.EndDate = EndDate;
+            copy.ItemDate = ItemDate;            
             copy.Departure = Departure;
             copy.Destination = Destination;
             copy.Hours = Hours;
@@ -1170,7 +1248,7 @@ namespace SingerDispatch
         {
             switch (e.PropertyName)
             {
-                case "Cost":
+                case "Rate":
                     UpdateTotalCost();
                     break;
                 case "Hours":
@@ -1197,7 +1275,7 @@ namespace SingerDispatch
 
             copy.Description = Description;            
             copy.Hours = Hours;
-            copy.Cost = Cost;
+            copy.Rate = Rate;
 
             return copy;
         }

@@ -244,15 +244,18 @@ namespace SingerDispatch.Printing.Documents
             {                
                 builder.Append(GetBreakdownLine(item, tax));
 
+                var hours = item.Hours ?? 1;
+
                 if (item.Rate != null)
-                    running += item.Rate;
+                    running += (item.Rate * (decimal)hours);
 
                 foreach (var extra in item.Extras)
                 {
                     builder.Append(GetBreakdownExtra(extra, tax));
+                    hours = extra.Hours ?? 1;
 
-                    if (item.Rate != null)
-                        running += extra.Cost;
+                    if (extra.Rate != null)
+                        running += (extra.Rate * (decimal)hours);
                 }
             }            
 
@@ -269,16 +272,19 @@ namespace SingerDispatch.Printing.Documents
         private string GetBreakdownLine(InvoiceLineItem item, decimal gst)
         {
             var builder = new StringBuilder();
-            
+
+            var hours = item.Hours ?? 1;
+            var cost = (item.Rate * (decimal)hours);
+
             builder.Append("<tr>");
-            builder.Append(@"<td class=""dates"">%DATES%</td>".Replace("%DATES%", String.Format("{0:MMM d, yyyy}", item.StartDate)));
+            builder.Append(@"<td class=""dates"">%DATES%</td>".Replace("%DATES%", String.Format("{0:MMM d, yyyy}", item.ItemDate)));
             builder.Append(@"<td class=""description"">%DESCRIPTION%</td>".Replace("%DESCRIPTION%", item.Description));
             builder.Append(@"<td class=""departure"">%DEPARTURE%</td>".Replace("%DEPARTURE%", item.Departure));
             builder.Append(@"<td class=""destination"">%DESTINATION%</td>".Replace("%DESTINATION%", item.Destination));
-            builder.Append(@"<td class=""hours"">%HOURS%</td>".Replace("%HOURS%", item.Hours.ToString()));
-            builder.Append(@"<td class=""cost"">%COST%</td>".Replace("%COST%", String.Format("{0:C}", item.Rate)));
-            builder.Append(@"<td class=""line_tax"">%LINE_TAX%</td>".Replace("%LINE_TAX%", String.Format("{0:C}", item.Rate * gst)));
-            builder.Append(@"<td class=""amount"">%AMOUNT%</td>".Replace("%AMOUNT%", String.Format("{0:C}", item.Rate * (1 + gst))));
+            builder.Append(@"<td class=""hours"">%HOURS%</td>".Replace("%HOURS%", hours.ToString()));
+            builder.Append(@"<td class=""cost"">%COST%</td>".Replace("%COST%", String.Format("{0:C}", cost)));
+            builder.Append(@"<td class=""line_tax"">%LINE_TAX%</td>".Replace("%LINE_TAX%", String.Format("{0:C}", cost * gst)));
+            builder.Append(@"<td class=""amount"">%AMOUNT%</td>".Replace("%AMOUNT%", String.Format("{0:C}", cost * (1 + gst))));
             builder.Append("</tr>");
             
             return builder.ToString();
@@ -288,15 +294,18 @@ namespace SingerDispatch.Printing.Documents
         {
             var builder = new StringBuilder();
 
+            var hours = item.Hours ?? 1;           
+            var cost = (item.Rate * (decimal)hours);
+
             builder.Append("<tr>");
             builder.Append(@"<td class=""dates""></td>");
             builder.Append(@"<td class=""description"">%DESCRIPTION%</td>".Replace("%DESCRIPTION%", item.Description));
             builder.Append(@"<td class=""departure""></td>");
             builder.Append(@"<td class=""destination""></td>");
-            builder.Append(@"<td class=""hours"">%HOURS%</td>".Replace("%HOURS%", item.Hours.ToString()));
-            builder.Append(@"<td class=""cost"">%COST%</td>".Replace("%COST%", String.Format("{0:C}", item.Cost)));
-            builder.Append(@"<td class=""line_tax"">%LINE_TAX%</td>".Replace("%LINE_TAX%", String.Format("{0:C}", item.Cost * gst)));
-            builder.Append(@"<td class=""amount"">%AMOUNT%</td>".Replace("%AMOUNT%", String.Format("{0:C}", item.Cost * (1 + gst))));
+            builder.Append(@"<td class=""hours"">%HOURS%</td>".Replace("%HOURS%", hours.ToString()));
+            builder.Append(@"<td class=""cost"">%COST%</td>".Replace("%COST%", String.Format("{0:C}", cost)));
+            builder.Append(@"<td class=""line_tax"">%LINE_TAX%</td>".Replace("%LINE_TAX%", String.Format("{0:C}", cost * gst)));
+            builder.Append(@"<td class=""amount"">%AMOUNT%</td>".Replace("%AMOUNT%", String.Format("{0:C}", cost * (1 + gst))));
             builder.Append("</tr>");
 
             return builder.ToString();

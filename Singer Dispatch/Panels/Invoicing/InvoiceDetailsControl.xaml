@@ -43,7 +43,7 @@
                                 <Label Grid.Row="0" Grid.Column="1">Hours:</Label>
                                 <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding TotalHours}" IsReadOnly="True" Style="{StaticResource ReadOnly}" />
 
-                                <Label Grid.Row="0" Grid.Column="2">Cost:</Label>
+                                <Label Grid.Row="0" Grid.Column="2">Subtotal:</Label>
                                 <TextBox Grid.Row="1" Grid.Column="2" Text="{Binding Path=TotalCost, StringFormat=c, Converter={StaticResource NullableValueConverter}}" IsReadOnly="True" Style="{StaticResource ReadOnly}" />
 
                                 <CheckBox Grid.Row="1" Grid.Column="3" IsChecked="{Binding GSTExempt}">Tax exempt</CheckBox>
@@ -163,7 +163,7 @@
                     <GroupBox Header="Item Details" DataContext="{Binding ElementName=dgLineItems, Path=SelectedItem}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgLineItems, Path=SelectedItem}">
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition />
+                                <ColumnDefinition Width="0.6*" />
                                 <ColumnDefinition />
                                 <ColumnDefinition />
                                 <ColumnDefinition />
@@ -178,22 +178,8 @@
                             <Label Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="4">Description:</Label>
                             <TextBox Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="4" Name="txtDescription" Text="{Binding Description}" />
 
-                            <Grid Grid.Column="0" Grid.Row="2" Grid.RowSpan="2">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition />
-                                    <ColumnDefinition />
-                                </Grid.ColumnDefinitions>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition />
-                                    <RowDefinition />
-                                </Grid.RowDefinitions>
-
-                                <Label Grid.Column="0" Grid.Row="0">Start:</Label>
-                                <DatePicker Grid.Column="0" Grid.Row="1" SelectedDate="{Binding StartDate}" />
-
-                                <Label Grid.Column="1" Grid.Row="0">End:</Label>
-                                <DatePicker Grid.Column="1" Grid.Row="1" SelectedDate="{Binding EndDate}" />
-                            </Grid>
+                            <Label Grid.Column="0" Grid.Row="2">Date:</Label>
+                            <DatePicker Grid.Column="0" Grid.Row="3" SelectedDate="{Binding ItemDate}" />
 
                             <Label Grid.Column="1" Grid.Row="2">From:</Label>
                             <TextBox Grid.Column="1" Grid.Row="3" Text="{Binding Departure}" />
@@ -236,7 +222,7 @@
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="*" />
                                     <DataGridTextColumn Header="Hours" Binding="{Binding Hours}" Width="75" />
-                                    <DataGridTextColumn Header="Cost" Binding="{Binding Cost, StringFormat=c}" Width="100" />
+                                    <DataGridTextColumn Header="Rate" Binding="{Binding Rate, StringFormat=c}" Width="100" />
                                 </DataGrid.Columns>
                             </DataGrid>
                         </DockPanel>
@@ -246,8 +232,7 @@
 
                 <DataGrid Name="dgLineItems" Style="{StaticResource ListDisplay}" SelectionChanged="dgLineItems_SelectionChanged" RowEditEnding="RowEditEnding">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Start" Binding="{Binding StartDate, StringFormat={}{0:MM/dd/yyyy}}" Width="0.5*" />
-                        <DataGridTextColumn Header="End" Binding="{Binding EndDate, StringFormat={}{0:MM/dd/yyyy}}" Width="0.5*" />
+                        <DataGridTextColumn Header="Date" Binding="{Binding ItemDate, StringFormat={}{0:MM/dd/yyyy}}" Width="0.5*" />                        
                         <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="2*" />
                         <DataGridTextColumn Header="From" Binding="{Binding Departure}" />
                         <DataGridTextColumn Header="To" Binding="{Binding Destination}" />
