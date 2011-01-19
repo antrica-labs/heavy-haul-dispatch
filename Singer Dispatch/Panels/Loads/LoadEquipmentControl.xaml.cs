@@ -114,54 +114,7 @@ namespace SingerDispatch.Panels.Loads
 
             if (load == null) return;
 
-            load.LoadedWidth = 0.0;
-            load.LoadedLength = 0.0;
-            load.LoadedHeight = 0.0;
-            load.CalculatedWeight = 0.0;
-
-            if (load.Equipment != null)
-                load.CalculatedWeight += load.Equipment.Tare ?? 0.0;
-
-            var widest = 0.0;
-            var longest = 0.0;
-            var highest = 0.0;
-
-            foreach (var commodity in load.LoadedCommodities)
-            {
-                var length = commodity.JobCommodity.Length ?? 0.0;
-                var height = commodity.JobCommodity.Height ?? 0.0;
-                var width = commodity.JobCommodity.Width ?? 0.0;
-
-                if (length > longest)
-                    longest = length;
-
-                if (height > highest)
-                    highest = height;
-
-                if (width > widest)
-                    widest = width;
-
-                load.CalculatedWeight += commodity.JobCommodity.Weight ?? 0.0;
-            }
-
-            load.LoadedHeight += highest;
-
-            if (load.TrailerCombination != null)
-            {
-                load.LoadedWidth += load.TrailerCombination.Width ?? 0.0;
-                load.LoadedLength += load.TrailerCombination.Length ?? 0.0;
-                load.LoadedHeight += load.TrailerCombination.Height ?? 0.0;
-                load.CalculatedWeight += load.TrailerCombination.Tare ?? 0.0;
-            }
-
-            if (load.LoadedHeight < SingerConfigs.MinLoadHeight)
-                load.LoadedHeight = SingerConfigs.MinLoadHeight;
-
-            if (widest > load.LoadedWidth)
-                load.LoadedWidth = widest;
-
-            if (longest > load.LoadedLength)
-                load.LoadedLength = longest;
+            load.RecaculateDimensionsAndWeight();
         }
 
         private void AddReferenceNumber_Click(object sender, RoutedEventArgs e)

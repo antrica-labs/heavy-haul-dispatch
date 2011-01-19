@@ -665,7 +665,7 @@ namespace SingerDispatch
                     UpdateLastKnownInstructions();
                     break;
                 case "JobCommodity":
-                    UpdateJobCommodity();
+                    UpdateJobCommodity();                    
                     break;
             }  
         }
@@ -709,17 +709,21 @@ namespace SingerDispatch
 
         public void UpdateJobCommodity()
         {
-            if (JobCommodity == null) return;
+            if (JobCommodity != null)
+            {
+                LoadLocation = JobCommodity.DepartureSiteName;
+                LoadAddress = JobCommodity.DepartureAddress;
+                UnloadLocation = JobCommodity.ArrivalSiteName;
+                UnloadAddress = JobCommodity.ArrivalAddress;
 
-            LoadLocation = JobCommodity.DepartureSiteName;
-            LoadAddress = JobCommodity.DepartureAddress;
-            UnloadLocation = JobCommodity.ArrivalSiteName;
-            UnloadAddress = JobCommodity.ArrivalAddress;
+                if (JobCommodity.OriginalCommodity == null) return;
 
-            if (JobCommodity.OriginalCommodity == null) return;
+                LoadRoute = JobCommodity.OriginalCommodity.LastRoute;
+                LoadInstructions = JobCommodity.OriginalCommodity.LastLoadInstructions;
+            }
 
-            LoadRoute = JobCommodity.OriginalCommodity.LastRoute;
-            LoadInstructions = JobCommodity.OriginalCommodity.LastLoadInstructions;
+            if (Load != null)
+                Load.RecaculateDimensionsAndWeight();
         }
 
         public LoadedCommodity Duplicate()
@@ -834,13 +838,67 @@ namespace SingerDispatch
         }
 
         private void SomePropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
-        {            
+        {
             if (e.PropertyName.StartsWith("EWeight"))
                 RecalculateEGross();
             else if (e.PropertyName.StartsWith("SWeight"))
                 RecalculateSGross();
+            else if (e.PropertyName == "Equipment" || e.PropertyName == "TrailerCombination")
+                RecaculateDimensionsAndWeight();            
             //else if (e.PropertyName == "Status")
             //    StatusChanged();
+        }
+
+        public void RecaculateDimensionsAndWeight()
+        {
+            LoadedWidth = 0.0;
+            LoadedLength = 0.0;
+            LoadedHeight = 0.0;
+            CalculatedWeight = 0.0;
+
+            if (Equipment != null)
+                CalculatedWeight += Equipment.Tare ?? 0.0;
+
+            var widest = 0.0;
+            var longest = 0.0;
+            var highest = 0.0;
+
+            foreach (var commodity in LoadedCommodities)
+            {
+                var length = commodity.JobCommodity.Length ?? 0.0;
+                var height = commodity.JobCommodity.Height ?? 0.0;
+                var width = commodity.JobCommodity.Width ?? 0.0;
+
+                if (length > longest)
+                    longest = length;
+
+                if (height > highest)
+                    highest = height;
+
+                if (width > widest)
+                    widest = width;
+
+                CalculatedWeight += commodity.JobCommodity.Weight ?? 0.0;
+            }
+
+            LoadedHeight += highest;
+
+            if (TrailerCombination != null)
+            {
+                LoadedWidth += TrailerCombination.Width ?? 0.0;
+                LoadedLength += TrailerCombination.Length ?? 0.0;
+                LoadedHeight += TrailerCombination.Height ?? 0.0;
+                CalculatedWeight += TrailerCombination.Tare ?? 0.0;
+            }
+
+            if (LoadedHeight < SingerConfigs.MinLoadHeight)
+                LoadedHeight = SingerConfigs.MinLoadHeight;
+
+            if (widest > LoadedWidth)
+                LoadedWidth = widest;
+
+            if (longest > LoadedLength)
+                LoadedLength = longest;
         }
 
         private void RecalculateEGross()

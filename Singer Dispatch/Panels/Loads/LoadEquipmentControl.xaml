@@ -382,7 +382,7 @@
                         </TextBox.Text>
                     </TextBox>
 
-                    <Button Grid.Column="13" Grid.Row="3" Margin="2" Click="GuessLoadWeights_Click">Estimate</Button>
+                    <Button Grid.Column="13" Grid.Row="3" Margin="2" Click="GuessLoadWeights_Click">Recalculate</Button>
                 </Grid>
             </StackPanel>
         </GroupBox>
