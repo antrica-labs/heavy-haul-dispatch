@@ -128,6 +128,7 @@ namespace SingerDispatch.Printing.Documents
             output.Append(GetLoadCommodities(dispatch.Load.LoadedCommodities));
             output.Append(GetTractors(from t in dispatch.Load.Dispatches where t.Equipment != null && t.Equipment.EquipmentType != null && t.Equipment.EquipmentType.EquipmentClass != null && t.Equipment.EquipmentType.EquipmentClass.Name == "Tractor" select t));
             output.Append(GetSingerPilots(from p in dispatch.Load.Dispatches where p.Equipment != null && p.Equipment.EquipmentType != null && p.Equipment.EquipmentType.EquipmentClass != null && p.Equipment.EquipmentType.EquipmentClass.Name == "Pilot" select p));
+            output.Append(GetContractors(from p in dispatch.Load.Dispatches where p.Equipment != null && p.Equipment.EquipmentType != null && p.Equipment.EquipmentType.Name == "Contractor" select p));
             output.Append(GetThirdPartyPilots(from s in dispatch.Load.ThirdPartyServices where s.ServiceType != null && s.ServiceType.Name.Contains("Pilot") select s));
             output.Append(GetThirdPartyServices(from s in dispatch.Load.ThirdPartyServices where s.ServiceType == null || (!s.ServiceType.Name.Contains("Pilot") && !s.ServiceType.Name.Contains("Wirelift")) select s));
             output.Append(GetWireLiftInfo(from wl in dispatch.Load.ThirdPartyServices where wl.ServiceType != null && wl.ServiceType.Name.Contains("Wirelift") select wl));
@@ -1208,7 +1209,7 @@ namespace SingerDispatch.Printing.Documents
         {
             const string html = @"
                 <div class=""tractors section"">
-                    <span class=""heading"">Tractors (Singer Service)</span>
+                    <span class=""heading"">Tractors (Singer)</span>
                     
                     {0}
                 </div>
@@ -1257,7 +1258,7 @@ namespace SingerDispatch.Printing.Documents
         {
             const string html = @"
                 <div class=""other_equipment section"">
-                    <span class=""heading"">Pilot Car and Other Equipment (Singer Service)</span>
+                    <span class=""heading"">Pilot Cars (Singer)</span>
                     
                     {0}
                 </div>
@@ -1294,6 +1295,57 @@ namespace SingerDispatch.Printing.Documents
                                 
                 replacements[0] = (item.Equipment == null) ? "" : item.Equipment.UnitNumber;
                 replacements[1] = contact;
+
+                rows.Append(string.Format(row, replacements));
+            }
+
+            return string.Format(html, string.Format(table, rows.ToString()));
+        }
+
+        private static string GetContractors(IEnumerable<Dispatch> dispatches)
+        {
+            const string html = @"
+                <div class=""contactors section"">
+                    <span class=""heading"">Contactors</span>
+                    
+                    {0}
+                </div>
+            ";
+            const string table = @"
+                <table class=""simple_breakdown"">
+                    <thead>
+                        <tr>
+                            <th>Unit</th>
+                            <th>Contact</th>
+                            <th>Responsibility</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {0}
+                    </tbody>
+                </table>
+            ";
+            const string row = @"
+                <tr>
+                    <td>{0}</td>
+                    <td>{1}</td>
+                    <td>{2}</td>
+                </tr>
+            ";
+
+            if (dispatches.Count() == 0)
+                return "";
+
+            var rows = new StringBuilder();
+            foreach (var item in dispatches)
+            {
+                var replacements = new object[3];
+
+                var contact = (item.Employee == null) ? "" : string.Format("{0} {1}", item.Employee.Name, item.Employee.Mobile);
+
+                replacements[0] = (item.Equipment == null) ? "" : item.Equipment.UnitNumber;
+                replacements[1] = contact;
+                replacements[2] = item.Responsibility;
 
                 rows.Append(string.Format(row, replacements));
             }
