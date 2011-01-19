@@ -130,7 +130,7 @@ namespace SingerDispatch.Panels.Loads
                 cmbTrailerCombinations.ItemsSource = (from tc in Database.TrailerCombinations where tc.Rate == cmbRates.SelectedItem select tc).ToList();
             }
 
-            cmbCommodityName.ItemsSource = SelectedLoad.Job.JobCommodities.ToList();
+            cmbCommodityName.ItemsSource = new ObservableCollection<JobCommodity>(SelectedLoad.Job.JobCommodities);
 
             var methods = from m in Database.LoadUnloadMethods select m;
 
@@ -629,6 +629,30 @@ namespace SingerDispatch.Panels.Loads
             catch (Exception ex)
             {
                 NoticeWindow.ShowError("Error while adding company to database", ex.Message);
+            }
+        }
+
+        private void AddJobCommodity_Click(object sender, RoutedEventArgs e)
+        {
+            var cmbCommodities = (ComboBox)((Button)sender).DataContext;
+
+            var window = new CreateJobCommodityWindow(Database, SelectedLoad.Job.Company, SelectedLoad.Job.CareOfCompany) { Owner = Application.Current.MainWindow };
+            var commodity = window.CreateCommodity();
+
+            if (commodity == null) return;
+
+            commodity.Job = SelectedLoad.Job;
+            SelectedLoad.Job.JobCommodities.Add(commodity);
+
+            try
+            {
+                Database.SubmitChanges();
+                ((ObservableCollection<JobCommodity>)cmbCommodities.ItemsSource).Add(commodity);
+                cmbCommodities.SelectedItem = commodity;
+            }
+            catch (Exception ex)
+            {
+                NoticeWindow.ShowError("Error while adding job commodity to database", ex.ToString());
             }
         }        
     }

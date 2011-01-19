@@ -52,10 +52,10 @@ namespace SingerDispatch.Windows
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-
+            
         }
 
-        private void CreateCompany_Click(object sender, RoutedEventArgs e)
+        private void CreateCommodity_Click(object sender, RoutedEventArgs e)
         {
             _created = true;
             Close();

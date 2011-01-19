@@ -133,7 +133,7 @@
                     <Label Grid.Column="0" Grid.Row="0">Name:</Label>
                     <ComboBox Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="7" Name="cmbCommodityName" ItemTemplate="{StaticResource NameAndUnitTemplate}" TextSearch.TextPath="Name" IsEditable="False" SelectedItem="{Binding JobCommodity}" Controls:ComboUtil.AllowNull="True" SelectionChanged="cmbCommodityName_SelectionChanged" />
 
-                    <Button Grid.Column="8" Grid.Row="0" Style="{StaticResource HorizontalEnd}" Padding="3,0,3,0" Click="FillLocations_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=cmbCommodityName, Path=SelectedItem}">Fill locations</Button>
+                    <Button Grid.Column="8" Grid.Row="0" Style="{StaticResource HorizontalEnd}" Padding="3,0,3,0" Click="AddJobCommodity_Click" DataContext="{Binding ElementName=cmbCommodityName}">Create commodity</Button>
                     
                     <Label Grid.Column="0" Grid.Row="1">Length:</Label>
                     <TextBox Grid.Column="1" Grid.Row="1" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=cmbCommodityName, Path=SelectedItem}">

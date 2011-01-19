@@ -653,55 +653,73 @@ namespace SingerDispatch
             switch (e.PropertyName)
             {
                 case "UnloadLocation":
-                    UpdateLastKnownLocation(UnloadLocation);
+                    UpdateLastKnownLocation();
                     break;
                 case "UnloadAddress":
-                    UpdateLastKnownAddress(UnloadAddress);
+                    UpdateLastKnownAddress();
                     break;
                 case "UnloadRoute":
-                    UpdateLastKnownRoute(UnloadRoute);
+                    UpdateLastKnownRoute();
                     break;
                 case "UnloadInstructions":
-                    UpdateLastKnownInstructions(UnloadInstructions);
+                    UpdateLastKnownInstructions();
+                    break;
+                case "JobCommodity":
+                    UpdateJobCommodity();
                     break;
             }  
         }
 
-        public void UpdateLastKnownLocation(string location)
+        public void UpdateLastKnownLocation()
         {
             if (JobCommodity != null)
             {
-                JobCommodity.DepartureSiteName = location;
+                JobCommodity.DepartureSiteName = UnloadLocation;
                 JobCommodity.ArrivalSiteName = null;
 
                 if (JobCommodity.OriginalCommodity != null)
-                    JobCommodity.OriginalCommodity.LastLocation = location;
+                    JobCommodity.OriginalCommodity.LastLocation = UnloadLocation;
             }
         }
 
-        public void UpdateLastKnownAddress(string address)
+        public void UpdateLastKnownAddress()
         {
             if (JobCommodity != null)
             {
-                JobCommodity.DepartureAddress = address;
+                JobCommodity.DepartureAddress = UnloadAddress;
                 JobCommodity.ArrivalAddress = null;
 
                 if (JobCommodity.OriginalCommodity != null)
-                    JobCommodity.OriginalCommodity.LastAddress = address;
+                    JobCommodity.OriginalCommodity.LastAddress = UnloadAddress;
             }
         }
 
-        public void UpdateLastKnownRoute(string route)
+        public void UpdateLastKnownRoute()
         {
             if (JobCommodity != null && JobCommodity.OriginalCommodity != null)
-                JobCommodity.OriginalCommodity.LastRoute = route;
+                JobCommodity.OriginalCommodity.LastRoute = UnloadRoute;
         }
 
-        public void UpdateLastKnownInstructions(string instructions)
+        public void UpdateLastKnownInstructions()
         {
             if (JobCommodity != null && JobCommodity.OriginalCommodity != null)
-                JobCommodity.OriginalCommodity.LastLoadInstructions = instructions;
+                JobCommodity.OriginalCommodity.LastLoadInstructions = UnloadInstructions;
 
+        }
+
+        public void UpdateJobCommodity()
+        {
+            if (JobCommodity == null) return;
+
+            LoadLocation = JobCommodity.DepartureSiteName;
+            LoadAddress = JobCommodity.DepartureAddress;
+            UnloadLocation = JobCommodity.ArrivalSiteName;
+            UnloadAddress = JobCommodity.ArrivalAddress;
+
+            if (JobCommodity.OriginalCommodity == null) return;
+
+            LoadRoute = JobCommodity.OriginalCommodity.LastRoute;
+            LoadInstructions = JobCommodity.OriginalCommodity.LastLoadInstructions;
         }
 
         public LoadedCommodity Duplicate()

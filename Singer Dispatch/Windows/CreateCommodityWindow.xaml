@@ -125,6 +125,6 @@
             </Grid>
         </GroupBox>
 
-        <Button Style="{StaticResource Standard}" Click="CreateCompany_Click">Create commodity</Button>
+        <Button Style="{StaticResource Standard}" Click="CreateCommodity_Click">Create commodity</Button>
     </StackPanel>
 </Window>

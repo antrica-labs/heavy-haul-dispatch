@@ -305,6 +305,9 @@
     <Compile Include="Windows\CreateContactWindow.xaml.cs">
       <DependentUpon>CreateContactWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Windows\CreateJobCommodityWindow.xaml.cs">
+      <DependentUpon>CreateJobCommodityWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\DocumentViewerWindow.xaml.cs">
       <DependentUpon>DocumentViewerWindow.xaml</DependentUpon>
     </Compile>
@@ -560,6 +563,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Windows\CreateContactWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\CreateJobCommodityWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

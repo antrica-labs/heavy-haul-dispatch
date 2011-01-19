@@ -1,0 +1,178 @@
+﻿<Window x:Class="SingerDispatch.Windows.CreateJobCommodityWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:Controls="clr-namespace:SingerDispatch.Controls"
+        Title="Create Commodity" SizeToContent="Height" Width="800"
+        FocusManager.FocusedElement="{Binding ElementName=txtCommodityName}"
+        Loaded="Window_Loaded" KeyDown="Window_KeyDown" Closing="Window_Closing">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/SingerDispatchDictionary.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <StackPanel Margin="5,5,5,5">
+        <Label Style="{StaticResource Heading}">Create New Job Commodity</Label>
+
+        <GroupBox Header="Commodity Details">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+
+                <Label Grid.Row="0" Grid.Column="0">Owner:</Label>
+                <ComboBox Grid.Row="0" Grid.Column="1" Name="cmbOwners" IsEditable="False" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectedItem="{Binding Owner}" />
+
+                <Label Grid.Row="1" Grid.Column="0" Style="{StaticResource Important}">Name:</Label>
+                <TextBox Name="txtCommodityName" Text="{Binding Name}" Grid.Row="1" Grid.Column="1" />
+
+                <Label Grid.Row="2" Grid.Column="0" Style="{StaticResource Important}">Unit number:</Label>
+                <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Unit}" />
+
+                <Label Grid.Row="3" Grid.Column="0" Style="{StaticResource Important}">Declared value:</Label>
+                <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Value, StringFormat=c, Converter={StaticResource NullableValueConverter}}" />
+
+                <Label Grid.Row="4" Grid.Column="0">Hauling cost:</Label>
+                <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Cost, StringFormat=c, Converter={StaticResource NullableValueConverter}}" />
+
+                <Label Grid.Row="5" Grid.Column="0">Serial number:</Label>
+                <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding Serial}" />
+
+                <Label Grid.Row="6" Grid.Column="0">Notes:</Label>
+                <TextBox Grid.Row="6" Grid.Column="1" Style="{StaticResource MultiLine}" Text="{Binding Notes}" />
+
+                <GroupBox Header="Recorded Commodity" Grid.Row="0" Grid.Column="2" Grid.RowSpan="7" Margin="5,0,0,0">
+                    <DockPanel>
+                        <Button Style="{StaticResource VerticalEnd}" DockPanel.Dock="Bottom" Click="AddRecordedCommodity_Click">Add to recorded commodities</Button>
+
+                        <DataGrid Style="{StaticResource ListDisplay}" Margin="0,0,0,3" Name="dgRecordedCommodities" SelectedItem="{Binding OriginalCommodity}" DataGridRow.MouseDoubleClick="dgRecordedCommodities_MouseDoubleClick" SelectionChanged="dgRecordedCommodities_SelectionChanged">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Name" Binding="{Binding Name}" />
+                                <DataGridTextColumn Header="Unit" Binding="{Binding Unit}" Width="0.5*" />
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </DockPanel>
+                </GroupBox>
+            </Grid>
+        </GroupBox>
+
+        <GroupBox Header="Dimensions &amp; Weight">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <Label Grid.Column="0">Length:</Label>
+                <TextBox Grid.Column="1">
+                    <TextBox.Text>
+                        <MultiBinding Converter="{StaticResource LengthMeasurementConverter}">
+                            <Binding Path="Length" />
+                            <Binding ElementName="ThePanel" Path="UseImperialMeasurements" />
+                        </MultiBinding>
+                    </TextBox.Text>
+                </TextBox>
+
+                <Label Grid.Column="2">Width:</Label>
+                <TextBox Grid.Column="3">
+                    <TextBox.Text>
+                        <MultiBinding Converter="{StaticResource LengthMeasurementConverter}">
+                            <Binding Path="Width" />
+                            <Binding ElementName="ThePanel" Path="UseImperialMeasurements" />
+                        </MultiBinding>
+                    </TextBox.Text>
+                </TextBox>
+
+                <Label Grid.Column="4">Height:</Label>
+                <TextBox Grid.Column="5">
+                    <TextBox.Text>
+                        <MultiBinding Converter="{StaticResource LengthMeasurementConverter}">
+                            <Binding Path="Height" />
+                            <Binding ElementName="ThePanel" Path="UseImperialMeasurements" />
+                        </MultiBinding>
+                    </TextBox.Text>
+                </TextBox>
+
+                <Label Grid.Column="6">Weight:</Label>
+                <TextBox Grid.Column="7">
+                    <TextBox.Text>
+                        <MultiBinding Converter="{StaticResource WeightMeasurementConverter}">
+                            <Binding Path="Weight" />
+                            <Binding ElementName="ThePanel" Path="UseImperialMeasurements" />
+                        </MultiBinding>
+                    </TextBox.Text>
+                </TextBox>
+
+                <CheckBox Grid.Column="8" IsChecked="{Binding DimensionsEstimated}">Estimated</CheckBox>
+            </Grid>
+        </GroupBox>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="3" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <GroupBox Header="Current Location" Grid.Column="0">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+
+                    <Label Grid.Column="0" Grid.Row="0">Site name:</Label>                    
+                    <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding DepartureSiteName}" />
+
+                    <Label Grid.Column="0" Grid.Row="1">Address/LSD:</Label>
+                    <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding DepartureAddress}" />
+                </Grid>
+            </GroupBox>
+
+            <GroupBox Header="Destination" Grid.Column="2">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+
+                    <Label Grid.Column="0" Grid.Row="0">Site name:</Label>
+                    <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding ArrivalSiteName}" />
+
+                    <Label Grid.Column="0" Grid.Row="1">Address/LSD:</Label>
+                    <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding ArrivalAddress}" />
+                </Grid>
+            </GroupBox>
+        </Grid>
+
+        <Button Style="{StaticResource Standard}" Click="CreateCommodity_Click">Create commodity</Button>
+    </StackPanel>
+</Window>
