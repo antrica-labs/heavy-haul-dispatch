@@ -100,17 +100,42 @@ namespace SingerDispatch.Printing.Documents
 
         private string GetBillFrom(Invoice invoice)
         {
-            var content = @"
+            var html = @"
                 <div id=""bill_from"" class=""subsection"">
                     <div class=""address"">
-                        <span>235132 84th St. SE</span>
-                        <span>Calgary, AB T1X 0K1</span>
-                        <span>Phone: (403) 569-8605</span>
+                        <span>{0}</span>
+                        <span>{1}</span>
+                        <span>{2}</span>
+                        <span>{3}</span>
                     </div>
                 </div>
 
             ";
-            return content;
+
+            var replacements = new object[6];
+            string cName, cAddress, cCity, cPhone;
+
+            if (SpecializedDocument)
+            {
+                cName = "SingerName";
+                cAddress = "SingerAddress-StreetAddress";
+                cCity = "SingerAddress-City";
+                cPhone = "SingerAddress-Phone";
+            }
+            else
+            {
+                cName = "EnterpriseName";
+                cAddress = "EnterpriseAddress-StreetAddress";
+                cCity = "EnterpriseAddress-City";
+                cPhone = "EnterpriseAddress-Phone";
+            }
+
+            replacements[0] = SingerConfigs.GetConfig(cName) ?? "Singer Specialized Ltd.";
+            replacements[1] = SingerConfigs.GetConfig(cAddress);
+            replacements[2] = SingerConfigs.GetConfig(cCity);
+            replacements[3] = SingerConfigs.GetConfig(cPhone);
+
+            return string.Format(html, replacements);
         }
 
         private string GetAttention(Invoice invoice)
@@ -190,14 +215,14 @@ namespace SingerDispatch.Printing.Documents
                 <div id=""breakdown"">
                     <table class=""breakdown"">
                         <tr>
-                            <th>Date</th>
-                            <th>Description of Service</th>
-                            <th>From</th>
-                            <th>To</th>
-                            <th>Hrs</th>
-                            <th>Cost</th>
-                            <th>GST</th>
-                            <th>Amount</th>
+                            <th class=""date"">Date</th>
+                            <th class=""description"">Description of Service</th>
+                            <th class=""from"">From</th>
+                            <th class=""to"">To</th>
+                            <th class=""hours"">Hrs</th>
+                            <th class=""cost"">Cost</th>
+                            <th class=""tax"">GST</th>
+                            <th class=""amount"">Amount</th>                            
                         </tr>
             ";
             var footer = @"
@@ -381,7 +406,7 @@ namespace SingerDispatch.Printing.Documents
                     body
                     {          
                         padding: 1em;       
-                        font-size: 13px;
+                        font-size: 12px;
                         font-family: sans-serif;
                         background-color: #FFFFFF;
                     }
@@ -532,22 +557,29 @@ namespace SingerDispatch.Printing.Documents
                         background-color: #004127;
                         color: #FFFFFF;
                         font-weight: bold;
+                        padding: 0 0.4em;
+                    }
+
+                    div#breakdown table.breakdown th.date,
+                    div#breakdown table.breakdown th.description,
+                    div#breakdown table.breakdown th.from,
+                    div#breakdown table.breakdown th.to
+                    {
+                        text-align: left;
                     }
 
                     div#breakdown table.breakdown td
                     {
                         text-align: center;
-                        padding: 0.6em 0.8em;
+                        padding: 0.6em 0.4em;
                     }
 
-                    div#breakdown table.breakdown td.dates
+                    div#breakdown table.breakdown td.dates,
+                    div#breakdown table.breakdown td.description,
+                    div#breakdown table.breakdown td.departure,
+                    div#breakdown table.breakdown td.destination
                     {
                         text-align: left;
-                    }
-
-                    div#breakdown table.breakdown td.description
-                    {
-                        text-align: left;	
                     }
 
                     div#breakdown table.breakdown td.amount
@@ -565,12 +597,14 @@ namespace SingerDispatch.Printing.Documents
                     {
                         color: #000000;                        
                         text-align: left;
+                        vertical-align: middle;                        
                         background-color: transparent;
+                        padding-right: 0.4em;
                     }
 
                     div#breakdown table.breakdown tr.summary td.dollars
                     {
-                        padding: 0.2em 0.8em;
+                        vertical-align: middle;
                         background-color: #EDEDED;
                     }
 
@@ -601,7 +635,7 @@ namespace SingerDispatch.Printing.Documents
                 <style type=""text/css"" media=""print"">
                     body
                     {
-                        font-size: 10pt;
+                        font-size: 8pt;
                         padding: 0;
                     }
                 </style>
