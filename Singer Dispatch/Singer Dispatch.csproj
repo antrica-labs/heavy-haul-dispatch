@@ -243,6 +243,9 @@
       <DependentUpon>QuoteStorageControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Panels\QuoteUserControl.cs" />
+    <Compile Include="Panels\Storage\StorageListControl.xaml.cs">
+      <DependentUpon>StorageListControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Panels\Storage\StoragePanel.xaml.cs">
       <DependentUpon>StoragePanel.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -530,6 +533,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Panels\Storage\StorageListControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Panels\Storage\StoragePanel.xaml">
       <SubType>Designer</SubType>
