@@ -1219,8 +1219,8 @@ namespace SingerDispatch
 
            
             InvoiceLineItems.Add(line);
-           
- 
+
+
             if (load.Permits.Count > 0)
             {
                 var permitTotal = 0.00m;
@@ -1244,9 +1244,8 @@ namespace SingerDispatch
 
                 line.Description = "Permit acquisition fee";
 
-
                 if (permitTotal < 150m)
-                    line.Rate = permitTotal + 15m;
+                    line.Rate = 15m;
                 else
                     line.Rate = permitTotal * 0.1m;
 
