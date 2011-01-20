@@ -5,7 +5,7 @@
                            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                            xmlns:Panels="clr-namespace:SingerDispatch.Panels"
                            xmlns:Validators="clr-namespace:SingerDispatch.Controls.Validators"
-                           x:Name="ThePanel" mc:Ignorable="d" d:DesignWidth="780"
+                           x:Name="ThePanel" mc:Ignorable="d" d:DesignWidth="800"
                            Loaded="Control_Loaded">
     <UserControl.Resources>
         <ResourceDictionary>
@@ -30,7 +30,7 @@
                                     <ColumnDefinition />
                                     <ColumnDefinition />
                                     <ColumnDefinition />
-                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition />
                                 </Grid.ColumnDefinitions>
                                 <Grid.RowDefinitions>
                                     <RowDefinition />
@@ -46,7 +46,8 @@
                                 <Label Grid.Row="0" Grid.Column="2">Subtotal:</Label>
                                 <TextBox Grid.Row="1" Grid.Column="2" Text="{Binding Path=TotalCost, StringFormat=c, Converter={StaticResource NullableValueConverter}}" IsReadOnly="True" Style="{StaticResource ReadOnly}" />
 
-                                <CheckBox Grid.Row="1" Grid.Column="3" IsChecked="{Binding GSTExempt}">Tax exempt</CheckBox>
+                                <Label Grid.Row="0" Grid.Column="3">Tax rate:</Label>
+                                <TextBox Grid.Row="1" Grid.Column="3" Text="{Binding TaxRate, Converter={StaticResource PercentageConverter}}" />
                             </Grid>
                         </StackPanel>
                     </GroupBox>
@@ -163,7 +164,7 @@
                     <GroupBox Header="Item Details" DataContext="{Binding ElementName=dgLineItems, Path=SelectedItem}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgLineItems, Path=SelectedItem}">
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="0.6*" />
+                                <ColumnDefinition Width="0.5*" />
                                 <ColumnDefinition />
                                 <ColumnDefinition />
                                 <ColumnDefinition />
@@ -191,6 +192,7 @@
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition />
                                     <ColumnDefinition />
+                                    <ColumnDefinition Width="Auto" />
                                 </Grid.ColumnDefinitions>
                                 <Grid.RowDefinitions>
                                     <RowDefinition />
@@ -202,6 +204,8 @@
 
                                 <Label Grid.Column="1" Grid.Row="0">Rate:</Label>
                                 <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding Rate, StringFormat=c, Converter={StaticResource NullableValueConverter}}" />
+                                
+                                <CheckBox Grid.Column="2" Grid.Row="1" IsChecked="{Binding TaxExempt}">Tax exempt</CheckBox>
                             </Grid>
                         </Grid>
                     </GroupBox>

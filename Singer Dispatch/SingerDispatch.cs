@@ -1106,7 +1106,7 @@ namespace SingerDispatch
 
         partial void OnCreated()
         {
-            GSTExempt = GSTExempt ?? false;
+            TaxRate = TaxRate ?? SingerConfigs.GST;
         }
 
         public void UpdateTotalCost()
@@ -1158,9 +1158,7 @@ namespace SingerDispatch
             copy.Number = Number;
             copy.Comment = Comment;
             copy.Contact = Contact;
-            copy.HourlyRate = HourlyRate;
-            copy.Hours = Hours;
-            copy.GSTExempt = GSTExempt;
+            copy.TaxRate = TaxRate;
             copy.InvoiceDate = InvoiceDate;
 
             foreach (var item in InvoiceLineItems)
@@ -1177,7 +1175,7 @@ namespace SingerDispatch
         }
 
         public void Add(Job job)
-        {
+        {            
             var loads = from l in job.Loads where l.Status.Name != "Billed" select l;
 
             foreach (var load in loads)
@@ -1246,10 +1244,10 @@ namespace SingerDispatch
 
             if (permitTotal > 0.0m)
             {
-                if (permitTotal < 100m)
+                if (permitTotal < 150m)
                     line.Rate = permitTotal + 15m;
                 else
-                    line.Rate = permitTotal * 1.10m;
+                    line.Rate = permitTotal * 0.1m;
                 
                 InvoiceLineItems.Add(line);
             }
@@ -1270,6 +1268,8 @@ namespace SingerDispatch
     {
         partial void OnCreated()
         {
+            TaxExempt = TaxExempt ?? false;
+
             this.PropertyChanged += new System.ComponentModel.PropertyChangedEventHandler(SomePropertyChanged);
         }
 

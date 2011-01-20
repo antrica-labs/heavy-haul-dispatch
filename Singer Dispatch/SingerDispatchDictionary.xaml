@@ -19,6 +19,7 @@
     <Controls:NullableValueConverter x:Key="NullableValueConverter" />
     <Controls:TimeConverter x:Key="TimeConverter" />
     <Controls:YesNoBooleanConverter x:Key="YesNoBooleanConverter" />
+    <Controls:PercentageConverter x:Key="PercentageConverter" />
     
     <DataTemplate x:Key="SimpleNameTemplate">
         <TextBlock Text="{Binding Name}" />

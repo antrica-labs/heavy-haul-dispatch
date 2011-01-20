@@ -64,7 +64,7 @@ namespace SingerDispatch
         {
             get
             {
-                var gst = GetConfig("GSTRate") ?? "";
+                var gst = GetConfig("GSTRate") ?? "0.05m";
                 decimal result;
 
                 try

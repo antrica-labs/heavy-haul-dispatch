@@ -17583,11 +17583,7 @@ namespace SingerDispatch
 		
 		private System.Nullable<System.DateTime> _InvoiceDate;
 		
-		private System.Nullable<int> _Hours;
-		
-		private System.Nullable<decimal> _HourlyRate;
-		
-		private System.Nullable<bool> _GSTExempt;
+		private System.Nullable<decimal> _TaxRate;
 		
 		private EntitySet<InvoiceReferenceNumber> _ReferenceNumbers;
 		
@@ -17623,12 +17619,8 @@ namespace SingerDispatch
     partial void OnCommentChanged();
     partial void OnInvoiceDateChanging(System.Nullable<System.DateTime> value);
     partial void OnInvoiceDateChanged();
-    partial void OnHoursChanging(System.Nullable<int> value);
-    partial void OnHoursChanged();
-    partial void OnHourlyRateChanging(System.Nullable<decimal> value);
-    partial void OnHourlyRateChanged();
-    partial void OnGSTExemptChanging(System.Nullable<bool> value);
-    partial void OnGSTExemptChanged();
+    partial void OnTaxRateChanging(System.Nullable<decimal> value);
+    partial void OnTaxRateChanged();
     #endregion
 		
 		public Invoice()
@@ -17838,62 +17830,22 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Hours")]
-		public System.Nullable<int> Hours
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TaxRate")]
+		public System.Nullable<decimal> TaxRate
 		{
 			get
 			{
-				return this._Hours;
+				return this._TaxRate;
 			}
 			set
 			{
-				if ((this._Hours != value))
+				if ((this._TaxRate != value))
 				{
-					this.OnHoursChanging(value);
+					this.OnTaxRateChanging(value);
 					this.SendPropertyChanging();
-					this._Hours = value;
-					this.SendPropertyChanged("Hours");
-					this.OnHoursChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_HourlyRate")]
-		public System.Nullable<decimal> HourlyRate
-		{
-			get
-			{
-				return this._HourlyRate;
-			}
-			set
-			{
-				if ((this._HourlyRate != value))
-				{
-					this.OnHourlyRateChanging(value);
-					this.SendPropertyChanging();
-					this._HourlyRate = value;
-					this.SendPropertyChanged("HourlyRate");
-					this.OnHourlyRateChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_GSTExempt")]
-		public System.Nullable<bool> GSTExempt
-		{
-			get
-			{
-				return this._GSTExempt;
-			}
-			set
-			{
-				if ((this._GSTExempt != value))
-				{
-					this.OnGSTExemptChanging(value);
-					this.SendPropertyChanging();
-					this._GSTExempt = value;
-					this.SendPropertyChanged("GSTExempt");
-					this.OnGSTExemptChanged();
+					this._TaxRate = value;
+					this.SendPropertyChanged("TaxRate");
+					this.OnTaxRateChanged();
 				}
 			}
 		}
@@ -18302,6 +18254,8 @@ namespace SingerDispatch
 		
 		private System.Nullable<decimal> _Rate;
 		
+		private System.Nullable<bool> _TaxExempt;
+		
 		private EntitySet<InvoiceExtra> _Extras;
 		
 		private EntityRef<Invoice> _Invoice;
@@ -18326,6 +18280,8 @@ namespace SingerDispatch
     partial void OnHoursChanged();
     partial void OnRateChanging(System.Nullable<decimal> value);
     partial void OnRateChanged();
+    partial void OnTaxExemptChanging(System.Nullable<bool> value);
+    partial void OnTaxExemptChanged();
     #endregion
 		
 		public InvoiceLineItem()
@@ -18495,6 +18451,26 @@ namespace SingerDispatch
 					this._Rate = value;
 					this.SendPropertyChanged("Rate");
 					this.OnRateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TaxExempt")]
+		public System.Nullable<bool> TaxExempt
+		{
+			get
+			{
+				return this._TaxExempt;
+			}
+			set
+			{
+				if ((this._TaxExempt != value))
+				{
+					this.OnTaxExemptChanging(value);
+					this.SendPropertyChanging();
+					this._TaxExempt = value;
+					this.SendPropertyChanged("TaxExempt");
+					this.OnTaxExemptChanged();
 				}
 			}
 		}

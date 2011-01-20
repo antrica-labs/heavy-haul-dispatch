@@ -210,7 +210,9 @@ namespace SingerDispatch.Printing.Documents
         private string GetBreakdown(Invoice invoice)
         {
             var builder = new StringBuilder();
-            decimal? running = 0.00m;
+            decimal? subtotal = 0.00m;
+            decimal? taxTotal = 0.00m;
+
             var header = @"
                 <div id=""breakdown"">
                     <table class=""breakdown"">
@@ -221,7 +223,7 @@ namespace SingerDispatch.Printing.Documents
                             <th class=""to"">To</th>
                             <th class=""hours"">Hrs</th>
                             <th class=""cost"">Cost</th>
-                            <th class=""tax"">GST</th>
+                            <th class=""tax"">Tax</th>
                             <th class=""amount"">Amount</th>                            
                         </tr>
             ";
@@ -229,7 +231,7 @@ namespace SingerDispatch.Printing.Documents
                     </table>
                 </div>
             ";
-            var subtotal = @"
+            var subtotalText = @"
                 <tr class=""summary subtotal"">
                     <td colspan=""6"" rowspan=""4"" class=""comments"">
                         <span>For inquiries, please contact the accounts receivable department at (403) 569-7635 Mon-Fri: 9:00am - 4:00pm</span>    
@@ -248,10 +250,10 @@ namespace SingerDispatch.Printing.Documents
                     <td class=""dollars"">%FUEL_TAX%</td>
                 </tr>
             ";
-            var gst = @"
+            var regularTax = @"
                 <tr class=""summary gst"">
-                    <th>GST</th>
-                    <td class=""dollars"">%GST%</td>
+                    <th>TAX</th>
+                    <td class=""dollars"">%TAX%</td>
                 </tr>
             ";
             var total = @"
@@ -261,45 +263,57 @@ namespace SingerDispatch.Printing.Documents
                 </tr>
             ";
 
-            var tax = invoice.GSTExempt == true ? 0.00m : SingerConfigs.GST;
+            var taxRate = invoice.TaxRate ?? SingerConfigs.GST;
 
             builder.Append(header);
 
             foreach (var item in invoice.InvoiceLineItems)
             {                
-                builder.Append(GetBreakdownLine(item, tax));
+                builder.Append(GetBreakdownLine(item, taxRate));
 
                 var hours = item.Hours ?? 1;
 
                 if (item.Rate != null)
-                    running += (item.Rate * (decimal)hours);
+                {                   
+                    subtotal += (item.Rate * (decimal)hours);
+
+                    if (item.TaxExempt != true)
+                        taxTotal += (item.Rate * (decimal)hours) * taxRate;
+                }
 
                 foreach (var extra in item.Extras)
                 {
-                    builder.Append(GetBreakdownExtra(extra, tax));
+                    builder.Append(GetBreakdownExtra(extra, taxRate));
                     hours = extra.Hours ?? 1;
 
                     if (extra.Rate != null)
-                        running += (extra.Rate * (decimal)hours);
+                    {
+                        subtotal += (extra.Rate * (decimal)hours);
+                        taxTotal += (extra.Rate * (decimal)hours) * taxRate;
+                    }
+                        
                 }
-            }            
+            }
 
-            builder.Append(subtotal.Replace("%SUBTOTAL%", String.Format("{0:C}", running)));
-            builder.Append(fuelTax.Replace("%FUEL_TAX%", String.Format("{0:C}", running * SingerConfigs.FuelTax)));
-            builder.Append(gst.Replace("%GST%", String.Format("{0:C}", (running * (1 + SingerConfigs.FuelTax)) * tax)));
-            builder.Append(total.Replace("%TOTAL%", String.Format("{0:C}", (running * (1 + SingerConfigs.FuelTax)) * (1 + tax))));
+            var fuelTaxTotal = subtotal * SingerConfigs.FuelTax;
+
+            builder.Append(subtotalText.Replace("%SUBTOTAL%", String.Format("{0:C}", subtotal)));
+            builder.Append(fuelTax.Replace("%FUEL_TAX%", String.Format("{0:C}", fuelTaxTotal)));
+            builder.Append(regularTax.Replace("%TAX%", String.Format("{0:C}", taxTotal)));
+            builder.Append(total.Replace("%TOTAL%", String.Format("{0:C}", (subtotal + fuelTaxTotal + taxTotal))));
 
             builder.Append(footer);
 
             return builder.ToString();
         }
 
-        private string GetBreakdownLine(InvoiceLineItem item, decimal gst)
+        private string GetBreakdownLine(InvoiceLineItem item, decimal taxRate)
         {
             var builder = new StringBuilder();
 
             var hours = item.Hours ?? 1;
             var cost = (item.Rate * (decimal)hours);
+            var tax = (item.TaxExempt != true) ? cost * taxRate : 0m;
 
             builder.Append("<tr>");
             builder.Append(@"<td class=""dates"">%DATES%</td>".Replace("%DATES%", String.Format("{0:MMM d, yyyy}", item.ItemDate)));
@@ -308,14 +322,14 @@ namespace SingerDispatch.Printing.Documents
             builder.Append(@"<td class=""destination"">%DESTINATION%</td>".Replace("%DESTINATION%", item.Destination));
             builder.Append(@"<td class=""hours"">%HOURS%</td>".Replace("%HOURS%", (item.Hours != null) ? item.Hours.ToString() : ""));
             builder.Append(@"<td class=""cost"">%COST%</td>".Replace("%COST%", String.Format("{0:C}", cost)));
-            builder.Append(@"<td class=""line_tax"">%LINE_TAX%</td>".Replace("%LINE_TAX%", String.Format("{0:C}", cost * gst)));
-            builder.Append(@"<td class=""amount"">%AMOUNT%</td>".Replace("%AMOUNT%", String.Format("{0:C}", cost * (1 + gst))));
+            builder.Append(@"<td class=""line_tax"">%LINE_TAX%</td>".Replace("%LINE_TAX%", String.Format("{0:C}", tax)));
+            builder.Append(@"<td class=""amount"">%AMOUNT%</td>".Replace("%AMOUNT%", String.Format("{0:C}", cost + tax)));
             builder.Append("</tr>");
             
             return builder.ToString();
         }
 
-        private string GetBreakdownExtra(InvoiceExtra item, decimal gst)
+        private string GetBreakdownExtra(InvoiceExtra item, decimal taxRate)
         {
             var builder = new StringBuilder();
 
@@ -329,8 +343,8 @@ namespace SingerDispatch.Printing.Documents
             builder.Append(@"<td class=""destination""></td>");
             builder.Append(@"<td class=""hours"">%HOURS%</td>".Replace("%HOURS%", (item.Hours != null) ? item.Hours.ToString() : ""));
             builder.Append(@"<td class=""cost"">%COST%</td>".Replace("%COST%", String.Format("{0:C}", cost)));
-            builder.Append(@"<td class=""line_tax"">%LINE_TAX%</td>".Replace("%LINE_TAX%", String.Format("{0:C}", cost * gst)));
-            builder.Append(@"<td class=""amount"">%AMOUNT%</td>".Replace("%AMOUNT%", String.Format("{0:C}", cost * (1 + gst))));
+            builder.Append(@"<td class=""line_tax"">%LINE_TAX%</td>".Replace("%LINE_TAX%", String.Format("{0:C}", cost * taxRate)));
+            builder.Append(@"<td class=""amount"">%AMOUNT%</td>".Replace("%AMOUNT%", String.Format("{0:C}", cost * (1 + taxRate))));
             builder.Append("</tr>");
 
             return builder.ToString();

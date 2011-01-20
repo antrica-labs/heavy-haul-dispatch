@@ -754,14 +754,12 @@
       <Column Name="CompanyID" Type="System.Int64" CanBeNull="true" />
       <Column Name="JobID" Type="System.Int64" CanBeNull="true" />
       <Column Name="AddressID" Type="System.Int64" CanBeNull="true" />
-      <Column Name="ContactID" Type="System.Int64" CanBeNull="true" />
+      <Column Name="ContactID" Type="System.Int64" CanBeNull="true" />      
       <Column Name="Number" Type="System.Int64" CanBeNull="true" />
       <Column Name="Revision" Type="System.Int32" CanBeNull="true" />
       <Column Name="Comment" Type="System.String" CanBeNull="true" />
       <Column Name="InvoiceDate" Type="System.DateTime" CanBeNull="true" />
-      <Column Name="Hours" Type="System.Int32" CanBeNull="true" />
-      <Column Name="HourlyRate" Type="System.Decimal" CanBeNull="true" />
-      <Column Name="GSTExempt" Type="System.Boolean" CanBeNull="true" />
+      <Column Name="TaxRate" Type="System.Decimal" CanBeNull="true" /> 
       <Association Name="Invoice_InvoiceReferenceNumber" Member="ReferenceNumbers" ThisKey="ID" OtherKey="InvoiceID" Type="InvoiceReferenceNumber" />
       <Association Name="Invoice_InvoiceLineItem" Member="InvoiceLineItems" ThisKey="ID" OtherKey="InvoiceID" Type="InvoiceLineItem" />      
       <Association Name="Address_Invoice" Member="BillingAddress" ThisKey="AddressID" OtherKey="ID" Type="Address" IsForeignKey="true" />
@@ -789,6 +787,7 @@
       <Column Name="Destination" Type="System.String" CanBeNull="true" />
       <Column Name="Hours" Type="System.Double" CanBeNull="true" />
       <Column Name="Rate" Type="System.Decimal" CanBeNull="true" />
+      <Column Name="TaxExempt" Type="System.Boolean" CanBeNull="true" />
       <Association Name="Invoice_InvoiceLineItem" Member="Invoice" ThisKey="InvoiceID" OtherKey="ID" Type="Invoice" IsForeignKey="true" />
       <Association Name="InvoiceLineItem_InvoiceExtra" Member="Extras" ThisKey="ID" OtherKey="InvoiceLineItemID" Type="InvoiceExtra" />
     </Type>

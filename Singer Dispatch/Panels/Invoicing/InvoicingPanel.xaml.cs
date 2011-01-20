@@ -77,9 +77,15 @@ namespace SingerDispatch.Panels.Invoicing
             if (reference == null) return;
 
             if (reference != null && reference.Load != null)
+            {
+                invoice.Job = reference.Load.Job;
                 invoice.Add(reference.Load);
+            }
             else if (reference != null && reference.Job != null)
+            {
+                invoice.Job = reference.Job;
                 invoice.Add(reference.Job);
+            }
             
             try
             {
