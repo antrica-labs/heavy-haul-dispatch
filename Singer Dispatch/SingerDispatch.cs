@@ -1220,35 +1220,35 @@ namespace SingerDispatch
            
             InvoiceLineItems.Add(line);
 
-            
-            var permitTotal = 0.00m;
 
-            foreach (var permit in load.Permits)
+            if (load.Permits.Count > 0)
             {
+                var permitTotal = 0.00m;
+
+                foreach (var permit in load.Permits)
+                {
+                    line = new InvoiceLineItem();
+
+                    var company = (permit.IssuingCompany != null) ? permit.IssuingCompany.Name : "";
+                    var type = (permit.PermitType != null) ? permit.PermitType.Name : "";
+
+                    line.Description = string.Format("{0} - {1}", company, type);
+                    line.Rate = permit.Cost;
+
+                    InvoiceLineItems.Add(line);
+
+                    permitTotal += permit.Cost ?? 0.0m;
+                }
+
                 line = new InvoiceLineItem();
 
-                var company = (permit.IssuingCompany != null) ? permit.IssuingCompany.Name : "";
-                var type = (permit.PermitType != null) ? permit.PermitType.Name : "";
+                line.Description = "Permit acquisition fee";
 
-                line.Description = string.Format("{0} - {1}", company, type);
-                line.Rate = permit.Cost;
-
-                InvoiceLineItems.Add(line);
-
-                permitTotal += permit.Cost ?? 0.0m;
-            }
-
-            line = new InvoiceLineItem();
-
-            line.Description = "Permit acquisition fee";
-
-            if (permitTotal > 0.0m)
-            {
                 if (permitTotal < 150m)
-                    line.Rate = permitTotal + 15m;
+                    line.Rate = 15m;
                 else
                     line.Rate = permitTotal * 0.1m;
-                
+
                 InvoiceLineItems.Add(line);
             }
         }
