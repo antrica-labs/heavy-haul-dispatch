@@ -26,29 +26,9 @@
             </DataTemplate>
         </ResourceDictionary>
     </UserControl.Resources>
-    <StackPanel IsEnabled="{Binding ElementName=ThePanel, Path=SelectedCompany, Converter={StaticResource IsEnabledNullConverter}}">
-        <Border Background="LightGoldenrodYellow" BorderBrush="LightGray" BorderThickness="1" Margin="0,0,0,3">
-            <StackPanel>
-                <Grid Margin="3">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition />
-                        <ColumnDefinition />
-                        <ColumnDefinition />
-                    </Grid.ColumnDefinitions>
-
-                    <Label>Job #:</Label>
-                    <ComboBox Name="cmbJobList" Grid.Column="1" SelectedItem="{Binding ElementName=ThePanel, Path=SelectedJob}" TextSearch.TextPath="Number" ItemTemplate="{StaticResource SimpleJobTemplate}" />
-                    <Button Grid.Column="2" Style="{StaticResource Horizontal}" Click="EditJob_Click" IsEnabled="{Binding ElementName=ThePanel, Path=SelectedJob, Converter={StaticResource IsEnabledNullConverter}}">Edit job</Button>
-                    <Button Grid.Column="3" Style="{StaticResource HorizontalEnd}" Click="ViewStorageContract_Click" IsEnabled="{Binding ElementName=ThePanel, Path=SelectedLoad, Converter={StaticResource IsEnabledNullConverter}}">Vew storage contract</Button>
-                </Grid>
-            </StackPanel>
-        </Border>
-
-        <TabControl Name="Tabs" DataContext="{Binding ElementName=ThePanel}" Margin="5,0,0,0">
-            <TabItem Header="Storage List">
-                
-            </TabItem>
-        </TabControl>
-    </StackPanel>
+    <TabControl Name="Tabs">
+        <TabItem Header="Storage List">
+                    
+        </TabItem>
+    </TabControl>
 </Panels:JobUserControl>
