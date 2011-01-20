@@ -25,21 +25,27 @@
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition />
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
                                 <RowDefinition />
                                 <RowDefinition />
                                 <RowDefinition />
+                                <RowDefinition />
                             </Grid.RowDefinitions>
 
-                            <Label Grid.Row="0" Grid.Column="0">Commodity:</Label>
-                            <ComboBox Name="cmbCommodities" Grid.Row="0" Grid.Column="1" SelectedItem="{Binding JobCommodity}" ItemTemplate="{StaticResource NameAndUnitTemplate}" IsEditable="False" />
+                            <Label Grid.Row="0" Grid.Column="0">Owner:</Label>
+                            <TextBox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" Text="{Binding JobCommodity.Owner}" IsReadOnly="True" />
+                            
+                            <Label Grid.Row="1" Grid.Column="0">Commodity:</Label>
+                            <TextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3"  Text="{Binding JobCommodity.Name}" />                            
 
-                            <Label Grid.Row="1" Grid.Column="0">Unit #:</Label>
-                            <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding JobCommodity.Unit}" />
-
-                            <Label Grid.Row="2" Grid.Column="0">Location:</Label>
-                            <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding YardLocation}" Height="45"/>
+                            <Label Grid.Row="2" Grid.Column="0">Unit #:</Label>                                                        
+                            <TextBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" Text="{Binding JobCommodity.Unit}" />
+                            
+                            <Label Grid.Row="3" Grid.Column="0">Location:</Label>
+                            <TextBox Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3" Text="{Binding YardLocation}" />
                         </Grid>
                     </GroupBox>
 
