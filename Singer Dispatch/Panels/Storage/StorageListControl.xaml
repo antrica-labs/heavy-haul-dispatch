@@ -5,6 +5,7 @@
                         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                         xmlns:Panels="clr-namespace:SingerDispatch.Panels"
                         xmlns:Controls="clr-namespace:SingerDispatch.Controls"
+                        x:Name="ThePanel"
                         mc:Ignorable="d" d:DesignWidth="800" Loaded="Control_Loaded">
     <UserControl.Resources>
         <ResourceDictionary>
@@ -38,7 +39,7 @@
                         </Grid.RowDefinitions>
 
                         <Label Grid.Row="0" Grid.Column="0">Owner:</Label>
-                        <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding JobCommodity.Owner}" />
+                        <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding JobCommodity.Owner.Name}" />
 
                         <Label Grid.Row="1" Grid.Column="0">Commodity:</Label>
                         <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding JobCommodity.Name}" />
@@ -71,7 +72,7 @@
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
 
-                            <ComboBox Name="cmbContacts" Grid.Column="0" SelectedItem="{Binding Contact}" ItemsSource="{Binding Company.Contacts}" ItemTemplate="{StaticResource SimpleNameTemplate}" TextSearch.TextPath="Name" />
+                            <ComboBox Name="cmbContacts" Grid.Column="0" SelectedItem="{Binding Contact}" ItemTemplate="{StaticResource SimpleNameTemplate}" TextSearch.TextPath="Name" />
                             <Button Grid.Column="1" Style="{StaticResource Standard}" Click="AddContact_Click" DataContext="{Binding ElementName=cmbContacts}">Add</Button>
                         </Grid>
 
@@ -102,7 +103,7 @@
                 </GroupBox>
             </Grid>
 
-            <GroupBox Header="Dimensions" DataContext="{Binding ElementName=ThePanel, Path=SelectedItem.Commodity}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=ThePanel, Path=SelectedItem}">
+            <GroupBox Header="Dimensions" DataContext="{Binding ElementName=ThePanel, Path=SelectedItem.JobCommodity}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=ThePanel, Path=SelectedItem}">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
@@ -211,7 +212,7 @@
                             <ColumnDefinition />
                         </Grid.ColumnDefinitions>
 
-                        <Button Grid.Column="0" Style="{StaticResource Horizontal}" Click="ViewStorageContract_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=ThePanel, Path=SelectedItem}">View storage contract</Button>
+                        <Button Grid.Column="0" Style="{StaticResource Horizontal}" Click="ViewStorageContract_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=ThePanel, Path=SelectedItem}">Generate storage contract</Button>
                         <Button Grid.Column="1" Style="{StaticResource Horizontal}" Click="ViewStorageSticker_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=ThePanel, Path=SelectedItem}">View storage sticker</Button>
                         <Button Grid.Column="2" Style="{StaticResource HorizontalEnd}" Click="ArchiveItem_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=ThePanel, Path=SelectedItem}">Archive item</Button>
                     </Grid>
@@ -247,7 +248,7 @@
                     <DataGrid Name="dgPreviousStorageItems" Style="{StaticResource ListDisplay}" SelectionChanged="dgCurrentStorageItems_SelectionChanged">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Number" Binding="{Binding Number}" Width="Auto" />
-                            <DataGridTextColumn Header="Company" Binding="{Binding Company.Name}" />
+                            <DataGridTextColumn Header="Owner" Binding="{Binding JobCommodity.Owner.Name}" />
                             <DataGridTextColumn Header="Commodity" Binding="{Binding Commodity.NameAndUnit}" />
                             <DataGridTextColumn Header="Location" Binding="{Binding YardLocation}" />
                             <DataGridTextColumn Header="Rate" Binding="{Binding BillingRate, StringFormat=C}" Width="80" />

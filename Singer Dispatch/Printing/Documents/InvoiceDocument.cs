@@ -30,9 +30,8 @@ namespace SingerDispatch.Printing.Documents
             content.Append("</head>");
             content.Append("<body>");
             content.Append(GetHeader(invoice));
-            content.Append(GetBillFrom(invoice));
-            content.Append(GetAttention(invoice));
             content.Append(GetBillTo(invoice));
+            content.Append(GetAttention(invoice));
             content.Append(GetBreakdown(invoice));
             content.Append("</body>");
             content.Append("</html>");
@@ -44,75 +43,28 @@ namespace SingerDispatch.Printing.Documents
         {
             var html = @"
                 <div id=""header"">
+                    <div id=""details"">
+                        {6}
+                    </div>
+
                     <table class=""header"">
                         <tr>
                             <td id=""logo"">
                                 <span class=""logo""><img src=""{0}"" alt=""Singer""></span>
                                 <h3>GST Registration #{1}</h3>
                             </td>
-                            <td id=""document_name"">
-                                <span class=""title"">Invoice</span>
-                            </td>
-                            <td id=""details"">
-                                {2}                             
+                            <td id=""singer_address"">
+                                <span>{2}</span>
+                                <span>{3}</span>
+                                <span>{4}</span>
+                                <span>{5}</span>        
                             </td>
                         </tr>
                     </table>                        
                 </div>
             ";
 
-            var replacements = new object[3];
-
-            replacements[0] = GetHeaderImg();
-            replacements[1] = SingerConfigs.GetConfig("SingerGSTRegistrationNumber") ?? "883578023";
-            replacements[2] = GetDetails(invoice);
-
-            return string.Format(html, replacements);
-        }
-
-        private string GetDetails(Invoice invoice)
-        {
-            var builder = new StringBuilder();
-
-            var row = @"
-                <tr>
-                    <th>%NAME%:</th>
-                    <td>%VALUE%</td>                    
-                </tr>    
-            ";
-
-            builder.Append(@"<table>");
-
-            
-            builder.Append(row.Replace("%NAME%", "Date").Replace("%VALUE%", String.Format("{0:MMMM d, yyyy}", invoice.InvoiceDate)));
-            builder.Append(row.Replace("%NAME%", "Invoice #").Replace("%VALUE%", invoice.ToString()));
-
-
-            foreach (var item in invoice.ReferenceNumbers)
-            {
-                builder.Append(row.Replace("%NAME%", item.Field).Replace("%VALUE%", item.Value));
-            }
-
-            builder.Append(@"</table>");
-
-            return builder.ToString();
-        }
-
-        private string GetBillFrom(Invoice invoice)
-        {
-            var html = @"
-                <div id=""bill_from"" class=""subsection"">
-                    <div class=""address"">
-                        <span>{0}</span>
-                        <span>{1}</span>
-                        <span>{2}</span>
-                        <span>{3}</span>
-                    </div>
-                </div>
-
-            ";
-
-            var replacements = new object[6];
+            var replacements = new object[7];            
             string cName, cAddress, cCity, cPhone;
 
             if (SpecializedDocument)
@@ -130,12 +82,44 @@ namespace SingerDispatch.Printing.Documents
                 cPhone = "EnterpriseAddress-Phone";
             }
 
-            replacements[0] = SingerConfigs.GetConfig(cName) ?? "Singer Specialized Ltd.";
-            replacements[1] = SingerConfigs.GetConfig(cAddress);
-            replacements[2] = SingerConfigs.GetConfig(cCity);
-            replacements[3] = SingerConfigs.GetConfig(cPhone);
+            replacements[0] = GetHeaderImg();
+            replacements[1] = SingerConfigs.GetConfig("SingerGSTRegistrationNumber") ?? "883578023";
+            replacements[2] = SingerConfigs.GetConfig(cName) ?? "Singer Specialized Ltd.";
+            replacements[3] = SingerConfigs.GetConfig(cAddress);
+            replacements[4] = SingerConfigs.GetConfig(cCity);
+            replacements[5] = SingerConfigs.GetConfig(cPhone);
+            replacements[6] = GetDetails(invoice);
 
             return string.Format(html, replacements);
+        }
+
+        private string GetDetails(Invoice invoice)
+        {
+            var builder = new StringBuilder();
+
+            var row = @"
+                <tr>
+                    <th>%NAME%:</th>
+                    <td>%VALUE%</td>                    
+                </tr>    
+            ";
+
+            builder.Append(@"<span class=""document_name"">Invoice</span>");
+            builder.Append(@"<table>");
+
+            
+            builder.Append(row.Replace("%NAME%", "Date").Replace("%VALUE%", String.Format("{0:MMMM d, yyyy}", invoice.InvoiceDate)));
+            builder.Append(row.Replace("%NAME%", "Invoice #").Replace("%VALUE%", invoice.ToString()));
+
+
+            foreach (var item in invoice.ReferenceNumbers)
+            {
+                builder.Append(row.Replace("%NAME%", item.Field).Replace("%VALUE%", item.Value));
+            }
+
+            builder.Append(@"</table>");
+
+            return builder.ToString();
         }
 
         private string GetAttention(Invoice invoice)
@@ -456,6 +440,41 @@ namespace SingerDispatch.Printing.Documents
                     {                                
                         
                     }
+                    
+                    div#header div#details 
+                    {                
+                        float: right;
+                        margin-bottom: 1em;
+                    }
+
+                    div#header div#details span.document_name 
+                    {                
+                        display: block;
+                        text-align: right;
+                        margin-top: 0.2em;
+                        margin-bottom: 0.6em;
+                        font-size: 2em;
+                        text-transform: uppercase;                        
+                    }
+
+                    div#header div#details table
+                    {   
+                        border-collapse: collapse;
+                    }
+
+                    div#header div#details table th
+                    {
+                        vertical-align: bottom;
+                        padding: 0.2em 0.9em;
+                    }
+
+                    div#header div#details td
+                    {   
+                        vertical-align: bottom;
+                        border-bottom: 1px #CACACA solid;
+                        text-align: center;
+                        padding: 0.2em;
+                    }
                                 
                     div#header span 
                     {
@@ -464,14 +483,13 @@ namespace SingerDispatch.Printing.Documents
                     
                     div#header table.header
                     {
-                        width: 100%;
+                        width: 66%%;
                     }
                     
                     div#header table.header td#logo,
-                    div#header table.header td#document_name,
-                    div#header table.header td#details
+                    div#header table.header td#singer_address                    
                     {                
-                        width: 33%; 
+                        width: 50%; 
                         vertical-align: top;
                     }
                     
@@ -480,45 +498,22 @@ namespace SingerDispatch.Printing.Documents
                         text-align: left;
                     }
                     
-                    div#header td#document_name 
+                    div#header td#singer_address 
                     {                
-                        text-align: center;              
+                        text-align: left;
+                        padding-top: 0.5em;
                     }
                     
-                    div#header td#document_name span.title 
-                    {                
-                        font-size: 2em;
-                        text-transform: uppercase;
-                        padding-top: 1em;
-                    }
-                    
-                    div#header td#details 
-                    {                
-                        
-                    }
-
-                    div#header td#details table
+                    div#header td#singer_address span
                     {
-                        float: right;
-                        border-collapse: collapse;
-                    }
-
-                    div#header td#details table th
-                    {
-                        padding: 0.2em 0.9em 0.2em;
-                    }
-
-                    div#header td#details td
-                    {   
-                        border-bottom: 1px #CACACA solid;
-                        text-align: center;
-                        padding: 0 0.2em;
+                        display: block;
+                        padding-left: 1em;
                     }
 
                     div.subsection 
                     {
-                        width: 40%;	
-                        margin: 2em 0;
+                        width: 30%;
+                        margin-left: 1.5em;
                     }
 
                     div.subsection span
@@ -537,9 +532,16 @@ namespace SingerDispatch.Printing.Documents
                         font-weight: bold;
                     }
 
+                    div#bill_to
+                    {
+                        margin-top: 2em;
+                        margin-bottom: 2em;
+                    }
+
                     div#attention
                     {
-                        margin-top: 1.5em;	
+                        margin-top: -1.2em;
+                        margin-bottom: 2em;
                     }
 
                     div#attention span.name

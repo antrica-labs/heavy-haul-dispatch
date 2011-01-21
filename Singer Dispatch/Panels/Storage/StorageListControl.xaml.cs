@@ -70,6 +70,7 @@ namespace SingerDispatch.Panels.Storage
 
         private void SelectedItemChanged(StorageItem newValue, StorageItem oldValue)
         {
+            /*
             if (newValue == null)
             {
                 dgCurrentStorageItems.SelectedItem = null;
@@ -83,7 +84,7 @@ namespace SingerDispatch.Panels.Storage
             {
                 dgCurrentStorageItems.SelectedItem = newValue;                
             }
-
+            */
             UpdateComboBoxes();
         }
 

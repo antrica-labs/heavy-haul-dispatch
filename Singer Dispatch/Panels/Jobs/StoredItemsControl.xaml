@@ -78,7 +78,7 @@
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
 
-                            <ComboBox Name="cmbContacts" Grid.Column="0" SelectedItem="{Binding Contact}" ItemsSource="{Binding Company.Contacts}" ItemTemplate="{StaticResource SimpleNameTemplate}" TextSearch.TextPath="Name" />
+                            <ComboBox Name="cmbContacts" Grid.Column="0" SelectedItem="{Binding Contact}" ItemTemplate="{StaticResource SimpleNameTemplate}" TextSearch.TextPath="Name" />
                             <Button Grid.Column="1" Style="{StaticResource Standard}" Click="AddContact_Click" DataContext="{Binding ElementName=cmbContacts}">Add</Button>
                         </Grid>
 

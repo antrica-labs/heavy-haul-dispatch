@@ -69,7 +69,7 @@
                     <Expander Name="expanderInvoicing" Header="Invoicing" Style="{StaticResource SectionExpander}" Expanded="ExpandInvoicing">
                         <StackPanel Name="linksPricing" Style="{StaticResource SectionExpanderContent}" VerticalAlignment="Top"></StackPanel>
                     </Expander>
-                    <Expander Name="expanderStorage" Header="Storage" Style="{StaticResource SectionExpander}" Expanded="ExpandStorage">
+                    <Expander Visibility="Collapsed" Name="expanderStorage" Header="Storage" Style="{StaticResource SectionExpander}" Expanded="ExpandStorage">
                         <StackPanel Name="linksStorage" Style="{StaticResource SectionExpanderContent}" VerticalAlignment="Top"></StackPanel>
                     </Expander>
                     <Expander Name="expanderAdmin" Header="Admin" Style="{StaticResource SectionExpander}" Expanded="ExpandAdmin">
