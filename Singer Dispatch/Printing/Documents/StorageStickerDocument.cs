@@ -308,9 +308,9 @@ namespace SingerDispatch.Printing.Documents
             replacements[0] = item.Contact.Company.Name;
             replacements[1] = item.Contact.Name;
             replacements[2] = (string.IsNullOrWhiteSpace(item.Contact.Email)) ? "" : item.Contact.Email;
-            replacements[3] = (string.IsNullOrWhiteSpace(item.Contact.PrimaryPhone)) ? "" : item.Contact.PrimaryPhone;
-            replacements[4] = (string.IsNullOrWhiteSpace(item.Contact.SecondaryPhone)) ? "" : item.Contact.SecondaryPhone;
-            replacements[5] = (string.IsNullOrWhiteSpace(item.Contact.Fax)) ? "" : item.Contact.Fax;
+            replacements[3] = (string.IsNullOrWhiteSpace(item.Contact.PrimaryPhone)) ? "" : string.Format("Phone: {0}", item.Contact.PrimaryPhone);
+            replacements[4] = (string.IsNullOrWhiteSpace(item.Contact.SecondaryPhone)) ? "" : string.Format("Phone: {0}", item.Contact.SecondaryPhone);
+            replacements[5] = (string.IsNullOrWhiteSpace(item.Contact.Fax)) ? "" : string.Format("Fax: {0}", item.Contact.Fax);
 
             return string.Format(html, replacements);
         }
