@@ -25,15 +25,19 @@ namespace SingerDispatch.Panels.Storage
     /// </summary>
     public partial class StoragePanel 
     {
-
-        private void EditJob_Click(object sender, RoutedEventArgs e)
+        public StoragePanel()
         {
-
+            InitializeComponent();
         }
 
-        private void ViewStorageContract_Click(object sender, RoutedEventArgs e)
+        protected override void UseImperialMeasurementsChanged(bool value)
         {
+            base.UseImperialMeasurementsChanged(value);
+        }
 
+        protected override void CompanyListChanged(ObservableCollection<Company> newValue, ObservableCollection<Company> oldValue)
+        {
+            base.CompanyListChanged(newValue, oldValue);
         }
     }
 }

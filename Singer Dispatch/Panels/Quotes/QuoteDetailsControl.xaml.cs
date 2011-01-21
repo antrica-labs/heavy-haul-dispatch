@@ -75,8 +75,8 @@ namespace SingerDispatch.Panels.Quotes
                 var address = SelectedQuote.BillingAddress;
                 var contact = SelectedQuote.Contact;
 
-                cmbAddresses.ItemsSource = new ObservableCollection<Address>(from a in Database.Addresses where a.Company == SelectedQuote.Company || a.Company == SelectedQuote.CareOfCompany orderby a.AddressType.Name select a);
-                cmbContacts.ItemsSource = new ObservableCollection<Contact>(from c in Database.Contacts where c.Company == SelectedQuote.Company || c.Company == SelectedQuote.CareOfCompany orderby c.FirstName, c.LastName select c);
+                cmbAddresses.ItemsSource = new ObservableCollection<Address>(from a in Database.Addresses where a.Company != null && a.Company == SelectedQuote.Company || a.Company == SelectedQuote.CareOfCompany orderby a.AddressType.Name select a);
+                cmbContacts.ItemsSource = new ObservableCollection<Contact>(from c in Database.Contacts where c.Company != null && c.Company == SelectedQuote.Company || c.Company == SelectedQuote.CareOfCompany orderby c.FirstName, c.LastName select c);
 
                 SelectedQuote.BillingAddress = address;
                 SelectedQuote.Contact = contact;

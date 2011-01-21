@@ -1,9 +1,11 @@
-﻿<UserControl x:Class="SingerDispatch.Panels.Storage.StorageListControl"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             mc:Ignorable="d" d:DesignWidth="800">
+﻿<Panels:BaseUserControl x:Class="SingerDispatch.Panels.Storage.StorageListControl"
+                        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+                        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                        xmlns:Panels="clr-namespace:SingerDispatch.Panels"
+                        xmlns:Controls="clr-namespace:SingerDispatch.Controls"
+                        mc:Ignorable="d" d:DesignWidth="800" Loaded="Control_Loaded">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -11,202 +13,251 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
+
     <DockPanel>
-        <GroupBox Header="Item details" DockPanel.Dock="Bottom">
-            <StackPanel>
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition />
-                        <ColumnDefinition Width="0.75*" />
-                    </Grid.ColumnDefinitions>
+        <StackPanel DockPanel.Dock="Bottom">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="0.75*" />
+                </Grid.ColumnDefinitions>
 
-                    <GroupBox Header="Stored Item" Grid.Column="0" DataContext="{Binding ElementName=dgStorageItems, Path=SelectedItem}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgStorageItems, Path=SelectedItem}">
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition />
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition />
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition />
-                                <RowDefinition />
-                                <RowDefinition />
-                                <RowDefinition />
-                            </Grid.RowDefinitions>
-
-                            <Label Grid.Row="0" Grid.Column="0">Owner:</Label>
-                            <TextBox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" Text="{Binding JobCommodity.Owner}" IsReadOnly="True" />
-                            
-                            <Label Grid.Row="1" Grid.Column="0">Commodity:</Label>
-                            <TextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3"  Text="{Binding JobCommodity.Name}" />                            
-
-                            <Label Grid.Row="2" Grid.Column="0">Unit #:</Label>                                                        
-                            <TextBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" Text="{Binding JobCommodity.Unit}" />
-                            
-                            <Label Grid.Row="3" Grid.Column="0">Location:</Label>
-                            <TextBox Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3" Text="{Binding YardLocation}" />
-                        </Grid>
-                    </GroupBox>
-
-                    <GroupBox Header="Billing" Grid.Column="1" Margin="3,0,0,0" DataContext="{Binding ElementName=dgStorageItems, Path=SelectedItem}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgStorageItems, Path=SelectedItem}">
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition />
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition />
-                                <RowDefinition />
-                                <RowDefinition />
-                                <RowDefinition />
-                            </Grid.RowDefinitions>
-
-                            <Label Grid.Column="0" Grid.Row="0">Contact:</Label>
-                            <Grid Grid.Column="1" Grid.Row="0" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, Path=Company}">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition />
-                                    <ColumnDefinition Width="Auto" />
-                                </Grid.ColumnDefinitions>
-
-                                <ComboBox Name="cmbContacts" Grid.Column="0" SelectedItem="{Binding Contact}" ItemsSource="{Binding Company.Contacts}" ItemTemplate="{StaticResource SimpleNameTemplate}" TextSearch.TextPath="Name" />
-                                <Button Grid.Column="1" Style="{StaticResource Standard}" Click="AddContact_Click" DataContext="{Binding ElementName=cmbContacts}">Add</Button>
-                            </Grid>
-
-                            <Label Grid.Column="0" Grid.Row="1">Billing rate:</Label>
-                            <Grid Grid.Column="1" Grid.Row="1">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition />
-                                    <ColumnDefinition Width="1.2*"/>
-                                </Grid.ColumnDefinitions>
-
-                                <TextBox Grid.Column="0" Text="{Binding BillingRate, StringFormat=C}" />
-                                <ComboBox Grid.Column="1" Name="cmbBillingIntervals" SelectedItem="{Binding BillingInterval}" ItemTemplate="{StaticResource SimpleNameTemplate}" IsEditable="False" />
-                            </Grid>
-
-                            <Label Grid.Column="0" Grid.Row="2">Date in/out:</Label>
-                            <Grid Grid.Column="1" Grid.Row="2">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition />
-                                    <ColumnDefinition />
-                                </Grid.ColumnDefinitions>
-
-                                <DatePicker Grid.Column="0" SelectedDate="{Binding DateEntered}" />
-                                <DatePicker Grid.Column="1" SelectedDate="{Binding DateRemoved}" />
-                            </Grid>
-
-                            <CheckBox Grid.Column="1" Grid.Row="3" IsChecked="{Binding ContractSigned}">Contract signed</CheckBox>
-                        </Grid>
-                    </GroupBox>
-                </Grid>
-
-                <GroupBox Header="Dimensions" DataContext="{Binding ElementName=dgStorageItems, Path=SelectedItem.JobCommodity}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgStorageItems, Path=SelectedItem}">
+                <GroupBox Header="Stored Item" Grid.Column="0" DataContext="{Binding ElementName=ThePanel, Path=SelectedItem}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=ThePanel, Path=SelectedItem}">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition />
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition />
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition />
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition />
                         </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
 
-                        <Label Grid.Column="0">Length:</Label>
-                        <TextBox Grid.Column="1">
-                            <TextBox.Text>
-                                <MultiBinding Converter="{StaticResource LengthMeasurementConverter}">
-                                    <Binding Path="Length" />
-                                    <Binding ElementName="ThePanel" Path="UseImperialMeasurements" />
-                                </MultiBinding>
-                            </TextBox.Text>
-                        </TextBox>
+                        <Label Grid.Row="0" Grid.Column="0">Owner:</Label>
+                        <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding JobCommodity.Owner}" />
 
-                        <Label Grid.Column="2">Width:</Label>
-                        <TextBox Grid.Column="3">
-                            <TextBox.Text>
-                                <MultiBinding Converter="{StaticResource LengthMeasurementConverter}">
-                                    <Binding Path="Width" />
-                                    <Binding ElementName="ThePanel" Path="UseImperialMeasurements" />
-                                </MultiBinding>
-                            </TextBox.Text>
-                        </TextBox>
+                        <Label Grid.Row="1" Grid.Column="0">Commodity:</Label>
+                        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding JobCommodity.Name}" />
 
-                        <Label Grid.Column="4">Height:</Label>
-                        <TextBox Grid.Column="5">
-                            <TextBox.Text>
-                                <MultiBinding Converter="{StaticResource LengthMeasurementConverter}">
-                                    <Binding Path="Height" />
-                                    <Binding ElementName="ThePanel" Path="UseImperialMeasurements" />
-                                </MultiBinding>
-                            </TextBox.Text>
-                        </TextBox>
+                        <Label Grid.Row="3" Grid.Column="0">Unit #:</Label>
+                        <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Commodity.Unit}" />
 
-                        <Label Grid.Column="6">Weight:</Label>
-                        <TextBox Grid.Column="7">
-                            <TextBox.Text>
-                                <MultiBinding Converter="{StaticResource WeightMeasurementConverter}">
-                                    <Binding Path="Weight" />
-                                    <Binding ElementName="ThePanel" Path="UseImperialMeasurements" />
-                                </MultiBinding>
-                            </TextBox.Text>
-                        </TextBox>
+                        <Label Grid.Row="4" Grid.Column="0">Location:</Label>
+                        <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding YardLocation}" />
                     </Grid>
                 </GroupBox>
 
+                <GroupBox Header="Billing" Grid.Column="1" Margin="3,0,0,0" DataContext="{Binding ElementName=ThePanel, Path=SelectedItem}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=ThePanel, Path=SelectedItem}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+
+                        <Label Grid.Column="0" Grid.Row="0">Contact:</Label>
+                        <Grid Grid.Column="1" Grid.Row="0" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, Path=Company}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <ComboBox Name="cmbContacts" Grid.Column="0" SelectedItem="{Binding Contact}" ItemsSource="{Binding Company.Contacts}" ItemTemplate="{StaticResource SimpleNameTemplate}" TextSearch.TextPath="Name" />
+                            <Button Grid.Column="1" Style="{StaticResource Standard}" Click="AddContact_Click" DataContext="{Binding ElementName=cmbContacts}">Add</Button>
+                        </Grid>
+
+                        <Label Grid.Column="0" Grid.Row="1">Billing rate:</Label>
+                        <Grid Grid.Column="1" Grid.Row="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition Width="1.2*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <TextBox Grid.Column="0" Text="{Binding BillingRate, StringFormat=C}" />
+                            <ComboBox Grid.Column="1" Name="cmbBillingIntervals" SelectedItem="{Binding BillingInterval}" ItemTemplate="{StaticResource SimpleNameTemplate}" IsEditable="False" />
+                        </Grid>
+
+                        <Label Grid.Column="0" Grid.Row="2">Date in/out:</Label>
+                        <Grid Grid.Column="1" Grid.Row="2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+
+                            <DatePicker Grid.Column="0" SelectedDate="{Binding DateEntered}" />
+                            <DatePicker Grid.Column="1" SelectedDate="{Binding DateRemoved}" />
+                        </Grid>
+
+                        <CheckBox Grid.Column="1" Grid.Row="3" IsChecked="{Binding ContractSigned}">Contract signed</CheckBox>
+                    </Grid>
+                </GroupBox>
+            </Grid>
+
+            <GroupBox Header="Dimensions" DataContext="{Binding ElementName=ThePanel, Path=SelectedItem.Commodity}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=ThePanel, Path=SelectedItem}">
                 <Grid>
                     <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
                         <ColumnDefinition />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="Auto" />
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
 
-                    <GroupBox Grid.Column="0" Header="Notes" DataContext="{Binding ElementName=dgStorageItems, Path=SelectedItem}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgStorageItems, Path=SelectedItem}">
-                        <TextBox Style="{StaticResource MultiLine}" Height="Auto" Text="{Binding Notes}" />
-                    </GroupBox>
+                    <Label Grid.Column="0">Length:</Label>
+                    <TextBox Grid.Column="1">
+                        <TextBox.Text>
+                            <MultiBinding Converter="{StaticResource LengthMeasurementConverter}">
+                                <Binding Path="Length" />
+                                <Binding ElementName="ThePanel" Path="UseImperialMeasurements" />
+                            </MultiBinding>
+                        </TextBox.Text>
+                    </TextBox>
 
-                    <GroupBox Grid.Column="1" Header="Contact Details" DataContext="{Binding ElementName=dgStorageItems, Path=SelectedItem.Contact}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgStorageItems, Path=SelectedItem}">
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition />
-                                <ColumnDefinition Width="10" />
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition />
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition />
-                                <RowDefinition />
-                                <RowDefinition />
-                            </Grid.RowDefinitions>
+                    <Label Grid.Column="2">Width:</Label>
+                    <TextBox Grid.Column="3">
+                        <TextBox.Text>
+                            <MultiBinding Converter="{StaticResource LengthMeasurementConverter}">
+                                <Binding Path="Width" />
+                                <Binding ElementName="ThePanel" Path="UseImperialMeasurements" />
+                            </MultiBinding>
+                        </TextBox.Text>
+                    </TextBox>
 
-                            <Label Grid.Column="0" Grid.Row="0">Phone 1:</Label>
-                            <Label Grid.Column="1" Grid.Row="0" FontWeight="Bold" Content="{Binding PrimaryPhone, Converter={StaticResource PhoneNumberConverter}}" />
+                    <Label Grid.Column="4">Height:</Label>
+                    <TextBox Grid.Column="5">
+                        <TextBox.Text>
+                            <MultiBinding Converter="{StaticResource LengthMeasurementConverter}">
+                                <Binding Path="Height" />
+                                <Binding ElementName="ThePanel" Path="UseImperialMeasurements" />
+                            </MultiBinding>
+                        </TextBox.Text>
+                    </TextBox>
 
-                            <Label Grid.Column="0" Grid.Row="1">Email:</Label>
-                            <Label Grid.Column="1" Grid.Row="1" FontWeight="Bold" Content="{Binding Email}" />
-
-                            <Label Grid.Column="3" Grid.Row="0">Phone 2:</Label>
-                            <Label Grid.Column="4" Grid.Row="0" FontWeight="Bold" Content="{Binding SecondaryPhone, Converter={StaticResource PhoneNumberConverter}}" />
-
-                            <Label Grid.Column="3" Grid.Row="1">Fax:</Label>
-                            <Label Grid.Column="4" Grid.Row="1" FontWeight="Bold" Content="{Binding Fax, Converter={StaticResource PhoneNumberConverter}}" />
-
-                            <Label Grid.Column="0" Grid.Row="2">Preferred:</Label>
-                            <Label Grid.Column="1" Grid.Row="2" FontWeight="Bold" Content="{Binding PreferedContactMethod}" />
-                        </Grid>
-                    </GroupBox>
+                    <Label Grid.Column="6">Weight:</Label>
+                    <TextBox Grid.Column="7">
+                        <TextBox.Text>
+                            <MultiBinding Converter="{StaticResource WeightMeasurementConverter}">
+                                <Binding Path="Weight" />
+                                <Binding ElementName="ThePanel" Path="UseImperialMeasurements" />
+                            </MultiBinding>
+                        </TextBox.Text>
+                    </TextBox>
                 </Grid>
-            </StackPanel>
-        </GroupBox>
-        
-        <TabControl TabStripPlacement="Bottom">
+            </GroupBox>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+
+                <GroupBox Grid.Column="0" Header="Notes" DataContext="{Binding ElementName=ThePanel, Path=SelectedItem}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=ThePanel, Path=SelectedItem}">
+                    <TextBox Style="{StaticResource MultiLine}" Height="Auto" Text="{Binding Notes}" />
+                </GroupBox>
+
+                <GroupBox Grid.Column="1" Header="Contact Details" DataContext="{Binding ElementName=ThePanel, Path=SelectedItem.Contact}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="10" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+
+                        <Label Grid.Column="0" Grid.Row="0">Phone 1:</Label>
+                        <Label Grid.Column="1" Grid.Row="0" FontWeight="Bold" Content="{Binding PrimaryPhone, Converter={StaticResource PhoneNumberConverter}}" />
+
+                        <Label Grid.Column="0" Grid.Row="1">Email:</Label>
+                        <Label Grid.Column="1" Grid.Row="1" FontWeight="Bold" Content="{Binding Email}" />
+
+                        <Label Grid.Column="3" Grid.Row="0">Phone 2:</Label>
+                        <Label Grid.Column="4" Grid.Row="0" FontWeight="Bold" Content="{Binding SecondaryPhone, Converter={StaticResource PhoneNumberConverter}}" />
+
+                        <Label Grid.Column="3" Grid.Row="1">Fax:</Label>
+                        <Label Grid.Column="4" Grid.Row="1" FontWeight="Bold" Content="{Binding Fax, Converter={StaticResource PhoneNumberConverter}}" />
+
+                        <Label Grid.Column="0" Grid.Row="2">Preferred:</Label>
+                        <Label Grid.Column="1" Grid.Row="2" FontWeight="Bold" Content="{Binding PreferedContactMethod}" />
+                    </Grid>
+                </GroupBox>
+            </Grid>
+        </StackPanel>
+
+        <TabControl TabStripPlacement="Bottom" SelectionChanged="TabControl_SelectionChanged">
             <TabItem Header="Current">
-                
+                <DockPanel>
+                    <Grid DockPanel.Dock="Bottom">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+
+                        <Button Grid.Column="0" Style="{StaticResource Horizontal}" Click="ViewStorageContract_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=ThePanel, Path=SelectedItem}">View storage contract</Button>
+                        <Button Grid.Column="1" Style="{StaticResource Horizontal}" Click="ViewStorageSticker_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=ThePanel, Path=SelectedItem}">View storage sticker</Button>
+                        <Button Grid.Column="2" Style="{StaticResource HorizontalEnd}" Click="ArchiveItem_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=ThePanel, Path=SelectedItem}">Archive item</Button>
+                    </Grid>
+
+                    <DataGrid Name="dgCurrentStorageItems" Style="{StaticResource ListDisplay}" SelectionChanged="dgCurrentStorageItems_SelectionChanged">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Number" Binding="{Binding Number}" Width="Auto" />
+                            <DataGridTextColumn Header="Owner" Binding="{Binding JobCommodity.Owner.Name}" />
+                            <DataGridTextColumn Header="Commodity" Binding="{Binding JobCommodity.NameAndUnit}" />
+                            <DataGridTextColumn Header="Location" Binding="{Binding YardLocation}" />
+                            <DataGridTextColumn Header="Rate" Binding="{Binding BillingRate, StringFormat=C}" Width="80" />
+                            <DataGridTextColumn Header="Interval" Binding="{Binding BillingInterval.Name}" Width="100" />
+                            <DataGridTextColumn Header="Contact" Binding="{Binding Contact.Name}" Width="100" />
+                            <DataGridTextColumn Header="Signed" Binding="{Binding ContractSigned, Converter={StaticResource YesNoBooleanConverter}}" Width="Auto" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </DockPanel>
             </TabItem>
-            <TabItem Header="History">
-                
+            <TabItem Header="Previously stored">
+                <DockPanel>
+                    <Grid DockPanel.Dock="Bottom">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+
+                        <Button Grid.Column="0" Style="{StaticResource Horizontal}" Click="ViewStorageContract_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=ThePanel, Path=SelectedItem}">Generate storage contract</Button>
+                        <Button Grid.Column="1" Style="{StaticResource Horizontal}" Click="ViewStorageSticker_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=ThePanel, Path=SelectedItem}">View storage sticker</Button>
+                        <Button Grid.Column="2" Style="{StaticResource HorizontalEnd}" Click="RemoveItem_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=ThePanel, Path=SelectedItem}">Remove item</Button>
+                    </Grid>
+
+                    <DataGrid Name="dgPreviousStorageItems" Style="{StaticResource ListDisplay}" SelectionChanged="dgCurrentStorageItems_SelectionChanged">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Number" Binding="{Binding Number}" Width="Auto" />
+                            <DataGridTextColumn Header="Company" Binding="{Binding Company.Name}" />
+                            <DataGridTextColumn Header="Commodity" Binding="{Binding Commodity.NameAndUnit}" />
+                            <DataGridTextColumn Header="Location" Binding="{Binding YardLocation}" />
+                            <DataGridTextColumn Header="Rate" Binding="{Binding BillingRate, StringFormat=C}" Width="80" />
+                            <DataGridTextColumn Header="Interval" Binding="{Binding BillingInterval.Name}" Width="100" />
+                            <DataGridTextColumn Header="Contact" Binding="{Binding Contact.Name}" Width="100" />
+                            <DataGridTextColumn Header="Signed" Binding="{Binding ContractSigned, Converter={StaticResource YesNoBooleanConverter}}" Width="Auto" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </DockPanel>
             </TabItem>
         </TabControl>
     </DockPanel>
-</UserControl>
+</Panels:BaseUserControl>

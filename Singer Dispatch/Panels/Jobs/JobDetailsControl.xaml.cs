@@ -58,8 +58,8 @@ namespace SingerDispatch.Panels.Jobs
             if (SelectedJob != null)
             {
                 var contact = SelectedJob.Contact;
-
-                cmbContacts.ItemsSource = new ObservableCollection<Contact>(from c in Database.Contacts where c.Company == SelectedCompany || c.Company == SelectedJob.CareOfCompany orderby c.FirstName, c.LastName select c);
+                                
+                cmbContacts.ItemsSource = new ObservableCollection<Contact>(from c in Database.Contacts where c.Company != null && c.Company == SelectedJob.Company || c.Company == SelectedJob.CareOfCompany orderby c.FirstName, c.LastName select c);
 
                 cmbContacts.SelectedItem = contact;
             }
