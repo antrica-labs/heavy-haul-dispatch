@@ -99,22 +99,23 @@ namespace SingerDispatch.Printing.Documents
 
             var row = @"
                 <tr>
-                    <th>%NAME%:</th>
-                    <td>%VALUE%</td>                    
+                    <th>{0}:</th>
+                    <td>{1}</td>                    
                 </tr>    
             ";
 
             builder.Append(@"<span class=""document_name"">Invoice</span>");
             builder.Append(@"<table>");
 
-            
-            builder.Append(row.Replace("%NAME%", "Date").Replace("%VALUE%", String.Format("{0:MMMM d, yyyy}", invoice.InvoiceDate)));
-            builder.Append(row.Replace("%NAME%", "Invoice #").Replace("%VALUE%", invoice.ToString()));
+            builder.Append(string.Format(row, "Date", string.Format("{0:MMMM d, yyyy}", invoice.InvoiceDate)));
+            builder.Append(string.Format(row, "Invoice #", invoice.ToString()));
 
+            if (invoice.Job != null)
+                builder.Append(string.Format(row, "Job #", invoice.Job.Number));
 
             foreach (var item in invoice.ReferenceNumbers)
             {
-                builder.Append(row.Replace("%NAME%", item.Field).Replace("%VALUE%", item.Value));
+                builder.Append(string.Format(row, item.Field, item.Value));
             }
 
             builder.Append(@"</table>");
