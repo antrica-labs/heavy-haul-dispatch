@@ -219,7 +219,7 @@
 
                     <DataGrid Name="dgCurrentStorageItems" Style="{StaticResource ListDisplay}" SelectionChanged="dgCurrentStorageItems_SelectionChanged">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="Number" Binding="{Binding Number}" Width="Auto" />
+                            <DataGridTextColumn Header="Job" Binding="{Binding Job.Number}" Width="50" />
                             <DataGridTextColumn Header="Owner" Binding="{Binding JobCommodity.Owner.Name}" />
                             <DataGridTextColumn Header="Commodity" Binding="{Binding JobCommodity.NameAndUnit}" />
                             <DataGridTextColumn Header="Location" Binding="{Binding YardLocation}" />
@@ -247,7 +247,7 @@
 
                     <DataGrid Name="dgPreviousStorageItems" Style="{StaticResource ListDisplay}" SelectionChanged="dgCurrentStorageItems_SelectionChanged">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="Number" Binding="{Binding Number}" Width="Auto" />
+                            <DataGridTextColumn Header="Job" Binding="{Binding Job.Number}" Width="50" />
                             <DataGridTextColumn Header="Owner" Binding="{Binding JobCommodity.Owner.Name}" />
                             <DataGridTextColumn Header="Commodity" Binding="{Binding JobCommodity.NameAndUnit}" />
                             <DataGridTextColumn Header="Location" Binding="{Binding YardLocation}" />
