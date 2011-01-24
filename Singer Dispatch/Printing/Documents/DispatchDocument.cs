@@ -453,6 +453,18 @@ namespace SingerDispatch.Printing.Documents
                         margin-bottom: 0.3em;
                     }
 
+                    div.dispatch_doc div.load_and_unload span.method
+                    {
+                        display: block;
+                        margin: 0.6em 0.2em;
+                        font-weight: bold;
+                    }
+                    
+                    div.dispatch_doc div.load_and_unload span.method span
+                    {
+                        font-weight: normal;
+                    }
+
                     div.dispatch_doc div.load_and_unload td
                     {
                         padding: 0.3em 0.5em;
@@ -940,6 +952,8 @@ namespace SingerDispatch.Printing.Documents
                     <div class=""loading"">
                         <span class=""subheading"">Load Information</span>
                         
+                        {22}
+
                         <table class=""details"">
                             <thead>
                                 <tr>
@@ -982,6 +996,8 @@ namespace SingerDispatch.Printing.Documents
                     <div class=""unloading"">
                         <span class=""subheading"">Unload Information</span>
                         
+                        {23}
+
                         <table class=""details"">
                             <thead>
                                 <tr>
@@ -1030,7 +1046,7 @@ namespace SingerDispatch.Printing.Documents
             for (var i = 0; i < commodities.Count; i++)
             {
                 var item = commodities[i];
-                var reps = new object[22];
+                var reps = new object[24];
 
                 reps[0] = item.JobCommodity.Name;
                 reps[1] = (item.JobCommodity.Unit != null) ? string.Format("Unit {0}", item.JobCommodity.Unit) : "";
@@ -1040,6 +1056,9 @@ namespace SingerDispatch.Printing.Documents
                 reps[20] = string.Format("{0}", MeasurementFormater.FromKilograms(item.JobCommodity.Weight, MeasurementFormater.UPounds));
                 reps[21] = string.Format("{0} x {1} x {2} (LxWxH)", MeasurementFormater.FromMetres(item.JobCommodity.Length, MeasurementFormater.UFeet), MeasurementFormater.FromMetres(item.JobCommodity.Width, MeasurementFormater.UFeet), MeasurementFormater.FromMetres(item.JobCommodity.Height, MeasurementFormater.UFeet));
 
+
+                if (item.LoadMethod != null)
+                    reps[22] = string.Format(@"<span class=""method"">Method: <span>{0}</span></span>", item.LoadMethod.Name);
 
                 if (item.LoadDate != null)
                 {
@@ -1052,15 +1071,16 @@ namespace SingerDispatch.Printing.Documents
                     reps[5] = "";
                 }
 
-                
-
                 reps[6] = string.Format("<span>{0}</span><span>{1}</span>", item.LoadLocation, item.LoadAddress);
                 reps[7] = (item.LoadSiteContact != null) ? string.Format(@"<span class=""contact"">{0}</span><span class=""contact"">{1}</span>", item.LoadSiteContact.Name, item.LoadSiteContact.PrimaryPhone) : "";
                 reps[8] = (item.LoadingCompany != null) ? item.LoadingCompany.Name : "";
                 reps[9] = (item.LoadingContact != null) ? string.Format(@"<span class=""contact"">{0}</span><span class=""contact"">{1}</span>", item.LoadingContact.Name, item.LoadingContact.PrimaryPhone) : ""; ;
                 reps[10] = item.LoadRoute;
-                reps[11] = item.LoadInstructions;                
+                reps[11] = item.LoadInstructions;
 
+
+                if (item.UnloadMethod != null)
+                    reps[23] = string.Format(@"<span class=""method"">Method: <span>{0}</span></span>", item.UnloadMethod.Name);
 
                 if (item.UnloadDate != null)
                 {
