@@ -1186,6 +1186,13 @@ namespace SingerDispatch
 
         public void Add(Load load)
         {
+            foreach (var reference in load.ReferenceNumbers)
+            {
+                var item = new InvoiceReferenceNumber() { Field = reference.Field, Value = reference.Value };
+
+                ReferenceNumbers.Add(item);
+            }
+
             InvoiceLineItem line;
             
             line = new InvoiceLineItem();

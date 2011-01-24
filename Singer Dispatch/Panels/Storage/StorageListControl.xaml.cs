@@ -53,14 +53,14 @@ namespace SingerDispatch.Panels.Storage
         {
             if (InDesignMode()) return;
 
-            var storage = from si in Database.StorageItems orderby si.Number descending select si;
-
-            dgCurrentStorageItems.ItemsSource = new ObservableCollection<StorageItem>(from s in storage where s.DateRemoved == null select s);
-            dgPreviousStorageItems.ItemsSource = new ObservableCollection<StorageItem>(from s in storage where s.DateRemoved != null select s);
+            if (currentOrPreviousTabs.SelectedIndex == 0)
+                UpdateCurrentStorageList();
+            else if (currentOrPreviousTabs.SelectedIndex == 1)
+                UpdatePreviouslyStoredList();
 
             UpdateComboBoxes();
         }
-
+        
         protected static void SelectedItemPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var control = (StorageListControl)d;
@@ -69,22 +69,7 @@ namespace SingerDispatch.Panels.Storage
         }
 
         private void SelectedItemChanged(StorageItem newValue, StorageItem oldValue)
-        {
-            /*
-            if (newValue == null)
-            {
-                dgCurrentStorageItems.SelectedItem = null;
-                dgPreviousStorageItems.SelectedItem = null;
-            }
-            else if (newValue.DateRemoved != null)
-            {
-                dgPreviousStorageItems.SelectedItem = newValue;                
-            }
-            else
-            {
-                dgCurrentStorageItems.SelectedItem = newValue;                
-            }
-            */
+        {           
             UpdateComboBoxes();
         }
 
@@ -119,7 +104,24 @@ namespace SingerDispatch.Panels.Storage
 
         private void UpdateComboBoxes()
         {
-            cmbContacts.ItemsSource = (SelectedItem == null) ? null : new ObservableCollection<Contact>(from c in Database.Contacts where c.Company != null && c.Company == SelectedItem.Job.Company || c.Company == SelectedItem.Job.CareOfCompany orderby c.FirstName, c.LastName select c);            
+            var selected = cmbContacts.SelectedItem;
+            
+            cmbContacts.ItemsSource = (SelectedItem == null) ? null : new ObservableCollection<Contact>(from c in Database.Contacts where c.Company != null && c.Company == SelectedItem.Job.Company || c.Company == SelectedItem.Job.CareOfCompany orderby c.FirstName, c.LastName select c);
+            cmbContacts.SelectedItem = selected;
+        }                
+        
+        private void UpdateCurrentStorageList()
+        {
+            var storage = from si in Database.StorageItems orderby si.Number descending select si;
+
+            dgCurrentStorageItems.ItemsSource = new ObservableCollection<StorageItem>(from s in storage where s.DateRemoved == null select s);            
+        }
+
+        private void UpdatePreviouslyStoredList()
+        {
+            var storage = from si in Database.StorageItems orderby si.Number descending select si;
+
+            dgPreviousStorageItems.ItemsSource = new ObservableCollection<StorageItem>(from s in storage where s.DateRemoved != null select s);           
         }
 
         private void AddContact_Click(object sender, RoutedEventArgs e)
@@ -150,8 +152,8 @@ namespace SingerDispatch.Panels.Storage
             }
 
             var title = String.Format("Storage Contract #{0}", SelectedItem.Number);
-
-            var viewer = new Windows.DocumentViewerWindow(new StorageContractDocument(), SelectedItem, title) { IsMetric = !UseImperialMeasurements, IsSpecializedDocument = SelectedItem.Job.Company.CustomerType.IsEnterprise != true };
+            var specialized = (SelectedItem.Job.Company.CustomerType != null) ? SelectedItem.Job.Company.CustomerType.IsEnterprise != true : true;
+            var viewer = new Windows.DocumentViewerWindow(new StorageContractDocument(), SelectedItem, title) { IsMetric = !UseImperialMeasurements, IsSpecializedDocument = specialized };
             viewer.DisplayPrintout();
         }
 
@@ -180,8 +182,8 @@ namespace SingerDispatch.Panels.Storage
             }
 
             var title = string.Format("Storage Sticker #{0}", SelectedItem.Number);
-
-            var viewer = new Windows.DocumentViewerWindow(new StorageStickerDocument(), SelectedItem, title) { IsMetric = !UseImperialMeasurements, IsSpecializedDocument = SelectedItem.Job.Company.CustomerType.IsEnterprise != true };
+            var specialized = (SelectedItem.Job.Company.CustomerType != null) ? SelectedItem.Job.Company.CustomerType.IsEnterprise != true : true;
+            var viewer = new Windows.DocumentViewerWindow(new StorageStickerDocument(), SelectedItem, title) { IsMetric = !UseImperialMeasurements, IsSpecializedDocument = specialized };
             viewer.DisplayPrintout();
         }
 
@@ -192,9 +194,15 @@ namespace SingerDispatch.Panels.Storage
             SelectedItem = null;
 
             if (tb.SelectedIndex == 0)
+            {
+                UpdateCurrentStorageList();
                 SelectedItem = (StorageItem)dgCurrentStorageItems.SelectedItem;
+            }
             else if (tb.SelectedIndex == 1)
+            {
+                UpdatePreviouslyStoredList();
                 SelectedItem = (StorageItem)dgPreviousStorageItems.SelectedItem;
+            }                
         }
 
         private void ArchiveItem_Click(object sender, RoutedEventArgs e)
@@ -204,7 +212,7 @@ namespace SingerDispatch.Panels.Storage
 
             if (SelectedItem == null) return;
 
-            var confirmation = MessageBox.Show("Are you sure you want to archive this storage item? This cannot be undone.", "Archive confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            var confirmation = MessageBox.Show("Are you sure you want to archive this storage item? This will set the removed date if it is not already.", "Archive confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
             if (confirmation != MessageBoxResult.Yes) return;
 

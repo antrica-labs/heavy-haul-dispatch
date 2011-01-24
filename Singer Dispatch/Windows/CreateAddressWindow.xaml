@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:Controls="clr-namespace:SingerDispatch.Controls"
         xmlns:Validators="clr-namespace:SingerDispatch.Controls.Validators"
-        Title="Create Address" SizeToContent="Height" Width="450" 
+        Title="Create Address" SizeToContent="Height" Width="450" ResizeMode="NoResize"
         Loaded="Window_Loaded" KeyDown="Window_KeyDown" Closing="Window_Closing">
     <Window.Resources>
         <ResourceDictionary>

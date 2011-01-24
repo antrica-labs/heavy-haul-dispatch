@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:Controls="clr-namespace:SingerDispatch.Controls"
         xmlns:Validators="clr-namespace:SingerDispatch.Controls.Validators"
-        Title="Create Company" WindowStartupLocation="CenterOwner" SizeToContent="Height" Width="700"
+        Title="Create Company" WindowStartupLocation="CenterOwner" SizeToContent="Height" Width="700" ResizeMode="NoResize"
         FocusManager.FocusedElement="{Binding ElementName=txtName}"
         Loaded="Window_Loaded" KeyDown="Window_KeyDown" Closing="Window_Closing">
     <Window.Resources>

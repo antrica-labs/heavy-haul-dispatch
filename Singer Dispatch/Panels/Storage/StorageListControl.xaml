@@ -202,7 +202,7 @@
             </Grid>
         </StackPanel>
 
-        <TabControl TabStripPlacement="Bottom" SelectionChanged="TabControl_SelectionChanged">
+        <TabControl Name="currentOrPreviousTabs" TabStripPlacement="Bottom" SelectionChanged="TabControl_SelectionChanged">
             <TabItem Header="Current">
                 <DockPanel>
                     <Grid DockPanel.Dock="Bottom">
@@ -249,7 +249,7 @@
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Number" Binding="{Binding Number}" Width="Auto" />
                             <DataGridTextColumn Header="Owner" Binding="{Binding JobCommodity.Owner.Name}" />
-                            <DataGridTextColumn Header="Commodity" Binding="{Binding Commodity.NameAndUnit}" />
+                            <DataGridTextColumn Header="Commodity" Binding="{Binding JobCommodity.NameAndUnit}" />
                             <DataGridTextColumn Header="Location" Binding="{Binding YardLocation}" />
                             <DataGridTextColumn Header="Rate" Binding="{Binding BillingRate, StringFormat=C}" Width="80" />
                             <DataGridTextColumn Header="Interval" Binding="{Binding BillingInterval.Name}" Width="100" />

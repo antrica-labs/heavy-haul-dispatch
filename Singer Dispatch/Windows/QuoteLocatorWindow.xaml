@@ -1,7 +1,7 @@
 ﻿<Window x:Class="SingerDispatch.Windows.QuoteLocatorWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    Title="Quote Lookup" Width="300" SizeToContent="Height" WindowStartupLocation="CenterOwner"
+    Title="Quote Lookup" Width="300" SizeToContent="Height" WindowStartupLocation="CenterOwner" ResizeMode="NoResize"
     FocusManager.FocusedElement="{Binding ElementName=txtQuoteNumber}"
     KeyDown="Window_KeyDown">
     <Window.Resources>
