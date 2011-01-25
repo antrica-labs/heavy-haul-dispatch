@@ -260,6 +260,7 @@
     <Compile Include="Printing\Documents\LoadingDocument.cs" />
     <Compile Include="Printing\Documents\SingerPrintDocument.cs" />
     <Compile Include="Printing\Documents\StorageContractDocument.cs" />
+    <Compile Include="Printing\Documents\StorageListDocument.cs" />
     <Compile Include="Printing\Documents\StorageStickerDocument.cs" />
     <Compile Include="Printing\FileUtils.cs" />
     <Compile Include="Printing\Documents\InvoiceDocument.cs" />

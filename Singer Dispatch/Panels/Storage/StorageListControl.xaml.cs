@@ -232,5 +232,25 @@ namespace SingerDispatch.Panels.Storage
                 Windows.NoticeWindow.ShowError("Error while attempting to write changes to database", ex.Message);
             }
         }
+
+        private void PrintCurrentStorage_Click(object sender, RoutedEventArgs e)
+        {
+            var list = (ObservableCollection<StorageItem>)dgCurrentStorageItems.ItemsSource;
+            var items = from i in list select i;
+            var title = "Singer Storage List - Current";
+
+            var viewer = new DocumentViewerWindow(new StorageListDocument(), items, title) { IsMetric = !UseImperialMeasurements };
+            viewer.DisplayPrintout();            
+        }
+
+        private void PrintPreviousStorage_Click(object sender, RoutedEventArgs e)
+        {
+            var list = (ObservableCollection<StorageItem>)dgPreviousStorageItems.ItemsSource;
+            var items = from i in list select i;
+            var title = "Singer Storage List - Archive";
+
+            var viewer = new DocumentViewerWindow(new StorageListDocument(), items, title) { IsMetric = !UseImperialMeasurements };
+            viewer.DisplayPrintout();     
+        }
     }
 }

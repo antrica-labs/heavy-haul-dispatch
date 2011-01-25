@@ -202,7 +202,7 @@
             </Grid>
         </StackPanel>
 
-        <TabControl Name="currentOrPreviousTabs" TabStripPlacement="Bottom" SelectionChanged="TabControl_SelectionChanged">
+        <TabControl Name="currentOrPreviousTabs" TabStripPlacement="Bottom" SelectionChanged="TabControl_SelectionChanged" Margin="0,0,0,3">
             <TabItem Header="Current">
                 <DockPanel>
                     <Grid DockPanel.Dock="Bottom">
@@ -210,11 +210,13 @@
                             <ColumnDefinition />
                             <ColumnDefinition />
                             <ColumnDefinition />
+                            <ColumnDefinition />
                         </Grid.ColumnDefinitions>
 
-                        <Button Grid.Column="0" Style="{StaticResource Horizontal}" Click="ViewStorageContract_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=ThePanel, Path=SelectedItem}">Generate storage contract</Button>
-                        <Button Grid.Column="1" Style="{StaticResource Horizontal}" Click="ViewStorageSticker_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=ThePanel, Path=SelectedItem}">View storage sticker</Button>
-                        <Button Grid.Column="2" Style="{StaticResource HorizontalEnd}" Click="ArchiveItem_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=ThePanel, Path=SelectedItem}">Archive item</Button>
+                        <Button Grid.Column="0" Style="{StaticResource Horizontal}" Click="PrintCurrentStorage_Click">Print list</Button>
+                        <Button Grid.Column="1" Style="{StaticResource Horizontal}" Click="ViewStorageContract_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=ThePanel, Path=SelectedItem}">Generate storage contract</Button>
+                        <Button Grid.Column="2" Style="{StaticResource Horizontal}" Click="ViewStorageSticker_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=ThePanel, Path=SelectedItem}">View storage sticker</Button>
+                        <Button Grid.Column="3" Style="{StaticResource HorizontalEnd}" Click="ArchiveItem_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=ThePanel, Path=SelectedItem}">Archive item</Button>
                     </Grid>
 
                     <DataGrid Name="dgCurrentStorageItems" Style="{StaticResource ListDisplay}" SelectionChanged="dgCurrentStorageItems_SelectionChanged">
@@ -238,11 +240,13 @@
                             <ColumnDefinition />
                             <ColumnDefinition />
                             <ColumnDefinition />
+                            <ColumnDefinition />
                         </Grid.ColumnDefinitions>
 
-                        <Button Grid.Column="0" Style="{StaticResource Horizontal}" Click="ViewStorageContract_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=ThePanel, Path=SelectedItem}">Generate storage contract</Button>
-                        <Button Grid.Column="1" Style="{StaticResource Horizontal}" Click="ViewStorageSticker_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=ThePanel, Path=SelectedItem}">View storage sticker</Button>
-                        <Button Grid.Column="2" Style="{StaticResource HorizontalEnd}" Click="RemoveItem_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=ThePanel, Path=SelectedItem}">Remove item</Button>
+                        <Button Grid.Column="0" Style="{StaticResource Horizontal}" Click="PrintPreviousStorage_Click">Print list</Button>
+                        <Button Grid.Column="1" Style="{StaticResource Horizontal}" Click="ViewStorageContract_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=ThePanel, Path=SelectedItem}">Generate storage contract</Button>
+                        <Button Grid.Column="2" Style="{StaticResource Horizontal}" Click="ViewStorageSticker_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=ThePanel, Path=SelectedItem}">View storage sticker</Button>
+                        <Button Grid.Column="3" Style="{StaticResource HorizontalEnd}" Click="RemoveItem_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=ThePanel, Path=SelectedItem}">Remove item</Button>
                     </Grid>
 
                     <DataGrid Name="dgPreviousStorageItems" Style="{StaticResource ListDisplay}" SelectionChanged="dgCurrentStorageItems_SelectionChanged">

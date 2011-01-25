@@ -41,8 +41,8 @@
                 <MenuItem Header="Invoicing" Visibility="Collapsed">                    
                 </MenuItem>
                 -->
-                <MenuItem Header="Storage" Visibility="Collapsed">
-                    <MenuItem Header="Storage List" Click="ViewStorageList_Click" />
+                <MenuItem Header="Storage">
+                    <MenuItem Header="Current Storage List" Click="ViewStorageList_Click" />
                 </MenuItem>
                 <MenuItem Header="Tools">
                     <!-- <MenuItem Header="Global search" /> -->
