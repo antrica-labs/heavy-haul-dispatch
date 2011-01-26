@@ -258,6 +258,7 @@
     <Compile Include="Printing\Documents\FuelReportDocument.cs" />
     <Compile Include="Printing\Documents\JobListDocument.cs" />
     <Compile Include="Printing\Documents\LoadingDocument.cs" />
+    <Compile Include="Printing\Documents\OutOfProvinceReportDocument.cs" />
     <Compile Include="Printing\Documents\SingerPrintDocument.cs" />
     <Compile Include="Printing\Documents\StorageContractDocument.cs" />
     <Compile Include="Printing\Documents\StorageListDocument.cs" />
@@ -312,6 +313,9 @@
     </Compile>
     <Compile Include="Windows\CreateJobCommodityWindow.xaml.cs">
       <DependentUpon>CreateJobCommodityWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\DateRangeSelectionWindow.xaml.cs">
+      <DependentUpon>DateRangeSelectionWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\DocumentViewerWindow.xaml.cs">
       <DependentUpon>DocumentViewerWindow.xaml</DependentUpon>
@@ -576,6 +580,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\CreateJobCommodityWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\DateRangeSelectionWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

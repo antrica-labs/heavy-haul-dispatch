@@ -487,6 +487,23 @@ namespace SingerDispatch
             else
                 box.Style = TryFindResource("GoodInfo") as Style;
         }
-        
+
+        private void PrintOutOfProvinceReport_Click(object sender, RoutedEventArgs e)
+        {
+            var selector = new DateRangeSelectionWindow() { Owner = this };
+            var range = selector.GetDates();
+
+            if (range != null)
+            {
+                if (range.StartDate == null || range.EndDate == null)
+                    throw new Exception("Both start date and end date must be filled in"); 
+
+                var list = from t in Database.OutOfProvinceTravels select t;
+                var title = string.Format("Fuel Report - {0} to {1}", range.StartDate.ToString(SingerConfigs.PrintedDateFormatString), range.EndDate.ToString(SingerConfigs.PrintedDateFormatString));
+
+                var viewer = new DocumentViewerWindow(new OutOfProvinceReportDocument(), list, title) { Owner = this, IsMetric = !UseImperialMeasurements };
+                viewer.DisplayPrintout();
+            }
+        }
     }
 }

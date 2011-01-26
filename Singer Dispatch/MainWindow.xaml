@@ -35,18 +35,14 @@
                 </MenuItem>
                 <MenuItem Header="Jobs">
                     <MenuItem Header="_Job list" Click="ViewJobList_Click" />
-                    <MenuItem Header="_Find job" Click="FindJob_Click" InputGestureText="Ctrl+Shift+J" />                    
+                    <MenuItem Header="_Find job" Click="FindJob_Click" InputGestureText="Ctrl+Shift+J" />
                 </MenuItem>
-                <!--
-                <MenuItem Header="Invoicing" Visibility="Collapsed">                    
-                </MenuItem>
-                -->
                 <MenuItem Header="Storage">
-                    <MenuItem Header="Current Storage List" Click="ViewStorageList_Click" />
+                    <MenuItem Header="Current storage list" Click="ViewStorageList_Click" />
                 </MenuItem>
-                <MenuItem Header="Tools">
-                    <!-- <MenuItem Header="Global search" /> -->
+                <MenuItem Header="Tools">                    
                     <MenuItem Header="Use imperial measurements" IsCheckable="true" IsChecked="{Binding ElementName=ThisWindow, Path=UseImperialMeasurements}" />
+                    <MenuItem Header="_Out of province report" Click="PrintOutOfProvinceReport_Click" />
                 </MenuItem>
             </Menu>
 
