@@ -134,6 +134,9 @@ namespace SingerDispatch
     partial void InsertRateType(RateType instance);
     partial void UpdateRateType(RateType instance);
     partial void DeleteRateType(RateType instance);
+    partial void InsertRateAdjustment(RateAdjustment instance);
+    partial void UpdateRateAdjustment(RateAdjustment instance);
+    partial void DeleteRateAdjustment(RateAdjustment instance);
     partial void InsertSeason(Season instance);
     partial void UpdateSeason(Season instance);
     partial void DeleteSeason(Season instance);
@@ -497,6 +500,14 @@ namespace SingerDispatch
 			get
 			{
 				return this.GetTable<RateType>();
+			}
+		}
+		
+		public System.Data.Linq.Table<RateAdjustment> RateAdjustments
+		{
+			get
+			{
+				return this.GetTable<RateAdjustment>();
 			}
 		}
 		
@@ -2167,6 +2178,8 @@ namespace SingerDispatch
 		
 		private EntitySet<Quote> _CareOfQuotes;
 		
+		private EntitySet<RateAdjustment> _RateAdjustments;
+		
 		private EntitySet<Service> _Services;
 		
 		private EntitySet<ThirdPartyService> _ThirdPartyServices;
@@ -2221,6 +2234,7 @@ namespace SingerDispatch
 			this._Permits = new EntitySet<Permit>(new Action<Permit>(this.attach_Permits), new Action<Permit>(this.detach_Permits));
 			this._Quotes = new EntitySet<Quote>(new Action<Quote>(this.attach_Quotes), new Action<Quote>(this.detach_Quotes));
 			this._CareOfQuotes = new EntitySet<Quote>(new Action<Quote>(this.attach_CareOfQuotes), new Action<Quote>(this.detach_CareOfQuotes));
+			this._RateAdjustments = new EntitySet<RateAdjustment>(new Action<RateAdjustment>(this.attach_RateAdjustments), new Action<RateAdjustment>(this.detach_RateAdjustments));
 			this._Services = new EntitySet<Service>(new Action<Service>(this.attach_Services), new Action<Service>(this.detach_Services));
 			this._ThirdPartyServices = new EntitySet<ThirdPartyService>(new Action<ThirdPartyService>(this.attach_ThirdPartyServices), new Action<ThirdPartyService>(this.detach_ThirdPartyServices));
 			this._Invoices = new EntitySet<Invoice>(new Action<Invoice>(this.attach_Invoices), new Action<Invoice>(this.detach_Invoices));
@@ -2639,6 +2653,19 @@ namespace SingerDispatch
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Company_RateAdjustment", Storage="_RateAdjustments", ThisKey="ID", OtherKey="CompanyID")]
+		public EntitySet<RateAdjustment> RateAdjustments
+		{
+			get
+			{
+				return this._RateAdjustments;
+			}
+			set
+			{
+				this._RateAdjustments.Assign(value);
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Company_Service", Storage="_Services", ThisKey="ID", OtherKey="CompanyID")]
 		public EntitySet<Service> Services
 		{
@@ -2932,6 +2959,18 @@ namespace SingerDispatch
 		{
 			this.SendPropertyChanging();
 			entity.CareOfCompany = null;
+		}
+		
+		private void attach_RateAdjustments(RateAdjustment entity)
+		{
+			this.SendPropertyChanging();
+			entity.Company = this;
+		}
+		
+		private void detach_RateAdjustments(RateAdjustment entity)
+		{
+			this.SendPropertyChanging();
+			entity.Company = null;
 		}
 		
 		private void attach_Services(Service entity)
@@ -13633,6 +13672,8 @@ namespace SingerDispatch
 		
 		private EntitySet<Load> _Loads;
 		
+		private EntitySet<RateAdjustment> _RateAdjustments;
+		
 		private EntitySet<TrailerCombination> _TrailerCombinations;
 		
 		private EntityRef<RateType> _RateType;
@@ -13660,6 +13701,7 @@ namespace SingerDispatch
 		public Rate()
 		{
 			this._Loads = new EntitySet<Load>(new Action<Load>(this.attach_Loads), new Action<Load>(this.detach_Loads));
+			this._RateAdjustments = new EntitySet<RateAdjustment>(new Action<RateAdjustment>(this.attach_RateAdjustments), new Action<RateAdjustment>(this.detach_RateAdjustments));
 			this._TrailerCombinations = new EntitySet<TrailerCombination>(new Action<TrailerCombination>(this.attach_TrailerCombinations), new Action<TrailerCombination>(this.detach_TrailerCombinations));
 			this._RateType = default(EntityRef<RateType>);
 			OnCreated();
@@ -13822,6 +13864,19 @@ namespace SingerDispatch
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Rate_RateAdjustment", Storage="_RateAdjustments", ThisKey="ID", OtherKey="RateID")]
+		public EntitySet<RateAdjustment> RateAdjustments
+		{
+			get
+			{
+				return this._RateAdjustments;
+			}
+			set
+			{
+				this._RateAdjustments.Assign(value);
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Rate_TrailerCombination", Storage="_TrailerCombinations", ThisKey="ID", OtherKey="RateID")]
 		public EntitySet<TrailerCombination> TrailerCombinations
 		{
@@ -13896,6 +13951,18 @@ namespace SingerDispatch
 		}
 		
 		private void detach_Loads(Load entity)
+		{
+			this.SendPropertyChanging();
+			entity.Rate = null;
+		}
+		
+		private void attach_RateAdjustments(RateAdjustment entity)
+		{
+			this.SendPropertyChanging();
+			entity.Rate = this;
+		}
+		
+		private void detach_RateAdjustments(RateAdjustment entity)
 		{
 			this.SendPropertyChanging();
 			entity.Rate = null;
@@ -14025,6 +14092,222 @@ namespace SingerDispatch
 		{
 			this.SendPropertyChanging();
 			entity.RateType = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="")]
+	public partial class RateAdjustment : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private long _ID;
+		
+		private System.Nullable<long> _CompanyID;
+		
+		private System.Nullable<long> _RateID;
+		
+		private System.Nullable<decimal> _AdjustedRate;
+		
+		private EntityRef<Company> _Company;
+		
+		private EntityRef<Rate> _Rate;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDChanging(long value);
+    partial void OnIDChanged();
+    partial void OnCompanyIDChanging(System.Nullable<long> value);
+    partial void OnCompanyIDChanged();
+    partial void OnRateIDChanging(System.Nullable<long> value);
+    partial void OnRateIDChanged();
+    partial void OnAdjustedRateChanging(System.Nullable<decimal> value);
+    partial void OnAdjustedRateChanged();
+    #endregion
+		
+		public RateAdjustment()
+		{
+			this._Company = default(EntityRef<Company>);
+			this._Rate = default(EntityRef<Rate>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, IsPrimaryKey=true, IsDbGenerated=true)]
+		public long ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this.OnIDChanging(value);
+					this.SendPropertyChanging();
+					this._ID = value;
+					this.SendPropertyChanged("ID");
+					this.OnIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CompanyID")]
+		public System.Nullable<long> CompanyID
+		{
+			get
+			{
+				return this._CompanyID;
+			}
+			set
+			{
+				if ((this._CompanyID != value))
+				{
+					if (this._Company.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnCompanyIDChanging(value);
+					this.SendPropertyChanging();
+					this._CompanyID = value;
+					this.SendPropertyChanged("CompanyID");
+					this.OnCompanyIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RateID")]
+		public System.Nullable<long> RateID
+		{
+			get
+			{
+				return this._RateID;
+			}
+			set
+			{
+				if ((this._RateID != value))
+				{
+					if (this._Rate.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnRateIDChanging(value);
+					this.SendPropertyChanging();
+					this._RateID = value;
+					this.SendPropertyChanged("RateID");
+					this.OnRateIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AdjustedRate")]
+		public System.Nullable<decimal> AdjustedRate
+		{
+			get
+			{
+				return this._AdjustedRate;
+			}
+			set
+			{
+				if ((this._AdjustedRate != value))
+				{
+					this.OnAdjustedRateChanging(value);
+					this.SendPropertyChanging();
+					this._AdjustedRate = value;
+					this.SendPropertyChanged("AdjustedRate");
+					this.OnAdjustedRateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Company_RateAdjustment", Storage="_Company", ThisKey="CompanyID", OtherKey="ID", IsForeignKey=true)]
+		public Company Company
+		{
+			get
+			{
+				return this._Company.Entity;
+			}
+			set
+			{
+				Company previousValue = this._Company.Entity;
+				if (((previousValue != value) 
+							|| (this._Company.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Company.Entity = null;
+						previousValue.RateAdjustments.Remove(this);
+					}
+					this._Company.Entity = value;
+					if ((value != null))
+					{
+						value.RateAdjustments.Add(this);
+						this._CompanyID = value.ID;
+					}
+					else
+					{
+						this._CompanyID = default(Nullable<long>);
+					}
+					this.SendPropertyChanged("Company");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Rate_RateAdjustment", Storage="_Rate", ThisKey="RateID", OtherKey="ID", IsForeignKey=true)]
+		public Rate Rate
+		{
+			get
+			{
+				return this._Rate.Entity;
+			}
+			set
+			{
+				Rate previousValue = this._Rate.Entity;
+				if (((previousValue != value) 
+							|| (this._Rate.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Rate.Entity = null;
+						previousValue.RateAdjustments.Remove(this);
+					}
+					this._Rate.Entity = value;
+					if ((value != null))
+					{
+						value.RateAdjustments.Add(this);
+						this._RateID = value.ID;
+					}
+					else
+					{
+						this._RateID = default(Nullable<long>);
+					}
+					this.SendPropertyChanged("Rate");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
 		}
 	}
 	

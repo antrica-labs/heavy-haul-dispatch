@@ -506,5 +506,25 @@ namespace SingerDispatch
                 viewer.DisplayPrintout();
             }
         }
+
+        private void FixLoadRates_Click(object sender, RoutedEventArgs e)
+        {
+            var loads = from l in Database.Loads select l;
+
+            foreach (var load in loads)
+            {
+                if (load.AdjustedRate != null) continue;
+
+                try
+                {
+                    var enterprise = load.Job.Company.CustomerType != null && load.Job.Company.CustomerType.IsEnterprise == true;
+                    load.AdjustedRate = (enterprise) ? load.Rate.HourlyEnterprise : load.Rate.HourlySpecialized;
+                }
+                catch
+                { }
+            }
+
+            Database.SubmitChanges();
+        }
     }
 }

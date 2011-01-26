@@ -76,7 +76,7 @@
                 </ComboBox>
 
                 <Label Grid.Column="2" Grid.Row="0">Billing rate:</Label>
-                <TextBox Grid.Column="2" Grid.Row="1" Text="{Binding ElementName=cmbRates, Path=SelectedItem.Adjusted, StringFormat=c}" />
+                <TextBox Grid.Column="2" Grid.Row="1" Text="{Binding AdjustedRate, StringFormat=c}" />
 
                 <Label Grid.Column="3" Grid.Row="0">Trailer combination:</Label>
                 <ComboBox Name="cmbTrailerCombinations" Grid.Column="3" Grid.Row="1" TextSearch.TextPath="Combination" ItemTemplate="{StaticResource TrailerCombinationTemplate}">

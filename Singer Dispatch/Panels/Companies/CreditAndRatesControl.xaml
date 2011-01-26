@@ -6,7 +6,7 @@
                            xmlns:Panels="clr-namespace:SingerDispatch.Panels"
                            xmlns:Controls="clr-namespace:SingerDispatch.Controls"
                            x:Name="creditAndRatesControl"
-                           Loaded="Control_Loaded" mc:Ignorable="d" d:DesignWidth="780">
+                           Loaded="Control_Loaded" mc:Ignorable="d" d:DesignWidth="800">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -23,11 +23,23 @@
                 </TextBlock>
             </DataTemplate>           
         </ResourceDictionary>        
-    </UserControl.Resources>    
-    <DockPanel>
-        <StackPanel DockPanel.Dock="Right" Width="350" Margin="5,0,0,0">
-            <GroupBox Header="Administration" DataContext="{Binding ElementName=creditAndRatesControl, Path=SelectedCompany}">
-                <StackPanel VerticalAlignment="Top">
+    </UserControl.Resources>
+    <DockPanel IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=creditAndRatesControl, Path=SelectedCompany}">
+        <StackPanel DockPanel.Dock="Top">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="2*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+
+                <GroupBox Header="Administration" Grid.Column="0" DataContext="{Binding ElementName=creditAndRatesControl, Path=SelectedCompany}">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
@@ -38,43 +50,67 @@
                             <RowDefinition />
                             <RowDefinition />
                             <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
                         </Grid.RowDefinitions>
 
-                        <Label Grid.Column="0" Grid.Row="0">Rate Adjustment ($):</Label>
-                        <TextBox Name="txtCreditRateHourly" Grid.Column="1" Grid.Row="0" Text="{Binding RateAdjustment, StringFormat=C, Converter={StaticResource NullableValueConverter}}" TextChanged="txtCreditRateHourly_TextChanged" KeyDown="txtCreditRateHourly_KeyDown" GotFocus="txtCreditRateHourly_GotFocus" LostFocus="txtCreditRateHourly_LostFocus" />
+                        <Label Grid.Row="0" Grid.Column="0">Customer type</Label>
+                        <ComboBox Grid.Row="0" Grid.Column="1" Name="cmbCreditCustomerType" SelectedItem="{Binding CustomerType}" IsEditable="False" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectionChanged="cmbCreditCustomerType_SelectionChanged" />
 
-                        <Label Grid.Row="1" Grid.Column="0">Customer type</Label>
-                        <ComboBox Name="cmbCreditCustomerType" Grid.Row="1" Grid.Column="1" SelectedItem="{Binding CustomerType}" IsEditable="False" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectionChanged="cmbCreditCustomerType_SelectionChanged" />
-                        
-                        <Label Grid.Row="2" Grid.Column="0">Available credit:</Label>
-                        <TextBox Name="txtCreditAvailableCredit" Grid.Row="2" Grid.Column="1" Text="{Binding AvailableCredit, StringFormat=c, Converter={StaticResource NullableValueConverter}}" />
-                       
-                        <Label Grid.Row="3" Grid.Column="0">Priority level:</Label>
-                        <ComboBox Name="cmbCreditPriority" Grid.Row="3" Grid.Column="1" ItemTemplate="{StaticResource PriorityLevelTemplate}" SelectedItem="{Binding CompanyPriorityLevel}" IsEditable="False" />
+                        <Label Grid.Row="1" Grid.Column="0">Available credit:</Label>
+                        <Grid Grid.Row="1" Grid.Column="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
 
-                        <Label Grid.Row="4" Grid.Column="0">AccPac customer code:</Label>
-                        <TextBox Name="txtCreditAccPacCode" Grid.Row="4" Grid.Column="1"  Text="{Binding AccPacVendorCode}" />
+                            <TextBox Grid.Column="0" Text="{Binding AvailableCredit, StringFormat=c, Converter={StaticResource NullableValueConverter}}" />
+                            <CheckBox Grid.Column="1" IsChecked="{Binding EquifaxComplete}">Equifax report complete</CheckBox>
+                        </Grid>
 
-                        <Label Grid.Row="5" Grid.Column="0">Equifax report complete:</Label>
-                        <CheckBox Name="chbCreditEquifaxComplete" Grid.Row="5" Grid.Column="1" IsChecked="{Binding EquifaxComplete}" />
+                        <Label Grid.Row="2" Grid.Column="0">Priority level:</Label>
+                        <ComboBox Grid.Row="2" Grid.Column="1" Name="cmbCreditPriority" ItemTemplate="{StaticResource PriorityLevelTemplate}" SelectedItem="{Binding CompanyPriorityLevel}" IsEditable="False" />
+
+                        <Label Grid.Row="3" Grid.Column="0">AccPac code:</Label>
+                        <TextBox Grid.Row="3" Grid.Column="1"  Text="{Binding AccPacVendorCode}" />
                     </Grid>
+                </GroupBox>
 
-                    <StackPanel VerticalAlignment="Top">
-                        <Label>Addministration notes:</Label>
-                        <TextBox Name="txtCreditAdminNotes" Height="60" Style="{StaticResource MultiLine}" Text="{Binding Notes}" />
-                    </StackPanel>
-                </StackPanel>
-            </GroupBox>
+                <GroupBox Header="Customer notes" Grid.Column="1" DataContext="{Binding ElementName=creditAndRatesControl, Path=SelectedCompany}">
+                    <TextBox Style="{StaticResource MultiLine}" Height="Auto" Text="{Binding Notes}" />
+                </GroupBox>
+            </Grid>
         </StackPanel>
 
-        <DataGrid Name="dgCreditRates" Style="{StaticResource ListDisplay}">
-            <DataGrid.Columns>                
-                <DataGridTextColumn Header="Type" Binding="{Binding Name}" Width="2*" />
-                <DataGridTextColumn Header="Hourly" Binding="{Binding Path=Hourly, StringFormat=c}" />
-                <DataGridTextColumn Header="Adjusted" Binding="{Binding Path=Adjusted, StringFormat=c}" />
-            </DataGrid.Columns>
-        </DataGrid>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <GroupBox Header="Default rates" Grid.Column="0">
+                <DockPanel>
+                    <Button DockPanel.Dock="Bottom" Margin="0,3,0,0" Click="CreateAdjustment_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgCreditRates, Path=SelectedItem}">Create adjustment</Button>
+                    
+                    <DataGrid Name="dgCreditRates" Style="{StaticResource ListDisplay}">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Type" Binding="{Binding Name}" Width="2*" />
+                            <DataGridTextColumn Header="Hourly" Binding="{Binding Path=Hourly, StringFormat=c}" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </DockPanel>
+            </GroupBox>
+
+            <GroupBox Header="Adjusted rates" Grid.Column="1">
+                <DockPanel>
+                    <Button DockPanel.Dock="Bottom" Margin="0,3,0,0" Click="RemoveAdjustment_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgAdjustedCreditRates, Path=SelectedItem}">Remove adjustment</Button>
+                    
+                    <DataGrid Name="dgAdjustedCreditRates" Style="{StaticResource ListDisplay}" IsReadOnly="False" SelectionChanged="dgAdjustedCreditRates_SelectionChanged">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Type" Binding="{Binding Rate.Name}" Width="2*" />
+                            <DataGridTextColumn Header="Hourly" Binding="{Binding AdjustedRate, StringFormat=c}" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </DockPanel>
+            </GroupBox>
+        </Grid>        
     </DockPanel>
 </Panels:CompanyUserControl>

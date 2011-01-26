@@ -122,7 +122,7 @@ namespace SingerDispatch.Panels.Loads
             if (SelectedLoad == null) return;
 
             cmbSeasons.ItemsSource = from s in Database.Seasons orderby s.SortOrder select s;
-            cmbRates.ItemsSource = GetCompanyRates(SelectedCompany);
+            cmbRates.ItemsSource = GetDefaultRates();
             cmbUnits.ItemsSource = (SelectedLoad == null) ? null : from u in Database.Equipment where u.Archived != true && u.EquipmentType.EquipmentClass.Name == "Tractor" orderby u.UnitNumber select u;
 
             if (cmbRates.SelectedItem != null)
@@ -342,13 +342,12 @@ namespace SingerDispatch.Panels.Loads
             }
         }
 
-        private System.Collections.IEnumerable GetCompanyRates(Company company)
+        private IEnumerable<Rate> GetDefaultRates()
         {
-            if (company == null)
-            {
+            if (SelectedCompany == null)
                 return null;
-            }
 
+            var enterprise = SelectedCompany.CustomerType != null && SelectedCompany.CustomerType.IsEnterprise == true;
             var rates = new List<Rate>();
 
             var trailers = from t in Database.RateTypes where t.Name == "Trailer" select t;
@@ -356,32 +355,161 @@ namespace SingerDispatch.Panels.Loads
 
             rates.AddRange((from r in Database.Rates where r.Archived != true && trailers.Contains(r.RateType) orderby r.Name select r).ToList());
             rates.AddRange((from r in Database.Rates where r.Archived != true && tractors.Contains(r.RateType) orderby r.Name select r).ToList());
-                        
-            var discount = company.RateAdjustment ?? 0.00m;
-            var enterprise = company.CustomerType != null && company.CustomerType.IsEnterprise == true;
 
+            /*
             foreach (var rate in rates)
             {
-                if (enterprise)
-                {
-                    if (rate.HourlyEnterprise != null)
-                    {
-                        rate.Hourly = rate.HourlyEnterprise;
-                        rate.Adjusted = rate.Hourly + discount;
-                    }
-                }
-                else
-                {
-                    if (rate.HourlySpecialized != null)
-                    {
-                        rate.Hourly = rate.HourlySpecialized;
-                        rate.Adjusted = rate.Hourly + discount;
-                    }
-                }
+                rate.Hourly = (enterprise) ? rate.HourlyEnterprise : rate.HourlySpecialized;
             }
+            */
 
-            return rates;
+            return rates.ToList();
         }
+
+        private void cmbRates_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var rate = (Rate)cmbRates.SelectedItem;
+
+            if (SelectedLoad == null || rate == null) return;
+            /*
+            try
+            {
+                SelectedLoad.AdjustedRate = (from ra in SelectedLoad.Job.Company.RateAdjustments where ra.Rate == rate select ra).First().AdjustedRate;
+            }
+            catch
+            {
+                SelectedLoad.AdjustedRate = rate.Hourly;
+            }
+            */
+            cmbTrailerCombinations.ItemsSource = from tc in Database.TrailerCombinations where tc.Rate == rate select tc;      
+        }
+
+        private void cmbCommodityName_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (SelectedLoad == null) return;
+
+            SelectedLoad.Notify("LoadedCommodities");
+        }
+
+        private void FillLocations_Click(object sender, RoutedEventArgs e)
+        {
+            var commodity = (LoadedCommodity)dgCommodities.SelectedItem;
+
+            if (commodity == null || commodity.JobCommodity == null) return;
+
+            commodity.LoadLocation = commodity.JobCommodity.DepartureSiteName;
+            commodity.LoadAddress = commodity.JobCommodity.DepartureAddress;
+            commodity.UnloadLocation = commodity.JobCommodity.ArrivalSiteName;
+            commodity.UnloadAddress = commodity.JobCommodity.ArrivalAddress;
+
+            if (commodity.JobCommodity.OriginalCommodity == null) return;
+
+            commodity.LoadRoute = commodity.JobCommodity.OriginalCommodity.LastRoute;
+            commodity.LoadInstructions = commodity.JobCommodity.OriginalCommodity.LastLoadInstructions;
+        }
+
+        private void AddContact_Click(object sender, RoutedEventArgs e)
+        {
+            var cmbContacts = (ComboBox)((Button)sender).DataContext;
+            var cmbCompanies = (ComboBox)cmbContacts.DataContext;
+
+            var company = (Company)cmbCompanies.SelectedItem;
+
+            if (SelectedLoad == null && company != null) return;
+
+            var window = new CreateContactWindow(Database, company, null) { Owner = Application.Current.MainWindow };
+            var contact = window.CreateContact();
+
+            if (contact == null || contact.Company == null) return;
+
+            contact.Company.Contacts.Add(contact);
+                        
+            if ((Company)cmbLoadingSiteContactCompanies.SelectedItem == contact.Company)
+                ((ObservableCollection<Contact>)cmbLoadingSiteContacts.ItemsSource).Add(contact);
+
+            if ((Company)cmbUnloadingSiteContactCompanies.SelectedItem == contact.Company)
+                ((ObservableCollection<Contact>)cmbUnloadingSiteContacts.ItemsSource).Add(contact);
+
+            if ((Company)cmbLoadingContactCompanies.SelectedItem == contact.Company)
+                ((ObservableCollection<Contact>)cmbLoadingContacts.ItemsSource).Add(contact);
+
+            if ((Company)cmbUnloadingContactCompanies.SelectedItem == contact.Company)
+                ((ObservableCollection<Contact>)cmbUnloadingContacts.ItemsSource).Add(contact);
+
+            cmbContacts.SelectedItem = contact;
+        }
+
+        private void AddAddress_Click(object sender, RoutedEventArgs e)
+        {
+            var cmbAddresses = (ComboBox)((Button)sender).DataContext;
+            var cmbCompanies = (ComboBox)cmbAddresses.DataContext;
+
+            var company = (Company)cmbCompanies.SelectedItem;
+            
+            if (SelectedLoad == null && company != null) return;
+
+            var window = new CreateAddressWindow(Database, company, null) { Owner = Application.Current.MainWindow };
+            var address = window.CreateAddress();
+
+            if (address == null || address.Company == null) return;
+
+            address.Company.Addresses.Add(address);
+                        
+            if ((Company)cmbShipperCompanies.SelectedItem == address.Company)
+                ((ObservableCollection<Address>)cmbShipperAddresses.ItemsSource).Add(address);
+
+            if ((Company)cmbConsigneeCompanies.SelectedItem == address.Company)
+                ((ObservableCollection<Address>)cmbConsigneeAddresses.ItemsSource).Add(address);
+            
+            cmbAddresses.SelectedItem = address;
+        }
+
+        private void AddCompany_Click(object sender, RoutedEventArgs e)
+        {
+            var cmbCompanies = (ComboBox)((Button)sender).DataContext;
+
+            var window = new CreateCompanyWindow(Database) { Owner = Application.Current.MainWindow };
+            var company = window.CreateCompany();
+
+            if (company == null) return;
+
+            try
+            {
+                Database.SubmitChanges();
+                CompanyList.Add(company);
+
+                cmbCompanies.SelectedItem = company;
+            }
+            catch (Exception ex)
+            {
+                NoticeWindow.ShowError("Error while adding company to database", ex.Message);
+            }
+        }
+
+        private void AddJobCommodity_Click(object sender, RoutedEventArgs e)
+        {
+            var cmbCommodities = (ComboBox)((Button)sender).DataContext;
+
+            var window = new CreateJobCommodityWindow(Database, SelectedLoad.Job.Company, SelectedLoad.Job.CareOfCompany) { Owner = Application.Current.MainWindow };
+            var commodity = window.CreateCommodity();
+
+            if (commodity == null) return;
+
+            commodity.Job = SelectedLoad.Job;
+            SelectedLoad.Job.JobCommodities.Add(commodity);
+
+            try
+            {
+                Database.SubmitChanges();
+                ((ObservableCollection<JobCommodity>)cmbCommodities.ItemsSource).Add(commodity);
+                cmbCommodities.SelectedItem = commodity;
+            }
+            catch (Exception ex)
+            {
+                NoticeWindow.ShowError("Error while adding job commodity to database", ex.ToString());
+            }
+        }
+
 
         #region DraggedItem
 
@@ -525,135 +653,5 @@ namespace SingerDispatch.Panels.Loads
 
         #endregion
 
-        private void cmbRates_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            cmbTrailerCombinations.ItemsSource = from tc in Database.TrailerCombinations where tc.Rate == cmbRates.SelectedItem select tc;
-        }
-
-        private void cmbCommodityName_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (SelectedLoad == null) return;
-
-            SelectedLoad.Notify("LoadedCommodities");
-        }
-
-        private void FillLocations_Click(object sender, RoutedEventArgs e)
-        {
-            var commodity = (LoadedCommodity)dgCommodities.SelectedItem;
-
-            if (commodity == null || commodity.JobCommodity == null) return;
-
-            commodity.LoadLocation = commodity.JobCommodity.DepartureSiteName;
-            commodity.LoadAddress = commodity.JobCommodity.DepartureAddress;
-            commodity.UnloadLocation = commodity.JobCommodity.ArrivalSiteName;
-            commodity.UnloadAddress = commodity.JobCommodity.ArrivalAddress;
-
-            if (commodity.JobCommodity.OriginalCommodity == null) return;
-
-            commodity.LoadRoute = commodity.JobCommodity.OriginalCommodity.LastRoute;
-            commodity.LoadInstructions = commodity.JobCommodity.OriginalCommodity.LastLoadInstructions;
-        }
-
-        private void AddContact_Click(object sender, RoutedEventArgs e)
-        {
-            var cmbContacts = (ComboBox)((Button)sender).DataContext;
-            var cmbCompanies = (ComboBox)cmbContacts.DataContext;
-
-            var company = (Company)cmbCompanies.SelectedItem;
-
-            if (SelectedLoad == null && company != null) return;
-
-            var window = new CreateContactWindow(Database, company, null) { Owner = Application.Current.MainWindow };
-            var contact = window.CreateContact();
-
-            if (contact == null || contact.Company == null) return;
-
-            contact.Company.Contacts.Add(contact);
-                        
-            if ((Company)cmbLoadingSiteContactCompanies.SelectedItem == contact.Company)
-                ((ObservableCollection<Contact>)cmbLoadingSiteContacts.ItemsSource).Add(contact);
-
-            if ((Company)cmbUnloadingSiteContactCompanies.SelectedItem == contact.Company)
-                ((ObservableCollection<Contact>)cmbUnloadingSiteContacts.ItemsSource).Add(contact);
-
-            if ((Company)cmbLoadingContactCompanies.SelectedItem == contact.Company)
-                ((ObservableCollection<Contact>)cmbLoadingContacts.ItemsSource).Add(contact);
-
-            if ((Company)cmbUnloadingContactCompanies.SelectedItem == contact.Company)
-                ((ObservableCollection<Contact>)cmbUnloadingContacts.ItemsSource).Add(contact);
-
-            cmbContacts.SelectedItem = contact;
-        }
-
-        private void AddAddress_Click(object sender, RoutedEventArgs e)
-        {
-            var cmbAddresses = (ComboBox)((Button)sender).DataContext;
-            var cmbCompanies = (ComboBox)cmbAddresses.DataContext;
-
-            var company = (Company)cmbCompanies.SelectedItem;
-            
-            if (SelectedLoad == null && company != null) return;
-
-            var window = new CreateAddressWindow(Database, company, null) { Owner = Application.Current.MainWindow };
-            var address = window.CreateAddress();
-
-            if (address == null || address.Company == null) return;
-
-            address.Company.Addresses.Add(address);
-                        
-            if ((Company)cmbShipperCompanies.SelectedItem == address.Company)
-                ((ObservableCollection<Address>)cmbShipperAddresses.ItemsSource).Add(address);
-
-            if ((Company)cmbConsigneeCompanies.SelectedItem == address.Company)
-                ((ObservableCollection<Address>)cmbConsigneeAddresses.ItemsSource).Add(address);
-            
-            cmbAddresses.SelectedItem = address;
-        }
-
-        private void AddCompany_Click(object sender, RoutedEventArgs e)
-        {
-            var cmbCompanies = (ComboBox)((Button)sender).DataContext;
-
-            var window = new CreateCompanyWindow(Database) { Owner = Application.Current.MainWindow };
-            var company = window.CreateCompany();
-
-            if (company == null) return;
-
-            try
-            {
-                Database.SubmitChanges();
-                CompanyList.Add(company);
-
-                cmbCompanies.SelectedItem = company;
-            }
-            catch (Exception ex)
-            {
-                NoticeWindow.ShowError("Error while adding company to database", ex.Message);
-            }
-        }
-
-        private void AddJobCommodity_Click(object sender, RoutedEventArgs e)
-        {
-            var cmbCommodities = (ComboBox)((Button)sender).DataContext;
-
-            var window = new CreateJobCommodityWindow(Database, SelectedLoad.Job.Company, SelectedLoad.Job.CareOfCompany) { Owner = Application.Current.MainWindow };
-            var commodity = window.CreateCommodity();
-
-            if (commodity == null) return;
-
-            commodity.Job = SelectedLoad.Job;
-            SelectedLoad.Job.JobCommodities.Add(commodity);
-
-            try
-            {
-                Database.SubmitChanges();
-                ((ObservableCollection<JobCommodity>)cmbCommodities.ItemsSource).Add(commodity);
-                cmbCommodities.SelectedItem = commodity;
-            }
-            catch (Exception ex)
-            {
-                NoticeWindow.ShowError("Error while adding job commodity to database", ex.ToString());
-            }
-        }        
     }
 }

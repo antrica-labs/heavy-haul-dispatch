@@ -101,6 +101,7 @@
       <Association Name="Company_LoadedCommodity_Load" Member="Loading" OtherKey="LoadingCompanyID" ThisKey="ID" Type="LoadedCommodity" />
       <Association Name="Company_LoadedCommodity_Unload" Member="Unloading" OtherKey="UnloadingCompanyID" ThisKey="ID" Type="LoadedCommodity" />
       <Association Name="Company_Invoice" Member="Invoices" OtherKey="CompanyID" ThisKey="ID" Type="Invoice" />
+      <Association Name="Company_RateAdjustment" Member="RateAdjustments" OtherKey="CompanyID" ThisKey="ID" Type="RateAdjustment" />
     </Type>
   </Table>
   <Table Name="" Member="CompanyPriorityLevels">
@@ -576,7 +577,8 @@
       <Association Name="Rate_Load" Member="Loads" ThisKey="ID" OtherKey="RateID" Type="Load" />
       <Association Name="Rate_Dispatch" Member="Dispatches" ThisKey="ID" OtherKey="RateID" Type="Dispatch" />
       <Association Name="Rate_TrailerCombination" Member="TrailerCombinations" ThisKey="ID" OtherKey="RateID" Type="TrailerCombination" />
-      <Association Name="RateType_Rate" Member="RateType" ThisKey="RateTypeID" OtherKey="ID" Type="RateType" IsForeignKey="true" />
+      <Association Name="RateType_Rate" Member="RateType" ThisKey="RateTypeID" OtherKey="ID" Type="RateType" IsForeignKey="true" />\
+      <Association Name="Rate_RateAdjustment" Member="RateAdjustments" ThisKey="ID" OtherKey="RateID" Type="RateAdjustment" />
     </Type>
   </Table>
   <Table Name="" Member="RateTypes">
@@ -584,6 +586,16 @@
       <Column Name="ID" Type="System.Int64" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Name" Type="System.String" CanBeNull="true" />
       <Association Name="RateType_Rate" Member="Rates" ThisKey="ID" OtherKey="RateTypeID" Type="Rate" />
+    </Type>
+  </Table>
+  <Table Name="" Member="RateAdjustments">
+    <Type Name="RateAdjustment">
+      <Column Name="ID" Type="System.Int64" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="CompanyID" Type="System.Int64" CanBeNull="true" />
+      <Column Name="RateID" Type="System.Int64" CanBeNull="true" />
+      <Column Name="AdjustedRate" Type="System.Decimal" CanBeNull="true" />
+      <Association Name="Company_RateAdjustment" Member="Company" ThisKey="CompanyID" OtherKey="ID" Type="Company" IsForeignKey="true" />
+      <Association Name="Rate_RateAdjustment" Member="Rate" ThisKey="RateID" OtherKey="ID" Type="Rate" IsForeignKey="true"  />      
     </Type>
   </Table>
   <Table Name="" Member="Seasons">

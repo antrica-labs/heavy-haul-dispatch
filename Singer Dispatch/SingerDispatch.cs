@@ -460,8 +460,7 @@ namespace SingerDispatch
             Archived = Archived ?? false;
         }
 
-        public decimal? Hourly { get; set; }
-        public decimal? Adjusted { get; set; }
+        public decimal? Hourly { get; set; }        
     }
 
     partial class Job
@@ -844,7 +843,9 @@ namespace SingerDispatch
             else if (e.PropertyName.StartsWith("SWeight"))
                 RecalculateSGross();
             else if (e.PropertyName == "Equipment" || e.PropertyName == "TrailerCombination")
-                RecaculateDimensionsAndWeight();            
+                RecaculateDimensionsAndWeight();
+            else if (e.PropertyName == "Rate")
+                CalculateAdjustedRate();
             //else if (e.PropertyName == "Status")
             //    StatusChanged();
         }
@@ -941,6 +942,25 @@ namespace SingerDispatch
             weight += SWeightGroup10 ?? 0.0;
 
             SGrossWeight = weight;
+        }
+
+        private void CalculateAdjustedRate()
+        {   
+            var enterprise = Job != null && Job.Company != null && Job.Company.CustomerType != null && Job.Company.CustomerType.IsEnterprise == true;
+
+            if (Rate == null)
+                AdjustedRate = null;
+            else
+            {
+                try
+                {
+                    AdjustedRate = (from ra in Job.Company.RateAdjustments where ra.Rate == Rate select ra).First().AdjustedRate;
+                }
+                catch
+                {
+                    AdjustedRate = (enterprise) ? Rate.HourlyEnterprise : Rate.HourlySpecialized;
+                }
+            }
         }
 
         private void StatusChanged()
@@ -1198,7 +1218,7 @@ namespace SingerDispatch
             line = new InvoiceLineItem();
 
             line.Description = string.Format("Supply men and equipment to transport {0}", load.ToString());
-            line.Rate = load.Rate.HourlySpecialized; // TODO: Provide their adjusted rate (also check if they are an S.S. or M.E. cust)            
+            line.Rate = load.AdjustedRate;           
             
             var fromDiffers = false;
             var toDiffers = false;            
