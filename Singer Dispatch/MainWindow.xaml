@@ -42,8 +42,7 @@
                 </MenuItem>
                 <MenuItem Header="Tools">                    
                     <MenuItem Header="Use imperial measurements" IsCheckable="true" IsChecked="{Binding ElementName=ThisWindow, Path=UseImperialMeasurements}" />
-                    <MenuItem Header="_Out of province report" Click="PrintOutOfProvinceReport_Click" />
-                    <MenuItem Header="Fix load rates" Click="FixLoadRates_Click" />
+                    <MenuItem Header="_Out of province report" Click="PrintOutOfProvinceReport_Click" />                    
                 </MenuItem>
             </Menu>
 
