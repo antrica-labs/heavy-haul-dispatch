@@ -159,20 +159,15 @@ namespace SingerDispatch.Panels.Storage
             viewer.DisplayPrintout();
         }
 
-        private void dgCurrentStorageItems_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void StorageItemGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var item = (StorageItem)dgCurrentStorageItems.SelectedItem;
+            var grid = (DataGrid)sender;
+            var item = (StorageItem)grid.SelectedItem;
 
             SelectedItem = null;
             SelectedItem = item;
-        }
 
-        private void dgPreviousStorageItems_SelectionChanged(object sender, SelectedCellsChangedEventArgs e)
-        {
-            var item = (StorageItem)dgPreviousStorageItems.SelectedItem;
-
-            SelectedItem = null;
-            SelectedItem = item;
+            e.Handled = true;
         }
 
         private void ViewStorageSticker_Click(object sender, RoutedEventArgs e)
@@ -210,7 +205,6 @@ namespace SingerDispatch.Panels.Storage
         private void ArchiveItem_Click(object sender, RoutedEventArgs e)
         {
             var clist = (ObservableCollection<StorageItem>)dgCurrentStorageItems.ItemsSource;
-            var plist = (ObservableCollection<StorageItem>)dgPreviousStorageItems.ItemsSource;
 
             if (SelectedItem == null) return;
 
@@ -225,7 +219,6 @@ namespace SingerDispatch.Panels.Storage
                 Database.SubmitChanges();
 
                 clist.Remove(SelectedItem);
-                //plist.Add(SelectedItem);
             }
             catch (System.Exception ex)
             {

@@ -23,6 +23,7 @@ using SingerDispatch.Security;
 using SingerDispatch.Panels.Loads;
 using WPFAutoCompleteBox.Controls;
 using SingerDispatch.Printing.Documents;
+using SingerDispatch.Database;
 
 namespace SingerDispatch
 {
@@ -496,9 +497,9 @@ namespace SingerDispatch
             if (range != null)
             {
                 if (range.StartDate == null || range.EndDate == null)
-                    throw new Exception("Both start date and end date must be filled in"); 
+                    throw new Exception("Both start date and end date must be filled in");
 
-                var list = from t in Database.OutOfProvinceTravels select t;
+                var list = OutOfProvinceGenerator.GetAllOutOfProvince(range.StartDate, range.EndDate, Database);
                 var title = string.Format("Fuel Report - {0} to {1}", range.StartDate.ToString(SingerConfigs.PrintedDateFormatString), range.EndDate.ToString(SingerConfigs.PrintedDateFormatString));
 
                 var viewer = new DocumentViewerWindow(new OutOfProvinceReportDocument(), list, title) { Owner = this, IsMetric = !UseImperialMeasurements };

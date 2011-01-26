@@ -26,20 +26,10 @@
             </DataTemplate>
         </ResourceDictionary>
     </UserControl.Resources>
-    <DockPanel>
-        <Grid DockPanel.Dock="Bottom">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition />
-                <ColumnDefinition />
-            </Grid.ColumnDefinitions>
-
-            <Button Style="{StaticResource Horizontal}" Grid.Column="0" Click="NewEquipment_Click">New equipment</Button>            
-            <Button Style="{StaticResource HorizontalEnd}" Grid.Column="1" Click="RemoveEquipment_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgEquipment, Path=SelectedItem}">Remove equipment</Button>
-        </Grid>
-
+    <DockPanel>        
         <ScrollViewer DockPanel.Dock="Right">
             <StackPanel Width="285" Margin="3,0,0,0">
-                <GroupBox Header="Equipment details" DataContext="{Binding ElementName=dgEquipment, Path=SelectedItem}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgEquipment, Path=SelectedItem}">
+                <GroupBox Header="Equipment details" DataContext="{Binding ElementName=ThisControl, Path=SelectedItem}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=ThisControl, Path=SelectedItem}">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
@@ -164,14 +154,53 @@
             </StackPanel>
         </ScrollViewer>
 
-        <DataGrid Name="dgEquipment" Style="{StaticResource ListDisplay}">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Unit" Binding="{Binding UnitNumber}" Width="Auto" />
-                <DataGridTextColumn Header="Type" Binding="{Binding EquipmentType.Name}" Width="Auto" />
-                <DataGridTextColumn Header="Make" Binding="{Binding Make}" />
-                <DataGridTextColumn Header="Model" Binding="{Binding Model}" />
-                <DataGridTextColumn Header="Driver" Binding="{Binding DefaultDriver.Name}" />
-            </DataGrid.Columns>
-        </DataGrid>
+        <TabControl Name="currentOrArchivedTabs" TabStripPlacement="Bottom" SelectionChanged="TabControl_SelectionChanged">
+            <TabItem Header="Current">
+                <DockPanel>
+                    <Grid DockPanel.Dock="Bottom">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+
+                        <Button Style="{StaticResource Horizontal}" Grid.Column="0" Click="NewEquipment_Click">New equipment</Button>
+                        <Button Style="{StaticResource HorizontalEnd}" Grid.Column="1" Click="ArchiveEquipment_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgEquipment, Path=SelectedItem}">Archive equipment</Button>
+                    </Grid>
+
+                    <DataGrid Name="dgEquipment" Style="{StaticResource ListDisplay}" SelectionChanged="EquipmentGrid_SelectionChanged">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Unit" Binding="{Binding UnitNumber}" Width="Auto" />
+                            <DataGridTextColumn Header="Type" Binding="{Binding EquipmentType.Name}" Width="Auto" />
+                            <DataGridTextColumn Header="Make" Binding="{Binding Make}" />
+                            <DataGridTextColumn Header="Model" Binding="{Binding Model}" />
+                            <DataGridTextColumn Header="Driver" Binding="{Binding DefaultDriver.Name}" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </DockPanel>
+            </TabItem>
+            <TabItem Header="Archived">
+                <DockPanel>
+                    <Grid DockPanel.Dock="Bottom">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+
+                        <Button Style="{StaticResource Horizontal}" Grid.Column="0" IsEnabled="False">New equipment</Button>
+                        <Button Style="{StaticResource HorizontalEnd}" Grid.Column="1" Click="ReinstateEquipment_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgArchivedEquipment, Path=SelectedItem}">Reinstate equipment</Button>
+                    </Grid>
+
+                    <DataGrid Name="dgArchivedEquipment" Style="{StaticResource ListDisplay}" SelectionChanged="EquipmentGrid_SelectionChanged">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Unit" Binding="{Binding UnitNumber}" Width="Auto" />
+                            <DataGridTextColumn Header="Type" Binding="{Binding EquipmentType.Name}" Width="Auto" />
+                            <DataGridTextColumn Header="Make" Binding="{Binding Make}" />
+                            <DataGridTextColumn Header="Model" Binding="{Binding Model}" />
+                            <DataGridTextColumn Header="Driver" Binding="{Binding DefaultDriver.Name}" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </DockPanel>
+            </TabItem>
+        </TabControl>        
     </DockPanel>
 </Panels:BaseUserControl>

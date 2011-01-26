@@ -13,7 +13,20 @@ namespace SingerDispatch.Panels.Admin
     /// </summary>
     public partial class EquipmentControl
     {
+        public static DependencyProperty SelectedItemProperty = DependencyProperty.Register("SelectedItem", typeof(Equipment), typeof(EquipmentControl), new PropertyMetadata(null, SelectedItemPropertyChanged));
         public SingerDispatchDataContext Database { get; set; }
+
+        public Equipment SelectedItem
+        {
+            get
+            {
+                return (Equipment)GetValue(SelectedItemProperty);
+            }
+            set
+            {
+                SetValue(SelectedItemProperty, value);
+            }
+        }
 
         public EquipmentControl()
         {
@@ -30,8 +43,39 @@ namespace SingerDispatch.Panels.Admin
         {
             if (InDesignMode()) return;
 
-            cmbEmployees.ItemsSource = from emp in Database.Employees where emp.Archived != true orderby emp.FirstName, emp.LastName select emp;            
-            dgEquipment.ItemsSource = new ObservableCollection<Equipment>(from equip in Database.Equipment where equip.Archived != true orderby equip.UnitNumber select equip);            
+            cmbEmployees.ItemsSource = from emp in Database.Employees where emp.Archived != true orderby emp.FirstName, emp.LastName select emp;
+
+            if (currentOrArchivedTabs.SelectedIndex == 0)
+                UpdateCurrentEquipment();
+            else if (currentOrArchivedTabs.SelectedIndex == 1)
+                UpdateArchivedEquipment();
+        }
+
+        protected static void SelectedItemPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var control = (EquipmentControl)d;
+
+            control.SelectedItemChanged((Equipment)e.NewValue, (Equipment)e.OldValue);
+        }
+
+        private void SelectedItemChanged(Equipment newValue, Equipment oldValue)
+        {
+        }
+
+        private void UpdateCurrentEquipment()
+        {
+            var query = from eq in Database.Equipment orderby eq.UnitNumber select eq;
+            var equipments = from eq in query where eq.Archived != true select eq;
+
+            dgEquipment.ItemsSource = new ObservableCollection<Equipment>(equipments);
+        }
+
+        private void UpdateArchivedEquipment()
+        {
+            var query = from eq in Database.Equipment orderby eq.UnitNumber select eq;
+            var equipments = from eq in query where eq.Archived == true select eq;
+
+            dgArchivedEquipment.ItemsSource = new ObservableCollection<Equipment>(equipments);
         }
 
         private void NewEquipment_Click(object sender, RoutedEventArgs e)
@@ -46,13 +90,13 @@ namespace SingerDispatch.Panels.Admin
             txtUnitNumber.Focus();
         }
 
-        private void RemoveEquipment_Click(object sender, RoutedEventArgs e)
+        private void ArchiveEquipment_Click(object sender, RoutedEventArgs e)
         {
-            var unit = (Equipment)dgEquipment.SelectedItem;
+            var unit = SelectedItem;
 
             if (unit == null) return;
 
-            MessageBoxResult confirmation = MessageBox.Show("Are you sure you want to remove this unit?", "Delete confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            MessageBoxResult confirmation = MessageBox.Show("Are you sure you want to archive this unit?", "Delete confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
             if (confirmation != MessageBoxResult.Yes) return;
 
@@ -68,7 +112,26 @@ namespace SingerDispatch.Panels.Admin
             {
                 Windows.NoticeWindow.ShowError("Error while attempting to remove equipment", ex.Message);
             }
+        }
 
+        private void ReinstateEquipment_Click(object sender, RoutedEventArgs e)
+        {
+            var unit = SelectedItem;
+
+            if (unit == null) return;
+
+            try
+            {
+                unit.Archived = false;
+
+                Database.SubmitChanges();
+
+                ((ObservableCollection<Equipment>)dgArchivedEquipment.ItemsSource).Remove(unit);
+            }
+            catch (System.Exception ex)
+            {
+                Windows.NoticeWindow.ShowError("Error while attempting to remove equipment", ex.Message);
+            }
         }
 
         private void cmbEquipmentTypes_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -79,6 +142,35 @@ namespace SingerDispatch.Panels.Admin
                 gbTractorInfo.IsEnabled = true;
             else
                 gbTractorInfo.IsEnabled = false;
+        }
+
+        private void EquipmentGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var grid = (DataGrid)sender;
+            var item = (Equipment)grid.SelectedItem;
+
+            SelectedItem = null;
+            SelectedItem = item;
+
+            e.Handled = true;
+        }
+
+        private void TabControl_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            var tb = (TabControl)sender;
+
+            SelectedItem = null;
+
+            if (tb.SelectedIndex == 0)
+            {
+                UpdateCurrentEquipment();
+                SelectedItem = (Equipment)dgEquipment.SelectedItem;
+            }
+            else if (tb.SelectedIndex == 1)
+            {
+                UpdateArchivedEquipment();
+                SelectedItem = (Equipment)dgArchivedEquipment.SelectedItem;
+            }
         }
         
     }

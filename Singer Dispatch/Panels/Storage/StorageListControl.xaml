@@ -219,7 +219,7 @@
                         <Button Grid.Column="3" Style="{StaticResource HorizontalEnd}" Click="ArchiveItem_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=ThePanel, Path=SelectedItem}">Archive item</Button>
                     </Grid>
 
-                    <DataGrid Name="dgCurrentStorageItems" Style="{StaticResource ListDisplay}" SelectionChanged="dgCurrentStorageItems_SelectionChanged">
+                    <DataGrid Name="dgCurrentStorageItems" Style="{StaticResource ListDisplay}" SelectionChanged="StorageItemGrid_SelectionChanged">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Job" Binding="{Binding Job.Number}" Width="50" />
                             <DataGridTextColumn Header="Owner" Binding="{Binding JobCommodity.Owner.Name}" />
@@ -249,7 +249,7 @@
                         <Button Grid.Column="3" Style="{StaticResource HorizontalEnd}" Click="RemoveItem_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=ThePanel, Path=SelectedItem}">Remove item</Button>
                     </Grid>
 
-                    <DataGrid Name="dgPreviousStorageItems" Style="{StaticResource ListDisplay}" SelectionChanged="dgCurrentStorageItems_SelectionChanged">
+                    <DataGrid Name="dgPreviousStorageItems" Style="{StaticResource ListDisplay}" SelectionChanged="StorageItemGrid_SelectionChanged">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Job" Binding="{Binding Job.Number}" Width="50" />
                             <DataGridTextColumn Header="Owner" Binding="{Binding JobCommodity.Owner.Name}" />

@@ -4,6 +4,7 @@
                         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
                         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                         xmlns:Panels="clr-namespace:SingerDispatch.Panels"
+                        x:Name="ThePanel"
                         Loaded="UserControl_Loaded" mc:Ignorable="d" d:DesignWidth="780">
     <UserControl.Resources>
         <ResourceDictionary>
@@ -13,18 +14,8 @@
         </ResourceDictionary>
     </UserControl.Resources>
     <DockPanel>
-        <Grid DockPanel.Dock="Bottom">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition />                
-                <ColumnDefinition />                
-            </Grid.ColumnDefinitions>
-
-            <Button Style="{StaticResource Horizontal}" Grid.Column="0" Click="NewEmployee_Click">New employee</Button>
-            <Button Style="{StaticResource HorizontalEnd}" Grid.Column="1" Click="RemoveEmployee_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgEmployees, Path=SelectedItem}">Remove employee</Button>            
-        </Grid>
-
         <StackPanel DockPanel.Dock="Right" Width="285" Margin="3,0,0,0">
-            <GroupBox Header="Employee details" DataContext="{Binding ElementName=dgEmployees, Path=SelectedItem}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgEmployees, Path=SelectedItem}">
+            <GroupBox Header="Employee details" DataContext="{Binding ElementName=ThePanel, Path=SelectedItem}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=ThePanel, Path=SelectedItem}">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto"/>
@@ -92,13 +83,51 @@
             </GroupBox>
         </StackPanel>
 
-        <DataGrid Name="dgEmployees" Style="{StaticResource ListDisplay}">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="First name" Binding="{Binding FirstName}" />
-                <DataGridTextColumn Header="Last name" Binding="{Binding LastName}" />
-                <DataGridTextColumn Header="Mobile" Binding="{Binding Mobile, Converter={StaticResource PhoneNumberConverter}}" />
-                <DataGridTextColumn Header="Phone" Binding="{Binding Phone, Converter={StaticResource PhoneNumberConverter}}" />
-            </DataGrid.Columns>
-        </DataGrid>
+        <TabControl Name="currentOrArchivedTabs" TabStripPlacement="Bottom" SelectionChanged="TabControl_SelectionChanged">
+            <TabItem Header="Current">
+                <DockPanel>
+                    <Grid DockPanel.Dock="Bottom">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />                            
+                        </Grid.ColumnDefinitions>
+
+                        <Button Style="{StaticResource Horizontal}" Grid.Column="0" Click="NewEmployee_Click">New employee</Button>
+                        <Button Style="{StaticResource HorizontalEnd}" Grid.Column="1" Click="ArchiveEmployee_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgEmployees, Path=SelectedItem}">Archive employee</Button>
+                    </Grid>
+
+                    <DataGrid Name="dgEmployees" Style="{StaticResource ListDisplay}" SelectionChanged="EmployeesGrid_SelectionChanged">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="First name" Binding="{Binding FirstName}" />
+                            <DataGridTextColumn Header="Last name" Binding="{Binding LastName}" />
+                            <DataGridTextColumn Header="Mobile" Binding="{Binding Mobile, Converter={StaticResource PhoneNumberConverter}}" />
+                            <DataGridTextColumn Header="Phone" Binding="{Binding Phone, Converter={StaticResource PhoneNumberConverter}}" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </DockPanel>                
+            </TabItem>
+            <TabItem Header="Archived">
+                <DockPanel>
+                    <Grid DockPanel.Dock="Bottom">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+
+                        <Button Style="{StaticResource Horizontal}" Grid.Column="0" IsEnabled="False">New employee</Button>
+                        <Button Style="{StaticResource HorizontalEnd}" Grid.Column="1" Click="ReinstateEmployee_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=dgArchivedEmployees, Path=SelectedItem}">Reinstate employee</Button>
+                    </Grid>
+
+                    <DataGrid Name="dgArchivedEmployees" Style="{StaticResource ListDisplay}" SelectionChanged="EmployeesGrid_SelectionChanged">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="First name" Binding="{Binding FirstName}" />
+                            <DataGridTextColumn Header="Last name" Binding="{Binding LastName}" />
+                            <DataGridTextColumn Header="Mobile" Binding="{Binding Mobile, Converter={StaticResource PhoneNumberConverter}}" />
+                            <DataGridTextColumn Header="Phone" Binding="{Binding Phone, Converter={StaticResource PhoneNumberConverter}}" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </DockPanel>
+            </TabItem>
+        </TabControl>        
     </DockPanel>
 </Panels:BaseUserControl>
