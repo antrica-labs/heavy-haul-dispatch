@@ -25,7 +25,7 @@
             <TabItem Header="Services">
                 <Companies:ServicesControl CompanyList="{Binding CompanyList}" SelectedCompany="{Binding Path=SelectedCompany}" UseImperialMeasurements="{Binding Path=UseImperialMeasurements}" />
             </TabItem>
-            <TabItem Header="Credit &amp; Rates">
+            <TabItem Header="Rates &amp; Administration">
                 <Companies:CreditAndRatesControl CompanyList="{Binding CompanyList}" SelectedCompany="{Binding Path=SelectedCompany}" UseImperialMeasurements="{Binding Path=UseImperialMeasurements}" />
             </TabItem>
         </TabControl>
