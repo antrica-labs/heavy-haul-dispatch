@@ -87,7 +87,8 @@ namespace SingerDispatch.Panels.Loads
             var dispatch = new Dispatch { LoadID = SelectedLoad.ID, DispatchedBy = SingerConfigs.OperatingEmployee };
                         
             dispatch.Description = string.Format(SingerConfigs.DefaultDispatchDescription, Load.PrintCommodityList(SelectedLoad));
-            dispatch.Schedule = SelectedLoad.Schedule;            
+            dispatch.Schedule = SelectedLoad.Schedule;
+            dispatch.Notes = SelectedLoad.Notes;
 
             if (SelectedLoad.Dispatches.Count == 0 && SelectedLoad.Equipment != null)
             {

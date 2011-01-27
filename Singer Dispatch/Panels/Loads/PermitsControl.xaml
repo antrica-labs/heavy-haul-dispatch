@@ -61,7 +61,6 @@
         
         <DataGrid Name="dgPermits" Style="{StaticResource ListDisplay}">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Load" Binding="{Binding Load.Name}" Width="0.2*" />
                 <DataGridTextColumn Header="Permit #" Binding="{Binding Reference}" Width="0.3*" />
                 <DataGridTextColumn Header="Issuer" Binding="{Binding IssuingCompany.Name}" Width="0.4*"  />
                 <DataGridTextColumn Header="Permit Type" Binding="{Binding PermitType.Name}" Width="0.4*" />

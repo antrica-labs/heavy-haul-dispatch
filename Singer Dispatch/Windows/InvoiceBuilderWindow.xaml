@@ -1,0 +1,112 @@
+﻿<Window x:Class="SingerDispatch.Windows.InvoiceBuilderWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:AC="clr-namespace:WPFAutoCompleteBox.Controls;assembly=WPFAutoCompleteBox"        
+        Title="Invoice Builder" SizeToContent="Height" Width="750" WindowStartupLocation="CenterOwner" ResizeMode="NoResize"
+        FocusManager.FocusedElement="{Binding ElementName=acJobNumber}" Loaded="Window_Loaded" Closing="Window_Closing">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/SingerDispatchDictionary.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <StackPanel Margin="5">
+        <Label Style="{StaticResource Heading}">Invoice Builder - Select any items you wish to include</Label>
+        
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+                
+            <Label Grid.Column="0">Job #:</Label>
+            <AC:CompletableTextBox Grid.Column="1" Name="acJobNumber" TextChanged="acJobNumber_TextChanged" SelectionChanged="acJobNumber_SelectionChanged" />
+        </Grid>
+
+        <Grid Height="150" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=acJobNumber, Path=SelectedItem}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            
+            <GroupBox Grid.Column="0" Header="Loads">
+                <DockPanel>
+                    <Grid DockPanel.Dock="Bottom">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        
+                        <Button Grid.Column="0" Style="{StaticResource Horizontal}" Click="SelectNone_Click" DataContext="{Binding ElementName=dgLoads}">Select none</Button>
+                        <Button Grid.Column="1" Style="{StaticResource HorizontalEnd}" Click="SelectAll_Click" DataContext="{Binding ElementName=dgLoads}">Select all</Button>
+                    </Grid>
+                    
+                    <DataGrid Style="{StaticResource ListDisplay}" Name="dgLoads" SelectionMode="Extended">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Number" Binding="{Binding Number}" Width="Auto" />
+                            <DataGridTemplateColumn Header="Commodities">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Converter={StaticResource LoadCommoditiesStringConverter}, Path=LoadedCommodities}">
+                                <TextBlock.ToolTip>
+                                    <TextBlock Text="{Binding Converter={StaticResource LoadCommoditiesStringConverter}, Path=LoadedCommodities}" />
+                                </TextBlock.ToolTip>
+                            </TextBlock>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </DockPanel>
+            </GroupBox>
+            
+            <GroupBox Grid.Column="1" Header="Third Party Services">
+                <DockPanel>
+                    <Grid DockPanel.Dock="Bottom">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+
+                        <Button Grid.Column="0" Style="{StaticResource Horizontal}" Click="SelectNone_Click" DataContext="{Binding ElementName=dgServices}">Select none</Button>
+                        <Button Grid.Column="1" Style="{StaticResource HorizontalEnd}" Click="SelectAll_Click" DataContext="{Binding ElementName=dgServices}">Select all</Button>
+                    </Grid>
+
+                    <DataGrid Style="{StaticResource ListDisplay}" Name="dgServices" SelectionMode="Extended">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Load" Binding="{Binding Load.Number}" Width="Auto" />
+                            <DataGridTextColumn Header="Company" Binding="{Binding Company.Name}" />
+                            <DataGridTextColumn Header="Service" Binding="{Binding ServiceType.Name}" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </DockPanel>
+            </GroupBox>
+        </Grid>
+
+        <GroupBox Header="Storage Items" Height="150" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=acJobNumber, Path=SelectedItem}">
+            <DockPanel>
+                <Grid DockPanel.Dock="Bottom">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+
+                    <Button Grid.Column="0" Style="{StaticResource Horizontal}" Click="SelectNone_Click" DataContext="{Binding ElementName=dgStorage}">Select none</Button>
+                    <Button Grid.Column="1" Style="{StaticResource HorizontalEnd}" Click="SelectAll_Click" DataContext="{Binding ElementName=dgStorage}">Select all</Button>
+                </Grid>
+
+                <DataGrid Style="{StaticResource ListDisplay}" Name="dgStorage" SelectionMode="Extended">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Owner" Binding="{Binding JobCommodity.Owner.Name}" />
+                        <DataGridTextColumn Header="Commodity" Binding="{Binding JobCommodity.NameAndUnit}" />
+                        <DataGridTextColumn Header="Rate" Binding="{Binding BillingRate, StringFormat=C}" Width="0.5*"/>
+                        <DataGridTextColumn Header="Interval" Binding="{Binding BillingInterval.Name}" Width="0.5*" />
+                    </DataGrid.Columns>
+                </DataGrid>
+            </DockPanel>
+        </GroupBox>
+        
+        <Button Style="{StaticResource Standard}" Click="CreateInvoice_Click">Create invoice</Button>
+    </StackPanel>
+</Window>

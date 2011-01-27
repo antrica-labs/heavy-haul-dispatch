@@ -633,8 +633,9 @@
       <Column Name="ServiceDate" Type="System.DateTime" CanBeNull="true" />
       <Column Name="ServiceTime" Type="System.String" CanBeNull="true" />
       <Column Name="Location" Type="System.String" CanBeNull="true" />
-      <Column Name="Reference" Type="System.String" CanBeNull="true" />
+      <Column Name="Reference" Type="System.String" CanBeNull="true" />      
       <Column Name="Notes" Type="System.String" CanBeNull="true" />
+      <Column Name="IsBilled" Type="System.Boolean" CanBeNull="true" /> 
       <Association Name="Company_ThirdPartyService" Member="Company" ThisKey="CompanyID" OtherKey="ID" Type="Company" IsForeignKey="true" />
       <Association Name="Contact_ThirdPartyService" Member="Contact" ThisKey="ContactID" OtherKey="ID" Type="Contact" IsForeignKey="true" />      
       <Association Name="Load_ThirdPartyService" Member="Load" ThisKey="LoadID" OtherKey="ID" Type="Load" IsForeignKey="true" />

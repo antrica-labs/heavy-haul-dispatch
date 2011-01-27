@@ -113,7 +113,7 @@ namespace SingerDispatch.Panels.Storage
         private void UpdateCurrentStorageList()
         {
             var storage = from si in Database.StorageItems orderby si.Number descending select si;
-            var query = from s in storage where s.JobCommodity != null && (s.DateRemoved == null || s.DateRemoved >= DateTime.Today) orderby s.JobCommodity.Owner.Name select s;
+            var query = from s in storage where s.JobCommodity != null && (s.DateRemoved == null || s.DateRemoved > DateTime.Today) orderby s.JobCommodity.Owner.Name select s;
 
             dgCurrentStorageItems.ItemsSource = new ObservableCollection<StorageItem>(query);
         }
@@ -121,7 +121,7 @@ namespace SingerDispatch.Panels.Storage
         private void UpdatePreviouslyStoredList()
         {
             var storage = from si in Database.StorageItems orderby si.Number descending select si;
-            var query = from s in storage where s.JobCommodity != null && (s.DateRemoved != null && s.DateRemoved < DateTime.Today) orderby s.JobCommodity.Owner.Name select s;
+            var query = from s in storage where s.JobCommodity != null && (s.DateRemoved != null && s.DateRemoved <= DateTime.Today) orderby s.JobCommodity.Owner.Name select s;
 
             dgPreviousStorageItems.ItemsSource = new ObservableCollection<StorageItem>(query);
         }

@@ -140,6 +140,7 @@
     <Compile Include="Controls\UIHelper.cs" />
     <Compile Include="Controls\Validators\SelectionExistsValidator.cs" />
     <Compile Include="Database\CompleteProviders\CompanyNameACProvider.cs" />
+    <Compile Include="Database\CompleteProviders\JobNumAndNameACProvider.cs" />
     <Compile Include="Database\EntityHelper.cs" />
     <Compile Include="Database\OutOfProvinceGenerator.cs" />
     <Compile Include="MainWindow.xaml.cs">
@@ -323,6 +324,9 @@
     </Compile>
     <Compile Include="Windows\EditCompaniesWindow.xaml.cs">
       <DependentUpon>EditCompaniesWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\InvoiceBuilderWindow.xaml.cs">
+      <DependentUpon>InvoiceBuilderWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\JobAndLoadSelectorWindow.xaml.cs">
       <DependentUpon>JobAndLoadSelectorWindow.xaml</DependentUpon>
@@ -599,6 +603,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Windows\InvoiceBuilderWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\JobAndLoadSelectorWindow.xaml">
       <SubType>Designer</SubType>

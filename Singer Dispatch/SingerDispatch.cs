@@ -508,6 +508,18 @@ namespace SingerDispatch
 
             return cp;
         }
+
+        public override string ToString()
+        {
+            string output;
+
+            if (!string.IsNullOrWhiteSpace(Name))
+                output = string.Format("{0} - {1}", Number, Name);
+            else
+                output = string.Format("{0}", Number);
+
+            return output;
+        }
     }
 
     partial class JobReferenceNumber
@@ -766,6 +778,11 @@ namespace SingerDispatch
 
     partial class ThirdPartyService
     {
+        partial void OnCreated()
+        {
+            IsBilled = IsBilled ?? false;
+        }
+
         public ThirdPartyService Duplicate()
         {
             var copy = new ThirdPartyService();
@@ -1127,6 +1144,7 @@ namespace SingerDispatch
         partial void OnCreated()
         {
             TaxRate = TaxRate ?? SingerConfigs.GST;
+            InvoiceDate = InvoiceDate ?? DateTime.Now;
         }
 
         public void UpdateTotalCost()
@@ -1192,19 +1210,26 @@ namespace SingerDispatch
             }
             
             return copy;
+        }        
+
+        public override string ToString()
+        {
+            return string.Format("{0}-{1}", Number, Revision);
         }
 
-        public void Add(Job job)
-        {            
-            var loads = from l in job.Loads where l.Status.Name != "Billed" select l;
+        internal void AddPermitAcquisition(decimal totalCost)
+        {
+            var line = new InvoiceLineItem() { Description = "Permit acquisition fee" };
 
-            foreach (var load in loads)
-            {
-                Add(load);
-            }
+            if (totalCost < 150m)
+                line.Rate = 15m;
+            else
+                line.Rate = totalCost * 0.1m;
+
+            InvoiceLineItems.Add(line);
         }
 
-        public void Add(Load load)
+        internal void AddLoadReferences(Load load)
         {
             foreach (var reference in load.ReferenceNumbers)
             {
@@ -1212,17 +1237,18 @@ namespace SingerDispatch
 
                 ReferenceNumbers.Add(item);
             }
+        }
 
-            InvoiceLineItem line;
-            
-            line = new InvoiceLineItem();
+        internal void AddLoadedCommodities(Load load)
+        {
+            var line = new InvoiceLineItem();
 
             line.Description = string.Format("Supply men and equipment to transport {0}", load.ToString());
-            line.Rate = load.AdjustedRate;           
-            
+            line.Rate = load.AdjustedRate;
+
             var fromDiffers = false;
-            var toDiffers = false;            
-            
+            var toDiffers = false;
+
             foreach (var commodity in load.LoadedCommodities)
             {
                 line.ItemDate = line.ItemDate ?? commodity.LoadDate;
@@ -1235,7 +1261,7 @@ namespace SingerDispatch
                     fromDiffers = true;
 
                 if (toDiffers == false && line.Destination != unloading.Trim())
-                    toDiffers = true;                
+                    toDiffers = true;
             }
 
             if (fromDiffers)
@@ -1243,51 +1269,92 @@ namespace SingerDispatch
 
             if (toDiffers)
                 line.Destination = "Various";
-
-           
+            
             InvoiceLineItems.Add(line);
 
+            load.StatusID = 1L; // TODO: 1 is the hardcoded ID for Status "Billied", so any DB changes to the Status table could break this code - BAD DESIGN! 
+        }
 
-            if (load.Permits.Count > 0)
+        internal decimal AddPermits(Load load)
+        {
+            var permitTotal = 0.00m;
+
+            foreach (var permit in load.Permits)
             {
-                var permitTotal = 0.00m;
+                var line = new InvoiceLineItem();
 
-                foreach (var permit in load.Permits)
-                {
-                    line = new InvoiceLineItem();
+                var company = (permit.IssuingCompany != null) ? permit.IssuingCompany.Name : "";
+                var type = (permit.PermitType != null) ? permit.PermitType.Name : "";
 
-                    var company = (permit.IssuingCompany != null) ? permit.IssuingCompany.Name : "";
-                    var type = (permit.PermitType != null) ? permit.PermitType.Name : "";
+                line.Description = string.Format("{0} - {1}", company, type);
+                line.Rate = permit.Cost;
 
-                    line.Description = string.Format("{0} - {1}", company, type);
-                    line.Rate = permit.Cost;
+                InvoiceLineItems.Add(line);
 
-                    InvoiceLineItems.Add(line);
+                permitTotal += permit.Cost ?? 0.0m;
+            }
 
-                    permitTotal += permit.Cost ?? 0.0m;
-                }
+            return permitTotal;
+        }
 
-                line = new InvoiceLineItem();
+        internal void AddLoads(IEnumerable<Load> loads)
+        {
+            var hasPermits = false;
+            var permitCost = 0.0m;
 
-                line.Description = "Permit acquisition fee";
+            foreach (var load in loads)
+            {
+                AddLoadReferences(load);
+                AddLoadedCommodities(load);
+                permitCost += AddPermits(load);
 
-                if (permitTotal < 150m)
-                    line.Rate = 15m;
-                else
-                    line.Rate = permitTotal * 0.1m;
+                if (hasPermits == false)
+                    hasPermits = load.Permits.Count > 0;
+            }
+
+            if (hasPermits)
+            {
+                AddPermitAcquisition(permitCost);
+            }
+        }
+
+        internal void AddThirdPartyServices(IEnumerable<ThirdPartyService> services)
+        {
+            foreach (var service in services)
+            {
+                var line = new InvoiceLineItem();
+
+                var type = (service.ServiceType != null) ? service.ServiceType.Name : "UNKNOWN SERVICE";
+                var company = (service.Company != null) ? service.Company.Name : "UNKNOWN COMPANY";
+                var commodities = (service.Load != null) ? service.Load.ToString() : "various items";
+
+                line.Description = string.Format("Supply {0} by {1} to transport {2}", type, company, commodities);
+
+                if (!string.IsNullOrWhiteSpace(service.Reference))
+                    line.Description += string.Format(" [Reference: {0}]", service.Reference);
+
+                service.IsBilled = true;
 
                 InvoiceLineItems.Add(line);
             }
         }
 
-        public void Add(ThirdPartyService service)
+        internal void AddStorageItems(IEnumerable<StorageItem> storage)
         {
+            foreach (var item in storage)
+            {
+                var line = new InvoiceLineItem();
 
-        }
+                var commodity = (item.JobCommodity != null) ? item.JobCommodity.NameAndUnit : "UNKNOWN";                
 
-        public override string ToString()
-        {
-            return string.Format("{0}-{1}", Number, Revision);
+                line.Description = string.Format("Supply secure storge for {0} from [date] to [date]", commodity);
+                line.Rate = item.BillingRate;
+
+                if (item.BillingInterval != null)
+                    line.Description += string.Format(" (Billed {0})", item.BillingInterval.Name.ToLower());
+
+                InvoiceLineItems.Add(line);
+            }
         }
     }
 

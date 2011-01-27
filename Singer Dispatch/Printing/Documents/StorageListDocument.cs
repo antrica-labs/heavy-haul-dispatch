@@ -83,13 +83,14 @@ namespace SingerDispatch.Printing.Documents
 
                 var replacements = new String[9];
                 var units = (PrintMetric != true) ? MeasurementFormater.UFeet : MeasurementFormater.UMetres;
-                
+                var weights = (PrintMetric != true) ? MeasurementFormater.UPounds : MeasurementFormater.UKilograms;
+
                 var company = (item.JobCommodity.Owner != null) ? item.JobCommodity.Owner.Name : item.Job.Company.Name;
                 var contact = (item.Contact != null) ? string.Format("{0}<br>{1}", item.Contact.Name, item.Contact.PrimaryPhone) : "";
                 var arrival = (item.DateEntered != null) ? item.DateEntered.Value.ToString(SingerConfigs.PrintedDateFormatString) : "";
                 var depart = (item.DateRemoved != null) ? item.DateRemoved.Value.ToString(SingerConfigs.PrintedDateFormatString) : "";
                 var commodity = item.JobCommodity.NameAndUnit;
-                var dimensions = string.Format("{0} x {1} x {2}", MeasurementFormater.FromMetres(item.JobCommodity.Length, units), MeasurementFormater.FromMetres(item.JobCommodity.Width, units), MeasurementFormater.FromMetres(item.JobCommodity.Height, units));
+                var dimensions = string.Format("{0} x {1} x {2}<br>{3}", new object[] { MeasurementFormater.FromMetres(item.JobCommodity.Length, units), MeasurementFormater.FromMetres(item.JobCommodity.Width, units), MeasurementFormater.FromMetres(item.JobCommodity.Height, units), MeasurementFormater.FromKilograms(item.JobCommodity.Weight, weights) });
                 var rate = (item.BillingInterval == null) ? string.Format("{0:C}&nbsp;", item.BillingRate) : string.Format("{0:C} ({1})", item.BillingRate, item.BillingInterval.Name);
                 var job = item.Job.Number.ToString();
 

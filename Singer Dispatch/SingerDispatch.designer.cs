@@ -14809,6 +14809,8 @@ namespace SingerDispatch
 		
 		private string _Notes;
 		
+		private System.Nullable<bool> _IsBilled;
+		
 		private EntityRef<Company> _Company;
 		
 		private EntityRef<Contact> _Contact;
@@ -14841,6 +14843,8 @@ namespace SingerDispatch
     partial void OnReferenceChanged();
     partial void OnNotesChanging(string value);
     partial void OnNotesChanged();
+    partial void OnIsBilledChanging(System.Nullable<bool> value);
+    partial void OnIsBilledChanged();
     #endregion
 		
 		public ThirdPartyService()
@@ -15064,6 +15068,26 @@ namespace SingerDispatch
 					this._Notes = value;
 					this.SendPropertyChanged("Notes");
 					this.OnNotesChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsBilled")]
+		public System.Nullable<bool> IsBilled
+		{
+			get
+			{
+				return this._IsBilled;
+			}
+			set
+			{
+				if ((this._IsBilled != value))
+				{
+					this.OnIsBilledChanging(value);
+					this.SendPropertyChanging();
+					this._IsBilled = value;
+					this.SendPropertyChanged("IsBilled");
+					this.OnIsBilledChanged();
 				}
 			}
 		}

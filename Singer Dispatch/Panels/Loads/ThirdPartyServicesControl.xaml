@@ -75,43 +75,45 @@
                         <ComboBox Name="cmbContacts" Grid.Column="0" SelectedItem="{Binding Contact}" ItemTemplate="{StaticResource SimpleNameTemplate}" TextSearch.TextPath="Name" />
                         <Button Grid.Column="1" Style="{StaticResource Standard}" Click="AddContact_Click" DataContext="{Binding ElementName=cmbContacts}">Add</Button>
                     </Grid>
-                    
 
-                    <Label Grid.Row="3" Grid.Column="0">Location:</Label>
-                    <TextBox Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Location}" />
+                    <Label Grid.Row="3" Grid.Column="0">Reference:</Label>
+                    <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Reference}" />
 
-                    <Label Grid.Row="4" Grid.Column="0">Reference:</Label>
-                    <TextBox Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Reference}" />
+                    <Label Grid.Row="4" Grid.Column="0">Location:</Label>
+                    <TextBox Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Location}" />
 
                     <Label Grid.Row="5" Grid.Column="0">Notes:</Label>
                     <TextBox Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Notes}" Style="{StaticResource MultiLine}" Height="40" />
 
-                    <GroupBox Grid.Column="2" Grid.Row="0" Grid.RowSpan="3" Header="Departure" Margin="3,0,0,0">
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition />
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition />
-                                <RowDefinition />
-                                <RowDefinition />
-                            </Grid.RowDefinitions>
+                    <GroupBox Grid.Column="2" Grid.Row="0" Grid.RowSpan="4" Header="Other details" Margin="3,0,0,0">
+                        <StackPanel>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
 
-                            <Label Grid.Row="0" Grid.Column="0">Date:</Label>
-                            <DatePicker Grid.Row="0" Grid.Column="1"  SelectedDate="{Binding ServiceDate}" />
-                            
-                            <Label Grid.Row="1" Grid.Column="0">Time:</Label>
-                            <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding ServiceTime, Converter={StaticResource TimeConverter}}" />                            
-                        </Grid>
+                                <Label Grid.Row="0" Grid.Column="0">Date:</Label>
+                                <DatePicker Grid.Row="0" Grid.Column="1"  SelectedDate="{Binding ServiceDate}" />
+
+                                <Label Grid.Row="1" Grid.Column="0">Time:</Label>
+                                <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding ServiceTime, Converter={StaticResource TimeConverter}}" />
+
+                                <CheckBox Grid.Row="2" Grid.Column="1" IsChecked="{Binding IsBilled}">Has been billed</CheckBox>
+                            </Grid>
+                        </StackPanel>
                     </GroupBox>
                 </Grid>
             </GroupBox>
         </StackPanel>
 
         <DataGrid Name="dgServices" Style="{StaticResource ListDisplay}" SelectionChanged="dgServices_SelectionChanged">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Load" Binding="{Binding Load.Name}" Width="0.2*" />
+            <DataGrid.Columns>                
                 <DataGridTextColumn Header="Company" Binding="{Binding Company.Name}" Width="0.4*" />
                 <DataGridTextColumn Header="Service Type" Binding="{Binding ServiceType.Name}" Width="0.3*" />
                 <DataGridTextColumn Header="Notes" Binding="{Binding Notes}" />

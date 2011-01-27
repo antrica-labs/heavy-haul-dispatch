@@ -68,25 +68,12 @@ namespace SingerDispatch.Panels.Invoicing
         {
             if (SelectedCompany == null) return;
 
-            var invoice = new Invoice { Company = SelectedCompany, InvoiceDate = DateTime.Now };
             var list = (ObservableCollection<Invoice>)dgInvoices.ItemsSource;
+            var builder = new InvoiceBuilderWindow(SelectedCompany, Database) { Owner = Application.Current.MainWindow };
+            var invoice = builder.CreateInvoice();
 
-            var window = new JobAndLoadSelectorWindow(SelectedCompany, Database) { Owner = Application.Current.MainWindow };
-            var reference = window.GetJobAndLoad("Create invoice from job or load?");
-
-            if (reference == null) return;
-
-            if (reference != null && reference.Load != null)
-            {
-                invoice.Job = reference.Load.Job;
-                invoice.Add(reference.Load);
-            }
-            else if (reference != null && reference.Job != null)
-            {
-                invoice.Job = reference.Job;
-                invoice.Add(reference.Job);
-            }
-            
+            if (invoice == null) return;
+                                    
             try
             {
                 EntityHelper.SaveAsNewInvoice(invoice, Database);
