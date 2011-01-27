@@ -382,11 +382,21 @@ namespace SingerDispatch
         private void ViewStorageList_Click(object sender, RoutedEventArgs e)
         {
             var storage = from si in Database.StorageItems orderby si.Number descending select si;
-            var items = from s in storage where s.JobCommodity != null && (s.DateRemoved == null || s.DateRemoved >= DateTime.Today) orderby s.JobCommodity.Owner.Name select s;            
+            var items = from s in storage where s.JobCommodity != null && (s.DateRemoved == null || s.DateRemoved.Value.Date > DateTime.Today.Date) orderby s.JobCommodity.Owner.Name select s;            
             var title = "Singer Storage List - Current";
 
             var viewer = new DocumentViewerWindow(new StorageListDocument(), items, title) { IsMetric = !UseImperialMeasurements };
             viewer.DisplayPrintout(); 
+        }
+
+        private void ViewArchivedStorageList_Click(object sender, RoutedEventArgs e)
+        {
+            var storage = from si in Database.StorageItems orderby si.Number descending select si;
+            var items = from s in storage where s.JobCommodity != null && (s.DateRemoved != null && s.DateRemoved.Value.Date <= DateTime.Today.Date) orderby s.JobCommodity.Owner.Name select s;
+            var title = "Singer Storage List - Archive";
+
+            var viewer = new DocumentViewerWindow(new StorageListDocument(), items, title) { IsMetric = !UseImperialMeasurements };
+            viewer.DisplayPrintout();
         }
 
         private void ViewJobList_Click(object sender, RoutedEventArgs e)

@@ -30,6 +30,7 @@ namespace SingerDispatch.Printing.Documents
             content.Append("</head>");
             content.Append("<body>");
             content.Append(@"<div class=""job_list"">");
+            content.Append(@"<h1>Job List - " + DateTime.Today.ToString(SingerConfigs.PrintedDateFormatString) + "</h1>");
             content.Append(GetBodyHTML(jobs));
             content.Append("</div>");
             content.Append("</body>");
@@ -170,7 +171,18 @@ namespace SingerDispatch.Printing.Documents
                         font-family: sans-serif;
                         padding: 1em;
                     }
-                    
+
+                    h1
+                    {
+                        display: block;
+                        width: 100%;
+                        margin-bottom: 1.0em;
+                        line-height: 1.2em;
+                        font-weight: bold;
+                        font-size: 1.5em;
+                        text-align: center;
+                    }
+
                     table.jobs
                     {
                         width: 100%;

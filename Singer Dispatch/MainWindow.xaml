@@ -39,6 +39,7 @@
                 </MenuItem>
                 <MenuItem Header="Storage">
                     <MenuItem Header="Current storage list" Click="ViewStorageList_Click" />
+                    <MenuItem Header="Archived storage list" Click="ViewArchivedStorageList_Click" />
                 </MenuItem>
                 <MenuItem Header="Tools">                    
                     <MenuItem Header="Use imperial measurements" IsCheckable="true" IsChecked="{Binding ElementName=ThisWindow, Path=UseImperialMeasurements}" />
