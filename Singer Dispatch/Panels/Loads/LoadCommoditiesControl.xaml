@@ -20,16 +20,6 @@
             <DataTemplate x:Key="TrailerCombinationTemplate">
                 <TextBlock Text="{Binding Combination}" />
             </DataTemplate>
-            <DataTemplate x:Key="WheelTypeTemplate">
-                <TextBlock>
-                    <TextBlock.Text>
-                        <MultiBinding StringFormat="{}{0} {1:C}">
-                            <Binding Path="Name" />
-                            <Binding Path="Adjusted" />
-                        </MultiBinding>
-                    </TextBlock.Text>
-                </TextBlock>
-            </DataTemplate>
             <DataTemplate x:Key="RouteComboTemplate">
             	<Grid>
             		<TextBlock TextWrapping="Wrap" Text="{Binding}"/>
@@ -65,7 +55,7 @@
                 </ComboBox>
 
                 <Label Grid.Column="1" Grid.Row="0">Rate type:</Label>
-                <ComboBox Name="cmbRates" Grid.Column="1" Grid.Row="1" SelectionChanged="cmbRates_SelectionChanged" ItemTemplate="{StaticResource WheelTypeTemplate}" TextSearch.TextPath="Name">
+                <ComboBox Name="cmbRates" Grid.Column="1" Grid.Row="1" SelectionChanged="cmbRates_SelectionChanged" ItemTemplate="{StaticResource SimpleNameTemplate}" TextSearch.TextPath="Name">
                     <ComboBox.SelectedItem>
                         <Binding Path="Rate">
                             <Binding.ValidationRules>
