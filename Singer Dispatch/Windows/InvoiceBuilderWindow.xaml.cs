@@ -110,11 +110,22 @@ namespace SingerDispatch.Windows
 
             if (job != null)
             {
+                Status status;
+
+                try
+                {
+                    status = (from s in Database.Statuses where s.Name == "Billed" select s).First();
+                }
+                catch
+                {
+                    status = null;
+                }
+
                 var loads = (System.Collections.IList)dgLoads.SelectedItems;
                 var services = (System.Collections.IList)dgServices.SelectedItems;
                 var storage = (System.Collections.IList)dgStorage.SelectedItems;
 
-                Invoice = CreateDetailedInvoice(job, loads.Cast<Load>(), services.Cast<ThirdPartyService>(), storage.Cast<StorageItem>());
+                Invoice = CreateDetailedInvoice(job, loads.Cast<Load>(), services.Cast<ThirdPartyService>(), storage.Cast<StorageItem>(), status);
             }
             else
                 Invoice = new Invoice();
@@ -124,11 +135,11 @@ namespace SingerDispatch.Windows
             Close();
         }
 
-        private static Invoice CreateDetailedInvoice(Job job, IEnumerable<Load> loads, IEnumerable<ThirdPartyService> services, IEnumerable<StorageItem> storage)
+        private static Invoice CreateDetailedInvoice(Job job, IEnumerable<Load> loads, IEnumerable<ThirdPartyService> services, IEnumerable<StorageItem> storage, Status billedStatus)
         {
             var invoice = new Invoice();
-
-            invoice.AddLoads(loads);
+            
+            invoice.AddLoads(loads, billedStatus);
             invoice.AddThirdPartyServices(services);
             invoice.AddStorageItems(storage);
 

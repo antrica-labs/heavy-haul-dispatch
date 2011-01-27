@@ -1271,8 +1271,6 @@ namespace SingerDispatch
                 line.Destination = "Various";
             
             InvoiceLineItems.Add(line);
-
-            load.StatusID = 1L; // TODO: 1 is the hardcoded ID for Status "Billied", so any DB changes to the Status table could break this code - BAD DESIGN! 
         }
 
         internal decimal AddPermits(Load load)
@@ -1297,7 +1295,7 @@ namespace SingerDispatch
             return permitTotal;
         }
 
-        internal void AddLoads(IEnumerable<Load> loads)
+        internal void AddLoads(IEnumerable<Load> loads, Status status)
         {
             var hasPermits = false;
             var permitCost = 0.0m;
@@ -1310,6 +1308,9 @@ namespace SingerDispatch
 
                 if (hasPermits == false)
                     hasPermits = load.Permits.Count > 0;
+
+                if (status != null)
+                    load.Status = status;
             }
 
             if (hasPermits)
