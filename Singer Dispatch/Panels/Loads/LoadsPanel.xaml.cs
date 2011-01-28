@@ -46,6 +46,7 @@ namespace SingerDispatch.Panels.Loads
         {
             if (InDesignMode()) return;
 
+            UpdateJobList();
             UpdateLoadList();
         }
 
@@ -70,7 +71,7 @@ namespace SingerDispatch.Panels.Loads
         {
             base.SelectedCompanyChanged(newValue, oldValue);
 
-            cmbJobList.ItemsSource = from j in Database.Jobs where j.Company == SelectedCompany orderby j.Number descending select j;
+            UpdateJobList();
         }
 
         protected override void UseImperialMeasurementsChanged(bool value)
@@ -78,7 +79,12 @@ namespace SingerDispatch.Panels.Loads
             base.UseImperialMeasurementsChanged(value);
         }
 
-        public void UpdateLoadList()
+        private void UpdateJobList()
+        {
+            cmbJobList.ItemsSource = (SelectedCompany == null) ? null : from j in Database.Jobs where j.Company == SelectedCompany orderby j.Number descending select j;
+        }
+
+        private void UpdateLoadList()
         {
             dgLoads.ItemsSource = (SelectedJob == null) ? null : new ObservableCollection<Load>(from l in Database.Loads where l.Job == SelectedJob orderby l.Number descending select l);
         }
