@@ -142,7 +142,6 @@
     <Compile Include="Database\CompleteProviders\CompanyNameACProvider.cs" />
     <Compile Include="Database\CompleteProviders\JobNumAndNameACProvider.cs" />
     <Compile Include="Database\EntityHelper.cs" />
-    <Compile Include="Database\OutOfProvinceGenerator.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
@@ -336,6 +335,9 @@
     </Compile>
     <Compile Include="Windows\JobLocatorWindow.xaml.cs">
       <DependentUpon>JobLocatorWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\OutOfProvinceBuilderWindow.xaml.cs">
+      <DependentUpon>OutOfProvinceBuilderWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\PdfCreationWindow.xaml.cs">
       <DependentUpon>PdfCreationWindow.xaml</DependentUpon>
@@ -623,6 +625,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Windows\OutOfProvinceBuilderWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\PdfCreationWindow.xaml">
       <SubType>Designer</SubType>

@@ -509,11 +509,8 @@ namespace SingerDispatch
                 if (range.StartDate == null || range.EndDate == null)
                     throw new Exception("Both start date and end date must be filled in");
 
-                var list = OutOfProvinceGenerator.GetAllOutOfProvince(range.StartDate, range.EndDate, Database);
-                var title = string.Format("Fuel Report - {0} to {1}", range.StartDate.ToString(SingerConfigs.PrintedDateFormatString), range.EndDate.ToString(SingerConfigs.PrintedDateFormatString));
-
-                var viewer = new DocumentViewerWindow(new OutOfProvinceReportDocument(), list, title) { Owner = this, IsMetric = !UseImperialMeasurements };
-                viewer.DisplayPrintout();
+                var generator = new OutOfProvinceBuilderWindow() { Owner = this };
+                generator.BuildReport(range.StartDate, range.EndDate);
             }
         }
     }
