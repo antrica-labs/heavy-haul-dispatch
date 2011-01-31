@@ -35,8 +35,10 @@
                     <MenuItem Header="Go to job" Click="FindJob_Click" InputGestureText="Ctrl+Shift+J" />
                     <MenuItem Header="Go to loads" Click="FindLoads_Click" InputGestureText="Ctrl+Shift+L" />
                     <MenuItem Header="Go to invoice" Click="FindInvoice_Click" InputGestureText="Ctrl+Shift+I" />
+                    <!--
                     <Separator />
                     <MenuItem Header="Search" Click="Search_Click" />
+                    -->
                 </MenuItem>
                 <MenuItem Header="Reports">
                     <MenuItem Header="Job list" Click="ViewJobList_Click" />
