@@ -88,7 +88,7 @@ namespace SingerDispatch.Panels.Loads
 
         private void ThePanel_Loaded(object sender, RoutedEventArgs e)
         {
-            if (InDesignMode()) return;
+            if (InDesignMode() || IsVisible == false) return;
 
             UpdateComboBoxes();
         }

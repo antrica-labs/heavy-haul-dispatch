@@ -28,7 +28,7 @@ namespace SingerDispatch.Panels.Companies
 
         private void ControlLoaded(object sender, RoutedEventArgs e)
         {
-            if (InDesignMode()) return;
+            if (InDesignMode() || IsVisible == false) return;
 
             RefreshServiceList();
         }

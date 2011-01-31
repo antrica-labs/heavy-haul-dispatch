@@ -31,7 +31,7 @@ namespace SingerDispatch.Panels.Companies
 
         private void Control_Loaded(object sender, RoutedEventArgs e)
         {
-            if (InDesignMode()) return;
+            if (InDesignMode() || IsVisible == false) return;
 
             cmbCreditPriority.ItemsSource = from l in Database.CompanyPriorityLevels orderby l.Level select l;
             cmbCreditCustomerType.ItemsSource = from ct in Database.CustomerType select ct;

@@ -25,6 +25,8 @@ namespace SingerDispatch.Panels.Quotes
 
         private void Control_Loaded(object sender, RoutedEventArgs e)
         {
+            if (InDesignMode() || IsVisible == false) return;
+
             // refresh the commodity list
             cmbCommodities.ItemsSource = (SelectedQuote == null) ? null : SelectedQuote.QuoteCommodities.ToList();
         }

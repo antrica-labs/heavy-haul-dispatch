@@ -59,7 +59,7 @@ namespace SingerDispatch.Panels.Jobs
 
         private void ControlLoaded(object sender, RoutedEventArgs e)
         {
-            if (InDesignMode()) return;
+            if (InDesignMode() || IsVisible == false) return;
 
             if (dgRecordedCommodities.ActualHeight > 0.0)
             {

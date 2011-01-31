@@ -44,7 +44,7 @@ namespace SingerDispatch.Panels.Loads
 
         private void ControlLoaded(object sender, RoutedEventArgs e)
         {
-            if (InDesignMode()) return;
+            if (InDesignMode() || IsVisible == false) return;
 
             if (dgSwampers.ActualHeight > 0.0) 
                 dgSwampers.MaxHeight = dgSwampers.ActualHeight;

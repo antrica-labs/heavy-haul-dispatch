@@ -32,11 +32,13 @@
                 </Grid.RowDefinitions>
 
                 <Label Grid.Column="0" Grid.Row="0">Project name:</Label>
-                <TextBox Name="txtName" Grid.Column="0" Grid.Row="1" Text="{Binding Name}" />
+                <TextBox Name="txtName" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Text="{Binding Name}" />
 
+                <!--
                 <Label Grid.Column="1" Grid.Row="0">Status:</Label>
                 <ComboBox Name="cmbStatuses" Grid.Column="1" Grid.Row="1" SelectedItem="{Binding Status}" IsEditable="False" ItemTemplate="{StaticResource SimpleNameTemplate}" />
-
+                -->
+                
                 <Label Grid.Column="0" Grid.Row="2">Care of:</Label>
                 <Grid Grid.Column="0" Grid.Row="3">
                     <Grid.ColumnDefinitions>
@@ -63,15 +65,7 @@
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
 
-                    <ComboBox Name="cmbContacts" Grid.Column="0" ItemTemplate="{StaticResource ContactTemplate}" TextSearch.TextPath="Name">
-                        <ComboBox.SelectedItem>
-                            <Binding Path="Contact">
-                                <Binding.ValidationRules>
-                                    <Validators:SelectionExistsValidator />
-                                </Binding.ValidationRules>
-                            </Binding>
-                        </ComboBox.SelectedItem>
-                    </ComboBox>
+                    <ComboBox Name="cmbContacts" Grid.Column="0" ItemTemplate="{StaticResource ContactTemplate}" TextSearch.TextPath="Name" SelectedItem="{Binding Contact}" />
                     <Button Grid.Column="1" Style="{StaticResource Standard}" Click="AddContact_Click" DataContext="{Binding ElementName=cmbContacts}">Add</Button>
                 </Grid>
                 
@@ -85,11 +79,11 @@
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
 
-            <GroupBox Grid.Column="0" Header="Additional Notes" DataContext="{Binding ElementName=ThePanel, Path=SelectedJob}">
+            <GroupBox Grid.Column="0" Header="Project Notes (Not Printed)" DataContext="{Binding ElementName=ThePanel, Path=SelectedJob}">
                 <TextBox Style="{StaticResource MultiLine}" Height="Auto" Text="{Binding Notes}" />
             </GroupBox>
             
-            <GroupBox Grid.Column="2" Header="Reference numbers">
+            <GroupBox Grid.Column="2" Header="Project Reference Numbers">
                 <DockPanel>
                     <Grid DockPanel.Dock="Top">
                         <Grid.ColumnDefinitions>

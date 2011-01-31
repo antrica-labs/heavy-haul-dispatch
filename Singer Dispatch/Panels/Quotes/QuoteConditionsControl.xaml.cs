@@ -27,6 +27,8 @@ namespace SingerDispatch.Panels.Quotes
         
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
+            if (InDesignMode() || IsVisible == false) return;
+
             var list = (ObservableCollection<CheckBox>)TheList.ItemsSource;
 
             list.Clear();

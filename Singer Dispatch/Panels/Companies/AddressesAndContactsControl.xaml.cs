@@ -27,8 +27,8 @@ namespace SingerDispatch.Panels.Companies
         }
 
         private void Control_Loaded(object sender, RoutedEventArgs e)
-        {          
-            if (InDesignMode()) return;
+        {
+            if (InDesignMode() || IsVisible == false) return;
 
             lbContactTypes.MaxHeight = lbContactTypes.ActualHeight;
 

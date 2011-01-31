@@ -51,7 +51,7 @@ namespace SingerDispatch.Panels.Storage
 
         private void Control_Loaded(object sender, RoutedEventArgs e)
         {
-            if (InDesignMode()) return;
+            if (InDesignMode() || IsVisible == false) return;
 
             if (currentOrPreviousTabs.SelectedIndex == 0)
                 UpdateCurrentStorageList();

@@ -24,7 +24,7 @@
             <AC:CompletableTextBox Grid.Column="1" Name="acJobNumber" TextChanged="acJobNumber_TextChanged" SelectionChanged="acJobNumber_SelectionChanged" />
         </Grid>
 
-        <Grid Height="150" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=acJobNumber, Path=SelectedItem}">
+        <Grid Height="200" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=acJobNumber, Path=SelectedItem}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
                 <ColumnDefinition />
@@ -84,7 +84,7 @@
             </GroupBox>
         </Grid>
 
-        <GroupBox Header="Storage Items" Height="150" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=acJobNumber, Path=SelectedItem}">
+        <GroupBox Header="Storage Items" Height="175" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=acJobNumber, Path=SelectedItem}">
             <DockPanel>
                 <Grid DockPanel.Dock="Bottom">
                     <Grid.ColumnDefinitions>

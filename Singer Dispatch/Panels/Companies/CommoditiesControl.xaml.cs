@@ -27,6 +27,8 @@ namespace SingerDispatch.Panels.Companies
 
         private void Control_Loaded(object sender, RoutedEventArgs e)
         {
+            if (InDesignMode() || IsVisible == false) return;
+
             dgCommodities.ItemsSource = (SelectedCompany == null) ? null : new ObservableCollection<Commodity>(from c in Database.Commodities where c.Company == SelectedCompany orderby c.Name, c.Unit select c);
         }
         

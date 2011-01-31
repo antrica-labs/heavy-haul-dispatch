@@ -41,7 +41,7 @@ namespace SingerDispatch.Panels.Admin
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            if (InDesignMode()) return;
+            if (InDesignMode() || IsVisible == false) return;
 
             cmbEmployees.ItemsSource = from emp in Database.Employees where emp.Archived != true orderby emp.FirstName, emp.LastName select emp;
 

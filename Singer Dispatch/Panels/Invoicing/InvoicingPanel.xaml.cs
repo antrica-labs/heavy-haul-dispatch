@@ -37,7 +37,7 @@ namespace SingerDispatch.Panels.Invoicing
 
         private void Control_Loaded(object sender, RoutedEventArgs e)
         {
-            if (InDesignMode()) return;
+            if (InDesignMode() || IsVisible == false) return;
 
             UpdateLists();
         }

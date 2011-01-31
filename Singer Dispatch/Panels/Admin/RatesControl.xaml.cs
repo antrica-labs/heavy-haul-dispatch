@@ -42,7 +42,7 @@ namespace SingerDispatch.Panels.Admin
 
         private void Control_Loaded(object sender, RoutedEventArgs e)
         {
-            if (InDesignMode()) return;
+            if (InDesignMode() || IsVisible == false) return;
 
             dgRates.ItemsSource = new ObservableCollection<Rate>(from r in Database.Rates where r.Archived != true orderby r.RateType.Name, r.Name select r);            
         }

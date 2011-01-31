@@ -37,9 +37,9 @@ namespace SingerDispatch.Panels.Jobs
 
         private void Control_Loaded(object sender, RoutedEventArgs e)
         {
-            if (InDesignMode()) return;
+            if (InDesignMode() || IsVisible == false) return;
 
-            cmbStatuses.ItemsSource = from s in Database.Statuses orderby s.Name select s;
+            //cmbStatuses.ItemsSource = from s in Database.Statuses orderby s.Name select s;
 
             UpdateContacts();
             UpdateReferenceNumbers();

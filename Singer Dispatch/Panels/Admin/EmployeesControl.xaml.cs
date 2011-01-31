@@ -39,7 +39,7 @@ namespace SingerDispatch.Panels.Admin
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            if (InDesignMode()) return;
+            if (InDesignMode() || IsVisible == false) return;
 
             if (currentOrArchivedTabs.SelectedIndex == 0)
                 UpdateCurrentEmployees();

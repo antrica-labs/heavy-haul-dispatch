@@ -29,7 +29,7 @@ namespace SingerDispatch.Panels.Admin
 
         private void Control_Loaded(object sender, RoutedEventArgs e)
         {
-            if (InDesignMode()) return;
+            if (InDesignMode() || IsVisible == false) return;
 
             var provider = (ObjectDataProvider)FindResource("RatesDropList");
 

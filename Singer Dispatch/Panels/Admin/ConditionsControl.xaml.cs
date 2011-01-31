@@ -26,7 +26,7 @@ namespace SingerDispatch.Panels.Admin
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            if (InDesignMode()) return;
+            if (InDesignMode() || IsVisible == false) return;
 
             TheGrid.ItemsSource = new ObservableCollection<Condition>(from c in Database.Conditions where c.Archived != true orderby c.ID select c);
         }

@@ -22,7 +22,7 @@ namespace SingerDispatch.Panels.Loads
 
         private void ControlLoaded(object sender, RoutedEventArgs e)
         {
-            if (InDesignMode()) return;
+            if (InDesignMode() || IsVisible == false) return;
 
             cmbCompanies.ItemsSource = from s in Database.Services where s.ServiceType == (from st in Database.ServiceTypes where st.Name == "Permits" select st).First() orderby s.Company.Name select s.Company;
             cmbPermitTypes.ItemsSource = (SelectedLoad == null) ? null : from pt in Database.PermitTypes select pt;            
