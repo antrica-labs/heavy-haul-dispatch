@@ -127,35 +127,29 @@
                     </DataGrid.Columns>
                 </DataGrid>
             </TabItem>
-            <TabItem Header="Services &amp; Permits">                
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="200" />
-                        <RowDefinition Height="*" />
-                    </Grid.RowDefinitions>
-                    
-                    <GroupBox Grid.Row="0" Header="Third Party Services">
-                        <DataGrid Name="dgServices" Style="{StaticResource ListDisplay}">
-                            <DataGrid.Columns>
-                                <DataGridTextColumn Header="Company" Binding="{Binding Company.Name}" />
-                                <DataGridTextColumn Header="Service Type" Binding="{Binding ServiceType.Name}" />
-                                <DataGridTextColumn Header="Reference" Binding="{Binding Reference}" />
-                                <DataGridTextColumn Header="Date" Binding="{Binding ServiceDate, StringFormat={}{0:MM/dd/yyyy}}" Width="100" />
-                            </DataGrid.Columns>
-                        </DataGrid>
-                    </GroupBox>
-
-                    <GroupBox Grid.Row="1" Header="Permits">
-                        <DataGrid Name="dgPermits" Style="{StaticResource ListDisplay}">
-                            <DataGrid.Columns>
-                                <DataGridTextColumn Header="Issuer" Binding="{Binding IssuingCompany.Name}" />
-                                <DataGridTextColumn Header="Permit Type" Binding="{Binding PermitType.Name}" />
-                                <DataGridTextColumn Header="Permit #" Binding="{Binding Reference}" />
-                                <DataGridTextColumn Header="Cost" Binding="{Binding Cost, StringFormat=C}" Width="100" />
-                            </DataGrid.Columns>
-                        </DataGrid>
-                    </GroupBox>
-                </Grid>
+            <TabItem Header="Third Party Services">
+                <DataGrid Name="dgServices" Style="{StaticResource ListDisplay}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Job" Binding="{Binding Load.Job.Number}" Width="50"/>
+                        <DataGridTextColumn Header="Load" Binding="{Binding Load.Name}" Width="50" />
+                        <DataGridTextColumn Header="Company" Binding="{Binding Company.Name}" />
+                        <DataGridTextColumn Header="Service Type" Binding="{Binding ServiceType.Name}" />
+                        <DataGridTextColumn Header="Reference" Binding="{Binding Reference}" />
+                        <DataGridTextColumn Header="Date" Binding="{Binding ServiceDate, StringFormat={}{0:MM/dd/yyyy}}" Width="100" />
+                    </DataGrid.Columns>
+                </DataGrid>
+            </TabItem>
+            <TabItem Header="Permits">
+                <DataGrid Name="dgPermits" Style="{StaticResource ListDisplay}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Job" Binding="{Binding Load.Job.Number}" Width="50"/>
+                        <DataGridTextColumn Header="Load" Binding="{Binding Load.Name}" Width="50" />
+                        <DataGridTextColumn Header="Issuer" Binding="{Binding IssuingCompany.Name}" />
+                        <DataGridTextColumn Header="Permit Type" Binding="{Binding PermitType.Name}" />
+                        <DataGridTextColumn Header="Permit #" Binding="{Binding Reference}" />
+                        <DataGridTextColumn Header="Cost" Binding="{Binding Cost, StringFormat=C}" Width="100" />
+                    </DataGrid.Columns>
+                </DataGrid>
             </TabItem>
         </TabControl>
     </DockPanel>

@@ -265,6 +265,7 @@
     <Compile Include="Printing\Documents\JobListDocument.cs" />
     <Compile Include="Printing\Documents\LoadingDocument.cs" />
     <Compile Include="Printing\Documents\OutOfProvinceReportDocument.cs" />
+    <Compile Include="Printing\Documents\QuoteListDocument.cs" />
     <Compile Include="Printing\Documents\SingerPrintDocument.cs" />
     <Compile Include="Printing\Documents\StorageContractDocument.cs" />
     <Compile Include="Printing\Documents\StorageListDocument.cs" />
@@ -331,6 +332,9 @@
     </Compile>
     <Compile Include="Windows\GeneralSearchWindow.xaml.cs">
       <DependentUpon>GeneralSearchWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\GetSupportWindow.xaml.cs">
+      <DependentUpon>GetSupportWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\InvoiceBuilderWindow.xaml.cs">
       <DependentUpon>InvoiceBuilderWindow.xaml</DependentUpon>
@@ -618,6 +622,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Windows\GeneralSearchWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\GetSupportWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

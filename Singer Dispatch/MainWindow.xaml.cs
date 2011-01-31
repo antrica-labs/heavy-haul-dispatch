@@ -354,6 +354,63 @@ namespace SingerDispatch
             ((LoadsPanel)panelMainContent.Child).SelectedJob = job;
         }
 
+        public void ViewLoad(Load load)
+        {
+            if (load == null || load.Job == null || load.Job.Company == null) return;
+
+            expanderLoads.IsExpanded = true;
+            acCompany.SelectedItem = load.Job.Company;
+
+            ((LoadsPanel)panelMainContent.Child).UpdateLayout();
+            ((LoadsPanel)panelMainContent.Child).SelectedJob = load.Job;
+            ((LoadsPanel)panelMainContent.Child).SelectedLoad = load;
+        }
+
+        public void ViewPermit(Permit permit)
+        {
+            if (permit == null || permit.Load == null || permit.Load.Job == null) return;
+
+            expanderLoads.IsExpanded = true;
+            acCompany.SelectedItem = permit.Load.Job.Company;
+
+            var panel = (LoadsPanel)panelMainContent.Child;
+
+            panel.UpdateLayout();
+            panel.SelectedJob = permit.Load.Job;
+            panel.SelectedLoad = permit.Load;
+            panel.Tabs.SelectedIndex = 4;
+        }
+
+        public void ViewThirdPartyService(ThirdPartyService service)
+        {
+            if (service == null || service.Load == null || service.Load.Job == null) return;
+
+            expanderLoads.IsExpanded = true;
+            acCompany.SelectedItem = service.Load.Job.Company;
+
+            var panel = (LoadsPanel)panelMainContent.Child;
+
+            panel.UpdateLayout();
+            panel.SelectedJob = service.Load.Job;
+            panel.SelectedLoad = service.Load;
+            panel.Tabs.SelectedIndex = 3;
+        }
+
+        public void ViewDispatch(Dispatch dispatch)
+        {
+            if (dispatch == null || dispatch.Load == null || dispatch.Load.Job == null) return;
+
+            expanderLoads.IsExpanded = true;
+            acCompany.SelectedItem = dispatch.Load.Job.Company;
+
+            var panel = (LoadsPanel)panelMainContent.Child;
+
+            panel.UpdateLayout();
+            panel.SelectedJob = dispatch.Load.Job;
+            panel.SelectedLoad = dispatch.Load;
+            panel.Tabs.SelectedIndex = 2;
+        }
+
         public void ViewInvoice(Invoice invoice)
         {
             if (invoice == null || invoice.Company == null) return;
@@ -435,10 +492,19 @@ namespace SingerDispatch
 
         private void ViewJobList_Click(object sender, RoutedEventArgs e)
         {
-            var jobs = from j in Database.Jobs orderby j.Number descending select j;
+            var jobs = from j in Database.Jobs where j.Company != null orderby j.Number descending select j;
             var title = "Singer Job List";
 
             var viewer = new Windows.DocumentViewerWindow(new JobListDocument(), jobs, title) { IsMetric = !UseImperialMeasurements };
+            viewer.DisplayPrintout();
+        }
+
+        private void ViewQuoteList_Click(object sender, RoutedEventArgs e)
+        {
+            var quotes = from q in Database.Quotes where q.Company != null orderby q.Number, q.Revision descending select q;
+            var title = "Singer Quote List";
+
+            var viewer = new Windows.DocumentViewerWindow(new QuoteListDocument(), quotes, title) { IsMetric = !UseImperialMeasurements };
             viewer.DisplayPrintout();
         }
 
@@ -521,9 +587,22 @@ namespace SingerDispatch
             var window = new GeneralSearchWindow { Owner = this };
             var entity = window.FindSomething();
 
-            if (entity == null) return;
-
-
+            if (entity == null)
+                return;
+            else if (entity is Job)
+                ViewJob(entity as Job);
+            else if (entity is Load)
+                ViewLoad(entity as Load);
+            else if (entity is Permit)
+                ViewPermit(entity as Permit);
+            else if (entity is Dispatch)
+                ViewDispatch(entity as Dispatch);
+            else if (entity is ThirdPartyService)
+                ViewThirdPartyService(entity as ThirdPartyService);
+            else if (entity is Quote)
+                ViewQuote(entity as Quote);
+            else if (entity is Invoice)
+                ViewInvoice(entity as Invoice);
         }
 
         private void CreateCompany()
@@ -590,6 +669,11 @@ namespace SingerDispatch
             }
         }
 
-        
+
+        private void GetSupport_Click(object sender, RoutedEventArgs e)
+        {
+            var window = new GetSupportWindow() { Owner = this };
+            window.ShowDialog();
+        }
     }
 }

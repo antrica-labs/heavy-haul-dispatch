@@ -1,0 +1,21 @@
+﻿<Window x:Class="SingerDispatch.Windows.GetSupportWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Get Support" WindowStartupLocation="CenterOwner" SizeToContent="WidthAndHeight" KeyDown="Window_KeyDown">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/SingerDispatchDictionary.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <StackPanel Margin="5,5,5,5">
+        <Label Style="{StaticResource Heading}">Create New Company</Label>
+        
+        <Frame Padding="5">
+            <Frame.Content>
+                <TextBlock>To report any bugs or problems, contact Simon Twogood by email at <Hyperlink NavigateUri="mailto:simon.twogood@gmail.com">simon.twogood@gmail.com</Hyperlink>.</TextBlock>
+            </Frame.Content>
+        </Frame>
+    </StackPanel>
+</Window>
