@@ -1,0 +1,136 @@
+﻿<Window x:Class="SingerDispatch.Windows.GeneralSearchWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        mc:Ignorable="d" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+        Width="800" Height="450" WindowStartupLocation="CenterOwner"
+        FocusManager.FocusedElement="{Binding ElementName=txtSearchTerm}" KeyDown="Window_KeyDown">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/SingerDispatchDictionary.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <DockPanel>        
+        <Grid DockPanel.Dock="Top">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="0.70*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            
+            <GroupBox Header="Search Term" Grid.Column="0">
+                <TextBox Name="txtSearchTerm" />
+            </GroupBox>
+            
+            <GroupBox Header="Dates" Grid.Column="1">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    
+                    <Label Grid.Column="0">Start:</Label>
+                    <DatePicker Grid.Column="1" Name="startDate" />
+                    
+                    <Label Grid.Column="2">End:</Label>
+                    <DatePicker Grid.Column="3" Name="endDate" />
+                </Grid>
+            </GroupBox>
+            
+            <Button Grid.Column="2" Padding="5,0" Margin="3" Click="RunSearch_Click">Search</Button>
+        </Grid>
+        
+        <TabControl Margin="0,5,0,0">
+            <TabItem Header="Jobs">
+                <DockPanel>
+                    <Grid DockPanel.Dock="Bottom" Height="150">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+
+                        <GroupBox Grid.Column="0" Header="Loads">
+                            <DataGrid Name="dgLoads" Style="{StaticResource ListDisplay}">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="Number" Binding="{Binding Number}" Width="Auto" />
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </GroupBox>
+                        
+                        <GroupBox Grid.Column="1" Header="Dispatches">
+                            <DataGrid Name="dgDispatches" Style="{StaticResource ListDisplay}">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="Number" Binding="{Binding Number}" Width="Auto" />
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </GroupBox>
+                    </Grid>
+                    
+                    <GroupBox Header="Jobs">
+                        <DataGrid Name="dgJobs" Style="{StaticResource ListDisplay}">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Number" Binding="{Binding Number}" Width="Auto" />
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </GroupBox>
+                </DockPanel>
+            </TabItem>
+            <TabItem Header="Quotes">
+                <DataGrid Style="{StaticResource ListDisplay}" Name="dgQuotes">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Number" Width="Auto" Binding="{Binding NumberAndRev}"/>
+                        <DataGridTextColumn Header="Creation date" Binding="{Binding CreationDate, StringFormat=d}" Width="90" />
+                        <DataGridTextColumn Header="Start date" Binding="{Binding StartDate, StringFormat=d}" Width="90" />
+                        <DataGridTextColumn Header="Price" Binding="{Binding Price, StringFormat=C}" Width="75" />
+                        <DataGridTemplateColumn Header="Commodities">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Converter={StaticResource QuoteCommoditiesStringConverter}, Path=QuoteCommodities}">
+                                        <TextBlock.ToolTip>
+                                            <TextBlock Text="{Binding Converter={StaticResource QuoteCommoditiesStringConverter}, Path=QuoteCommodities}" />
+                                        </TextBlock.ToolTip>
+                                    </TextBlock>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </TabItem>
+            <TabItem Header="Invoices">
+                <DataGrid Name="dgInvoices" Style="{StaticResource ListDisplay}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Number" Binding="{Binding NumberAndRev}" Width="Auto" />                        
+                    </DataGrid.Columns>
+                </DataGrid>
+            </TabItem>
+            <TabItem Header="Services &amp; Permits">                
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    
+                    <GroupBox Grid.Column="0" Header="Third Party Services">
+                        <DataGrid Name="dgServices" Style="{StaticResource ListDisplay}">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Company" Binding="{Binding Company.Name}" />
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </GroupBox>
+
+                    <GroupBox Grid.Column="1" Header="Third Party Services">
+                        <DataGrid Name="dgPermits" Style="{StaticResource ListDisplay}">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Company" Binding="{Binding Company.Name}" />
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </GroupBox>
+                </Grid>
+            </TabItem>
+        </TabControl>
+    </DockPanel>
+</Window>

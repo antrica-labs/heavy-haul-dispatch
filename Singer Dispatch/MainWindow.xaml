@@ -22,19 +22,21 @@
     <Border>
         <DockPanel>
             <Menu DockPanel.Dock="Top">
-                <MenuItem Header="_File">
-                    <MenuItem Header="_Exit" Click="Terminate_Click" />
+                <MenuItem Header="File">
+                    <MenuItem Header="Exit" Click="Terminate_Click" />
                 </MenuItem>
-                <MenuItem Header="_Companies">
-                    <MenuItem Header="_Create" Click="CreateCompanyMenuItem_Click" InputGestureText="Ctrl+Shift+N" />                    
-                    <MenuItem Header="_Rename/Remove" Click="EditCompaniesMenuItem_Click" InputGestureText="Ctrl+Shift+E" />
-                    <MenuItem Header="_Refresh" Click="RefreshCompaniesMenuItem_Click" />
+                <MenuItem Header="Companies">
+                    <MenuItem Header="Create" Click="CreateCompanyMenuItem_Click" InputGestureText="Ctrl+Shift+N" />                    
+                    <MenuItem Header="Rename/Remove" Click="EditCompaniesMenuItem_Click" InputGestureText="Ctrl+Shift+E" />
+                    <MenuItem Header="Refresh" Click="RefreshCompaniesMenuItem_Click" />
                 </MenuItem>
                 <MenuItem Header="Find">
                     <MenuItem Header="Go to quote" Click="FindQuote_Click" InputGestureText="Ctrl+Shift+Q" />
                     <MenuItem Header="Go to job" Click="FindJob_Click" InputGestureText="Ctrl+Shift+J" />
                     <MenuItem Header="Go to loads" Click="FindLoads_Click" InputGestureText="Ctrl+Shift+L" />
-                    <MenuItem Header="Find invoice by number" Click="FindInvoice_Click" InputGestureText="Ctrl+Shift+I" />
+                    <MenuItem Header="Go to invoice" Click="FindInvoice_Click" InputGestureText="Ctrl+Shift+I" />
+                    <Separator />
+                    <MenuItem Header="Search" Click="Search_Click" />
                 </MenuItem>
                 <MenuItem Header="Reports">
                     <MenuItem Header="Job list" Click="ViewJobList_Click" />

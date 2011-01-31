@@ -1141,6 +1141,14 @@ namespace SingerDispatch
             }
         }
 
+        public string NumberAndRev
+        {
+            get
+            {
+                return String.Format("{0}-{1}", Number, Revision);
+            }
+        }
+
         partial void OnCreated()
         {
             TaxRate = TaxRate ?? SingerConfigs.GST;

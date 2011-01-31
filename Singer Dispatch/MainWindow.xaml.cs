@@ -408,6 +408,11 @@ namespace SingerDispatch
             FindInvoice();
         }
 
+        private void Search_Click(object sender, RoutedEventArgs e)
+        {
+            DoSearch();
+        }
+
         private void ViewStorageList_Click(object sender, RoutedEventArgs e)
         {
             var storage = from si in Database.StorageItems orderby si.Number descending select si;
@@ -511,6 +516,16 @@ namespace SingerDispatch
             }            
         }
 
+        private void DoSearch()
+        {
+            var window = new GeneralSearchWindow { Owner = this };
+            var entity = window.FindSomething();
+
+            if (entity == null) return;
+
+
+        }
+
         private void CreateCompany()
         {
             var window = new CreateCompanyWindow(Database) { Owner = this };
@@ -575,8 +590,6 @@ namespace SingerDispatch
             }
         }
 
-        private void Search_Click(object sender, RoutedEventArgs e)
-        {
-        }
+        
     }
 }
