@@ -10,7 +10,7 @@
         </ResourceDictionary>
     </Window.Resources>
     <StackPanel Margin="5,5,5,5">
-        <Label Style="{StaticResource Heading}">Create New Company</Label>
+        <Label Style="{StaticResource Heading}">Get Support</Label>
         
         <Frame Padding="5">
             <Frame.Content>
