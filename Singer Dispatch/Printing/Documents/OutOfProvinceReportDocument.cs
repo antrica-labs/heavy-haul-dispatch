@@ -52,8 +52,8 @@ namespace SingerDispatch.Printing.Documents
                     <thead>
                         <tr>
                             <th class=""unit"">Unit</th>
-                            <th class=""job"">Job</th>
-                            <th class=""dispatch"">Load &amp; Dispatch</th>
+                            <th class=""job"">Job Num - Name</th>
+                            <th class=""dispatch"">Load - Dispatch</th>
                             <th class=""province"">Province/State</th>
                             <th class=""distance"">Distance</th>                                    
                         </tr>
@@ -86,7 +86,7 @@ namespace SingerDispatch.Printing.Documents
 
                     replacements[1] = (dispatch.Equipment != null) ? dispatch.Equipment.UnitNumber : "";
                     replacements[2] = (dispatch.Load != null && dispatch.Load.Job != null) ? dispatch.Load.Job.Number + " - " + dispatch.Load.Job.Name : "";
-                    replacements[3] = (dispatch.Load != null) ? string.Format("{0}-{1}", dispatch.Load.Number, dispatch.Number) : dispatch.Number.ToString();
+                    replacements[3] = (dispatch.Load != null) ? string.Format("{0} - {1}", dispatch.Load.Number, dispatch.Number) : dispatch.Number.ToString();
                     replacements[4] = (op.ProvinceOrState != null) ? op.ProvinceOrState.Name : "";
                     replacements[5] = MeasurementFormater.FromMetres(op.Distance * 1000, unit);
 
@@ -101,7 +101,7 @@ namespace SingerDispatch.Printing.Documents
 
                     replacements[1] = (dispatch.Equipment != null) ? dispatch.Equipment.UnitNumber : "";
                     replacements[2] = (dispatch.Load != null && dispatch.Load.Job != null) ? dispatch.Load.Job.Number + " - " + dispatch.Load.Job.Name : "";
-                    replacements[3] = (dispatch.Load != null) ? string.Format("{0}-{1}", dispatch.Load.Number, dispatch.Number) : dispatch.Number.ToString();
+                    replacements[3] = (dispatch.Load != null) ? string.Format("{0} - {1}", dispatch.Load.Number, dispatch.Number) : dispatch.Number.ToString();
                     replacements[4] = "Not recorded".ToUpper();
                     replacements[5] = "";
 

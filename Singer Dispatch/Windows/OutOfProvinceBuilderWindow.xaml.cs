@@ -55,7 +55,7 @@ namespace SingerDispatch.Windows
             var alberta = (from p in database.ProvincesAndStates where p.Abbreviation == "AB" select p).First();
             var tractorClass = (from ec in database.EquipmentClasses where ec.Name == "Tractor" select ec).First();
 
-            var loads = from c in database.LoadedCommodities where (c.LoadDate.Value.Date >= StartDate.Date || c.LoadDate.Value.Date <= EndDate.Date) && (c.LoadingProvince != alberta || c.UnloadingProvince != alberta) select c.Load;
+            var loads = from c in database.LoadedCommodities where (c.LoadDate.Value.Date >= StartDate.Date || c.LoadDate.Value.Date <= EndDate.Date) && ((c.LoadingProvince == null || c.LoadingProvince != alberta) || (c.UnloadingProvince == null || c.UnloadingProvince != alberta)) select c.Load;
             var dispatches = from d in database.Dispatches where loads.Contains(d.Load) && d.Equipment.EquipmentType.EquipmentClass == tractorClass select d;
             
             Dispatcher.Invoke(DispatcherPriority.Normal, new Action<string>(UpdateStatus), "Displaying report...");

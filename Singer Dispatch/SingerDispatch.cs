@@ -1275,11 +1275,13 @@ namespace SingerDispatch
 
             foreach (var commodity in load.LoadedCommodities)
             {
+                var loading = commodity.LoadLocation + " - " + commodity.LoadAddress;
+                var unloading = commodity.UnloadLocation + " - " + commodity.UnloadAddress;
+
                 line.ItemDate = line.ItemDate ?? commodity.LoadDate;
-                line.Departure = line.Departure ?? commodity.LoadLocation;
-                line.Destination = line.Destination ?? commodity.UnloadLocation;
-                var loading = commodity.LoadLocation ?? "";
-                var unloading = commodity.UnloadLocation ?? "";
+                line.Departure = line.Departure ?? loading;
+                line.Destination = line.Destination ?? unloading;
+                
 
                 if (fromDiffers == false && line.Departure != loading.Trim())
                     fromDiffers = true;
