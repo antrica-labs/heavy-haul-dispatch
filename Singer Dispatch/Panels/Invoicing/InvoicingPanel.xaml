@@ -35,9 +35,9 @@
         
         <DataGrid Grid.Column="0" Grid.Row="1" Style="{StaticResource ListDisplay}" SelectedItem="{Binding ElementName=ThePanel, Path=SelectedInvoice}" Name="dgInvoices" SelectionChanged="dgInvoices_SelectionChanged">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Number" Width="Auto" Binding="{Binding NumberAndRev}" />
-                <DataGridTextColumn Header="Job" Width="Auto" Binding="{Binding Job.Number}" />
-                <DataGridTextColumn Header="Date" Binding="{Binding InvoiceDate}" />
+                <DataGridTextColumn Header="Number" Binding="{Binding NumberAndRev}" Width="65" />
+                <DataGridTextColumn Header="Job" Binding="{Binding Job.Number}" Width="65"/>
+                <DataGridTextColumn Header="Date" Binding="{Binding InvoiceDate, StringFormat={}{0:MM/dd/yyyy}}" />
             </DataGrid.Columns>
         </DataGrid>
         

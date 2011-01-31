@@ -204,8 +204,7 @@
         
         <DataGrid Name="dgDispatches" Style="{StaticResource ListDisplay}" SelectionChanged="dgDispatches_SelectionChanged">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Number" Binding="{Binding Number, StringFormat={}{0:D2}}" Width="0.2*" />
-                <DataGridTextColumn Header="Load" Binding="{Binding Load.Name}" Width="0.2*" />
+                <DataGridTextColumn Header="Number" Binding="{Binding Number, StringFormat={}{0:D2}}" Width="0.2*" />                
                 <DataGridTextColumn Header="Driver" Binding="{Binding Employee.Name}" Width="0.3*" />
                 <DataGridTextColumn Header="Unit" Binding="{Binding Equipment.UnitNumber}" Width="0.2*" />                
                 <DataGridTextColumn Header="Description" Binding="{Binding Description}" />
