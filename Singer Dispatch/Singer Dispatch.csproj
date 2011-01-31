@@ -107,6 +107,10 @@
     <Reference Include="PresentationFramework">
       <RequiredTargetFramework>3.0</RequiredTargetFramework>
     </Reference>
+    <Reference Include="WPFAutoCompleteBox, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Libraries\WPFAutoCompleteBox.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -687,12 +691,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\DragInsert.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\WPF\WPFAutoCompleteBox\WPFAutoCompleteBox\WPFAutoCompleteBox.csproj">
-      <Project>{19FC56EC-9859-4473-9941-E04FC5CC1B56}</Project>
-      <Name>WPFAutoCompleteBox</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Images\DocumentHeader.png">
