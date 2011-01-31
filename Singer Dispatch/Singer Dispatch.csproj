@@ -109,7 +109,7 @@
     </Reference>
     <Reference Include="WPFAutoCompleteBox, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Libraries\WPFAutoCompleteBox.dll</HintPath>
+      <HintPath>Libraries\WPFAutoCompleteBox.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
