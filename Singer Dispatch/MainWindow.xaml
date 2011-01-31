@@ -30,20 +30,20 @@
                     <MenuItem Header="_Rename/Remove" Click="EditCompaniesMenuItem_Click" InputGestureText="Ctrl+Shift+E" />
                     <MenuItem Header="_Refresh" Click="RefreshCompaniesMenuItem_Click" />
                 </MenuItem>
-                <MenuItem Header="Quotes">
-                    <MenuItem Header="_Find quote" Click="FindQuote_Click" InputGestureText="Ctrl+Shift+Q" />
+                <MenuItem Header="Find">
+                    <MenuItem Header="Go to quote" Click="FindQuote_Click" InputGestureText="Ctrl+Shift+Q" />
+                    <MenuItem Header="Go to job" Click="FindJob_Click" InputGestureText="Ctrl+Shift+J" />
+                    <MenuItem Header="Go to loads" Click="FindLoads_Click" InputGestureText="Ctrl+Shift+L" />
+                    <MenuItem Header="Find invoice by number" Click="FindInvoice_Click" InputGestureText="Ctrl+Shift+I" />
                 </MenuItem>
-                <MenuItem Header="Jobs">
-                    <MenuItem Header="_Job list" Click="ViewJobList_Click" />
-                    <MenuItem Header="_Find job" Click="FindJob_Click" InputGestureText="Ctrl+Shift+J" />
-                </MenuItem>
-                <MenuItem Header="Storage">
-                    <MenuItem Header="Current storage list" Click="ViewStorageList_Click" />
-                    <MenuItem Header="Archived storage list" Click="ViewArchivedStorageList_Click" />
+                <MenuItem Header="Reports">
+                    <MenuItem Header="Job list" Click="ViewJobList_Click" />
+                    <MenuItem Header="Storage list" Click="ViewStorageList_Click" />
+                    <MenuItem Header="Storage list (archived)" Click="ViewArchivedStorageList_Click" />
+                    <MenuItem Header="Out of province report" Click="PrintOutOfProvinceReport_Click" />
                 </MenuItem>
                 <MenuItem Header="Tools">                    
-                    <MenuItem Header="Use imperial measurements" IsCheckable="true" IsChecked="{Binding ElementName=ThisWindow, Path=UseImperialMeasurements}" />
-                    <MenuItem Header="_Out of province report" Click="PrintOutOfProvinceReport_Click" />                    
+                    <MenuItem Header="Use imperial measurements" IsCheckable="true" IsChecked="{Binding ElementName=ThisWindow, Path=UseImperialMeasurements}" />                                        
                 </MenuItem>
             </Menu>
 

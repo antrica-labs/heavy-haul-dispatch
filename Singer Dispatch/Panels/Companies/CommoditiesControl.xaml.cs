@@ -29,12 +29,19 @@ namespace SingerDispatch.Panels.Companies
         {
             if (InDesignMode() || IsVisible == false) return;
 
-            dgCommodities.ItemsSource = (SelectedCompany == null) ? null : new ObservableCollection<Commodity>(from c in Database.Commodities where c.Company == SelectedCompany orderby c.Name, c.Unit select c);
+            UpdateCommodityList();
         }
         
         protected override void SelectedCompanyChanged(Company newValue, Company oldValue)
         {
-            base.SelectedCompanyChanged(newValue, oldValue);            
+            base.SelectedCompanyChanged(newValue, oldValue);
+
+            UpdateCommodityList();
+        }
+
+        private void UpdateCommodityList()
+        {
+            dgCommodities.ItemsSource = (SelectedCompany == null) ? null : new ObservableCollection<Commodity>(from c in Database.Commodities where c.Company == SelectedCompany orderby c.Name, c.Unit select c);
         }
 
         private void NewCommodity_Click(object sender, RoutedEventArgs e)

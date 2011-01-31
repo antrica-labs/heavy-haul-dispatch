@@ -327,6 +327,9 @@
     <Compile Include="Windows\InvoiceBuilderWindow.xaml.cs">
       <DependentUpon>InvoiceBuilderWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Windows\InvoiceLocatorWindow.xaml.cs">
+      <DependentUpon>InvoiceLocatorWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\JobAndLoadSelectorWindow.xaml.cs">
       <DependentUpon>JobAndLoadSelectorWindow.xaml</DependentUpon>
     </Compile>
@@ -607,6 +610,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Windows\InvoiceBuilderWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\InvoiceLocatorWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

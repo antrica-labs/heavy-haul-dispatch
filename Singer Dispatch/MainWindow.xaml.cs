@@ -177,6 +177,14 @@ namespace SingerDispatch
             var cb5 = new CommandBinding(CustomCommands.EditCompaniesCommand);
             cb5.Executed += EditCompaniesCommandHandler;
             CommandBindings.Add(cb5);
+
+            var cb6 = new CommandBinding(CustomCommands.InvoiceLookupCommand);
+            cb6.Executed += InvoiceLookupCommandHandler;
+            CommandBindings.Add(cb6);
+
+            var cb7 = new CommandBinding(CustomCommands.LoadsLookupCommand);
+            cb7.Executed += LoadsLookupCommandHandler;
+            CommandBindings.Add(cb7);
         }
 
         private void CreateCompanyMenuItem_Click(object sender, RoutedEventArgs e)
@@ -346,6 +354,17 @@ namespace SingerDispatch
             ((LoadsPanel)panelMainContent.Child).SelectedJob = job;
         }
 
+        public void ViewInvoice(Invoice invoice)
+        {
+            if (invoice == null || invoice.Company == null) return;
+
+            expanderInvoicing.IsExpanded = true;
+            acCompany.SelectedItem = invoice.Company;
+
+            ((InvoicingPanel)panelMainContent.Child).UpdateLayout();
+            ((InvoicingPanel)panelMainContent.Child).SelectedInvoice = invoice;
+        }
+
         public void ViewQuote(Quote quote)
         {
             if (quote == null || quote.Company == null) return;
@@ -379,6 +398,16 @@ namespace SingerDispatch
             FindJob();
         }
 
+        private void FindLoads_Click(object sender, RoutedEventArgs e)
+        {
+            FindLoads();
+        }
+
+        private void FindInvoice_Click(object sender, RoutedEventArgs e)
+        {
+            FindInvoice();
+        }
+
         private void ViewStorageList_Click(object sender, RoutedEventArgs e)
         {
             var storage = from si in Database.StorageItems orderby si.Number descending select si;
@@ -401,7 +430,7 @@ namespace SingerDispatch
 
         private void ViewJobList_Click(object sender, RoutedEventArgs e)
         {
-            var jobs = from j in Database.Jobs orderby j.Number select j;
+            var jobs = from j in Database.Jobs orderby j.Number descending select j;
             var title = "Singer Job List";
 
             var viewer = new Windows.DocumentViewerWindow(new JobListDocument(), jobs, title) { IsMetric = !UseImperialMeasurements };
@@ -417,7 +446,17 @@ namespace SingerDispatch
         {
             FindJob();
         }
-        
+
+        private void LoadsLookupCommandHandler(object sender, ExecutedRoutedEventArgs e)
+        {
+            FindLoads();
+        }
+
+        private void InvoiceLookupCommandHandler(object sender, ExecutedRoutedEventArgs e)
+        {
+            FindInvoice();
+        }
+
         private void CreateCompanyCommandHandler(object sender, ExecutedRoutedEventArgs e)
         {
             CreateCompany();
@@ -449,7 +488,29 @@ namespace SingerDispatch
                 ViewJob(job);
             }
         }
-        
+
+        private void FindLoads()
+        {
+            var window = new JobLocatorWindow { Owner = this };
+            var job = window.GetJob();
+
+            if (job != null)
+            {
+                ViewLoads(job);
+            }
+        }
+
+        private void FindInvoice()
+        {
+            var window = new InvoiceLocatorWindow { Owner = this };
+            var invoice = window.GetInvoice();
+
+            if (invoice != null)
+            {
+                ViewInvoice(invoice);
+            }            
+        }
+
         private void CreateCompany()
         {
             var window = new CreateCompanyWindow(Database) { Owner = this };
@@ -512,6 +573,10 @@ namespace SingerDispatch
                 var generator = new OutOfProvinceBuilderWindow() { Owner = this };
                 generator.BuildReport(range.StartDate, range.EndDate);
             }
+        }
+
+        private void Search_Click(object sender, RoutedEventArgs e)
+        {
         }
     }
 }
