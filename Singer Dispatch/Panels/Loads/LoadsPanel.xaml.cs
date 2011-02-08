@@ -92,7 +92,14 @@ namespace SingerDispatch.Panels.Loads
         private void NewLoad_Click(object sender, RoutedEventArgs e)
         {
             var list = (ObservableCollection<Load>)dgLoads.ItemsSource;
-            var load = new Load { Job = SelectedJob, Status = SelectedJob.Status };
+            var load = new Load { Job = SelectedJob };
+
+            try
+            {
+                load.Status = (from s in Database.Statuses where s.Name == "In Process" select s).First();
+            }
+            catch
+            { }            
 
             foreach (var item in SelectedJob.ReferenceNumbers)
             {

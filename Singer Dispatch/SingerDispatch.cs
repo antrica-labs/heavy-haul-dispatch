@@ -1362,6 +1362,32 @@ namespace SingerDispatch
 
                 service.IsBilled = true;
 
+                var fromDiffers = false;
+                var toDiffers = false;
+
+                foreach (var commodity in service.Load.LoadedCommodities)
+                {
+                    var loading = commodity.LoadLocation + " - " + commodity.LoadAddress;
+                    var unloading = commodity.UnloadLocation + " - " + commodity.UnloadAddress;
+
+                    line.ItemDate = line.ItemDate ?? commodity.LoadDate;
+                    line.Departure = line.Departure ?? loading;
+                    line.Destination = line.Destination ?? unloading;
+
+
+                    if (fromDiffers == false && line.Departure != loading.Trim())
+                        fromDiffers = true;
+
+                    if (toDiffers == false && line.Destination != unloading.Trim())
+                        toDiffers = true;
+                }
+
+                if (fromDiffers)
+                    line.Departure = "Various";
+
+                if (toDiffers)
+                    line.Destination = "Various";
+
                 InvoiceLineItems.Add(line);
             }
         }
