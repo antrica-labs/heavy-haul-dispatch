@@ -16,7 +16,8 @@
         <Grid DockPanel.Dock="Top">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
-                <ColumnDefinition Width="0.70*" />
+                <ColumnDefinition />
+                <ColumnDefinition />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
             
@@ -24,7 +25,11 @@
                 <TextBox Name="txtSearchTerm" />
             </GroupBox>
             
-            <GroupBox Header="Dates" Grid.Column="1">
+            <GroupBox Header="Company" Grid.Column="1">
+                <TextBox Name="txtCompany" />
+            </GroupBox>
+            
+            <GroupBox Header="Dates" Grid.Column="2">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
@@ -41,11 +46,11 @@
                 </Grid>
             </GroupBox>
             
-            <Button Grid.Column="2" Padding="5,0" Margin="3" Click="RunSearch_Click">Search</Button>
+            <Button Grid.Column="3" Padding="10,0" Margin="3,9,0,0" Click="RunSearch_Click">Search</Button>
         </Grid>
         
-        <TabControl Margin="0,5,0,0">
-            <TabItem Header="Jobs">
+        <TabControl Margin="0,5,0,0" Name="Tabs">
+            <TabItem Header="Jobs" Name="tbJobs">
                 <DockPanel>
                     <GroupBox DockPanel.Dock="Bottom" Height="175" Header="Dispatches">
                         <DataGrid Name="dgDispatches" Style="{StaticResource ListDisplay}">
@@ -67,7 +72,7 @@
                         </Grid.ColumnDefinitions>
 
                         <GroupBox Grid.Column="0" Header="Jobs">
-                            <DataGrid Name="dgJobs" Style="{StaticResource ListDisplay}">
+                            <DataGrid Name="dgJobs" Style="{StaticResource ListDisplay}" MouseDoubleClick="SearchItem_DoubleClick">
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Header="Number" Binding="{Binding Number}" Width="Auto" />
                                     <DataGridTextColumn Header="Name" Binding="{Binding Name}" />
@@ -97,7 +102,7 @@
                     </Grid>
                 </DockPanel>
             </TabItem>
-            <TabItem Header="Quotes">
+            <TabItem Header="Quotes" Name="tbQuotes">
                 <DataGrid Style="{StaticResource ListDisplay}" Name="dgQuotes">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Number" Width="Auto" Binding="{Binding NumberAndRev}"/>
@@ -118,7 +123,7 @@
                     </DataGrid.Columns>
                 </DataGrid>
             </TabItem>
-            <TabItem Header="Invoices">
+            <TabItem Header="Invoices" Name="tbInvoices">
                 <DataGrid Name="dgInvoices" Style="{StaticResource ListDisplay}">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Number" Binding="{Binding NumberAndRev}" Width="Auto" />
@@ -127,7 +132,7 @@
                     </DataGrid.Columns>
                 </DataGrid>
             </TabItem>
-            <TabItem Header="Third Party Services">
+            <TabItem Header="Third Party Services" Name="tbThirdParty">
                 <DataGrid Name="dgServices" Style="{StaticResource ListDisplay}">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Job" Binding="{Binding Load.Job.Number}" Width="50"/>
@@ -139,7 +144,7 @@
                     </DataGrid.Columns>
                 </DataGrid>
             </TabItem>
-            <TabItem Header="Permits">
+            <TabItem Header="Permits" Name="tbPermits">
                 <DataGrid Name="dgPermits" Style="{StaticResource ListDisplay}">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Job" Binding="{Binding Load.Job.Number}" Width="50"/>
