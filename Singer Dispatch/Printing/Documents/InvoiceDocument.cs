@@ -158,12 +158,17 @@ namespace SingerDispatch.Printing.Documents
             ";
 
 
-            var company = (invoice.Job != null && invoice.Job.CareOfCompany != null) ? invoice.Job.CareOfCompany : invoice.Company;
+            string company;
+
+            if (invoice.Job != null && invoice.Job.CareOfCompany != null)
+                company = string.Format("{0} c/o {1}", invoice.Company.Name, invoice.Job.CareOfCompany.Name);
+            else
+                company = invoice.Company.Name;
             
             builder.Append(header);
-            builder.Append(line.Replace("%LINE%", company.Name));
+            builder.Append(line.Replace("%LINE%", company));
 
-            var address = (invoice.BillingAddress != null) ? invoice.BillingAddress : company.Addresses.First();
+            var address = (invoice.BillingAddress != null) ? invoice.BillingAddress : invoice.Company.Addresses.First();
             
             if (address != null)
             {   
