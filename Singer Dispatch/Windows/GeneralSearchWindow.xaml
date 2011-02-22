@@ -75,6 +75,8 @@
                             <DataGrid Name="dgJobs" Style="{StaticResource ListDisplay}" MouseDoubleClick="SearchItem_DoubleClick">
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Header="Number" Binding="{Binding Number}" Width="Auto" />
+                                    <DataGridTextColumn Header="Company" Binding="{Binding Company.Name}" />
+                                    <DataGridTextColumn Header="Care of" Binding="{Binding CareOfCompany.Name}" />
                                     <DataGridTextColumn Header="Name" Binding="{Binding Name}" />
                                 </DataGrid.Columns>
                             </DataGrid>
