@@ -607,7 +607,7 @@ namespace SingerDispatch.Printing.Documents
                 if (string.IsNullOrEmpty(commodity.DepartureAddress) || string.IsNullOrEmpty(commodity.DepartureSiteName))
                     depart = string.Format("{0} {1}", commodity.DepartureSiteName, commodity.DepartureAddress);
                 else
-                    depart = string.Format("{0} - {1}", commodity.DepartureAddress, commodity.DepartureSiteName);
+                    depart = string.Format("{0} - {1}", commodity.DepartureSiteName, commodity.DepartureAddress);
                 
                 if (string.IsNullOrEmpty(commodity.Unit))
                     description = commodity.Name;
