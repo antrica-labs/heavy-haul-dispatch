@@ -356,13 +356,10 @@ namespace SingerDispatch
 
         public void ViewLoad(Load load)
         {
-            if (load == null || load.Job == null || load.Job.Company == null) return;
+            if (load == null || load.Job == null) return;
 
-            expanderLoads.IsExpanded = true;
-            acCompany.SelectedItem = load.Job.Company;
+            ViewLoads(load.Job);
 
-            ((LoadsPanel)panelMainContent.Child).UpdateLayout();
-            ((LoadsPanel)panelMainContent.Child).SelectedJob = load.Job;
             ((LoadsPanel)panelMainContent.Child).SelectedLoad = load;
         }
 
@@ -370,14 +367,10 @@ namespace SingerDispatch
         {
             if (permit == null || permit.Load == null || permit.Load.Job == null) return;
 
-            expanderLoads.IsExpanded = true;
-            acCompany.SelectedItem = permit.Load.Job.Company;
+            ViewLoad(permit.Load);
 
             var panel = (LoadsPanel)panelMainContent.Child;
 
-            panel.UpdateLayout();
-            panel.SelectedJob = permit.Load.Job;
-            panel.SelectedLoad = permit.Load;
             panel.Tabs.SelectedIndex = 4;
         }
 
@@ -385,14 +378,10 @@ namespace SingerDispatch
         {
             if (service == null || service.Load == null || service.Load.Job == null) return;
 
-            expanderLoads.IsExpanded = true;
-            acCompany.SelectedItem = service.Load.Job.Company;
+            ViewLoad(service.Load);
 
             var panel = (LoadsPanel)panelMainContent.Child;
 
-            panel.UpdateLayout();
-            panel.SelectedJob = service.Load.Job;
-            panel.SelectedLoad = service.Load;
             panel.Tabs.SelectedIndex = 3;
         }
 
@@ -400,14 +389,10 @@ namespace SingerDispatch
         {
             if (dispatch == null || dispatch.Load == null || dispatch.Load.Job == null) return;
 
-            expanderLoads.IsExpanded = true;
-            acCompany.SelectedItem = dispatch.Load.Job.Company;
+            ViewLoad(dispatch.Load);
 
             var panel = (LoadsPanel)panelMainContent.Child;
 
-            panel.UpdateLayout();
-            panel.SelectedJob = dispatch.Load.Job;
-            panel.SelectedLoad = dispatch.Load;
             panel.Tabs.SelectedIndex = 2;
         }
 

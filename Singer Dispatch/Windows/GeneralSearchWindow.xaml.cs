@@ -42,7 +42,60 @@ namespace SingerDispatch.Windows
             var end = endDate.SelectedDate;
 
             FindJobs(terms, company, start, end);
-        }        
+        }
+
+        private void RunJobsSearch_Click(object sender, RoutedEventArgs e)
+        {
+            var terms = txtSearchTerm.Text;
+            var company = txtCompany.Text;
+            var start = startDate.SelectedDate;
+            var end = endDate.SelectedDate;
+
+            FindJobs(terms, company, start, end);
+            FindLoads(terms, company, start, end);
+            FindDispatches(terms, company, start, end);
+        }
+
+        private void RunQuotesSearch_Click(object sender, RoutedEventArgs e)
+        {
+            var terms = txtSearchTerm.Text;
+            var company = txtCompany.Text;
+            var start = startDate.SelectedDate;
+            var end = endDate.SelectedDate;
+
+            FindQuotes(terms, company, start, end);
+        }
+
+        private void RunInvoicesSearch_Click(object sender, RoutedEventArgs e)
+        {
+            var terms = txtSearchTerm.Text;
+            var company = txtCompany.Text;
+            var start = startDate.SelectedDate;
+            var end = endDate.SelectedDate;
+
+            FindInvoices(terms, company, start, end);
+        }
+
+        private void RunServicesSearch_Click(object sender, RoutedEventArgs e)
+        {
+            var terms = txtSearchTerm.Text;
+            var company = txtCompany.Text;
+            var start = startDate.SelectedDate;
+            var end = endDate.SelectedDate;
+
+            FindThirdPartyServices(terms, company, start, end);
+        }
+
+        private void RunPermitsSearch_Click(object sender, RoutedEventArgs e)
+        {
+            var terms = txtSearchTerm.Text;
+            var company = txtCompany.Text;
+            var start = startDate.SelectedDate;
+            var end = endDate.SelectedDate;
+
+            FindPermits(terms, company, start, end);
+        }
+
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
@@ -80,7 +133,7 @@ namespace SingerDispatch.Windows
             dgJobs.ItemsSource = jobs;
         }
 
-        private void FindLoads(string term, string company, DateTime start, DateTime end)
+        private void FindLoads(string term, string company, DateTime? start, DateTime? end)
         {
             var database = new SingerDispatchDataContext();
             var loads = from l in database.Loads select l;
@@ -98,7 +151,7 @@ namespace SingerDispatch.Windows
             dgLoads.ItemsSource = loads;
         }
 
-        private void FindDispatches(string term, string company, DateTime start, DateTime end)
+        private void FindDispatches(string term, string company, DateTime? start, DateTime? end)
         {
             var database = new SingerDispatchDataContext();
             var dispatches = from d in database.Dispatches select d;
@@ -126,7 +179,7 @@ namespace SingerDispatch.Windows
             dgDispatches.ItemsSource = dispatches;
         }
 
-        private void FindQuotes(string term, string company, DateTime start, DateTime end)
+        private void FindQuotes(string term, string company, DateTime? start, DateTime? end)
         {
             var database = new SingerDispatchDataContext();
             var quotes = from q in database.Quotes select q;
@@ -152,7 +205,7 @@ namespace SingerDispatch.Windows
             }
         }
 
-        private void FindInvoices(string term, string company, DateTime start, DateTime end)
+        private void FindInvoices(string term, string company, DateTime? start, DateTime? end)
         {
             var database = new SingerDispatchDataContext();
             var invoices = from i in database.Invoices select i;
@@ -180,7 +233,7 @@ namespace SingerDispatch.Windows
             dgInvoices.ItemsSource = invoices;
         }
 
-        private void FindThirdPartyServices(string term, string company, DateTime start, DateTime end)
+        private void FindThirdPartyServices(string term, string company, DateTime? start, DateTime? end)
         {
             var database = new SingerDispatchDataContext();
             var services = from s in database.ThirdPartyServices select s;
@@ -208,7 +261,7 @@ namespace SingerDispatch.Windows
             dgServices.ItemsSource = services;
         }
 
-        private void FindPermits(string term, string company, DateTime start, DateTime end)
+        private void FindPermits(string term, string company, DateTime? start, DateTime? end)
         {
             var database = new SingerDispatchDataContext();
             var permits = from p in database.Permits select p;

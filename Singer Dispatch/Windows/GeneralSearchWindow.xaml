@@ -18,7 +18,6 @@
                 <ColumnDefinition />
                 <ColumnDefinition />
                 <ColumnDefinition />
-                <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
             
             <GroupBox Header="Search Term" Grid.Column="0">
@@ -45,17 +44,17 @@
                     <DatePicker Grid.Column="3" Name="endDate" />
                 </Grid>
             </GroupBox>
-            
-            <Button Grid.Column="3" Padding="10,0" Margin="3,9,0,0" Click="RunSearch_Click">Search</Button>
         </Grid>
         
         <TabControl Margin="0,5,0,0" Name="Tabs">
             <TabItem Header="Jobs" Name="tbJobs">
                 <DockPanel>
+                    <Button DockPanel.Dock="Top" Click="RunJobsSearch_Click">Run search</Button>
+                    
                     <GroupBox DockPanel.Dock="Bottom" Height="175" Header="Dispatches">
-                        <DataGrid Name="dgDispatches" Style="{StaticResource ListDisplay}">
+                        <DataGrid Name="dgDispatches" Style="{StaticResource ListDisplay}" MouseDoubleClick="SearchItem_DoubleClick">
                             <DataGrid.Columns>
-                                <DataGridTextColumn Header="Job" Binding="{Binding Job.Number}" Width="50" />
+                                <DataGridTextColumn Header="Job" Binding="{Binding Load.Job.Number}" Width="50" />
                                 <DataGridTextColumn Header="Load" Binding="{Binding Load.Name}" Width="50" />
                                 <DataGridTextColumn Header="Number" Binding="{Binding Number, StringFormat={}{0:D2}}" Width="60" />
                                 <DataGridTextColumn Header="Driver" Binding="{Binding Employee.Name}" Width="0.3*" />
@@ -83,7 +82,7 @@
                         </GroupBox>
 
                         <GroupBox Grid.Column="1" Header="Loads">
-                            <DataGrid Name="dgLoads" Style="{StaticResource ListDisplay}">
+                            <DataGrid Name="dgLoads" Style="{StaticResource ListDisplay}" MouseDoubleClick="SearchItem_DoubleClick">
                                 <DataGrid.Columns>      
                                     <DataGridTextColumn Header="Job" Binding="{Binding Job.Number}" Width="50" />
                                     <DataGridTextColumn Header="Number" Binding="{Binding Number}" Width="Auto" />
@@ -105,58 +104,74 @@
                 </DockPanel>
             </TabItem>
             <TabItem Header="Quotes" Name="tbQuotes">
-                <DataGrid Style="{StaticResource ListDisplay}" Name="dgQuotes">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="Number" Width="Auto" Binding="{Binding NumberAndRev}"/>
-                        <DataGridTextColumn Header="Creation date" Binding="{Binding CreationDate, StringFormat={}{0:MM/dd/yyyy}}" Width="90" />
-                        <DataGridTextColumn Header="Start date" Binding="{Binding StartDate, StringFormat={}{0:MM/dd/yyyy}}" Width="90" />
-                        <DataGridTextColumn Header="Price" Binding="{Binding Price, StringFormat=C}" Width="75" />
-                        <DataGridTemplateColumn Header="Commodities">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="{Binding Converter={StaticResource QuoteCommoditiesStringConverter}, Path=QuoteCommodities}">
+                <DockPanel>
+                    <Button DockPanel.Dock="Top" Click="RunQuotesSearch_Click" Margin="0,0,0,4">Run search</Button>
+
+                    <DataGrid Style="{StaticResource ListDisplay}" Name="dgQuotes" MouseDoubleClick="SearchItem_DoubleClick">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Number" Width="Auto" Binding="{Binding NumberAndRev}"/>
+                            <DataGridTextColumn Header="Creation date" Binding="{Binding CreationDate, StringFormat={}{0:MM/dd/yyyy}}" Width="90" />
+                            <DataGridTextColumn Header="Start date" Binding="{Binding StartDate, StringFormat={}{0:MM/dd/yyyy}}" Width="90" />
+                            <DataGridTextColumn Header="Price" Binding="{Binding Price, StringFormat=C}" Width="75" />
+                            <DataGridTemplateColumn Header="Commodities">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Converter={StaticResource QuoteCommoditiesStringConverter}, Path=QuoteCommodities}">
                                         <TextBlock.ToolTip>
                                             <TextBlock Text="{Binding Converter={StaticResource QuoteCommoditiesStringConverter}, Path=QuoteCommodities}" />
                                         </TextBlock.ToolTip>
                                     </TextBlock>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-                    </DataGrid.Columns>
-                </DataGrid>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </DockPanel>                
             </TabItem>
             <TabItem Header="Invoices" Name="tbInvoices">
-                <DataGrid Name="dgInvoices" Style="{StaticResource ListDisplay}">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="Number" Binding="{Binding NumberAndRev}" Width="Auto" />
-                        <DataGridTextColumn Header="Job" Binding="{Binding Job.Number}" Width="60" />
-                        <DataGridTextColumn Header="Date" Binding="{Binding InvoiceDate, StringFormat={}{0:MM/dd/yyyy}}" />
-                    </DataGrid.Columns>
-                </DataGrid>
+                <DockPanel>
+                    <Button DockPanel.Dock="Top" Click="RunInvoicesSearch_Click" Margin="0,0,0,4">Run search</Button>
+
+                    <DataGrid Name="dgInvoices" Style="{StaticResource ListDisplay}" MouseDoubleClick="SearchItem_DoubleClick">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Number" Binding="{Binding NumberAndRev}" Width="Auto" />
+                            <DataGridTextColumn Header="Job" Binding="{Binding Job.Number}" Width="60" />
+                            <DataGridTextColumn Header="Date" Binding="{Binding InvoiceDate, StringFormat={}{0:MM/dd/yyyy}}" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </DockPanel>
             </TabItem>
             <TabItem Header="Third Party Services" Name="tbThirdParty">
-                <DataGrid Name="dgServices" Style="{StaticResource ListDisplay}">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="Job" Binding="{Binding Load.Job.Number}" Width="50"/>
-                        <DataGridTextColumn Header="Load" Binding="{Binding Load.Name}" Width="50" />
-                        <DataGridTextColumn Header="Company" Binding="{Binding Company.Name}" />
-                        <DataGridTextColumn Header="Service Type" Binding="{Binding ServiceType.Name}" />
-                        <DataGridTextColumn Header="Reference" Binding="{Binding Reference}" />
-                        <DataGridTextColumn Header="Date" Binding="{Binding ServiceDate, StringFormat={}{0:MM/dd/yyyy}}" Width="100" />
-                    </DataGrid.Columns>
-                </DataGrid>
+                <DockPanel>
+                    <Button DockPanel.Dock="Top" Click="RunServicesSearch_Click" Margin="0,0,0,4">Run search</Button>
+
+                    <DataGrid Name="dgServices" Style="{StaticResource ListDisplay}" MouseDoubleClick="SearchItem_DoubleClick">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Job" Binding="{Binding Load.Job.Number}" Width="50"/>
+                            <DataGridTextColumn Header="Load" Binding="{Binding Load.Name}" Width="50" />
+                            <DataGridTextColumn Header="Company" Binding="{Binding Company.Name}" />
+                            <DataGridTextColumn Header="Service Type" Binding="{Binding ServiceType.Name}" />
+                            <DataGridTextColumn Header="Reference" Binding="{Binding Reference}" />
+                            <DataGridTextColumn Header="Date" Binding="{Binding ServiceDate, StringFormat={}{0:MM/dd/yyyy}}" Width="100" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </DockPanel>
             </TabItem>
             <TabItem Header="Permits" Name="tbPermits">
-                <DataGrid Name="dgPermits" Style="{StaticResource ListDisplay}">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="Job" Binding="{Binding Load.Job.Number}" Width="50"/>
-                        <DataGridTextColumn Header="Load" Binding="{Binding Load.Name}" Width="50" />
-                        <DataGridTextColumn Header="Issuer" Binding="{Binding IssuingCompany.Name}" />
-                        <DataGridTextColumn Header="Permit Type" Binding="{Binding PermitType.Name}" />
-                        <DataGridTextColumn Header="Permit #" Binding="{Binding Reference}" />
-                        <DataGridTextColumn Header="Cost" Binding="{Binding Cost, StringFormat=C}" Width="100" />
-                    </DataGrid.Columns>
-                </DataGrid>
+                <DockPanel>
+                    <Button DockPanel.Dock="Top" Click="RunPermitsSearch_Click" Margin="0,0,0,4">Run search</Button>
+
+                    <DataGrid Name="dgPermits" Style="{StaticResource ListDisplay}" MouseDoubleClick="SearchItem_DoubleClick">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Job" Binding="{Binding Load.Job.Number}" Width="50"/>
+                            <DataGridTextColumn Header="Load" Binding="{Binding Load.Name}" Width="50" />
+                            <DataGridTextColumn Header="Issuer" Binding="{Binding IssuingCompany.Name}" />
+                            <DataGridTextColumn Header="Permit Type" Binding="{Binding PermitType.Name}" />
+                            <DataGridTextColumn Header="Permit #" Binding="{Binding Reference}" />
+                            <DataGridTextColumn Header="Cost" Binding="{Binding Cost, StringFormat=C}" Width="100" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </DockPanel>                
             </TabItem>
         </TabControl>
     </DockPanel>
