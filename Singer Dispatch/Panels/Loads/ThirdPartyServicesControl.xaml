@@ -23,11 +23,11 @@
                 </Grid.ColumnDefinitions>
 
                 <Button Style="{StaticResource Horizontal}" Grid.Column="0" Click="NewService_Click">New service</Button>
-                <Button Style="{StaticResource Horizontal}" Grid.Column="1" Click="DuplicateService_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=ThePanel, Path=SelectedItem}">Duplicate service</Button>
-                <Button Style="{StaticResource HorizontalEnd}" Grid.Column="2" Click="RemoveService_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=ThePanel, Path=SelectedItem}">Remove service</Button>
+                <Button Style="{StaticResource Horizontal}" Grid.Column="1" Click="DuplicateService_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=ThePanel, Path=SelectedThirdPartyService}">Duplicate service</Button>
+                <Button Style="{StaticResource HorizontalEnd}" Grid.Column="2" Click="RemoveService_Click" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=ThePanel, Path=SelectedThirdPartyService}">Remove service</Button>
             </Grid>
 
-            <GroupBox Header="Service Details" DataContext="{Binding ElementName=ThePanel, Path=SelectedItem}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=ThePanel, Path=SelectedItem}">
+            <GroupBox Header="Service Details" DataContext="{Binding ElementName=ThePanel, Path=SelectedThirdPartyService}" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=ThePanel, Path=SelectedThirdPartyService}">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
@@ -55,18 +55,18 @@
                     </Grid>
 
                     <Label Grid.Row="1" Grid.Column="0">Service type:</Label>
-                    <Grid Grid.Row="1" Grid.Column="1" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=ThePanel, Path=SelectedItem.Company}">
+                    <Grid Grid.Row="1" Grid.Column="1" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=ThePanel, Path=SelectedThirdPartyService.Company}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition />
                             <ColumnDefinition Width="Auto" />                                 
                         </Grid.ColumnDefinitions>
 
-                        <ComboBox Name="cmbServiceTypes" Grid.Column="0" SelectedItem="{Binding ServiceType}" ItemTemplate="{StaticResource SimpleNameTemplate}" TextSearch.TextPath="Name" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=ThePanel, Path=SelectedItem.Company}"  />
+                        <ComboBox Name="cmbServiceTypes" Grid.Column="0" SelectedItem="{Binding ServiceType}" ItemTemplate="{StaticResource SimpleNameTemplate}" TextSearch.TextPath="Name" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=ThePanel, Path=SelectedThirdPartyService.Company}"  />
                         <Button Grid.Column="1" Style="{StaticResource Standard}" Click="UpdateServices_Click" DataContext="{Binding ElementName=cmbServiceTypes}">Add</Button>
                     </Grid>
 
                     <Label Grid.Row="2" Grid.Column="0">Contact:</Label>
-                    <Grid Grid.Row="2" Grid.Column="1" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=ThePanel, Path=SelectedItem.Company}">
+                    <Grid Grid.Row="2" Grid.Column="1" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=ThePanel, Path=SelectedThirdPartyService.Company}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition />
                             <ColumnDefinition Width="Auto" />
@@ -83,7 +83,7 @@
                     <TextBox Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Location}" />
 
                     <Label Grid.Row="5" Grid.Column="0">Notes:</Label>
-                    <TextBox Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Notes}" Style="{StaticResource MultiLine}" Height="40" />
+                    <TextBox Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Notes}" Style="{StaticResource MultiLine}" Height="80" />
 
                     <GroupBox Grid.Column="2" Grid.Row="0" Grid.RowSpan="4" Header="Other details" Margin="3,0,0,0">
                         <StackPanel>

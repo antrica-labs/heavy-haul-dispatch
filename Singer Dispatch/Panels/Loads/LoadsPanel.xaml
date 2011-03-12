@@ -85,10 +85,10 @@
                 <Loads:DispatchesControl CompanyList="{Binding CompanyList}" SelectedCompany="{Binding SelectedCompany}"  SelectedLoad="{Binding SelectedLoad}" UseImperialMeasurements="{Binding UseImperialMeasurements}" />
             </TabItem>            
             <TabItem Header="Third party services" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, Path=SelectedLoad}">
-                <Loads:ThirdPartyServicesControl CompanyList="{Binding CompanyList}" SelectedCompany="{Binding SelectedCompany}"  SelectedLoad="{Binding SelectedLoad}" UseImperialMeasurements="{Binding UseImperialMeasurements}" />
+                <Loads:ThirdPartyServicesControl CompanyList="{Binding CompanyList}" SelectedCompany="{Binding SelectedCompany}"  SelectedLoad="{Binding SelectedLoad}" SelectedThirdPartyService="{Binding SelectedThirdPartyService}"  UseImperialMeasurements="{Binding UseImperialMeasurements}" />
             </TabItem>
             <TabItem Header="Permits" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, Path=SelectedLoad}">
-                <Loads:PermitsControl CompanyList="{Binding CompanyList}" SelectedCompany="{Binding SelectedCompany}"  SelectedLoad="{Binding SelectedLoad}" UseImperialMeasurements="{Binding UseImperialMeasurements}" />
+                <Loads:PermitsControl CompanyList="{Binding CompanyList}" SelectedCompany="{Binding SelectedCompany}" SelectedLoad="{Binding SelectedLoad}" SelectedPermit="{Binding SelectedPermit}"  UseImperialMeasurements="{Binding UseImperialMeasurements}" />
             </TabItem>
         </TabControl>
     </Grid>

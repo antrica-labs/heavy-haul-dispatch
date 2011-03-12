@@ -154,6 +154,7 @@
                             <DataGridTextColumn Header="Company" Binding="{Binding Company.Name}" />
                             <DataGridTextColumn Header="Service Type" Binding="{Binding ServiceType.Name}" />
                             <DataGridTextColumn Header="Reference" Binding="{Binding Reference}" />
+                            <DataGridTextColumn Header="Location" Binding="{Binding Location}" />
                             <DataGridTextColumn Header="Date" Binding="{Binding ServiceDate, StringFormat={}{0:MM/dd/yyyy}}" Width="100" />
                         </DataGrid.Columns>
                     </DataGrid>

@@ -117,8 +117,8 @@ namespace SingerDispatch.Windows
 
         private void FindJobs(string term, string company, DateTime? start, DateTime? end)
         {
-            var database = new SingerDispatchDataContext();
-            var jobs = from j in database.Jobs select j;
+            var database = SingerConfigs.CommonDataContext;
+            var jobs = from j in database.Jobs where j.Company != null select j;
 
             if (!string.IsNullOrWhiteSpace(term))
             {
@@ -135,8 +135,8 @@ namespace SingerDispatch.Windows
 
         private void FindLoads(string term, string company, DateTime? start, DateTime? end)
         {
-            var database = new SingerDispatchDataContext();
-            var loads = from l in database.Loads select l;
+            var database = SingerConfigs.CommonDataContext;
+            var loads = from l in database.Loads where l.Job != null select l;
 
             if (!string.IsNullOrWhiteSpace(term))
             {
@@ -153,8 +153,8 @@ namespace SingerDispatch.Windows
 
         private void FindDispatches(string term, string company, DateTime? start, DateTime? end)
         {
-            var database = new SingerDispatchDataContext();
-            var dispatches = from d in database.Dispatches select d;
+            var database = SingerConfigs.CommonDataContext;
+            var dispatches = from d in database.Dispatches where d.Load != null && d.Load.Job != null select d;
 
             if (!string.IsNullOrWhiteSpace(term))
             {
@@ -181,8 +181,8 @@ namespace SingerDispatch.Windows
 
         private void FindQuotes(string term, string company, DateTime? start, DateTime? end)
         {
-            var database = new SingerDispatchDataContext();
-            var quotes = from q in database.Quotes select q;
+            var database = SingerConfigs.CommonDataContext;
+            var quotes = from q in database.Quotes where q.Company != null select q;
 
             if (!string.IsNullOrWhiteSpace(term))
             {
@@ -209,8 +209,8 @@ namespace SingerDispatch.Windows
 
         private void FindInvoices(string term, string company, DateTime? start, DateTime? end)
         {
-            var database = new SingerDispatchDataContext();
-            var invoices = from i in database.Invoices select i;
+            var database = SingerConfigs.CommonDataContext;
+            var invoices = from i in database.Invoices where i.Company != null select i;
 
             if (!string.IsNullOrWhiteSpace(term))
             {
@@ -237,12 +237,12 @@ namespace SingerDispatch.Windows
 
         private void FindThirdPartyServices(string term, string company, DateTime? start, DateTime? end)
         {
-            var database = new SingerDispatchDataContext();
-            var services = from s in database.ThirdPartyServices select s;
+            var database = SingerConfigs.CommonDataContext;
+            var services = from s in database.ThirdPartyServices where s.Load != null && s.Load.Job != null select s;
 
             if (!string.IsNullOrWhiteSpace(term))
             {
-                services = from s in services where s.Reference != null && s.Reference.ToUpper().Contains(term.ToUpper()) select s;
+                services = from s in services where (s.Reference != null && s.Reference.ToUpper().Contains(term.ToUpper())) || (s.Location != null && s.Location.ToUpper().Contains(term.ToUpper())) select s;
             }
 
             if (!string.IsNullOrWhiteSpace(company))
@@ -265,8 +265,8 @@ namespace SingerDispatch.Windows
 
         private void FindPermits(string term, string company, DateTime? start, DateTime? end)
         {
-            var database = new SingerDispatchDataContext();
-            var permits = from p in database.Permits select p;
+            var database = SingerConfigs.CommonDataContext;
+            var permits = from p in database.Permits where p.Load != null && p.Load.Job != null select p;
 
             if (!string.IsNullOrWhiteSpace(term))
             {
@@ -278,7 +278,7 @@ namespace SingerDispatch.Windows
                 permits = from p in permits where p.IssuingCompany != null && p.IssuingCompany.Name.ToUpper().Contains(company.ToUpper()) select p;                          
             }
 
-            dgPermits.ItemsSource = permits;
+            dgPermits.ItemsSource = permits.ToList();
         }
     }
 }

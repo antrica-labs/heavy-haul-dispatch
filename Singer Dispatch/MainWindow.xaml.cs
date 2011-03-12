@@ -369,9 +369,7 @@ namespace SingerDispatch
 
             ViewLoad(permit.Load);
 
-            var panel = (LoadsPanel)panelMainContent.Child;
-
-            panel.Tabs.SelectedIndex = 4;
+            ((LoadsPanel)panelMainContent.Child).SelectedPermit = permit;
         }
 
         public void ViewThirdPartyService(ThirdPartyService service)
@@ -379,10 +377,7 @@ namespace SingerDispatch
             if (service == null || service.Load == null || service.Load.Job == null) return;
 
             ViewLoad(service.Load);
-
-            var panel = (LoadsPanel)panelMainContent.Child;
-
-            panel.Tabs.SelectedIndex = 3;
+            ((LoadsPanel)panelMainContent.Child).SelectedThirdPartyService = service;
         }
 
         public void ViewDispatch(Dispatch dispatch)

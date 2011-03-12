@@ -20,6 +20,8 @@ namespace SingerDispatch.Panels.Loads
         public SingerDispatchDataContext Database { get; set; }
 
         public static DependencyProperty SelectedJobProperty = DependencyProperty.Register("SelectedJob", typeof(Job), typeof(LoadsPanel), new PropertyMetadata(null, SelectedJobPropertyChanged));
+        public static DependencyProperty SelectedPermitProperty = DependencyProperty.Register("SelectedPermit", typeof(Permit), typeof(LoadsPanel), new PropertyMetadata(null, SelectedPermitPropertyChanged));
+        public static DependencyProperty SelectedThirdPartyServiceProperty = DependencyProperty.Register("SelectedThirdPartyService", typeof(ThirdPartyService), typeof(LoadsPanel), new PropertyMetadata(null, SelectedThirdPartyServicePropertyChanged));
 
         public Job SelectedJob
         {
@@ -30,6 +32,30 @@ namespace SingerDispatch.Panels.Loads
             get
             {
                 return (Job)GetValue(SelectedJobProperty);
+            }
+        }
+
+        public Permit SelectedPermit
+        {
+            set
+            {
+                SetValue(SelectedPermitProperty, value);
+            }
+            get
+            {
+                return GetValue(SelectedPermitProperty) as Permit;
+            }
+        }
+
+        public ThirdPartyService SelectedThirdPartyService
+        {
+            set
+            {
+                SetValue(SelectedThirdPartyServiceProperty, value);
+            }
+            get
+            {
+                return GetValue(SelectedThirdPartyServiceProperty) as ThirdPartyService;
             }
         }
 
@@ -60,6 +86,20 @@ namespace SingerDispatch.Panels.Loads
             var control = (LoadsPanel)d;
 
             control.SelectedJobChanged((Job)e.NewValue, (Job)e.OldValue);
+        }
+
+        public static void SelectedPermitPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var control = (LoadsPanel)d;
+
+            control.Tabs.SelectedIndex = 4;
+        }
+
+        public static void SelectedThirdPartyServicePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var control = (LoadsPanel)d;
+
+            control.Tabs.SelectedIndex = 3;
         }
 
         protected void SelectedJobChanged(Job newValue, Job oldValue)

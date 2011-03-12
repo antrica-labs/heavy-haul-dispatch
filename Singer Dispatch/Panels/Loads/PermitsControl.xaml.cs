@@ -11,6 +11,20 @@ namespace SingerDispatch.Panels.Loads
     {
         public SingerDispatchDataContext Database { get; set; }
 
+        public static DependencyProperty SelectedPermitProperty = DependencyProperty.Register("SelectedPermit", typeof(Permit), typeof(PermitsControl), new PropertyMetadata(null, SelectedPermitPropertyChanged));
+
+        public Permit SelectedPermit
+        {
+            set
+            {
+                SetValue(SelectedPermitProperty, value);
+            }
+            get
+            {
+                return GetValue(SelectedPermitProperty) as Permit;
+            }
+        }
+
         public PermitsControl()
         {
             InitializeComponent();
@@ -33,6 +47,13 @@ namespace SingerDispatch.Panels.Loads
             base.SelectedLoadChanged(newValue, oldValue);
 
             dgPermits.ItemsSource = (newValue == null) ? null : new ObservableCollection<Permit>(newValue.Permits);
+        }
+
+        public static void SelectedPermitPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var control = (PermitsControl)d;
+
+            control.dgPermits.SelectedItem = (Permit)e.NewValue;
         }
 
         private void NewPermit_Click(object sender, RoutedEventArgs e)

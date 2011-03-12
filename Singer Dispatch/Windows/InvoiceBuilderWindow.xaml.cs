@@ -21,8 +21,7 @@ namespace SingerDispatch.Windows
         private Company Company;
         private SingerDispatchDataContext Database;
 
-        private Invoice Invoice;
-        private Boolean Created;
+        private Invoice Invoice;        
 
         public InvoiceBuilderWindow(Company company, SingerDispatchDataContext database)
         {
@@ -32,7 +31,6 @@ namespace SingerDispatch.Windows
             Database = database;
 
             Invoice = null;
-            Created = false;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -129,8 +127,6 @@ namespace SingerDispatch.Windows
             }
             else
                 Invoice = new Invoice();
-
-            Created = true;
 
             Close();
         }

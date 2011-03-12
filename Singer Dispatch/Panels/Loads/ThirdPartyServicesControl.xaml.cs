@@ -12,18 +12,21 @@ namespace SingerDispatch.Panels.Loads
     /// </summary>
     public partial class ThirdPartyServicesControl
     {
-        public static DependencyProperty SelectedItemProperty = DependencyProperty.Register("SelectedItem", typeof(ThirdPartyService), typeof(ThirdPartyServicesControl));
+        private Boolean SelectionChangedInCode = false;
+     
         public SingerDispatchDataContext Database { get; set; }
 
-        public ThirdPartyService SelectedItem
+        public static DependencyProperty SelectedThirdPartyServiceProperty = DependencyProperty.Register("SelectedThirdPartyService", typeof(ThirdPartyService), typeof(ThirdPartyServicesControl), new PropertyMetadata(null, SelectedThirdPartyServicePropertyChanged));
+
+        public ThirdPartyService SelectedThirdPartyService
         {
             get
             {
-                return (ThirdPartyService)GetValue(SelectedItemProperty);
+                return (ThirdPartyService)GetValue(SelectedThirdPartyServiceProperty);
             }
             set
             {
-                SetValue(SelectedItemProperty, value);
+                SetValue(SelectedThirdPartyServiceProperty, value);
             }
         }
 
@@ -50,6 +53,14 @@ namespace SingerDispatch.Panels.Loads
             dgServices.ItemsSource = (newValue == null) ? null : new ObservableCollection<ThirdPartyService>(newValue.ThirdPartyServices);
         }
 
+        public static void SelectedThirdPartyServicePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var control = (ThirdPartyServicesControl)d;
+
+            control.SelectionChangedInCode = true;
+            control.dgServices.SelectedItem = (ThirdPartyService)e.NewValue;
+        }        
+
         private void ServiceCompany_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             UpdateComboBoxes();
@@ -57,10 +68,10 @@ namespace SingerDispatch.Panels.Loads
 
         private void UpdateComboBoxes()
         {
-            if (SelectedItem != null && SelectedItem.Company != null)
+            if (SelectedThirdPartyService != null && SelectedThirdPartyService.Company != null)
             {
-                cmbServiceTypes.ItemsSource = new ObservableCollection<ServiceType>(from st in Database.Services where st.Company == SelectedItem.Company select st.ServiceType);
-                cmbContacts.ItemsSource = new ObservableCollection<Contact>(from c in Database.Contacts where c.Company == SelectedItem.Company orderby c.FirstName, c.LastName select c);
+                cmbServiceTypes.ItemsSource = new ObservableCollection<ServiceType>(from st in Database.Services where st.Company == SelectedThirdPartyService.Company select st.ServiceType);
+                cmbContacts.ItemsSource = new ObservableCollection<Contact>(from c in Database.Contacts where c.Company == SelectedThirdPartyService.Company orderby c.FirstName, c.LastName select c);
             }
         }
 
@@ -146,10 +157,16 @@ namespace SingerDispatch.Panels.Loads
 
         private void dgServices_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if (SelectionChangedInCode)
+            {
+                SelectionChangedInCode = false;
+                return;
+            }
+
             var item = (ThirdPartyService)dgServices.SelectedItem;
 
-            SelectedItem = null;
-            SelectedItem = item;
+            SelectedThirdPartyService = null;
+            SelectedThirdPartyService = item;
         }
 
         private void UpdateCompanies_Click(object sender, RoutedEventArgs e)
