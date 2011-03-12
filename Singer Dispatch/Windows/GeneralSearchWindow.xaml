@@ -12,7 +12,7 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
-    <DockPanel>        
+    <DockPanel Margin="5">        
         <Grid DockPanel.Dock="Top">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
@@ -20,11 +20,11 @@
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
             
-            <GroupBox Header="Search Term" Grid.Column="0">
+            <GroupBox Header="Search Terms" Grid.Column="0">
                 <TextBox Name="txtSearchTerm" />
             </GroupBox>
             
-            <GroupBox Header="Company" Grid.Column="1">
+            <GroupBox Header="Company" Grid.Column="1" Margin="5,0,5,0">
                 <TextBox Name="txtCompany" />
             </GroupBox>
             
@@ -136,7 +136,9 @@
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Number" Binding="{Binding NumberAndRev}" Width="Auto" />
                             <DataGridTextColumn Header="Job" Binding="{Binding Job.Number}" Width="60" />
-                            <DataGridTextColumn Header="Date" Binding="{Binding InvoiceDate, StringFormat={}{0:MM/dd/yyyy}}" />
+                            <DataGridTextColumn Header="Date" Binding="{Binding InvoiceDate, StringFormat={}{0:MM/dd/yyyy}}" Width="100" />
+                            <DataGridTextColumn Header="Company" Binding="{Binding Company.Name}" />
+                            <DataGridTextColumn Header="Care of" Binding="{Binding Job.CareOfCompany.Name}" />
                         </DataGrid.Columns>
                     </DataGrid>
                 </DockPanel>

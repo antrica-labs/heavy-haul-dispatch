@@ -130,7 +130,7 @@ namespace SingerDispatch.Windows
                 jobs = from j in jobs where j.Company.Name.ToUpper().Contains(company.ToUpper()) || (j.CareOfCompany != null && j.CareOfCompany.Name.ToUpper().Contains(company.ToUpper())) select j;
             }
 
-            dgJobs.ItemsSource = jobs;
+            dgJobs.ItemsSource = jobs.ToList();
         }
 
         private void FindLoads(string term, string company, DateTime? start, DateTime? end)
@@ -148,7 +148,7 @@ namespace SingerDispatch.Windows
                 loads = from l in loads where l.Job.Company.Name.ToUpper().Contains(company.ToUpper()) || (l.Job.CareOfCompany != null && l.Job.CareOfCompany.Name.ToUpper().Contains(company.ToUpper())) select l;
             }
 
-            dgLoads.ItemsSource = loads;
+            dgLoads.ItemsSource = loads.ToList();
         }
 
         private void FindDispatches(string term, string company, DateTime? start, DateTime? end)
@@ -176,7 +176,7 @@ namespace SingerDispatch.Windows
                 dispatches = from d in dispatches where d.MeetingDate <= end select d;
             }
 
-            dgDispatches.ItemsSource = dispatches;
+            dgDispatches.ItemsSource = dispatches.ToList();
         }
 
         private void FindQuotes(string term, string company, DateTime? start, DateTime? end)
@@ -203,6 +203,8 @@ namespace SingerDispatch.Windows
             {
                 quotes = from q in quotes where q.StartDate <= end || q.CreationDate <= end select q;
             }
+
+            dgQuotes.ItemsSource = quotes.ToList();
         }
 
         private void FindInvoices(string term, string company, DateTime? start, DateTime? end)
@@ -230,7 +232,7 @@ namespace SingerDispatch.Windows
                 invoices = from i in invoices where i.InvoiceDate <= end select i;
             }
 
-            dgInvoices.ItemsSource = invoices;
+            dgInvoices.ItemsSource = invoices.ToList();
         }
 
         private void FindThirdPartyServices(string term, string company, DateTime? start, DateTime? end)
@@ -258,7 +260,7 @@ namespace SingerDispatch.Windows
                 services = from s in services where s.ServiceDate <= end select s;
             }
 
-            dgServices.ItemsSource = services;
+            dgServices.ItemsSource = services.ToList();
         }
 
         private void FindPermits(string term, string company, DateTime? start, DateTime? end)
