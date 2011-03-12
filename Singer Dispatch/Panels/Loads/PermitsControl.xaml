@@ -54,7 +54,7 @@
                     <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Cost, StringFormat=c, Converter={StaticResource NullableValueConverter}}" />
 
                     <Label Grid.Row="0" Grid.Column="2">Conditions:</Label>
-                    <TextBox Grid.Row="1" Grid.Column="2" Grid.RowSpan="3" Text="{Binding Conditions}" />
+                    <TextBox Grid.Row="1" Grid.Column="2" Grid.RowSpan="3" Text="{Binding Conditions}" Style="{StaticResource MultiLine}" Height="Auto" />
                 </Grid>
             </GroupBox>
         </StackPanel>
