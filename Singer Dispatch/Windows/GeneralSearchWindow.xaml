@@ -111,7 +111,8 @@
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Number" Width="Auto" Binding="{Binding NumberAndRev}"/>
                             <DataGridTextColumn Header="Creation date" Binding="{Binding CreationDate, StringFormat={}{0:MM/dd/yyyy}}" Width="90" />
-                            <DataGridTextColumn Header="Start date" Binding="{Binding StartDate, StringFormat={}{0:MM/dd/yyyy}}" Width="90" />
+                            <DataGridTextColumn Header="Company" Binding="{Binding Company.Name}" Width="150" />
+                            <DataGridTextColumn Header="Care of" Binding="{Binding CareOfCompany.Name}" Width="150" />
                             <DataGridTextColumn Header="Price" Binding="{Binding Price, StringFormat=C}" Width="75" />
                             <DataGridTemplateColumn Header="Commodities">
                                 <DataGridTemplateColumn.CellTemplate>

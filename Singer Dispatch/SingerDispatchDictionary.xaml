@@ -13,6 +13,7 @@
     <Controls:InvoiceFriendlyNameConverter x:Key="InvoiceFriendlyNameConverter" />
     <Controls:EmployeeFriendlyNameConverter x:Key="EmployeeFriendlyNameConverter" />
     <Controls:LoadCommoditiesStringConverter x:Key="LoadCommoditiesStringConverter" />
+    <Controls:QuoteCommoditiesStringConverter x:Key="QuoteCommoditiesStringConverter" />
     <Controls:LengthMeasurementConverter x:Key="LengthMeasurementConverter" />    
     <Controls:WeightMeasurementConverter x:Key="WeightMeasurementConverter" />
     <Controls:PhoneNumberConverter x:Key="PhoneNumberConverter" />
