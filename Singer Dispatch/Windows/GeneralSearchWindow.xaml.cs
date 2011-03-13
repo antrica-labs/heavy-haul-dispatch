@@ -122,7 +122,7 @@ namespace SingerDispatch.Windows
 
             if (!string.IsNullOrWhiteSpace(term))
             {
-                jobs = from j in jobs where j.Name.ToUpper().Contains(term.ToUpper()) select j;
+                jobs = (from j in jobs where j.Name != null && j.Name.ToUpper().Contains(term.ToUpper()) select j).Concat(from j in jobs join r in database.JobReferenceNumbers on j.ID equals r.JobID where r.Value != null && r.Value.ToUpper().Contains(term.ToUpper()) select j);
             }
 
             if (!string.IsNullOrWhiteSpace(company))
@@ -130,7 +130,7 @@ namespace SingerDispatch.Windows
                 jobs = from j in jobs where j.Company.Name.ToUpper().Contains(company.ToUpper()) || (j.CareOfCompany != null && j.CareOfCompany.Name.ToUpper().Contains(company.ToUpper())) select j;
             }
 
-            dgJobs.ItemsSource = jobs.ToList();
+            dgJobs.ItemsSource = jobs;
         }
 
         private void FindLoads(string term, string company, DateTime? start, DateTime? end)
@@ -140,7 +140,17 @@ namespace SingerDispatch.Windows
 
             if (!string.IsNullOrWhiteSpace(term))
             {
-                //loads = from l in database.Loads where l.
+                term = term.ToUpper();
+
+                var others = from l in loads join r in database.LoadReferenceNumbers on l.ID equals r.LoadID where r.Value != null && r.Value.ToUpper().Contains(term) select l;
+
+                loads = from l in loads where 
+                            l.TrailerCombination != null && l.TrailerCombination.Combination.ToUpper().Contains(term) ||
+                            l.Equipment != null && l.Equipment.UnitNumber.ToUpper().Contains(term) ||
+                            l.Rate != null && l.Rate.Name.ToUpper().Contains(term)
+                        select l;
+                
+                loads = loads.Concat(others);
             }
 
             if (!string.IsNullOrWhiteSpace(company))
