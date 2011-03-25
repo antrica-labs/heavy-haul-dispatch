@@ -193,6 +193,11 @@ namespace SingerDispatch
                 copy.QuoteCommodities.Add(commodity.Duplicate());
             }
 
+            foreach (var inclusion in QuoteInclusions)
+            {
+                copy.QuoteInclusions.Add(inclusion.Duplicate());
+            }
+
             foreach (var supplement in QuoteSupplements)
             {
                 copy.QuoteSupplements.Add(supplement.Duplicate());
@@ -426,6 +431,18 @@ namespace SingerDispatch
 
             copy.OriginalCondition = OriginalCondition;
             copy.Line = Line;
+
+            return copy;
+        }
+    }
+
+    partial class QuoteInclusion
+    {
+        public QuoteInclusion Duplicate()
+        {
+            var copy = new QuoteInclusion();
+
+            copy.Inclusion = Inclusion;
 
             return copy;
         }
