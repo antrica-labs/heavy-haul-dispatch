@@ -100,7 +100,7 @@ namespace SingerDispatch.Printing.Documents
 
             content.Append(@"<div class=""storage_contract"">");
             content.Append(GetHeader(documentNumber));
-            content.Append(GetReferenceTable(company, contact, address));
+            content.Append(GetReferenceTable(job.Company, contact, address));
             content.Append(GetCommodities(job));
             content.Append(GetLegal());
             content.Append(GetSignatures());
@@ -133,7 +133,7 @@ namespace SingerDispatch.Printing.Documents
 
             content.Append(@"<div class=""storage_contract"">");
             content.Append(GetHeader(documentNumber));
-            content.Append(GetReferenceTable(company, contact, address));
+            content.Append(GetReferenceTable(item.JobCommodity.Owner, contact, address));
             content.Append(GetCommodity(item));
             content.Append(GetLegal());
             content.Append(GetSignatures());
