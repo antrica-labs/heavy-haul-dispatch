@@ -603,8 +603,8 @@ namespace SingerDispatch.Printing.Documents
             {
                 var commodity = item.JobCommodity;
 
-                if (commodity != null)                
-                    rows.Append(GetCommodityRow(commodity.NameAndUnit, company.Name, commodity.Length, commodity.Width, commodity.Height, commodity.Weight, item.BillingRate, item.BillingInterval, item.Notes));
+                if (commodity != null)
+                    rows.Append(GetCommodityRow(commodity.NameAndUnit, commodity.Owner.Name, commodity.Length, commodity.Width, commodity.Height, commodity.Weight, item.BillingRate, item.BillingInterval, item.Notes));
             }
 
             replacements[0] = SingerConfigs.GetConfig("SingerName") ?? "Singer Specialized Ltd.";
@@ -624,7 +624,7 @@ namespace SingerDispatch.Printing.Documents
             var company = item.Job.CareOfCompany ?? item.Job.Company;
 
             if (commodity != null)
-                rows.Append(GetCommodityRow(commodity.NameAndUnit, company.Name, commodity.Length, commodity.Width, commodity.Height, commodity.Weight, item.BillingRate, item.BillingInterval, item.Notes));            
+                rows.Append(GetCommodityRow(commodity.NameAndUnit, commodity.Owner.Name, commodity.Length, commodity.Width, commodity.Height, commodity.Weight, item.BillingRate, item.BillingInterval, item.Notes));            
 
             replacements[0] = SingerConfigs.GetConfig("SingerName") ?? "Singer Specialized Ltd.";
             replacements[1] = company.Name;

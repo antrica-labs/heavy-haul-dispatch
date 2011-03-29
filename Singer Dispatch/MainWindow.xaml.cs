@@ -452,7 +452,7 @@ namespace SingerDispatch
 
         private void ViewStorageList_Click(object sender, RoutedEventArgs e)
         {
-            var storage = from si in Database.StorageItems orderby si.Number descending select si;
+            var storage = from si in Database.StorageItems where si.Job != null orderby si.Number descending select si;
             var items = from s in storage where s.JobCommodity != null && (s.DateRemoved == null || s.DateRemoved.Value.Date > DateTime.Today.Date) orderby s.JobCommodity.Owner.Name select s;            
             var title = "Singer Storage List - Current";
 
