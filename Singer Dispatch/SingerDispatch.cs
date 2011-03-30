@@ -71,6 +71,19 @@ namespace SingerDispatch
                 return FirstName + " " + LastName;
             }
         }
+
+        public override string ToString()
+        {
+            return Name;
+        }
+    }
+
+    partial class ContactMethod
+    {
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 
     partial class Employee

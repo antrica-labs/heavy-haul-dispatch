@@ -189,7 +189,7 @@ namespace SingerDispatch.Printing.Documents
                         margin-bottom: 0.1em;
                     }
 
-                    div.contact span.company
+                    div.contact span.name
                     {
                         font-weight: bold;
                     }
@@ -253,12 +253,13 @@ namespace SingerDispatch.Printing.Documents
                 <span class=""commodity_name"">{0} <span class=""unit"">{1}</span></span>
                 
                 <div class=""commodity_details"">
-                    <span class=""dimensions"">{2}</span>
-                    <span class=""weight"">{3}</span>
+                    <span class=""company"">{2}</span>
+                    <span class=""dimensions"">{3}</span>
+                    <span class=""weight"">{4}</span>
                 </div>
 
                 <div class=""location"">
-                    <p>{4}</p>
+                    <p>{5}</p>
                 </div>
             ";
 
@@ -277,13 +278,18 @@ namespace SingerDispatch.Printing.Documents
                 weight = MeasurementFormater.UKilograms;
             }
 
-            var replacements = new string[5];
+            var replacements = new string[6];
+
+            var customer = string.Format("{0}", item.Job.Company);
+            if (item.Job.CareOfCompany != null)
+                customer = string.Format("{0} c/o {1}", customer, item.Job.CareOfCompany);
 
             replacements[0] = item.JobCommodity.Name;
             replacements[1] = string.Format("[{0}]", item.JobCommodity.Unit);
-            replacements[2] = string.Format("{0} x {1} x {2} (LxWxH)", MeasurementFormater.FromMetres(item.JobCommodity.Length, distance), MeasurementFormater.FromMetres(item.JobCommodity.Width, distance), MeasurementFormater.FromMetres(item.JobCommodity.Height, distance));
-            replacements[3] = string.Format("{0}", MeasurementFormater.FromKilograms(item.JobCommodity.Weight, weight));
-            replacements[4] = item.YardLocation;
+            replacements[2] = customer;
+            replacements[3] = string.Format("{0} x {1} x {2} (LxWxH)", MeasurementFormater.FromMetres(item.JobCommodity.Length, distance), MeasurementFormater.FromMetres(item.JobCommodity.Width, distance), MeasurementFormater.FromMetres(item.JobCommodity.Height, distance));
+            replacements[4] = string.Format("{0}", MeasurementFormater.FromKilograms(item.JobCommodity.Weight, weight));
+            replacements[5] = item.YardLocation;
 
             return string.Format(html, replacements);
         }
@@ -292,8 +298,8 @@ namespace SingerDispatch.Printing.Documents
         {
             const string html = @"
                 <div class=""contact"">
-                    <span class=""company"">{0}</span>
-                    <span class=""name"">{1}</span>
+                    <span class=""name"">{0}</span>
+                    <span class=""company"">{1}</span>
                     <span class=""email"">{2}</span>
                     <span class=""phone"">{3}</span>
                     <span class=""phone"">{4}</span>
@@ -305,8 +311,8 @@ namespace SingerDispatch.Printing.Documents
 
             var replacements = new string[6];
 
-            replacements[0] = item.Contact.Company.Name;
-            replacements[1] = item.Contact.Name;
+            replacements[0] = item.Contact.Name;
+            replacements[1] = item.Contact.Company.Name;            
             replacements[2] = (string.IsNullOrWhiteSpace(item.Contact.Email)) ? "" : item.Contact.Email;
             replacements[3] = (string.IsNullOrWhiteSpace(item.Contact.PrimaryPhone)) ? "" : string.Format("Phone: {0}", item.Contact.PrimaryPhone);
             replacements[4] = (string.IsNullOrWhiteSpace(item.Contact.SecondaryPhone)) ? "" : string.Format("Phone: {0}", item.Contact.SecondaryPhone);
@@ -327,6 +333,5 @@ namespace SingerDispatch.Printing.Documents
 
             return string.Format(html, item.Notes);
         }
-
     }
 }

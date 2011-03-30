@@ -100,7 +100,7 @@ namespace SingerDispatch.Printing.Documents
 
             content.Append(@"<div class=""storage_contract"">");
             content.Append(GetHeader(documentNumber));
-            content.Append(GetReferenceTable(job.Company, contact, address));
+            content.Append(GetReferenceTable(job.Company, job.CareOfCompany, contact, address));
             content.Append(GetCommodities(job));
             content.Append(GetLegal());
             content.Append(GetSignatures());
@@ -133,7 +133,7 @@ namespace SingerDispatch.Printing.Documents
 
             content.Append(@"<div class=""storage_contract"">");
             content.Append(GetHeader(documentNumber));
-            content.Append(GetReferenceTable(item.JobCommodity.Owner, contact, address));
+            content.Append(GetReferenceTable(item.Job.Company, item.Job.CareOfCompany, contact, address));
             content.Append(GetCommodity(item));
             content.Append(GetLegal());
             content.Append(GetSignatures());
@@ -524,7 +524,7 @@ namespace SingerDispatch.Printing.Documents
             return string.Format(html, replacements);
         }
 
-        public string GetReferenceTable(Company company, Contact contact, Address address)
+        public string GetReferenceTable(Company company, Company careOfCompany, Contact contact, Address address)
         {
             var html = @"
                 <div class=""reference"">
@@ -566,8 +566,12 @@ namespace SingerDispatch.Printing.Documents
 
             var replacements = new string[14];
 
+            var customer = string.Format("{0}", company);
+            if (careOfCompany != null)
+                customer = string.Format("{0} c/o {1}", customer, careOfCompany);
+
             replacements[0] = DateTime.Now.ToString(SingerConfigs.PrintedDateFormatString);
-            replacements[1] = (company != null) ? company.Name : "";
+            replacements[1] = customer;
 
             replacements[2] = (contact != null) ? contact.Name : "";
             replacements[3] = (contact != null && !string.IsNullOrEmpty(contact.PrimaryPhone)) ? string.Format("[ Ph: {0} ]", contact.PrimaryPhone) : "";
@@ -577,7 +581,7 @@ namespace SingerDispatch.Printing.Documents
             var prov = (address != null && address.ProvincesAndState != null) ? address.ProvincesAndState.Abbreviation : "";
             var postal = (address != null) ? address.PostalZip : "";
 
-            replacements[5] = (company != null) ? company.Name : "";
+            replacements[5] = customer;
             replacements[6] = (address != null) ? address.Line1 : "";
             replacements[7] = (address != null) ? address.Line2 : "";
             replacements[8] = (address != null) ? string.Format("{0}, {1} {2}", city, prov, postal) : "";
@@ -645,7 +649,7 @@ namespace SingerDispatch.Printing.Documents
                         <thead>
                             <tr>
                                 <th class=""name"">Item Description</th>
-                                <th class=""Owner"">Owner</th>
+                                <th class=""owner"">Owner</th>
                                 <th class=""dimensions"">Dimensions (LxWxH)</th>
                                 <th class=""weight"">Weight</th>
                                 <th class=""price"">Rate</th>                    
