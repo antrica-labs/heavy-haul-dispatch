@@ -1353,25 +1353,16 @@ namespace SingerDispatch
 
         internal void AddLoads(IEnumerable<Load> loads, Status status)
         {
-            var hasPermits = false;
-            var permitCost = 0.0m;
-
             foreach (var load in loads)
             {
+                var permitCosts = AddPermits(load);
+
                 AddLoadReferences(load);
                 AddLoadedCommodities(load);
-                permitCost += AddPermits(load);
-
-                if (hasPermits == false)
-                    hasPermits = load.Permits.Count > 0;
+                AddPermitAcquisition(permitCosts);
 
                 if (status != null)
                     load.Status = status;
-            }
-
-            if (hasPermits)
-            {
-                AddPermitAcquisition(permitCost);
             }
         }
 
