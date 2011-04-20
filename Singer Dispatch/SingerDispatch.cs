@@ -7,7 +7,8 @@ namespace SingerDispatch
 {
     partial class SingerDispatchDataContext
     {
-        public SingerDispatchDataContext() : base(System.Configuration.ConfigurationManager.ConnectionStrings["ConnectionParameters"].ConnectionString)
+        public SingerDispatchDataContext()
+            : base(System.Configuration.ConfigurationManager.ConnectionStrings["ConnectionParameters"].ConnectionString)
         {
         }
     }
@@ -128,7 +129,7 @@ namespace SingerDispatch
 
                 if (!string.IsNullOrEmpty(Unit))
                     name += " - " + Unit;
-                
+
                 return name;
             }
         }
@@ -141,7 +142,7 @@ namespace SingerDispatch
         public Commodity Duplicate()
         {
             var copy = new Commodity();
-            
+
             copy.Name = Name;
             copy.Value = Value;
             copy.Serial = Serial;
@@ -187,7 +188,7 @@ namespace SingerDispatch
         public Quote Duplicate()
         {
             var copy = new Quote();
-                        
+
             copy.Company = Company;
             copy.Number = Number;
             copy.CareOfCompany = CareOfCompany;
@@ -400,7 +401,7 @@ namespace SingerDispatch
             jc.Weight = Weight;
             jc.DimensionsEstimated = DimensionsEstimated;
             jc.Cost = Cost;
-            jc.Notes = Notes;            
+            jc.Notes = Notes;
 
             return jc;
         }
@@ -421,7 +422,7 @@ namespace SingerDispatch
 
     partial class Condition
     {
-        partial void OnCreated()        
+        partial void OnCreated()
         {
             Archived = Archived ?? false;
             AutoInclude = AutoInclude ?? false;
@@ -480,7 +481,7 @@ namespace SingerDispatch
     partial class QuoteNote
     {
         public QuoteNote Duplicate()
-        {           
+        {
             return new QuoteNote { Note = this.Note };
         }
     }
@@ -490,7 +491,7 @@ namespace SingerDispatch
         public QuoteStorageItem Duplicate()
         {
             var copy = new QuoteStorageItem();
-            
+
             copy.Commodity = Commodity;
             copy.Price = Price;
             copy.Notes = Notes;
@@ -506,7 +507,7 @@ namespace SingerDispatch
             Archived = Archived ?? false;
         }
 
-        public decimal? Hourly { get; set; }        
+        public decimal? Hourly { get; set; }
     }
 
     partial class Job
@@ -525,7 +526,7 @@ namespace SingerDispatch
         private void StatusChanged()
         {
             if (Status == null || Status.Name != "Completed") return;
-            
+
             foreach (var item in Loads)
             {
                 item.Status = Status;
@@ -539,10 +540,10 @@ namespace SingerDispatch
             cp.Name = Name;
             cp.CareOfCompany = CareOfCompany;
             cp.Company = Company;
-            cp.Notes = Notes;            
-            cp.Quote = Quote;            
+            cp.Notes = Notes;
+            cp.Quote = Quote;
             cp.Status = Status;
-            
+
             foreach (var item in JobCommodities)
                 cp.JobCommodities.Add(item.Duplicate());
 
@@ -642,7 +643,7 @@ namespace SingerDispatch
         public Commodity ToRecordedCommodity()
         {
             var commodity = new Commodity();
-                        
+
             commodity.Company = Owner;
             commodity.Name = Name;
             commodity.Unit = Unit;
@@ -676,7 +677,7 @@ namespace SingerDispatch
         public JobCommodity Duplicate()
         {
             var copy = new JobCommodity();
-            
+
             copy.Owner = Owner;
             copy.Name = Name;
             copy.Value = Value;
@@ -691,7 +692,7 @@ namespace SingerDispatch
             copy.Height = Height;
             copy.Weight = Weight;
             copy.DimensionsEstimated = DimensionsEstimated;
-            copy.Cost = Cost;            
+            copy.Cost = Cost;
             copy.Notes = Notes;
 
             return copy;
@@ -706,7 +707,7 @@ namespace SingerDispatch
         }
 
         private void SomePropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
-        {            
+        {
             switch (e.PropertyName)
             {
                 case "UnloadLocation":
@@ -722,9 +723,9 @@ namespace SingerDispatch
                     UpdateLastKnownInstructions();
                     break;
                 case "JobCommodity":
-                    UpdateJobCommodity();                    
+                    UpdateJobCommodity();
                     break;
-            }  
+            }
         }
 
         public void UpdateLastKnownLocation()
@@ -786,7 +787,7 @@ namespace SingerDispatch
         public LoadedCommodity Duplicate()
         {
             var copy = new LoadedCommodity();
-                        
+
             copy.LoadLocation = LoadLocation;
             copy.LoadAddress = LoadAddress;
             copy.LoadingProvince = LoadingProvince;
@@ -803,7 +804,7 @@ namespace SingerDispatch
             copy.UnloadAddress = UnloadAddress;
             copy.UnloadingProvince = UnloadingProvince;
             copy.UnloadSiteCompany = UnloadSiteCompany;
-            copy.UnloadSiteContact = UnloadSiteContact;            
+            copy.UnloadSiteContact = UnloadSiteContact;
             copy.UnloadingCompany = UnloadingCompany;
             copy.UnloadingContact = UnloadingContact;
             copy.UnloadMethod = UnloadMethod;
@@ -850,9 +851,9 @@ namespace SingerDispatch
         public Permit Duplicate()
         {
             var cp = new Permit();
-                        
+
             cp.IssuingCompany = IssuingCompany;
-            cp.PermitType = PermitType;            
+            cp.PermitType = PermitType;
             cp.Conditions = Conditions;
 
             return cp;
@@ -870,12 +871,12 @@ namespace SingerDispatch
             cp.MeetingTime = MeetingTime;
             cp.DepartingLocation = DepartingLocation;
             cp.Description = Description;
-            cp.Schedule = Schedule;            
+            cp.Schedule = Schedule;
             cp.Notes = Notes;
-            
+
             return cp;
         }
-        
+
         public string Name
         {
             get
@@ -893,7 +894,7 @@ namespace SingerDispatch
     }
 
     partial class Load
-    {        
+    {
         partial void OnCreated()
         {
             this.PropertyChanged += new System.ComponentModel.PropertyChangedEventHandler(SomePropertyChanged);
@@ -972,7 +973,7 @@ namespace SingerDispatch
             weight = 0;
             weight += EWeightSteer ?? 0.0;
             weight += EWeightDrive ?? 0.0;
-            weight += EWeightGroup1 ?? 0.0; 
+            weight += EWeightGroup1 ?? 0.0;
             weight += EWeightGroup2 ?? 0.0;
             weight += EWeightGroup3 ?? 0.0;
             weight += EWeightGroup4 ?? 0.0;
@@ -1008,7 +1009,7 @@ namespace SingerDispatch
         }
 
         private void CalculateAdjustedRate()
-        {   
+        {
             var enterprise = Job != null && Job.Company != null && Job.Company.CustomerType != null && Job.Company.CustomerType.IsEnterprise == true;
 
             if (Rate == null)
@@ -1061,7 +1062,7 @@ namespace SingerDispatch
             var cp = new Load();
 
             cp.Status = Status;
-            cp.Schedule = Schedule;            
+            cp.Schedule = Schedule;
             cp.Season = Season;
             cp.Info = Info;
             cp.StartDate = StartDate;
@@ -1089,7 +1090,7 @@ namespace SingerDispatch
             get
             {
                 var name = String.Format("{0:D2}", Number);
-                
+
                 return name;
             }
         }
@@ -1158,7 +1159,7 @@ namespace SingerDispatch
     {
         private double? _totalHours;
         private decimal? _totalCost;
-        
+
         public double? TotalHours
         {
             get
@@ -1223,7 +1224,7 @@ namespace SingerDispatch
         }
 
         public void UpdateTotalHours()
-        {            
+        {
             TotalHours = 0.0;
 
             foreach (var item in InvoiceLineItems)
@@ -1262,18 +1263,19 @@ namespace SingerDispatch
 
                 copy.InvoiceLineItems.Add(line);
             }
-            
+
             return copy;
-        }        
+        }
 
         public override string ToString()
         {
             return string.Format("{0}-{1}", Number, Revision);
         }
 
-        internal void AddPermitAcquisition(decimal totalCost)
+        internal void AddPermitAcquisition(Load load, decimal totalCost)
         {
-            var line = new InvoiceLineItem() { Description = "Permit acquisition fee" };
+            var description = string.Format("Load {0}: Permit acquisition fee", load.Name);
+            var line = new InvoiceLineItem() { Description = description };
 
             if (totalCost < 150m)
                 line.Rate = 15m;
@@ -1297,7 +1299,7 @@ namespace SingerDispatch
         {
             var line = new InvoiceLineItem();
 
-            line.Description = string.Format("Supply men and equipment to transport {0}", load.ToString());
+            line.Description = string.Format("Load {0}: Supply men and equipment to transport {1}", load.Name, load.ToString());
             line.Rate = load.AdjustedRate;
 
             var fromDiffers = false;
@@ -1311,7 +1313,7 @@ namespace SingerDispatch
                 line.ItemDate = line.ItemDate ?? commodity.LoadDate;
                 line.Departure = line.Departure ?? loading;
                 line.Destination = line.Destination ?? unloading;
-                
+
 
                 if (fromDiffers == false && line.Departure != loading.Trim())
                     fromDiffers = true;
@@ -1325,7 +1327,7 @@ namespace SingerDispatch
 
             if (toDiffers)
                 line.Destination = "Various";
-            
+
             InvoiceLineItems.Add(line);
         }
 
@@ -1339,8 +1341,9 @@ namespace SingerDispatch
 
                 var company = (permit.IssuingCompany != null) ? permit.IssuingCompany.Name : "";
                 var type = (permit.PermitType != null) ? permit.PermitType.Name : "";
+                var loadName = (permit.Load != null) ? permit.Load.Name : "N/A";
 
-                line.Description = string.Format("{0} - {1}", company, type);
+                line.Description = string.Format("Load {0}: {1} - {2}", loadName, company, type);
                 line.Rate = permit.Cost;
 
                 InvoiceLineItems.Add(line);
@@ -1359,7 +1362,7 @@ namespace SingerDispatch
 
                 AddLoadReferences(load);
                 AddLoadedCommodities(load);
-                AddPermitAcquisition(permitCosts);
+                AddPermitAcquisition(load, permitCosts);
 
                 if (status != null)
                     load.Status = status;
@@ -1375,8 +1378,9 @@ namespace SingerDispatch
                 var type = (service.ServiceType != null) ? service.ServiceType.Name : "UNKNOWN SERVICE";
                 var company = (service.Company != null) ? service.Company.Name : "UNKNOWN COMPANY";
                 var commodities = (service.Load != null) ? service.Load.ToString() : "various items";
+                var loadName = (service.Load != null) ? service.Load.Name : "N/A";
 
-                line.Description = string.Format("Supply {0} by {1} to transport {2}", type, company, commodities);
+                line.Description = string.Format("Load {0}: Supply {1} by {2} to transport {3}", loadName, type, company, commodities);
 
                 if (!string.IsNullOrWhiteSpace(service.Reference))
                     line.Description += string.Format(" [Reference: {0}]", service.Reference);
@@ -1419,7 +1423,7 @@ namespace SingerDispatch
             {
                 var line = new InvoiceLineItem();
 
-                var commodity = (item.JobCommodity != null) ? item.JobCommodity.NameAndUnit : "UNKNOWN";                
+                var commodity = (item.JobCommodity != null) ? item.JobCommodity.NameAndUnit : "UNKNOWN";
 
                 line.Description = string.Format("Supply secure storge for {0} from [date] to [date]", commodity);
                 line.Rate = item.BillingRate;
@@ -1471,14 +1475,14 @@ namespace SingerDispatch
             var copy = new InvoiceLineItem();
 
             copy.Description = Description;
-            copy.ItemDate = ItemDate;            
+            copy.ItemDate = ItemDate;
             copy.Departure = Departure;
             copy.Destination = Destination;
             copy.Hours = Hours;
             copy.Rate = Rate;
 
             return copy;
-        }        
+        }
     }
 
     partial class InvoiceExtra
@@ -1517,7 +1521,7 @@ namespace SingerDispatch
         {
             var copy = new InvoiceExtra();
 
-            copy.Description = Description;            
+            copy.Description = Description;
             copy.Hours = Hours;
             copy.Rate = Rate;
 
@@ -1536,9 +1540,9 @@ namespace SingerDispatch
     partial class StorageItem
     {
         partial void OnCreated()
-        {            
+        {
             ContractSigned = ContractSigned ?? false;
-        } 
+        }
     }
 
     partial class TrailerCombination
