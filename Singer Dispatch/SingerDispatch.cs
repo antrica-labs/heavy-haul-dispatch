@@ -1302,7 +1302,7 @@ namespace SingerDispatch
             line.Description = string.Format("Load {0}: Supply men and equipment to transport {1}", load.Name, load.ToString());
             line.Rate = load.AdjustedRate;
 
-            var fromDiffers = false;
+            var fromDiffers = false;    
             var toDiffers = false;
 
             foreach (var commodity in load.LoadedCommodities)
@@ -1358,11 +1358,11 @@ namespace SingerDispatch
         {
             foreach (var load in loads)
             {
-                var permitCosts = AddPermits(load);
-
                 AddLoadReferences(load);
                 AddLoadedCommodities(load);
-                AddPermitAcquisition(load, permitCosts);
+                
+                if (load.Permits.Count() > 0)
+                    AddPermitAcquisition(load, AddPermits(load));
 
                 if (status != null)
                     load.Status = status;
