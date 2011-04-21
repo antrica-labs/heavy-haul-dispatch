@@ -1274,7 +1274,7 @@ namespace SingerDispatch
 
         internal void AddPermitAcquisition(Load load, decimal totalCost)
         {
-            var description = string.Format("Load {0}: Permit acquisition fee", load.Name);
+            var description = "Permit acquisition fee";
             var line = new InvoiceLineItem() { Description = description };
 
             if (totalCost < 150m)
@@ -1299,7 +1299,7 @@ namespace SingerDispatch
         {
             var line = new InvoiceLineItem();
 
-            line.Description = string.Format("Load {0}: Supply men and equipment to transport {1}", load.Name, load.ToString());
+            line.Description = string.Format("Supply men and equipment to transport {0}", load.ToString());
             line.Rate = load.AdjustedRate;
 
             var fromDiffers = false;    
@@ -1343,7 +1343,7 @@ namespace SingerDispatch
                 var type = (permit.PermitType != null) ? permit.PermitType.Name : "";
                 var loadName = (permit.Load != null) ? permit.Load.Name : "N/A";
 
-                line.Description = string.Format("Load {0}: {1} - {2}", loadName, company, type);
+                line.Description = string.Format("{0} - {1}", company, type);
                 line.Rate = permit.Cost;
 
                 InvoiceLineItems.Add(line);
@@ -1380,7 +1380,7 @@ namespace SingerDispatch
                 var commodities = (service.Load != null) ? service.Load.ToString() : "various items";
                 var loadName = (service.Load != null) ? service.Load.Name : "N/A";
 
-                line.Description = string.Format("Load {0}: Supply {1} by {2} to transport {3}", loadName, type, company, commodities);
+                line.Description = string.Format("Supply {0} by {1} to transport {2}", type, company, commodities);
 
                 if (!string.IsNullOrWhiteSpace(service.Reference))
                     line.Description += string.Format(" [Reference: {0}]", service.Reference);
