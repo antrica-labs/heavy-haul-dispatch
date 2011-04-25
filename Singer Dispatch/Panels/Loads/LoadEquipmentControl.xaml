@@ -59,8 +59,21 @@
                 </StackPanel>
             </GroupBox>
             
-            <GroupBox Header="Status" Grid.Column="2" Grid.Row="0">
-                <ComboBox Name="cmbStatuses" ItemTemplate="{StaticResource SimpleNameTemplate}" IsEditable="False" SelectedItem="{Binding Status}" />
+            <GroupBox Header="Billing" Grid.Column="2" Grid.Row="0">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="100" />
+                    </Grid.ColumnDefinitions>
+    
+                    <Label Grid.Column="0">Status:</Label>
+                    <ComboBox Grid.Column="1" Name="cmbStatuses" ItemTemplate="{StaticResource SimpleNameTemplate}" IsEditable="False" SelectedItem="{Binding Status}" />
+                  
+                    <Label Grid.Column="2">Invoice:</Label>
+                    <TextBox Grid.Column="3" Text="{Binding Invoice.Number}" IsReadOnly="True" />
+                </Grid>                
             </GroupBox>
 
             <GroupBox Header="References" Grid.Column="2" Grid.Row="1">

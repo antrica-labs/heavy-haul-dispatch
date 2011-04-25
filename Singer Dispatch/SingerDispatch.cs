@@ -1366,6 +1366,8 @@ namespace SingerDispatch
 
                 if (status != null)
                     load.Status = status;
+
+                load.Invoice = this;
             }
         }
 

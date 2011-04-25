@@ -265,6 +265,7 @@
       <Column Name="SeasonID" Type="System.Int64" CanBeNull="true" />
       <Column Name="TrailerCombinationID" Type="System.Int64" CanBeNull="true" />
       <Column Name="StatusID" Type="System.Int64" CanBeNull="true" />
+      <Column Name="InvoiceID" Type="System.Int64" CanBeNull="true" />
       <Column Name="Number" Type="System.Int32" CanBeNull="true" />
       <Column Name="Info" Type="System.String" CanBeNull="true" />
       <Column Name="StartDate" Type="System.DateTime" CanBeNull="true" />
@@ -308,7 +309,8 @@
       <Association Name="Load_Permit" Member="Permits" ThisKey="ID" OtherKey="LoadID" Type="Permit" />      
       <Association Name="Load_Dispatch" Member="Dispatches" ThisKey="ID" OtherKey="LoadID" Type="Dispatch" />
       <Association Name="Load_ThirdPartyService" Member="ThirdPartyServices" ThisKey="ID" OtherKey="LoadID" Type="ThirdPartyService" />
-      <Association Name="Status_Load" Member="Status" ThisKey="StatusID" OtherKey="ID" Type="Status" IsForeignKey="true" />      
+      <Association Name="Status_Load" Member="Status" ThisKey="StatusID" OtherKey="ID" Type="Status" IsForeignKey="true" />
+      <Association Name="Invoice_Load" Member="Invoice" ThisKey="InvoiceID" OtherKey="ID" Type="Invoice" IsForeignKey="true" />
       <Association Name="Season_Load" Member="Season" ThisKey="SeasonID" OtherKey="ID" Type="Season" IsForeignKey="true" />
       <Association Name="Equipment_Load" Member="Equipment" ThisKey="EquipmentID" OtherKey="ID" Type="Equipment" IsForeignKey="true" />
       <Association Name="Rate_Load" Member="Rate" ThisKey="RateID" OtherKey="ID" Type="Rate" IsForeignKey="true" />
@@ -778,6 +780,7 @@
       <Association Name="Address_Invoice" Member="BillingAddress" ThisKey="AddressID" OtherKey="ID" Type="Address" IsForeignKey="true" />
       <Association Name="Contact_Invoice" Member="Contact" ThisKey="ContactID" OtherKey="ID" Type="Contact" IsForeignKey="true" />
       <Association Name="Job_Invoice" Member="Job" ThisKey="JobID" OtherKey="ID" Type="Job" IsForeignKey="true" />
+      <Association Name="Invoice_Load" Member="Loads" ThisKey="ID" OtherKey="InvoiceID" Type="Load" />
       <Association Name="Company_Invoice" Member="Company" ThisKey="CompanyID" OtherKey="ID" Type="Company" IsForeignKey="true" />
     </Type>
   </Table>
