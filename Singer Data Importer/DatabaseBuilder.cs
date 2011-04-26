@@ -346,6 +346,8 @@ namespace SingerDispatch.Importer
             Database.Configurations.InsertOnSubmit(new Configuration { Name = "Dispatch-SingerBoLDriverCopies", Value = 3.ToString() });
             Database.Configurations.InsertOnSubmit(new Configuration { Name = "Dispatch-EnterprisePrintFileCopy", Value = false.ToString() });
             Database.Configurations.InsertOnSubmit(new Configuration { Name = "Dispatch-SingerPrintFileCopy", Value = true.ToString() });
+            Database.Configurations.InsertOnSubmit(new Configuration { Name = "SingerGSTNumber", Value = "883578023" });
+            Database.Configurations.InsertOnSubmit(new Configuration { Name = "EnterpriseGSTNumber", Value = "115133969" });
 
             Database.SubmitChanges();
         }

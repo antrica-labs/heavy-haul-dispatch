@@ -65,7 +65,7 @@ namespace SingerDispatch.Printing.Documents
             ";
 
             var replacements = new object[7];            
-            string cName, cAddress, cCity, cPhone;
+            string cName, cAddress, cCity, cPhone, cGSTNumber;
 
             if (SpecializedDocument)
             {
@@ -73,6 +73,7 @@ namespace SingerDispatch.Printing.Documents
                 cAddress = "SingerAddress-StreetAddress";
                 cCity = "SingerAddress-City";
                 cPhone = "SingerAddress-Phone";
+                cGSTNumber = "SingerGSTNumber";
             }
             else
             {
@@ -80,10 +81,11 @@ namespace SingerDispatch.Printing.Documents
                 cAddress = "EnterpriseAddress-StreetAddress";
                 cCity = "EnterpriseAddress-City";
                 cPhone = "EnterpriseAddress-Phone";
+                cGSTNumber = "EnterpriseGSTNumber";
             }
 
             replacements[0] = GetHeaderImg();
-            replacements[1] = SingerConfigs.GetConfig("SingerGSTRegistrationNumber") ?? "883578023";
+            replacements[1] = SingerConfigs.GetConfig(cGSTNumber);
             replacements[2] = SingerConfigs.GetConfig(cName) ?? "Singer Specialized Ltd.";
             replacements[3] = SingerConfigs.GetConfig(cAddress);
             replacements[4] = SingerConfigs.GetConfig(cCity);
