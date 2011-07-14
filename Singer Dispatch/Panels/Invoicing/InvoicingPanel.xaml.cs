@@ -78,6 +78,18 @@ namespace SingerDispatch.Panels.Invoicing
             {
                 EntityHelper.SaveAsNewInvoice(invoice, Database);
 
+                // Add a note to each of the loads in this invoice to show where they were billed.
+                if (invoice.IncludedLoads != null)
+                {
+                    foreach (var load in invoice.IncludedLoads)
+                    {
+                        if (!string.IsNullOrWhiteSpace(load.Notes))
+                            load.Notes += Environment.NewLine;
+
+                        load.Notes += string.Format("Billed under invoice #{0}", invoice.Number.ToString());
+                    }
+                }
+
                 list.Insert(0, invoice);
                 SelectedCompany.Invoices.Add(invoice);
 

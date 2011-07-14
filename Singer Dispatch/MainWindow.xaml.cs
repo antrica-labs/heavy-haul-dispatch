@@ -655,5 +655,21 @@ namespace SingerDispatch
             var window = new GetSupportWindow() { Owner = this };
             window.ShowDialog();
         }
+
+        private void MigrateMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            var loads = from l in Database.Loads where l.Invoice != null select l;
+
+            foreach (var item in loads)
+            {
+                if (!string.IsNullOrWhiteSpace(item.Notes))
+                    item.Notes += Environment.NewLine;
+
+                item.Notes += string.Format("Billed under invoice #{0}", item.Invoice.Number.ToString());
+                item.Invoice = null;
+            }
+
+            Database.SubmitChanges();
+        }
     }
 }

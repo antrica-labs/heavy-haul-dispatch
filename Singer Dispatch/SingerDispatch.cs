@@ -1196,6 +1196,8 @@ namespace SingerDispatch
             }
         }
 
+        public IEnumerable<Load> IncludedLoads { get; set; }
+
         partial void OnCreated()
         {
             TaxRate = TaxRate ?? SingerConfigs.GST;
@@ -1356,7 +1358,9 @@ namespace SingerDispatch
 
         internal void AddLoads(IEnumerable<Load> loads, Status status)
         {
-            foreach (var load in loads)
+            IncludedLoads = loads;
+
+            foreach (var load in IncludedLoads)
             {
                 AddLoadReferences(load);
                 AddLoadedCommodities(load);
@@ -1365,9 +1369,7 @@ namespace SingerDispatch
                     AddPermitAcquisition(load, AddPermits(load));
 
                 if (status != null)
-                    load.Status = status;
-
-                load.Invoice = this;
+                    load.Status = status;                
             }
         }
 
