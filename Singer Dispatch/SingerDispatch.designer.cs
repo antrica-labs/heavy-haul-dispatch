@@ -6383,8 +6383,6 @@ namespace SingerDispatch
 		
 		private System.Nullable<long> _StatusID;
 		
-		private System.Nullable<long> _InvoiceID;
-		
 		private System.Nullable<int> _Number;
 		
 		private string _Info;
@@ -6477,8 +6475,6 @@ namespace SingerDispatch
 		
 		private EntityRef<Status> _Status;
 		
-		private EntityRef<Invoice> _Invoice;
-		
 		private EntityRef<Season> _Season;
 		
 		private EntityRef<Equipment> _Equipment;
@@ -6505,8 +6501,6 @@ namespace SingerDispatch
     partial void OnTrailerCombinationIDChanged();
     partial void OnStatusIDChanging(System.Nullable<long> value);
     partial void OnStatusIDChanged();
-    partial void OnInvoiceIDChanging(System.Nullable<long> value);
-    partial void OnInvoiceIDChanged();
     partial void OnNumberChanging(System.Nullable<int> value);
     partial void OnNumberChanged();
     partial void OnInfoChanging(string value);
@@ -6595,7 +6589,6 @@ namespace SingerDispatch
 			this._Dispatches = new EntitySet<Dispatch>(new Action<Dispatch>(this.attach_Dispatches), new Action<Dispatch>(this.detach_Dispatches));
 			this._Job = default(EntityRef<Job>);
 			this._Status = default(EntityRef<Status>);
-			this._Invoice = default(EntityRef<Invoice>);
 			this._Season = default(EntityRef<Season>);
 			this._Equipment = default(EntityRef<Equipment>);
 			this._Rate = default(EntityRef<Rate>);
@@ -6763,30 +6756,6 @@ namespace SingerDispatch
 					this._StatusID = value;
 					this.SendPropertyChanged("StatusID");
 					this.OnStatusIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_InvoiceID")]
-		public System.Nullable<long> InvoiceID
-		{
-			get
-			{
-				return this._InvoiceID;
-			}
-			set
-			{
-				if ((this._InvoiceID != value))
-				{
-					if (this._Invoice.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnInvoiceIDChanging(value);
-					this.SendPropertyChanging();
-					this._InvoiceID = value;
-					this.SendPropertyChanged("InvoiceID");
-					this.OnInvoiceIDChanged();
 				}
 			}
 		}
@@ -7693,40 +7662,6 @@ namespace SingerDispatch
 						this._StatusID = default(Nullable<long>);
 					}
 					this.SendPropertyChanged("Status");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Invoice_Load", Storage="_Invoice", ThisKey="InvoiceID", OtherKey="ID", IsForeignKey=true)]
-		public Invoice Invoice
-		{
-			get
-			{
-				return this._Invoice.Entity;
-			}
-			set
-			{
-				Invoice previousValue = this._Invoice.Entity;
-				if (((previousValue != value) 
-							|| (this._Invoice.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Invoice.Entity = null;
-						previousValue.Loads.Remove(this);
-					}
-					this._Invoice.Entity = value;
-					if ((value != null))
-					{
-						value.Loads.Add(this);
-						this._InvoiceID = value.ID;
-					}
-					else
-					{
-						this._InvoiceID = default(Nullable<long>);
-					}
-					this.SendPropertyChanged("Invoice");
 				}
 			}
 		}
@@ -17957,8 +17892,6 @@ namespace SingerDispatch
 		
 		private System.Nullable<decimal> _TaxRate;
 		
-		private EntitySet<Load> _Loads;
-		
 		private EntitySet<InvoiceReferenceNumber> _ReferenceNumbers;
 		
 		private EntitySet<InvoiceLineItem> _InvoiceLineItems;
@@ -17999,7 +17932,6 @@ namespace SingerDispatch
 		
 		public Invoice()
 		{
-			this._Loads = new EntitySet<Load>(new Action<Load>(this.attach_Loads), new Action<Load>(this.detach_Loads));
 			this._ReferenceNumbers = new EntitySet<InvoiceReferenceNumber>(new Action<InvoiceReferenceNumber>(this.attach_ReferenceNumbers), new Action<InvoiceReferenceNumber>(this.detach_ReferenceNumbers));
 			this._InvoiceLineItems = new EntitySet<InvoiceLineItem>(new Action<InvoiceLineItem>(this.attach_InvoiceLineItems), new Action<InvoiceLineItem>(this.detach_InvoiceLineItems));
 			this._BillingAddress = default(EntityRef<Address>);
@@ -18225,19 +18157,6 @@ namespace SingerDispatch
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Invoice_Load", Storage="_Loads", ThisKey="ID", OtherKey="InvoiceID")]
-		public EntitySet<Load> Loads
-		{
-			get
-			{
-				return this._Loads;
-			}
-			set
-			{
-				this._Loads.Assign(value);
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Invoice_InvoiceReferenceNumber", Storage="_ReferenceNumbers", ThisKey="ID", OtherKey="InvoiceID")]
 		public EntitySet<InvoiceReferenceNumber> ReferenceNumbers
 		{
@@ -18418,18 +18337,6 @@ namespace SingerDispatch
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
-		}
-		
-		private void attach_Loads(Load entity)
-		{
-			this.SendPropertyChanging();
-			entity.Invoice = this;
-		}
-		
-		private void detach_Loads(Load entity)
-		{
-			this.SendPropertyChanging();
-			entity.Invoice = null;
 		}
 		
 		private void attach_ReferenceNumbers(InvoiceReferenceNumber entity)
