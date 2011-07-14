@@ -30,6 +30,16 @@ namespace SingerDispatch.Database
                 context.QuoteConditions.DeleteOnSubmit(item);
             }
 
+            foreach (var item in quote.QuoteInclusions.Where(item => item.ID != 0))
+            {
+                context.QuoteInclusions.DeleteOnSubmit(item);
+            }
+
+            foreach (var item in quote.QuoteNotes.Where(item => item.ID != 0))
+            {
+                context.QuoteNotes.DeleteOnSubmit(item);
+            }
+
             if (quote.ID != 0)
             {
                 context.Quotes.DeleteOnSubmit(quote);
