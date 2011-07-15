@@ -125,7 +125,7 @@ namespace SingerDispatch.Printing.Documents
             output.Append(GetEquipment(dispatch.Load.ExtraEquipment));
             output.Append(GetSchedule(dispatch));
             output.Append(GetDimensions(dispatch.Load));
-            output.Append(GetLoadCommodities(dispatch.Load.LoadedCommodities));
+            output.Append(GetLoadCommodities((from lc in dispatch.Load.LoadedCommodities where lc.JobCommodity != null select lc).ToList()));
             output.Append(GetTractors(from t in dispatch.Load.Dispatches where t.Equipment != null && t.Equipment.EquipmentType != null && t.Equipment.EquipmentType.EquipmentClass != null && t.Equipment.EquipmentType.EquipmentClass.Name == "Tractor" select t));
             output.Append(GetSingerPilots(from p in dispatch.Load.Dispatches where p.Equipment != null && p.Equipment.EquipmentType != null && p.Equipment.EquipmentType.EquipmentClass != null && p.Equipment.EquipmentType.EquipmentClass.Name == "Pilot" select p));
             output.Append(GetContractors(from p in dispatch.Load.Dispatches where p.Equipment != null && p.Equipment.EquipmentType != null && p.Equipment.EquipmentType.Name == "Contractor" select p));
@@ -180,6 +180,8 @@ namespace SingerDispatch.Printing.Documents
             for (var i = 0; i < dispatch.Load.LoadedCommodities.Count; i++)
             {
                 var commodity = dispatch.Load.LoadedCommodities[i];
+
+                if (commodity.JobCommodity == null) continue;
 
                 content.Append(doc.GenerateBodyHTML(dispatch, commodity));
 
@@ -929,7 +931,7 @@ namespace SingerDispatch.Printing.Documents
             return string.Format(content, dispatch.Schedule);
         }
 
-        private string GetLoadCommodities(EntitySet<LoadedCommodity> commodities)
+        private string GetLoadCommodities(List<LoadedCommodity> commodities)
         {
             const string head = @"<div class=""load_and_unload section""><span class=""heading"">Load/Unload Information</span>";
             const string divider = "<hr>";

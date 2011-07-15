@@ -28,6 +28,8 @@ namespace SingerDispatch.Printing.Documents
         
         public override string GenerateHTML(object entity)
         {
+            if (entity == null) return "";
+
             if (entity is BillOfLadingEntity)
             {
                 var bol = (BillOfLadingEntity)entity;
@@ -46,6 +48,8 @@ namespace SingerDispatch.Printing.Documents
 
         public string GenerateHTML(Dispatch dispatch, LoadedCommodity commodity)
         {
+            if (commodity.JobCommodity == null) return "";
+
             var content = new StringBuilder();
 
             content.Append(@"<!DOCTYPE HTML PUBLIC ""-//W3C//DTD HTML 4.01//EN"" ""http://www.w3.org/TR/html4/strict.dtd"">");
@@ -68,6 +72,8 @@ namespace SingerDispatch.Printing.Documents
 
         public string GenerateBodyHTML(Dispatch dispatch, LoadedCommodity commodity)
         {
+            if (commodity.JobCommodity == null) return "";
+
             var content = new StringBuilder();
             string documentNumber;
 
