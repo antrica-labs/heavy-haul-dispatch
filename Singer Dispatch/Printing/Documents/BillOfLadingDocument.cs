@@ -80,7 +80,7 @@ namespace SingerDispatch.Printing.Documents
             if (dispatch != null && dispatch.Load != null)
                 documentNumber = string.Format("{0}-{1:D2}-{2}", dispatch.Load.Job.Number, dispatch.Load.Number, commodity.ID);
             else
-                documentNumber = string.Format("LC-{0:D2}", commodity.ID);            
+                documentNumber = string.Format("{0}-00-{1:D2}", commodity.JobCommodity.Job.Number, commodity.ID);            
 
 
             content.Append(@"<div class=""bol_doc"">");
@@ -172,7 +172,7 @@ namespace SingerDispatch.Printing.Documents
                 <style type=""text/css"" media=""print"">
                     body
                     {
-                    	font-size: 10pt;
+                    	font-size: 8pt;
                         padding: 0;
                     }
 
