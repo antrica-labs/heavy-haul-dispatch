@@ -75,13 +75,8 @@ namespace SingerDispatch.Printing.Documents
             if (commodity.JobCommodity == null) return "";
 
             var content = new StringBuilder();
-            string documentNumber;
-
-            if (dispatch != null && dispatch.Load != null)
-                documentNumber = string.Format("{0}-{1:D2}-{2}", dispatch.Load.Job.Number, dispatch.Load.Number, commodity.ID);
-            else
-                documentNumber = string.Format("{0}-00-{1:D2}", commodity.JobCommodity.Job.Number, commodity.ID);            
-
+            
+            var documentNumber = string.Format("{0}-{1:D2}-{2}", commodity.Load.Job.Number, commodity.Load.Number, commodity.ID);            
 
             content.Append(@"<div class=""bol_doc"">");
             content.Append(GetHeader(documentNumber));

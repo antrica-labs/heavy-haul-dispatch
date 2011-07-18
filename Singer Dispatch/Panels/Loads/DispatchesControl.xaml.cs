@@ -192,6 +192,15 @@ namespace SingerDispatch.Panels.Loads
 
             SelectedLoad.Dispatches.Remove(dispatch);
             ((ObservableCollection<Dispatch>)dgDispatches.ItemsSource).Remove(dispatch);
+
+            try
+            {
+                Database.SubmitChanges();
+            }
+            catch (Exception ex)
+            {
+                NoticeWindow.ShowError("Error while attempting to delete dispatch", ex.Message);
+            }
         }
 
         private void AddTravel_Click(object sender, RoutedEventArgs e)
