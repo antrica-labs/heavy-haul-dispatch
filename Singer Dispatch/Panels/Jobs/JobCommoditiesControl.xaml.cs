@@ -202,6 +202,9 @@ namespace SingerDispatch.Panels.Jobs
 
             var recorded = jobCommodity.ToRecordedCommodity();
 
+            if (jobCommodity.Owner == null) // Some job commodities lost their owner setting when moved from quote commodity to job commodity... ugh
+                jobCommodity.Owner = jobCommodity.Job.Company;
+
             jobCommodity.Owner.Commodities.Add(recorded);
             ((ObservableCollection<Commodity>)dgRecordedCommodities.ItemsSource).Add(recorded);
             dgRecordedCommodities.ScrollIntoView(recorded);

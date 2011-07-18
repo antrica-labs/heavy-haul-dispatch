@@ -385,6 +385,7 @@ namespace SingerDispatch
         {
             var jc = new JobCommodity();
 
+            jc.Owner = Owner;
             jc.OrderIndex = OrderIndex;
             jc.OriginalCommodity = OriginalCommodity;
             jc.Name = Name;
