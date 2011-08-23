@@ -454,7 +454,7 @@ namespace SingerDispatch.Printing.Documents
             var address = quote.BillingAddress;
             var contact = quote.Contact;
 
-            content.Append(string.Format(header, DateTime.Now.ToString(SingerConfigs.PrintedDateFormatString)));            
+            content.Append(string.Format(header, quote.CreationDate.Value.ToString(SingerConfigs.PrintedDateFormatString)));            
             content.Append("<span>" + quote.Company.Name + "</span>");
 
             if (quote.CareOfCompany != null)
