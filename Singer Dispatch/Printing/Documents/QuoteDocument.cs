@@ -484,7 +484,7 @@ namespace SingerDispatch.Printing.Documents
 
             content.Append(middle);
 
-            if (contact != null)
+            if (contact != null && address != null)
             {
                 var telephone = "<span>Telephone: {0}</span>";
                 var fax = "<span>Fax: {0}</span>";
