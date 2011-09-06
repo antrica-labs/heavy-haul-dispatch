@@ -5,6 +5,9 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using SingerDispatch.Controls;
 using System.Windows.Controls;
+using System.ComponentModel;
+using System.Windows.Threading;
+using System;
 
 namespace SingerDispatch.Panels.Admin
 {
@@ -13,6 +16,9 @@ namespace SingerDispatch.Panels.Admin
     /// </summary>
     public partial class EmployeesControl
     {
+        private BackgroundWorker MainGridWorker;
+        private BackgroundWorker ArchiveGridWorker;
+
         public static DependencyProperty SelectedItemProperty = DependencyProperty.Register("SelectedItem", typeof(Employee), typeof(EmployeesControl), new PropertyMetadata(null, SelectedItemPropertyChanged));
         public SingerDispatchDataContext Database { get; set; }
 
@@ -34,7 +40,18 @@ namespace SingerDispatch.Panels.Admin
             
             if (InDesignMode()) return;
 
-            Database = SingerConfigs.CommonDataContext;            
+            Database = SingerConfigs.CommonDataContext;
+
+            MainGridWorker = new BackgroundWorker();
+            MainGridWorker.WorkerSupportsCancellation = true;
+            MainGridWorker.DoWork += FillMainGridAsync;
+
+            ArchiveGridWorker = new BackgroundWorker();
+            ArchiveGridWorker.WorkerSupportsCancellation = true;
+            ArchiveGridWorker.DoWork += FillArchiveGridAsync;
+
+            RegisterThread(MainGridWorker);
+            RegisterThread(ArchiveGridWorker);
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
@@ -61,31 +78,98 @@ namespace SingerDispatch.Panels.Admin
 
         private void UpdateCurrentEmployees()
         {
-            var query = from emp in Database.Employees orderby emp.FirstName, emp.LastName select emp;
-            var employees = from emp in query where emp.Archived != true select emp;
-
-            dgEmployees.ItemsSource = new ObservableCollection<Employee>(employees);
+            if (MainGridWorker.IsBusy)
+                return;
+                    
+            dgEmployees.ItemsSource = new ObservableCollection<Employee>();
+            MainGridWorker.RunWorkerAsync();        
         }
 
         private void UpdateArchivedEmployees()
         {
-            var query = from emp in Database.Employees orderby emp.FirstName, emp.LastName select emp;
-            var employees = from emp in query where emp.Archived == true select emp;
+            if (ArchiveGridWorker.IsBusy)
+                return;
+            
+            dgArchivedEmployees.ItemsSource = new ObservableCollection<Employee>();
+            ArchiveGridWorker.RunWorkerAsync();
+        }
 
-            dgArchivedEmployees.ItemsSource = new ObservableCollection<Employee>(employees);
+        private void AddEmployeeToMainGrid(Employee emp)
+        {
+            var list = dgEmployees.ItemsSource as ObservableCollection<Employee>;
+
+            list.Add(emp);
+        }
+
+        private void AddEmployeeToArchiveGrid(Employee emp)
+        {
+            var list = dgArchivedEmployees.ItemsSource as ObservableCollection<Employee>;
+
+            list.Add(emp);
+        }
+
+        private void FillMainGridAsync(object sender, DoWorkEventArgs e)
+        {
+            var async = sender as BackgroundWorker;
+
+            if (async.CancellationPending)
+            {
+                e.Cancel = true;
+                return;
+            }
+
+            FillDataGridAsync(async, (ObservableCollection<Employee>)dgEmployees.ItemsSource, false);
+
+            if (async.CancellationPending)
+                e.Cancel = true;
+        }
+
+        private void FillArchiveGridAsync(object sender, DoWorkEventArgs e)
+        {
+            var async = sender as BackgroundWorker;
+
+            if (async.CancellationPending)
+            {
+                e.Cancel = true;
+                return;
+            }
+
+            FillDataGridAsync(async, (ObservableCollection<Employee>)dgArchivedEmployees.ItemsSource, true);
+
+            if (async.CancellationPending)
+                e.Cancel = true;
+        }
+
+        private void FillDataGridAsync(BackgroundWorker thread, ObservableCollection<Employee> list, bool archived)
+        {
+            if (thread.CancellationPending)
+                return;
+
+            var employees = from emp in Database.Employees where emp.Archived == archived orderby emp.FirstName, emp.LastName select emp;
+
+            foreach (var emp in employees)
+            {
+                if (thread.CancellationPending)
+                    break;
+
+                if (archived)
+                    Dispatcher.Invoke(DispatcherPriority.Render, new Action<Employee>(AddEmployeeToArchiveGrid), emp);
+                else
+                    Dispatcher.Invoke(DispatcherPriority.Render, new Action<Employee>(AddEmployeeToMainGrid), emp);
+            }
         }
 
         private void NewEmployee_Click(object sender, RoutedEventArgs e)
         {
             var employees = (ObservableCollection<Employee>)dgEmployees.ItemsSource;
-            var employee = new Employee();
+            var employee = new Employee() { Archived = false, IsAvailable = true, IsSingerStaff = true, IsSupervisor = false, StartDate = DateTime.Now };
 
-            employees.Add(employee);
+            employees.Add(employee);            
             Database.Employees.InsertOnSubmit(employee);
             dgEmployees.ScrollIntoView(employee);
-            dgEmployees.SelectedItem = employee;
+            dgEmployees.SelectedItem = employee;                     
 
-            txtFirstName.Focus();            
+            txtFirstName.Focus();
         }
 
         private void ArchiveEmployee_Click(object sender, RoutedEventArgs e)
@@ -151,16 +235,15 @@ namespace SingerDispatch.Panels.Admin
 
             SelectedItem = null;
 
-            if (tb.SelectedIndex == 0)
+            switch (tb.SelectedIndex)
             {
-                UpdateCurrentEmployees();
-                SelectedItem = (Employee)dgEmployees.SelectedItem;
+                case 0:
+                    UpdateCurrentEmployees();
+                    break;
+                case 1:
+                    UpdateArchivedEmployees();
+                    break;
             }
-            else if (tb.SelectedIndex == 1)
-            {
-                UpdateArchivedEmployees();
-                SelectedItem = (Employee)dgArchivedEmployees.SelectedItem;
-            }       
         }
 
         

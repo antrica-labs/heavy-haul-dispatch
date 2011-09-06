@@ -5,6 +5,9 @@ using System.Windows.Input;
 using SingerDispatch.Controls;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using System.ComponentModel;
+using System.Windows.Threading;
+using System;
 
 namespace SingerDispatch.Panels.Admin
 {
@@ -13,6 +16,8 @@ namespace SingerDispatch.Panels.Admin
     /// </summary>
     public partial class ConditionsControl
     {
+        private BackgroundWorker MainGridWorker;
+
         public SingerDispatchDataContext Database { get; set; }
 
         public ConditionsControl()
@@ -22,13 +27,19 @@ namespace SingerDispatch.Panels.Admin
             if (InDesignMode()) return;
 
             Database = SingerConfigs.CommonDataContext;
+
+            MainGridWorker = new BackgroundWorker();
+            MainGridWorker.WorkerSupportsCancellation = true;
+            MainGridWorker.DoWork += FillDataGridAsync;
+
+            RegisterThread(MainGridWorker);
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             if (InDesignMode() || IsVisible == false) return;
 
-            TheGrid.ItemsSource = new ObservableCollection<Condition>(from c in Database.Conditions where c.Archived != true orderby c.ID select c);
+            FillDataGrid();
         }
 
         private void NewCondition_Click(object sender, RoutedEventArgs e)
@@ -85,6 +96,46 @@ namespace SingerDispatch.Panels.Admin
             {
                 CommitChanges();
             }
+        }
+
+        private void FillDataGrid()
+        {
+            if (MainGridWorker.IsBusy)
+                return;
+
+            TheGrid.ItemsSource = new ObservableCollection<Condition>();
+            MainGridWorker.RunWorkerAsync();
+        }
+
+        private void FillDataGridAsync(object sender, DoWorkEventArgs e)
+        {
+            var async = sender as BackgroundWorker;
+
+            if (async.CancellationPending)
+            {
+                e.Cancel = true;
+                return;
+            }
+
+            var entities = from c in Database.Conditions where c.Archived != true orderby c.ID select c;
+
+            foreach (var entity in entities)
+            {
+                if (async.CancellationPending)
+                {
+                    e.Cancel = true;
+                    break;
+                }
+
+                Dispatcher.Invoke(DispatcherPriority.Render, new Action<Condition>(AddToGrid), entity);
+            }
+        }
+
+        private void AddToGrid(Condition entity)
+        {
+            var list = (ObservableCollection<Condition>)TheGrid.ItemsSource;
+
+            list.Add(entity);
         }
         
     }

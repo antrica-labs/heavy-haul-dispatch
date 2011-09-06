@@ -16,23 +16,23 @@
     </UserControl.Resources>
     <Grid>
         <TabControl Name="Tabs">
-            <TabItem Header="Employees">
-                <Admin:EmployeesControl Width="Auto" CompanyList="{Binding CompanyList}" UseImperialMeasurements="{Binding UseImperialMeasurements}" />    
+            <TabItem Header="Rates">
+                <Admin:RatesControl Width="Auto" CompanyList="{Binding CompanyList}" UseImperialMeasurements="{Binding UseImperialMeasurements}" />
+            </TabItem>
+            <TabItem Header="Trailer combinations">
+                <Admin:TrailerCombinationsControl Width="Auto" CompanyList="{Binding CompanyList}" UseImperialMeasurements="{Binding UseImperialMeasurements}" />
             </TabItem>
             <TabItem Header="Equipment">
                 <Admin:EquipmentControl Width="Auto" CompanyList="{Binding CompanyList}" UseImperialMeasurements="{Binding UseImperialMeasurements}" />
+            </TabItem>
+            <TabItem Header="Employees">
+                <Admin:EmployeesControl Width="Auto" CompanyList="{Binding CompanyList}" UseImperialMeasurements="{Binding UseImperialMeasurements}" />    
             </TabItem>
             <TabItem Header="Quote inclusions">
                 <Admin:InclusionsControl Width="Auto" CompanyList="{Binding CompanyList}" UseImperialMeasurements="{Binding UseImperialMeasurements}" />
             </TabItem>
             <TabItem Header="Quote conditions">
                 <Admin:ConditionsControl Width="Auto" CompanyList="{Binding CompanyList}" UseImperialMeasurements="{Binding UseImperialMeasurements}" />
-            </TabItem>
-            <TabItem Header="Rates">
-                <Admin:RatesControl Width="Auto" CompanyList="{Binding CompanyList}" UseImperialMeasurements="{Binding UseImperialMeasurements}" />
-            </TabItem>
-            <TabItem Header="Trailer combinations">
-                <Admin:TrailerCombinationsControl Width="Auto" CompanyList="{Binding CompanyList}" UseImperialMeasurements="{Binding UseImperialMeasurements}" />
             </TabItem>
         </TabControl>
     </Grid>

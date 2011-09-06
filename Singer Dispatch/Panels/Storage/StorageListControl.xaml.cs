@@ -14,6 +14,8 @@ using System.Windows.Shapes;
 using System.Collections.ObjectModel;
 using SingerDispatch.Printing.Documents;
 using SingerDispatch.Windows;
+using System.ComponentModel;
+using System.Windows.Threading;
 
 namespace SingerDispatch.Panels.Storage
 {
@@ -22,6 +24,9 @@ namespace SingerDispatch.Panels.Storage
     /// </summary>
     public partial class StorageListControl
     {
+        private BackgroundWorker MainGridWorker;
+        private BackgroundWorker ArchiveGridWorker;
+
         public static DependencyProperty SelectedItemProperty = DependencyProperty.Register("SelectedItem", typeof(StorageItem), typeof(StorageListControl), new PropertyMetadata(null, SelectedItemPropertyChanged));
         public SingerDispatchDataContext Database { get; set; }
 
@@ -47,18 +52,30 @@ namespace SingerDispatch.Panels.Storage
             Database = SingerConfigs.CommonDataContext;
 
             cmbBillingIntervals.ItemsSource = from bi in Database.BillingIntervals select bi;
+
+            MainGridWorker = new BackgroundWorker();
+            MainGridWorker.WorkerSupportsCancellation = true;
+            MainGridWorker.DoWork += FillMainGridAsync;
+
+            ArchiveGridWorker = new BackgroundWorker();
+            ArchiveGridWorker.WorkerSupportsCancellation = true;
+            ArchiveGridWorker.DoWork += FillArchiveGridAsync;
+
+            RegisterThread(MainGridWorker);
+            RegisterThread(ArchiveGridWorker);
         }
 
         private void Control_Loaded(object sender, RoutedEventArgs e)
         {
             if (InDesignMode() || IsVisible == false) return;
 
+            UpdateComboBoxes();
+
             if (currentOrPreviousTabs.SelectedIndex == 0)
                 UpdateCurrentStorageList();
             else if (currentOrPreviousTabs.SelectedIndex == 1)
                 UpdatePreviouslyStoredList();
-
-            UpdateComboBoxes();
+            
         }
         
         protected static void SelectedItemPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -112,18 +129,90 @@ namespace SingerDispatch.Panels.Storage
         
         private void UpdateCurrentStorageList()
         {
-            var storage = from si in Database.StorageItems where si.Job != null orderby si.Number descending select si;
-            var query = from s in storage where s.JobCommodity != null && (s.DateRemoved == null || s.DateRemoved.Value.Date > DateTime.Today.Date) orderby s.JobCommodity.Owner.Name select s;
+            if (MainGridWorker.IsBusy)
+                return;
 
-            dgCurrentStorageItems.ItemsSource = new ObservableCollection<StorageItem>(query);
+            dgCurrentStorageItems.ItemsSource = new ObservableCollection<StorageItem>();
+            MainGridWorker.RunWorkerAsync();
         }
 
         private void UpdatePreviouslyStoredList()
         {
-            var storage = from si in Database.StorageItems where si.Job != null orderby si.Number descending select si;
-            var query = from s in storage where s.JobCommodity != null && (s.DateRemoved != null && s.DateRemoved.Value.Date <= DateTime.Today.Date) orderby s.JobCommodity.Owner.Name select s;
+            if (ArchiveGridWorker.IsBusy)
+                return;
+            
+            dgPreviousStorageItems.ItemsSource = new ObservableCollection<StorageItem>();
+            ArchiveGridWorker.RunWorkerAsync();            
+        }
 
-            dgPreviousStorageItems.ItemsSource = new ObservableCollection<StorageItem>(query);
+        private void AddItemToMainGrid(StorageItem item)
+        {
+            var list = dgCurrentStorageItems.ItemsSource as ObservableCollection<StorageItem>;
+
+            list.Add(item);
+        }
+
+        private void AddItemToArchiveGrid(StorageItem item)
+        {
+            var list = dgPreviousStorageItems.ItemsSource as ObservableCollection<StorageItem>;
+
+            list.Add(item);
+        }
+
+        private void FillMainGridAsync(object sender, DoWorkEventArgs e)
+        {
+            var async = sender as BackgroundWorker;
+
+            if (async.CancellationPending)
+            {
+                e.Cancel = true;
+                return;
+            }
+
+            FillDataGridAsync(async, (ObservableCollection<StorageItem>)dgCurrentStorageItems.ItemsSource, false);
+
+            if (async.CancellationPending)
+                e.Cancel = true;
+        }
+
+        private void FillArchiveGridAsync(object sender, DoWorkEventArgs e)
+        {
+            var async = sender as BackgroundWorker;
+
+            if (async.CancellationPending)
+            {
+                e.Cancel = true;
+                return;
+            }
+
+            FillDataGridAsync(async, (ObservableCollection<StorageItem>)dgPreviousStorageItems.ItemsSource, true);
+
+            if (async.CancellationPending)
+                e.Cancel = true;
+        }
+
+        private void FillDataGridAsync(BackgroundWorker thread, ObservableCollection<StorageItem> list, bool archived)
+        {
+            if (thread.CancellationPending)
+                return;
+
+            var storage = from si in Database.StorageItems where si.Job != null orderby si.Number descending select si;
+
+            if (archived)
+                storage = from s in storage where s.JobCommodity != null && (s.DateRemoved != null && s.DateRemoved.Value.Date <= DateTime.Today.Date) orderby s.JobCommodity.Owner.Name select s;
+            else
+                storage = from s in storage where s.JobCommodity != null && (s.DateRemoved == null || s.DateRemoved.Value.Date > DateTime.Today.Date) orderby s.JobCommodity.Owner.Name select s;
+
+            foreach (var item in storage)
+            {
+                if (thread.CancellationPending)
+                    break;
+
+                if (archived)
+                    Dispatcher.Invoke(DispatcherPriority.Render, new Action<StorageItem>(AddItemToArchiveGrid), item);
+                else
+                    Dispatcher.Invoke(DispatcherPriority.Render, new Action<StorageItem>(AddItemToMainGrid), item);
+            }
         }
 
         private void AddContact_Click(object sender, RoutedEventArgs e)
@@ -190,15 +279,14 @@ namespace SingerDispatch.Panels.Storage
 
             SelectedItem = null;
 
-            if (tb.SelectedIndex == 0)
+            switch (tb.SelectedIndex)
             {
-                UpdateCurrentStorageList();
-                SelectedItem = (StorageItem)dgCurrentStorageItems.SelectedItem;
-            }
-            else if (tb.SelectedIndex == 1)
-            {
-                UpdatePreviouslyStoredList();
-                SelectedItem = (StorageItem)dgPreviousStorageItems.SelectedItem;
+                case 0:
+                    UpdateCurrentStorageList();
+                    break;
+                case 1:
+                    UpdatePreviouslyStoredList();
+                    break;
             }                
         }
 

@@ -6,6 +6,9 @@ using System.Windows.Input;
 using SingerDispatch.Controls;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using System.ComponentModel;
+using System.Windows.Threading;
+using System;
 
 namespace SingerDispatch.Panels.Admin
 {
@@ -14,6 +17,7 @@ namespace SingerDispatch.Panels.Admin
     /// </summary>
     public partial class RatesControl
     {
+        private BackgroundWorker MainGridWorker;
         public SingerDispatchDataContext Database { get; set; }
       
         public RatesControl()
@@ -23,6 +27,12 @@ namespace SingerDispatch.Panels.Admin
             if (InDesignMode()) return;
 
             Database = SingerConfigs.CommonDataContext;
+
+            MainGridWorker = new BackgroundWorker();
+            MainGridWorker.WorkerSupportsCancellation = true;
+            MainGridWorker.DoWork += FillDataGridAsync;
+
+            RegisterThread(MainGridWorker);
 
             var provider = (ObjectDataProvider)FindResource("RateTypesDropList");
 
@@ -37,14 +47,14 @@ namespace SingerDispatch.Panels.Admin
                 {
                     list.Add(type);
                 }
-            }
+            }            
         }
 
         private void Control_Loaded(object sender, RoutedEventArgs e)
         {
             if (InDesignMode() || IsVisible == false) return;
 
-            dgRates.ItemsSource = new ObservableCollection<Rate>(from r in Database.Rates where r.Archived != true orderby r.RateType.Name, r.Name select r);            
+            FillDataGrid();
         }
 
         private void NewRate_Click(object sender, RoutedEventArgs e)
@@ -101,7 +111,48 @@ namespace SingerDispatch.Panels.Admin
             {
                 CommitChanges();
             }
-        }      
+        }
+
+        private void AddRateToGrid(Rate rate)
+        {
+            var list = (ObservableCollection<Rate>)dgRates.ItemsSource;
+
+            list.Add(rate);
+        }
+                
+        private void FillDataGrid()
+        {
+            if (MainGridWorker.IsBusy)
+                return;
+
+            dgRates.ItemsSource = new ObservableCollection<Rate>();
+            MainGridWorker.RunWorkerAsync();
+        }
+
+        private void FillDataGridAsync(object sender, DoWorkEventArgs e)
+        {
+            var async = sender as BackgroundWorker;
+
+            if (async.CancellationPending)
+            {
+                e.Cancel = true;
+                return;
+            }
+
+            var rates = from r in Database.Rates where r.Archived != true orderby r.RateType.Name, r.Name select r;
+
+            foreach (var rate in rates)
+            {
+                if (async.CancellationPending)
+                {
+                    e.Cancel = true;
+                    break;
+                }
+
+                Dispatcher.Invoke(DispatcherPriority.Render, new Action<Rate>(AddRateToGrid), rate);
+            }
+        }
+
     }
 
     public class RateTypesDropList : ObservableCollection<RateType>

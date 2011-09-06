@@ -2,11 +2,15 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Collections.ObjectModel;
+using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace SingerDispatch.Panels
 {
     public class BaseUserControl : UserControl
     {
+
+        private List<BackgroundWorker> ThreadList;
 
         public static DependencyProperty CompanyListProperty = DependencyProperty.Register("CompanyList", typeof(ObservableCollection<Company>), typeof(BaseUserControl), new PropertyMetadata(null, CompanyListPropertyChanged));
         public static DependencyProperty UseImperialMeasurementsProperty = DependencyProperty.Register("UseImperialMeasurements", typeof(Boolean), typeof(BaseUserControl), new PropertyMetadata(false, UseImperialMeasurementsPropertyChanged));
@@ -35,6 +39,30 @@ namespace SingerDispatch.Panels
             }
         }
 
+        public BaseUserControl()
+        {
+            ThreadList = new List<BackgroundWorker>();
+        }
+
+        public void RegisterThread(BackgroundWorker worker)
+        {
+            ThreadList.Add(worker);
+        }
+
+        public bool CancelThreads()
+        {
+            var allClear = true;
+
+            foreach (var worker in ThreadList)
+            {
+                if (worker.WorkerSupportsCancellation)
+                    worker.CancelAsync();
+                else
+                    allClear = false;
+            }
+
+            return allClear;
+        }
 
         public static void UseImperialMeasurementsPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
