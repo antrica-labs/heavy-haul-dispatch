@@ -21,8 +21,6 @@ namespace SingerDispatch.Panels.Loads
         public static DependencyProperty CommonRoutesProperty = DependencyProperty.Register("CommonRoutes", typeof(ObservableCollection<string>), typeof(LoadCommoditiesControl));
         public static DependencyProperty CommonInstructionsProperty = DependencyProperty.Register("CommonInstructions", typeof(ObservableCollection<string>), typeof(LoadCommoditiesControl));
 
-        public SingerDispatchDataContext Database { get; set; }
-
         public ObservableCollection<string> CommonRoutes
         {
             get

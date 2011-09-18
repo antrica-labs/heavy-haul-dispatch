@@ -17,8 +17,7 @@ namespace SingerDispatch.Panels.Admin
     /// </summary>
     public partial class RatesControl
     {
-        private BackgroundWorker MainGridWorker;
-        public SingerDispatchDataContext Database { get; set; }
+        private BackgroundWorker MainGridWorker;        
       
         public RatesControl()
         {
@@ -26,7 +25,7 @@ namespace SingerDispatch.Panels.Admin
 
             if (InDesignMode()) return;
 
-            Database = SingerConfigs.CommonDataContext;
+            Database = new SingerDispatchDataContext();
 
             MainGridWorker = new BackgroundWorker();
             MainGridWorker.WorkerSupportsCancellation = true;
@@ -38,7 +37,7 @@ namespace SingerDispatch.Panels.Admin
 
             if (provider != null)
             {
-                var types = from rt in Database.RateTypes select rt;
+                var types = (from rt in Database.RateTypes select rt).ToList();
                 var list = (RateTypesDropList)provider.Data;
 
                 list.Clear();
@@ -119,7 +118,12 @@ namespace SingerDispatch.Panels.Admin
 
             list.Add(rate);
         }
-                
+
+        private void SetDataGridAvailability(bool isAvailable)
+        {
+            dgRates.IsEnabled = isAvailable;
+        }
+
         private void FillDataGrid()
         {
             if (MainGridWorker.IsBusy)
@@ -139,6 +143,8 @@ namespace SingerDispatch.Panels.Admin
                 return;
             }
 
+            Dispatcher.Invoke(DispatcherPriority.Render, new Action<bool>(SetDataGridAvailability), false);
+
             var rates = from r in Database.Rates where r.Archived != true orderby r.RateType.Name, r.Name select r;
 
             foreach (var rate in rates)
@@ -151,6 +157,8 @@ namespace SingerDispatch.Panels.Admin
 
                 Dispatcher.Invoke(DispatcherPriority.Render, new Action<Rate>(AddRateToGrid), rate);
             }
+
+            Dispatcher.Invoke(DispatcherPriority.Render, new Action<bool>(SetDataGridAvailability), true);
         }
 
     }

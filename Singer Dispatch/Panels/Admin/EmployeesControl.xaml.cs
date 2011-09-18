@@ -19,8 +19,7 @@ namespace SingerDispatch.Panels.Admin
         private BackgroundWorker MainGridWorker;
         private BackgroundWorker ArchiveGridWorker;
 
-        public static DependencyProperty SelectedItemProperty = DependencyProperty.Register("SelectedItem", typeof(Employee), typeof(EmployeesControl), new PropertyMetadata(null, SelectedItemPropertyChanged));
-        public SingerDispatchDataContext Database { get; set; }
+        public static DependencyProperty SelectedItemProperty = DependencyProperty.Register("SelectedItem", typeof(Employee), typeof(EmployeesControl), new PropertyMetadata(null, SelectedItemPropertyChanged));        
 
         public Employee SelectedItem
         {
@@ -40,7 +39,7 @@ namespace SingerDispatch.Panels.Admin
             
             if (InDesignMode()) return;
 
-            Database = SingerConfigs.CommonDataContext;
+            Database = new SingerDispatchDataContext();
 
             MainGridWorker = new BackgroundWorker();
             MainGridWorker.WorkerSupportsCancellation = true;
@@ -94,6 +93,11 @@ namespace SingerDispatch.Panels.Admin
             ArchiveGridWorker.RunWorkerAsync();
         }
 
+        private void SetDataGridAvailability(bool isAvailable)
+        {
+            dgEmployees.IsEnabled = isAvailable;
+        }
+
         private void AddEmployeeToMainGrid(Employee emp)
         {
             var list = dgEmployees.ItemsSource as ObservableCollection<Employee>;
@@ -145,7 +149,9 @@ namespace SingerDispatch.Panels.Admin
             if (thread.CancellationPending)
                 return;
 
-            var employees = from emp in Database.Employees where emp.Archived == archived orderby emp.FirstName, emp.LastName select emp;
+            Dispatcher.Invoke(DispatcherPriority.Render, new Action<bool>(SetDataGridAvailability), false);
+
+            var employees = (from emp in Database.Employees where emp.Archived == archived orderby emp.FirstName, emp.LastName select emp).ToList();
 
             foreach (var emp in employees)
             {
@@ -157,6 +163,8 @@ namespace SingerDispatch.Panels.Admin
                 else
                     Dispatcher.Invoke(DispatcherPriority.Render, new Action<Employee>(AddEmployeeToMainGrid), emp);
             }
+
+            Dispatcher.Invoke(DispatcherPriority.Render, new Action<bool>(SetDataGridAvailability), true);
         }
 
         private void NewEmployee_Click(object sender, RoutedEventArgs e)
@@ -164,7 +172,7 @@ namespace SingerDispatch.Panels.Admin
             var employees = (ObservableCollection<Employee>)dgEmployees.ItemsSource;
             var employee = new Employee() { Archived = false, IsAvailable = true, IsSingerStaff = true, IsSupervisor = false, StartDate = DateTime.Now };
 
-            employees.Add(employee);            
+            employees.Add(employee);
             Database.Employees.InsertOnSubmit(employee);
             dgEmployees.ScrollIntoView(employee);
             dgEmployees.SelectedItem = employee;                     

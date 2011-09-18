@@ -17,8 +17,6 @@ namespace SingerDispatch.Panels.Jobs
     /// </summary>
     public partial class JobsPanel
     {   
-        public SingerDispatchDataContext Database { get; set; }
-
         private Status DefaultJobStatus { get; set; }
         
         public JobsPanel()

@@ -21,8 +21,6 @@ namespace SingerDispatch.Panels.Loads
     /// </summary>
     public partial class LoadEquipmentControl 
     {
-        public SingerDispatchDataContext Database { get; set; }
-
         public LoadEquipmentControl()
         {
             InitializeComponent();

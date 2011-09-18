@@ -8,6 +8,7 @@ using SingerDispatch.Controls;
 using System.ComponentModel;
 using System.Windows.Threading;
 using System;
+using System.Collections.Generic;
 
 namespace SingerDispatch.Panels.Admin
 {
@@ -20,8 +21,7 @@ namespace SingerDispatch.Panels.Admin
         private BackgroundWorker ArchiveGridWorker;
 
         public static DependencyProperty SelectedItemProperty = DependencyProperty.Register("SelectedItem", typeof(Equipment), typeof(EquipmentControl), new PropertyMetadata(null, SelectedItemPropertyChanged));
-        public SingerDispatchDataContext Database { get; set; }
-
+        
         public Equipment SelectedItem
         {
             get
@@ -40,9 +40,9 @@ namespace SingerDispatch.Panels.Admin
             
             if (InDesignMode()) return;
 
-            Database = SingerConfigs.CommonDataContext;
+            Database = new SingerDispatchDataContext();
 
-            cmbEquipmentTypes.ItemsSource = from et in Database.EquipmentTypes orderby et.Prefix select et;
+            cmbEquipmentTypes.ItemsSource = (from et in Database.EquipmentTypes orderby et.Prefix select et).ToList();
 
             MainGridWorker = new BackgroundWorker();
             MainGridWorker.WorkerSupportsCancellation = true;
@@ -59,8 +59,8 @@ namespace SingerDispatch.Panels.Admin
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             if (InDesignMode() || IsVisible == false) return;
-
-            cmbEmployees.ItemsSource = from emp in Database.Employees where emp.Archived != true orderby emp.FirstName, emp.LastName select emp;
+            
+            
 
             if (currentOrArchivedTabs.SelectedIndex == 0)
                 UpdateCurrentEquipment();
@@ -78,7 +78,7 @@ namespace SingerDispatch.Panels.Admin
         private void SelectedItemChanged(Equipment newValue, Equipment oldValue)
         {
         }
-
+        
         private void UpdateCurrentEquipment()
         {
             if (MainGridWorker.IsBusy)
@@ -95,6 +95,17 @@ namespace SingerDispatch.Panels.Admin
             
             dgArchivedEquipment.ItemsSource = new ObservableCollection<Equipment>();
             ArchiveGridWorker.RunWorkerAsync();        
+        }
+
+        private void ResetEmployeeComboBox(IEnumerable<Employee> employees)
+        {
+            cmbEmployees.ItemsSource = employees;
+        }
+
+        private void SetDataGridAvailability(bool isAvailable)
+        {
+            dgEquipment.IsEnabled = isAvailable;
+            dgArchivedEquipment.IsEnabled = isAvailable;
         }
 
         private void AddEquipmentToMainGrid(Equipment equip)
@@ -145,10 +156,16 @@ namespace SingerDispatch.Panels.Admin
 
         private void FillDataGridAsync(BackgroundWorker thread, ObservableCollection<Equipment> list, bool archived)
         {
-            if (thread.CancellationPending)
-                return;
+            if (thread.CancellationPending) return;
 
-            var equipment = from eq in Database.Equipment where eq.Archived == archived orderby eq.UnitNumber select eq;
+            Dispatcher.Invoke(DispatcherPriority.Render, new Action<bool>(SetDataGridAvailability), false);
+
+            var employees = (from emp in Database.Employees where emp.Archived != true orderby emp.FirstName, emp.LastName select emp).ToList();
+            Dispatcher.Invoke(DispatcherPriority.Render, new Action<IEnumerable<Employee>>(ResetEmployeeComboBox), employees);
+
+            if (thread.CancellationPending) return;
+
+            var equipment = (from eq in Database.Equipment where eq.Archived == archived orderby eq.UnitNumber select eq).ToList();
 
             foreach (var eq in equipment)
             {
@@ -160,6 +177,8 @@ namespace SingerDispatch.Panels.Admin
                 else
                     Dispatcher.Invoke(DispatcherPriority.Render, new Action<Equipment>(AddEquipmentToMainGrid), eq);
             }
+
+            Dispatcher.Invoke(DispatcherPriority.Render, new Action<bool>(SetDataGridAvailability), true);
         }
 
         private void NewEquipment_Click(object sender, RoutedEventArgs e)
@@ -187,7 +206,7 @@ namespace SingerDispatch.Panels.Admin
             try
             {
                 unit.Archived = true;
-                
+
                 Database.SubmitChanges();
 
                 ((ObservableCollection<Equipment>)dgEquipment.ItemsSource).Remove(unit);

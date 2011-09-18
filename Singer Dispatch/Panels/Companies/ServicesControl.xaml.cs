@@ -14,8 +14,6 @@ namespace SingerDispatch.Panels.Companies
     /// </summary>
     public partial class ServicesControl
     {
-        public SingerDispatchDataContext Database { get; set; }
-
         public ServicesControl()
         {
             InitializeComponent();

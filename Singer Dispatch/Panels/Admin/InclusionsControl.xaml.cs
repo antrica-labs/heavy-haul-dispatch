@@ -18,15 +18,13 @@ namespace SingerDispatch.Panels.Admin
     {
         private BackgroundWorker MainGridWorker;
 
-        public SingerDispatchDataContext Database { get; set; }
-
         public InclusionsControl()
         {
             InitializeComponent();
 
             if (InDesignMode()) return;
 
-            Database = SingerConfigs.CommonDataContext;
+            Database = new SingerDispatchDataContext();
 
             MainGridWorker = new BackgroundWorker();
             MainGridWorker.WorkerSupportsCancellation = true;
@@ -98,6 +96,11 @@ namespace SingerDispatch.Panels.Admin
             }
         }
 
+        private void SetDataGridAvailability(bool isAvailable)
+        {
+            TheGrid.IsEnabled = isAvailable;            
+        }
+
         private void FillDataGrid()
         {
             if (MainGridWorker.IsBusy)
@@ -117,7 +120,9 @@ namespace SingerDispatch.Panels.Admin
                 return;
             }
 
-            var entities = from i in Database.Inclusions where i.Archived != true orderby i.Line select i;
+            Dispatcher.Invoke(DispatcherPriority.Render, new Action<bool>(SetDataGridAvailability), false);
+
+            var entities = (from i in Database.Inclusions where i.Archived != true orderby i.Line select i).ToList();
 
             foreach (var entity in entities)
             {
@@ -129,6 +134,8 @@ namespace SingerDispatch.Panels.Admin
 
                 Dispatcher.Invoke(DispatcherPriority.Render, new Action<Inclusion>(AddToGrid), entity);
             }
+
+            Dispatcher.Invoke(DispatcherPriority.Render, new Action<bool>(SetDataGridAvailability), true);
         }
 
         private void AddToGrid(Inclusion entity)

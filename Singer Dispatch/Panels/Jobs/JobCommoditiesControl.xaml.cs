@@ -19,8 +19,6 @@ namespace SingerDispatch.Panels.Jobs
         public static DependencyProperty CommonSiteNamesProperty = DependencyProperty.Register("CommonSiteNames", typeof(ObservableCollection<string>), typeof(JobCommoditiesControl));
         public static DependencyProperty CommonSiteAddressesProperty = DependencyProperty.Register("CommonSiteAddresses", typeof(ObservableCollection<string>), typeof(JobCommoditiesControl));
 
-        public SingerDispatchDataContext Database { get; set; }
-
         public ObservableCollection<string> CommonSiteNames
         {
             get

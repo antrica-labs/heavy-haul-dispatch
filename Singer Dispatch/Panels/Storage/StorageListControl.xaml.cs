@@ -27,8 +27,7 @@ namespace SingerDispatch.Panels.Storage
         private BackgroundWorker MainGridWorker;
         private BackgroundWorker ArchiveGridWorker;
 
-        public static DependencyProperty SelectedItemProperty = DependencyProperty.Register("SelectedItem", typeof(StorageItem), typeof(StorageListControl), new PropertyMetadata(null, SelectedItemPropertyChanged));
-        public SingerDispatchDataContext Database { get; set; }
+        public static DependencyProperty SelectedItemProperty = DependencyProperty.Register("SelectedItem", typeof(StorageItem), typeof(StorageListControl), new PropertyMetadata(null, SelectedItemPropertyChanged));        
 
         public StorageItem SelectedItem
         {
@@ -51,7 +50,7 @@ namespace SingerDispatch.Panels.Storage
 
             Database = SingerConfigs.CommonDataContext;
 
-            cmbBillingIntervals.ItemsSource = from bi in Database.BillingIntervals select bi;
+            cmbBillingIntervals.ItemsSource = (from bi in Database.BillingIntervals select bi).ToList();
 
             MainGridWorker = new BackgroundWorker();
             MainGridWorker.WorkerSupportsCancellation = true;
@@ -122,7 +121,7 @@ namespace SingerDispatch.Panels.Storage
         private void UpdateComboBoxes()
         {
             var selected = cmbContacts.SelectedItem;
-            
+
             cmbContacts.ItemsSource = (SelectedItem == null) ? null : new ObservableCollection<Contact>(from c in Database.Contacts where c.Company != null && c.Company == SelectedItem.Job.Company || c.Company == SelectedItem.Job.CareOfCompany orderby c.FirstName, c.LastName select c);
             cmbContacts.SelectedItem = selected;
         }                
@@ -143,6 +142,12 @@ namespace SingerDispatch.Panels.Storage
             
             dgPreviousStorageItems.ItemsSource = new ObservableCollection<StorageItem>();
             ArchiveGridWorker.RunWorkerAsync();            
+        }
+
+        private void SetDataGridAvailability(bool isAvailable)
+        {
+            dgCurrentStorageItems.IsEnabled = isAvailable;
+            dgPreviousStorageItems.IsEnabled = isAvailable;
         }
 
         private void AddItemToMainGrid(StorageItem item)
@@ -196,6 +201,8 @@ namespace SingerDispatch.Panels.Storage
             if (thread.CancellationPending)
                 return;
 
+            Dispatcher.Invoke(DispatcherPriority.Render, new Action<bool>(SetDataGridAvailability), false);
+                        
             var storage = from si in Database.StorageItems where si.Job != null orderby si.Number descending select si;
 
             if (archived)
@@ -213,6 +220,8 @@ namespace SingerDispatch.Panels.Storage
                 else
                     Dispatcher.Invoke(DispatcherPriority.Render, new Action<StorageItem>(AddItemToMainGrid), item);
             }
+
+            Dispatcher.Invoke(DispatcherPriority.Render, new Action<bool>(SetDataGridAvailability), true);
         }
 
         private void AddContact_Click(object sender, RoutedEventArgs e)

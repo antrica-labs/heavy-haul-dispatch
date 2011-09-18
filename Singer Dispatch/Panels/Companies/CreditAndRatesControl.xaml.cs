@@ -18,8 +18,6 @@ namespace SingerDispatch.Panels.Companies
     {
         private CommandBinding SaveCommand { get; set; }
 
-        public SingerDispatchDataContext Database { get; set; }        
-
         public CreditAndRatesControl()
         {
             InitializeComponent();

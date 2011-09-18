@@ -14,8 +14,6 @@ namespace SingerDispatch.Panels.Companies
     /// </summary>
     public partial class CommoditiesControl
     {
-        public SingerDispatchDataContext Database { get; set; }
-
         public CommoditiesControl()
         {
             InitializeComponent();

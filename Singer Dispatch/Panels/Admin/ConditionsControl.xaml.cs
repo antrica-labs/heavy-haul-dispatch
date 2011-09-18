@@ -98,6 +98,11 @@ namespace SingerDispatch.Panels.Admin
             }
         }
 
+        private void SetDataGridAvailability(bool isAvailable)
+        {
+            TheGrid.IsEnabled = isAvailable;
+        }
+
         private void FillDataGrid()
         {
             if (MainGridWorker.IsBusy)
@@ -117,7 +122,9 @@ namespace SingerDispatch.Panels.Admin
                 return;
             }
 
-            var entities = from c in Database.Conditions where c.Archived != true orderby c.ID select c;
+            Dispatcher.Invoke(DispatcherPriority.Render, new Action<bool>(SetDataGridAvailability), false);
+
+            var entities = (from c in Database.Conditions where c.Archived != true orderby c.ID select c).ToList();
 
             foreach (var entity in entities)
             {
@@ -129,6 +136,8 @@ namespace SingerDispatch.Panels.Admin
 
                 Dispatcher.Invoke(DispatcherPriority.Render, new Action<Condition>(AddToGrid), entity);
             }
+
+            Dispatcher.Invoke(DispatcherPriority.Render, new Action<bool>(SetDataGridAvailability), true);
         }
 
         private void AddToGrid(Condition entity)

@@ -20,15 +20,13 @@ namespace SingerDispatch.Panels.Admin
     {
         private BackgroundWorker MainGridWorker;
 
-        public SingerDispatchDataContext Database { get; set; }
-
         public TrailerCombinationsControl()
         {
             InitializeComponent();
 
             if (InDesignMode()) return;
 
-            Database = SingerConfigs.CommonDataContext;
+            Database = new SingerDispatchDataContext();
 
             MainGridWorker = new BackgroundWorker();
             MainGridWorker.WorkerSupportsCancellation = true;
@@ -45,7 +43,7 @@ namespace SingerDispatch.Panels.Admin
 
             if (provider != null)
             {
-                var rates = from r in Database.Rates where r.Archived != true && r.RateType.Name == "Trailer" select r;
+                var rates = (from r in Database.Rates where r.Archived != true && r.RateType.Name == "Trailer" select r).ToList();
                 var list = (RatesDropList)provider.Data;
 
                 list.Clear();
@@ -129,6 +127,11 @@ namespace SingerDispatch.Panels.Admin
             }
         }
 
+        private void SetDataGridAvailability(bool isAvailable)
+        {
+            dgCombinations.IsEnabled = isAvailable;
+        }
+
         private void FillDataGrid()
         {
             if (MainGridWorker.IsBusy)
@@ -148,7 +151,9 @@ namespace SingerDispatch.Panels.Admin
                 return;
             }
 
-            var combos = from tc in Database.TrailerCombinations where tc.Archived != true orderby tc.Rate.Name select tc;
+            Dispatcher.Invoke(DispatcherPriority.Render, new Action<bool>(SetDataGridAvailability), false);
+
+            var combos = (from tc in Database.TrailerCombinations where tc.Archived != true orderby tc.Rate.Name select tc).ToList();
 
             foreach (var combo in combos)
             {
@@ -160,6 +165,8 @@ namespace SingerDispatch.Panels.Admin
 
                 Dispatcher.Invoke(DispatcherPriority.Render, new Action<TrailerCombination>(AddToGrid), combo);
             }
+
+            Dispatcher.Invoke(DispatcherPriority.Render, new Action<bool>(SetDataGridAvailability), true);
         }
 
         private void AddToGrid(TrailerCombination combo)

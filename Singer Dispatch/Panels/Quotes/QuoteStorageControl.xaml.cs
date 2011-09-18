@@ -10,8 +10,6 @@ namespace SingerDispatch.Panels.Quotes
     /// </summary>
     public partial class QuoteStorageControl
     {
-        public SingerDispatchDataContext Database { get; set; }
-
         public QuoteStorageControl()
         {
             InitializeComponent();

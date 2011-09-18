@@ -17,8 +17,6 @@ namespace SingerDispatch.Panels.Quotes
     {
         private Style _previousStyle;
 
-        public SingerDispatchDataContext Database { get; set; }
-
         public QuoteDetailsControl()
         {
             InitializeComponent();

@@ -23,8 +23,6 @@ namespace SingerDispatch.Panels.Jobs
     /// </summary>
     public partial class JobDetailsControl
     {
-        public SingerDispatchDataContext Database { get; set; }
-
         public JobDetailsControl()
         {
             InitializeComponent();

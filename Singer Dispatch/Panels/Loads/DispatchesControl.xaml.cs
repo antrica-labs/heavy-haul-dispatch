@@ -16,8 +16,6 @@ namespace SingerDispatch.Panels.Loads
     /// </summary>
     public partial class DispatchesControl
     {
-        public SingerDispatchDataContext Database { get; set; }
-
         public DispatchesControl()
         {
             InitializeComponent();

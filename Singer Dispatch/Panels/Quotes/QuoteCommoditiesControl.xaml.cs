@@ -18,8 +18,6 @@ namespace SingerDispatch.Panels.Quotes
         public static DependencyProperty CommonSiteNamesProperty = DependencyProperty.Register("CommonSiteNames", typeof(ObservableCollection<string>), typeof(QuoteCommoditiesControl));
         public static DependencyProperty CommonSiteAddressesProperty = DependencyProperty.Register("CommonSiteAddresses", typeof(ObservableCollection<string>), typeof(QuoteCommoditiesControl));
 
-        public SingerDispatchDataContext Database { get; set; }
-
         public ObservableCollection<string> CommonSiteNames
         {
             get

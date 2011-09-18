@@ -12,8 +12,6 @@ namespace SingerDispatch.Panels.Quotes
     /// </summary>
     public partial class QuoteConditionsControl
     {
-        public SingerDispatchDataContext Database { get; set; }
-
         public QuoteConditionsControl()
         {
             InitializeComponent();

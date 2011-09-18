@@ -12,6 +12,8 @@ namespace SingerDispatch.Panels
 
         private List<BackgroundWorker> ThreadList;
 
+        public SingerDispatchDataContext Database { get; set; }
+
         public static DependencyProperty CompanyListProperty = DependencyProperty.Register("CompanyList", typeof(ObservableCollection<Company>), typeof(BaseUserControl), new PropertyMetadata(null, CompanyListPropertyChanged));
         public static DependencyProperty UseImperialMeasurementsProperty = DependencyProperty.Register("UseImperialMeasurements", typeof(Boolean), typeof(BaseUserControl), new PropertyMetadata(false, UseImperialMeasurementsPropertyChanged));
 

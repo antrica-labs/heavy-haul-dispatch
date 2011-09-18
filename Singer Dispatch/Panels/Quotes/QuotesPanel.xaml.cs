@@ -17,8 +17,6 @@ namespace SingerDispatch.Panels.Quotes
     /// </summary>
     public partial class QuotesPanel
     {
-        public SingerDispatchDataContext Database { get; set; }
-
         public QuotesPanel()
         {
             InitializeComponent();

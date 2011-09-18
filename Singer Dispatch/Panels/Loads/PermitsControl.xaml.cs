@@ -9,8 +9,6 @@ namespace SingerDispatch.Panels.Loads
     /// </summary>
     public partial class PermitsControl
     {
-        public SingerDispatchDataContext Database { get; set; }
-
         public static DependencyProperty SelectedPermitProperty = DependencyProperty.Register("SelectedPermit", typeof(Permit), typeof(PermitsControl), new PropertyMetadata(null, SelectedPermitPropertyChanged));
 
         public Permit SelectedPermit

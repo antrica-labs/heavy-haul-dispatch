@@ -22,9 +22,7 @@ namespace SingerDispatch.Panels.Jobs
     /// Interaction logic for StoredItemsControl.xaml
     /// </summary>
     public partial class StoredItemsControl
-    {        
-        public SingerDispatchDataContext Database { get; set; }
-
+    {   
         public StoredItemsControl()
         {
             InitializeComponent();

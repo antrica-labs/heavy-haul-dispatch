@@ -17,8 +17,6 @@ namespace SingerDispatch.Panels.Loads
     /// </summary>
     public partial class LoadsPanel
     {
-        public SingerDispatchDataContext Database { get; set; }
-
         public static DependencyProperty SelectedJobProperty = DependencyProperty.Register("SelectedJob", typeof(Job), typeof(LoadsPanel), new PropertyMetadata(null, SelectedJobPropertyChanged));
         public static DependencyProperty SelectedPermitProperty = DependencyProperty.Register("SelectedPermit", typeof(Permit), typeof(LoadsPanel), new PropertyMetadata(null, SelectedPermitPropertyChanged));
         public static DependencyProperty SelectedThirdPartyServiceProperty = DependencyProperty.Register("SelectedThirdPartyService", typeof(ThirdPartyService), typeof(LoadsPanel), new PropertyMetadata(null, SelectedThirdPartyServicePropertyChanged));

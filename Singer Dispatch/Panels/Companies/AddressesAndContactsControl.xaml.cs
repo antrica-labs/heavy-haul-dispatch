@@ -13,8 +13,6 @@ namespace SingerDispatch.Panels.Companies
     /// </summary>
     public partial class AddressesAndContactsControl
     {
-        public SingerDispatchDataContext Database { get; set; }
-
         public AddressesAndContactsControl()
         {
             InitializeComponent();

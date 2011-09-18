@@ -14,8 +14,6 @@ namespace SingerDispatch.Panels.Loads
     {
         private Boolean SelectionChangedInCode = false;
      
-        public SingerDispatchDataContext Database { get; set; }
-
         public static DependencyProperty SelectedThirdPartyServiceProperty = DependencyProperty.Register("SelectedThirdPartyService", typeof(ThirdPartyService), typeof(ThirdPartyServicesControl), new PropertyMetadata(null, SelectedThirdPartyServicePropertyChanged));
 
         public ThirdPartyService SelectedThirdPartyService

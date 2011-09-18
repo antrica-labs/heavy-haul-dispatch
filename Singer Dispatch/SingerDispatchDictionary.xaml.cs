@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using SingerDispatch.Panels;
 
 namespace SingerDispatch
 {
@@ -37,6 +38,27 @@ namespace SingerDispatch
             try
             {
                 SingerConfigs.CommonDataContext.SubmitChanges();
+
+                if (sender is FrameworkElement)
+                {
+                    var element = sender as FrameworkElement;
+                    
+                    while (element.Parent != null)
+                    {
+                        if (element.Parent is BaseUserControl)
+                        {
+                            var control = element.Parent as BaseUserControl;
+
+                            if (control.Database != null)
+                                control.Database.SubmitChanges();
+
+                            break;
+                        }
+                        else
+                            element = element.Parent as FrameworkElement;
+                    }
+                }                
+
                 ChangesMade = false;
             }
             catch (System.Exception ex)

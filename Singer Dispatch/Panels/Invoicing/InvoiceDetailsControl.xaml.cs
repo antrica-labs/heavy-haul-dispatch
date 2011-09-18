@@ -22,8 +22,6 @@ namespace SingerDispatch.Panels.Invoicing
     /// </summary>
     public partial class InvoiceDetailsControl
     {
-        public SingerDispatchDataContext Database { get; set; }
-
         public InvoiceDetailsControl()
         {
             InitializeComponent();
