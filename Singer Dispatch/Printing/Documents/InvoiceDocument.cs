@@ -113,7 +113,7 @@ namespace SingerDispatch.Printing.Documents
             builder.Append(string.Format(row, "Invoice #", invoice.ToString()));
 
             if (invoice.Job != null)
-                builder.Append(string.Format(row, "Job #", invoice.Job.Number));
+                builder.Append(string.Format(row, "Singer Job #", invoice.Job.Number));
 
             foreach (var item in invoice.ReferenceNumbers)
             {
