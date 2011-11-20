@@ -36,7 +36,7 @@
         <DataGrid Name="dgJobs" Grid.Column="0" Grid.Row="1" Style="{StaticResource ListDisplay}" SelectedItem="{Binding ElementName=ThePanel, Path=SelectedJob}" SelectionChanged="dgJobs_SelectionChanged">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Number" Binding="{Binding Number}" Width="65"/>
-                <DataGridTextColumn Header="Quote" Binding="{Binding Quote.Number}" Width="65" />
+                <DataGridTextColumn Header="Quote" Binding="{Binding Quote.FriendlyNumber}" Width="65" />
                 <DataGridTextColumn Header="Name" Binding="{Binding Name}" />
             </DataGrid.Columns>
         </DataGrid>

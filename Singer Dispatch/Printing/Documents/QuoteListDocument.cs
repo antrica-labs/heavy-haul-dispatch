@@ -59,7 +59,7 @@ namespace SingerDispatch.Printing.Documents
             ";
             var row = @"
                 <tr {0}>
-                    <td class=""jobid"">{1}</td>
+                    <td class=""quoteid"">{1}</td>
                     <td class=""company"">{2}</td>
                     <td class=""careof"">{3}</td>
                     <td class=""price"">{4}</td>
@@ -213,6 +213,11 @@ namespace SingerDispatch.Printing.Documents
                     table.items tr.last td
                     {
                         border-bottom: none;
+                    }
+
+                    table.items td.quoteid
+                    {
+                        white-space: nowrap;
                     }
                 </style>
                 <style type=""text/css"" media=""print"">

@@ -169,11 +169,19 @@ namespace SingerDispatch
             IsItemizedBilling = IsItemizedBilling ?? false;
         }
 
+        public string FriendlyNumber
+        {
+            get
+            {
+                return string.Format("Q{0}", Number);
+            }
+        }
+
         public string FriendlyName
         {
             get
             {
-                return string.Format("{0} rev. {1}", Number, Revision);
+                return string.Format("Q{0} rev. {1}", Number, Revision);
             }
         }
 
@@ -181,7 +189,7 @@ namespace SingerDispatch
         {
             get
             {
-                return String.Format("{0}-{1}", Number, Revision);
+                return String.Format("Q{0}-{1}", Number, Revision);
             }
         }
 

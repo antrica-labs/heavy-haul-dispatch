@@ -35,7 +35,7 @@
 
         <DataGrid Grid.Column="0" Grid.Row="1" Name="dgQuoteList" Style="{StaticResource ListDisplay}" SelectedItem="{Binding ElementName=ThePanel, Path=SelectedQuote}">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Number" Binding="{Binding Number}" Width="0.75*" />
+                <DataGridTextColumn Header="Number" Binding="{Binding FriendlyNumber}" Width="0.75*" />
                 <DataGridTextColumn Header="Rev" Binding="{Binding Revision}" Width="0.5*" />
                 <DataGridTextColumn Header="Price" Binding="{Binding Price, StringFormat=C}" />
             </DataGrid.Columns>
