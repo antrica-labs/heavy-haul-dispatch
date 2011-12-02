@@ -45,7 +45,7 @@
                         <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding JobCommodity.Name}" />
 
                         <Label Grid.Row="3" Grid.Column="0">Unit #:</Label>
-                        <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Commodity.Unit}" />
+                        <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding JobCommodity.Unit}" />
 
                         <Label Grid.Row="4" Grid.Column="0">Location:</Label>
                         <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding YardLocation}" />
@@ -223,7 +223,8 @@
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Job" Binding="{Binding Job.Number}" Width="50" />
                             <DataGridTextColumn Header="Owner" Binding="{Binding JobCommodity.Owner.Name}" />
-                            <DataGridTextColumn Header="Commodity" Binding="{Binding JobCommodity.NameAndUnit}" />
+                            <DataGridTextColumn Header="Commodity" Binding="{Binding JobCommodity.Name}" />
+                            <DataGridTextColumn Header="Unit" Binding="{Binding JobCommodity.Unit}" Width="150" />
                             <DataGridTextColumn Header="Location" Binding="{Binding YardLocation}" />
                             <DataGridTextColumn Header="Rate" Binding="{Binding BillingRate, StringFormat=C}" Width="80" />
                             <DataGridTextColumn Header="Interval" Binding="{Binding BillingInterval.Name}" Width="100" />

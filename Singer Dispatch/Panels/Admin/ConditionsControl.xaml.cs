@@ -26,7 +26,7 @@ namespace SingerDispatch.Panels.Admin
 
             if (InDesignMode()) return;
 
-            Database = SingerConfigs.CommonDataContext;
+            Database = new SingerDispatchDataContext();
 
             MainGridWorker = new BackgroundWorker();
             MainGridWorker.WorkerSupportsCancellation = true;
