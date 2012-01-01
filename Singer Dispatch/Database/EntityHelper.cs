@@ -117,19 +117,47 @@ namespace SingerDispatch.Database
 
         public static void SaveAsNewQuote(Quote quote, SingerDispatchDataContext context)
         {
-            var number = (from q in context.Quotes select q.Number).Max() + 1;
+            var number = (from q in context.Quotes select q.Number).Max();
 
             quote.Revision = 0;
-            quote.Number = number ?? 11001;
+
+            if (number == null)
+            {
+                quote.Number = Convert.ToInt32(DateTime.Now.Year + "001");
+            }
+            else
+            {
+                var year = Convert.ToInt32(number.ToString().Substring(0, 2));
+                var count = Convert.ToInt32(number.ToString().Substring(2));
+
+                if (year.ToString() != DateTime.Now.ToString("yy"))
+                    quote.Number = Convert.ToInt32(DateTime.Now.ToString("yy") + "001");
+                else
+                    quote.Number = Convert.ToInt32(year + (count + 1).ToString("000"));
+            }
 
             context.SubmitChanges();
         }
 
         public static void SaveAsNewJob(Job job, SingerDispatchDataContext context)
         {
-            var number = (from j in context.Jobs select j.Number).Max() + 1;
+            var number = (from j in context.Jobs select j.Number).Max();
 
-            job.Number = number ?? 11001;
+            if (number == null)
+            {
+                job.Number = Convert.ToInt32(DateTime.Now.Year + "001");
+            }
+            else
+            {
+                var year = Convert.ToInt32(number.ToString().Substring(0, 2));
+                var count = Convert.ToInt32(number.ToString().Substring(2));
+
+                if (year.ToString() != DateTime.Now.ToString("yy"))
+                    job.Number = Convert.ToInt32(DateTime.Now.ToString("yy") + "001");
+                else
+                    job.Number = Convert.ToInt32(year + (count + 1).ToString("000"));
+            }
+
 
             context.SubmitChanges();
         }
