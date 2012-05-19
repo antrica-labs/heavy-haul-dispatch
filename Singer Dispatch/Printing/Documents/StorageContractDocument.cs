@@ -500,10 +500,10 @@ namespace SingerDispatch.Printing.Documents
 
             if (SpecializedDocument)
             {
-                cName = "SingerName";
-                cAddress = "SingerAddress-StreetAddress";
-                cCity = "SingerAddress-City";
-                cPhone = "SingerAddress-Phone";
+                cName = "CompanyName";
+                cAddress = "CompanyAddress-StreetAddress";
+                cCity = "CompanyAddress-City";
+                cPhone = "CompanyAddress-Phone";
             }
             else
             {
@@ -587,10 +587,10 @@ namespace SingerDispatch.Printing.Documents
             replacements[8] = (address != null) ? string.Format("{0}, {1} {2}", city, prov, postal) : "";
             replacements[9] = (address != null) ? address.PrimaryPhone : "";
 
-            replacements[10] = SingerConfigs.GetConfig("SingerName") ?? "Singer Specialized Ltd.";
-            replacements[11] = SingerConfigs.GetConfig("SingerAddress-StreetAddress");
-            replacements[12] = SingerConfigs.GetConfig("SingerAddress-City");
-            replacements[13] = SingerConfigs.GetConfig("SingerAddress-Phone");
+            replacements[10] = SingerConfigs.GetConfig("CompanyName") ?? "Singer Specialized Ltd.";
+            replacements[11] = SingerConfigs.GetConfig("CompanyAddress-StreetAddress");
+            replacements[12] = SingerConfigs.GetConfig("CompanyAddress-City");
+            replacements[13] = SingerConfigs.GetConfig("CompanyAddress-Phone");
 
             return string.Format(html, replacements);
         }
@@ -611,7 +611,7 @@ namespace SingerDispatch.Printing.Documents
                     rows.Append(GetCommodityRow(commodity.NameAndUnit, commodity.Owner.Name, commodity.Length, commodity.Width, commodity.Height, commodity.Weight, item.BillingRate, item.BillingInterval, item.Notes));
             }
 
-            replacements[0] = SingerConfigs.GetConfig("SingerName") ?? "Singer Specialized Ltd.";
+            replacements[0] = SingerConfigs.GetConfig("CompanyName") ?? "Singer Specialized Ltd.";
             replacements[1] = company.Name;
             replacements[2] = rows.ToString();
 
@@ -630,7 +630,7 @@ namespace SingerDispatch.Printing.Documents
             if (commodity != null)
                 rows.Append(GetCommodityRow(commodity.NameAndUnit, commodity.Owner.Name, commodity.Length, commodity.Width, commodity.Height, commodity.Weight, item.BillingRate, item.BillingInterval, item.Notes));            
 
-            replacements[0] = SingerConfigs.GetConfig("SingerName") ?? "Singer Specialized Ltd.";
+            replacements[0] = SingerConfigs.GetConfig("CompanyName") ?? "Singer Specialized Ltd.";
             replacements[1] = company.Name;
             replacements[2] = rows.ToString();
 

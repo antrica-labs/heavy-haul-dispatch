@@ -603,7 +603,7 @@ namespace SingerDispatch.Printing.Documents
                     <table>
                         <tr>
                             <td class=""logo_col"">
-                                <span class=""logo""><img src=""{0}"" alt=""Singer Specialized""></span>
+                                <span class=""logo""><img src=""{0}"" alt=""{1}""></span>
                             </td>
                             <td class=""address_col"">
                                 <span>{1}</span>
@@ -627,10 +627,10 @@ namespace SingerDispatch.Printing.Documents
 
             if (SpecializedDocument)
             {
-                cName = "SingerName";
-                cAddress = "SingerAddress-StreetAddress";
-                cCity = "SingerAddress-City";
-                cPhone = "SingerAddress-Phone";
+                cName = "CompanyName";
+                cAddress = "CompanyAddress-StreetAddress";
+                cCity = "CompanyAddress-City";
+                cPhone = "CompanyAddress-Phone";
             }
             else
             {
@@ -642,7 +642,7 @@ namespace SingerDispatch.Printing.Documents
 
 
             replacements[0] = GetHeaderImg();
-            replacements[1] = SingerConfigs.GetConfig(cName) ?? "Singer Specialized Ltd.";
+            replacements[1] = SingerConfigs.GetConfig(cName);
             replacements[2] = SingerConfigs.GetConfig(cAddress);
             replacements[3] = SingerConfigs.GetConfig(cCity);
             replacements[4] = SingerConfigs.GetConfig(cPhone);

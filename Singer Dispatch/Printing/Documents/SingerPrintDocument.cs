@@ -17,9 +17,9 @@ namespace SingerDispatch.Printing.Documents
             string img = null;
 
             if (SpecializedDocument)
-                img = SingerConfigs.GetConfig("Documents-SingerHeaderImg") ?? @"Images\DocumentHeader.png";
+                img = SingerConfigs.GetConfig("Documents-CompanyHeaderImg") ?? @"Images\DocumentHeader.png";
             else
-                img = SingerConfigs.GetConfig("Documents-MEHeaderImg") ?? @"Images\DocumentHeader.png";
+                img = SingerConfigs.GetConfig("Documents-EnterpriseHeaderImg") ?? @"Images\DocumentHeader.png";
 
             try
             {

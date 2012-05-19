@@ -143,14 +143,14 @@ namespace SingerDispatch.Printing.Documents
                 if (copyType == "Driver Copy")
                 {
                     if (SpecializedDocument)
-                        copies = Convert.ToInt32(SingerConfigs.GetConfig("Dispatch-SingerBoLDriverCopies") ?? "1");
+                        copies = Convert.ToInt32(SingerConfigs.GetConfig("Dispatch-CompanyBoLDriverCopies") ?? "1");
                     else
                         copies = Convert.ToInt32(SingerConfigs.GetConfig("Dispatch-EnterpriseBoLDriverCopies") ?? "1");
                 }
                 else if (copyType == "File Copy")
                 {
                     if (SpecializedDocument)
-                        copies = Convert.ToInt32(SingerConfigs.GetConfig("Dispatch-SingerBoLFileCopies") ?? "1");
+                        copies = Convert.ToInt32(SingerConfigs.GetConfig("Dispatch-CompanyBoLFileCopies") ?? "1");
                     else
                         copies = Convert.ToInt32(SingerConfigs.GetConfig("Dispatch-EnterpriseBoLFileCopies") ?? "1");
                 }
@@ -675,10 +675,10 @@ namespace SingerDispatch.Printing.Documents
 
             if (SpecializedDocument)
             {
-                cName = "SingerName";
-                cAddress = "SingerAddress-StreetAddress";
-                cCity = "SingerAddress-City";
-                cPhone = "SingerAddress-Phone";
+                cName = "CompanyName";
+                cAddress = "CompanyAddress-StreetAddress";
+                cCity = "CompanyAddress-City";
+                cPhone = "CompanyAddress-Phone";
             }
             else
             {

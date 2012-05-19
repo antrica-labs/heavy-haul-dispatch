@@ -69,11 +69,11 @@ namespace SingerDispatch.Printing.Documents
 
             if (SpecializedDocument)
             {
-                cName = "SingerName";
-                cAddress = "SingerAddress-StreetAddress";
-                cCity = "SingerAddress-City";
-                cPhone = "SingerAddress-Phone";
-                cGSTNumber = "SingerGSTNumber";
+                cName = "CompanyName";
+                cAddress = "CompanyAddress-StreetAddress";
+                cCity = "CompanyAddress-City";
+                cPhone = "CompanyAddress-Phone";
+                cGSTNumber = "CompanyGSTNumber";
             }
             else
             {

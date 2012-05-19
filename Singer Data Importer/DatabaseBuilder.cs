@@ -320,21 +320,21 @@ namespace SingerDispatch.Importer
 
         public void PopulateDefaults()
         {
-            Database.Configurations.InsertOnSubmit(new Configuration { Name = "SingerName", Value = "Singer Specialized Ltd." });
+            Database.Configurations.InsertOnSubmit(new Configuration { Name = "CompanyName", Value = "Singer Specialized Ltd." });
             Database.Configurations.InsertOnSubmit(new Configuration { Name = "EnterpriseName", Value = "M.E. Singer Enterprise" });
             Database.Configurations.InsertOnSubmit(new Configuration { Name = "GSTRate", Value = "0.05m" });
             Database.Configurations.InsertOnSubmit(new Configuration { Name = "FuelTaxRate", Value = "0.00m" });
-            Database.Configurations.InsertOnSubmit(new Configuration { Name = "SingerAddress-StreetAddress", Value = "235132 84th St. SE" });
-            Database.Configurations.InsertOnSubmit(new Configuration { Name = "SingerAddress-City", Value = "Calgary, AB T1X 0K1" });
-            Database.Configurations.InsertOnSubmit(new Configuration { Name = "SingerAddress-Phone", Value = "(403) 569-8605" });
+            Database.Configurations.InsertOnSubmit(new Configuration { Name = "CompanyAddress-StreetAddress", Value = "235132 84th St. SE" });
+            Database.Configurations.InsertOnSubmit(new Configuration { Name = "CompanyAddress-City", Value = "Calgary, AB T1X 0K1" });
+            Database.Configurations.InsertOnSubmit(new Configuration { Name = "CompanyAddress-Phone", Value = "(403) 569-8605" });
             Database.Configurations.InsertOnSubmit(new Configuration { Name = "EnterpriseAddress-StreetAddress", Value = "235132 84th St. SE" });
             Database.Configurations.InsertOnSubmit(new Configuration { Name = "EnterpriseAddress-City", Value = "Calgary, AB T1X 0K1" });
             Database.Configurations.InsertOnSubmit(new Configuration { Name = "EnterpriseAddress-Phone", Value = "(403) 569-8605" });
             Database.Configurations.InsertOnSubmit(new Configuration { Name = "Quote-DefaultSignoff", Value = "We appreciate the opportunity to supply a quotation for your project.  Should you have any questions, concerns, or  comments, please feel free to contact me at your convenience." });
             Database.Configurations.InsertOnSubmit(new Configuration { Name = "PDF-ExecutablePath", Value = "PDF\\wkhtmltopdf.exe" });
             Database.Configurations.InsertOnSubmit(new Configuration { Name = "PDF-Arguments", Value = @"--print-media-type --page-size Letter ""%HTML_FILE%"" ""%PDF_FILE%""" });
-            Database.Configurations.InsertOnSubmit(new Configuration { Name = "Documents-SingerHeaderImg", Value = @"Images\DocumentHeader.png" });
-            Database.Configurations.InsertOnSubmit(new Configuration { Name = "Documents-MEHeaderImg", Value = @"Images\DocumentHeader.png" });
+            Database.Configurations.InsertOnSubmit(new Configuration { Name = "Documents-CompanyHeaderImg", Value = @"Images\DocumentHeader.png" });
+            Database.Configurations.InsertOnSubmit(new Configuration { Name = "Documents-EnterpriseHeaderImg", Value = @"Images\DocumentHeader.png" });
             Database.Configurations.InsertOnSubmit(new Configuration { Name = "GenericRemoveItemConfirmation", Value = "Are you sure you want to remove this item?" });
             Database.Configurations.InsertOnSubmit(new Configuration { Name = "BillOfLading-MainLegal", Value = "COMBINATION SHORT FORM OF STRAIGHT BILL OF LADING - EXPRESS SHIPPING CONTRACT ADOPTED BY RAIL FREIGHT AND EXPRESS CARRIER'S SUBJECT TO THE JURISDICTION OF THE CANADIAN TRANSPORT COMMISION. ISSUED AT SHIPPER'S REQUEST.<br><br>RECIEVED AT THE POINT OF ORIGIN ON THE DATE SPECIFIED, FROM THE CONSIGNOR MENTIONED HEREIN, THE PROPERTY HEREIN DESCRIBED, IN APPARENT GOOD ORDER, EXCEPT AS NOTED (CONTENTS OF PACKAGES AND CONDITIONS OF CONTENTS ARE UNKNOWN) MARKED, CONSIGNED AND DESTINED AS INDICATED BELOW, WHICH THE CARRIER AGREES TO CARRY AND TO DELIVER TO THE CONSIGNEE AT THE SAID DESTINATION, IF ON ITS OWN AUTHORIZED ROUTE OR OTHERWISE TO CAUSE TO BE CARRIED BY ANOTHER CARRIER ON THE ROUTE TO SAID DESTINATION SUBJECT TO THE RATES AND CLASSIFICATION IN EFFECT ON THE DATE OF SHIPMENT. IT IS MUTUALLY AGREED, AS TO EACH CARRIER OF ALL OR ANY OF THE GOODS OVERALL OR ANY PORTION OF THE ROUTE TO DESTINATION; AND AS TO EACH PARTY OF ANY TIME INTERESTED IN ALL OR ANY OF THE GOODS, THAT EVERY SERVICE TO BE PERFORMED HEREUNDER SHALL BE SUBJECT TO ALL THE CONDITIONS NOTE PROHIBITED BY LAW, WHETHER PRINTED OR WRITTEN, INCLUDING CONDITIONS ON BACK HEREOF, WHICH ARE HEREBY AGREED BY THE CONSIGNOR ACCEPTED FOR HIMSELF AND HIS ASSIGNS." });
             Database.Configurations.InsertOnSubmit(new Configuration { Name = "BillOfLading-ShippersWeight", Value = "<p>The shipper declares that the weight of this shipment does not exceed the maximum freight weight shown above; and agree to indemnify the carrier and to pay as part of the transportation charges in accordance with the carrier's filed tariffs, and fine or penalty incurred by the carrier by reason of a violation of any provision of the Transport Safety Act, arising from any error or misstatement, intensional or otherwise, in this weight declaration.</p>" });
@@ -342,11 +342,11 @@ namespace SingerDispatch.Importer
             Database.Configurations.InsertOnSubmit(new Configuration { Name = "BillOfLading-MaxLiability", Value = "Maximum liability of $2.00 per lb/$4.41 per kg unless declared valuation states otherwise" });
             Database.Configurations.InsertOnSubmit(new Configuration { Name = "Dispatch-EnterpriseBoLFileCopies", Value = 1.ToString() });
             Database.Configurations.InsertOnSubmit(new Configuration { Name = "Dispatch-EnterpriseBoLDriverCopies", Value = 1.ToString() });
-            Database.Configurations.InsertOnSubmit(new Configuration { Name = "Dispatch-SingerBoLFileCopies", Value = 1.ToString() });
-            Database.Configurations.InsertOnSubmit(new Configuration { Name = "Dispatch-SingerBoLDriverCopies", Value = 3.ToString() });
+            Database.Configurations.InsertOnSubmit(new Configuration { Name = "Dispatch-CompanyBoLFileCopies", Value = 1.ToString() });
+            Database.Configurations.InsertOnSubmit(new Configuration { Name = "Dispatch-CompanyBoLDriverCopies", Value = 3.ToString() });
             Database.Configurations.InsertOnSubmit(new Configuration { Name = "Dispatch-EnterprisePrintFileCopy", Value = false.ToString() });
-            Database.Configurations.InsertOnSubmit(new Configuration { Name = "Dispatch-SingerPrintFileCopy", Value = true.ToString() });
-            Database.Configurations.InsertOnSubmit(new Configuration { Name = "SingerGSTNumber", Value = "883578023" });
+            Database.Configurations.InsertOnSubmit(new Configuration { Name = "Dispatch-CompanyPrintFileCopy", Value = true.ToString() });
+            Database.Configurations.InsertOnSubmit(new Configuration { Name = "CompanyGSTNumber", Value = "883578023" });
             Database.Configurations.InsertOnSubmit(new Configuration { Name = "EnterpriseGSTNumber", Value = "115133969" });
 
             Database.SubmitChanges();
