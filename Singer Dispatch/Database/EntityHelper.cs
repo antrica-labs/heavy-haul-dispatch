@@ -117,47 +117,32 @@ namespace SingerDispatch.Database
 
         public static void SaveAsNewQuote(Quote quote, SingerDispatchDataContext context)
         {
-            var number = (from q in context.Quotes select q.Number).Max();
+            var number = (from j in context.Quotes select j.Number).Max() ?? 0;
 
             quote.Revision = 0;
 
-            if (number == null)
-            {
-                quote.Number = Convert.ToInt32(DateTime.Now.Year + "001");
-            }
-            else
-            {
-                var year = Convert.ToInt32(number.ToString().Substring(0, 2));
-                var count = Convert.ToInt32(number.ToString().Substring(2));
+            var year = number / 1000;
+            var count = number % 1000;
 
-                if (year.ToString() != DateTime.Now.ToString("yy"))
-                    quote.Number = Convert.ToInt32(DateTime.Now.ToString("yy") + "001");
-                else
-                    quote.Number = Convert.ToInt32(year + (count + 1).ToString("000"));
-            }
+            if (number == 0 || year != (DateTime.Now.Year % 100))
+                quote.Number = (DateTime.Now.Year % 100) * 1000 + 1;
+            else
+                quote.Number = (DateTime.Now.Year % 100) * 1000 + count + 1;
 
             context.SubmitChanges();
         }
 
         public static void SaveAsNewJob(Job job, SingerDispatchDataContext context)
         {
-            var number = (from j in context.Jobs select j.Number).Max();
+            var number = (from j in context.Jobs select j.Number).Max() ?? 0;
 
-            if (number == null)
-            {
-                job.Number = Convert.ToInt32(DateTime.Now.Year + "001");
-            }
+            var year = number / 1000;
+            var count = number % 1000;
+
+            if (number == 0 || year != (DateTime.Now.Year % 100))
+                job.Number = (DateTime.Now.Year % 100) * 1000 + 1;
             else
-            {
-                var year = Convert.ToInt32(number.ToString().Substring(0, 2));
-                var count = Convert.ToInt32(number.ToString().Substring(2));
-
-                if (year.ToString() != DateTime.Now.ToString("yy"))
-                    job.Number = Convert.ToInt32(DateTime.Now.ToString("yy") + "001");
-                else
-                    job.Number = Convert.ToInt32(year + (count + 1).ToString("000"));
-            }
-
+                job.Number = (DateTime.Now.Year % 100) * 1000 + count + 1;
 
             context.SubmitChanges();
         }
