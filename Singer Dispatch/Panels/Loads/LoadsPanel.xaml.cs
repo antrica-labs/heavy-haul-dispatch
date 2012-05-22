@@ -213,6 +213,8 @@ namespace SingerDispatch.Panels.Loads
             catch (Exception ex)
             {
                 NoticeWindow.ShowError("Error while attempting to delete load", ex.Message);
+
+                Database.RevertChanges();
             }
         }
 

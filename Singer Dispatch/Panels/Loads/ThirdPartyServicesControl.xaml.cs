@@ -188,6 +188,8 @@ namespace SingerDispatch.Panels.Loads
             catch (Exception ex)
             {
                 NoticeWindow.ShowError("Error while adding company to database", ex.Message);
+
+                Database.RevertChanges();
             }
         }
     }

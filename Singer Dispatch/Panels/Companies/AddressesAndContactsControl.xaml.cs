@@ -126,6 +126,8 @@ namespace SingerDispatch.Panels.Companies
             catch (System.Exception ex)
             {
                 Windows.NoticeWindow.ShowError("Error while attempting to write changes to database", ex.Message);
+
+                Database.RevertChanges();
             }
         }
 
@@ -149,6 +151,8 @@ namespace SingerDispatch.Panels.Companies
             catch (System.Exception ex)
             {
                 Windows.NoticeWindow.ShowError("Error while attempting to write changes to database", ex.Message);
+
+                Database.RevertChanges();
             }
         }
 

@@ -198,6 +198,8 @@ namespace SingerDispatch.Panels.Loads
             catch (Exception ex)
             {
                 NoticeWindow.ShowError("Error while attempting to delete dispatch", ex.Message);
+
+                Database.RevertChanges();
             }
         }
 

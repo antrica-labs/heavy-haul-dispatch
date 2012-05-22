@@ -71,43 +71,59 @@ namespace SingerDispatch.Panels.Jobs
 
         private void NewJob_Click(object sender, RoutedEventArgs e)
         {
-            var list = (ObservableCollection<Job>)dgJobs.ItemsSource;
-            var job = new Job { Status = DefaultJobStatus, Company = SelectedCompany };
-            
             try
             {
-                EntityHelper.SaveAsNewJob(job, Database);
+                Database.SubmitChanges();
+            }
+            catch (Exception ex)
+            {
+                Windows.NoticeWindow.ShowError("Error while attempting to write changes to database", ex.Message);
+                Database.RevertChanges();
+            }
 
+            var window = new NewJobNumberWindow() { Owner = Application.Current.MainWindow };
+
+            var list = (ObservableCollection<Job>)dgJobs.ItemsSource;
+            var job = new Job { Status = DefaultJobStatus, Company = SelectedCompany };
+
+            job.Number = window.CreateJobNumber();
+
+            if (job.Number != null)
+            {
                 list.Insert(0, job);
                 SelectedCompany.Jobs.Add(job);
 
                 SelectedJob = job;
-            }
-            catch (Exception ex)
-            {
-                NoticeWindow.ShowError("Error while attempting to write changes to database", ex.Message);
-            }
+            }            
         }
 
         private void DuplicateJob_Click(object sender, RoutedEventArgs e)
         {
             if (SelectedJob == null) return;
 
-            var list = (ObservableCollection<Job>)dgJobs.ItemsSource;
-            var job = SelectedJob.Duplicate();
-
-            list.Insert(0, job);
-            SelectedCompany.Jobs.Add(job);
-
             try
             {
-                EntityHelper.SaveAsNewJob(job, Database);
-
-                SelectedJob = job;
+                Database.SubmitChanges();
             }
             catch (Exception ex)
             {
-                NoticeWindow.ShowError("Error while attempting to write changes to database", ex.Message);
+                Windows.NoticeWindow.ShowError("Error while attempting to write changes to database", ex.Message);
+                Database.RevertChanges();
+            }
+
+            var window = new NewJobNumberWindow() { Owner = Application.Current.MainWindow };
+
+            var list = (ObservableCollection<Job>)dgJobs.ItemsSource;
+            var job = SelectedJob.Duplicate();
+
+            job.Number = window.CreateJobNumber();
+
+            if (job.Number != null)
+            {
+                list.Insert(0, job);
+                SelectedCompany.Jobs.Add(job);
+
+                SelectedJob = job;
             }
         }
 
@@ -132,6 +148,7 @@ namespace SingerDispatch.Panels.Jobs
             catch (System.Exception ex)
             {
                 Windows.NoticeWindow.ShowError("Error while attempting to write changes to database", ex.Message);
+                Database.RevertChanges();
             }
         }
 

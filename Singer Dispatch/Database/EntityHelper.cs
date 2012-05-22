@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System;
+using System.Transactions;
 
 namespace SingerDispatch.Database
 {
@@ -68,7 +69,18 @@ namespace SingerDispatch.Database
             }
 
             if (job.ID != 0)
+            {
                 context.Jobs.DeleteOnSubmit(job);
+
+                try
+                {
+                    var number = context.JobNumbers.Where(n => n.Number == job.Number).First();
+
+                    context.JobNumbers.DeleteOnSubmit(number);    
+                }
+                catch
+                { }
+            }
         }
 
         public static void PrepareEntityDelete(Invoice invoice, SingerDispatchDataContext context)
@@ -117,34 +129,15 @@ namespace SingerDispatch.Database
 
         public static void SaveAsNewQuote(Quote quote, SingerDispatchDataContext context)
         {
-            var number = (from j in context.Quotes select j.Number).Max() ?? 0;
-
             quote.Revision = 0;
-
-            var year = number / 1000;
-            var count = number % 1000;
-
-            if (number == 0 || year != (DateTime.Now.Year % 100))
-                quote.Number = (DateTime.Now.Year % 100) * 1000 + 1;
-            else
-                quote.Number = (DateTime.Now.Year % 100) * 1000 + count + 1;
+            quote.Number = GenerateQuoteNumber(context);
 
             context.SubmitChanges();
         }
 
         public static void SaveAsNewJob(Job job, SingerDispatchDataContext context)
         {
-            var number = (from j in context.Jobs select j.Number).Max() ?? 0;
-
-            var year = number / 1000;
-            var count = number % 1000;
-
-            if (number == 0 || year != (DateTime.Now.Year % 100))
-                job.Number = (DateTime.Now.Year % 100) * 1000 + 1;
-            else
-                job.Number = (DateTime.Now.Year % 100) * 1000 + count + 1;
-
-            context.SubmitChanges();
+            job.Number = GenerateJobNumber(context);
         }
 
         public static void SaveAsNewLoad(Load load, SingerDispatchDataContext context)
@@ -194,6 +187,63 @@ namespace SingerDispatch.Database
             invoice.Revision = revision ?? 1;
 
             context.SubmitChanges();
+        }
+
+        public static bool SuggestJobNumber(int number, SingerDispatchDataContext context)
+        {
+            bool success;            
+
+            try
+            {
+                var proposal = new JobNumber() { Number = number };
+
+                context.JobNumbers.InsertOnSubmit(proposal);
+                context.SubmitChanges();
+
+                success = true;                
+            }
+            catch (Exception e)
+            {
+                context.RevertChanges();
+
+                success = false;
+            }
+
+            return success;
+        }
+
+        public static int GenerateJobNumber(SingerDispatchDataContext context)
+        {
+            int number;
+
+            try
+            {
+                number = (from j in context.JobNumbers select j.Number).Max() + 1;
+            }
+            catch (InvalidOperationException e)
+            {
+                number = 0;
+            }
+
+            if (SuggestJobNumber(number, context))
+                return number;
+            else
+                throw new InvalidOperationException("Generated job number is already in use");
+        }
+
+        public static long GenerateQuoteNumber(SingerDispatchDataContext context)
+        {
+            var number = (from j in context.Quotes select j.Number).Max() ?? 0;
+
+            var year = number / 1000;
+            var count = number % 1000;
+
+            if (number == 0 || year != (DateTime.Now.Year % 100))
+                number = (DateTime.Now.Year % 100) * 1000 + 1;
+            else
+                number = (DateTime.Now.Year % 100) * 1000 + count + 1;
+
+            return number;
         }
     }
 }

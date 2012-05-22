@@ -135,6 +135,8 @@ namespace SingerDispatch.Panels.Invoicing
             catch (Exception ex)
             {
                 NoticeWindow.ShowError("Error while attempting to delete line item", ex.Message);
+
+                Database.RevertChanges();
             }
         }
 

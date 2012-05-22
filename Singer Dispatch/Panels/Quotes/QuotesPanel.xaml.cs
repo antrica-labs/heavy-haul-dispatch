@@ -133,7 +133,20 @@ namespace SingerDispatch.Panels.Quotes
 
             if (confirmation != MessageBoxResult.Yes) return;
 
+
+            try
+            {
+                Database.SubmitChanges();
+            }
+            catch (Exception ex)
+            {
+                Windows.NoticeWindow.ShowError("Error while attempting to write changes to database", ex.Message);
+                Database.RevertChanges();
+            }
+
             var window = (MainWindow)Application.Current.MainWindow;
+            var numberSelectionWindow = new NewJobNumberWindow() { Owner = Application.Current.MainWindow };
+            
             var job = quote.ToJob();
 
             try
@@ -145,18 +158,14 @@ namespace SingerDispatch.Panels.Quotes
                 Console.Error.WriteLine(ex);
             }
 
-            SelectedCompany.Jobs.Add(job);
-            Database.Jobs.InsertOnSubmit(job);
+            job.Number = numberSelectionWindow.CreateJobNumber();
 
-            try
+            if (job.Number != null)
             {
-                EntityHelper.SaveAsNewJob(job, Database);
+                SelectedCompany.Jobs.Add(job);
+                //Database.Jobs.InsertOnSubmit(job);
 
                 window.ViewJob(job);
-            }
-            catch (Exception ex)
-            {
-                NoticeWindow.ShowError("Error while attempting to write changes to database", ex.Message);
             }
         }
 
@@ -181,6 +190,8 @@ namespace SingerDispatch.Panels.Quotes
             catch (Exception ex)
             {
                 NoticeWindow.ShowError("Error while attempting to write changes to database", ex.Message);
+
+                Database.RevertChanges();
             }
         }
 

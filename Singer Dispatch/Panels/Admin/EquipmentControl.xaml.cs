@@ -214,6 +214,8 @@ namespace SingerDispatch.Panels.Admin
             catch (System.Exception ex)
             {
                 Windows.NoticeWindow.ShowError("Error while attempting to remove equipment", ex.Message);
+
+                Database.RevertChanges();
             }
         }
 
@@ -234,6 +236,8 @@ namespace SingerDispatch.Panels.Admin
             catch (System.Exception ex)
             {
                 Windows.NoticeWindow.ShowError("Error while attempting to remove equipment", ex.Message);
+
+                Database.RevertChanges();
             }
         }
 

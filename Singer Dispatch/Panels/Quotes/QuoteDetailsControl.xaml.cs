@@ -162,6 +162,8 @@ namespace SingerDispatch.Panels.Quotes
             catch (Exception ex)
             {
                 NoticeWindow.ShowError("Error while adding company to database", ex.Message);
+
+                Database.RevertChanges();
             }
         }
 
