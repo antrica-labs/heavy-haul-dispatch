@@ -127,6 +127,8 @@ namespace SingerDispatch.Panels.Jobs
             catch (Exception ex)
             {
                 NoticeWindow.ShowError("Error while adding company to database", ex.Message);
+
+                Database.RevertChanges();
             }
         }
 

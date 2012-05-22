@@ -481,6 +481,8 @@ namespace SingerDispatch.Panels.Loads
             catch (Exception ex)
             {
                 NoticeWindow.ShowError("Error while adding company to database", ex.Message);
+
+                Database.RevertChanges();
             }
         }
 
@@ -505,6 +507,8 @@ namespace SingerDispatch.Panels.Loads
             catch (Exception ex)
             {
                 NoticeWindow.ShowError("Error while adding job commodity to database", ex.ToString());
+
+                Database.RevertChanges();
             }
         }
 

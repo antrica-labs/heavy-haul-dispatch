@@ -123,6 +123,8 @@ namespace SingerDispatch.Panels.Invoicing
             catch (Exception ex)
             {
                 NoticeWindow.ShowError("Error while attempting to delete invoice", ex.Message);
+
+                Database.RevertChanges();
             }
         }
 

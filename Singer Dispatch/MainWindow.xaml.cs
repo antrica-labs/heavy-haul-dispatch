@@ -146,8 +146,10 @@ namespace SingerDispatch
                 Database.SubmitChanges();                
             }
             catch (System.Exception ex)
-            {
+            {                
                 Windows.NoticeWindow.ShowError("Error while attempting to write changes to database", ex.Message);
+
+                Database.RevertChanges();
             }
 
             Settings.MainWindowPlacement = WindowPlacement.GetPlacement(new WindowInteropHelper(this).Handle);
@@ -248,7 +250,10 @@ namespace SingerDispatch
             {
                 SingerConfigs.CommonDataContext.SubmitChanges();
             }
-            catch { }
+            catch
+            {
+                SingerConfigs.CommonDataContext.RevertChanges();
+            }
 
             CollapseAllOtherNavigationExpanders(expander);
 
@@ -602,6 +607,8 @@ namespace SingerDispatch
             catch (Exception ex)
             {
                 NoticeWindow.ShowError("Error while creating company", ex.Message);
+
+                Database.RevertChanges();
             }
                 
         }

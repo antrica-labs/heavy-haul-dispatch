@@ -40,6 +40,8 @@ namespace SingerDispatch.Windows
             catch (System.Exception ex)
             {
                 NoticeWindow.ShowError("Error while attempting to write changes to database", ex.Message);
+
+                Database.RevertChanges();
             }
         }
 

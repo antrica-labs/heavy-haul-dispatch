@@ -1,0 +1,29 @@
+﻿<Window x:Class="SingerDispatch.Windows.NewJobNumberWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Create Job Number" Width="300" SizeToContent="Height" WindowStartupLocation="CenterOwner" ResizeMode="NoResize"
+        FocusManager.FocusedElement="{Binding ElementName=txtNewJobNumber}"
+        KeyDown="Window_KeyDown">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/SingerDispatchDictionary.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <StackPanel Margin="3,3,3,0">
+        <GroupBox Header="Job number">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                
+                <TextBox Grid.Column="0" Name="txtNewJobNumber" TextChanged="txtNewJobNumber_TextChanged" />
+                <Button Grid.Column="1" Style="{StaticResource Horizontal}" Click="AutoGenerateButton_Click">Auto generate</Button>
+            </Grid>
+        </GroupBox>
+
+        <Button Style="{StaticResource HorizontalEnd}" Click="CreateButton_Click">Create</Button>
+    </StackPanel>
+</Window>
