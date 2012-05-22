@@ -370,7 +370,6 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <None Include="Singer Dispatch.pfx" />
-    <None Include="Singer Dispatch_TemporaryKey.pfx" />
     <None Include="SingerDispatch.dbml.layout">
       <DependentUpon>SingerDispatch.dbml</DependentUpon>
     </None>
