@@ -149,7 +149,8 @@ namespace SingerDispatch
             {                
                 Windows.NoticeWindow.ShowError("Error while attempting to write changes to database", ex.Message);
 
-                Database.RevertChanges();
+                if (Database != null)
+                    Database.RevertChanges();
             }
 
             Settings.MainWindowPlacement = WindowPlacement.GetPlacement(new WindowInteropHelper(this).Handle);

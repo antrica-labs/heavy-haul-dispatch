@@ -348,6 +348,7 @@ namespace SingerDispatch.Importer
             Database.Configurations.InsertOnSubmit(new Configuration { Name = "Dispatch-CompanyPrintFileCopy", Value = true.ToString() });
             Database.Configurations.InsertOnSubmit(new Configuration { Name = "CompanyGSTNumber", Value = "883578023" });
             Database.Configurations.InsertOnSubmit(new Configuration { Name = "EnterpriseGSTNumber", Value = "115133969" });
+            Database.Configurations.InsertOnSubmit(new Configuration { Name = "MaxUserDefinedJobNumber", Value = "69999" });
 
             Database.SubmitChanges();
         }

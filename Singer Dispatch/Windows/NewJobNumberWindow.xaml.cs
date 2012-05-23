@@ -61,8 +61,7 @@ namespace SingerDispatch.Windows
             }
             catch
             {
-                txtNewJobNumber.Background = Brushes.OrangeRed;
-                txtNewJobNumber.Foreground = Brushes.White;
+                InvalidateNumber();
             }
         }
 
@@ -73,26 +72,61 @@ namespace SingerDispatch.Windows
 
         private void txtNewJobNumber_TextChanged(object sender, TextChangedEventArgs e)
         {
-            txtNewJobNumber.Background = Brushes.White;
-            txtNewJobNumber.Foreground = Brushes.Black;
+            BeginAcceptingNumber();
         }
 
         private void PickJobNumber()
         {
-            var number = Convert.ToInt32(txtNewJobNumber.Text);
-            var success = EntityHelper.SuggestJobNumber(number, SingerConfigs.CommonDataContext);
+            var success = AttemptManualEntry();
 
             if (success)
-            {
-                NewJobNumber = number;
-
                 Close();
-            }
             else
+                InvalidateNumber();
+        }
+
+        private bool AttemptManualEntry()
+        {
+            try
             {
-                txtNewJobNumber.Background = Brushes.OrangeRed;
-                txtNewJobNumber.Foreground = Brushes.White;
+                var number = Convert.ToInt32(txtNewJobNumber.Text);
+
+                EntityHelper.SuggestJobNumber(number, SingerConfigs.CommonDataContext);
+
+                NewJobNumber = number;
             }
+            catch (ArgumentOutOfRangeException exa)
+            {
+                NoticeWindow.ShowError("Invalid job number", exa.Message);
+
+                return false;
+            }
+            catch (InvalidOperationException exi)
+            {
+                NoticeWindow.ShowError("Duplicate job number", exi.Message);
+
+                return false;
+            }
+            catch (Exception ex)
+            {
+                NoticeWindow.ShowError("Input error", ex.Message);
+
+                return false;
+            }
+
+            return true;
+        }
+
+        private void BeginAcceptingNumber()
+        {
+            txtNewJobNumber.Background = Brushes.White;
+            txtNewJobNumber.Foreground = Brushes.Black;
+        }
+
+        private void InvalidateNumber()
+        {
+            txtNewJobNumber.Background = Brushes.OrangeRed;
+            txtNewJobNumber.Foreground = Brushes.White;
         }
     }
 }

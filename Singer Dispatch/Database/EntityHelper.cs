@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using System;
-using System.Transactions;
 
 namespace SingerDispatch.Database
 {
@@ -189,46 +188,61 @@ namespace SingerDispatch.Database
             context.SubmitChanges();
         }
 
-        public static bool SuggestJobNumber(int number, SingerDispatchDataContext context)
+        public static void SuggestJobNumber(int number, SingerDispatchDataContext context)
         {
-            bool success;            
+            int max;
 
+            try
+            {
+                max = Convert.ToInt32(SingerConfigs.GetConfig("MaxUserDefinedJobNumber"));
+            }
+            catch
+            {
+                max = Int32.MaxValue;
+            }
+
+            if (number >= max)
+                throw new ArgumentOutOfRangeException("Job number", string.Format("Specified value is above the max of {0}", max));
+
+            RecordJobNumber(number, context);
+        }
+
+        private static void RecordJobNumber(int number, SingerDispatchDataContext context)
+        {
             try
             {
                 var proposal = new JobNumber() { Number = number };
 
                 context.JobNumbers.InsertOnSubmit(proposal);
                 context.SubmitChanges();
-
-                success = true;                
             }
-            catch (Exception e)
+            catch
             {
                 context.RevertChanges();
 
-                success = false;
-            }
-
-            return success;
+                throw new InvalidOperationException(string.Format("Number {0} is already in use", number));
+            } 
         }
 
         public static int GenerateJobNumber(SingerDispatchDataContext context)
         {
-            int number;
+            int next;
+            int min = Convert.ToInt32(SingerConfigs.GetConfig("MaxUserDefinedJobNumber") ?? "0");
 
             try
             {
-                number = (from j in context.JobNumbers select j.Number).Max() + 1;
+                next = (from j in context.JobNumbers select j.Number).Max() + 1;
             }
             catch (InvalidOperationException e)
             {
-                number = 0;
+                next = min;
             }
 
-            if (SuggestJobNumber(number, context))
-                return number;
-            else
-                throw new InvalidOperationException("Generated job number is already in use");
+            next = Math.Max(min, next);
+
+            RecordJobNumber(next, context);
+            
+            return next;            
         }
 
         public static long GenerateQuoteNumber(SingerDispatchDataContext context)

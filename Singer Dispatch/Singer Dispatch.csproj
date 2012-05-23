@@ -34,9 +34,9 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ProductName>Singer Dispatch</ProductName>
     <PublisherName>Singer Specialized</PublisherName>
-    <MinimumRequiredVersion>1.2.0.30</MinimumRequiredVersion>
+    <MinimumRequiredVersion>1.2.0.35</MinimumRequiredVersion>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
-    <ApplicationRevision>31</ApplicationRevision>
+    <ApplicationRevision>36</ApplicationRevision>
     <ApplicationVersion>1.2.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -346,6 +346,9 @@
     <Compile Include="Windows\JobAndLoadSelectorWindow.xaml.cs">
       <DependentUpon>JobAndLoadSelectorWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Windows\NewJobNumberWindow.xaml.cs">
+      <DependentUpon>NewJobNumberWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\NoticeWindow.xaml.cs">
       <DependentUpon>NoticeWindow.xaml</DependentUpon>
     </Compile>
@@ -641,6 +644,10 @@
     <Page Include="Windows\JobAndLoadSelectorWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\NewJobNumberWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Windows\NoticeWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
