@@ -126,19 +126,6 @@ namespace SingerDispatch.Database
             context.SubmitChanges();
         }
 
-        public static void SaveAsNewQuote(Quote quote, SingerDispatchDataContext context)
-        {
-            quote.Revision = 0;
-            quote.Number = GenerateQuoteNumber(context);
-
-            context.SubmitChanges();
-        }
-
-        public static void SaveAsNewJob(Job job, SingerDispatchDataContext context)
-        {
-            job.Number = GenerateJobNumber(context);
-        }
-
         public static void SaveAsNewLoad(Load load, SingerDispatchDataContext context)
         {
             if (load.Job == null)
@@ -186,6 +173,28 @@ namespace SingerDispatch.Database
             invoice.Revision = revision ?? 1;
 
             context.SubmitChanges();
+        }
+
+        public static void SuggestQuoteNumber(string number, SingerDispatchDataContext context)
+        {
+            RecordQuoteNumber(number, context);
+        }
+
+        private static void RecordQuoteNumber(string number, SingerDispatchDataContext context)
+        {
+            try
+            {
+                var proposal = new QuoteNumber() { Number = number };
+
+                context.QuoteNumbers.InsertOnSubmit(proposal);
+                context.SubmitChanges();
+            }
+            catch
+            {
+                context.RevertChanges();
+
+                throw new InvalidOperationException(string.Format("Number {0} is already in use", number));
+            }
         }
 
         public static void SuggestJobNumber(int number, SingerDispatchDataContext context)
@@ -245,6 +254,7 @@ namespace SingerDispatch.Database
             return next;            
         }
 
+        /*
         public static long GenerateQuoteNumber(SingerDispatchDataContext context)
         {
             var number = (from j in context.Quotes select j.Number).Max() ?? 0;
@@ -259,5 +269,6 @@ namespace SingerDispatch.Database
 
             return number;
         }
+        */
     }
 }

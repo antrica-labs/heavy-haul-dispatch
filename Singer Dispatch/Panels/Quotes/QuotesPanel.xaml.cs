@@ -74,6 +74,18 @@ namespace SingerDispatch.Panels.Quotes
 
         private void NewQuote_Click(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                Database.SubmitChanges();
+            }
+            catch (Exception ex)
+            {
+                Windows.NoticeWindow.ShowError("Error while attempting to write changes to database", ex.Message);
+                Database.RevertChanges();
+            }
+
+            var window = new NewQuoteNumberWindow() { Owner = Application.Current.MainWindow };
+
             var list = (ObservableCollection<Quote>)dgQuoteList.ItemsSource;
             var quote = new Quote { CreationDate = DateTime.Today, ExpirationDate = DateTime.Today.AddDays(30), Company = SelectedCompany, Employee = SingerConfigs.OperatingEmployee };
 
@@ -86,20 +98,16 @@ namespace SingerDispatch.Panels.Quotes
             list.Insert(0, quote);
             dgQuoteList.SelectedItem = quote;
 
+            quote.Number = window.CreateQuoteNumber();
+            quote.Revision = 0;
+
             // Add any of the default quote conditions            
             foreach (var condition in (from c in Database.Conditions where c.Archived != true && c.AutoInclude == true select c))
             {
                 quote.QuoteConditions.Add(new QuoteCondition { ConditionID = condition.ID, Line = condition.Line });
             }
 
-            try
-            {
-                EntityHelper.SaveAsNewQuote(quote, Database);
-            }
-            catch (Exception ex)
-            {
-                NoticeWindow.ShowError("Error while attempting to write changes to database", ex.Message);
-            }
+            
         }
 
         private void CreateRevision_Click(object sender, RoutedEventArgs e)

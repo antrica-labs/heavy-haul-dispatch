@@ -1,0 +1,21 @@
+﻿<Window x:Class="SingerDispatch.Windows.NewQuoteNumberWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Create Quote Number" Width="300" SizeToContent="Height" WindowStartupLocation="CenterOwner" ResizeMode="NoResize"
+        FocusManager.FocusedElement="{Binding ElementName=txtNewQuoteNumber}"
+        KeyDown="Window_KeyDown">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/SingerDispatchDictionary.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <StackPanel Margin="3,3,3,0">
+        <GroupBox Header="Quote number">
+            <TextBox Name="txtNewQuoteNumber" TextChanged="txtNewQuoteNumber_TextChanged" />
+        </GroupBox>
+
+        <Button Style="{StaticResource HorizontalEnd}" Click="CreateButton_Click">Create</Button>
+    </StackPanel>
+</Window>

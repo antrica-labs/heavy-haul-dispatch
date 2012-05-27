@@ -198,6 +198,25 @@ namespace SingerDispatch
         }
     }
 
+    partial class QuoteNumber
+    {
+        partial void OnCreated()
+        {
+            CreateDate = DateTime.Now;
+        }
+    }
+
+    /*
+    -- alter table Quote add Number nvarchar(4000);
+    -- update Quote set Number = NumberOrig;
+
+    --CREATE TABLE QuoteNumber(
+    --	[Number] [nvarchar](255) NOT NULL PRIMARY KEY,
+    --	[CreateDate] [datetime] NOT NULL
+    --);
+
+    --insert into quotenumber (number, createdate) select distinct number, CURRENT_TIMESTAMP from quote;  
+    */
     partial class Quote
     {
         partial void OnCreated()

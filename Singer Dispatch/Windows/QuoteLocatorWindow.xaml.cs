@@ -55,7 +55,7 @@ namespace SingerDispatch.Windows
         {
             try
             {
-                LocatedQuote = QuoteLookup(Convert.ToInt32(txtQuoteNumber.Text));
+                LocatedQuote = QuoteLookup(txtQuoteNumber.Text);
 
                 if (LocatedQuote == null)
                 {
@@ -71,7 +71,7 @@ namespace SingerDispatch.Windows
             }
         }
 
-        private Quote QuoteLookup(int number)
+        private Quote QuoteLookup(string number)
         {
             try
             {

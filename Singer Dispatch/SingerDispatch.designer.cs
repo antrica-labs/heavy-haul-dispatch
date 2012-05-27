@@ -200,6 +200,9 @@ namespace SingerDispatch
     partial void InsertJobNumber(JobNumber instance);
     partial void UpdateJobNumber(JobNumber instance);
     partial void DeleteJobNumber(JobNumber instance);
+    partial void InsertQuoteNumber(QuoteNumber instance);
+    partial void UpdateQuoteNumber(QuoteNumber instance);
+    partial void DeleteQuoteNumber(QuoteNumber instance);
     #endregion
 		
 		public SingerDispatchDataContext(string connection) : 
@@ -679,6 +682,14 @@ namespace SingerDispatch
 			get
 			{
 				return this.GetTable<JobNumber>();
+			}
+		}
+		
+		public System.Data.Linq.Table<QuoteNumber> QuoteNumbers
+		{
+			get
+			{
+				return this.GetTable<QuoteNumber>();
 			}
 		}
 	}
@@ -11396,7 +11407,7 @@ namespace SingerDispatch
 		
 		private System.Nullable<long> _ContactID;
 		
-		private System.Nullable<long> _Number;
+		private string _Number;
 		
 		private System.Nullable<int> _Revision;
 		
@@ -11460,7 +11471,7 @@ namespace SingerDispatch
     partial void OnAddressIDChanged();
     partial void OnContactIDChanging(System.Nullable<long> value);
     partial void OnContactIDChanged();
-    partial void OnNumberChanging(System.Nullable<long> value);
+    partial void OnNumberChanging(string value);
     partial void OnNumberChanged();
     partial void OnRevisionChanging(System.Nullable<int> value);
     partial void OnRevisionChanged();
@@ -11600,7 +11611,7 @@ namespace SingerDispatch
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Number")]
-		public System.Nullable<long> Number
+		public string Number
 		{
 			get
 			{
@@ -19959,6 +19970,92 @@ namespace SingerDispatch
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Number", IsPrimaryKey=true)]
 		public int Number
+		{
+			get
+			{
+				return this._Number;
+			}
+			set
+			{
+				if ((this._Number != value))
+				{
+					this.OnNumberChanging(value);
+					this.SendPropertyChanging();
+					this._Number = value;
+					this.SendPropertyChanged("Number");
+					this.OnNumberChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreateDate")]
+		public System.DateTime CreateDate
+		{
+			get
+			{
+				return this._CreateDate;
+			}
+			set
+			{
+				if ((this._CreateDate != value))
+				{
+					this.OnCreateDateChanging(value);
+					this.SendPropertyChanging();
+					this._CreateDate = value;
+					this.SendPropertyChanged("CreateDate");
+					this.OnCreateDateChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="")]
+	public partial class QuoteNumber : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private string _Number;
+		
+		private System.DateTime _CreateDate;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnNumberChanging(string value);
+    partial void OnNumberChanged();
+    partial void OnCreateDateChanging(System.DateTime value);
+    partial void OnCreateDateChanged();
+    #endregion
+		
+		public QuoteNumber()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Number", CanBeNull=false, IsPrimaryKey=true)]
+		public string Number
 		{
 			get
 			{
