@@ -34,9 +34,9 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ProductName>Singer Dispatch</ProductName>
     <PublisherName>Singer Specialized</PublisherName>
-    <MinimumRequiredVersion>1.2.0.35</MinimumRequiredVersion>
+    <MinimumRequiredVersion>1.2.0.36</MinimumRequiredVersion>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
-    <ApplicationRevision>36</ApplicationRevision>
+    <ApplicationRevision>37</ApplicationRevision>
     <ApplicationVersion>1.2.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
