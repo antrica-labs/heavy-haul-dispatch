@@ -487,7 +487,7 @@ namespace SingerDispatch
 
         private void ViewQuoteList_Click(object sender, RoutedEventArgs e)
         {
-            var quotes = from q in Database.Quotes where q.Company != null orderby q.Number, q.Revision descending select q;
+            var quotes = from q in Database.Quotes where q.Company != null orderby q.ID descending select q;
             var title = "Singer Quote List";
 
             var viewer = new Windows.DocumentViewerWindow(new QuoteListDocument(), quotes, title) { IsMetric = !UseImperialMeasurements };

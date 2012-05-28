@@ -47,6 +47,9 @@ namespace SingerDispatch.Windows
 
         private void txtQuoteNumber_TextChanged(object sender, TextChangedEventArgs e)
         {
+            if (txtQuoteNumber.Text.ToUpper().StartsWith("Q"))
+                txtQuoteNumber.Text = txtQuoteNumber.Text.Substring(1);
+
             txtQuoteNumber.Background = Brushes.White;
             txtQuoteNumber.Foreground = Brushes.Black;
         }

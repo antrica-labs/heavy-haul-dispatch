@@ -82,19 +82,28 @@ namespace SingerDispatch.Panels.Jobs
             }
 
             var window = new NewJobNumberWindow() { Owner = Application.Current.MainWindow };
+            var jobNumber = window.CreateJobNumber();
+
+            if (jobNumber == null)
+                return;
 
             var list = (ObservableCollection<Job>)dgJobs.ItemsSource;
             var job = new Job { Status = DefaultJobStatus, Company = SelectedCompany };
+                        
+            list.Insert(0, job);
+            SelectedCompany.Jobs.Add(job);
 
-            job.Number = window.CreateJobNumber();
-
-            if (job.Number != null)
+            SelectedJob = job;
+            
+            try
             {
-                list.Insert(0, job);
-                SelectedCompany.Jobs.Add(job);
-
-                SelectedJob = job;
-            }            
+                Database.SubmitChanges();
+            }
+            catch (Exception ex)
+            {
+                Windows.NoticeWindow.ShowError("Error while attempting to write changes to database", ex.Message);
+                Database.RevertChanges();
+            }
         }
 
         private void DuplicateJob_Click(object sender, RoutedEventArgs e)

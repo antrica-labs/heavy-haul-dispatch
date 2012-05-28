@@ -74,6 +74,9 @@ namespace SingerDispatch.Windows
             {
                 var number = txtNewQuoteNumber.Text;
 
+                if (number.Length == 0)
+                    throw new ArgumentOutOfRangeException("Quote number can't be blank");
+
                 EntityHelper.SuggestQuoteNumber(number, SingerConfigs.CommonDataContext);
 
                 NewQuoteNumber = number;
@@ -102,6 +105,9 @@ namespace SingerDispatch.Windows
 
         private void BeginAcceptingNumber()
         {
+            if (txtNewQuoteNumber.Text.ToUpper().StartsWith("Q"))
+                txtNewQuoteNumber.Text = txtNewQuoteNumber.Text.Substring(1);
+
             txtNewQuoteNumber.Background = Brushes.White;
             txtNewQuoteNumber.Foreground = Brushes.Black;
         }
@@ -110,6 +116,8 @@ namespace SingerDispatch.Windows
         {
             txtNewQuoteNumber.Background = Brushes.OrangeRed;
             txtNewQuoteNumber.Foreground = Brushes.White;
+
+            NewQuoteNumber = null;
         }
     }
 }

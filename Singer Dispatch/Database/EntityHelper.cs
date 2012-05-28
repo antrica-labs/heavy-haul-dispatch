@@ -43,8 +43,16 @@ namespace SingerDispatch.Database
             if (quote.ID != 0)
             {
                 context.Quotes.DeleteOnSubmit(quote);
+
+                try
+                {
+                    var number = context.QuoteNumbers.Where(n => n.Number == quote.Number).First();
+
+                    context.QuoteNumbers.DeleteOnSubmit(number);
+                }
+                catch
+                { }
             }
-            
         }
 
         public static void PrepareEntityDelete(Job job, SingerDispatchDataContext context)

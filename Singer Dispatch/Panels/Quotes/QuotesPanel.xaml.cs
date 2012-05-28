@@ -85,10 +85,14 @@ namespace SingerDispatch.Panels.Quotes
             }
 
             var window = new NewQuoteNumberWindow() { Owner = Application.Current.MainWindow };
+            var quoteNumber = window.CreateQuoteNumber();
+
+            // If the user bailed out on picking a quote number, abort the quote creation
+            if (quoteNumber == null)
+                return;
 
             var list = (ObservableCollection<Quote>)dgQuoteList.ItemsSource;
-            var quote = new Quote { CreationDate = DateTime.Today, ExpirationDate = DateTime.Today.AddDays(30), Company = SelectedCompany, Employee = SingerConfigs.OperatingEmployee };
-
+            var quote = new Quote { CreationDate = DateTime.Today, ExpirationDate = DateTime.Today.AddDays(30), Company = SelectedCompany, Employee = SingerConfigs.OperatingEmployee, Number = quoteNumber, Revision = 0 };
             var addresses = from a in SelectedCompany.Addresses select a;
 
             if (addresses.Count() > 0)
@@ -98,16 +102,21 @@ namespace SingerDispatch.Panels.Quotes
             list.Insert(0, quote);
             dgQuoteList.SelectedItem = quote;
 
-            quote.Number = window.CreateQuoteNumber();
-            quote.Revision = 0;
-
             // Add any of the default quote conditions            
             foreach (var condition in (from c in Database.Conditions where c.Archived != true && c.AutoInclude == true select c))
             {
                 quote.QuoteConditions.Add(new QuoteCondition { ConditionID = condition.ID, Line = condition.Line });
             }
 
-            
+            try
+            {
+                Database.SubmitChanges();
+            }
+            catch (Exception ex)
+            {
+                Windows.NoticeWindow.ShowError("Error while attempting to write changes to database", ex.Message);
+                Database.RevertChanges();
+            }
         }
 
         private void CreateRevision_Click(object sender, RoutedEventArgs e)
