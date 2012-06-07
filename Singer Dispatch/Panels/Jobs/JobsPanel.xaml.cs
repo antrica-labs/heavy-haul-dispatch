@@ -88,7 +88,7 @@ namespace SingerDispatch.Panels.Jobs
                 return;
 
             var list = (ObservableCollection<Job>)dgJobs.ItemsSource;
-            var job = new Job { Status = DefaultJobStatus, Company = SelectedCompany };
+            var job = new Job { Number = jobNumber, Status = DefaultJobStatus, Company = SelectedCompany };
                         
             list.Insert(0, job);
             SelectedCompany.Jobs.Add(job);
