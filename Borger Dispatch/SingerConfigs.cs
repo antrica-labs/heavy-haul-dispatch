@@ -39,7 +39,7 @@ namespace SingerDispatch
         {
             get
             {
-                return "Singer Specialized";
+                return "Borger Group of Companies";
             }
         }
         

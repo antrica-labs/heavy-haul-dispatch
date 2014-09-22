@@ -871,7 +871,7 @@ namespace SingerDispatch.Printing.Documents
                 }
             }
             else
-                employee = "Dan Klassen";
+                employee = "";
             
 
             

@@ -21,8 +21,8 @@
                 </Grid.ColumnDefinitions>
 
                 <ComboBox Name="cmbCompanyType" Grid.Column="0" Margin="4">
-                    <ComboBoxItem Selected="SingerSpecialized_Selected" IsSelected="True">Singer Specialized document</ComboBoxItem>
-                    <ComboBoxItem Selected="SingerEnterprises_Selected">M.E. Singer Enterprises document</ComboBoxItem>
+                    <ComboBoxItem Selected="SingerSpecialized_Selected" IsSelected="True">Borger Group of Companies</ComboBoxItem>
+                    <!-- ComboBoxItem Selected="SingerEnterprises_Selected">M.E. Singer Enterprises document</ComboBoxItem> -->
                 </ComboBox>                
                                 
                 <Button Grid.Column="1" Style="{StaticResource Horizontal}" Click="Print_Click">Print</Button>

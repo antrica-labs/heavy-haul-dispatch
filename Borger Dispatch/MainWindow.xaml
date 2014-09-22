@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:AC="clr-namespace:WPFAutoCompleteBox.Controls;assembly=WPFAutoCompleteBox"
         xmlns:Controls="clr-namespace:SingerDispatch.Controls"
-        Title="Singer Dispatch" MinWidth="1000" MinHeight="750"
+        Title="Borger Dispatch" MinWidth="1000" MinHeight="750"
         Loaded="Window_Loaded" Closing="Window_Closing"       
         x:Name="ThisWindow">
     <Window.Resources>
@@ -55,7 +55,7 @@
 
             <Border Style="{StaticResource MainNavigation}" DockPanel.Dock="Left">
                 <StackPanel Name="altNavigationStack">
-                    <Label Style="{StaticResource Heading}">Singer Dispatch</Label>
+                    <Label Style="{StaticResource Heading}">Borger Dispatch</Label>
                     
                     <Expander Name="expanderCompanies"  Header="Company info" Style="{StaticResource SectionExpander}" Expanded="ExpandCompanies">
                         <StackPanel Name="linksCompanies" Style="{StaticResource SectionExpanderContent}" VerticalAlignment="Top"></StackPanel>
