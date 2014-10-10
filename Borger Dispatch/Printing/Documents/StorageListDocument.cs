@@ -26,7 +26,7 @@ namespace SingerDispatch.Printing.Documents
             content.Append(@"<!DOCTYPE HTML PUBLIC ""-//W3C//DTD HTML 4.01//EN"" ""http://www.w3.org/TR/html4/strict.dtd""><html>");
             content.Append("<head>");
             content.Append(@"<meta http-equiv=""Content-Type"" content=""text/html;charset=utf-8"">");
-            content.Append(GetTitle("Singer Storage List"));
+            content.Append(GetTitle("Storage List"));
             content.Append(GetStyles());
             content.Append("</head>");
             content.Append("<body>");
