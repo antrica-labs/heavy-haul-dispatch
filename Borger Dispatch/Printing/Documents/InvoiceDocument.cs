@@ -25,7 +25,7 @@ namespace SingerDispatch.Printing.Documents
             content.Append("<html>");
             content.Append("<head>");
             content.Append(@"<meta http-equiv=""Content-Type"" content=""text/html;charset=utf-8"">");
-            content.Append("<title>Singer Specialized - Invoice</title>");
+            content.Append("<title>Invoice</title>");
             content.Append(GetStyles());            
             content.Append("</head>");
             content.Append("<body>");
@@ -50,7 +50,7 @@ namespace SingerDispatch.Printing.Documents
                     <table class=""header"">
                         <tr>
                             <td id=""logo"">
-                                <span class=""logo""><img src=""{0}"" alt=""Singer""></span>
+                                <span class=""logo""><img src=""{0}"" alt=""""></span>
                                 <h3>GST Registration #{1}</h3>
                             </td>
                             <td id=""singer_address"">
@@ -86,7 +86,7 @@ namespace SingerDispatch.Printing.Documents
 
             replacements[0] = GetHeaderImg();
             replacements[1] = SingerConfigs.GetConfig(cGSTNumber);
-            replacements[2] = SingerConfigs.GetConfig(cName) ?? "Singer Specialized Ltd.";
+            replacements[2] = SingerConfigs.GetConfig(cName) ?? "Borger";
             replacements[3] = SingerConfigs.GetConfig(cAddress);
             replacements[4] = SingerConfigs.GetConfig(cCity);
             replacements[5] = SingerConfigs.GetConfig(cPhone);
@@ -113,7 +113,7 @@ namespace SingerDispatch.Printing.Documents
             builder.Append(string.Format(row, "Invoice #", invoice.ToString()));
 
             if (invoice.Job != null)
-                builder.Append(string.Format(row, "Singer Job #", invoice.Job.Number));
+                builder.Append(string.Format(row, "Job #", invoice.Job.Number));
 
             foreach (var item in invoice.ReferenceNumbers)
             {

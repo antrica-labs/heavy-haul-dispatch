@@ -45,7 +45,7 @@ namespace SingerDispatch.Printing.Documents
             content.Append("<html>");
             content.Append("<head>");
             content.Append(@"<meta http-equiv=""Content-Type"" content=""text/html;charset=utf-8"">");
-            content.Append(GetTitle("Singer Specialized - Dispatch"));
+            content.Append(GetTitle("Job Dispatch"));
             content.Append(GetStyles());
             content.Append("</head>");
             content.Append("<body>");
@@ -78,7 +78,7 @@ namespace SingerDispatch.Printing.Documents
             content.Append("<html>");
             content.Append("<head>");
             content.Append(@"<meta http-equiv=""Content-Type"" content=""text/html;charset=utf-8"">");
-            content.Append(GetTitle("Singer Specialized - Dispatch"));
+            content.Append(GetTitle("Job Dispatch"));
             content.Append(GetStyles());
             content.Append("</head>");
             content.Append("<body>");
@@ -647,7 +647,7 @@ namespace SingerDispatch.Printing.Documents
                     <table>
                         <tr>
                             <td class=""logo_col"">
-                                <span class=""logo""><img src=""{0}"" alt=""Singer Specialized""></span>
+                                <span class=""logo""><img src=""{0}"" alt=""""></span>
                             </td>
                             <td class=""address_col"">
                                 <span>{1}</span>
@@ -689,7 +689,7 @@ namespace SingerDispatch.Printing.Documents
             }
 
             replacements[0] = GetHeaderImg();
-            replacements[1] = SingerConfigs.GetConfig(cName) ?? "Singer Specialized Ltd.";
+            replacements[1] = SingerConfigs.GetConfig(cName) ?? "Borger";
             replacements[2] = SingerConfigs.GetConfig(cAddress);
             replacements[3] = SingerConfigs.GetConfig(cCity);
             replacements[4] = SingerConfigs.GetConfig(cPhone);
@@ -1231,7 +1231,7 @@ namespace SingerDispatch.Printing.Documents
         {
             const string html = @"
                 <div class=""tractors section"">
-                    <span class=""heading"">Tractors (Singer)</span>
+                    <span class=""heading"">Tractors</span>
                     
                     {0}
                 </div>
@@ -1280,7 +1280,7 @@ namespace SingerDispatch.Printing.Documents
         {
             const string html = @"
                 <div class=""other_equipment section"">
-                    <span class=""heading"">Pilot Cars (Singer)</span>
+                    <span class=""heading"">Pilot Cars</span>
                     
                     {0}
                 </div>

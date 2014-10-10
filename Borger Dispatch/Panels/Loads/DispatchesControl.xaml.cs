@@ -333,8 +333,9 @@ namespace SingerDispatch.Panels.Loads
         private void cmbEquipmentTypes_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
             var type = (EquipmentType)cmbEquipmentTypes.SelectedItem;
-                        
-            cmbUnits.ItemsSource = (type == null) ? null : from eq in Database.Equipment where eq.IsDispatchable == true && eq.Archived != true && eq.UnitNumber.StartsWith(string.Format("{0}-", type.Prefix)) select eq;
+            var units = (type == null) ? null : from eq in Database.Equipment where eq.IsDispatchable == true && eq.Archived != true && eq.EquipmentType == type select eq;
+            
+            cmbUnits.ItemsSource = units;
         }
     }
 

@@ -475,7 +475,7 @@ namespace SingerDispatch.Printing.Documents
                     <table>
                         <tr>
                             <td class=""logo_col"">
-                                <span class=""logo""><img src=""{0}"" alt=""Singer""></span>
+                                <span class=""logo""><img src=""{0}"" alt=""""></span>
                             </td>
                             <td class=""address_col"">
                                 <span>{1}</span>
@@ -515,7 +515,7 @@ namespace SingerDispatch.Printing.Documents
             
 
             replacements[0] = GetHeaderImg();
-            replacements[1] = SingerConfigs.GetConfig(cName) ?? "Singer Specialized Ltd.";
+            replacements[1] = SingerConfigs.GetConfig(cName) ?? "Borger";
             replacements[2] = SingerConfigs.GetConfig(cAddress);
             replacements[3] = SingerConfigs.GetConfig(cCity);
             replacements[4] = SingerConfigs.GetConfig(cPhone);
@@ -551,7 +551,7 @@ namespace SingerDispatch.Printing.Documents
                             </td>
                             <td class=""secondary"">                                
                                 <div class=""store"">
-                                    <span class=""heading"">Singer Storage (Name Address)</span>
+                                    <span class=""heading"">Storage (Name Address)</span>
                                     
                                     <span>{10}</span>
                                     <span>{11}</span>
@@ -587,7 +587,7 @@ namespace SingerDispatch.Printing.Documents
             replacements[8] = (address != null) ? string.Format("{0}, {1} {2}", city, prov, postal) : "";
             replacements[9] = (address != null) ? address.PrimaryPhone : "";
 
-            replacements[10] = SingerConfigs.GetConfig("CompanyName") ?? "Singer Specialized Ltd.";
+            replacements[10] = SingerConfigs.GetConfig("CompanyName") ?? "Borger";
             replacements[11] = SingerConfigs.GetConfig("CompanyAddress-StreetAddress");
             replacements[12] = SingerConfigs.GetConfig("CompanyAddress-City");
             replacements[13] = SingerConfigs.GetConfig("CompanyAddress-Phone");
@@ -611,7 +611,7 @@ namespace SingerDispatch.Printing.Documents
                     rows.Append(GetCommodityRow(commodity.NameAndUnit, commodity.Owner.Name, commodity.Length, commodity.Width, commodity.Height, commodity.Weight, item.BillingRate, item.BillingInterval, item.Notes));
             }
 
-            replacements[0] = SingerConfigs.GetConfig("CompanyName") ?? "Singer Specialized Ltd.";
+            replacements[0] = SingerConfigs.GetConfig("CompanyName") ?? "Borger";
             replacements[1] = company.Name;
             replacements[2] = rows.ToString();
 
@@ -630,7 +630,7 @@ namespace SingerDispatch.Printing.Documents
             if (commodity != null)
                 rows.Append(GetCommodityRow(commodity.NameAndUnit, commodity.Owner.Name, commodity.Length, commodity.Width, commodity.Height, commodity.Weight, item.BillingRate, item.BillingInterval, item.Notes));            
 
-            replacements[0] = SingerConfigs.GetConfig("CompanyName") ?? "Singer Specialized Ltd.";
+            replacements[0] = SingerConfigs.GetConfig("CompanyName") ?? "Borger";
             replacements[1] = company.Name;
             replacements[2] = rows.ToString();
 
@@ -733,7 +733,7 @@ namespace SingerDispatch.Printing.Documents
         {
             var html = @"
                 <div class=""legal"">
-                    <p>The undersigned, for the same consideration, understands that they are not responsible for any damage, vandalism, or other perils, which may or may not occur during the course of storage. Singer Specialized Ltd., is not responsible for maintaining any insurance coverage, and the undersigned hereby forever release, discharge, acquit, and forgive from any and all claims, actions, suits, demands, agreements, and each of the if more than one, liabilities, judgments, and proceedings both at law an in equity arising from the beginning of time to the end of the term of storage. This release shall be binging upon, and inure to the benefit of Singer Specialized Ltd., their successors, insurers, assigns, agents, and representatives.</p>
+                    <p>The undersigned, for the same consideration, understands that they are not responsible for any damage, vandalism, or other perils, which may or may not occur during the course of storage. Broger Group of Companies, is not responsible for maintaining any insurance coverage, and the undersigned hereby forever release, discharge, acquit, and forgive from any and all claims, actions, suits, demands, agreements, and each of the if more than one, liabilities, judgments, and proceedings both at law an in equity arising from the beginning of time to the end of the term of storage. This release shall be binging upon, and inure to the benefit of Borger Group of Companies, their successors, insurers, assigns, agents, and representatives.</p>
                 </div>
             ";
 
@@ -750,12 +750,12 @@ namespace SingerDispatch.Printing.Documents
                                 <br><br>
 
                                 <span class=""signline"">x</span>
-                                <span class=""subtext""><span>Certification - (Singer Print)</span> <span class=""date"">Date</span></span>
+                                <span class=""subtext""><span>Certification - (Borger Print)</span> <span class=""date"">Date</span></span>
 
                                 <br><br><br>
 
                                 <span class=""signline"">x</span>
-                                <span class=""subtext""><span>Certification - (Singer Sign)</span> <span class=""date"">Date</span></span>
+                                <span class=""subtext""><span>Certification - (Borger Sign)</span> <span class=""date"">Date</span></span>
                             </td>
                             <td class=""secondary"">
                                 <br><br>

@@ -227,7 +227,7 @@ namespace SingerDispatch.Printing.Documents
                     <table>
                         <tr>
                             <td id=""logo"">
-                                <span class=""logo""><img src=""{0}"" alt=""Singer""></span>                        
+                                <span class=""logo""><img src=""{0}"" alt=""""></span>                        
                             </td>
                             <td id=""document_name"">
                                 <span class=""title"">Storage #{1}</span>

@@ -383,7 +383,7 @@ namespace SingerDispatch.Printing.Documents
                     <table>
                         <tr>
                             <td id=""logo"">
-                                <span class=""logo""><img src=""{0}"" alt=""Singer""></span>                        
+                                <span class=""logo""><img src=""{0}"" alt=""""></span>                        
                             </td>
                             <td id=""quote_name"">
                                 <span class=""title"">Quote {1}</span>
@@ -420,7 +420,7 @@ namespace SingerDispatch.Printing.Documents
 
             replacements[0] = GetHeaderImg();
             replacements[1] = quoteName;
-            replacements[2] = SingerConfigs.GetConfig(cName) ?? "Singer Specialized Ltd.";
+            replacements[2] = SingerConfigs.GetConfig(cName) ?? "Borger";
             replacements[3] = SingerConfigs.GetConfig(cAddress);
             replacements[4] = SingerConfigs.GetConfig(cCity);
             replacements[5] = SingerConfigs.GetConfig(cPhone);
