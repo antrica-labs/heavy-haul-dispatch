@@ -144,7 +144,7 @@ namespace SingerDispatch
     {
         public override string ToString()
         {
-            return string.Format("{0} - {1}", Prefix, Name);
+            return Prefix.Trim().Length > 0 ? string.Format("{0} - {1}", Prefix, Name) : string.Format("{0}", Name);
         }
     }
 

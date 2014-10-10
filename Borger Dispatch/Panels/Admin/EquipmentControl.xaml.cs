@@ -42,7 +42,7 @@ namespace SingerDispatch.Panels.Admin
 
             Database = new SingerDispatchDataContext();
 
-            cmbEquipmentTypes.ItemsSource = (from et in Database.EquipmentTypes orderby et.Prefix select et).ToList();
+            cmbEquipmentTypes.ItemsSource = (from et in Database.EquipmentTypes orderby et.Prefix, et.Name select et).ToList();
 
             MainGridWorker = new BackgroundWorker();
             MainGridWorker.WorkerSupportsCancellation = true;

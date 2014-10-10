@@ -14,16 +14,18 @@
                 <ResourceDictionary Source="/SingerDispatchDictionary.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
+            <!--
             <DataTemplate x:Key="EquipmentTypeTemplate">
                 <TextBlock>
                     <TextBlock.Text>
-                        <MultiBinding StringFormat="{}{0} - {1}">
+                        <MultiBinding StringFormat="{}{1}">
                             <Binding Path="Prefix" />
                             <Binding Path="Name" />
                         </MultiBinding>
                     </TextBlock.Text>
                 </TextBlock>
             </DataTemplate>
+            -->
         </ResourceDictionary>
     </UserControl.Resources>
     <DockPanel>        
@@ -52,7 +54,7 @@
                         </Grid.RowDefinitions>
                         
                         <Label Grid.Row="0" Grid.Column="0">Equipment Type:</Label>
-                        <ComboBox Name="cmbEquipmentTypes" Grid.Row="0" Grid.Column="1" IsEditable="False" SelectedItem="{Binding EquipmentType}" ItemTemplate="{StaticResource EquipmentTypeTemplate}" SelectionChanged="cmbEquipmentTypes_SelectionChanged" />
+                        <ComboBox Name="cmbEquipmentTypes" Grid.Row="0" Grid.Column="1" IsEditable="False" SelectedItem="{Binding EquipmentType}" ItemTemplate="{StaticResource SimpleNameTemplate}" SelectionChanged="cmbEquipmentTypes_SelectionChanged" />
                         
                         <Label Grid.Row="1" Grid.Column="0">Unit #:</Label>
                         <TextBox Name="txtUnitNumber" Grid.Row="1" Grid.Column="1" Text="{Binding UnitNumber}" />

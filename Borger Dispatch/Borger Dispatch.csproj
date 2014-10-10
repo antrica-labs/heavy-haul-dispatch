@@ -35,9 +35,9 @@
     <InstallUrl>\\borgerfps01\Programs\Borger Dispatch Installer\</InstallUrl>
     <ProductName>Borger Dispatch</ProductName>
     <PublisherName>Simon Twogood</PublisherName>
-    <MinimumRequiredVersion>1.2.0.40</MinimumRequiredVersion>
+    <MinimumRequiredVersion>1.2.0.42</MinimumRequiredVersion>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
-    <ApplicationRevision>42</ApplicationRevision>
+    <ApplicationRevision>43</ApplicationRevision>
     <ApplicationVersion>1.2.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
