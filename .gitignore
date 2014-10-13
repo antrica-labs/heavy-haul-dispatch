@@ -1,0 +1,9 @@
+bin/
+obj/
+.suo
+.user
+.tmp_proj
+.swp
+_ReSharper.*
+Borger Dispatch.sln.cache
+TestResults/
