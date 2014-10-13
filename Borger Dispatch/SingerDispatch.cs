@@ -129,6 +129,8 @@ namespace SingerDispatch
         partial void OnCreated()
         {
             Archived = Archived ?? false;
+            IsAvailable = IsAvailable ?? true;
+            IsSupervisor = IsSupervisor ?? false;
         }
 
         public string Name
@@ -153,6 +155,11 @@ namespace SingerDispatch
         partial void OnCreated()
         {
             Archived = Archived ?? false;
+            IsDispatchable = IsDispatchable ?? true;
+            HasWinch = HasWinch ?? false;
+            IsProrated = IsProrated ?? false;
+            IsOnlyForScheuerle = IsOnlyForScheuerle ?? false;
+            IsOnlyForPushing = IsOnlyForPushing ?? false;
         }
     }
 
