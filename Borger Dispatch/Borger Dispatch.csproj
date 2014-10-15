@@ -22,7 +22,7 @@
     <UpgradeBackupLocation />
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
     <IsWebBootstrapper>false</IsWebBootstrapper>
-    <PublishUrl>C:\Users\Simon\Downloads\Borger Dispatch Setup\</PublishUrl>
+    <PublishUrl>\\Borgerfps01.wrdborger.local\Programs\Borger Dispatch Installer\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Unc</InstallFrom>
     <UpdateEnabled>true</UpdateEnabled>
@@ -32,12 +32,13 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>true</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <InstallUrl>\\borgerfps01\Programs\Borger Dispatch Installer\</InstallUrl>
     <ProductName>Borger Dispatch</ProductName>
     <PublisherName>Simon Twogood</PublisherName>
-    <MinimumRequiredVersion>1.2.0.42</MinimumRequiredVersion>
+    <MinimumRequiredVersion>1.2.0.46</MinimumRequiredVersion>
+    <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
+    <WebPage>publish.htm</WebPage>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
-    <ApplicationRevision>45</ApplicationRevision>
+    <ApplicationRevision>47</ApplicationRevision>
     <ApplicationVersion>1.2.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
