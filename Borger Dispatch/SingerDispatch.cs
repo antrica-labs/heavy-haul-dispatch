@@ -1435,18 +1435,18 @@ namespace SingerDispatch
 
             foreach (var commodity in load.LoadedCommodities)
             {
-                var loading = commodity.LoadLocation + " - " + commodity.LoadAddress;
-                var unloading = commodity.UnloadLocation + " - " + commodity.UnloadAddress;
+                var loading = commodity.LoadLocation.Trim() + " - " + commodity.LoadAddress.Trim();
+                var unloading = commodity.UnloadLocation.Trim() + " - " + commodity.UnloadAddress.Trim();
 
                 line.ItemDate = line.ItemDate ?? commodity.LoadDate;
                 line.Departure = line.Departure ?? loading;
                 line.Destination = line.Destination ?? unloading;
 
 
-                if (fromDiffers == false && line.Departure != loading.Trim())
+                if (fromDiffers == false && line.Departure != loading)
                     fromDiffers = true;
 
-                if (toDiffers == false && line.Destination != unloading.Trim())
+                if (toDiffers == false && line.Destination != unloading)
                     toDiffers = true;
             }
 
@@ -1470,6 +1470,7 @@ namespace SingerDispatch
                 else
                     line.Description = string.Format("Dispatch #{0}", dispatch.Number);
 
+                line.ItemDate = dispatch.MeetingDate;
                 line.Rate = dispatch.AdjustedRate;
                 line.Departure = dispatch.DepartingLocation;
 
