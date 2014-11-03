@@ -36,16 +36,7 @@ namespace SingerDispatch.Windows
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             var jobs = from j in Database.Jobs where j.Company == Company && (j.Status != null && j.Status.Name != "Billed") orderby j.Number select j;
-
-            try
-            {
-                var acManager = new WPFAutoCompleteBox.Core.AutoCompleteManager(acJobNumber);
-                acManager.DataProvider = new SingerDispatch.Database.CompleteProviders.JobNumAndNameACProvider(jobs);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
+            cmbJobList.ItemsSource = jobs;
         }
 
         private void SelectNone_Click(object sender, RoutedEventArgs e)
@@ -64,11 +55,11 @@ namespace SingerDispatch.Windows
             grid.SelectAll();
         }
 
-        private void acJobNumber_TextChanged(object sender, TextChangedEventArgs e)
+        private void cmbJobList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(acJobNumber.Text))
-                acJobNumber.SelectedItem = null;
+            UpdateDataGrids();
         }
+
 
         private void acJobNumber_SelectionChanged(object sender, RoutedEventArgs e)
         {
@@ -77,7 +68,7 @@ namespace SingerDispatch.Windows
 
         private void UpdateDataGrids()
         {
-            var job = (Job)acJobNumber.SelectedItem;
+            var job = (Job)cmbJobList.SelectedItem;
 
             if (job != null)
             {
@@ -104,7 +95,7 @@ namespace SingerDispatch.Windows
 
         private void CreateInvoice_Click(object sender, RoutedEventArgs e)
         {
-            var job = (Job)acJobNumber.SelectedItem;
+            var job = (Job)cmbJobList.SelectedItem;
 
             if (job != null)
             {
@@ -135,7 +126,7 @@ namespace SingerDispatch.Windows
         {
             var invoice = new Invoice();
             
-            invoice.AddLoads(loads, billedStatus);
+            invoice.AddLoads(loads, billedStatus);            
             invoice.AddThirdPartyServices(services);
             invoice.AddStorageItems(storage);
 
@@ -147,5 +138,7 @@ namespace SingerDispatch.Windows
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {          
         }
+
+        
     }
 }

@@ -16338,6 +16338,8 @@ namespace SingerDispatch
 		
 		private string _Responsibility;
 		
+		private System.Nullable<decimal> _AdjustedRate;
+		
 		private string _Description;
 		
 		private string _Schedule;
@@ -16386,6 +16388,8 @@ namespace SingerDispatch
     partial void OnNumberChanged();
     partial void OnResponsibilityChanging(string value);
     partial void OnResponsibilityChanged();
+    partial void OnAdjustedRateChanging(System.Nullable<decimal> value);
+    partial void OnAdjustedRateChanged();
     partial void OnDescriptionChanging(string value);
     partial void OnDescriptionChanged();
     partial void OnScheduleChanging(string value);
@@ -16590,6 +16594,26 @@ namespace SingerDispatch
 					this._Responsibility = value;
 					this.SendPropertyChanged("Responsibility");
 					this.OnResponsibilityChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AdjustedRate")]
+		public System.Nullable<decimal> AdjustedRate
+		{
+			get
+			{
+				return this._AdjustedRate;
+			}
+			set
+			{
+				if ((this._AdjustedRate != value))
+				{
+					this.OnAdjustedRateChanging(value);
+					this.SendPropertyChanging();
+					this._AdjustedRate = value;
+					this.SendPropertyChanged("AdjustedRate");
+					this.OnAdjustedRateChanged();
 				}
 			}
 		}

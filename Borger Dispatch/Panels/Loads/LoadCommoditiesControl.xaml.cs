@@ -354,13 +354,6 @@ namespace SingerDispatch.Panels.Loads
             rates.AddRange((from r in Database.Rates where r.Archived != true && trailers.Contains(r.RateType) orderby r.Name select r).ToList());
             rates.AddRange((from r in Database.Rates where r.Archived != true && tractors.Contains(r.RateType) orderby r.Name select r).ToList());
 
-            /*
-            foreach (var rate in rates)
-            {
-                rate.Hourly = (enterprise) ? rate.HourlyEnterprise : rate.HourlySpecialized;
-            }
-            */
-
             return rates.ToList();
         }
 
@@ -369,16 +362,7 @@ namespace SingerDispatch.Panels.Loads
             var rate = (Rate)cmbRates.SelectedItem;
 
             if (SelectedLoad == null || rate == null) return;
-            /*
-            try
-            {
-                SelectedLoad.AdjustedRate = (from ra in SelectedLoad.Job.Company.RateAdjustments where ra.Rate == rate select ra).First().AdjustedRate;
-            }
-            catch
-            {
-                SelectedLoad.AdjustedRate = rate.Hourly;
-            }
-            */
+
             cmbTrailerCombinations.ItemsSource = from tc in Database.TrailerCombinations where tc.Rate == rate select tc;      
         }
 

@@ -942,6 +942,33 @@ namespace SingerDispatch
 
     partial class Dispatch
     {
+        private Rate _suggesteRate;
+
+        public Rate SuggestedRate
+        {
+            get
+            {
+                return _suggesteRate;
+            }
+            set
+            {
+                SendPropertyChanging();
+                _suggesteRate = value;
+                SendPropertyChanged("SuggestedRate");
+            }
+        }
+
+        partial void OnCreated()
+        {
+            this.PropertyChanged += new System.ComponentModel.PropertyChangedEventHandler(SomePropertyChanged);
+        }
+
+        private void SomePropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "SuggestedRate")
+                CalculateAdjustedRate();
+        }
+
         public Dispatch Duplicate()
         {
             var cp = new Dispatch();
@@ -969,6 +996,25 @@ namespace SingerDispatch
                     dispatchNumber = string.Format("{0}-{1:D2}-{2:D2}", Load.Job.Number, Load.Number, Number);
 
                 return dispatchNumber;
+            }
+        }
+
+        private void CalculateAdjustedRate()
+        {
+            var enterprise = Load.Job != null && Load.Job.Company != null && Load.Job.Company.CustomerType != null && Load.Job.Company.CustomerType.IsEnterprise == true;
+
+            if (SuggestedRate == null)
+                AdjustedRate = null;
+            else
+            {
+                try
+                {
+                    AdjustedRate = (from ra in Load.Job.Company.RateAdjustments where ra.Rate == SuggestedRate select ra).First().AdjustedRate;
+                }
+                catch
+                {
+                    AdjustedRate = (enterprise) ? SuggestedRate.HourlyEnterprise : SuggestedRate.HourlySpecialized;
+                }
             }
         }
     }
@@ -1381,7 +1427,7 @@ namespace SingerDispatch
         {
             var line = new InvoiceLineItem();
 
-            line.Description = string.Format("Supply men and equipment to transport {0}", load.ToString());
+            line.Description = string.Format(SingerConfigs.DefaultDispatchDescription, load.ToString());
             line.Rate = load.AdjustedRate;
 
             var fromDiffers = false;    
@@ -1411,6 +1457,24 @@ namespace SingerDispatch
                 line.Destination = "Various";
 
             InvoiceLineItems.Add(line);
+        }
+
+        internal void AddDispatches(Load load)
+        {
+            foreach (var dispatch in load.Dispatches)
+            {
+                var line = new InvoiceLineItem();
+
+                if (dispatch.Equipment != null && dispatch.EquipmentType != null)
+                    line.Description = string.Format("Dispatch #{0}: {1} - {2}", dispatch.Number, dispatch.EquipmentType.Name, dispatch.Equipment.UnitNumber);
+                else
+                    line.Description = string.Format("Dispatch #{0}", dispatch.Number);
+
+                line.Rate = dispatch.AdjustedRate;
+                line.Departure = dispatch.DepartingLocation;
+
+                InvoiceLineItems.Add(line);
+            }
         }
 
         internal decimal AddPermits(Load load)
@@ -1444,6 +1508,7 @@ namespace SingerDispatch
             {
                 AddLoadReferences(load);
                 AddLoadedCommodities(load);
+                AddDispatches(load);
                 
                 if (load.Permits.Count() > 0)
                     AddPermitAcquisition(load, AddPermits(load));

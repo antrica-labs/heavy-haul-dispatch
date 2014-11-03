@@ -3,12 +3,23 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:AC="clr-namespace:WPFAutoCompleteBox.Controls;assembly=WPFAutoCompleteBox"        
         Title="Invoice Builder" SizeToContent="Height" Width="750" WindowStartupLocation="CenterOwner" ResizeMode="NoResize"
-        FocusManager.FocusedElement="{Binding ElementName=acJobNumber}" Loaded="Window_Loaded" Closing="Window_Closing">
+        FocusManager.FocusedElement="{Binding ElementName=cmbJobList}" Loaded="Window_Loaded" Closing="Window_Closing">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/SingerDispatchDictionary.xaml" />
             </ResourceDictionary.MergedDictionaries>
+
+            <DataTemplate x:Key="SimpleJobTemplate">
+                <TextBlock>
+                    <TextBlock.Text>
+                        <MultiBinding StringFormat="{}{0} - {1}">
+                            <Binding Path="Number" />
+                            <Binding Path="Name" />
+                        </MultiBinding>
+                    </TextBlock.Text>
+                </TextBlock>
+            </DataTemplate>
         </ResourceDictionary>
     </Window.Resources>
     <StackPanel Margin="5">
@@ -21,7 +32,8 @@
             </Grid.ColumnDefinitions>
                 
             <Label Grid.Column="0">Job #:</Label>
-            <AC:CompletableTextBox Grid.Column="1" Name="acJobNumber" TextChanged="acJobNumber_TextChanged" SelectionChanged="acJobNumber_SelectionChanged" />
+            <ComboBox Grid.Column="1" Name="cmbJobList" TextSearch.TextPath="Number" ItemTemplate="{StaticResource SimpleJobTemplate}" SelectionChanged="cmbJobList_SelectionChanged" />
+            <!-- <AC:CompletableTextBox Grid.Column="1" Name="acJobNumber" TextChanged="acJobNumber_TextChanged" SelectionChanged="acJobNumber_SelectionChanged" /> -->
         </Grid>
 
         <Grid Height="200" IsEnabled="{Binding Converter={StaticResource IsEnabledNullConverter}, ElementName=acJobNumber, Path=SelectedItem}">

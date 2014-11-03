@@ -27,7 +27,7 @@
                 </MenuItem>
                 <MenuItem Header="Companies">
                     <MenuItem Header="Create" Click="CreateCompanyMenuItem_Click" InputGestureText="Ctrl+Shift+N" />                    
-                    <MenuItem Header="Rename/Remove" Click="EditCompaniesMenuItem_Click" InputGestureText="Ctrl+Shift+E" />
+                    <MenuItem Header="Edit" Click="EditCompaniesMenuItem_Click" InputGestureText="Ctrl+Shift+E" />
                     <MenuItem Header="Refresh" Click="RefreshCompaniesMenuItem_Click" />
                 </MenuItem>
                 <MenuItem Header="Find">

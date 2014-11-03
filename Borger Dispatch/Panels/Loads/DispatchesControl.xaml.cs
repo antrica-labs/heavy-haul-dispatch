@@ -332,10 +332,19 @@ namespace SingerDispatch.Panels.Loads
 
         private void cmbEquipmentTypes_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
+            var dispatch = (Dispatch)dgDispatches.SelectedItem;
             var type = (EquipmentType)cmbEquipmentTypes.SelectedItem;
             var units = (type == null) ? null : from eq in Database.Equipment where eq.IsDispatchable == true && eq.Archived != true && eq.EquipmentType == type select eq;
-            
+
             cmbUnits.ItemsSource = units;
+
+            
+            if (type != null)
+            { 
+                var rate = (from r in Database.Rates where r.Name.ToUpper() == type.Name.ToUpper() select r).FirstOrDefault();
+
+                dispatch.SuggestedRate = rate;
+            }
         }
     }
 
