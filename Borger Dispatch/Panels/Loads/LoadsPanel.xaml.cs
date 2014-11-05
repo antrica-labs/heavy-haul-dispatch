@@ -232,7 +232,7 @@ namespace SingerDispatch.Panels.Loads
             }
             else
             {
-                printFileCopy = Convert.ToBoolean(SingerConfigs.GetConfig("Dispatch-SingerPrintFileCopy") ?? "false");
+                printFileCopy = Convert.ToBoolean(SingerConfigs.GetConfig("Dispatch-CompanyPrintFileCopy") ?? "false");
             }
 
             var viewer = new DocumentViewerWindow(new DispatchDocument(printFileCopy), dispatches, string.Format("Dispatches - Load #{0}-{1}", SelectedJob.Number, SelectedLoad.Number)) { IsMetric = !UseImperialMeasurements, IsSpecializedDocument = SelectedCompany.CustomerType.IsEnterprise != true };

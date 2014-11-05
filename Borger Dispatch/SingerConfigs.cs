@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace SingerDispatch
@@ -17,19 +18,29 @@ namespace SingerDispatch
 
         public static Employee OperatingEmployee = null;
 
+        private static Dictionary<String, String> ConfigCache = new Dictionary<String, String>();
         public static string GetConfig(string key)
         {
             string result;
 
-            try
+            if (ConfigCache.ContainsKey(key))
             {
-                var config = (from c in CommonDataContext.Configurations where c.Name == key select c).First();
-
-                result = config.Value;
+                result = ConfigCache[key]; 
             }
-            catch (Exception)
+            else
             {
-                result = null;
+                try
+                {
+                    var config = (from c in CommonDataContext.Configurations where c.Name == key select c).First();
+
+                    ConfigCache.Add(key, config.Value);
+
+                    result = ConfigCache[key];
+                }
+                catch (Exception)
+                {
+                    result = null;
+                }
             }
 
             return result;
@@ -64,7 +75,7 @@ namespace SingerDispatch
         {
             get
             {
-                var gst = GetConfig("GSTRate") ?? "0.05m";
+                var gst = GetConfig("GSTRate") ?? "0.05";
                 decimal result;
 
                 try

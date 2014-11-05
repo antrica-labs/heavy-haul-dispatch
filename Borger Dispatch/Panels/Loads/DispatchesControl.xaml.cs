@@ -171,7 +171,7 @@ namespace SingerDispatch.Panels.Loads
             }
             else
             {
-                printFileCopy = Convert.ToBoolean(SingerConfigs.GetConfig("Dispatch-SingerPrintFileCopy") ?? "false");
+                printFileCopy = Convert.ToBoolean(SingerConfigs.GetConfig("Dispatch-CompanyPrintFileCopy") ?? "false");
             }
 
             var viewer = new DocumentViewerWindow(new DispatchDocument(printFileCopy), dgDispatches.SelectedItem, String.Format("Dispatch #{0}", dispatch.Name)) { IsMetric = !UseImperialMeasurements, IsSpecializedDocument = SelectedCompany.CustomerType.IsEnterprise != true };
