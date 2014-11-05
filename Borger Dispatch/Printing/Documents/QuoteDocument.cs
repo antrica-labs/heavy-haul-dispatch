@@ -529,7 +529,7 @@ namespace SingerDispatch.Printing.Documents
                         {0}                        
                     </table>
 
-                    <p>As per your quotation request we are pleased to submit the following proposal, valid until {2}:</p>
+                    <p>As per your quotation request we are pleased to submit the following proposal, valid until {1}:</p>
                 </div>
             ";
 
@@ -547,8 +547,8 @@ namespace SingerDispatch.Printing.Documents
             var replacements = new object[3];
 
             replacements[0] = (recipient != null) ? string.Format(@"<tr><td class=""fieldname"">Attention:</td><td>{0}</td></tr>", recipient.Name) : "";
-            replacements[1] = subject;
-            replacements[2] = closingDate.Value.ToString(SingerConfigs.PrintedDateFormatString);
+            //replacements[1] = subject;
+            replacements[1] = closingDate.Value.ToString(SingerConfigs.PrintedDateFormatString);
 
             return string.Format(html, replacements);
         }

@@ -1425,7 +1425,7 @@ namespace SingerDispatch.Printing.Documents
             var rows = new StringBuilder();
             foreach (var item in pilots)
             {
-                var replacements = new object[7];
+                var replacements = new object[6];
 
                 replacements[0] = (item.ServiceDate == null) ? "" : item.ServiceDate.Value.ToString(SingerConfigs.PrintedDateFormatString) + " " + item.ServiceTime;
                 replacements[1] = (item.Company == null) ? "" : item.Company.Name;
@@ -1621,7 +1621,7 @@ namespace SingerDispatch.Printing.Documents
 
             foreach (var item in permits)
             {
-                var replacements = new object[4];
+                var replacements = new object[3];
                 
                 replacements[0] = (item.IssuingCompany == null) ? "" : item.IssuingCompany.Name;
                 replacements[1] = (item.PermitType == null) ? "" : item.PermitType.Name;

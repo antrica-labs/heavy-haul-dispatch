@@ -494,7 +494,7 @@ namespace SingerDispatch.Printing.Documents
                 </div>
             ";
 
-            var replacements = new object[7];
+            var replacements = new object[6];
 
             string cName, cAddress, cCity, cPhone;
 
