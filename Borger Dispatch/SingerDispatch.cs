@@ -1425,6 +1425,7 @@ namespace SingerDispatch
 
         internal void AddLoadedCommodities(Load load)
         {
+            string loading, unloading;
             var line = new InvoiceLineItem();
 
             line.Description = string.Format(SingerConfigs.DefaultDispatchDescription, load.ToString());
@@ -1434,10 +1435,23 @@ namespace SingerDispatch
             var toDiffers = false;
 
             foreach (var commodity in load.LoadedCommodities)
-            {
-                var loading = commodity.LoadLocation.Trim() + " - " + commodity.LoadAddress.Trim();
-                var unloading = commodity.UnloadLocation.Trim() + " - " + commodity.UnloadAddress.Trim();
+            {                
+                // Ugly, but I can't think of a better way to trim these strings and null out the empty ones
+                commodity.LoadLocation = (commodity.LoadLocation ?? "").Trim();
+                commodity.LoadAddress = (commodity.LoadAddress ?? "").Trim();
+                commodity.UnloadLocation = (commodity.UnloadLocation ?? "").Trim();
+                commodity.UnloadAddress = (commodity.UnloadAddress ?? "").Trim();
 
+                if (commodity.LoadLocation.Length > 0 && commodity.LoadAddress.Length > 0)
+                    loading = string.Format("{0} - {1}", commodity.LoadLocation, commodity.LoadAddress);
+                else
+                    loading = string.Format("{0} {1}", commodity.LoadLocation, commodity.LoadAddress).Trim();
+
+                if (commodity.UnloadLocation.Length > 0 && commodity.UnloadAddress.Length > 0)
+                    unloading = string.Format("{0} - {1}", commodity.UnloadLocation, commodity.UnloadAddress);
+                else
+                    unloading = string.Format("{0} {1}", commodity.UnloadLocation, commodity.UnloadAddress).Trim();
+                
                 line.ItemDate = line.ItemDate ?? commodity.LoadDate;
                 line.Departure = line.Departure ?? loading;
                 line.Destination = line.Destination ?? unloading;
