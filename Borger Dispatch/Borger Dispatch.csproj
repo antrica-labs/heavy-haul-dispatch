@@ -34,11 +34,11 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ProductName>Borger Dispatch</ProductName>
     <PublisherName>Simon Twogood</PublisherName>
-    <MinimumRequiredVersion>1.2.0.48</MinimumRequiredVersion>
+    <MinimumRequiredVersion>1.2.0.51</MinimumRequiredVersion>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
-    <ApplicationRevision>49</ApplicationRevision>
+    <ApplicationRevision>52</ApplicationRevision>
     <ApplicationVersion>1.2.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
