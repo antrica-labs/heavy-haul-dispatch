@@ -221,11 +221,7 @@ namespace SingerDispatch.Printing.Documents
             var subtotalText = @"
                 <tr class=""summary subtotal"">
                     <td colspan=""6"" rowspan=""4"" class=""comments"">
-                        <span>For inquiries, please contact the accounts receivable department at (403) 569-7635 Mon-Fri: 9:00am - 4:00pm</span>    
-                        
-                        <span>All accounts due upon receipt of invoice. All accounts 60 days overdue are subject to 2.0% interest per month.</span>
-                        
-                        <span>Please Note: Any Wire lift charges are cost + 10%</span>
+                        %INVOICE_SIGNOFF%
                     </td>
                     <th>Subtotal</th>
                     <td class=""dollars"">%SUBTOTAL%</td>
@@ -283,8 +279,10 @@ namespace SingerDispatch.Printing.Documents
             }
 
             var fuelTaxTotal = subtotal * SingerConfigs.FuelTax;
+            var signoff = SingerConfigs.GetConfig("InvoiceSignoff");
 
-            builder.Append(subtotalText.Replace("%SUBTOTAL%", String.Format("{0:C}", subtotal)));
+            
+            builder.Append(subtotalText.Replace("%INVOICE_SIGNOFF%", String.Format("{0:C}", signoff)).Replace("%SUBTOTAL%", String.Format("{0:C}", subtotal)));
             builder.Append(fuelTax.Replace("%FUEL_TAX%", String.Format("{0:C}", fuelTaxTotal)));
             builder.Append(regularTax.Replace("%TAX%", String.Format("{0:C}", taxTotal)));
             builder.Append(total.Replace("%TOTAL%", String.Format("{0:C}", (subtotal + fuelTaxTotal + taxTotal))));
