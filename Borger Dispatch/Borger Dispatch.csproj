@@ -156,6 +156,9 @@
     <Compile Include="Panels\Admin\AdminPanel.xaml.cs">
       <DependentUpon>AdminPanel.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Panels\Admin\AppConfigsControl.xaml.cs">
+      <DependentUpon>AppConfigsControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Panels\Admin\ConditionsControl.xaml.cs">
       <DependentUpon>ConditionsControl.xaml</DependentUpon>
     </Compile>
@@ -410,6 +413,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Panels\Admin\AppConfigsControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Panels\Admin\ConditionsControl.xaml">
       <Generator>MSBuild:Compile</Generator>

@@ -34,6 +34,9 @@
             <TabItem Header="Quote conditions">
                 <Admin:ConditionsControl Width="Auto" CompanyList="{Binding CompanyList}" UseImperialMeasurements="{Binding UseImperialMeasurements}" />
             </TabItem>
+            <TabItem Header="Application configs (Do not play with these)">
+                <Admin:AppConfigsControl Width="Auto" CompanyList="{Binding CompanyList}" UseImperialMeasurements="{Binding UseImperialMeasurements}" />
+            </TabItem>
         </TabControl>
     </Grid>
 </Panels:BaseUserControl>

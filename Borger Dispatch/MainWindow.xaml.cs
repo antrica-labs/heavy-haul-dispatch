@@ -88,7 +88,8 @@ namespace SingerDispatch
 
                 if (!Database.DatabaseExists()) 
                     throw new Exception("Unable to connect to the required database!");
-                                
+
+                SingerConfigs.PreloadConfigs();
                 SingerConfigs.OperatingEmployee = GetOperatingEmployee();
             }
             catch (Exception e)

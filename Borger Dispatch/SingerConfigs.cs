@@ -145,5 +145,20 @@ namespace SingerDispatch
                 return "Supply men and equipment to transport {0}";
             }
         }
+        
+
+        public static void PreloadConfigs()
+        {
+            var configs = CommonDataContext.Configurations.ToList();
+
+            foreach (var config in configs)
+            {
+                try
+                {
+                    ConfigCache.Add(config.Name, config.Value);
+                }
+                catch { }
+            }
+        }
     }
 }
