@@ -21,7 +21,7 @@
                 </Grid.ColumnDefinitions>
 
                 <ComboBox Name="cmbCompanyType" Grid.Column="0" Margin="4">
-                    <ComboBoxItem Selected="SingerSpecialized_Selected" IsSelected="True">Borger Group of Companies</ComboBoxItem>
+                    <ComboBoxItem Selected="SingerSpecialized_Selected" IsSelected="True">Borger Transport</ComboBoxItem>
                     <!-- ComboBoxItem Selected="SingerEnterprises_Selected">M.E. Singer Enterprises document</ComboBoxItem> -->
                 </ComboBox>                
                                 

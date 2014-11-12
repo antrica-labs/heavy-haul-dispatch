@@ -461,7 +461,7 @@ namespace SingerDispatch
         {
             var storage = from si in Database.StorageItems where si.Job != null orderby si.Number descending select si;
             var items = from s in storage where s.JobCommodity != null && (s.DateRemoved == null || s.DateRemoved.Value.Date > DateTime.Today.Date) orderby s.JobCommodity.Owner.Name select s;            
-            var title = "Singer Storage List - Current";
+            var title = "Storage List - Current";
 
             var viewer = new DocumentViewerWindow(new StorageListDocument(), items, title) { IsMetric = !UseImperialMeasurements };
             viewer.DisplayPrintout(); 
@@ -471,7 +471,7 @@ namespace SingerDispatch
         {
             var storage = from si in Database.StorageItems orderby si.Number descending select si;
             var items = from s in storage where s.JobCommodity != null && (s.DateRemoved != null && s.DateRemoved.Value.Date <= DateTime.Today.Date) orderby s.JobCommodity.Owner.Name select s;
-            var title = "Singer Storage List - Archive";
+            var title = "Storage List - Archive";
 
             var viewer = new DocumentViewerWindow(new StorageListDocument(), items, title) { IsMetric = !UseImperialMeasurements };
             viewer.DisplayPrintout();
@@ -479,17 +479,34 @@ namespace SingerDispatch
 
         private void ViewJobList_Click(object sender, RoutedEventArgs e)
         {
+
             var jobs = from j in Database.Jobs where j.Company != null orderby j.Number descending select j;
-            var title = "Singer Job List";
+            var title = "Job List";
 
             var viewer = new Windows.DocumentViewerWindow(new JobListDocument(), jobs, title) { IsMetric = !UseImperialMeasurements };
             viewer.DisplayPrintout();
         }
 
+        private void ViewCurrentDispatches_Click(object sender, RoutedEventArgs e)
+        {
+            var dispatches = from d in Database.Dispatches
+                             where d.Load != null && d.Load.Job != null && d.Load.Job.Company != null && d.MeetingDate != null
+                             && (d.MeetingDate >= DateTime.Now.AddDays(-1).Date && d.MeetingDate <= DateTime.Now.AddDays(1).Date)
+                             && (d.Load.Status.Name == "In Process" || d.Load.Status.Name == "Pending" || d.Load.Status.Name == "Delayed")
+                             orderby d.Load.Job.Company.Name, d.Load.Job.Number, d.Load.Number, d.MeetingDate
+                             select d;
+
+            var title = "Job Dispatch List";
+
+            var viewer = new Windows.DocumentViewerWindow(new DispatchListDocument(), dispatches, title) { IsMetric = !UseImperialMeasurements };
+            viewer.DisplayPrintout();
+        }
+        
+
         private void ViewQuoteList_Click(object sender, RoutedEventArgs e)
         {
             var quotes = from q in Database.Quotes where q.Company != null orderby q.ID descending select q;
-            var title = "Singer Quote List";
+            var title = "Quote List";
 
             var viewer = new Windows.DocumentViewerWindow(new QuoteListDocument(), quotes, title) { IsMetric = !UseImperialMeasurements };
             viewer.DisplayPrintout();
