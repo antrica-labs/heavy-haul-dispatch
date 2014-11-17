@@ -40,14 +40,15 @@
                 </MenuItem>
                 <MenuItem Header="Reports">
                     <MenuItem Header="Current jobs" Click="ViewCurrentDispatches_Click" />
-                    <MenuItem Header="Complete job list" Click="ViewJobList_Click" />
+                    <MenuItem Header="All jobs" Click="ViewJobList_Click" />
                     <Separator />
-                    <MenuItem Header="Complete quote list" Click="ViewQuoteList_Click" />
+                    <MenuItem Header="All quotes" Click="ViewQuoteList_Click" />
                     <Separator />
+                    <MenuItem Header="Commodity locations" Click="CommodityLocationsReport_Click" />
                     <MenuItem Header="Storage list" Click="ViewStorageList_Click" />
                     <MenuItem Header="Storage list (archived)" Click="ViewArchivedStorageList_Click" />
                     <Separator />
-                    <MenuItem Header="Out of province report" Click="PrintOutOfProvinceReport_Click" />
+                    <MenuItem Header="Out of province report" Click="PrintOutOfProvinceReport_Click" />                    
                 </MenuItem>
                 <MenuItem Header="Tools">                    
                     <MenuItem Header="Use imperial measurements" IsCheckable="true" IsChecked="{Binding ElementName=ThisWindow, Path=UseImperialMeasurements}" />                                        

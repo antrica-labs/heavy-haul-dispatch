@@ -512,6 +512,23 @@ namespace SingerDispatch
             viewer.DisplayPrintout();
         }
 
+        private void CommodityLocationsReport_Click(object sender, RoutedEventArgs e)
+        {
+            var company = acCompany.SelectedItem as Company;
+            var title = "Commodity List";
+
+            if (company == null)
+            {
+                MessageBox.Show("Please load a company before running this report.");
+
+                return;
+            }
+
+            var viewer = new Windows.DocumentViewerWindow(new CommodityListDocument(), company, title) { IsMetric = !UseImperialMeasurements };
+            viewer.DisplayPrintout();
+                
+        }
+
         private void QuoteLoookupCommandHandler(object sender, ExecutedRoutedEventArgs e)
         {
             FindQuote();
@@ -673,8 +690,7 @@ namespace SingerDispatch
                 var generator = new OutOfProvinceBuilderWindow() { Owner = this };
                 generator.BuildReport(range.StartDate, range.EndDate);
             }
-        }
-
+        }        
 
         private void GetSupport_Click(object sender, RoutedEventArgs e)
         {
