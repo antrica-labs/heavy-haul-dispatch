@@ -427,8 +427,7 @@ namespace SingerDispatch.Printing.Documents
                     {
                         font-size: 1.1em;
                         text-decoration: underline;
-                        display: block;
-                        font-weight: bold;
+                        display: block;                        
                         margin-bottom: 0.75em;
                         margin-left: -0.5em;
                     }
@@ -441,7 +440,7 @@ namespace SingerDispatch.Printing.Documents
 
                     div.dispatch_doc div.load_and_unload span.commodity_name span.unit
                     {
-                        font-weight: normal;          
+                        font-weight: bold;          
                     }
 
                     div.dispatch_doc div.load_and_unload div.loading, div.dispatch_doc div.load_and_unload div.unloading
@@ -938,7 +937,7 @@ namespace SingerDispatch.Printing.Documents
             const string foot = "</div>";
             const string commodityHtml = @"                            
                 <div class=""commodity"">
-                    <span class=""commodity_name"">{0} <span class=""unit"">{1}</span></span> 
+                    <span class=""commodity_name""><span class=""unit"">{1}</span> {0}</span> 
                     
 
                     <div class=""dimensions metric"">

@@ -169,12 +169,14 @@ namespace SingerDispatch
         {
             get
             {
-                var name = Name;
+                var identifier = Unit;
 
-                if (!string.IsNullOrEmpty(Unit))
-                    name += " - " + Unit;
+                if (!string.IsNullOrEmpty(identifier) && !string.IsNullOrEmpty(Name))
+                    identifier += " - " + Name;
+                else
+                    identifier += Name;
 
-                return name;
+                return identifier;
             }
         }
 
@@ -482,12 +484,14 @@ namespace SingerDispatch
         {
             get
             {
-                var name = Name;
+                var identifier = Unit;
 
-                if (!string.IsNullOrEmpty(Unit))
-                    name += " - " + Unit;
+                if (!string.IsNullOrEmpty(identifier) && !string.IsNullOrEmpty(Name))
+                    identifier += " - " + Name;
+                else
+                    identifier += Name;
 
-                return name;
+                return identifier;
             }
         }
     }
@@ -745,12 +749,14 @@ namespace SingerDispatch
         {
             get
             {
-                var name = Name;
+                var identifier = Unit;
 
-                if (!string.IsNullOrEmpty(Unit))
-                    name += " - " + Unit;
+                if (!string.IsNullOrEmpty(identifier) && !string.IsNullOrEmpty(Name))
+                    identifier += " - " + Name;
+                else
+                    identifier += Name;
 
-                return name;
+                return identifier;
             }
         }
 
