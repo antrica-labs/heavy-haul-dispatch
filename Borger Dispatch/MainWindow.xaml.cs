@@ -484,7 +484,7 @@ namespace SingerDispatch
             var jobs = from j in Database.Jobs where j.Company != null orderby j.Number descending select j;
             var title = "Job List";
 
-            var viewer = new Windows.DocumentViewerWindow(new JobListDocument(), jobs, title) { IsMetric = !UseImperialMeasurements };
+            var viewer = new Windows.DocumentViewerWindow(new JobListDocument(), new JobListExcel(), jobs, title) { IsMetric = !UseImperialMeasurements };
             viewer.DisplayPrintout();
         }
 
@@ -509,7 +509,7 @@ namespace SingerDispatch
             var quotes = from q in Database.Quotes where q.Company != null orderby q.ID descending select q;
             var title = "Quote List";
 
-            var viewer = new Windows.DocumentViewerWindow(new QuoteListDocument(), quotes, title) { IsMetric = !UseImperialMeasurements };
+            var viewer = new Windows.DocumentViewerWindow(new QuoteListDocument(), new QuoteListExcel(), quotes, title) { IsMetric = !UseImperialMeasurements };
             viewer.DisplayPrintout();
         }
 
@@ -525,7 +525,7 @@ namespace SingerDispatch
                 return;
             }
 
-            var viewer = new Windows.DocumentViewerWindow(new CommodityListDocument(), company, title) { IsMetric = !UseImperialMeasurements };
+            var viewer = new Windows.DocumentViewerWindow(new CommodityListDocument(), new CommodityListExcel(), company, title) { IsMetric = !UseImperialMeasurements };
             viewer.DisplayPrintout();
                 
         }

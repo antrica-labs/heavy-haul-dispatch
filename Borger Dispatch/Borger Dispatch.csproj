@@ -281,8 +281,12 @@
     <Compile Include="Printing\Documents\StorageContractDocument.cs" />
     <Compile Include="Printing\Documents\StorageListDocument.cs" />
     <Compile Include="Printing\Documents\StorageStickerDocument.cs" />
+    <Compile Include="Printing\Excel\CommodityListExcel.cs" />
     <Compile Include="Printing\Excel\DispatchListExcel.cs" />
     <Compile Include="Printing\Excel\IExcelDocument.cs" />
+    <Compile Include="Printing\Excel\JobListExcel.cs" />
+    <Compile Include="Printing\Excel\OutOfProvinceExcel.cs" />
+    <Compile Include="Printing\Excel\QuoteListExcel.cs" />
     <Compile Include="Printing\Excel\SingerExcelDocument.cs" />
     <Compile Include="Printing\FileUtils.cs" />
     <Compile Include="Printing\Documents\InvoiceDocument.cs" />

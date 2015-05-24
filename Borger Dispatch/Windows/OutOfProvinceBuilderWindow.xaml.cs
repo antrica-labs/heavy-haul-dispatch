@@ -13,6 +13,7 @@ using System.Windows.Shapes;
 using System.ComponentModel;
 using System.Windows.Threading;
 using SingerDispatch.Printing.Documents;
+using SingerDispatch.Printing.Excel;
 
 namespace SingerDispatch.Windows
 {
@@ -77,7 +78,7 @@ namespace SingerDispatch.Windows
         private void DisplayDocument(OPReportDetails details)
         {
             var title = string.Format("Out of Province Report - {0} to {1}", details.StartDate.ToString(SingerConfigs.PrintedDateFormatString), details.EndDate.ToString(SingerConfigs.PrintedDateFormatString));
-            var viewer = new DocumentViewerWindow(new OutOfProvinceReportDocument(), details, title) { Owner = Application.Current.MainWindow };
+            var viewer = new DocumentViewerWindow(new OutOfProvinceReportDocument(), new OutOfProvinceExcel(), details, title) { Owner = Application.Current.MainWindow };
             viewer.DisplayPrintout(); 
         }
     }

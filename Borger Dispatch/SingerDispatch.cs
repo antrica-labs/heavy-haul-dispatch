@@ -651,6 +651,22 @@ namespace SingerDispatch
 
             return output;
         }
+
+        public static string PrintCommodityList(Job job)
+        {
+            var list = job.JobCommodities;
+            var output = new StringBuilder();
+
+            for (var i = 0; i < list.Count; i++)
+            {
+                output.Append(list[i].NameAndUnit);
+
+                if ((i + 1) != list.Count)
+                    output.Append(", ");
+            }
+
+            return output.ToString();
+        }
     }
 
     partial class JobReferenceNumber
