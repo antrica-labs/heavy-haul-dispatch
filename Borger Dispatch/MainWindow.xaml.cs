@@ -24,6 +24,7 @@ using SingerDispatch.Panels.Loads;
 using WPFAutoCompleteBox.Controls;
 using SingerDispatch.Printing.Documents;
 using SingerDispatch.Database;
+using SingerDispatch.Printing.Excel;
 
 namespace SingerDispatch
 {
@@ -498,7 +499,7 @@ namespace SingerDispatch
 
             var title = "Job Dispatch List";
 
-            var viewer = new Windows.DocumentViewerWindow(new DispatchListDocument(), dispatches, title) { IsMetric = !UseImperialMeasurements };
+            var viewer = new Windows.DocumentViewerWindow(new DispatchListDocument(), new DispatchListExcel(), dispatches, title) { IsMetric = !UseImperialMeasurements };
             viewer.DisplayPrintout();
         }
         

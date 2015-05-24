@@ -75,8 +75,8 @@ namespace SingerDispatch.Printing.Documents
                 currentCompany = currentCompany ?? currentJob.Company;
                 
                 var dispatchDate = string.Format("{0} {1}", currentDispatch.MeetingDate.Value.ToString(SingerConfigs.PrintedDateFormatString), currentDispatch.MeetingTime);
-                var dispatchName = string.Format("Dispatch #{0}: {1} - {2}", currentDispatch.ID, currentDispatch.EquipmentType.Name, currentDispatch.Equipment.UnitNumber);
-                var dispatchEmployee = currentDispatch.Employee.Name;
+                var dispatchName = string.Format("Dispatch #{0}: {1} - {2}", currentDispatch.Number, (currentDispatch.EquipmentType == null ? "N/A" : currentDispatch.EquipmentType.Name), (currentDispatch.Equipment == null ? "N/A" : currentDispatch.Equipment.UnitNumber));
+                var dispatchEmployee = currentDispatch.Employee == null ? "Unknown employee" : currentDispatch.Employee.Name;
 
                 dispatchList.Append(string.Format(dispatchHtml, dispatchDate, dispatchName, dispatchEmployee));
 

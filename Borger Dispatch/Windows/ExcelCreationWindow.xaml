@@ -1,0 +1,10 @@
+﻿<Window x:Class="SingerDispatch.Windows.ExcelCreationWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Excel Creation" Width="400" SizeToContent="Height" WindowStartupLocation="CenterOwner" ResizeMode="NoResize">
+    <DockPanel Margin="10">
+        <Label DockPanel.Dock="Top" FontWeight="Bold">Creating Excel:</Label>
+        
+        <Label Name="lblStatusOutput" Content="" Margin="20,0" />
+    </DockPanel>
+</Window>

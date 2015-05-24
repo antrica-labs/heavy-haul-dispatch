@@ -12,6 +12,7 @@ using System.ComponentModel;
 using System.Text.RegularExpressions;
 using System.IO;
 using System.Windows.Interop;
+using SingerDispatch.Printing.Excel;
 
 namespace SingerDispatch.Windows
 {
@@ -53,7 +54,8 @@ namespace SingerDispatch.Windows
 
         private UserSettings Settings { get; set; }
         private BackgroundWorker Backgrounder;
-        private IPrintDocument Document { get; set; }        
+        private IPrintDocument Document { get; set; }
+        private IExcelDocument Excel { get; set; }
         private object OriginalEntity { get; set; }
 
         private string _filename;
@@ -80,6 +82,7 @@ namespace SingerDispatch.Windows
             IsSpecializedDocument = true;
             IsMetric = true;
             Document = document;
+            Excel = null;
             OriginalEntity = entity;
             Filename = "";
         }
@@ -94,6 +97,37 @@ namespace SingerDispatch.Windows
             IsMetric = true;
             IsSpecializedDocument = true;
             Document = document;
+            Excel = null;
+            OriginalEntity = entity;
+            Filename = filename;
+        }
+
+        public DocumentViewerWindow(IPrintDocument document, IExcelDocument excel, object entity)
+        {
+            InitializeComponent();
+
+            Settings = new UserSettings();
+            Backgrounder = new BackgroundWorker();
+
+            IsSpecializedDocument = true;
+            IsMetric = true;
+            Document = document;
+            Excel = excel;
+            OriginalEntity = entity;
+            Filename = "";
+        }
+
+        public DocumentViewerWindow(IPrintDocument document, IExcelDocument excel, object entity, string filename)
+        {
+            InitializeComponent();
+
+            Settings = new UserSettings();
+            Backgrounder = new BackgroundWorker();
+
+            IsMetric = true;
+            IsSpecializedDocument = true;
+            Document = document;
+            Excel = excel;
             OriginalEntity = entity;
             Filename = filename;
         }
@@ -212,6 +246,39 @@ namespace SingerDispatch.Windows
             catch (Exception ex)
             {
                 NoticeWindow.ShowError("Problem saving to PDF", ex.ToString());
+            }
+        }
+
+        private void Excel_Click(object sender, RoutedEventArgs e)
+        {
+            if (Excel == null)
+            {
+                NoticeWindow.ShowMessage("Not supported", "Sorry, there is no excel output available for this report yet.");
+                return;
+            }
+
+            var dialog = new SaveFileDialog();
+
+            dialog.FileName = Filename;
+            dialog.DefaultExt = "xlsx";
+            dialog.Filter = "Microsoft Excel (.xlsx)|*.xlsx";
+
+            if (dialog.ShowDialog() != true)
+                return;
+
+            try
+            {
+                var outputFile = dialog.FileName;
+
+                Excel.PrintMetric = IsMetric == true;
+
+                
+                new ExcelCreationWindow(outputFile, Excel.GenerateExcel(outputFile, OriginalEntity)).Run();
+                //new PdfCreationWindow(outputFile, Document.GenerateHTML(OriginalEntity)).Run();
+            }
+            catch (Exception ex)
+            {
+                NoticeWindow.ShowError("Problem saving to Excel", ex.ToString());
             }
         }
 

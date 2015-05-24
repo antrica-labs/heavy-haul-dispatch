@@ -77,6 +77,9 @@
     <SignManifests>true</SignManifests>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ClosedXML">
+      <HintPath>Libraries\ClosedXML.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.mshtml, Version=7.0.3300.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
@@ -278,6 +281,9 @@
     <Compile Include="Printing\Documents\StorageContractDocument.cs" />
     <Compile Include="Printing\Documents\StorageListDocument.cs" />
     <Compile Include="Printing\Documents\StorageStickerDocument.cs" />
+    <Compile Include="Printing\Excel\DispatchListExcel.cs" />
+    <Compile Include="Printing\Excel\IExcelDocument.cs" />
+    <Compile Include="Printing\Excel\SingerExcelDocument.cs" />
     <Compile Include="Printing\FileUtils.cs" />
     <Compile Include="Printing\Documents\InvoiceDocument.cs" />
     <Compile Include="Printing\PDFizer.cs" />
@@ -367,6 +373,9 @@
     </Compile>
     <Compile Include="Windows\OutOfProvinceBuilderWindow.xaml.cs">
       <DependentUpon>OutOfProvinceBuilderWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\ExcelCreationWindow.xaml.cs">
+      <DependentUpon>ExcelCreationWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\PdfCreationWindow.xaml.cs">
       <DependentUpon>PdfCreationWindow.xaml</DependentUpon>
@@ -679,6 +688,10 @@
     <Page Include="Windows\OutOfProvinceBuilderWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\ExcelCreationWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Windows\PdfCreationWindow.xaml">
       <SubType>Designer</SubType>
