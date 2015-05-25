@@ -48,7 +48,9 @@
                     <MenuItem Header="Storage list" Click="ViewStorageList_Click" />
                     <MenuItem Header="Storage list (archived)" Click="ViewArchivedStorageList_Click" />
                     <Separator />
-                    <MenuItem Header="Out of province report" Click="PrintOutOfProvinceReport_Click" />                    
+                    <MenuItem Header="Out of province report" Click="PrintOutOfProvinceReport_Click" />
+                    <Separator />
+                    <MenuItem Header="Revenue report" Click="RevenueReport_Click" />
                 </MenuItem>
                 <MenuItem Header="Tools">                    
                     <MenuItem Header="Use imperial measurements" IsCheckable="true" IsChecked="{Binding ElementName=ThisWindow, Path=UseImperialMeasurements}" />                                        

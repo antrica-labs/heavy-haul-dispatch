@@ -691,7 +691,22 @@ namespace SingerDispatch
                 var generator = new OutOfProvinceBuilderWindow() { Owner = this };
                 generator.BuildReport(range.StartDate, range.EndDate);
             }
-        }        
+        }     
+   
+        private void RevenueReport_Click(object sender, RoutedEventArgs e)
+        {
+            var selector = new DateRangeSelectionWindow() { Owner = this };
+            var range = selector.GetDates();
+
+            if (range != null)
+            {
+                if (range.StartDate == null || range.EndDate == null)
+                    throw new Exception("Both start date and end date must be filled in");
+
+                var generator = new RevenueReportBuilder() { Owner = this };
+                generator.BuildReport(range.StartDate, range.EndDate);
+            }
+        }
 
         private void GetSupport_Click(object sender, RoutedEventArgs e)
         {
