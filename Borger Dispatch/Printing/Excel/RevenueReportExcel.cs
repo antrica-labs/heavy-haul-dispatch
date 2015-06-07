@@ -67,11 +67,20 @@ namespace SingerDispatch.Printing.Excel
 
                 row++;
             }
-
+            
             // Format numbers http://closedxml.codeplex.com/wikipage?title=NumberFormatId%20Lookup%20Table
             ws.Range(string.Format("F4:F{0}", row)).Style.NumberFormat.NumberFormatId = 7; // currency
             ws.Range(string.Format("G4:G{0}", row)).Style.NumberFormat.NumberFormatId = 9; // percent
             ws.Range(string.Format("H4:H{0}", row)).Style.NumberFormat.NumberFormatId = 7; // currency
+            
+            row--;
+            
+            var table = ws.Range(string.Format("A3:H{0}", row)).CreateTable();
+
+            table.ShowTotalsRow = true;
+            table.Field("Billed Hours").TotalsRowFunction = XLTotalsRowFunction.Sum;
+            table.Field("Subtotal").TotalsRowFunction = XLTotalsRowFunction.Sum;
+            table.Field("Total").TotalsRowFunction = XLTotalsRowFunction.Sum;            
         }
     }
 }
