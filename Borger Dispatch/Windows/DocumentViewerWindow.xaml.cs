@@ -13,6 +13,7 @@ using System.Text.RegularExpressions;
 using System.IO;
 using System.Windows.Interop;
 using SingerDispatch.Printing.Excel;
+using CefSharp;
 
 namespace SingerDispatch.Windows
 {
@@ -147,14 +148,10 @@ namespace SingerDispatch.Windows
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             if (Document == null) return;
-
-            var loading = new LoadingDocument();
-            
+                       
             // Spawn a new thread to render the requested document and then display it when ready.
             Backgrounder.DoWork += RenderDocument;
             Backgrounder.RunWorkerCompleted += DisplayDocument;
-
-            TheBrowser.NavigateToString(loading.GenerateHTML(null));
 
             HasLoaded = true;
 
@@ -221,7 +218,7 @@ namespace SingerDispatch.Windows
 
         private void ShowHTML(string html)
         {
-            TheBrowser.NavigateToString(html);
+            TheBrowser.LoadHtml(html, "file:///customreport/");
         }
 
         private void PDF_Click(object sender, RoutedEventArgs e)
@@ -279,18 +276,6 @@ namespace SingerDispatch.Windows
             catch (Exception ex)
             {
                 NoticeWindow.ShowError("Problem saving to Excel", ex.ToString());
-            }
-        }
-
-        private void Print_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                new PrintInProgressWindow((IHTMLDocument2)TheBrowser.Document).Run();
-            }
-            catch (Exception ex)
-            {
-                NoticeWindow.ShowError("Printing error", ex.Message);
             }
         }
 

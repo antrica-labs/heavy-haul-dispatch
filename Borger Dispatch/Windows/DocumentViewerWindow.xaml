@@ -1,6 +1,7 @@
 ﻿<Window x:Class="SingerDispatch.Windows.DocumentViewerWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:cefSharp="clr-namespace:CefSharp.Wpf;assembly=CefSharp.Wpf"
     Title="Document Viewer" Height="700" Width="900" WindowStartupLocation="CenterOwner"
     Loaded="Window_Loaded">
     <Window.Resources>
@@ -24,9 +25,9 @@
                 <ComboBox Name="cmbCompanyType" Grid.Column="0" Margin="4">
                     <ComboBoxItem Selected="SingerSpecialized_Selected" IsSelected="True">Borger Transport</ComboBoxItem>
                     <!-- ComboBoxItem Selected="SingerEnterprises_Selected">M.E. Singer Enterprises document</ComboBoxItem> -->
-                </ComboBox>                
-                                
-                <Button Grid.Column="1" Style="{StaticResource Horizontal}" Click="Print_Click">Print</Button>
+                </ComboBox>
+
+                <Button Grid.Column="1" Style="{StaticResource Horizontal}" Command="{Binding WebBrowser.PrintCommand, ElementName=TheBrowser}">Print</Button>
                 <Button Grid.Column="2" Style="{StaticResource Horizontal}" Click="PDF_Click">Save to PDF</Button>
                 <Button Grid.Column="3" Style="{StaticResource HorizontalEnd}" Click="Excel_Click">Save to Excel</Button>
                 
@@ -37,6 +38,6 @@
             </Grid>
         </Border>
 
-        <WebBrowser Grid.Row="1" Name="TheBrowser" />
+        <cefSharp:ChromiumWebBrowser Name="TheBrowser" />
     </DockPanel>
 </Window>
